@@ -8,6 +8,8 @@ public class Map : MonoBehaviour
 
     [Header("Debug Settings")]
     public bool debug;
+    public float vertexRadius;
+    public Color vertexColor;
     public Color gridColor;
 
     private Matrix4x4 UnitToWorldMatrix { get { return Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale); } }
@@ -17,11 +19,30 @@ public class Map : MonoBehaviour
         if (mapLayout && debug)
         {
             Gizmos.matrix = UnitToWorldMatrix;
-            Gizmos.color = gridColor;
 
             foreach (Vertex root in mapLayout.Vertices)
-                foreach (Vertex neighbour in root.Adjacent)
+            {
+                Gizmos.color = vertexColor;
+                Gizmos.DrawSphere(root, vertexRadius);
+                Gizmos.color = gridColor;
+
+                foreach (Vertex neighbour in mapLayout.GetAdjacent(root))
+                {
                     Gizmos.DrawLine(root, neighbour);
+                }
+            }
+
+            //foreach (Vertex root in mapLayout.Vertices)
+            //{
+            //    Gizmos.color = vertexColor;
+            //    Gizmos.DrawSphere(root, vertexRadius);
+            //    Gizmos.color = gridColor;
+
+            //    foreach (Vertex neighbour in root.Adjacent)
+            //    {
+            //        //Gizmos.DrawLine(root, neighbour);
+            //    }
+            //}
         }
     }
 }
