@@ -40,11 +40,11 @@ public class ScenarioEditor : EditorWindow
         Button btnLoad = root.Query<Button>("BtnLoad");
         btnLoad.clickable.clicked += LoadScenario;
 
-        //Button btnNewChoice = root.Query<Button>("btnNewChoice");
-        //btnNewChoice.clickable.clicked += NewChoice;
+        Button btnNewChoice = root.Query<Button>("btnNewChoice");
+        btnNewChoice.clickable.clicked += NewChoice;
 
-        Button btnNewOutcome = root.Query<Button>("btnNewOutcome");
-        btnNewOutcome.clickable.clicked += NewOutcome;
+        //Button btnNewOutcome = root.Query<Button>("btnNewOutcome");
+        //btnNewOutcome.clickable.clicked += NewOutcome;
 
         tfScenarioTitle = root.Query<TextField>("tfScenarioName");
         tfScenarioDescription = root.Query<TextField>("tfScenarioDescription");
