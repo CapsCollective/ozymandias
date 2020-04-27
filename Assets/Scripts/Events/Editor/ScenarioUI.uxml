@@ -1,0 +1,33 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Main" style="height: 100%;&#10;width: 100%;&#10;align-items: flex-start;&#10;flex-direction: row;&#10;flex-shrink: 1;&#10;flex-basis: 100%;&#10;flex-grow: 0;&#10;justify-content: space-between;&#10;">
+        <Style src="ScenarioUI.uss" />
+        <ui:VisualElement name="LeftColumn" style="width: 80%;&#10;height: 100%;&#10;flex-grow: 1;&#10;flex-shrink: initial;&#10;flex-basis: 100%;&#10;">
+            <ui:Label text="Event Editor" style="font-size: 22px;&#10;-unity-font-style: bold;&#10;margin-left: 5px;&#10;margin-right: 5px;&#10;margin-top: 5px;&#10;margin-bottom: 5px;&#10;" />
+            <ui:VisualElement style="flex-direction: row;&#10;flex-grow: 0;&#10;justify-content: space-between;&#10;align-items: flex-start;&#10;flex-basis: auto;&#10;width: initial;&#10;height: 50px;&#10;">
+                <ui:Button text="Load" name="BtnLoad" style="width: 100%;&#10;flex-shrink: 1;&#10;" />
+                <ui:Button text="Save" name="BtnSave" style="width: 100%;&#10;flex-shrink: 1;&#10;" />
+            </ui:VisualElement>
+            <ui:TextField picking-mode="Ignore" label="Scenario Name" value="ScenarioName" readonly="false" multiline="false" name="tfScenarioName" class="skinny" />
+            <ui:Label text="Scenario Description" style="margin-left: 3px;&#10;" />
+            <ui:TextField name="tfScenarioDescription" multiline="true" class="multi-line" />
+            <uie:ObjectField label="Background" allow-scene-objects="false" name="ofBackground" />
+            <ui:Button text="New Choice" name="btnNewChoice" />
+            <ui:ListView focusable="True" name="listChoices" style="height: 100%;&#10;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="width: 3px;&#10;height: 100%;&#10;background-color: rgb(84, 84, 84);&#10;" />
+        <ui:VisualElement name="RightColumn" style="right: auto;&#10;width: 100%;&#10;height: 100%;&#10;flex-grow: 1;&#10;margin-top: 0;&#10;flex-shrink: initial;&#10;flex-basis: 80%;&#10;padding-top: 2px;&#10;">
+            <ui:TextField picking-mode="Ignore" label="Choice Name" value="ChoiceName" name="tfChoiceName" />
+            <ui:Label text="Choice Description" style="margin-left: 3px;&#10;" />
+            <ui:TextField name="tfChoiceDescription" text="ggg" multiline="true" class="multi-line" />
+            <ui:VisualElement style="height: 1px;&#10;background-color: rgb(84, 84, 84);&#10;" />
+            <ui:VisualElement style="flex-direction: row;&#10;align-items: center;&#10;justify-content: space-between;&#10;flex-shrink: 1;&#10;flex-basis: initial;&#10;width: initial;&#10;flex-grow: 0;&#10;margin-top: 2px;&#10;margin-right: 5px;&#10;margin-left: 5px;&#10;">
+                <uie:ToolbarMenu name="menuOutcomes" style="flex-basis: auto;&#10;flex-shrink: initial;&#10;flex-grow: 1;&#10;flex-direction: row;&#10;" />
+            </ui:VisualElement>
+            <ui:ListView name="listOutcomes" focusable="True" style="flex-grow: 1;&#10;flex-shrink: 0;&#10;margin-left: 3px;&#10;margin-right: 3px;&#10;margin-top: 3px;&#10;margin-bottom: 3px;&#10;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="height: 100%;&#10;width: 3px;&#10;background-color: rgb(84, 84, 84);&#10;" />
+        <ui:VisualElement name="VariablesColumn" style="right: auto;&#10;width: auto;&#10;height: 100%;&#10;flex-grow: 1;&#10;margin-top: 0;&#10;flex-shrink: initial;&#10;flex-basis: 70%;&#10;align-items: stretch;&#10;padding-left: 2px;&#10;padding-right: 2px;&#10;padding-top: 2px;&#10;">
+            <ui:IMGUIContainer name="IMGUI" style="flex-grow: 1;&#10;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
