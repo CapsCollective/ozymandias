@@ -6,13 +6,17 @@ public class FlyerManager : MonoBehaviour
     [SerializeField] private Text titleText;
     [SerializeField] private Text descriptionText;
 
-    public void SetTitle(string title)
-    {
-        titleText.text = title;
-    }
+    private Event @event;
 
-    public void SetDescription(string description)
+    public void SetEvent(Event e)
     {
-        descriptionText.text = description;
+        @event = e;
+        titleText.text = @event.ScenarioTitle;
+        descriptionText.text = @event.ScenarioText;
+    }
+    
+    public Event GetEvent()
+    {
+        return @event;
     }
 }
