@@ -46,9 +46,10 @@ public class NoticeboardController : MonoBehaviour
             }
         }
         flyerMappings = newMap;
+        var unusedFlyers = flyerList.Where(f => !flyerMappings.Values.Contains(f)).ToArray()
+            .OrderBy(x => new System.Random().Next(1, 8)).ToArray();
         
         events = events.Where(e => !flyerMappings.Keys.Contains(e.ScenarioTitle)).ToArray();
-        var availableFlyers = flyerList.Where(f => !flyerMappings.Values.Contains(f)).ToArray();
         for (var i = 0; i < availableFlyers.Length; i++)
         {
             if (i < events.Length)
