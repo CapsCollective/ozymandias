@@ -77,13 +77,47 @@ public class MapLayout : ScriptableObject
 
     public void GenerateCells()
     {
+        Cells = new List<Cell>();
+
         // STEP 1. Add all triangular cells
+        foreach (Vertex root in Vertices)
+        {
+            foreach (Vertex neighbour in VertexMap[root])
+            {
+                foreach (Vertex mutual in VertexMap[neighbour])
+                {
+                    if (IsAdjacent(mutual, root))
+                    {
+                        Cell newCell = new Cell(root, neighbour, mutual);
+                        if (!Cells.Contains(newCell))
+                        {
+                            Cells.Add(newCell);
+                            CellMap.Add(newCell, new List<Cell>());
+                        }
+                    }
+                }
+            }
+        }
 
-        // STEP 2. Remove all possible edges
+        // STEP 2. Establish adjacency between triangular cells
+        foreach (Cell cell in Cells)
+        {
+            foreach (Cell other in Cells)
+            {
+                int shareCount = 0;
+                foreach (Vertex vertex in cell.Vertices)
+                    if (other.Vertices.Contains(vertex))
+                        shareCount++;
+                if (shareCount >= 2)
+                    CellMap[cell].Add(other);
+            }
+        }
 
-        // STEP 3. Subdivide
+        // STEP 3. Remove all possible edges
 
-        // STEP 4. Relax
+        // STEP 4. Subdivide
+
+        // STEP 5. Relax
     }
 
     public void CreateDirectedEdge(Vertex from, Vertex to)
@@ -112,7 +146,23 @@ public class MapLayout : ScriptableObject
 
     public List<Vertex> GetAdjacent(Vertex root)
     {
-        return VertexMap.ContainsKey(root) ? VertexMap[root] : new List<Vertex>();
+        if (VertexMap.ContainsKey(root))
+            return VertexMap[root];
+        else
+            throw new System.Exception("Vertex not contained in Vertex adjacency map.");
+    }
+
+    public List<Cell> GetAdjacent(Cell root)
+    {
+        if (CellMap.ContainsKey(root))
+            return CellMap[root];
+        else
+            throw new System.Exception("Cell not contained in Cell adjacency map.");
+    }
+
+    public bool IsAdjacent(Vertex root, Vertex other)
+    {
+        return VertexMap.ContainsKey(root) && VertexMap[root].Contains(other);
     }
 }
 
@@ -133,22 +183,67 @@ public class Vertex
 
 public class Cell
 {
-    public Vertex[] Vertices { get; private set; }
+    public List<Vertex> Vertices { get; private set; }
 
-    public bool IsQuad { get { return Vertices.Length == 4; } }
+    public bool IsQuad { get { return Vertices.Count == 4; } }
 
     public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD)
     {
-        Vertices = new Vertex[] { vertexA, vertexB, vertexC, vertexD };
+        Vertices = new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
     }
 
     public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC)
     {
-        Vertices = new Vertex[] { vertexA, vertexB, vertexC };
+        Vertices = new List<Vertex> { vertexA, vertexB, vertexC };
+    }
+
+    public void DrawCellGizmo()
+    {
+        for (int i = 0; i < Vertices.Count; i++)
+        {
+            Gizmos.DrawLine(Vertices[i], Vertices[(i + 1) % Vertices.Count]);
+        }
+    }
+
+    public static bool operator ==(Cell cell, Cell other)
+    {
+        foreach (Vertex vertex in cell.Vertices)
+        {
+            bool contains = false;
+
+            foreach (Vertex otherVertex in other.Vertices)
+            {
+                if (vertex == otherVertex)
+                    contains = true;
+            }
+
+            if (!contains) return false;
+        }
+        return true;
+    }
+
+    public static bool operator !=(Cell cell, Cell other)
+    {
+        return !(cell == other);
+    }
+
+    public static implicit operator List<Vertex>(Cell cell)
+    {
+        return cell.Vertices;
     }
 
     public static implicit operator Vertex[](Cell cell)
     {
-        return cell.Vertices;
+        return cell.Vertices.ToArray();
+    }
+
+    public override bool Equals(object obj)
+    {
+        return this == (Cell)obj;
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
     }
 }
