@@ -11,4 +11,10 @@ public class Event : ScriptableObject
 
     public List<Choice> Choices = new List<Choice>();
 
+
+
+    public virtual void Execute()
+    {
+
+    }
 }
