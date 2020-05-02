@@ -6,6 +6,7 @@ using UnityEngine;
 public class MapLayout : ScriptableObject
 {
     public int depth;
+    public int seed;
 
     public int relaxIterations;
     [Range(0f, 1f)] public float relaxStrength;
@@ -35,10 +36,10 @@ public class MapLayout : ScriptableObject
         closest.occupied = true;
     }
 
-    public void Generate()
+    public void Generate(int seed)
     {
         GenerateVertices();
-        GenerateCells();
+        GenerateCells(seed);
     }
 
     public void GenerateVertices()
@@ -96,8 +97,10 @@ public class MapLayout : ScriptableObject
         }
     }
 
-    public void GenerateCells()
+    public void GenerateCells(int seed)
     {
+        Random.InitState(seed);
+
         TriangleGraph = new Graph<Triangle>();
 
         // STEP 1. Add all triangles
@@ -197,7 +200,9 @@ public class MapLayout : ScriptableObject
 
         // STEP 7. Establish cell adjacency
 
-        // STEP 8. Relax vertices
+        // STEP 8. Establi
+
+        // STEP 9. Relax vertices
 
     }
 }
