@@ -11,6 +11,11 @@ public class Vertex
         position = _position;
     }
 
+    public void SetPosition(Vector3 newPosition)
+    {
+        position = newPosition;
+    }
+
     public static implicit operator Vector3(Vertex vertex)
     {
         return vertex.position;
