@@ -6,6 +6,7 @@ using UnityEngine;
 public class MapLayout : ScriptableObject
 {
     public int depth;
+    public int seed;
 
     public int relaxIterations;
     [Range(0f, 1f)] public float relaxStrength;
@@ -35,10 +36,10 @@ public class MapLayout : ScriptableObject
         closest.occupied = true;
     }
 
-    public void Generate()
+    public void Generate(int seed)
     {
         GenerateVertices();
-        GenerateCells();
+        GenerateCells(seed);
     }
 
     public void GenerateVertices()
@@ -96,8 +97,10 @@ public class MapLayout : ScriptableObject
         }
     }
 
-    public void GenerateCells()
+    public void GenerateCells(int seed)
     {
+        Random.InitState(seed);
+
         TriangleGraph = new Graph<Triangle>();
 
         // STEP 1. Add all triangles
@@ -196,8 +199,58 @@ public class MapLayout : ScriptableObject
         Debug.Log(VertexGraph.Count);
 
         // STEP 7. Establish cell adjacency
+        foreach (Cell root in CellGraph.GetData())
+        {
+            foreach (Cell other in CellGraph.GetData())
+            {
+                int sharedVertices = 0;
 
-        // STEP 8. Relax vertices
+                foreach (Vertex rootVertex in root.Vertices)
+                    if (other.Vertices.Contains(rootVertex))
+                        sharedVertices++;
 
+                if (sharedVertices == 2)
+                    CellGraph.CreateEdge(root, other);
+            }
+        }
+
+        // STEP 8. Establish vertex adjacency - two vertices are adjacent if they are different and share two or more cells (cellmates ha)
+        foreach (Vertex root in VertexGraph.GetData())
+        {
+            foreach (Vertex other in VertexGraph.GetData())
+            {
+                int sharedCells = 0;
+
+                foreach (Cell cell in CellGraph.GetData())
+                {
+                    if (cell.Vertices.Contains(root) && cell.Vertices.Contains(other))
+                        sharedCells++;
+                }
+
+                if (root != other && sharedCells >= 2)
+                {
+                    VertexGraph.CreateEdge(root, other);
+                }
+            }
+        }
+
+        // STEP 9. Relax vertices
+        for (int i = 0; i < relaxIterations; i++)
+        {
+            foreach (Vertex vertex in VertexGraph.GetData())
+            {
+                Vector3 averagedPosition = vertex;
+
+                foreach (Vertex neighbour in VertexGraph.GetAdjacent(vertex))
+                {
+                    averagedPosition += neighbour;
+                }
+
+                averagedPosition /= VertexGraph.GetAdjacent(vertex).Count + 1;
+
+                if (VertexGraph.GetAdjacent(vertex).Count + 1 > 3)
+                    vertex.SetPosition(Vector3.Lerp(vertex, averagedPosition, relaxStrength));
+            }
+        }
     }
 }
