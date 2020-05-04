@@ -24,15 +24,6 @@ public class Map : MonoBehaviour
         mapLayout.Generate(mapLayout.seed);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Occupy(clickPos);
-        }
-    }
-
     public void Occupy(Vector3 worldPos)
     {
         Vector3 unitPos = transform.InverseTransformPoint(worldPos);
