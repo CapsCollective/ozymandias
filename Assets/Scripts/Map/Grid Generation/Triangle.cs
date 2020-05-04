@@ -11,8 +11,8 @@ public class Triangle
         Vector3 ab = (vertexB - vertexA).normalized;
         Vector3 ac = (vertexC - vertexA).normalized;
 
-        Vertices = Vector3.SignedAngle(ab, ac, Vector3.Cross(ab, ac)) < 0 ?
-            new List<Vertex> { vertexA, vertexB, vertexC }:
+        Vertices = Vector3.SignedAngle(ab, ac, Vector3.forward) < 0 ?
+            new List<Vertex> { vertexA, vertexB, vertexC } :
             new List<Vertex> { vertexA, vertexC, vertexB };
     }
 

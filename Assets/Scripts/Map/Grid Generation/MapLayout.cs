@@ -15,12 +15,8 @@ public class MapLayout : ScriptableObject
     public Graph<Triangle> TriangleGraph { get; private set; } = new Graph<Triangle>();
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
 
-    public void Occupy(Vector3 unitPos)
+    public Cell Occupy(Vector3 unitPos)
     {
-        // Iterate through all of the cells
-        // Find the cell that is closest to unitPos
-        // Set it to occupied
-
         Cell closest = CellGraph.GetData()[0];
         float minDist = Vector3.Distance(closest.Centre, unitPos);
         foreach (Cell cell in CellGraph.GetData())
@@ -34,6 +30,7 @@ public class MapLayout : ScriptableObject
         }
 
         closest.occupied = true;
+        return closest;
     }
 
     public void Generate(int seed)
@@ -196,8 +193,6 @@ public class MapLayout : ScriptableObject
             }
         }
 
-        Debug.Log(VertexGraph.Count);
-
         // STEP 7. Establish cell adjacency
         foreach (Cell root in CellGraph.GetData())
         {
@@ -213,7 +208,7 @@ public class MapLayout : ScriptableObject
                     CellGraph.CreateEdge(root, other);
             }
         }
-
+        
         // STEP 8. Establish vertex adjacency - two vertices are adjacent if they are different and share two or more cells (cellmates ha)
         foreach (Vertex root in VertexGraph.GetData())
         {
@@ -252,5 +247,25 @@ public class MapLayout : ScriptableObject
                     vertex.SetPosition(Vector3.Lerp(vertex, averagedPosition, relaxStrength));
             }
         }
+    }
+
+    public Mesh GenerateMesh()
+    {
+        Graph<Vertex> dupVertexGraph = new Graph<Vertex>(VertexGraph);
+
+        List<Vector3> vertices = new List<Vector3>();
+        List<Vector2> uv = new List<Vector2>();
+        List<int> triangles = new List<int>();
+
+        for (int i = dupVertexGraph.Count; i >= 0; i--)
+        {
+            foreach (Vertex neighbour in dupVertexGraph.GetAdjacent(dupVertexGraph.GetData()[i]))
+            {
+
+            }
+            dupVertexGraph.Remove(dupVertexGraph.GetData()[i]);
+        }
+
+        return new Mesh();
     }
 }
