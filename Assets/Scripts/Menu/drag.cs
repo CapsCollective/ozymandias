@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public Map map;
     private Image image;
     public GameObject thing;
     private GameObject thingInstantiated;
-    bool thingExists = false;
+
     public Transform parent = null;
     public Transform parentPlaceholder = null;
     GameObject placeHolder = null;
-    public Camera position;
 
     private Vector2 mousePos;
     private Vector3 worldPoint;
@@ -102,10 +102,7 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetSiblingIndex(placeHolder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeHolder);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(Camera.main.transform.position, worldPoint);
+        map.Occupy(thingInstantiated.transform.position);
+        Destroy(thingInstantiated);
     }
 }
