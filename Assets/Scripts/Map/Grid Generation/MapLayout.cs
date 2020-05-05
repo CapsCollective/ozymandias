@@ -8,6 +8,8 @@ public class MapLayout : ScriptableObject
     public int depth;
     public int seed;
 
+    public float lineWeight;
+
     public int relaxIterations;
     [Range(0f, 1f)] public float relaxStrength;
 
@@ -257,15 +259,51 @@ public class MapLayout : ScriptableObject
         List<Vector2> uv = new List<Vector2>();
         List<int> triangles = new List<int>();
 
-        for (int i = dupVertexGraph.Count; i >= 0; i--)
+        for (int i = dupVertexGraph.Count - 1; i >= 0; i--)
         {
             foreach (Vertex neighbour in dupVertexGraph.GetAdjacent(dupVertexGraph.GetData()[i]))
             {
+                Vector3 root = dupVertexGraph.GetData()[i];
+                Vector3 toNeighbour = neighbour - root;
+                Vector3 direction = toNeighbour.normalized;
+                Vector3 cross = Vector3.Cross(direction, Vector3.forward);
 
+                vertices.AddRange(
+                    new Vector3[]
+                    {
+                        root - cross * lineWeight / 2f,
+                        neighbour - cross * lineWeight / 2f,
+                        root + cross * lineWeight / 2f,
+                        neighbour + cross * lineWeight / 2f
+                    }
+                    );
+
+                uv.AddRange(
+                    new Vector2[]
+                    {
+                        new Vector2(0, 0),
+                        new Vector2(0, 1),
+                        new Vector2(1, 0),
+                        new Vector2(1, 1)
+                    }
+                    );
+
+                triangles.Add(vertices.Count - 4);
+                triangles.Add(vertices.Count - 3);
+                triangles.Add(vertices.Count - 2);
+                triangles.Add(vertices.Count - 2);
+                triangles.Add(vertices.Count - 3);
+                triangles.Add(vertices.Count - 1);
             }
+
             dupVertexGraph.Remove(dupVertexGraph.GetData()[i]);
         }
 
-        return new Mesh();
+        return new Mesh()
+        {
+            vertices = vertices.ToArray(),
+            uv = uv.ToArray(),
+            triangles = triangles.ToArray()
+        };
     }
 }

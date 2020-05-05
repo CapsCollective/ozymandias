@@ -30,7 +30,7 @@ public class NoticeboardController : MonoBehaviour
             if (i < events.Length)
             {
                 unusedFlyers[i].SetActive(true);
-                unusedFlyers[i].GetComponent<FlyerManager>().SetEvent(events[i]);
+                unusedFlyers[i].GetComponent<EventDisplayManager>().SetEvent(events[i]);
                 newMappings.Add(events[i].ScenarioTitle, unusedFlyers[i]);
             }
             else

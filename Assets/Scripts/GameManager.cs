@@ -9,7 +9,8 @@ using NaughtyAttributes;
 public class GameManager : MonoBehaviour
 {
     public GameObject adventurerPrefab;
-    
+
+    public static Action OnNewTurn;
     private static GameManager instance;
     public static GameManager Instance {
         get {
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
     
     [ReadOnly][SerializeField] private List<Adventurer> adventurers = new List<Adventurer>();
 
-    [ReadOnly][SerializeField] private List<Building> buildings = new List<Building>();
+    [ReadOnly][SerializeField] public List<Building> buildings = new List<Building>();
     
     /*public List<Building> Buildings
     {
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
         Threat += buildings.Count;
         CurrentWealth = WealthPerTurn;
         UpdateUI();
+        OnNewTurn?.Invoke();
     }
 
     public void Build(Building building)
