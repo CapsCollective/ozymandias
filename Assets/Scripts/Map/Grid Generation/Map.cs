@@ -5,6 +5,7 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public MapLayout mapLayout;
+    public GameObject buildingPrefab;
     public bool selectingVertex;
     public int selectedVertex;
     public int selectedCell;
@@ -18,19 +19,24 @@ public class Map : MonoBehaviour
     public Color gridColor;
     public Color occupiedColor;
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Occupy(clickPos);
-        }
+        mapLayout.Generate(mapLayout.seed);
     }
 
     public void Occupy(Vector3 worldPos)
     {
         Vector3 unitPos = transform.InverseTransformPoint(worldPos);
-        mapLayout.Occupy(unitPos);
+
+        Cell occupied = mapLayout.Occupy(unitPos);
+
+        BuildingMesh bm = Instantiate(buildingPrefab, transform.TransformPoint(occupied.Centre), Quaternion.identity).GetComponent<BuildingMesh>();
+        bm.Fit(
+            transform.TransformPoint(occupied.Vertices[0]),
+            transform.TransformPoint(occupied.Vertices[1]),
+            transform.TransformPoint(occupied.Vertices[2]),
+            transform.TransformPoint(occupied.Vertices[3])
+            );
     }
 
     private void OnDrawGizmos()
@@ -72,6 +78,11 @@ public class Map : MonoBehaviour
 
                 Gizmos.color = selectedColor;
                 mapLayout.CellGraph.GetData()[selectedCell].DrawCell();
+                for (int i = 0; i < 4; i++)
+                {
+                    Gizmos.color = Color.Lerp(Color.blue, Color.red, (float)i / 3);
+                    Gizmos.DrawSphere(mapLayout.CellGraph.GetData()[selectedCell].Vertices[i], vertexRadius);
+                }
             }
 
             Gizmos.color = occupiedColor;
