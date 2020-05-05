@@ -6,6 +6,7 @@ using System;
 
 public class EventQueue : MonoBehaviour
 {
+    [SerializeField] private Outcome defaultOutcome;
     [ReorderableList]
     public List<Event> EventsQueue = new List<Event>();
 
@@ -26,6 +27,9 @@ public class EventQueue : MonoBehaviour
         {
             for (int i = 0; i < EventsQueue.Count; i++)
             {
+                if (EventsQueue[i].defaultOutcome == null)
+                    EventsQueue[i].defaultOutcome = defaultOutcome;
+
                 bool execute = false;
                 execute = EventsQueue[i].defaultOutcome.Execute();
                 // Find a new event from the queue
