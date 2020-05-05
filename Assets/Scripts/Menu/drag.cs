@@ -109,5 +109,11 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         Destroy(placeHolder);
         map.Occupy(thing, thingInstantiated.transform.position);
         Destroy(thingInstantiated);
+
+        if (!eventData.pointerEnter)
+        {
+            text.enabled = true;
+            image.enabled = true;
+        }
     }
 }
