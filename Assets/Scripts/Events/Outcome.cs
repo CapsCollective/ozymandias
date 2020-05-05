@@ -9,8 +9,8 @@ public class Outcome : ScriptableObject
     public Event ChainEvent;
 
     // What happens when this is executed
-    public virtual void Execute()
+    public virtual bool Execute()
     {
-
+        return false;
     }
 }
