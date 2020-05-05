@@ -6,6 +6,15 @@ using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
 
+public enum Metric
+{
+    Accomodation,
+    Satisfaction,
+    Effectiveness,
+    Spending,
+    Defense
+}
+
 public class GameManager : MonoBehaviour
 {
     public GameObject adventurerPrefab;
@@ -18,7 +27,7 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    
+
     [ReadOnly][SerializeField] private List<Adventurer> adventurers = new List<Adventurer>();
 
     [ReadOnly][SerializeField] private List<Building> buildings = new List<Building>();
@@ -30,7 +39,7 @@ public class GameManager : MonoBehaviour
             return GameObject.FindGameObjectsWithTag("Building").Select(x => x.GetComponent<Building>()).ToList();
         }
     }*/
-
+    
     [ReadOnly][SerializeField] private int availableAdventurers;
     public int AvailableAdventurers {
         get { return availableAdventurers = adventurers.Count(x => x.assignedQuest == null); }
@@ -126,6 +135,8 @@ public class GameManager : MonoBehaviour
 
     public void UpdateUI()
     {
+        topBar.UpdateUI();
+        wealthCounter.UpdateUI();
         //Todo: Updates all UI
         Debug.Log(
             "AvailableAdventurers: " + AvailableAdventurers +
@@ -138,10 +149,27 @@ public class GameManager : MonoBehaviour
             "\nThread: " + Threat +
             "\nCurrent Wealth:" + CurrentWealth + "/" + wealthPerTurn);
     }
+    
+    public int GetMetric(Metric metric)
+    {
+        switch (metric)
+        {
+            case Metric.Accomodation: return Accommodation;
+            case Metric.Satisfaction: return Satisfaction;
+            case Metric.Effectiveness: return Effectiveness;
+            case Metric.Spending: return Spending;
+            case Metric.Defense: return Defense;
+            default: return 0;
+        }
+    }
 
     [HorizontalLine()]
+    
+    public TopBar topBar;
+    public WealthCounter wealthCounter;
 
     [SerializeField] private GameObject guildHall;
+    
     private void BuildGuildHall()
     {
         Instantiate(guildHall, GameObject.Find("Buildings").transform).GetComponent<Building>().Build();
