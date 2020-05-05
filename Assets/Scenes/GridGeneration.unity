@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -151,8 +151,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapLayout: {fileID: 11400000, guid: 46bb7081b8c71b947b453565cdd9a8d0, type: 2}
-  selectingVertex: 1
-  selectedVertex: 131
+  buildingPrefab: {fileID: 6337801542876098187, guid: 0bde1425bc6d3cb49a4aadac5b0fcb39,
+    type: 3}
+  selectingVertex: 0
+  selectedVertex: 114
   selectedCell: 35
   debug: 1
   vertexRadius: 0.02

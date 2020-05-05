@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class FlyerManager : MonoBehaviour
+public class EventDisplayManager : MonoBehaviour
 {
     [SerializeField] private Text titleText;
     [SerializeField] private Text descriptionText;

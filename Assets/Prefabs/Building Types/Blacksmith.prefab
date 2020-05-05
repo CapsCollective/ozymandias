@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1056898780939818417}
   - component: {fileID: 1056898780939818422}
   - component: {fileID: 1056898780939818423}
-  - component: {fileID: 6352712776818904139}
+  - component: {fileID: 8992663554469614194}
   m_Layer: 2
-  m_Name: blockLaser
+  m_Name: Blacksmith
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5001d1b4eccee34478a40dd869f8c8d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,7 +94,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6352712776818904139
+--- !u!114 &8992663554469614194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,6 +103,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1056898780939818420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43d9abfc8c4b1ff4191a924194dbd43c, type: 3}
+  m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  operational: 0
+  baseCost: 0
+  satisfaction: 0
+  effectiveness: 0
+  spending: 0
+  accommodation: 0
+  defense: 0
