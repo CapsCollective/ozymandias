@@ -30,7 +30,11 @@ public class Map : MonoBehaviour
 
         Cell occupied = mapLayout.Occupy(unitPos);
 
-        BuildingMesh bm = Instantiate(buildingPrefab, transform.TransformPoint(occupied.Centre), Quaternion.identity).GetComponent<BuildingMesh>();
+        GameObject building = Instantiate(buildingPrefab, transform.TransformPoint(occupied.Centre), Quaternion.identity);
+        
+        building.GetComponent<Building>().Build();
+        
+        BuildingMesh bm = building.GetComponent<BuildingMesh>();
         bm.Fit(
             transform.TransformPoint(occupied.Vertices[0]),
             transform.TransformPoint(occupied.Vertices[1]),
