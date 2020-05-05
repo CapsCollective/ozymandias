@@ -5,7 +5,6 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public MapLayout mapLayout;
-    public GameObject buildingPrefab;
     public bool selectingVertex;
     public int selectedVertex;
     public int selectedCell;
@@ -22,9 +21,10 @@ public class Map : MonoBehaviour
     private void Start()
     {
         mapLayout.Generate(mapLayout.seed);
+        GetComponent<MeshFilter>().sharedMesh = mapLayout.GenerateMesh();
     }
 
-    public void Occupy(Vector3 worldPos)
+    public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
     {
         Vector3 unitPos = transform.InverseTransformPoint(worldPos);
 
