@@ -52,7 +52,7 @@ public class NewspaperController : MonoBehaviour
 
     private string GetNewspaperTitle()
     {
-        return "The Wizarding Post";
+        return "{" + "The Wizarding Post" + "}";
         // TODO randomly generate newspaper names
     }
     
