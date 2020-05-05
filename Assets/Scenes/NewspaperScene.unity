@@ -694,6 +694,7 @@ GameObject:
   - component: {fileID: 760826092}
   - component: {fileID: 760826094}
   - component: {fileID: 760826093}
+  - component: {fileID: 760826095}
   m_Layer: 5
   m_Name: Newspaper
   m_TagString: Untagged
@@ -761,6 +762,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760826091}
   m_CullTransparentMesh: 0
+--- !u!114 &760826095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760826091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1e5cd2e5df4aed85ee954994fa63c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newspaperTitle: {fileID: 388622038}
+  articleList:
+  - {fileID: 8889893978680584352}
+  - {fileID: 901693098}
+  - {fileID: 1928004888}
+  - {fileID: 1996315400}
+  articleImage: {fileID: 682880523}
+  choiceList:
+  - {fileID: 1152074462}
+  - {fileID: 606669312}
+  - {fileID: 1984385699}
+  - {fileID: 519629409}
 --- !u!1 &901693098
 GameObject:
   m_ObjectHideFlags: 0
