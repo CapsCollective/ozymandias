@@ -11,4 +11,15 @@ public class Event : ScriptableObject
 
     public List<Choice> Choices = new List<Choice>();
 
+    public float minChaos;
+    public float minThreat;
+    public float minWealth;
+
+    public float maxChaos;
+    public float maxThreat;
+    public float maxWealth;
+
+    public float weight;
+
+    public Outcome defaultOutcome;
 }
