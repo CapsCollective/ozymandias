@@ -5,20 +5,14 @@ using UnityEngine.UI;
 
 public class NewspaperController : MonoBehaviour
 {
-    // Fields
+    // Serialised Fields
     [SerializeField] private Text newspaperTitle;
     [SerializeField] private GameObject[] articleList;
     [SerializeField] private Image articleImage;
     [SerializeField] private Button[] choiceList;
 
+    // Private Fields
     private Event[] currentEvents;
-
-    public void OnChoiceSelected(int choice)
-    {
-        Array.ForEach(choiceList, b => b.interactable = false);
-        // TODO call the game logic with the selected choice with the following:
-        // currentEvents[0].Choices[choice]
-    }
 
     public void UpdateDisplay()
     {
@@ -42,6 +36,13 @@ public class NewspaperController : MonoBehaviour
             choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceText;
             choiceList[i].interactable = true;
         }
+    }
+    
+    public void OnChoiceSelected(int choice)
+    {
+        Array.ForEach(choiceList, b => b.interactable = false);
+        // TODO call the game logic with the selected choice with the following:
+        // currentEvents[0].Choices[choice]
     }
 
     private Event[] GetEvents()
