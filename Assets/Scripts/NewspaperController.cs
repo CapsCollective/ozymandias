@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,30 +11,36 @@ public class NewspaperController : MonoBehaviour
     [SerializeField] private Image articleImage;
     [SerializeField] private Button[] choiceList;
 
+    private Event[] currentEvents;
+
+    public void OnChoiceSelected(int choice)
+    {
+        Array.ForEach(choiceList, b => b.interactable = false);
+        // TODO call the game logic with the selected choice with the following:
+        // currentEvents[0].Choices[choice]
+    }
+
     public void UpdateDisplay()
     {
-        // Set the current newspaper title
-        newspaperTitle.text = GetNewspaperTitle();
-        
-        // Fetch the currently active events
-        var events = GetEvents();
-        
-        // Add the ad to the end of the array
-        events = events.Append(GetNewspaperAd()).ToArray();
+        // Fetch the currently active events and add the advertisement
+        currentEvents = GetEvents();
+        currentEvents = currentEvents.Append(GetNewspaperAd()).ToArray();
 
-        // Set the image for the main article
-        articleImage.sprite = events[0].ScenarioBackground;
+        // Set the image for the main article and a newspaper title
+        articleImage.sprite = currentEvents[0].ScenarioBackground;
+        newspaperTitle.text = GetNewspaperTitle();
 
         // Assign the remaining events to the unused flyers, setting their states and recording mappings
         for (var i = 0; i < articleList.Length; i++)
         {
-            articleList[i].GetComponent<EventDisplayManager>().SetEvent(events[i]);
+            articleList[i].GetComponent<EventDisplayManager>().SetEvent(currentEvents[i]);
         }
         
         // Set all event choices on button texts
         for (var i = 0; i < choiceList.Length; i++)
         {
-            choiceList[i].GetComponentInChildren<Text>().text = events[0].Choices[i].ChoiceText;
+            choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceText;
+            choiceList[i].interactable = true;
         }
     }
 
@@ -45,6 +52,7 @@ public class NewspaperController : MonoBehaviour
     private string GetNewspaperTitle()
     {
         return "The Wizarding Post";
+        // TODO randomly generate newspaper names
     }
     
     private Event GetNewspaperAd()
@@ -53,5 +61,6 @@ public class NewspaperController : MonoBehaviour
         e.ScenarioTitle = "Go buy this thing...";
         e.ScenarioText = "It's a really good thing to buy...";
         return e;
+        // TODO randomly generate ads
     }
 }
