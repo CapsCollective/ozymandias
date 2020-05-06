@@ -7,6 +7,10 @@ public class ShowOnNewTurn : MonoBehaviour
     void Awake()
     {
         GameManager.OnNewTurn += () => gameObject.SetActive(true);
+    }
+
+    void Start()
+    {
         gameObject.SetActive(false);
     }
 
