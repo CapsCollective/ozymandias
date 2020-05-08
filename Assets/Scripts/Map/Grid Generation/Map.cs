@@ -5,7 +5,6 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public MapLayout mapLayout;
-    public GameObject buildingPrefab;
     public bool selectingVertex;
     public int selectedVertex;
     public int selectedCell;
@@ -22,15 +21,20 @@ public class Map : MonoBehaviour
     private void Start()
     {
         mapLayout.Generate(mapLayout.seed);
+        GetComponent<MeshFilter>().sharedMesh = mapLayout.GenerateMesh();
     }
 
-    public void Occupy(Vector3 worldPos)
+    public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
     {
         Vector3 unitPos = transform.InverseTransformPoint(worldPos);
 
         Cell occupied = mapLayout.Occupy(unitPos);
 
-        BuildingMesh bm = Instantiate(buildingPrefab, transform.TransformPoint(occupied.Centre), Quaternion.identity).GetComponent<BuildingMesh>();
+        GameObject building = Instantiate(buildingPrefab, transform.TransformPoint(occupied.Centre), Quaternion.identity);
+        
+        building.GetComponent<Building>().Build();
+        
+        BuildingMesh bm = building.GetComponent<BuildingMesh>();
         bm.Fit(
             transform.TransformPoint(occupied.Vertices[0]),
             transform.TransformPoint(occupied.Vertices[1]),

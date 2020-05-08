@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    Text text;
     public Map map;
     private Image image;
     public GameObject thing;
@@ -22,6 +23,7 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private void Start()
     {
         image = GetComponent<Image>();
+        text = GetComponentInChildren<Text>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -50,6 +52,8 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         //If card is outside panel,
         if (!eventData.pointerEnter)
         {
+            //hide text
+            text.enabled = false;
             //fire a ray to see if it is being hovered over an object.
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             Physics.Raycast(ray, out hit);
@@ -70,6 +74,7 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
         //If card is in panel
         else if (eventData.pointerEnter)                                                                                                                                {
+            text.enabled = true;
             image.enabled = true                                                                                                                                      ;
             Destroy(thingInstantiated)                                                                                                                                ;
                                                                                                                                                                         }
@@ -102,7 +107,13 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetSiblingIndex(placeHolder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeHolder);
-        map.Occupy(thingInstantiated.transform.position);
+        map.Occupy(thing, thingInstantiated.transform.position);
         Destroy(thingInstantiated);
+
+        if (!eventData.pointerEnter)
+        {
+            text.enabled = true;
+            image.enabled = true;
+        }
     }
 }

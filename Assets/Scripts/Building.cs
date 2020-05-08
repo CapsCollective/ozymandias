@@ -16,6 +16,7 @@ public class Building : MonoBehaviour
 
     public void Build()
     {
+        transform.parent = GameObject.Find("Buildings").transform;
         GameManager.Instance.Build(this);
         operational = true;
     }

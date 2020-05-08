@@ -6,7 +6,7 @@ using UnityEngine;
 public class Event : ScriptableObject
 {
     public string ScenarioTitle;
-    [Multiline] public string ScenarioText;
+    [TextArea] public string ScenarioText;
     public Sprite ScenarioBackground;
 
     public List<Choice> Choices = new List<Choice>();
