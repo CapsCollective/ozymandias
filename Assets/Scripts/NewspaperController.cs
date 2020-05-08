@@ -33,13 +33,17 @@ public class NewspaperController : MonoBehaviour
         // Set all event choices on button texts
         for (var i = 0; i < choiceList.Length; i++)
         {
-            choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceText;
-            choiceList[i].interactable = true;
+            if (currentEvents[0].Choices.Count > 0)
+            {
+                choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceTitle;
+                choiceList[i].interactable = true;
+            }
         }
     }
     
     public void OnChoiceSelected(int choice)
     {
+        currentEvents[0].Choices[choice].PossibleOutcomes[0].Execute();
         Array.ForEach(choiceList, b => b.interactable = false);
         // TODO call the game logic with the selected choice with the following:
         // currentEvents[0].Choices[choice]

@@ -98,7 +98,9 @@ public class ScenarioEditor : EditorWindow
             {
                 if (selectedChoice != null)
                 {
-                    selectedChoice.PossibleOutcomes.Add(Instantiate(outcome));
+                    Outcome newOutcome = Instantiate(outcome);
+                    selectedChoice.PossibleOutcomes.Add(newOutcome);
+                    AssetDatabase.AddObjectToAsset(newOutcome, selectedChoice);
                     RefreshOutcomesList();
                 }
             };
@@ -224,7 +226,6 @@ public class ScenarioEditor : EditorWindow
 
     private void NewChoice()
     {
-        SaveScenario();
         Choice newChoice = new Choice()
         {
             ChoiceTitle = "New Choice"
