@@ -27,20 +27,33 @@ public class Map : MonoBehaviour
     public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
     {
         Vector3 unitPos = transform.InverseTransformPoint(worldPos);
-
-        Cell occupied = mapLayout.Occupy(unitPos);
-
-        GameObject building = Instantiate(buildingPrefab, transform.TransformPoint(occupied.Centre), Quaternion.identity);
+        Cell[] targets = mapLayout.GetClosestUnoccupied(unitPos, buildingPrefab.GetComponent<BuildingMesh>());
         
-        building.GetComponent<Building>().Build();
-        
-        BuildingMesh bm = building.GetComponent<BuildingMesh>();
-        bm.Fit(
-            transform.TransformPoint(occupied.Vertices[0]),
-            transform.TransformPoint(occupied.Vertices[1]),
-            transform.TransformPoint(occupied.Vertices[2]),
-            transform.TransformPoint(occupied.Vertices[3])
-            );
+        if (targets != null)
+        {
+            BuildingMesh building = Instantiate(buildingPrefab, transform.TransformPoint(targets[0].Centre), Quaternion.identity).GetComponent<BuildingMesh>();
+            building.GetComponent<Building>().Build();
+            BuildingMesh bm = building.GetComponent<BuildingMesh>();
+
+            Vector3[][] vertices = new Vector3[targets.Length][];
+            for (int i = 0; i < targets.Length; i++)
+                vertices[i] = CellUnitToWorld(targets[i]);
+
+            bm.Fit(vertices);
+
+            foreach (Cell cell in targets)
+                cell.Occupy(bm);
+        }
+    }
+
+    private Vector3[] CellUnitToWorld(Cell cell)
+    {
+        Vector3[] vertices = new Vector3[4];
+        for (int i = 0; i < 4; i++)
+        {
+            vertices[i] = transform.TransformPoint(cell.Vertices[i]);
+        }
+        return vertices;
     }
 
     private void OnDrawGizmos()
@@ -92,7 +105,7 @@ public class Map : MonoBehaviour
             Gizmos.color = occupiedColor;
             foreach (Cell cell in mapLayout.CellGraph.GetData())
             {
-                if (cell.occupied) cell.DrawCell();
+                if (cell.Occupied) cell.DrawCell();
             }
         }
     }
