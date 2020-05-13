@@ -1,23 +1,81 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraMovement : MonoBehaviour
 {
-    private Rigidbody _rb;
-
-    public int moveSpeed, scrollSpeed, rotateSpeed;
-    // Start is called before the first frame update
+    private Rigidbody rb;
+    private Camera cam;
+    private Vector3 dragOrigin, cameraOrigin;
+    private float rotateOrigin;
+    private bool dragging, rotating = false;
+    
+    public float dragSpeed, scrollSpeed, rotateSpeed;
+    public int minHeight, maxHeight;
     void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        cam = GetComponent<Camera>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 acceleration = transform.TransformDirection(new Vector3(Input.GetAxis("Horizontal") * moveSpeed * 2, Input.GetAxis("Vertical") * moveSpeed / Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.x), (Input.GetAxis("Zoom") * scrollSpeed * 100) + (Input.GetAxis("Vertical") * moveSpeed / Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.x))));
-        transform.eulerAngles += new Vector3(0,Input.GetAxis("Camera Rotate") * Time.deltaTime * rotateSpeed,0);
-        _rb.AddForce(acceleration);
+        if (!rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            dragOrigin = Input.mousePosition;
+            cameraOrigin = transform.position;
+            dragging = true;
+        }
+        else if (!dragging && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            dragOrigin = Input.mousePosition;
+            rotateOrigin = transform.eulerAngles.y;
+            rotating = true;
+
+        }
+        
+        if (Input.GetMouseButtonUp(0))
+        {
+            dragging = false;
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            rotating = false;
+        }
+
+        if (dragging)
+        {
+            Vector3 dir = cam.ScreenToViewportPoint(dragOrigin - Input.mousePosition);
+            Transform t = transform;
+            Vector3 pos = t.position;
+            t.position = cameraOrigin + 
+                         Quaternion.Euler(0, t.eulerAngles.y, 0) * 
+                         new Vector3(dir.x * dragSpeed * pos.y, 0, dir.y * dragSpeed * pos.y);
+        }
+        else if(rotating)
+        {
+            Vector3 dir = cam.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+            Transform t = transform;
+            Vector3 angles = t.eulerAngles;
+            t.eulerAngles = new Vector3(angles.x, rotateOrigin + dir.x * rotateSpeed, angles.z);
+        }
+        else
+        {
+            if (transform.position.y > maxHeight)
+            {
+                rb.AddForce(transform.TransformDirection(new Vector3(0, 0,2)));
+            }
+            if (transform.position.y < minHeight)
+            {
+                rb.AddForce(transform.TransformDirection(new Vector3(0, 0,-1)));
+            }
+            else
+            {
+                rb.AddForce(transform.TransformDirection(
+                    new Vector3(0, 0, Input.GetAxis("Zoom") * scrollSpeed * 10))
+                );
+            }
+        }
     }
 }
