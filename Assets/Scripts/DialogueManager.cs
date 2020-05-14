@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +8,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text dialogueWindowText;
     private string[] dialogueEvents;
     
-    public void StartDialogue()
+    public void StartDialogue(string dialogueId)
     {
-        dialogueEvents = GetDialogueEvents();
+        SetupDialogueEvents(dialogueId);
         gameObject.SetActive(true);
         Continue();
     }
@@ -27,13 +28,13 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private static string[] GetDialogueEvents()
+    private void SetupDialogueEvents(string dialogueId)
     {
-        return new[] {
-            "Hello, this is the dialogue speaking...", 
-            "This is the game dialogue window. It displays important information about the game and the size of " +
-            "the window will adapt to the content of the window accordingly.",
-            "Ok then. Goodbye for now!", 
-        };
+        dialogueEvents = System.IO.File.ReadAllText("./Assets/Dialogue/" + dialogueId + ".dialogue")
+            .Split(new [] { "~~" }, StringSplitOptions.RemoveEmptyEntries);
+        for (var i = 0; i < dialogueEvents.Length; i++)
+        {
+            dialogueEvents[i] = dialogueEvents[i].Trim('\n');
+        }
     }
 }
