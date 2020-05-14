@@ -28,7 +28,7 @@ public class BuildingMesh : MonoBehaviour
 
     public void Fit(Transform armature, Vector3[] vertices)
     {
-        armature.transform.position = (vertices[0] + vertices[1] + vertices[2] + vertices[3]) / 4f;
+        armature.parent.position = (vertices[0] + vertices[1] + vertices[2] + vertices[3]) / 4f;
         AlignBone(armature.GetChild(0), vertices[0]);
         AlignBone(armature.GetChild(1), vertices[1]);
         AlignBone(armature.GetChild(2), vertices[2]);
