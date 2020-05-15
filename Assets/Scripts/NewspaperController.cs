@@ -24,6 +24,11 @@ public class NewspaperController : MonoBehaviour
             currentEvents = list.ToArray();
             UpdateDisplay();
         };
+
+        OnOutcomeSelected += (outcome) =>
+        {
+            // Update the newspaper here
+        };
     }
 
     public void UpdateDisplay()
