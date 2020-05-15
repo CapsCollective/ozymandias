@@ -26,6 +26,18 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         text = GetComponentInChildren<Text>();
     }
 
+    private void Update()
+    {
+        if (thingInstantiated)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                thingInstantiated.transform.Rotate(0, 30, 0);
+            }
+        }
+    }
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Set placeholder so that a card can return to it's original position
@@ -114,6 +126,7 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             text.enabled = true;
             image.enabled = true;
+            //set brightness to normal
         }
     }
 }
