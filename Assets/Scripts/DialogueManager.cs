@@ -7,7 +7,7 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private Text dialogueWindowText;
     private string[] dialogueEvents;
-    
+
     public void StartDialogue(string dialogueId)
     {
         SetupDialogueEvents(dialogueId);
@@ -24,8 +24,13 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            End();
         }
+    }
+    
+    public void End()
+    {
+        gameObject.SetActive(false);
     }
 
     private void SetupDialogueEvents(string dialogueId)
