@@ -18,6 +18,7 @@ public class EventQueue : MonoBehaviour
     public void Awake()
     {
         GameManager.OnNewTurn += ProcessEvents;
+        NewspaperController.OnOutcomeSelected += HandleChainEvent;
     }
 
     private void ProcessEvents()
@@ -32,18 +33,6 @@ public class EventQueue : MonoBehaviour
                 if (EventsQueue[i].defaultOutcome == null)
                     EventsQueue[i].defaultOutcome = defaultOutcome;
 
-                bool execute = false;
-                if (EventsQueue[i].defaultOutcome != null)
-                    execute = EventsQueue[i].defaultOutcome.Execute();
-
-                // Find a new event from the queue
-                if (execute)
-                {
-                    CurrentEvents.Add(EventsQueue[i]);
-                    EventsQueue.RemoveAt(i);
-                    break;
-                }
-
                 // If the event has choices
                 if (EventsQueue[i].Choices.Count > 0)
                 {
@@ -57,10 +46,35 @@ public class EventQueue : MonoBehaviour
                     else
                         continue;
                 }
+
+                // If there is a default outcome
+                // We execute that
+                bool execute = false;
+                if (EventsQueue[i].defaultOutcome != null)
+                {
+                    execute = EventsQueue[i].defaultOutcome.Execute();
+                    if (execute)
+                    {
+                        CurrentEvents.Add(EventsQueue[i]);
+                        EventsQueue.RemoveAt(i);
+                        break;
+                    }
+
+                    if (EventsQueue[i].defaultOutcome.ChainEvent != null)
+                        HandleChainEvent(EventsQueue[i].defaultOutcome);
+                }
             }
             if (CurrentEvents.Count == 3)
+            {
+                hasChoices = false;
                 break;
+            }
         }
         OnEventsProcessed?.Invoke(CurrentEvents);
+    }
+
+    public void HandleChainEvent(Outcome outcome)
+    {
+        EventsQueue.RandomInsert(outcome.ChainEvent, outcome.ChainEventMaxTurnsAway * 3);
     }
 }

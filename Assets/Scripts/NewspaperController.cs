@@ -15,6 +15,8 @@ public class NewspaperController : MonoBehaviour
     // Private Fields
     private Event[] currentEvents;
 
+    public static Action<Outcome> OnOutcomeSelected;
+
     private void Awake()
     {
         EventQueue.OnEventsProcessed += (list) =>
@@ -56,6 +58,7 @@ public class NewspaperController : MonoBehaviour
     {
         currentEvents[0].Choices[choice].PossibleOutcomes[0].Execute();
         Array.ForEach(choiceList, b => b.interactable = false);
+        OnOutcomeSelected?.Invoke(currentEvents[0].Choices[choice].PossibleOutcomes[0]);
         // TODO call the game logic with the selected choice with the following:
         // currentEvents[0].Choices[choice]
     }
