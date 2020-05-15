@@ -15,12 +15,19 @@ public class NewspaperController : MonoBehaviour
     // Private Fields
     private Event[] currentEvents;
 
+    public static Action<Outcome> OnOutcomeSelected;
+
     private void Awake()
     {
         EventQueue.OnEventsProcessed += (list) =>
         {
             currentEvents = list.ToArray();
             UpdateDisplay();
+        };
+
+        OnOutcomeSelected += (outcome) =>
+        {
+            // Update the newspaper here
         };
     }
 
@@ -46,7 +53,7 @@ public class NewspaperController : MonoBehaviour
         {
             if (currentEvents[0].Choices.Count > 0)
             {
-                choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceText;
+                choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceTitle;
                 choiceList[i].interactable = true;
             }
         }
@@ -54,7 +61,9 @@ public class NewspaperController : MonoBehaviour
     
     public void OnChoiceSelected(int choice)
     {
+        currentEvents[0].Choices[choice].PossibleOutcomes[0].Execute();
         Array.ForEach(choiceList, b => b.interactable = false);
+        OnOutcomeSelected?.Invoke(currentEvents[0].Choices[choice].PossibleOutcomes[0]);
         // TODO call the game logic with the selected choice with the following:
         // currentEvents[0].Choices[choice]
     }
