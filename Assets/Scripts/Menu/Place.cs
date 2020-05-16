@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class Place : MonoBehaviour
 {
     EventSystem eventSystem;
+    public GameManager gameManager;
     public Image image;
     public Map map;
     public Click selectedObject;
-    private GameObject thingInstantiated;
+    private GameObject buildingInstantiated;
     private RaycastHit hit;
 
     private void Start()
@@ -24,20 +25,20 @@ public class Place : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             Physics.Raycast(ray, out hit);
-            if (!thingInstantiated)
+            if (!buildingInstantiated)
             {
                 if (hit.collider)
                 {
-                    thingInstantiated = Instantiate(selectedObject.building, hit.point, transform.rotation);
+                    buildingInstantiated = Instantiate(selectedObject.building, hit.point, transform.rotation);
                 }
             }
             else
             {
-                thingInstantiated.transform.position = hit.point;
+                buildingInstantiated.transform.position = hit.point;
             }
             if (Input.GetMouseButtonDown(1))
             {
-                thingInstantiated.transform.Rotate(0,30,0);
+                buildingInstantiated.transform.Rotate(0,30,0);
             }
         }
 
@@ -46,16 +47,24 @@ public class Place : MonoBehaviour
         {
             if (selectedObject)
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-                Physics.Raycast(ray, out hit);
-                if (hit.collider)
+                if (gameManager.CurrentWealth >= selectedObject.building.GetComponent<Building>().baseCost)
                 {
-                    Destroy(thingInstantiated);
-                    map.Occupy(selectedObject.building, hit.point);
-                    selectedObject = null;
+                    Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+                    Physics.Raycast(ray, out hit);
+                    if (hit.collider)
+                    {
+                        gameManager.Build(selectedObject.building.GetComponent<Building>());
+                        Destroy(buildingInstantiated);
+                        map.Occupy(selectedObject.building, hit.point);
+                        selectedObject = null;
+                    }
                 }
             }
         }
+    }
+
+    public void NewSelection()
+    {
+        Destroy(buildingInstantiated);
     }
 }
