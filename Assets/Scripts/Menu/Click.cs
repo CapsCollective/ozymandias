@@ -25,6 +25,7 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         place.selectedObject = this;
+        place.NewSelection();
         eventSystem.SetSelectedGameObject(gameObject);
     }
 
