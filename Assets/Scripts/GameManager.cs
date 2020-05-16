@@ -124,7 +124,11 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         // Run the menu tutorial system dialogue
-        dialogueManager.StartDialogue("menu_tutorial");
+        if (dialogueManager)
+        {
+            dialogueManager.StartDialogue("menu_tutorial");
+        }
+        
 
         // Clear out all adventurers and buildings
         foreach (Transform child in GameObject.Find("Adventurers").transform)

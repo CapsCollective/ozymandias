@@ -1279,6 +1279,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &897664867 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 800053112151562219, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+    type: 3}
+  m_PrefabInstance: {fileID: 800053113421994369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &897664871
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897664867}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &965894583 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6496067197575129851, guid: d839021eb53cb4148b83d527d23f4e64,
@@ -2013,7 +2033,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675583169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2571,12 +2591,12 @@ PrefabInstance:
     - target: {fileID: 7951437184037908515, guid: 7ff3d390f402a43edba5ab7c3737240d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -27.470242
+      value: -27.21083
       objectReference: {fileID: 0}
     - target: {fileID: 7951437184037908515, guid: 7ff3d390f402a43edba5ab7c3737240d,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 46.940483
+      value: 46.42166
       objectReference: {fileID: 0}
     - target: {fileID: 7951437184757092722, guid: 7ff3d390f402a43edba5ab7c3737240d,
         type: 3}
@@ -2596,7 +2616,7 @@ PrefabInstance:
     - target: {fileID: 7951437184757092722, guid: 7ff3d390f402a43edba5ab7c3737240d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -59.940483
+      value: -59.42166
       objectReference: {fileID: 0}
     - target: {fileID: 7951437184783720088, guid: 7ff3d390f402a43edba5ab7c3737240d,
         type: 3}
@@ -2716,7 +2736,7 @@ PrefabInstance:
     - target: {fileID: 7951437185199901686, guid: 7ff3d390f402a43edba5ab7c3737240d,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 64.94048
+      value: 64.42166
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff3d390f402a43edba5ab7c3737240d, type: 3}
@@ -2731,6 +2751,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Island
+      objectReference: {fileID: 0}
+    - target: {fileID: 800053112151562221, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 800053112151562223, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
