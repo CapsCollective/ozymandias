@@ -125,9 +125,9 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeHolder);
 
-        map.Occupy(thing, thingInstantiated.transform.position);
+        map.Occupy(building, placeHolder.transform.position);
         
-        Destroy(thingInstantiated);
+        Destroy(placeHolder);
 
         if (gameManager.CurrentWealth >= building.GetComponent<Building>().baseCost)
         {
