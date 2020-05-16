@@ -20,7 +20,7 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public Transform parentPlaceholder = null;
     private GameObject buildingInstantiated;
     private GameObject placeHolder = null;
-   
+
     //mouse tracking
     private Vector2 mousePos;
     private Vector3 worldPoint;
@@ -75,11 +75,11 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             Physics.Raycast(ray, out hit);
             if (!buildingInstantiated)
             {
-                if (hit.collider) 
+                if (hit.collider)
                 {
                     buildingInstantiated = Instantiate(building, hit.point, transform.rotation);
                     image.enabled = false;
-                } 
+                }
             }
             else
             {
@@ -123,7 +123,11 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetParent(parent);
         transform.SetSiblingIndex(placeHolder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        ////////////////////////////////////////////////////////////////////////////////////////
+        Destroy(placeHolder);
+
+        map.Occupy(thing, thingInstantiated.transform.position);
+        
+        Destroy(thingInstantiated);
 
         if (gameManager.CurrentWealth >= building.GetComponent<Building>().baseCost)
         {

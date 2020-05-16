@@ -24,23 +24,63 @@ public class Map : MonoBehaviour
         GetComponent<MeshFilter>().sharedMesh = mapLayout.GenerateMesh();
     }
 
-    public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
+    public void Occupy(GameObject prefab, Vector3 worldPosition)
     {
-        Vector3 unitPos = transform.InverseTransformPoint(worldPos);
+        BuildingPlacement.Building building = Instantiate(prefab).GetComponent<BuildingPlacement.Building>();
 
-        Cell occupied = mapLayout.Occupy(unitPos);
+        // Convert world to local position
+        Vector3 unitPosition = transform.InverseTransformPoint(worldPosition);
 
-        GameObject building = Instantiate(buildingPrefab, transform.TransformPoint(occupied.Centre), Quaternion.identity);
+        Cell[] cells = mapLayout.GetCells(building, unitPosition);
+
+        if (cells != null)
+        {
+            Vector3[][] vertices = new Vector3[cells.Length][];
+
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = CellUnitToWorld(cells[i]);
+                cells[i].Occupy(building);
+            }
+
+            building.Fit(vertices);
+        }
+        else
+        {
+            Destroy(building.gameObject);
+        }
+    }
+
+    //public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
+    //{
+    //    Vector3 unitPos = transform.InverseTransformPoint(worldPos);
+    //    Cell[] targets = mapLayout.GetClosestUnoccupied(unitPos, buildingPrefab.GetComponent<BuildingMesh>());
         
-        building.GetComponent<Building>().Build();
-        
-        BuildingMesh bm = building.GetComponent<BuildingMesh>();
-        bm.Fit(
-            transform.TransformPoint(occupied.Vertices[0]),
-            transform.TransformPoint(occupied.Vertices[1]),
-            transform.TransformPoint(occupied.Vertices[2]),
-            transform.TransformPoint(occupied.Vertices[3])
-            );
+    //    if (targets != null)
+    //    {
+    //        BuildingMesh building = Instantiate(buildingPrefab, transform.TransformPoint(targets[0].Centre), Quaternion.identity).GetComponent<BuildingMesh>();
+    //        building.GetComponent<Building>().Build();
+    //        BuildingMesh bm = building.GetComponent<BuildingMesh>();
+
+    //        Vector3[][] vertices = new Vector3[targets.Length][];
+    //        for (int i = 0; i < targets.Length; i++)
+    //            vertices[i] = CellUnitToWorld(targets[i]);
+
+    //        bm.Fit(vertices);
+
+    //        //foreach (Cell cell in targets)
+    //        //    cell.Occupy(bm);
+    //    }
+    //}
+
+    public Vector3[] CellUnitToWorld(Cell cell)
+    {
+        Vector3[] vertices = new Vector3[4];
+        for (int i = 0; i < 4; i++)
+        {
+            vertices[i] = transform.TransformPoint(cell.Vertices[i]);
+        }
+        return vertices;
     }
 
     private void OnDrawGizmos()
@@ -92,7 +132,7 @@ public class Map : MonoBehaviour
             Gizmos.color = occupiedColor;
             foreach (Cell cell in mapLayout.CellGraph.GetData())
             {
-                if (cell.occupied) cell.DrawCell();
+                if (cell.Occupied) cell.DrawCell();
             }
         }
     }

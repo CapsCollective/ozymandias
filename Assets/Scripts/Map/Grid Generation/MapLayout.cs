@@ -17,7 +17,77 @@ public class MapLayout : ScriptableObject
     public Graph<Triangle> TriangleGraph { get; private set; } = new Graph<Triangle>();
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
 
-    public Cell Occupy(Vector3 unitPos)
+    public Cell Step(Cell root, int direction)
+    {
+        Cell step = null;
+
+        Vertex left = root.Vertices[direction];
+        Vertex right = root.Vertices[(direction + 1) % 4];
+
+        foreach (Cell neighbour in CellGraph.GetAdjacent(root))
+        {
+            if (!neighbour.Occupied && neighbour.Vertices.Contains(left) && neighbour.Vertices.Contains(right))
+            {
+                step = neighbour;
+
+                while (neighbour.Vertices.IndexOf(left) != direction)
+                {
+                    Vertex end = neighbour.Vertices[3];
+                    neighbour.Vertices.Remove(end);
+                    neighbour.Vertices.Insert(0, end);
+                }
+
+                break;
+            }
+        }
+
+        return step;
+    }
+
+    public Cell[] GetCells(BuildingPlacement.Building building, Vector3 unitPosition)
+    {
+        List<Cell> cells = new List<Cell>();
+        Cell root = GetClosest(unitPosition);
+
+        foreach (BuildingPlacement.Building.SectionInfo sectionInfo in building.sections)
+        {
+            Cell newCell = root;
+            foreach (BuildingPlacement.Building.Direction direction in sectionInfo.directions)
+            {
+                newCell = Step(newCell, (int)direction);
+                if (newCell == null) return null;
+            }
+
+            if (!newCell.Occupied)
+                cells.Add(newCell);
+            else
+                return null;
+        }
+
+        return cells.ToArray();
+    }
+
+    public Cell[] GetClosestUnoccupied(Vector3 unitPos, BuildingMesh bMesh)
+    {
+        Cell closest = GetClosest(unitPos);
+        if (closest.Occupied) return null;
+
+        List<Cell> cells = new List<Cell>() { closest };
+        foreach (BuildingMesh.Extension extension in bMesh.extensions)
+        {
+            Cell extensionCell = closest;
+            foreach (BuildingMesh.StepDirection step in extension.steps)
+            {
+                extensionCell = Step(extensionCell, (int)step);
+                if (extensionCell.Occupied) return null;
+                cells.Add(extensionCell);
+            }
+        }
+
+        return cells.ToArray();
+    }
+
+    public Cell GetClosest(Vector3 unitPos)
     {
         Cell closest = CellGraph.GetData()[0];
         float minDist = Vector3.Distance(closest.Centre, unitPos);
@@ -31,7 +101,6 @@ public class MapLayout : ScriptableObject
             }
         }
 
-        closest.occupied = true;
         return closest;
     }
 
@@ -210,7 +279,7 @@ public class MapLayout : ScriptableObject
                     CellGraph.CreateEdge(root, other);
             }
         }
-        
+
         // STEP 8. Establish vertex adjacency - two vertices are adjacent if they are different and share two or more cells (cellmates ha)
         foreach (Vertex root in VertexGraph.GetData())
         {

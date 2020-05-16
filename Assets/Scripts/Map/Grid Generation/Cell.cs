@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Cell
 {
-    public bool occupied = false;
+    private BuildingPlacement.Building occupant;
 
     public List<Vertex> Vertices { get; private set; }
-
     public Vector3 Centre { get { return (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4; } }
+    public bool Occupied { get { return occupant; } }
 
     public Cell(Triangle triA, Triangle triB)
     {
@@ -37,6 +37,11 @@ public class Cell
     public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD)
     {
         Vertices = new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
+    }
+
+    public void Occupy(BuildingPlacement.Building newOccupant)
+    {
+        occupant = newOccupant;
     }
 
     public Cell[] Subdivide()
@@ -78,6 +83,12 @@ public class Cell
         Vertices[index] = newVert;
     }
 
+    public Vertex[] GetAdjacent(Vertex root)
+    {
+        int index = Vertices.IndexOf(root);
+        return new Vertex[] { Vertices[(index - 1 + Vertices.Count) % Vertices.Count], Vertices[(index + 1 + Vertices.Count) % Vertices.Count] };
+    }
+
     public void DrawCell()
     {
         for (int i = 0; i < Vertices.Count; i++)
@@ -88,6 +99,11 @@ public class Cell
 
     public static bool operator ==(Cell cell, Cell other)
     {
+        if (ReferenceEquals(other, null))
+        {
+            return ReferenceEquals(cell, null);
+        }
+
         foreach (Vertex vertex in cell.Vertices)
         {
             bool contains = false;

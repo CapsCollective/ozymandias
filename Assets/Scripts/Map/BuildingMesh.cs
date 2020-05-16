@@ -4,22 +4,38 @@ using UnityEngine;
 
 public class BuildingMesh : MonoBehaviour
 {
-    public Transform boneA;
-    public Transform boneB;
-    public Transform boneC;
-    public Transform boneD;
-
+    public Transform rootArmature;
+    public Extension[] extensions;
     public float boneRadius;
 
-    public void Fit(Vector3 vertexA, Vector3 vertexB, Vector3 vertexC, Vector3 vertexD)
+    public enum StepDirection { Left, Forward, Right, Back }
+
+    public void Rotate()
     {
-        AlignBone(boneA, vertexA);
-        AlignBone(boneB, vertexB);
-        AlignBone(boneC, vertexC);
-        AlignBone(boneD, vertexD);
+        //foreach (Extension extension in extensions)
+        //    for (int i = 0; i < extension.steps.Length; i++)
+        //        extension.steps[i] = (StepDirection)((int)(extension.steps[i] + 1) % 4);
     }
 
-    private static void AlignBone(Transform bone, Vector3 vertex)
+    public void Fit(Vector3[][] vertices)
+    {
+        Fit(rootArmature, vertices[0]);
+        for (int i = 0; i < extensions.Length; i++)
+        {
+            Fit(extensions[i].armature, vertices[i + 1]);
+        }
+    }
+
+    public void Fit(Transform armature, Vector3[] vertices)
+    {
+        armature.parent.position = (vertices[0] + vertices[1] + vertices[2] + vertices[3]) / 4f;
+        AlignBone(armature.GetChild(0), vertices[0]);
+        AlignBone(armature.GetChild(1), vertices[1]);
+        AlignBone(armature.GetChild(2), vertices[2]);
+        AlignBone(armature.GetChild(3), vertices[3]);
+    }
+
+    private void AlignBone(Transform bone, Vector3 vertex)
     {
         Vector3 boneDirection = bone.up;
         Vector3 vertexDirection = (vertex - bone.parent.parent.position).normalized;
@@ -31,39 +47,43 @@ public class BuildingMesh : MonoBehaviour
         float scaleRatio = Vector3.Distance(bone.position, vertex) / Vector3.Distance(bone.position, bone.GetChild(0).position);
 
         bone.localScale = new Vector3(bone.localScale.x, bone.localScale.y * scaleRatio, bone.localScale.z);
-
-        //Debug.DrawRay(bone.parent.parent.position, boneDirection, Color.blue);
-        //Debug.DrawRay(bone.parent.parent.position, vertexDirection, Color.green);
-        //Debug.Log(angle);
-        //Debug.Break();
-
-        //Quaternion rotation = Quaternion.FromToRotation(boneDirection, vertexDirection);
-        //bone.up = rotation * bone.up;
     }
 
     private void OnDrawGizmos()
     {
+        DrawArmature(rootArmature);
+    }
+
+    private void DrawArmature(Transform armature)
+    {
         Gizmos.color = Color.white;
-        Gizmos.DrawSphere(boneA.position, boneRadius);
-        Gizmos.DrawSphere(boneA.GetChild(0).position, boneRadius);
-        Gizmos.DrawLine(boneA.position, boneA.GetChild(0).position);
 
-        Gizmos.DrawSphere(boneB.position, boneRadius);
-        Gizmos.DrawSphere(boneB.GetChild(0).position, boneRadius);
-        Gizmos.DrawLine(boneB.position, boneB.GetChild(0).position);
+        DrawBone(armature.GetChild(0));
 
-        Gizmos.DrawSphere(boneC.position, boneRadius);
-        Gizmos.DrawSphere(boneC.GetChild(0).position, boneRadius);
-        Gizmos.DrawLine(boneC.position, boneC.GetChild(0).position);
+        DrawBone(armature.GetChild(1));
 
-        Gizmos.DrawSphere(boneD.position, boneRadius);
-        Gizmos.DrawSphere(boneD.GetChild(0).position, boneRadius);
-        Gizmos.DrawLine(boneD.position, boneD.GetChild(0).position);
+        DrawBone(armature.GetChild(2));
+
+        DrawBone(armature.GetChild(3));
 
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(boneA.GetChild(0).position, boneB.GetChild(0).position);
-        Gizmos.DrawLine(boneB.GetChild(0).position, boneC.GetChild(0).position);
-        Gizmos.DrawLine(boneC.GetChild(0).position, boneD.GetChild(0).position);
-        Gizmos.DrawLine(boneD.GetChild(0).position, boneA.GetChild(0).position);
+        Gizmos.DrawLine(armature.GetChild(0).GetChild(0).position, armature.GetChild(1).GetChild(0).position);
+        Gizmos.DrawLine(armature.GetChild(1).GetChild(0).position, armature.GetChild(2).GetChild(0).position);
+        Gizmos.DrawLine(armature.GetChild(2).GetChild(0).position, armature.GetChild(3).GetChild(0).position);
+        Gizmos.DrawLine(armature.GetChild(3).GetChild(0).position, armature.GetChild(0).GetChild(0).position);
+    }
+
+    private void DrawBone(Transform bone)
+    {
+        Gizmos.DrawSphere(bone.position, boneRadius);
+        Gizmos.DrawSphere(bone.GetChild(0).position, boneRadius);
+        Gizmos.DrawLine(bone.position, bone.GetChild(0).position);
+    }
+
+    [System.Serializable]
+    public struct Extension
+    {
+        public Transform armature;
+        public StepDirection[] steps;
     }
 }
