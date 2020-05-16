@@ -44,6 +44,29 @@ public class MapLayout : ScriptableObject
         return step;
     }
 
+    public Cell[] GetCells(BuildingPlacement.Building building, Vector3 unitPosition)
+    {
+        List<Cell> cells = new List<Cell>();
+        Cell root = GetClosest(unitPosition);
+
+        foreach (BuildingPlacement.Building.SectionInfo sectionInfo in building.sections)
+        {
+            Cell newCell = root;
+            foreach (BuildingPlacement.Building.Direction direction in sectionInfo.directions)
+            {
+                newCell = Step(newCell, (int)direction);
+                if (newCell == null) return null;
+            }
+
+            if (!newCell.Occupied)
+                cells.Add(newCell);
+            else
+                return null;
+        }
+
+        return cells.ToArray();
+    }
+
     public Cell[] GetClosestUnoccupied(Vector3 unitPos, BuildingMesh bMesh)
     {
         Cell closest = GetClosest(unitPos);

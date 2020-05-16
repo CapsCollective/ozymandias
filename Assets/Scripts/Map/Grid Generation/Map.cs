@@ -24,29 +24,56 @@ public class Map : MonoBehaviour
         GetComponent<MeshFilter>().sharedMesh = mapLayout.GenerateMesh();
     }
 
-    public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
+    public void Occupy(GameObject prefab, Vector3 worldPosition)
     {
-        Vector3 unitPos = transform.InverseTransformPoint(worldPos);
-        Cell[] targets = mapLayout.GetClosestUnoccupied(unitPos, buildingPrefab.GetComponent<BuildingMesh>());
-        
-        if (targets != null)
+        BuildingPlacement.Building building = Instantiate(prefab).GetComponent<BuildingPlacement.Building>();
+
+        // Convert world to local position
+        Vector3 unitPosition = transform.InverseTransformPoint(worldPosition);
+
+        Cell[] cells = mapLayout.GetCells(building, unitPosition);
+
+        if (cells != null)
         {
-            BuildingMesh building = Instantiate(buildingPrefab, transform.TransformPoint(targets[0].Centre), Quaternion.identity).GetComponent<BuildingMesh>();
-            building.GetComponent<Building>().Build();
-            BuildingMesh bm = building.GetComponent<BuildingMesh>();
+            Vector3[][] vertices = new Vector3[cells.Length][];
 
-            Vector3[][] vertices = new Vector3[targets.Length][];
-            for (int i = 0; i < targets.Length; i++)
-                vertices[i] = CellUnitToWorld(targets[i]);
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = CellUnitToWorld(cells[i]);
+                cells[i].Occupy(building);
+            }
 
-            bm.Fit(vertices);
-
-            foreach (Cell cell in targets)
-                cell.Occupy(bm);
+            building.Fit(vertices);
+        }
+        else
+        {
+            Destroy(building.gameObject);
         }
     }
 
-    private Vector3[] CellUnitToWorld(Cell cell)
+    //public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
+    //{
+    //    Vector3 unitPos = transform.InverseTransformPoint(worldPos);
+    //    Cell[] targets = mapLayout.GetClosestUnoccupied(unitPos, buildingPrefab.GetComponent<BuildingMesh>());
+        
+    //    if (targets != null)
+    //    {
+    //        BuildingMesh building = Instantiate(buildingPrefab, transform.TransformPoint(targets[0].Centre), Quaternion.identity).GetComponent<BuildingMesh>();
+    //        building.GetComponent<Building>().Build();
+    //        BuildingMesh bm = building.GetComponent<BuildingMesh>();
+
+    //        Vector3[][] vertices = new Vector3[targets.Length][];
+    //        for (int i = 0; i < targets.Length; i++)
+    //            vertices[i] = CellUnitToWorld(targets[i]);
+
+    //        bm.Fit(vertices);
+
+    //        //foreach (Cell cell in targets)
+    //        //    cell.Occupy(bm);
+    //    }
+    //}
+
+    public Vector3[] CellUnitToWorld(Cell cell)
     {
         Vector3[] vertices = new Vector3[4];
         for (int i = 0; i < 4; i++)

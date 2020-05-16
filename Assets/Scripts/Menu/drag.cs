@@ -107,7 +107,9 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.SetSiblingIndex(placeHolder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeHolder);
+
         map.Occupy(thing, thingInstantiated.transform.position);
+        
         Destroy(thingInstantiated);
 
         if (!eventData.pointerEnter)
