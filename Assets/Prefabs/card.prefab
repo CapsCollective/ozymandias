@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 2380156993854203016}
   - component: {fileID: 7992612516557042786}
   - component: {fileID: 6192853822547239599}
+  - component: {fileID: 1419515366}
+  - component: {fileID: 1419515367}
   m_Layer: 5
   m_Name: card
   m_TagString: Untagged
@@ -166,8 +168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5c7186ecda35c4a83cd0b22daa0761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   map: {fileID: 0}
-  thing: {fileID: 8580254763920355558, guid: 2f6e6ea9541ea4a47bfbb5db7cbc22fe, type: 3}
+  building: {fileID: 7911017683360621304, guid: 98cad9f837e22ac438f30cd060755ea7,
+    type: 3}
   parent: {fileID: 0}
   parentPlaceholder: {fileID: 0}
 --- !u!225 &7992612516557042786
@@ -202,3 +206,60 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &1419515366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821676634747878105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+    m_PressedColor: {r: 0.8862745, g: 0.8862745, b: 0.8862745, a: 1}
+    m_SelectedColor: {r: 0.8862745, g: 0.8862745, b: 0.8862745, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 4311823371050612564}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1419515367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821676634747878105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee8f285166f5a14ab3ecdca31fc746a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  building: {fileID: 7911017683360621304, guid: 98cad9f837e22ac438f30cd060755ea7,
+    type: 3}

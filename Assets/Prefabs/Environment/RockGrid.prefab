@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &6344129307919291084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202766138889799901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c192c78bed541d40a5faf502cd60512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depthRange: 0.4
+  scaleRange: 0.311
+  depth: 0
+  scale: 0
 --- !u!1 &669894030821235968
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,7 +33,7 @@ GameObject:
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &669894030821235980
 Transform:
@@ -101,6 +117,38 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4602241579922887238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735532337573459545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c192c78bed541d40a5faf502cd60512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depthRange: 0.4
+  scaleRange: 0.311
+  depth: 0
+  scale: 0
+--- !u!114 &2189159601472845732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6661354975129705829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c192c78bed541d40a5faf502cd60512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depthRange: 0.4
+  scaleRange: 0.311
+  depth: 0
+  scale: 0
 --- !u!1001 &270480985117368626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,6 +159,10 @@ PrefabInstance:
     - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_Name
       value: LowPoly - Rock A (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4838067341564878, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -187,6 +239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LowPoly - Rock A (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4838067341564878, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.221
@@ -261,6 +317,10 @@ PrefabInstance:
     - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_Name
       value: LowPoly - Rock A (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4838067341564878, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -413,8 +473,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock C
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 1f915d4e45151d34ebd8163e6fec8ece,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f915d4e45151d34ebd8163e6fec8ece, type: 3}
+--- !u!1 &6661354975129705829 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 1f915d4e45151d34ebd8163e6fec8ece,
+    type: 3}
+  m_PrefabInstance: {fileID: 3409240414587995244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7650132347894230902 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 1f915d4e45151d34ebd8163e6fec8ece,
@@ -431,6 +502,10 @@ PrefabInstance:
     - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_Name
       value: LowPoly - Rock A
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4838067341564878, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -506,6 +581,10 @@ PrefabInstance:
     - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_Name
       value: LowPoly - Rock A (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927372005322154, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4838067341564878, guid: ba8b8936e88a8ec43a39daa5dfd1bd3c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -658,8 +737,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock C (2)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 1f915d4e45151d34ebd8163e6fec8ece,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f915d4e45151d34ebd8163e6fec8ece, type: 3}
+--- !u!1 &202766138889799901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 1f915d4e45151d34ebd8163e6fec8ece,
+    type: 3}
+  m_PrefabInstance: {fileID: 8210541150462693844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3786128030541806286 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 1f915d4e45151d34ebd8163e6fec8ece,
@@ -753,8 +843,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock C (1)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 1f915d4e45151d34ebd8163e6fec8ece,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f915d4e45151d34ebd8163e6fec8ece, type: 3}
+--- !u!1 &735532337573459545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 1f915d4e45151d34ebd8163e6fec8ece,
+    type: 3}
+  m_PrefabInstance: {fileID: 8724826896085266256}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4354553247662736458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 1f915d4e45151d34ebd8163e6fec8ece,

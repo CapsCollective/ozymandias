@@ -6,19 +6,25 @@ using UnityEngine.UI;
 
 public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    Text text;
+    //external access
+    public GameManager gameManager;
     public Map map;
-    private Image image;
-    public GameObject thing;
-    private GameObject thingInstantiated;
+    public GameObject building;
 
+    //card features
+    private Image image;
+    private Text text;
+
+    //drag/drop requirements
     public Transform parent = null;
     public Transform parentPlaceholder = null;
-    GameObject placeHolder = null;
+    private GameObject buildingInstantiated;
+    private GameObject placeHolder = null;
 
+    //mouse tracking
     private Vector2 mousePos;
     private Vector3 worldPoint;
-    RaycastHit hit;
+    private RaycastHit hit;
 
     private void Start()
     {
@@ -26,9 +32,22 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         text = GetComponentInChildren<Text>();
     }
 
+    private void Update()
+    {
+        //If we have something instantiated on the cursor, allow for rotation
+        if (buildingInstantiated)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                buildingInstantiated.transform.Rotate(0, 30, 0);
+            }
+        }
+    }
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Set placeholder so that a card can return to it's original position
+        ////////////////////////////////Placeholder initialisation////////////////////////////
         placeHolder = new GameObject();
         placeHolder.transform.SetParent(transform.parent);
         LayoutElement le = placeHolder.AddComponent<LayoutElement>();
@@ -36,14 +55,13 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         le.preferredHeight = GetComponent<LayoutElement>().preferredHeight;
         le.flexibleWidth = 0;
         le.flexibleHeight = 0;
-
         placeHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
-
         //By making the transform a child of the canvas, it is not longer locked to a board
         parent = transform.parent;
         parentPlaceholder = parent;
         transform.SetParent(transform.parent.parent);
         GetComponent<CanvasGroup>().blocksRaycasts = false;
+        /////////////////////////////////////////////////////////////////////////////////////
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -52,38 +70,35 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         //If card is outside panel,
         if (!eventData.pointerEnter)
         {
-            //hide text
             text.enabled = false;
-            //fire a ray to see if it is being hovered over an object.
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             Physics.Raycast(ray, out hit);
-            //If it has not instantiated an object
-            if (!thingInstantiated)
+            if (!buildingInstantiated)
             {
-                if (hit.collider) 
+                if (hit.collider)
                 {
-                    thingInstantiated = Instantiate(thing, hit.point, transform.rotation);
+                    buildingInstantiated = Instantiate(building, hit.point, transform.rotation);
                     image.enabled = false;
-                } 
+                }
             }
-            //If it has not instantiated an object
             else
             {
-                thingInstantiated.transform.position = hit.point;
+                buildingInstantiated.transform.position = hit.point;
             }
         }
         //If card is in panel
         else if (eventData.pointerEnter)                                                                                                                                {
             text.enabled = true;
             image.enabled = true                                                                                                                                      ;
-            Destroy(thingInstantiated)                                                                                                                                ;
-                                                                                                                                                                        }
+            Destroy(buildingInstantiated)                                                                                                                                ;                                                                                                                                                                  }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //Placeholders
+        ///////////////////Placeholders////////////////////
         transform.position = eventData.position;
         int newSiblingIndex = parentPlaceholder.childCount;
+        ///////////////////////////////////////////////////
 
+        ///////////////////////////////////////////////////////Card Panel Position//////////////////////////////////////////////////////////////
         //The default position for a card is the right most of the list. Otherwise if position is more left than a card then put it there.
         for (int i = 0; i < parentPlaceholder.childCount; i++)
         {
@@ -99,10 +114,12 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
         }
         placeHolder.transform.SetSiblingIndex(newSiblingIndex);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        ////////////////////////////////drag/drop settings//////////////////////////////////////
         transform.SetParent(parent);
         transform.SetSiblingIndex(placeHolder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -112,10 +129,17 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         
         Destroy(thingInstantiated);
 
+        if (gameManager.CurrentWealth >= building.GetComponent<Building>().baseCost)
+        {
+            gameManager.Build(building.GetComponent<Building>());
+            map.Occupy(building, buildingInstantiated.transform.position);
+        }
         if (!eventData.pointerEnter)
         {
             text.enabled = true;
             image.enabled = true;
         }
+        Destroy(placeHolder);
+        Destroy(buildingInstantiated);
     }
 }
