@@ -16,6 +16,7 @@ public class MapLayout : ScriptableObject
     public Graph<Vertex> VertexGraph { get; private set; } = new Graph<Vertex>();
     public Graph<Triangle> TriangleGraph { get; private set; } = new Graph<Triangle>();
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
+    public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
 
     public Cell Step(Cell root, int direction)
     {
@@ -320,7 +321,49 @@ public class MapLayout : ScriptableObject
         }
     }
 
-    public Mesh GenerateMesh()
+    public Mesh GenerateCellMesh()
+    {
+        List<Vector3> vertices = new List<Vector3>();
+        List<Vector2> uv = new List<Vector2>();
+        List<int> triangles = new List<int>();
+
+        foreach (Cell cell in CellGraph.GetData())
+        {
+            // Add the 4 vertices
+            vertices.Add(cell.Vertices[0] + (cell.Centre - cell.Vertices[0]).normalized * lineWeight / 100f);
+            vertices.Add(cell.Vertices[1] + (cell.Centre - cell.Vertices[1]).normalized * lineWeight / 100f);
+            vertices.Add(cell.Vertices[2] + (cell.Centre - cell.Vertices[2]).normalized * lineWeight / 100f);
+            vertices.Add(cell.Vertices[3] + (cell.Centre - cell.Vertices[3]).normalized * lineWeight / 100f);
+
+            // Add the two triangles to both the Mesh and the Map
+            int[] triangleA = new int[] { vertices.Count - 4, vertices.Count - 3, vertices.Count - 2 };
+            int[] triangleB = new int[] { vertices.Count - 2, vertices.Count - 1, vertices.Count - 4 };
+
+            triangles.AddRange(triangleA);
+            triangles.AddRange(triangleB);
+
+            List<int> triangleValue = new List<int>();
+            triangleValue.AddRange(triangleA);
+            triangleValue.AddRange(triangleB);
+
+            TriangleMap.Add(cell, triangleValue);
+
+            // Set the uv's
+            uv.Add(Vector2.zero);
+            uv.Add(Vector2.zero);
+            uv.Add(Vector2.zero);
+            uv.Add(Vector2.zero);
+        }
+
+        return new Mesh()
+        {
+            vertices = vertices.ToArray(),
+            uv = uv.ToArray(),
+            triangles = triangles.ToArray()
+        };
+    }
+
+    public Mesh GenerateEdgeMesh()
     {
         Graph<Vertex> dupVertexGraph = new Graph<Vertex>(VertexGraph);
 
