@@ -22,9 +22,14 @@ public class Map : MonoBehaviour
 
     public enum HighlightState { Inactive, Valid, Invalid }
 
-    private void Start()
+
+    private void Awake()
     {
         Generate();
+    }
+    private void Start()
+    {
+        //Generate();
     }
 
     public void Highlight(Cell[] cells, HighlightState state)
