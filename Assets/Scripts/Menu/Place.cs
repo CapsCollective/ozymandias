@@ -51,7 +51,7 @@ public class Place : MonoBehaviour
             }
 
             // Check if new cells need to be highlighted
-            Cell closest = map.GetClosest(hit.point);
+            Cell closest = map.GetCell(hit.point);
             BuildingPlacement.Building building = selectedObject.building.GetComponent<BuildingPlacement.Building>();
             Cell[] cells = map.GetCells(closest, building);
 
