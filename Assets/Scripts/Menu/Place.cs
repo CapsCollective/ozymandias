@@ -11,6 +11,7 @@ public class Place : MonoBehaviour
     public Image image;
     public Map map;
     public Click selectedObject;
+    public Hover hoverObject;
     private GameObject buildingInstantiated;
     private RaycastHit hit;
 
@@ -59,6 +60,17 @@ public class Place : MonoBehaviour
                         selectedObject = null;
                     }
                 }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1)) {
+            if (hoverObject.isHovered && !hoverObject.instantiatedHelper)
+            {
+                hoverObject.InfoBox();
+            }
+            else if (hoverObject.isHovered && hoverObject.instantiatedHelper)
+            {
+                Destroy(hoverObject.instantiatedHelper);
             }
         }
     }
