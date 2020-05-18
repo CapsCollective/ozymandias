@@ -20,38 +20,34 @@ public class Map : MonoBehaviour
 
     private MeshFilter _meshFilter;
 
-    private void Awake()
+    public enum HighlightState { Inactive, Valid, Invalid }
+
+    private void Start()
     {
         Generate();
     }
 
-    private void Start()
-    {
-        
-    }
-
-    public void Highlight(Cell cell, bool valid)
+    public void Highlight(Cell[] cells, HighlightState state)
     {
         Vector2[] uv = _meshFilter.sharedMesh.uv;
 
-        foreach (int vertexIndex in mapLayout.TriangleMap[cell])
+        foreach (Cell cell in cells)
         {
-            uv[vertexIndex].x = valid ? 0.5f : 1.0f;
+            foreach (int vertexIndex in mapLayout.TriangleMap[cell])
+                uv[vertexIndex].x = (int)state / 2f;
         }
 
         _meshFilter.sharedMesh.uv = uv;
     }
 
-    public void Dehighlight(Cell cell)
+    public Cell GetClosest(Vector3 worldPosition)
     {
-        Vector2[] uv = _meshFilter.sharedMesh.uv;
+        return mapLayout.GetClosest(transform.InverseTransformPoint(worldPosition));
+    }
 
-        foreach (int vertexIndex in mapLayout.TriangleMap[cell])
-        {
-            uv[vertexIndex].x = 0.0f;
-        }
-
-        _meshFilter.sharedMesh.uv = uv;
+    public Cell[] GetCells(Cell root, BuildingPlacement.Building building)
+    {
+        return mapLayout.GetCells(root, building);
     }
 
     public void Generate()
