@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
 
-public class TopBar : UiUpdater
+public class SideBar : UiUpdater
 {
-    public Text adventurers, satisfaction, effectiveness, threat, defense;
+    public Text adventurers, satisfaction, effectiveness;//, threat, defense;
     // Update is called once per frame
     public override void UpdateUi()
     {
@@ -19,7 +19,7 @@ public class TopBar : UiUpdater
 
         effectiveness.text = "Effectiveness: " + Manager.Effectiveness + "%";
 
-        threat.text = "Threat: " + Manager.Threat;
-        defense.text = "Defense: " + Manager.Defense;
+        //threat.text = "Threat: " + Manager.Threat;
+        //defense.text = "Defense: " + Manager.Defense;
     }
 }
