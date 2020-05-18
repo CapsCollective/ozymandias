@@ -24,6 +24,6 @@ public class Outcome : ScriptableObject
 
     public virtual string GetOutcomeString()
     {
-        return dummyReplies[Random.Range(0, 4)];
+        return dummyReplies[Random.Range(0, 3)];
     }
 }

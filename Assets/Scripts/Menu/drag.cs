@@ -96,7 +96,7 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
 
             // Check if new cells need to be highlighted
-            Cell closest = map.GetClosest(hit.point);
+            Cell closest = map.GetCell(hit.point);
             BuildingPlacement.Building buildingComp = building.GetComponent<BuildingPlacement.Building>();
             Cell[] cells = map.GetCells(closest, buildingComp);
 

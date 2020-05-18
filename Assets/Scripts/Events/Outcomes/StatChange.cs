@@ -2,17 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatChange : MonoBehaviour
+[CreateAssetMenu]
+public class StatChange : Outcome
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public Metric MetricAffected;
+    public int Amount;
+    public int Turns;
+
+    private bool processedThisTurn = false;
+
+    public override bool Execute()
     {
-        
+        EventQueue.OnNewStatEffect?.Invoke(Instantiate(this));
+        return true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ProcessStatChange()
     {
-        
+        if(Turns == 0)
+        {
+            EventQueue.OnStatEffectComplete?.Invoke(this);
+            return;
+        }
+
+        Debug.Log("Do the stat changing here");
+        Turns--;
+
+        processedThisTurn = true;
     }
 }
