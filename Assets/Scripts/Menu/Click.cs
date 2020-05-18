@@ -24,9 +24,12 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        place.selectedObject = this;
-        place.NewSelection();
-        eventSystem.SetSelectedGameObject(gameObject);
+        if (pointerEventData.button == PointerEventData.InputButton.Left)
+        {
+            place.selectedObject = this;
+            place.NewSelection();
+            eventSystem.SetSelectedGameObject(gameObject);
+        }
     }
 
     public void OnPointerUp(PointerEventData pointerEventData)
@@ -34,7 +37,6 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
         place.selectedObject = null;
         eventSystem.SetSelectedGameObject(null);
     }
-
 }
 
 
