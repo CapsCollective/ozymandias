@@ -191,10 +191,10 @@ public class GameManager : MonoBehaviour
 
     [HorizontalLine()] 
     
-    [SerializeField] private GameObject adventurerPrefab;
-    [SerializeField] private DialogueManager dialogueManager;
-    [SerializeField] private Map map;
-    [SerializeField] private GameObject guildHall;
+    public GameObject adventurerPrefab;
+    public DialogueManager dialogueManager;
+    public Map map;
+    public GameObject guildHall;
 
     private void BuildGuildHall()
     {
