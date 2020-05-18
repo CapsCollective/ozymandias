@@ -25,9 +25,17 @@ public class NewspaperController : MonoBehaviour
             UpdateDisplay();
         };
 
+        // Read the effect text from if defaultOutcome is not null
+        // event.defaultOutcome.GetOutcomeString()
+        // At the moment every outcome will return dummy strings for testing - This will be removed
+        // You can use this to update effect text after a choice has been made
         OnOutcomeSelected += (outcome) =>
         {
             // Update the newspaper here
+
+            // The outcome has the "effect text" on it
+            // I added dummy text you can call with
+            // outcome.GetOutcomeString()
         };
     }
 
