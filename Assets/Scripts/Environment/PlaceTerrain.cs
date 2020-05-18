@@ -14,20 +14,31 @@ public class PlaceTerrain : MonoBehaviour
 
     private void Awake()
     {
-        
+        if (!map)
+        {
+            map = GameObject.FindObjectOfType<Map>();
+        }
         lm = LayerMask.GetMask("Surface","Terrain");
+        PlaceTerrain pt = terrainBuilding.GetComponent<PlaceTerrain>();
+        if (pt)
+        {
+            pt.enabled = false;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Place();   
+        if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
+        {
+            Place();
+        }
+          
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Place();
     }
 
     public void Place()
@@ -41,7 +52,9 @@ public class PlaceTerrain : MonoBehaviour
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
                     {
+                        print(hit.point);
                         map.Occupy(terrainBuilding, hit.point);
+                        Destroy(gameObject);
                     }
 
                 }

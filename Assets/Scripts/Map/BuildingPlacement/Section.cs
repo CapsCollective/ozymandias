@@ -49,7 +49,7 @@ namespace BuildingPlacement
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i].Set(planePositions[i].x, vertices[i].y, planePositions[i].z);//(planePositions[i].x, vertices[i].y, planePositions[i].y);
-                Debug.Log(planePositions[i] + " : " + vertices[i]);
+                //Debug.Log(planePositions[i] + " : " + vertices[i]);
             }
 
             _meshFilter.mesh.vertices = vertices;
