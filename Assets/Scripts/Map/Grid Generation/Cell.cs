@@ -39,6 +39,11 @@ public class Cell
         Vertices = new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
     }
 
+    public void Clear()
+    {
+        // Do something here
+    }
+
     public void Occupy(BuildingPlacement.Building newOccupant)
     {
         occupant = newOccupant;

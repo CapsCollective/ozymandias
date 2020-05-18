@@ -12,11 +12,18 @@ public class EventQueue : MonoBehaviour
 
     [ReorderableList]
     public List<Event> CurrentEvents = new List<Event>(3);
+    
+    [ReorderableList]
+    public List<StatChange> StatEffects = new List<StatChange>();
 
     public static Action<List<Event>> OnEventsProcessed;
+    public static Action<StatChange> OnNewStatEffect;
+    public static Action<StatChange> OnStatEffectComplete;
 
     public void Awake()
     {
+        OnNewStatEffect += HandleNewStatEffect;
+        OnStatEffectComplete += RemoveStatEffect;
         GameManager.OnNewTurn += ProcessEvents;
         NewspaperController.OnOutcomeSelected += HandleChainEvent;
     }
@@ -24,6 +31,12 @@ public class EventQueue : MonoBehaviour
     private void ProcessEvents()
     {
         CurrentEvents.Clear();
+
+        for (int i = 0; i < StatEffects.Count; i++)
+        {
+            StatEffects[i].ProcessStatChange();
+        }
+
         bool hasChoices = false;    
 
         for (int e = 0; e < CurrentEvents.Capacity; e++)
@@ -73,8 +86,22 @@ public class EventQueue : MonoBehaviour
         OnEventsProcessed?.Invoke(CurrentEvents);
     }
 
+    private void HandleNewStatEffect(StatChange statEffect)
+    {
+        Debug.Log("Testing?");
+        StatChange sc = Instantiate(statEffect) as StatChange;
+        sc.ProcessStatChange();
+        StatEffects.Add(sc);
+    }
+
+    private void RemoveStatEffect(StatChange statEffect)
+    {
+        StatEffects.Remove(statEffect);
+    }
+
     public void HandleChainEvent(Outcome outcome)
     {
-        EventsQueue.RandomInsert(outcome.ChainEvent, outcome.ChainEventMaxTurnsAway * 3);
+        if(outcome.ChainEvent != null)
+            EventsQueue.RandomInsert(outcome.ChainEvent, outcome.ChainEventMaxTurnsAway * 3);
     }
 }
