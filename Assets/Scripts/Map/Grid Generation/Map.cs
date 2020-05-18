@@ -18,10 +18,42 @@ public class Map : MonoBehaviour
     public Color gridColor;
     public Color occupiedColor;
 
+    private MeshFilter _meshFilter;
+
     private void Start()
     {
+        Generate();
+    }
+
+    public void Highlight(Cell cell, bool valid)
+    {
+        Vector2[] uv = _meshFilter.sharedMesh.uv;
+
+        foreach (int vertexIndex in mapLayout.TriangleMap[cell])
+        {
+            uv[vertexIndex].x = valid ? 0.5f : 1.0f;
+        }
+
+        _meshFilter.sharedMesh.uv = uv;
+    }
+
+    public void Dehighlight(Cell cell)
+    {
+        Vector2[] uv = _meshFilter.sharedMesh.uv;
+
+        foreach (int vertexIndex in mapLayout.TriangleMap[cell])
+        {
+            uv[vertexIndex].x = 0.0f;
+        }
+
+        _meshFilter.sharedMesh.uv = uv;
+    }
+
+    public void Generate()
+    {
         mapLayout.Generate(mapLayout.seed);
-        GetComponent<MeshFilter>().sharedMesh = mapLayout.GenerateMesh();
+        _meshFilter = GetComponent<MeshFilter>();
+        _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
 
     public void Occupy(GameObject prefab, Vector3 worldPosition)
@@ -50,28 +82,6 @@ public class Map : MonoBehaviour
             Destroy(building.gameObject);
         }
     }
-
-    //public void Occupy(GameObject buildingPrefab, Vector3 worldPos)
-    //{
-    //    Vector3 unitPos = transform.InverseTransformPoint(worldPos);
-    //    Cell[] targets = mapLayout.GetClosestUnoccupied(unitPos, buildingPrefab.GetComponent<BuildingMesh>());
-        
-    //    if (targets != null)
-    //    {
-    //        BuildingMesh building = Instantiate(buildingPrefab, transform.TransformPoint(targets[0].Centre), Quaternion.identity).GetComponent<BuildingMesh>();
-    //        building.GetComponent<Building>().Build();
-    //        BuildingMesh bm = building.GetComponent<BuildingMesh>();
-
-    //        Vector3[][] vertices = new Vector3[targets.Length][];
-    //        for (int i = 0; i < targets.Length; i++)
-    //            vertices[i] = CellUnitToWorld(targets[i]);
-
-    //        bm.Fit(vertices);
-
-    //        //foreach (Cell cell in targets)
-    //        //    cell.Occupy(bm);
-    //    }
-    //}
 
     public Vector3[] CellUnitToWorld(Cell cell)
     {
