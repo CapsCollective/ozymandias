@@ -20,9 +20,14 @@ public class Map : MonoBehaviour
 
     private MeshFilter _meshFilter;
 
-    private void Start()
+    private void Awake()
     {
         Generate();
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void Highlight(Cell cell, bool valid)
