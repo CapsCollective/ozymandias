@@ -14,6 +14,9 @@ public class Place : MonoBehaviour
     private GameObject buildingInstantiated;
     private RaycastHit hit;
 
+    // HIGHLIGHTING
+    private Cell[] highlighted = new Cell[0];
+
     private void Start()
     {
         eventSystem = EventSystem.current;
@@ -21,6 +24,10 @@ public class Place : MonoBehaviour
 
     void Update()
     {
+        // Clear previous highlights
+        map.Highlight(highlighted, Map.HighlightState.Inactive);
+        highlighted = new Cell[0];
+
         if (selectedObject)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
@@ -36,10 +43,26 @@ public class Place : MonoBehaviour
             {
                 buildingInstantiated.transform.position = hit.point;
             }
+
             if (Input.GetMouseButtonDown(1))
             {
                 buildingInstantiated.transform.Rotate(0,30,0);
             }
+
+            // Check if new cells need to be highlighted
+            Cell closest = map.GetClosest(hit.point);
+            BuildingPlacement.Building building = selectedObject.building.GetComponent<BuildingPlacement.Building>();
+            Cell[] cells = map.GetCells(closest, building);
+
+            bool valid = building.sections.Count == cells.Length;
+            for (int i = 0; valid && i < cells.Length; i++)
+                valid = !cells[i].Occupied;
+
+            // Highlight cells
+            highlighted = cells;
+
+            Map.HighlightState state = valid ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+            map.Highlight(highlighted, state);
         }
 
 

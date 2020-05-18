@@ -68,6 +68,26 @@ public class MapLayout : ScriptableObject
         return cells.ToArray();
     }
 
+    public Cell[] GetCells(Cell root, BuildingPlacement.Building building)
+    {
+        List<Cell> cells = new List<Cell>();
+
+        foreach (BuildingPlacement.Building.SectionInfo sectionInfo in building.sections)
+        {
+            Cell newCell = root;
+            foreach (BuildingPlacement.Building.Direction direction in sectionInfo.directions)
+            {
+                newCell = Step(newCell, (int)direction);
+                if (newCell == null) break;
+            }
+
+            if (newCell != null)
+                cells.Add(newCell);
+        }
+
+        return cells.ToArray();
+    }
+
     public Cell[] GetClosestUnoccupied(Vector3 unitPos, BuildingMesh bMesh)
     {
         Cell closest = GetClosest(unitPos);
@@ -105,6 +125,7 @@ public class MapLayout : ScriptableObject
         return closest;
     }
 
+    // GRID GENERATION
     public void Generate(int seed)
     {
         GenerateVertices();
@@ -321,6 +342,7 @@ public class MapLayout : ScriptableObject
         }
     }
 
+    // MESH GENERATION
     public Mesh GenerateCellMesh()
     {
         List<Vector3> vertices = new List<Vector3>();
