@@ -70,7 +70,11 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         //If card is outside panel,
         if (!eventData.pointerEnter)
         {
-            text.enabled = false;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+            //text.enabled = false;
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             Physics.Raycast(ray, out hit);
             if (!buildingInstantiated)
@@ -88,7 +92,11 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
         //If card is in panel
         else if (eventData.pointerEnter)                                                                                                                                {
-            text.enabled = true;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+            //text.enabled = true;
             image.enabled = true                                                                                                                                      ;
             Destroy(buildingInstantiated)                                                                                                                                ;                                                                                                                                                                  }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,8 +144,12 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
         if (!eventData.pointerEnter)
         {
-            text.enabled = true;
+            //text.enabled = true;
             image.enabled = true;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);
+            }
         }
         Destroy(placeHolder);
         Destroy(buildingInstantiated);
