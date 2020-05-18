@@ -9,6 +9,7 @@ public class PlaceTerrain : MonoBehaviour
     public float distance = 1.5f;
     private LayerMask lm;
     public GameObject terrainBuilding;
+    public int numberRadius = 1;
     
     private bool isPlaced = false;
 
@@ -52,7 +53,6 @@ public class PlaceTerrain : MonoBehaviour
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
                     {
-                        print(hit.point);
                         map.Occupy(terrainBuilding, hit.point);
                         Destroy(gameObject);
                     }
