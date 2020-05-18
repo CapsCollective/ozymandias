@@ -45,7 +45,8 @@ public class NewspaperController : MonoBehaviour
         // Assign the remaining events to the unused flyers, setting their states and recording mappings
         for (var i = 0; i < currentEvents.Length; i++)
         {
-            articleList[i].GetComponent<EventDisplayManager>().SetEvent(currentEvents[i]);
+            var isAd = i == currentEvents.Length-1;
+            articleList[i].GetComponent<EventDisplayManager>().SetEvent(currentEvents[i], !isAd);
         }
 
         // Set all event choices on button texts
@@ -82,8 +83,8 @@ public class NewspaperController : MonoBehaviour
     private Event GetNewspaperAd()
     {
         var e = ScriptableObject.CreateInstance<Event>();
-        e.ScenarioTitle = "Go buy this thing...";
-        e.ScenarioText = "It's a really good thing to buy...";
+        e.ScenarioTitle = "LESSER POTIONS FOR LESSER HEROES!\nWhatever your strength, we've got you covered at PotionBarn!";
+        e.ScenarioText = "Rude potion-sellers getting you down? Then come on down to where the potions aren't too hot or too cold for you, because they're just alright.";
         return e;
         // TODO randomly generate ads
     }
