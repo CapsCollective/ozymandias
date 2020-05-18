@@ -40,9 +40,14 @@ public class Map : MonoBehaviour
         _meshFilter.sharedMesh.uv = uv;
     }
 
-    public Cell GetClosest(Vector3 worldPosition)
+    public Cell GetCell(Vector3 worldPosition)
     {
         return mapLayout.GetClosest(transform.InverseTransformPoint(worldPosition));
+    }
+
+    public Cell[] GetCells(Vector3 worldPosition, float worldRadius)
+    {
+        return new Cell[0];
     }
 
     public Cell[] GetCells(Cell root, BuildingPlacement.Building building)
@@ -82,6 +87,17 @@ public class Map : MonoBehaviour
         {
             Destroy(building.gameObject);
         }
+    }
+
+    public void Clear(Cell cell)
+    {
+        cell.Clear();
+    }
+
+    public void Clear(Cell[] cells)
+    {
+        foreach (Cell cell in cells)
+            cell.Clear();
     }
 
     public Vector3[] CellUnitToWorld(Cell cell)
