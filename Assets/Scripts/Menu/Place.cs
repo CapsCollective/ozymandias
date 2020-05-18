@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static GameManager;
 
 public class Place : MonoBehaviour
 {
     EventSystem eventSystem;
-    public GameManager gameManager;
     public Image image;
     public Map map;
     public Click selectedObject;
     public Hover hoverObject;
     private GameObject buildingInstantiated;
     private RaycastHit hit;
+    private Camera cam;
 
     // HIGHLIGHTING
     private Cell[] highlighted = new Cell[0];
 
-    private void Start()
+    private void Awake()
     {
+        cam = Camera.main;
         eventSystem = EventSystem.current;
     }
 
@@ -31,7 +33,7 @@ public class Place : MonoBehaviour
 
         if (selectedObject)
         {
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+            Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
             Physics.Raycast(ray, out hit);
             if (!buildingInstantiated)
             {
@@ -69,25 +71,21 @@ public class Place : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (selectedObject)
+            if (selectedObject && Manager.CurrentWealth >= selectedObject.building.GetComponent<Building>().baseCost)
             {
-                if (gameManager.CurrentWealth >= selectedObject.building.GetComponent<Building>().baseCost)
+                Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+                Physics.Raycast(ray, out hit);
+                if (hit.collider)
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-                    Physics.Raycast(ray, out hit);
-                    if (hit.collider)
-                    {
-                        gameManager.Build(selectedObject.building.GetComponent<Building>());
-                        Destroy(buildingInstantiated);
-                        map.Occupy(selectedObject.building, hit.point);
-                        selectedObject = null;
-                    }
+                    Destroy(buildingInstantiated);
+                    map.Occupy(selectedObject.building, hit.point);
+                    selectedObject = null;
                 }
             }
         }
 
         if (Input.GetMouseButtonDown(1)) {
-            if (hoverObject.isHovered && !hoverObject.instantiatedHelper)
+            if (hoverObject && hoverObject.isHovered && !hoverObject.instantiatedHelper)
             {
                 hoverObject.InfoBox();
             }

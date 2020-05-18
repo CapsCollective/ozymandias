@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 [CreateAssetMenu]
 public class BuildingDamaged : Outcome
@@ -9,14 +10,14 @@ public class BuildingDamaged : Outcome
 
     public override bool Execute()
     {
-        for (int i = 0; i < GameManager.Instance.buildings.Count; i++)
+        for (int i = 0; i < Manager.buildings.Count; i++)
         {
-            if (i == GameManager.Instance.buildings.Count)
+            if (i == Manager.buildings.Count)
                 return false;
-            if(GameManager.Instance.buildings[i].gameObject.name.Contains(BuildingType.name))
+            if(Manager.buildings[i].gameObject.name.Contains(BuildingType.name))
             {
-                var curBuilding = GameManager.Instance.buildings[i];
-                GameManager.Instance.buildings.RemoveAt(i);
+                var curBuilding = Manager.buildings[i];
+                Manager.buildings.RemoveAt(i);
                 Destroy(curBuilding.gameObject);
                 return true;
             }
