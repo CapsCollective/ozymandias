@@ -48,8 +48,7 @@ namespace BuildingPlacement
             Vector3[] vertices = _meshFilter.mesh.vertices;
             for (int i = 0; i < vertices.Length; i++)
             {
-                vertices[i].Set(planePositions[i].x, vertices[i].y, planePositions[i].z);//(planePositions[i].x, vertices[i].y, planePositions[i].y);
-                Debug.Log(planePositions[i] + " : " + vertices[i]);
+                vertices[i].Set(planePositions[i].x, vertices[i].y, planePositions[i].z);
             }
 
             _meshFilter.mesh.vertices = vertices;

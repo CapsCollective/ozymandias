@@ -26,6 +26,9 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private Vector3 worldPoint;
     private RaycastHit hit;
 
+    //highlighting
+    private Cell[] highlighted = new Cell[0];
+
     private void Start()
     {
         image = GetComponent<Image>();
@@ -66,6 +69,8 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
+        ClearHighlights();
+
         //////////////////////////////////////////////////////Intantiate object on board/////////////////////////////////////////////////////////
         //If card is outside panel,
         if (!eventData.pointerEnter)
@@ -89,6 +94,21 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             {
                 buildingInstantiated.transform.position = hit.point;
             }
+
+            // Check if new cells need to be highlighted
+            Cell closest = map.GetClosest(hit.point);
+            BuildingPlacement.Building buildingComp = building.GetComponent<BuildingPlacement.Building>();
+            Cell[] cells = map.GetCells(closest, buildingComp);
+
+            bool valid = buildingComp.sections.Count == cells.Length;
+            for (int i = 0; valid && i < cells.Length; i++)
+                valid = !cells[i].Occupied;
+
+            // Highlight cells
+            highlighted = cells;
+
+            Map.HighlightState state = valid ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+            map.Highlight(highlighted, state);
         }
         //If card is in panel
         else if (eventData.pointerEnter)                                                                                                                                {
@@ -127,6 +147,8 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        ClearHighlights();
+
         ////////////////////////////////drag/drop settings//////////////////////////////////////
         transform.SetParent(parent);
         transform.SetSiblingIndex(placeHolder.transform.GetSiblingIndex());
@@ -153,5 +175,11 @@ public class drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
         Destroy(placeHolder);
         Destroy(buildingInstantiated);
+    }
+
+    private void ClearHighlights()
+    {
+        map.Highlight(highlighted, Map.HighlightState.Inactive);
+        highlighted = new Cell[0];
     }
 }
