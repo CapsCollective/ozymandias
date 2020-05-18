@@ -18,8 +18,8 @@ public class Building : MonoBehaviour
     public void Build()
     {
         transform.parent = GameObject.Find("Buildings").transform;
-        Manager.Build(this);
         operational = true;
+        Manager.Build(this);
     }
 
 }

@@ -120,24 +120,33 @@ public class GameManager : MonoBehaviour
         private set { currentWealth = value; }
     }
 
+    public void AddAdventurer()
+    {
+        adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
+        
+    }
+    
     [Button("StartGame")]
     public void StartGame()
     {
         // Clear out all adventurers and buildings
         foreach (Transform child in GameObject.Find("Adventurers").transform)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
 
         foreach (Transform child in GameObject.Find("Buildings").transform)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
-
+        
         adventurers = new List<Adventurer>();
         buildings = new List<Building>();
 
-        CurrentWealth = 10;
+        // Start game with 5 Adventurers
+        for (int i = 0; i < 5; i++) AddAdventurer();
+        
+        CurrentWealth = 50;
         threat = 1;
         BuildGuildHall();
         
@@ -151,11 +160,7 @@ public class GameManager : MonoBehaviour
     [Button("Next Turn")]
     public void NextTurn()
     {
-        if (Accommodation > adventurers.Count())
-        {
-            adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform)
-                .GetComponent<Adventurer>());
-        }
+        if (Accommodation > adventurers.Count()) AddAdventurer();
 
         Threat += buildings.Count;
         CurrentWealth = WealthPerTurn;
@@ -210,14 +215,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [HorizontalLine()] public TopBar topBar;
-    public WealthCounter wealthCounter;
+    [HorizontalLine()] 
+    
     [SerializeField] private DialogueManager dialogueManager;
-
     [SerializeField] private GameObject guildHall;
 
     private void BuildGuildHall()
     {
+        //TODO: Should place in the center of your town
+        //Need to call the click place manager for a virtual place if possible
         Instantiate(guildHall, GameObject.Find("Buildings").transform).GetComponent<Building>().Build();
     }
 
