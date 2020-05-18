@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public static Action OnNewTurn;
     private static GameManager instance;
 
-    public static GameManager Instance
+    public static GameManager Manager
     {
         get
         {
@@ -123,13 +123,6 @@ public class GameManager : MonoBehaviour
     [Button("StartGame")]
     public void StartGame()
     {
-        // Run the menu tutorial system dialogue
-        if (dialogueManager)
-        {
-            dialogueManager.StartDialogue("menu_tutorial");
-        }
-        
-
         // Clear out all adventurers and buildings
         foreach (Transform child in GameObject.Find("Adventurers").transform)
         {
@@ -145,8 +138,14 @@ public class GameManager : MonoBehaviour
         buildings = new List<Building>();
 
         CurrentWealth = 10;
-        threat = 0;
+        threat = 1;
         BuildGuildHall();
+        
+        // Run the menu tutorial system dialogue
+        if (dialogueManager)
+        {
+            dialogueManager.StartDialogue("menu_tutorial");
+        }
     }
 
     [Button("Next Turn")]
@@ -160,7 +159,7 @@ public class GameManager : MonoBehaviour
 
         Threat += buildings.Count;
         CurrentWealth = WealthPerTurn;
-        UpdateUI();
+        UpdateUi();
         OnNewTurn?.Invoke();
     }
 
@@ -168,14 +167,18 @@ public class GameManager : MonoBehaviour
     {
         CurrentWealth -= building.baseCost;
         buildings.Add(building);
-        UpdateUI();
+        UpdateUi();
     }
 
-    public void UpdateUI()
+    public UiUpdater[] uiUpdates;
+    public void UpdateUi()
     {
-        topBar.UpdateUI();
-        wealthCounter.UpdateUI();
-        //Todo: Updates all UI
+        foreach (var uiUpdater in uiUpdates)
+        {
+            uiUpdater.UpdateUi();
+        }        
+
+        /*
         Debug.Log(
             "AvailableAdventurers: " + AvailableAdventurers +
             "\nAccommodation: " + Accommodation +
@@ -186,6 +189,7 @@ public class GameManager : MonoBehaviour
             "\nChaos: " + Chaos +
             "\nThread: " + Threat +
             "\nCurrent Wealth:" + CurrentWealth + "/" + wealthPerTurn);
+        */
     }
 
     private void Start()
