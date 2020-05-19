@@ -18,6 +18,7 @@ public class MapLayout : ScriptableObject
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
     public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
 
+    // GRID QUERYING
     public Cell Step(Cell root, int direction)
     {
         Cell step = null;
@@ -45,28 +46,28 @@ public class MapLayout : ScriptableObject
         return step;
     }
 
-    public Cell[] GetCells(BuildingPlacement.Building building, Vector3 unitPosition)
-    {
-        List<Cell> cells = new List<Cell>();
-        Cell root = GetClosest(unitPosition);
+    //public Cell[] GetCells(BuildingPlacement.Building building, Vector3 unitPosition)
+    //{
+    //    List<Cell> cells = new List<Cell>();
+    //    Cell root = GetClosest(unitPosition);
 
-        foreach (BuildingPlacement.Building.SectionInfo sectionInfo in building.sections)
-        {
-            Cell newCell = root;
-            foreach (BuildingPlacement.Building.Direction direction in sectionInfo.directions)
-            {
-                newCell = Step(newCell, (int)direction);
-                if (newCell == null) return null;
-            }
+    //    foreach (BuildingPlacement.Building.SectionInfo sectionInfo in building.sections)
+    //    {
+    //        Cell newCell = root;
+    //        foreach (BuildingPlacement.Building.Direction direction in sectionInfo.directions)
+    //        {
+    //            newCell = Step(newCell, (int)direction);
+    //            if (newCell == null) return null;
+    //        }
 
-            if (!newCell.Occupied)
-                cells.Add(newCell);
-            else
-                return null;
-        }
+    //        if (!newCell.Occupied)
+    //            cells.Add(newCell);
+    //        else
+    //            return null;
+    //    }
 
-        return cells.ToArray();
-    }
+    //    return cells.ToArray();
+    //}
 
     public Cell[] GetCells(Cell root, BuildingPlacement.Building building)
     {
@@ -81,8 +82,7 @@ public class MapLayout : ScriptableObject
                 if (newCell == null) break;
             }
 
-            if (newCell != null)
-                cells.Add(newCell);
+            cells.Add(newCell);
         }
 
         return cells.ToArray();
