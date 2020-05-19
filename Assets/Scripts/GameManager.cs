@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
         private set { currentWealth = value; }
     }
 
+    [HideInInspector]
     public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod;
 
     public void AddAdventurer()

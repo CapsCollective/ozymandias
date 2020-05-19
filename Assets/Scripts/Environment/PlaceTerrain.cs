@@ -55,7 +55,7 @@ public class PlaceTerrain : MonoBehaviour
                     {
                         map.CreateBuilding(terrainBuilding, hit.point);
 
-                        Destroy(gameObject);
+                        //Destroy(gameObject);
                     }
 
                 }
