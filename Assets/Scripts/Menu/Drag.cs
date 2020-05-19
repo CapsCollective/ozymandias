@@ -97,7 +97,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
             // Check if new cells need to be highlighted
             Cell closest = map.GetCell(hit.point);
-            BuildingPlacement.Building buildingComp = building.GetComponent<BuildingPlacement.Building>();
+            BuildingStructure buildingComp = building.GetComponent<BuildingStructure>();
             Cell[] cells = map.GetCells(closest, buildingComp);
 
             bool valid = map.IsValid(cells);
@@ -157,21 +157,12 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         //Destroy(placeHolder);
 
-        if (Manager.CurrentWealth >= building.GetComponent<Building>().baseCost)
+        if (Manager.CurrentWealth >= building.GetComponent<BuildingStats>().baseCost)
         {
-            // This how we do it now ->
-            BuildingPlacement.Building buildingScript = Instantiate(building).GetComponent<BuildingPlacement.Building>();
+            // This how we do it now ;)
+            map.CreateBuilding(building, buildingInstantiated.transform.position);
 
-            Cell root = map.GetCell(hit.point);
-            Cell[] cells = map.GetCells(root, buildingScript);
-
-            if (map.IsValid(cells))
-                map.Occupy(buildingScript, cells);
-            else
-                Destroy(buildingScript.gameObject);
-            // <-
-
-            Manager.Build(building.GetComponent<Building>());
+            //Manager.Build(building.GetComponent<Building>());
             //map.Occupy(building, buildingInstantiated.transform.position);
         }
         if (!eventData.pointerEnter)

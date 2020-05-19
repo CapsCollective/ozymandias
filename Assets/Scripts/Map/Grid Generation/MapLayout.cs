@@ -17,10 +17,10 @@ public class MapLayout : ScriptableObject
     public Graph<Triangle> TriangleGraph { get; private set; } = new Graph<Triangle>();
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
     public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
-    public Dictionary<BuildingPlacement.Building, List<Cell>> BuildingMap = new Dictionary<BuildingPlacement.Building, List<Cell>>();
+    public Dictionary<BuildingStructure, List<Cell>> BuildingMap = new Dictionary<BuildingStructure, List<Cell>>();
 
     // BUILDING PLACEMENT
-    public void Occupy(BuildingPlacement.Building building, Cell[] cells)
+    public void Occupy(BuildingStructure building, Cell[] cells)
     {
         if (!BuildingMap.ContainsKey(building))
             BuildingMap.Add(building, new List<Cell>());
@@ -36,7 +36,7 @@ public class MapLayout : ScriptableObject
 
     public void Clear(Cell root)
     {
-        BuildingPlacement.Building building = root.occupant;
+        BuildingStructure building = root.occupant;
 
         if (building)
         {
@@ -77,40 +77,20 @@ public class MapLayout : ScriptableObject
         return step;
     }
 
-    public Cell[] GetCells(Cell root, BuildingPlacement.Building building)
+    public Cell[] GetCells(Cell root, BuildingStructure building)
     {
         List<Cell> cells = new List<Cell>();
 
-        foreach (BuildingPlacement.Building.SectionInfo sectionInfo in building.sections)
+        foreach (BuildingStructure.SectionInfo sectionInfo in building.sections)
         {
             Cell newCell = root;
-            foreach (BuildingPlacement.Building.Direction direction in sectionInfo.directions)
+            foreach (BuildingStructure.Direction direction in sectionInfo.directions)
             {
                 newCell = Step(newCell, (int)direction);
                 if (newCell == null) break;
             }
 
             cells.Add(newCell);
-        }
-
-        return cells.ToArray();
-    }
-
-    public Cell[] GetClosestUnoccupied(Vector3 unitPos, BuildingMesh bMesh)
-    {
-        Cell closest = GetClosest(unitPos);
-        if (closest.Occupied) return null;
-
-        List<Cell> cells = new List<Cell>() { closest };
-        foreach (BuildingMesh.Extension extension in bMesh.extensions)
-        {
-            Cell extensionCell = closest;
-            foreach (BuildingMesh.StepDirection step in extension.steps)
-            {
-                extensionCell = Step(extensionCell, (int)step);
-                if (extensionCell.Occupied) return null;
-                cells.Add(extensionCell);
-            }
         }
 
         return cells.ToArray();

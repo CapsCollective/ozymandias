@@ -54,7 +54,7 @@ public class Place : MonoBehaviour
 
             // Check if new cells need to be highlighted
             Cell closest = map.GetCell(hit.point);
-            BuildingPlacement.Building building = selectedObject.building.GetComponent<BuildingPlacement.Building>();
+            BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
             Cell[] cells = map.GetCells(closest, building);
 
             // Check if cells are valid
@@ -70,7 +70,7 @@ public class Place : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (selectedObject && Manager.CurrentWealth >= selectedObject.building.GetComponent<Building>().baseCost)
+            if (selectedObject && Manager.CurrentWealth >= selectedObject.building.GetComponent<BuildingStats>().baseCost)
             {
                 Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
                 Physics.Raycast(ray, out hit);
@@ -78,17 +78,7 @@ public class Place : MonoBehaviour
                 {
                     Destroy(buildingInstantiated);
 
-                    // This how we do it now ->
-                    BuildingPlacement.Building buildingScript = Instantiate(selectedObject.building).GetComponent<BuildingPlacement.Building>();
-                    
-                    Cell root = map.GetCell(hit.point);
-                    Cell[] cells = map.GetCells(root, buildingScript);
-
-                    if (map.IsValid(cells))
-                        map.Occupy(buildingScript, cells);
-                    else
-                        Destroy(buildingScript.gameObject);
-                    // <-
+                    map.CreateBuilding(selectedObject.building, hit.point);
 
                     selectedObject = null;
                 }
@@ -100,7 +90,7 @@ public class Place : MonoBehaviour
             {
                 hoverObject.InfoBox();
             }
-            else if (hoverObject.isHovered && hoverObject.instantiatedHelper)
+            else if (hoverObject && hoverObject.isHovered && hoverObject.instantiatedHelper)
             {
                 Destroy(hoverObject.instantiatedHelper);
             }

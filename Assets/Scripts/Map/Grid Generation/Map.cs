@@ -52,7 +52,7 @@ public class Map : MonoBehaviour
         return new Cell[0];
     }
 
-    public Cell[] GetCells(Cell root, BuildingPlacement.Building building)
+    public Cell[] GetCells(Cell root, BuildingStructure building)
     {
         return mapLayout.GetCells(root, building);
     }
@@ -64,7 +64,7 @@ public class Map : MonoBehaviour
         _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
 
-    public void Occupy(BuildingPlacement.Building building, Cell[] cells)
+    private void Occupy(BuildingStructure building, Cell[] cells)
     {
         Vector3[][] vertices = new Vector3[cells.Length][];
 
@@ -76,6 +76,21 @@ public class Map : MonoBehaviour
         mapLayout.Occupy(building, cells);
 
         building.Fit(vertices);
+    }
+
+    public void CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition)
+    {
+        GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
+        buildingInstance.GetComponent<BuildingStats>().Build();
+        BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
+
+        Cell root = GetCell(worldPosition);
+        Cell[] cells = GetCells(root, building);
+
+        if (IsValid(cells))
+            Occupy(building, cells);
+        else
+            Destroy(buildingInstance);
     }
 
     public bool IsValid(Cell[] cells)
