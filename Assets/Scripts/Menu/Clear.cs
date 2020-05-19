@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static GameManager;
 
 public class Clear : MonoBehaviour
@@ -9,11 +10,12 @@ public class Clear : MonoBehaviour
     private RaycastHit hit;
     private Cell[] highlighted = new Cell[1];
     public Map map;
+    private Image image;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        image = GetComponent<Image>();
+        image.color = Color.white;
     }
 
     // Update is called once per frame
@@ -25,8 +27,8 @@ public class Clear : MonoBehaviour
             highlighted = new Cell[1];
 
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-            Physics.Raycast(ray, out hit, LayerMask.GetMask("Surface"));
-
+            Physics.Raycast(ray, out hit, LayerMask.GetMask("Surface","UI"));
+            
             // Check if new cells need to be highlighted
             Cell closest = map.GetCell(hit.point);
             
@@ -42,16 +44,34 @@ public class Clear : MonoBehaviour
 
             //////////////////////////////////////////////////////////////////
 
-            if (Input.GetMouseButtonDown(0) && canClear)
+            if (Input.GetMouseButtonDown(0))
             {
-                ClearSpace(highlighted);
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("UI"))
+                {
+                    ExitClearMode();
+                    return;
+                }
+
+                else if (canClear)
+                {
+                    ClearSpace(highlighted);
+                }
             }
         }
     }
 
     public void EnterClearMode()
     {
-        clearMode = !clearMode;
+        if (!clearMode)
+        {
+            clearMode = true;
+            image.color = Color.gray;
+        }
+        else
+        {
+            ExitClearMode();
+        }
+        
     }
 
     public void ExitClearMode()
@@ -59,6 +79,7 @@ public class Clear : MonoBehaviour
         clearMode = false;
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
+        image.color = Color.white;
     }
 
     public void ClearSpace(Cell[] cellsToClear)
