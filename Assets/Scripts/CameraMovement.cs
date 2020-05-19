@@ -9,10 +9,17 @@ public class CameraMovement : MonoBehaviour
     private Camera cam;
     private Vector3 dragOrigin, cameraOrigin;
     private float rotateOrigin;
-    private bool dragging, rotating = false;
+    private bool dragging, rotating;
     
-    public float dragSpeed, scrollSpeed, rotateSpeed;
-    public int minHeight, maxHeight;
+    public float
+        dragSpeed = 3.5f,
+        scrollSpeed = 15,
+        rotateSpeed = 180;
+    
+    public int
+        minHeight = 4,
+        maxHeight = 20;
+    
     void Awake()
     {
         cam = GetComponent<Camera>();
