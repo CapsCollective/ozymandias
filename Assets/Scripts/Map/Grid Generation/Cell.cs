@@ -41,7 +41,7 @@ public class Cell
 
     public void Clear()
     {
-        // Do something here
+        occupant = null;
     }
 
     public void Occupy(BuildingPlacement.Building newOccupant)
