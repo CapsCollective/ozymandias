@@ -6,6 +6,7 @@ using static GameManager;
 public class BuildingStats : MonoBehaviour
 {
     public bool operational = false;
+    public bool terrain;
     
     public int  
         baseCost,
@@ -19,6 +20,6 @@ public class BuildingStats : MonoBehaviour
     {
         //transform.parent = GameObject.Find("Buildings").transform;
         operational = true;
-        Manager.Build(this);
+        if(!terrain) Manager.Build(this);
     }
 }
