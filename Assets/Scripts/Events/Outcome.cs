@@ -11,9 +11,9 @@ public class Outcome : ScriptableObject
 
     private static string[] dummyReplies =
     {
-        "Testing if the outcome is different!",
-        "Chaos has increased!\nEfficiency has increased!",
-        "Chaos has increased!\nEfficiency has increased!\nSomething else has increased!"
+        "• Chaos has increased!",
+        "• Chaos has increased!\n• Efficiency has increased!",
+        "• Chaos has increased!\n• Efficiency has increased!\n• Something else has increased!"
     };
 
     // What happens when this is executed

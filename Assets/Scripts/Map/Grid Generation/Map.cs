@@ -33,6 +33,8 @@ public class Map : MonoBehaviour
 
         foreach (Cell cell in cells)
         {
+            if (cell == null)
+                continue;
             foreach (int vertexIndex in mapLayout.TriangleMap[cell])
                 uv[vertexIndex].x = (int)state / 2f;
         }
@@ -50,7 +52,7 @@ public class Map : MonoBehaviour
         return new Cell[0];
     }
 
-    public Cell[] GetCells(Cell root, BuildingPlacement.Building building)
+    public Cell[] GetCells(Cell root, BuildingStructure building)
     {
         return mapLayout.GetCells(root, building);
     }
@@ -62,44 +64,59 @@ public class Map : MonoBehaviour
         _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
 
-    public void Occupy(GameObject prefab, Vector3 worldPosition)
+    private void Occupy(BuildingStructure building, Cell[] cells)
     {
-        GameObject buildingObj = Instantiate(prefab, GameObject.Find("Buildings").transform);
-        buildingObj.GetComponent<Building>().Build();
-        BuildingPlacement.Building building = buildingObj.GetComponent<BuildingPlacement.Building>();
+        Vector3[][] vertices = new Vector3[cells.Length][];
 
-        // Convert world to local position
-        Vector3 unitPosition = transform.InverseTransformPoint(worldPosition);
-        
-        Cell[] cells = mapLayout.GetCells(building, unitPosition);
-
-        if (cells != null)
+        for (int i = 0; i < vertices.Length; i++)
         {
-            Vector3[][] vertices = new Vector3[cells.Length][];
-
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = CellUnitToWorld(cells[i]);
-                cells[i].Occupy(building);
-            }
-
-            building.Fit(vertices);
+            vertices[i] = CellUnitToWorld(cells[i]);
         }
+
+        mapLayout.Occupy(building, cells);
+
+        building.Fit(vertices);
+    }
+
+    public void CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition)
+    {
+        GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
+        buildingInstance.GetComponent<BuildingStats>().Build();
+        BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
+
+        Cell root = GetCell(worldPosition);
+        Cell[] cells = GetCells(root, building);
+
+        if (IsValid(cells))
+            Occupy(building, cells);
         else
-        {
-            Destroy(building.gameObject);
-        }
+            Destroy(buildingInstance);
+    }
+
+    public bool IsValid(Cell[] cells)
+    {
+        bool valid = true;
+
+        for (int i = 0; valid && i < cells.Length; i++)
+            valid = IsValid(cells[i]);
+
+        return valid;
+    }
+
+    public bool IsValid(Cell cell)
+    {
+        return cell != null && !cell.Occupied;
     }
 
     public void Clear(Cell cell)
     {
-        cell.Clear();
+        mapLayout.Clear(cell);
     }
 
     public void Clear(Cell[] cells)
     {
         foreach (Cell cell in cells)
-            cell.Clear();
+            mapLayout.Clear(cell);
     }
 
     public Vector3[] CellUnitToWorld(Cell cell)

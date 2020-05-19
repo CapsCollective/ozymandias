@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
 
-public class Building : MonoBehaviour
+public class BuildingStats : MonoBehaviour
 {
     public bool operational = false;
     
@@ -21,5 +21,4 @@ public class Building : MonoBehaviour
         operational = true;
         Manager.Build(this);
     }
-
 }

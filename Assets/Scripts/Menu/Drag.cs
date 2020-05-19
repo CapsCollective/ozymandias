@@ -97,12 +97,10 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
             // Check if new cells need to be highlighted
             Cell closest = map.GetCell(hit.point);
-            BuildingPlacement.Building buildingComp = building.GetComponent<BuildingPlacement.Building>();
+            BuildingStructure buildingComp = building.GetComponent<BuildingStructure>();
             Cell[] cells = map.GetCells(closest, buildingComp);
 
-            bool valid = buildingComp.sections.Count == cells.Length;
-            for (int i = 0; valid && i < cells.Length; i++)
-                valid = !cells[i].Occupied;
+            bool valid = map.IsValid(cells);
 
             // Highlight cells
             highlighted = cells;
@@ -155,14 +153,17 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeHolder);
 
-        map.Occupy(building, placeHolder.transform.position);
-        
-        Destroy(placeHolder);
+        //map.Occupy(building, placeHolder.transform.position);
 
-        if (Manager.CurrentWealth >= building.GetComponent<Building>().baseCost)
+        //Destroy(placeHolder);
+
+        if (Manager.CurrentWealth >= building.GetComponent<BuildingStats>().baseCost)
         {
-            Manager.Build(building.GetComponent<Building>());
-            map.Occupy(building, buildingInstantiated.transform.position);
+            // This how we do it now ;)
+            map.CreateBuilding(building, buildingInstantiated.transform.position);
+
+            //Manager.Build(building.GetComponent<Building>());
+            //map.Occupy(building, buildingInstantiated.transform.position);
         }
         if (!eventData.pointerEnter)
         {

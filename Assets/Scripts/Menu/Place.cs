@@ -54,12 +54,11 @@ public class Place : MonoBehaviour
 
             // Check if new cells need to be highlighted
             Cell closest = map.GetCell(hit.point);
-            BuildingPlacement.Building building = selectedObject.building.GetComponent<BuildingPlacement.Building>();
+            BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
             Cell[] cells = map.GetCells(closest, building);
 
-            bool valid = building.sections.Count == cells.Length;
-            for (int i = 0; valid && i < cells.Length; i++)
-                valid = !cells[i].Occupied;
+            // Check if cells are valid
+            bool valid = map.IsValid(cells);
 
             // Highlight cells
             highlighted = cells;
@@ -71,14 +70,16 @@ public class Place : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (selectedObject && Manager.CurrentWealth >= selectedObject.building.GetComponent<Building>().baseCost)
+            if (selectedObject && Manager.CurrentWealth >= selectedObject.building.GetComponent<BuildingStats>().baseCost)
             {
                 Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
                 Physics.Raycast(ray, out hit);
                 if (hit.collider)
                 {
                     Destroy(buildingInstantiated);
-                    map.Occupy(selectedObject.building, hit.point);
+
+                    map.CreateBuilding(selectedObject.building, hit.point);
+
                     selectedObject = null;
                 }
             }
@@ -89,7 +90,7 @@ public class Place : MonoBehaviour
             {
                 hoverObject.InfoBox();
             }
-            else if (hoverObject.isHovered && hoverObject.instantiatedHelper)
+            else if (hoverObject && hoverObject.isHovered && hoverObject.instantiatedHelper)
             {
                 Destroy(hoverObject.instantiatedHelper);
             }

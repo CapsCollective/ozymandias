@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     [ReadOnly] [SerializeField] private List<Adventurer> adventurers = new List<Adventurer>();
 
-    [ReadOnly] [SerializeField] public List<Building> buildings = new List<Building>();
+    [ReadOnly] [SerializeField] public List<BuildingStats> buildings = new List<BuildingStats>();
 
     /*public List<Building> Buildings
     {
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in GameObject.Find("Adventurers").transform) Destroy(child.gameObject);
         foreach (Transform child in GameObject.Find("Buildings").transform) Destroy(child.gameObject);
         adventurers = new List<Adventurer>();
-        buildings = new List<Building>();
+        buildings = new List<BuildingStats>();
 
         // Start game with 5 Adventurers
         for (int i = 0; i < 5; i++) AddAdventurer();
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
         UpdateUi();
     }
 
-    public void Build(Building building)
+    public void Build(BuildingStats building)
     {
         CurrentWealth -= building.baseCost;
         buildings.Add(building);
@@ -207,8 +207,11 @@ public class GameManager : MonoBehaviour
         //TODO: Should place in the center of your town
         //Need to call the click place manager for a virtual place if possible
         //Instantiate(guildHall, GameObject.Find("Buildings").transform).GetComponent<Building>().Build();
+
         //Build Guild Hall in the center of the map
-        map.Occupy(guildHall, map.transform.position);
+        //map.Occupy(guildHall, map.transform.position);
+
+        map.CreateBuilding(guildHall, map.transform.position);
     }
 
 
