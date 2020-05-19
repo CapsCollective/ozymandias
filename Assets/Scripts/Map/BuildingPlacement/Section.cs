@@ -9,7 +9,7 @@ namespace BuildingPlacement
     {
         // Member variables
         public Transform cornerParent;
-        
+
         private MeshFilter _meshFilter;
 
         // Properties

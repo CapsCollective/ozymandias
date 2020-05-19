@@ -26,6 +26,10 @@ public class Map : MonoBehaviour
     {
         Generate();
     }
+    private void Start()
+    {
+        //Generate();
+    }
 
     public void Highlight(Cell[] cells, HighlightState state)
     {

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3308454136949207827}
   - component: {fileID: 8703429468604558240}
   - component: {fileID: 3326376377040969848}
-  m_Layer: 0
+  - component: {fileID: 2996761806577639229}
+  m_Layer: 23
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,3 +68,18 @@ MonoBehaviour:
   spending: 0
   accommodation: 0
   defense: 0
+--- !u!114 &2996761806577639229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7018205546198717094}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748b7c8bf9b55e34ebd5aa1b7db774de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 0}
+  distance: 1.5
+  terrainBuilding: {fileID: 7018205546198717094}
