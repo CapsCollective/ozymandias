@@ -58,7 +58,7 @@ public class Place : MonoBehaviour
             Cell[] cells = map.GetCells(closest, building);
 
             // Check if cells are valid
-            bool valid = map.Validate(cells);
+            bool valid = map.IsValid(cells);
 
             // Highlight cells
             highlighted = cells;
@@ -84,7 +84,7 @@ public class Place : MonoBehaviour
                     Cell root = map.GetCell(hit.point);
                     Cell[] cells = map.GetCells(root, buildingScript);
 
-                    if (map.Validate(cells))
+                    if (map.IsValid(cells))
                         map.Occupy(buildingScript, cells);
                     else
                         Destroy(buildingScript.gameObject);
