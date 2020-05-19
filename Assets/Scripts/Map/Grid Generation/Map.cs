@@ -62,34 +62,58 @@ public class Map : MonoBehaviour
         _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
 
-    public void Occupy(GameObject prefab, Vector3 worldPosition)
+    public void Occupy(BuildingPlacement.Building building, Cell[] cells)
     {
-        GameObject buildingObj = Instantiate(prefab, GameObject.Find("Buildings").transform);
-        buildingObj.GetComponent<Building>().Build();
-        BuildingPlacement.Building building = buildingObj.GetComponent<BuildingPlacement.Building>();
+        Vector3[][] vertices = new Vector3[cells.Length][];
+        for (int i = 0; i < vertices.Length; i++)
+            vertices[i] = CellUnitToWorld(cells[i]);
 
-        // Convert world to local position
-        Vector3 unitPosition = transform.InverseTransformPoint(worldPosition);
-        
-        Cell[] cells = mapLayout.GetCells(building, unitPosition);
-
-        if (cells != null)
-        {
-            Vector3[][] vertices = new Vector3[cells.Length][];
-
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = CellUnitToWorld(cells[i]);
-                cells[i].Occupy(building);
-            }
-
-            building.Fit(vertices);
-        }
-        else
-        {
-            Destroy(building.gameObject);
-        }
+        building.Fit(vertices);
     }
+
+    public bool Validate(Cell[] cells)
+    {
+        bool valid = true;
+
+        for (int i = 0; valid && i < cells.Length; i++)
+            valid = cells != null && !cells[i].Occupied;
+
+        return valid;
+    }
+
+    //public void Occupy(GameObject prefab, Vector3 worldPosition)
+    //{
+    //    // Obsolete
+    //}
+
+    //public void Occupy(GameObject prefab, Vector3 worldPosition)
+    //{
+    //    GameObject buildingObj = Instantiate(prefab, GameObject.Find("Buildings").transform);
+    //    buildingObj.GetComponent<Building>().Build();
+    //    BuildingPlacement.Building building = buildingObj.GetComponent<BuildingPlacement.Building>();
+
+    //    // Convert world to local position
+    //    Vector3 unitPosition = transform.InverseTransformPoint(worldPosition);
+        
+    //    Cell[] cells = mapLayout.GetCells(building, unitPosition);
+
+    //    if (cells != null)
+    //    {
+    //        Vector3[][] vertices = new Vector3[cells.Length][];
+
+    //        for (int i = 0; i < vertices.Length; i++)
+    //        {
+    //            vertices[i] = CellUnitToWorld(cells[i]);
+    //            cells[i].Occupy(building);
+    //        }
+
+    //        building.Fit(vertices);
+    //    }
+    //    else
+    //    {
+    //        Destroy(building.gameObject);
+    //    }
+    //}
 
     public void Clear(Cell cell)
     {
