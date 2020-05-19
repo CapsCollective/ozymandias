@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static Action OnNewTurn;
+    public static Action OnUpdateUI;
     private static GameManager instance;
 
     public static GameManager Manager
@@ -171,10 +172,13 @@ public class GameManager : MonoBehaviour
         UpdateUi();
     }
 
-    public UiUpdater[] uiUpdates;
+    // Legacy
+    //public UiUpdater[] uiUpdates;
     public void UpdateUi()
     {
-        foreach (var uiUpdater in uiUpdates) uiUpdater.UpdateUi();        
+        OnUpdateUI?.Invoke();
+        // Legacy
+        //foreach (var uiUpdater in uiUpdates) uiUpdater.UpdateUi();        
     }
 
     private void Start()
