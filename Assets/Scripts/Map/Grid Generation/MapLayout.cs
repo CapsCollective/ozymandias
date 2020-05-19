@@ -36,7 +36,17 @@ public class MapLayout : ScriptableObject
 
     public void Clear(Cell root)
     {
+        BuildingPlacement.Building building = root.occupant;
 
+        if (building)
+        {
+            foreach (Cell cell in BuildingMap[building])
+                cell.Clear();
+
+            BuildingMap.Remove(building);
+
+            Destroy(building.gameObject);
+        }
     }
 
     // GRID QUERYING
