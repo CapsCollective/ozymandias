@@ -6,7 +6,7 @@ public class Clear : MonoBehaviour
 {
     private bool clearMode = false;
     private RaycastHit hit;
-    private Cell[] highlighted = new Cell[0];
+    private Cell[] highlighted = new Cell[1];
     public Map map;
 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class Clear : MonoBehaviour
         if (clearMode)
         {
             map.Highlight(highlighted, Map.HighlightState.Inactive);
-            highlighted = new Cell[0];
+            highlighted = new Cell[1];
 
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
             Physics.Raycast(ray, out hit, LayerMask.GetMask("Surface"));
@@ -30,7 +30,11 @@ public class Clear : MonoBehaviour
             Cell closest = map.GetCell(hit.point);
             
             bool canClear = !map.IsValid(closest);
-            highlighted[0] = closest;
+            if (closest!=null)
+            {
+                highlighted[0] = closest;
+            }
+            
             Map.HighlightState state = canClear ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
             map.Highlight(highlighted, state);
 
@@ -40,14 +44,14 @@ public class Clear : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && canClear)
             {
-
+                ClearSpace(highlighted);
             }
         }
     }
 
     public void EnterClearMode()
     {
-        clearMode = true;
+        clearMode = !clearMode;
     }
 
     public void ExitClearMode()
@@ -55,8 +59,10 @@ public class Clear : MonoBehaviour
         clearMode = false;
     }
 
-    public void ClearSpace()
+    public void ClearSpace(Cell[] cellsToClear)
     {
-
+        map.Clear(cellsToClear);
+        // cost money to clear (10g/cell)
+        ExitClearMode();
     }
 }
