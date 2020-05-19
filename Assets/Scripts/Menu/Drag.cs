@@ -100,7 +100,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             BuildingPlacement.Building buildingComp = building.GetComponent<BuildingPlacement.Building>();
             Cell[] cells = map.GetCells(closest, buildingComp);
 
-            bool valid = map.Validate(cells);
+            bool valid = map.IsValid(cells);
 
             // Highlight cells
             highlighted = cells;
@@ -165,7 +165,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             Cell root = map.GetCell(hit.point);
             Cell[] cells = map.GetCells(root, buildingScript);
 
-            if (map.Validate(cells))
+            if (map.IsValid(cells))
                 map.Occupy(buildingScript, cells);
             else
                 Destroy(buildingScript.gameObject);

@@ -61,7 +61,7 @@ public class PlaceTerrain : MonoBehaviour
                         Cell root = map.GetCell(hit.point);
                         Cell[] cells = map.GetCells(root, buildingScript);
 
-                        if (map.Validate(cells))
+                        if (map.IsValid(cells))
                             map.Occupy(buildingScript, cells);
                         else
                             Destroy(buildingScript.gameObject);

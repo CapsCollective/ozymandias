@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
         Cell root = map.GetCell(map.transform.position);
         Cell[] cells = map.GetCells(root, guildHallBuilding);
 
-        if (map.Validate(cells))
+        if (map.IsValid(cells))
             map.Occupy(guildHallBuilding, cells);
         else
             Destroy(guildHallBuilding.gameObject);
