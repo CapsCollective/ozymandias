@@ -22,7 +22,7 @@ public class Map : MonoBehaviour
 
     public enum HighlightState { Inactive, Valid, Invalid }
 
-    private void Start()
+    private void Awake()
     {
         Generate();
     }
@@ -64,11 +64,13 @@ public class Map : MonoBehaviour
 
     public void Occupy(GameObject prefab, Vector3 worldPosition)
     {
-        BuildingPlacement.Building building = Instantiate(prefab).GetComponent<BuildingPlacement.Building>();
+        GameObject buildingObj = Instantiate(prefab, GameObject.Find("Buildings").transform);
+        buildingObj.GetComponent<Building>().Build();
+        BuildingPlacement.Building building = buildingObj.GetComponent<BuildingPlacement.Building>();
 
         // Convert world to local position
         Vector3 unitPosition = transform.InverseTransformPoint(worldPosition);
-
+        
         Cell[] cells = mapLayout.GetCells(building, unitPosition);
 
         if (cells != null)

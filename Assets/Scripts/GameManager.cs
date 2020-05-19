@@ -17,12 +17,11 @@ public enum Metric
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject adventurerPrefab;
 
     public static Action OnNewTurn;
     private static GameManager instance;
 
-    public static GameManager Instance
+    public static GameManager Manager
     {
         get
         {
@@ -55,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     public int Accommodation
     {
-        get { return accommodation = buildings.Sum(x => x.accommodation); }
+        get { return accommodation = buildings.Where(x => x.operational).Sum(x => x.accommodation); }
     }
 
     [ReadOnly] [SerializeField] private int satisfaction;
@@ -120,47 +119,42 @@ public class GameManager : MonoBehaviour
         private set { currentWealth = value; }
     }
 
+    public void AddAdventurer()
+    {
+        adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
+        
+    }
+    
     [Button("StartGame")]
     public void StartGame()
     {
-        // Run the menu tutorial system dialogue
-        if (dialogueManager)
-        {
-            dialogueManager.StartDialogue("menu_tutorial");
-        }
-        
-
         // Clear out all adventurers and buildings
-        foreach (Transform child in GameObject.Find("Adventurers").transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-
-        foreach (Transform child in GameObject.Find("Buildings").transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-
+        foreach (Transform child in GameObject.Find("Adventurers").transform) Destroy(child.gameObject);
+        foreach (Transform child in GameObject.Find("Buildings").transform) Destroy(child.gameObject);
         adventurers = new List<Adventurer>();
         buildings = new List<Building>();
 
-        CurrentWealth = 10;
-        threat = 0;
+        // Start game with 5 Adventurers
+        for (int i = 0; i < 5; i++) AddAdventurer();
+        
+
+        CurrentWealth = 50;
+        threat = 1;
         BuildGuildHall();
+        
+        // Run the menu tutorial system dialogue
+        // Commented out for now, players can trigger from the help button
+        //dialogueManager?.StartDialogue("menu_tutorial");
     }
 
     [Button("Next Turn")]
     public void NextTurn()
     {
-        if (Accommodation > adventurers.Count())
-        {
-            adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform)
-                .GetComponent<Adventurer>());
-        }
-
+        if (adventurers.Count() < Accommodation) AddAdventurer();
         Threat += buildings.Count;
         CurrentWealth = WealthPerTurn;
-        UpdateUI();
+
+        UpdateUi();
         OnNewTurn?.Invoke();
     }
 
@@ -168,24 +162,13 @@ public class GameManager : MonoBehaviour
     {
         CurrentWealth -= building.baseCost;
         buildings.Add(building);
-        UpdateUI();
+        UpdateUi();
     }
 
-    public void UpdateUI()
+    public UiUpdater[] uiUpdates;
+    public void UpdateUi()
     {
-        topBar.UpdateUI();
-        wealthCounter.UpdateUI();
-        //Todo: Updates all UI
-        Debug.Log(
-            "AvailableAdventurers: " + AvailableAdventurers +
-            "\nAccommodation: " + Accommodation +
-            "\nSatisfaction: " + Satisfaction +
-            "\nEffectiveness: " + Effectiveness +
-            "\nSpending: " + Spending +
-            "\nDefense: " + Defense +
-            "\nChaos: " + Chaos +
-            "\nThread: " + Threat +
-            "\nCurrent Wealth:" + CurrentWealth + "/" + wealthPerTurn);
+        foreach (var uiUpdater in uiUpdates) uiUpdater.UpdateUi();        
     }
 
     private void Start()
@@ -206,15 +189,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [HorizontalLine()] public TopBar topBar;
-    public WealthCounter wealthCounter;
-    [SerializeField] private DialogueManager dialogueManager;
-
-    [SerializeField] private GameObject guildHall;
+    [HorizontalLine()] 
+    
+    public GameObject adventurerPrefab;
+    public DialogueManager dialogueManager;
+    public Map map;
+    public GameObject guildHall;
 
     private void BuildGuildHall()
     {
-        Instantiate(guildHall, GameObject.Find("Buildings").transform).GetComponent<Building>().Build();
+        //TODO: Should place in the center of your town
+        //Need to call the click place manager for a virtual place if possible
+        //Instantiate(guildHall, GameObject.Find("Buildings").transform).GetComponent<Building>().Build();
+        //Build Guild Hall in the center of the map
+        map.Occupy(guildHall, map.transform.position);
     }
 
 

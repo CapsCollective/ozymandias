@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class Building : MonoBehaviour
 {
@@ -16,9 +17,9 @@ public class Building : MonoBehaviour
 
     public void Build()
     {
-        transform.parent = GameObject.Find("Buildings").transform;
-        GameManager.Instance.Build(this);
+        //transform.parent = GameObject.Find("Buildings").transform;
         operational = true;
+        Manager.Build(this);
     }
 
 }
