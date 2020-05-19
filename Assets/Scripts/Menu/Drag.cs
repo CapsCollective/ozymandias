@@ -14,6 +14,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     //card features
     private Image image;
     private Text text;
+    private BuildingStats buildingStats;
+    private Button button;
 
     //drag/drop requirements
     public Transform parent = null;
@@ -29,10 +31,12 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     //highlighting
     private Cell[] highlighted = new Cell[0];
 
-    private void Start()
+    private void Awake()
     {
         image = GetComponent<Image>();
         text = GetComponentInChildren<Text>();
+        buildingStats = building.GetComponent<BuildingStats>();
+        button = GetComponent<Button>();
     }
 
     private void Update()
@@ -44,6 +48,18 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             {
                 buildingInstantiated.transform.Rotate(0, 30, 0);
             }
+        }
+        
+        //TODO: Move into a ui updater class
+        if (buildingStats.baseCost > Manager.CurrentWealth)
+        {
+            image.color = button.colors.disabledColor;
+            GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
+        else
+        {
+            image.color = button.colors.normalColor;
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
     }
 
