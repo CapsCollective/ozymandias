@@ -37,6 +37,8 @@ public class Map : MonoBehaviour
 
         foreach (Cell cell in cells)
         {
+            if (cell == null)
+                continue;
             foreach (int vertexIndex in mapLayout.TriangleMap[cell])
                 uv[vertexIndex].x = (int)state / 2f;
         }
@@ -80,7 +82,7 @@ public class Map : MonoBehaviour
         bool valid = true;
 
         for (int i = 0; valid && i < cells.Length; i++)
-            valid = cells != null && !cells[i].Occupied;
+            valid = cells[i] != null && !cells[i].Occupied;
 
         return valid;
     }

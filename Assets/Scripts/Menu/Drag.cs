@@ -100,9 +100,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             BuildingPlacement.Building buildingComp = building.GetComponent<BuildingPlacement.Building>();
             Cell[] cells = map.GetCells(closest, buildingComp);
 
-            bool valid = buildingComp.sections.Count == cells.Length;
-            for (int i = 0; valid && i < cells.Length; i++)
-                valid = !cells[i].Occupied;
+            bool valid = map.Validate(cells);
 
             // Highlight cells
             highlighted = cells;
