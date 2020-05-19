@@ -10,7 +10,8 @@ public class StatChange : Outcome
     {
         Chaos,
         Defense,
-        Adventurers
+        Adventurers,
+        Threat
     }
 
     public StatToEffect StatToChange;
@@ -43,9 +44,12 @@ public class StatChange : Outcome
             case StatToEffect.Adventurers:
                 Manager.AdventurersMod += Amount;
                 break;
+            case StatToEffect.Threat:
+                Manager.ThreatMod += Amount;
+                break;
         }
 
-        Debug.Log($"{StatToChange} was changed by: {Amount}. {Turns} remaining.");
+        Debug.Log($"{StatToChange} was changed by {Amount}. {Turns} turns remaining.");
         Turns--;
     }
 }

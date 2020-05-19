@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
 
     public int Threat
     {
-        get { return threat; }
+        get { return threat + ThreatMod; }
         private set { threat = value; }
     }
 
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         private set { currentWealth = value; }
     }
 
-    public int AdventurersMod, ChaosMod, DefenseMod;
+    public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod;
 
     public void AddAdventurer()
     {
@@ -156,13 +156,12 @@ public class GameManager : MonoBehaviour
         Threat += buildings.Count;
         CurrentWealth = WealthPerTurn;
 
-        UpdateUi();
-
         ChaosMod = 0;
         AdventurersMod = 0;
         DefenseMod = 0;
 
         OnNewTurn?.Invoke();
+        UpdateUi();
     }
 
     public void Build(Building building)
