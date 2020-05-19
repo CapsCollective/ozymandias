@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 [CreateAssetMenu]
 public class StatChange : Outcome
 {
+    public enum StatToEffect
+    {
+        Chaos,
+        Defense,
+        Adventurers,
+        Threat
+    }
 
-    public Metric MetricAffected;
+    public StatToEffect StatToChange;
     public int Amount;
     public int Turns;
 
-    private bool processedThisTurn = false;
 
     public override bool Execute()
     {
@@ -26,9 +33,23 @@ public class StatChange : Outcome
             return;
         }
 
-        Debug.Log("Do the stat changing here");
-        Turns--;
+        switch (StatToChange)
+        {
+            case StatToEffect.Chaos:
+                Manager.ChaosMod += Amount;
+                break;
+            case StatToEffect.Defense:
+                Manager.DefenseMod += Amount;
+                break;
+            case StatToEffect.Adventurers:
+                Manager.AdventurersMod += Amount;
+                break;
+            case StatToEffect.Threat:
+                Manager.ThreatMod += Amount;
+                break;
+        }
 
-        processedThisTurn = true;
+        Debug.Log($"{StatToChange} was changed by {Amount}. {Turns} turns remaining.");
+        Turns--;
     }
 }

@@ -19,6 +19,15 @@ public class NewspaperController : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.OnNewTurn += () =>
+        {
+            for (var i = 0; i < choiceList.Length; i++)
+            {
+                choiceList[i].GetComponentInChildren<Text>().text = "This is a choice you can select it by clicking on it";
+                choiceList[i].interactable = false;
+            }
+        };
+
         EventQueue.OnEventsProcessed += (list) =>
         {
             currentEvents = list.ToArray();
@@ -47,7 +56,7 @@ public class NewspaperController : MonoBehaviour
         // Set all event choices on button texts
         for (var i = 0; i < choiceList.Length; i++)
         {
-            if (currentEvents[0].Choices.Count > 0)
+            if (i < currentEvents[0].Choices.Count)
             {
                 choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceTitle;
                 choiceList[i].interactable = true;

@@ -1,8 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <ui:VisualElement name="Main" style="height: 100%;&#10;width: 100%;&#10;align-items: flex-start;&#10;flex-direction: row;&#10;flex-shrink: 1;&#10;flex-basis: 100%;&#10;flex-grow: 0;&#10;justify-content: space-between;&#10;">
         <Style src="ScenarioUI.uss" />
-        <ui:VisualElement name="Library" style="flex-grow: 1;&#10;flex-shrink: initial;&#10;flex-basis: 40%;&#10;">
+        <ui:VisualElement name="Library" style="flex-grow: 1;&#10;flex-shrink: initial;&#10;flex-basis: 80%;&#10;">
             <ui:Button text="New Event" name="btnNewEvent" />
+            <uie:ToolbarSearchField focusable="True" name="searchLibrary" style="flex-basis: auto;&#10;width: auto;&#10;" />
             <ui:ListView focusable="True" name="listViewLibrary" item-height="30" style="flex-grow: 1;&#10;" />
         </ui:VisualElement>
         <ui:VisualElement style="width: 3px;&#10;height: 100%;&#10;background-color: rgb(84, 84, 84);&#10;" />

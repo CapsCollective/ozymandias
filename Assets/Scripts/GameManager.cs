@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static Action OnNewTurn;
+    public static Action OnUpdateUI;
     private static GameManager instance;
 
     public static GameManager Manager
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     public int AvailableAdventurers
     {
-        get { return availableAdventurers = adventurers.Count(x => x.assignedQuest == null); }
+        get { return availableAdventurers = adventurers.Count(x => x.assignedQuest == null) + AdventurersMod; }
     }
 
     [ReadOnly] [SerializeField] private int accommodation;
@@ -85,7 +86,7 @@ public class GameManager : MonoBehaviour
         get
         {
             return defense = AvailableAdventurers * Effectiveness +
-                             buildings.Where(x => x.operational).Sum(x => x.defense);
+                             buildings.Where(x => x.operational).Sum(x => x.defense) + DefenseMod;
         }
     }
 
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour
 
     public int Chaos
     {
-        get { return chaos = AvailableAdventurers / (Satisfaction + 1); }
+        get { return chaos = AvailableAdventurers / (Satisfaction + 1) + ChaosMod; }
     }
 
     [ReadOnly] [SerializeField] private int wealthPerTurn;
@@ -107,7 +108,7 @@ public class GameManager : MonoBehaviour
 
     public int Threat
     {
-        get { return threat; }
+        get { return threat + ThreatMod; }
         private set { threat = value; }
     }
 
@@ -118,6 +119,8 @@ public class GameManager : MonoBehaviour
         get { return currentWealth; }
         private set { currentWealth = value; }
     }
+
+    public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod;
 
     public void AddAdventurer()
     {
@@ -154,8 +157,12 @@ public class GameManager : MonoBehaviour
         Threat += buildings.Count;
         CurrentWealth = WealthPerTurn;
 
-        UpdateUi();
+        ChaosMod = 0;
+        AdventurersMod = 0;
+        DefenseMod = 0;
+
         OnNewTurn?.Invoke();
+        UpdateUi();
     }
 
     public void Build(BuildingStats building)
@@ -165,10 +172,13 @@ public class GameManager : MonoBehaviour
         UpdateUi();
     }
 
-    public UiUpdater[] uiUpdates;
+    // Legacy
+    //public UiUpdater[] uiUpdates;
     public void UpdateUi()
     {
-        foreach (var uiUpdater in uiUpdates) uiUpdater.UpdateUi();        
+        OnUpdateUI?.Invoke();
+        // Legacy
+        //foreach (var uiUpdater in uiUpdates) uiUpdater.UpdateUi();        
     }
 
     private void Start()
