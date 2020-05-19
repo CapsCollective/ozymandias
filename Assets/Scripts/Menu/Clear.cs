@@ -11,6 +11,7 @@ public class Clear : MonoBehaviour
     private Cell[] highlighted = new Cell[1];
     public Map map;
     private Image image;
+    public int clearCost = 5;
 
     private void Awake()
     {
@@ -84,8 +85,11 @@ public class Clear : MonoBehaviour
 
     public void ClearSpace(Cell[] cellsToClear)
     {
-        map.Clear(cellsToClear);
-        // cost money to clear (10g/cell)
+        //if (Manager.Spend(clearCost))
+        //{
+        //    map.Clear(cellsToClear);
+        //}
+        
         // Currently clears buildings and terrain, but needs to only clear the latter
         
         ExitClearMode();
