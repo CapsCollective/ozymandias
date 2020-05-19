@@ -95,13 +95,13 @@ public class Map : MonoBehaviour
 
     public void Clear(Cell cell)
     {
-        cell.Clear();
+        mapLayout.Clear(cell);
     }
 
     public void Clear(Cell[] cells)
     {
         foreach (Cell cell in cells)
-            cell.Clear();
+            mapLayout.Clear(cell);
     }
 
     public Vector3[] CellUnitToWorld(Cell cell)

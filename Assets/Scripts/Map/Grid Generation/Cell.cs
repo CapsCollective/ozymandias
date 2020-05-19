@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cell
 {
-    private BuildingPlacement.Building occupant;
+    public BuildingPlacement.Building occupant;
 
     public List<Vertex> Vertices { get; private set; }
     public Vector3 Centre { get { return (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4; } }
