@@ -30,16 +30,24 @@ public class PlaceTerrain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
-        {
-            Place();
-        }
+        //if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
+        //{
+        //    Place();
+        //}
           
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isPlaced)
+        {
+            if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
+            {
+                Place();
+            }
+                
+        }
     }
 
     public void Place()
@@ -55,7 +63,7 @@ public class PlaceTerrain : MonoBehaviour
                     {
                         map.CreateBuilding(terrainBuilding, hit.point);
 
-                        //Destroy(gameObject);
+                        Destroy(gameObject);
                     }
 
                 }
