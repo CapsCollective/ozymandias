@@ -26,10 +26,6 @@ public class Map : MonoBehaviour
     {
         Generate();
     }
-    private void Start()
-    {
-        //Generate();
-    }
 
     public void Highlight(Cell[] cells, HighlightState state)
     {
@@ -37,6 +33,8 @@ public class Map : MonoBehaviour
 
         foreach (Cell cell in cells)
         {
+            if (cell == null)
+                continue;
             foreach (int vertexIndex in mapLayout.TriangleMap[cell])
                 uv[vertexIndex].x = (int)state / 2f;
         }
@@ -66,33 +64,28 @@ public class Map : MonoBehaviour
         _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
 
-    public void Occupy(GameObject prefab, Vector3 worldPosition)
+    public void Occupy(BuildingPlacement.Building building, Cell[] cells)
     {
-        GameObject buildingObj = Instantiate(prefab, GameObject.Find("Buildings").transform);
-        buildingObj.GetComponent<Building>().Build();
-        BuildingPlacement.Building building = buildingObj.GetComponent<BuildingPlacement.Building>();
+        Vector3[][] vertices = new Vector3[cells.Length][];
+        for (int i = 0; i < vertices.Length; i++)
+            vertices[i] = CellUnitToWorld(cells[i]);
 
-        // Convert world to local position
-        Vector3 unitPosition = transform.InverseTransformPoint(worldPosition);
+        building.Fit(vertices);
+    }
 
-        Cell[] cells = mapLayout.GetCells(building, unitPosition);
+    public bool IsValid(Cell[] cells)
+    {
+        bool valid = true;
 
-        if (cells != null)
-        {
-            Vector3[][] vertices = new Vector3[cells.Length][];
+        for (int i = 0; valid && i < cells.Length; i++)
+            valid = IsValid(cells[i]);
 
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = CellUnitToWorld(cells[i]);
-                cells[i].Occupy(building);
-            }
+        return valid;
+    }
 
-            building.Fit(vertices);
-        }
-        else
-        {
-            Destroy(building.gameObject);
-        }
+    public bool IsValid(Cell cell)
+    {
+        return cell != null && !cell.Occupied;
     }
 
     public void Clear(Cell cell)

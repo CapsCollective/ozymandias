@@ -53,7 +53,20 @@ public class PlaceTerrain : MonoBehaviour
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
                     {
-                        map.Occupy(terrainBuilding, hit.point);
+                        //map.Occupy(terrainBuilding, hit.point);
+
+                        // This how we do it now ->
+                        BuildingPlacement.Building buildingScript = Instantiate(terrainBuilding).GetComponent<BuildingPlacement.Building>();
+
+                        Cell root = map.GetCell(hit.point);
+                        Cell[] cells = map.GetCells(root, buildingScript);
+
+                        if (map.IsValid(cells))
+                            map.Occupy(buildingScript, cells);
+                        else
+                            Destroy(buildingScript.gameObject);
+                        // <-
+
                         Destroy(gameObject);
                     }
 

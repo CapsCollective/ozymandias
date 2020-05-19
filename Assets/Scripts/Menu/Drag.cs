@@ -100,9 +100,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             BuildingPlacement.Building buildingComp = building.GetComponent<BuildingPlacement.Building>();
             Cell[] cells = map.GetCells(closest, buildingComp);
 
-            bool valid = buildingComp.sections.Count == cells.Length;
-            for (int i = 0; valid && i < cells.Length; i++)
-                valid = !cells[i].Occupied;
+            bool valid = map.IsValid(cells);
 
             // Highlight cells
             highlighted = cells;
@@ -155,14 +153,26 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeHolder);
 
-        map.Occupy(building, placeHolder.transform.position);
-        
-        Destroy(placeHolder);
+        //map.Occupy(building, placeHolder.transform.position);
+
+        //Destroy(placeHolder);
 
         if (Manager.CurrentWealth >= building.GetComponent<Building>().baseCost)
         {
+            // This how we do it now ->
+            BuildingPlacement.Building buildingScript = Instantiate(building).GetComponent<BuildingPlacement.Building>();
+
+            Cell root = map.GetCell(hit.point);
+            Cell[] cells = map.GetCells(root, buildingScript);
+
+            if (map.IsValid(cells))
+                map.Occupy(buildingScript, cells);
+            else
+                Destroy(buildingScript.gameObject);
+            // <-
+
             Manager.Build(building.GetComponent<Building>());
-            map.Occupy(building, buildingInstantiated.transform.position);
+            //map.Occupy(building, buildingInstantiated.transform.position);
         }
         if (!eventData.pointerEnter)
         {

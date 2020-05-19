@@ -57,9 +57,8 @@ public class Place : MonoBehaviour
             BuildingPlacement.Building building = selectedObject.building.GetComponent<BuildingPlacement.Building>();
             Cell[] cells = map.GetCells(closest, building);
 
-            bool valid = building.sections.Count == cells.Length;
-            for (int i = 0; valid && i < cells.Length; i++)
-                valid = !cells[i].Occupied;
+            // Check if cells are valid
+            bool valid = map.IsValid(cells);
 
             // Highlight cells
             highlighted = cells;
@@ -78,7 +77,19 @@ public class Place : MonoBehaviour
                 if (hit.collider)
                 {
                     Destroy(buildingInstantiated);
-                    map.Occupy(selectedObject.building, hit.point);
+
+                    // This how we do it now ->
+                    BuildingPlacement.Building buildingScript = Instantiate(selectedObject.building).GetComponent<BuildingPlacement.Building>();
+                    
+                    Cell root = map.GetCell(hit.point);
+                    Cell[] cells = map.GetCells(root, buildingScript);
+
+                    if (map.IsValid(cells))
+                        map.Occupy(buildingScript, cells);
+                    else
+                        Destroy(buildingScript.gameObject);
+                    // <-
+
                     selectedObject = null;
                 }
             }

@@ -201,8 +201,21 @@ public class GameManager : MonoBehaviour
         //TODO: Should place in the center of your town
         //Need to call the click place manager for a virtual place if possible
         //Instantiate(guildHall, GameObject.Find("Buildings").transform).GetComponent<Building>().Build();
+        
         //Build Guild Hall in the center of the map
-        map.Occupy(guildHall, map.transform.position);
+        //map.Occupy(guildHall, map.transform.position);
+
+        // This how we do it now ->
+        BuildingPlacement.Building guildHallBuilding = Instantiate(guildHall).GetComponent<BuildingPlacement.Building>();
+
+        Cell root = map.GetCell(map.transform.position);
+        Cell[] cells = map.GetCells(root, guildHallBuilding);
+
+        if (map.IsValid(cells))
+            map.Occupy(guildHallBuilding, cells);
+        else
+            Destroy(guildHallBuilding.gameObject);
+        // <-
     }
 
 
