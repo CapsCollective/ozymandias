@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-
+using UnityEditor.IMGUI.Controls;
+using System.Linq;
 
 public class ScenarioEditor : EditorWindow
 {
@@ -25,8 +26,13 @@ public class ScenarioEditor : EditorWindow
     private ListView listOutcomes;
     private ToolbarMenu menuEventOutcomes;
     private ToolbarMenu menuChoiceOutcomes;
+    private ToolbarSearchField librarySearchField;
     Button btnEditDefaultOutcome;
     private List<Event> eventsList = new List<Event>();
+
+    // Search Stuff
+    private IEnumerable<Event> searchList;
+    private string searchString;
 
 
     private Color[] colors =
@@ -44,9 +50,12 @@ public class ScenarioEditor : EditorWindow
         editor.Show();
     }
 
+
     private void OnEnable()
     {
         root = base.rootVisualElement;
+
+        eventsList.Clear();
 
         var rootVisualElement = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(@"Assets/Scripts/Events/Editor/ScenarioUI.uxml");
         rootVisualElement.CloneTree(root);
@@ -59,6 +68,13 @@ public class ScenarioEditor : EditorWindow
 
         //Button btnNewOutcome = root.Query<Button>("btnNewOutcome");
         //btnNewOutcome.clickable.clicked += NewOutcome;
+
+        librarySearchField = root.Query<ToolbarSearchField>("searchLibrary");
+        librarySearchField.RegisterCallback<KeyDownEvent>(e =>
+        {
+            if (e.keyCode == KeyCode.Return)
+                OnSearch(librarySearchField.value);
+        });
 
         listViewLibrary = root.Query<ListView>("listViewLibrary");
         tfScenarioTitle = root.Query<TextField>("tfScenarioName");
@@ -115,6 +131,15 @@ public class ScenarioEditor : EditorWindow
         
     }
 
+    private void OnSearch(string s)
+    {
+        searchList = eventsList.Where((x) => x.ScenarioTitle.ToLower().Contains(s.ToLower()));
+        Debug.Log(searchList.ToList().Count());
+        listViewLibrary.itemsSource = searchList.ToList();
+
+        listViewLibrary.Refresh();
+    }
+
     private void PopulateLibrary()
     {
         var events = AssetDatabase.FindAssets($"t:{typeof(Event)}");
@@ -128,11 +153,12 @@ public class ScenarioEditor : EditorWindow
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             (e as Label).style.backgroundColor = colors[i % 2];
-            (e as Label).text = eventsList[i].ScenarioTitle;
+            (e as Label).text = searchList.ToList()[i].ScenarioTitle;
             (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
         };
         eventsList.Sort((x, y) => string.Compare(x.ScenarioTitle, y.ScenarioTitle));
-        listViewLibrary.itemsSource = eventsList;
+        searchList = eventsList;
+        listViewLibrary.itemsSource = searchList.ToList();
         listViewLibrary.makeItem = makeItem;
         listViewLibrary.bindItem = bindItem;
         listViewLibrary.onItemChosen += (o) =>
@@ -261,7 +287,6 @@ public class ScenarioEditor : EditorWindow
 
     private void LoadChoice(Choice c)
     {
-        Debug.Log("Testing");
         TextField tfChoiceName = root.Query<TextField>("tfChoiceName");
         tfChoiceName.SetValueWithoutNotify(c.ChoiceTitle);
         tfChoiceName.RegisterValueChangedCallback((s) => {
@@ -282,10 +307,9 @@ public class ScenarioEditor : EditorWindow
             var serializedObject = new SerializedObject(scenario);
             tfScenarioTitle.SetValueWithoutNotify(scenario.ScenarioTitle);
             tfScenarioTitle.Bind(serializedObject);
-            tfScenarioTitle.RegisterValueChangedCallback((s) => listViewLibrary.Refresh());
+            tfScenarioTitle.RegisterCallback<UnityEngine.UIElements.FocusOutEvent>(e => OnSearch(""));
             tfScenarioDescription.SetValueWithoutNotify(scenario.ScenarioText);
             tfScenarioDescription.Bind(serializedObject);
-            tfScenarioDescription.RegisterValueChangedCallback((s) => listViewLibrary.Refresh());
             ofBackground.value = scenario.ScenarioBackground;
 
             if (scenario.defaultOutcome != null)
@@ -317,14 +341,16 @@ public class ScenarioEditor : EditorWindow
 
     private void SaveScenario()
     {
-        string file = EditorUtility.SaveFilePanel("Save Scenario", "Assets/", "New Event", "asset");
+        string file = EditorUtility.SaveFilePanel("Save Scenario", "Assets/Events", "New Event", "asset");
         file = file.Replace(Application.dataPath, "Assets");
         Event newEvent = new Event { ScenarioTitle = "New Event", name = "New Event" };
         if (!string.IsNullOrEmpty(file))
         {
             AssetDatabase.CreateAsset(newEvent, $"{file}");
             eventsList.Add(newEvent);
+            searchList = eventsList;
             eventsList.Sort((x, y) => string.Compare(x.ScenarioTitle, y.ScenarioTitle));
+            listViewLibrary.itemsSource = searchList.ToList();
             listViewLibrary.Refresh();
         }
     }

@@ -9,7 +9,7 @@ public class Outcome : ScriptableObject
     public Event ChainEvent;
     public int ChainEventMaxTurnsAway = 3;
 
-    private string[] dummyReplies =
+    private static string[] dummyReplies =
     {
         "• Chaos has increased!",
         "• Chaos has increased!\n• Efficiency has increased!",
