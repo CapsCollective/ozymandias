@@ -6,12 +6,12 @@ public class ShowOnNewTurn : MonoBehaviour
 {
     void Awake()
     {
-        GameManager.OnNewTurn += () => gameObject.SetActive(true);
+        GameManager.OnNewTurn += () => GetComponent<Canvas>().enabled = true;
     }
 
     void Start()
     {
-        gameObject.SetActive(false);
+        GetComponent<Canvas>().enabled = false;
     }
 
 }
