@@ -120,6 +120,18 @@ public class GameManager : MonoBehaviour
         private set { currentWealth = value; }
     }
 
+    public bool Spend(int amount)
+    {
+        if (currentWealth >= amount)
+        {
+            currentWealth -= amount;
+            UpdateUi();
+            return true;
+        }
+        return false;
+    }
+    
+
     [HideInInspector]
     public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod;
 
