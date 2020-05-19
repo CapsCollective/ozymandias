@@ -67,8 +67,13 @@ public class Map : MonoBehaviour
     public void Occupy(BuildingPlacement.Building building, Cell[] cells)
     {
         Vector3[][] vertices = new Vector3[cells.Length][];
+
         for (int i = 0; i < vertices.Length; i++)
+        {
             vertices[i] = CellUnitToWorld(cells[i]);
+        }
+
+        mapLayout.Occupy(building, cells);
 
         building.Fit(vertices);
     }
