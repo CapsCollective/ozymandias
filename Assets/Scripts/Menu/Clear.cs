@@ -65,6 +65,7 @@ public class Clear : MonoBehaviour
     {
         map.Clear(cellsToClear);
         // cost money to clear (10g/cell)
+        // Currently clears buildings and terrain, but needs to only clear the latter
         
         ExitClearMode();
     }
