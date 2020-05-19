@@ -85,13 +85,13 @@ public class Clear : MonoBehaviour
 
     public void ClearSpace(Cell[] cellsToClear)
     {
-        //if (Manager.Spend(clearCost))
-        //{
-        //    map.Clear(cellsToClear);
-        //}
-        
+        if (Manager.Spend(clearCost))
+        {
+            map.Clear(cellsToClear);
+        }
+
         // Currently clears buildings and terrain, but needs to only clear the latter
-        
+
         ExitClearMode();
     }
 }
