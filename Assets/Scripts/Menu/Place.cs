@@ -12,7 +12,7 @@ public class Place : MonoBehaviour
     public Map map;
     public Click selectedObject;
     public Hover hoverObject;
-    private GameObject buildingInstantiated;
+    public GameObject buildingInstantiated;
     private RaycastHit hit;
     private Camera cam;
 
@@ -74,7 +74,7 @@ public class Place : MonoBehaviour
             {
                 Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
                 Physics.Raycast(ray, out hit);
-                if (hit.collider)
+                if (hit.collider && !EventSystem.current.IsPointerOverGameObject())
                 {
                     Destroy(buildingInstantiated);
 

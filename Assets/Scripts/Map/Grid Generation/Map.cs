@@ -81,16 +81,20 @@ public class Map : MonoBehaviour
     public void CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition)
     {
         GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
-        buildingInstance.GetComponent<BuildingStats>().Build();
         BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
 
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building);
 
         if (IsValid(cells))
+        {
+            buildingInstance.GetComponent<BuildingStats>().Build();
             Occupy(building, cells);
+        }
         else
+        {
             Destroy(buildingInstance);
+        }
     }
 
     public bool IsValid(Cell[] cells)
