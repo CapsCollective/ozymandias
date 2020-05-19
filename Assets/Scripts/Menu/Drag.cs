@@ -49,18 +49,6 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 buildingInstantiated.transform.Rotate(0, 30, 0);
             }
         }
-        
-        //TODO: Move into a ui updater class
-        if (buildingStats.baseCost > Manager.CurrentWealth)
-        {
-            image.color = button.colors.disabledColor;
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-        else
-        {
-            image.color = button.colors.normalColor;
-            GetComponent<CanvasGroup>().blocksRaycasts = true;
-        }
     }
 
 
