@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class Clear : MonoBehaviour
 {
@@ -30,10 +31,9 @@ public class Clear : MonoBehaviour
             Cell closest = map.GetCell(hit.point);
             
             bool canClear = !map.IsValid(closest);
-            if (closest!=null)
-            {
-                highlighted[0] = closest;
-            }
+
+            highlighted[0] = closest;
+
             
             Map.HighlightState state = canClear ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
             map.Highlight(highlighted, state);
@@ -57,12 +57,15 @@ public class Clear : MonoBehaviour
     public void ExitClearMode()
     {
         clearMode = false;
+        map.Highlight(highlighted, Map.HighlightState.Inactive);
+        highlighted = new Cell[1];
     }
 
     public void ClearSpace(Cell[] cellsToClear)
     {
         map.Clear(cellsToClear);
         // cost money to clear (10g/cell)
+        
         ExitClearMode();
     }
 }
