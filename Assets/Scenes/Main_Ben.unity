@@ -5131,7 +5131,7 @@ PrefabInstance:
     - target: {fileID: 7197153339500725284, guid: 2337cb4a4576445fc85f8172b67f9d1e,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7197153340197557295, guid: 2337cb4a4576445fc85f8172b67f9d1e,
         type: 3}
@@ -5192,6 +5192,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099778652482282381, guid: 2337cb4a4576445fc85f8172b67f9d1e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1394508381}
+    - target: {fileID: 9099778652482282381, guid: 2337cb4a4576445fc85f8172b67f9d1e,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_enabled
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2337cb4a4576445fc85f8172b67f9d1e, type: 3}
@@ -7734,6 +7744,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 229034898819881749, guid: 62a5555fc4d27a64999b9f53da24ee9e,
     type: 3}
   m_PrefabInstance: {fileID: 1309285457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &1394508381 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7197153339500725284, guid: 2337cb4a4576445fc85f8172b67f9d1e,
+    type: 3}
+  m_PrefabInstance: {fileID: 842521020}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1402642133 stripped
 Transform:
