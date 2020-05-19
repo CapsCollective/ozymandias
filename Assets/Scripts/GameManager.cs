@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
         
         // Run the menu tutorial system dialogue
         // Commented out for now, players can trigger from the help button
-        //dialogueManager?.StartDialogue("menu_tutorial");
+        dialogueManager?.StartDialogue("menu_tutorial");
     }
 
     [Button("Next Turn")]
