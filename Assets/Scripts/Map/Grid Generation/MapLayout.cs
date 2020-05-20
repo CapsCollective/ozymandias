@@ -77,6 +77,11 @@ public class MapLayout : ScriptableObject
         return step;
     }
 
+    public Cell Step(Cell root, BuildingStructure.Direction direction)
+    {
+        return root;
+    }
+
     public Cell[] GetCells(Cell root, BuildingStructure building)
     {
         List<Cell> cells = new List<Cell>();
