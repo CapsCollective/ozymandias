@@ -11,6 +11,7 @@ public class NewspaperController : MonoBehaviour
     [SerializeField] private GameObject[] articleList;
     [SerializeField] private Image articleImage;
     [SerializeField] private Button[] choiceList;
+    [SerializeField] private Text[] fillerList;
 
     // Private Fields
     private Event[] currentEvents;
@@ -58,8 +59,15 @@ public class NewspaperController : MonoBehaviour
         {
             if (i < currentEvents[0].Choices.Count)
             {
+                choiceList[i].gameObject.SetActive(true);
                 choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceTitle;
                 choiceList[i].interactable = true;
+                fillerList[i].text = "";
+            }
+            else
+            {
+                fillerList[i].text = "smaller event description text that contains more details on the quest. The particulars and flavour text are mostly contained within this section and allow the player to engage with the world on a narrative level. This is the smaller event description text that contains more details on the quest. The particulars and flavour text are mostly contained within this section and allow the player to engage with the world on a narrative level. This is the sm";
+                choiceList[i].gameObject.SetActive(false);
             }
         }
     }
