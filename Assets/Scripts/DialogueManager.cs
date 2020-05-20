@@ -35,7 +35,8 @@ public class DialogueManager : MonoBehaviour
 
     private void SetupDialogueEvents(string dialogueId)
     {
-        dialogueEvents = System.IO.File.ReadAllText("./Assets/Dialogue/" + dialogueId + ".dialogue")
+        var additionalPath = Application.platform == RuntimePlatform.OSXPlayer ? "/Resources/Data" : "";
+        dialogueEvents = System.IO.File.ReadAllText(Application.dataPath + additionalPath + "/StreamingAssets/Dialogue/" + dialogueId + ".dialogue")
             .Split(new [] { "~~" }, StringSplitOptions.RemoveEmptyEntries);
         for (var i = 0; i < dialogueEvents.Length; i++)
         {
