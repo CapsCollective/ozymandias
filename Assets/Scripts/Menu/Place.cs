@@ -7,12 +7,13 @@ using static GameManager;
 
 public class Place : MonoBehaviour
 {
-    public Map map;
+    private Map map;
     public Click selectedObject;
     public Hover hoverObject;
-    public GameObject buildingInstantiated;
+    //public GameObject buildingInstantiated;
     private RaycastHit hit;
     private Camera cam;
+    private EventSystem eventSystem;
     
     // HIGHLIGHTING
     private Cell[] highlighted = new Cell[0];
@@ -20,6 +21,9 @@ public class Place : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
+        map = Manager.map;
+        eventSystem = EventSystem.current;
+        
         ClickManager.OnLeftClick += LeftClick;
         ClickManager.OnRightClick += RightClick;
     }
@@ -29,26 +33,30 @@ public class Place : MonoBehaviour
         // Clear previous highlights
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
-        
-        if (selectedObject) Highlight();
-    }
 
-    private void Highlight()
+        if (!selectedObject || eventSystem.IsPointerOverGameObject()) return;
+        
+        Highlight();
+        
+        // building Instantiated not actually used for placement anymore
+        // if (!buildingInstantiated)
+        // {
+        //     if (hit.collider)
+        //     {
+        //         buildingInstantiated = Instantiate(selectedObject.building, hit.point, transform.rotation);
+        //     }
+        // }
+        // else
+        // {
+        //     buildingInstantiated.transform.position = hit.point;
+        // }
+    }
+    
+    private bool Highlight()
     {
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
-        if (!buildingInstantiated)
-        {
-            if (hit.collider)
-            {
-                buildingInstantiated = Instantiate(selectedObject.building, hit.point, transform.rotation);
-            }
-        }
-        else
-        {
-            buildingInstantiated.transform.position = hit.point;
-        }
-
+        
         // Check if new cells need to be highlighted
         Cell closest = map.GetCell(hit.point);
         BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
@@ -62,6 +70,8 @@ public class Place : MonoBehaviour
 
         Map.HighlightState state = valid ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
         map.Highlight(highlighted, state);
+        
+        return valid;
     }
     
     private void LeftClick()
@@ -72,7 +82,7 @@ public class Place : MonoBehaviour
             Physics.Raycast(ray, out hit);
             if (hit.collider && !EventSystem.current.IsPointerOverGameObject())
             {
-                Destroy(buildingInstantiated);
+                //Destroy(buildingInstantiated);
                 map.CreateBuilding(selectedObject.building, hit.point);
                 selectedObject = null;
             }
@@ -93,11 +103,11 @@ public class Place : MonoBehaviour
         
         if (!selectedObject) return;
         //TODO: Replace with actual rotation
-        buildingInstantiated.transform.Rotate(0,30,0);
+        //buildingInstantiated.transform.Rotate(0,30,0);
     }
     
-    public void NewSelection()
-    {
-        Destroy(buildingInstantiated);
-    }
+    // public void NewSelection()
+    // {
+    //     Destroy(buildingInstantiated);
+    // }
 }

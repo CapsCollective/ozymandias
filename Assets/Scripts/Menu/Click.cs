@@ -46,7 +46,7 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
         if (pointerEventData.button == PointerEventData.InputButton.Left)
         {
             place.selectedObject = this;
-            place.NewSelection();
+            // place.NewSelection();
             eventSystem.SetSelectedGameObject(gameObject);
         }
     }
