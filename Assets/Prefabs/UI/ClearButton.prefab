@@ -32,10 +32,10 @@ RectTransform:
   m_Father: {fileID: 8171228687913504637}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.43333334, y: 0.11666667}
-  m_AnchorMax: {x: 0.91666675, y: 0.5666667}
-  m_AnchoredPosition: {x: -11.205, y: 14.309999}
-  m_SizeDelta: {x: 34.39, y: 27.58}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 2.86, y: 6.380001}
+  m_SizeDelta: {x: 46.3, y: 45.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4948591485811535839
 CanvasRenderer:
@@ -58,14 +58,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5862cdd6497127e4eb770946f8ef2b7b, type: 3}
-    m_FontSize: 20
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -91,7 +91,6 @@ GameObject:
   - component: {fileID: 8171228687913504632}
   - component: {fileID: 8171228687913504635}
   - component: {fileID: 8171228687913504634}
-  - component: {fileID: 1804523746}
   - component: {fileID: 8470713524370089664}
   m_Layer: 5
   m_Name: ClearButton
@@ -210,20 +209,6 @@ MonoBehaviour:
           m_StringArgument: menu_tutorial
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1804523746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8171228687913504636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b8720f9284480a4fb7287a74b7cf20b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map: {fileID: 0}
-  clearCost: 5
 --- !u!114 &8470713524370089664
 MonoBehaviour:
   m_ObjectHideFlags: 0
