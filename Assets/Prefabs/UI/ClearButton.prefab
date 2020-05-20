@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.43333334, y: 0.11666667}
   m_AnchorMax: {x: 0.91666675, y: 0.5666667}
-  m_AnchoredPosition: {x: -1.009999, y: 9.5}
-  m_SizeDelta: {x: 12.020002, y: 33}
+  m_AnchoredPosition: {x: -11.205, y: 14.309999}
+  m_SizeDelta: {x: 34.39, y: 27.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4948591485811535839
 CanvasRenderer:
@@ -64,11 +64,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 22
+    m_Font: {fileID: 12800000, guid: 5862cdd6497127e4eb770946f8ef2b7b, type: 3}
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 8171228687913504635}
   - component: {fileID: 8171228687913504634}
   - component: {fileID: 1804523746}
+  - component: {fileID: 8470713524370089664}
   m_Layer: 5
   m_Name: ClearButton
   m_TagString: Untagged
@@ -145,7 +146,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7af0445314f7ac841a7efc7b28a3be2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ad755bc0e19177b45b6e2011cb604305, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -177,9 +178,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1804523746}
+      - m_Target: {fileID: 8470713524370089664}
         m_MethodName: EnterClearMode
         m_Mode: 1
         m_Arguments:
@@ -222,3 +223,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 0}
+  clearCost: 5
+--- !u!114 &8470713524370089664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8171228687913504636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8720f9284480a4fb7287a74b7cf20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 0}
+  clearCost: 5
