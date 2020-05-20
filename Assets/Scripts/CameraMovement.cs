@@ -79,9 +79,8 @@ public class CameraMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log(Input.GetAxis("Zoom"));
                 rb.AddForce(transform.TransformDirection(
-                    new Vector3(0, 0, Mathf.Clamp(Input.GetAxis("Zoom"), -1, 1) * scrollSpeed * 10)
+                    new Vector3(0, 0, Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.05f) * scrollSpeed * 10)
                 ));
             }
         }
