@@ -83,6 +83,7 @@ public class Clear : MonoBehaviour
         image.color = Color.white;
     }
 
+
     public void ClearSpace(Cell[] cellsToClear)
     {
         if (Manager.Spend(clearCost))
@@ -92,6 +93,6 @@ public class Clear : MonoBehaviour
 
         // Currently clears buildings and terrain, but needs to only clear the latter
 
-        ExitClearMode();
+        //ExitClearMode();
     }
 }
