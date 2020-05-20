@@ -73,15 +73,16 @@ public class CameraMovement : MonoBehaviour
             {
                 rb.AddForce(transform.TransformDirection(new Vector3(0, 0,2)));
             }
-            if (transform.position.y < minHeight)
+            else if (transform.position.y < minHeight)
             {
                 rb.AddForce(transform.TransformDirection(new Vector3(0, 0,-1)));
             }
             else
             {
+                Debug.Log(Input.GetAxis("Zoom"));
                 rb.AddForce(transform.TransformDirection(
-                    new Vector3(0, 0, Input.GetAxis("Zoom") * scrollSpeed * 10))
-                );
+                    new Vector3(0, 0, Mathf.Clamp(Input.GetAxis("Zoom"), -1, 1) * scrollSpeed * 10)
+                ));
             }
         }
     }
