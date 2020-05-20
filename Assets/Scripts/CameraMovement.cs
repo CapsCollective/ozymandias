@@ -7,18 +7,24 @@ public class CameraMovement : MonoBehaviour
 {
     private Rigidbody rb;
     private Camera cam;
-    private Vector3 dragOrigin, cameraOrigin;
+    private Vector3 dragOrigin, cameraOrigin, rotateAxis;
     private float rotateOrigin;
     private bool dragging, rotating;
     
-    public float
-        dragSpeed = 3.5f,
-        scrollSpeed = 15,
-        rotateSpeed = 180;
+    [Range(1,10)]
+    public int
+        dragSpeed = 3,
+        scrollSpeed = 3,
+        rotateSpeed = 3;
     
     public int
-        minHeight = 4,
-        maxHeight = 20;
+        minHeight = 5,
+        maxHeight = 25,
+        minAngle = 25,
+        maxAngle = 60;
+    
+    private RaycastHit hit;
+    private float distance = 50f;
     
     void Awake()
     {
@@ -36,20 +42,17 @@ public class CameraMovement : MonoBehaviour
         }
         else if (!dragging && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
-            dragOrigin = Input.mousePosition;
-            rotateOrigin = transform.eulerAngles.y;
-            rotating = true;
-
+            Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                rotateAxis = hit.point;
+                rotating = true;
+            }
         }
         
-        if (Input.GetMouseButtonUp(0))
-        {
-            dragging = false;
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            rotating = false;
-        }
+        if (Input.GetMouseButtonUp(0)) dragging = false;
+        if (Input.GetMouseButtonUp(1)) rotating = false;
 
         if (dragging)
         {
@@ -62,27 +65,29 @@ public class CameraMovement : MonoBehaviour
         }
         else if(rotating)
         {
-            Vector3 dir = cam.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-            Transform t = transform;
-            Vector3 angles = t.eulerAngles;
-            t.eulerAngles = new Vector3(angles.x, rotateOrigin + dir.x * rotateSpeed, angles.z);
+             transform.RotateAround(rotateAxis, Vector3.up, Input.GetAxis("Mouse X") * rotateSpeed);
         }
         else
         {
             if (transform.position.y > maxHeight)
             {
-                rb.AddForce(transform.TransformDirection(new Vector3(0, 0,2)));
+                rb.AddForce(new Vector3(0, -1,0));
             }
             else if (transform.position.y < minHeight)
             {
-                rb.AddForce(transform.TransformDirection(new Vector3(0, 0,-1)));
+                rb.AddForce(new Vector3(0, 1, 0));
             }
             else
             {
-                rb.AddForce(transform.TransformDirection(
-                    new Vector3(0, 0, Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.05f) * scrollSpeed * 10)
-                ));
+                // Map the angle by the height
+                transform.eulerAngles = new Vector3(Remap(transform.position.y, minHeight, maxHeight - 5, minAngle, maxAngle), transform.eulerAngles.y, 0);
+                if (rb.velocity.y < 10 && rb.velocity.y > -10)
+                    rb.AddForce(new Vector3(0, Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0));
             }
         }
+    }
+    
+    public static float Remap (float value, float min1, float max1, float min2, float max2) {
+        return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
     }
 }
