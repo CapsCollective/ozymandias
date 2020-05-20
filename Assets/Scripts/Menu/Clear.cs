@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
+using UnityEngine.EventSystems;
 
 public class Clear : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class Clear : MonoBehaviour
     public Map map;
     private Image image;
     public int clearCost = 5;
+    EventSystem eventSystem;
 
     private void Awake()
     {
         image = GetComponent<Image>();
         image.color = Color.white;
+        eventSystem = EventSystem.current;
     }
 
     // Update is called once per frame
@@ -47,10 +50,14 @@ public class Clear : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("UI"))
+                if (eventSystem.IsPointerOverGameObject())
                 {
-                    ExitClearMode();
-                    return;
+                    if (eventSystem.currentSelectedGameObject.gameObject != gameObject)
+                    {
+                        ExitClearMode();
+                        return;
+                    }
+                    
                 }
 
                 else if (canClear)
