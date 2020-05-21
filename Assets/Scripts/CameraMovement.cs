@@ -22,6 +22,8 @@ public class CameraMovement : MonoBehaviour
         maxHeight = 25,
         minAngle = 25,
         maxAngle = 60;
+
+    public bool invertScroll;
     
     private RaycastHit hit;
     private float distance = 50f;
@@ -79,10 +81,11 @@ public class CameraMovement : MonoBehaviour
             }
             else
             {
+                int dir = invertScroll ? 1 : -1;
                 // Map the angle by the height
                 transform.eulerAngles = new Vector3(Remap(transform.position.y, minHeight, maxHeight - 5, minAngle, maxAngle), transform.eulerAngles.y, 0);
                 if (rb.velocity.y < 10 && rb.velocity.y > -10)
-                    rb.AddForce(new Vector3(0, Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0));
+                    rb.AddForce(new Vector3(0, dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0));
             }
         }
     }
