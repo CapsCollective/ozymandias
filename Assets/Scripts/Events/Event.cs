@@ -21,5 +21,6 @@ public class Event : ScriptableObject
 
     public float weight;
 
-    public Outcome defaultOutcome;
+    [Tooltip("These are the outcomes that are run without making a choice")]
+    public List<Outcome> eventOutcomes = new List<Outcome>();
 }

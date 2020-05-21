@@ -5,32 +5,37 @@ using UnityEngine.EventSystems;
 
 public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
-    public GameObject helper;
-    public GameObject instantiatedHelper;
-    public bool isHovered = false;
-    private Place place;
+    public GameObject helperPrefab;
+    private GameObject helper;
+    private bool isHovered;
 
-    private void Start()
+    private void Awake()
     {
-        place = FindObjectOfType<Place>();
+        ClickManager.OnRightClick += RightClick;
     }
     
+    public void RightClick()
+    {
+        if (!isHovered) return;
+        if (helper) Destroy(helper);
+        else InfoBox();
+    }
+    
+    public void InfoBox()
+    {
+        if (!helperPrefab) return;
+        helper = Instantiate(helperPrefab, transform, false);
+        helper.transform.localPosition = new Vector3(0, 150, 0);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovered = true;
-        place.hoverObject = this;
-    }
-    
-
-    public void InfoBox()
-    {
-        instantiatedHelper = Instantiate(helper, transform, false);
-        instantiatedHelper.transform.localPosition = new Vector3(0, 150, 0);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Destroy(instantiatedHelper);
+        Destroy(helper);
         isHovered = false;
     }
 }

@@ -11,7 +11,7 @@ public class EventDisplayManager : MonoBehaviour
     {
         titleText.text = upper ? e.ScenarioTitle.ToUpper() : e.ScenarioTitle;
         descriptionText.text = e.ScenarioText;
-        if (e.defaultOutcome)
-            effectText.text = e.defaultOutcome.GetOutcomeString() ?? "";
+        if (e.eventOutcomes.Count > 0)
+            effectText.text = EventQueue.outcomeString ?? "";
     }
 }
