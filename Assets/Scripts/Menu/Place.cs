@@ -19,6 +19,9 @@ public class Place : MonoBehaviour
     // HIGHLIGHTING
     private Cell[] highlighted = new Cell[0];
 
+    // ROTATION
+    private int rotation = 0;
+
     private void Awake()
     {
         cam = Camera.main;
@@ -50,12 +53,14 @@ public class Place : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 buildingInstantiated.transform.Rotate(0,30,0);
+                rotation++;
+
             }
 
             // Check if new cells need to be highlighted
             Cell closest = map.GetCell(hit.point);
             BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
-            Cell[] cells = map.GetCells(closest, building);
+            Cell[] cells = map.GetCells(closest, building, rotation);
 
             // Check if cells are valid
             bool valid = map.IsValid(cells);
@@ -78,7 +83,7 @@ public class Place : MonoBehaviour
                 {
                     Destroy(buildingInstantiated);
 
-                    map.CreateBuilding(selectedObject.building, hit.point);
+                    map.CreateBuilding(selectedObject.building, hit.point, rotation);
 
                     selectedObject = null;
                 }
