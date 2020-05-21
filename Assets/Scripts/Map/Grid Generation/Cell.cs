@@ -102,6 +102,16 @@ public class Cell
         }
     }
 
+    public void RotateCell(int numRotations)
+    {
+        for (int i = 0; i < numRotations; i++)
+        {
+            Vertex front = Vertices[0];
+            Vertices.Remove(front);
+            Vertices.Add(front);
+        }
+    }
+
     public static bool operator ==(Cell cell, Cell other)
     {
         if (ReferenceEquals(other, null))

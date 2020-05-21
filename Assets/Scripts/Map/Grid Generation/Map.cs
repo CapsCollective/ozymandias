@@ -25,13 +25,6 @@ public class Map : MonoBehaviour
     private void Awake()
     {
         Generate();
-
-        List<Cell> cells = new List<Cell>();
-        cells.Add(mapLayout.CellGraph.GetData()[0]);
-
-        cells.Add(mapLayout.Step(cells[cells.Count - 1], new BuildingStructure.Direction[] { BuildingStructure.Direction.Forward, BuildingStructure.Direction.Right, BuildingStructure.Direction.Back }));
-
-        Highlight(cells.ToArray(), HighlightState.Valid);
     }
 
     public void Highlight(Cell[] cells, HighlightState state)
@@ -95,6 +88,7 @@ public class Map : MonoBehaviour
 
         if (IsValid(cells))
         {
+            mapLayout.Align(cells, rotation);
             buildingInstance.GetComponent<BuildingStats>().Build();
             Occupy(building, cells);
         }
