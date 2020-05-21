@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4926950199246871018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  OutcomeName: 
+  OutcomeFlavourText: Your village is terrified (-10% Satisfaction)
+  StatToChange: 1
+  Amount: -10
+  Turns: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Santa
+  m_EditorClassIdentifier: 
+  ScenarioTitle: Ho Ho Horror
+  ScenarioText: An Evil Wizard dressed all in red with a sleigh and reindeer blazed
+    through town scaring residents and adventurers alike. The sound of his haunting
+    laugh caused a few of our resident elves to flee in terror at the sound of their
+    former master.
+  ScenarioBackground: {fileID: 0}
+  Choices: []
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  weight: 0
+  EventOutcomes:
+  - {fileID: 4317875650670658602}
+  - {fileID: -4926950199246871018}
+--- !u!114 &4317875650670658602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: Remove Adventurers(Clone)
+  m_EditorClassIdentifier: 
+  OutcomeName: Elves Flee
+  OutcomeFlavourText: 3 Adventures fled into the forest, never to be seen again
+  adventurerNames:
+  - 
+  - 
+  - 
+  kill: 0

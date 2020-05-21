@@ -7,16 +7,8 @@ using static GameManager;
 [CreateAssetMenu]
 public class StatChange : Outcome
 {
-    public enum StatToEffect
-    {
-        Chaos,
-        Defense,
-        Adventurers,
-        Threat,
-        Satisfaction
-    }
 
-    public StatToEffect StatToChange;
+    public Metric StatToChange;
     public int Amount;
     public int Turns;
 
@@ -40,25 +32,8 @@ public class StatChange : Outcome
             return;
         }
 
-        switch (StatToChange)
-        {
-            case StatToEffect.Chaos:
-                Manager.ChaosMod += Amount;
-                break;
-            case StatToEffect.Defense:
-                Manager.DefenseMod += Amount;
-                break;
-            case StatToEffect.Adventurers:
-                Manager.AdventurersMod += Amount;
-                break;
-            case StatToEffect.Threat:
-                Manager.ThreatMod += Amount;
-                break;
-            case StatToEffect.Satisfaction:
-                Manager.SatisfactionMod += Amount;
-                break;
-        }
-        
+        Manager.modifiers[StatToChange] += Amount;
+
         Debug.Log($"{StatToChange} was changed by {Amount}. {turnsLeft} turns remaining.");
         turnsLeft--;
     }

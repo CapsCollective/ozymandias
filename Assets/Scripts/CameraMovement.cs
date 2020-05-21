@@ -25,9 +25,6 @@ public class CameraMovement : MonoBehaviour
 
     public bool invertScroll;
     
-    private RaycastHit hit;
-    private float distance = 50f;
-    
     void Awake()
     {
         cam = GetComponent<Camera>();

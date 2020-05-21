@@ -14,24 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OutcomeName: Stat Change
   OutcomeFlavourText: 
-  StatToChange: 1
+  StatToChange: 2
   Amount: -3
   Turns: 5
---- !u!114 &-774007562443861194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: New Choice
-  m_EditorClassIdentifier: 
-  ChoiceTitle: New Choice
-  ChoiceText: 
-  PossibleOutcomes: []
 --- !u!114 &-487042889847760454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +51,6 @@ MonoBehaviour:
   Choices:
   - {fileID: 6807836616848578861}
   - {fileID: -487042889847760454}
-  - {fileID: -774007562443861194}
   minChaos: 0
   minThreat: 0
   minWealth: 0
@@ -89,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChoiceTitle: Send Adventurers After Them
   ChoiceText: The adventurers have been hitting the crabs for weeks now. They are
-    strong enough to take on te toughest of crabs now.
+    strong enough to take on the toughest of crabs now.
   PossibleOutcomes:
   - {fileID: 7820212843733379569}
 --- !u!114 &7820212843733379569
@@ -106,6 +90,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OutcomeName: Stat Change
   OutcomeFlavourText: 
-  StatToChange: 1
+  StatToChange: 2
   Amount: 3
   Turns: 5

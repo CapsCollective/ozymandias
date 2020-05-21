@@ -1,21 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2677079579589401081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: Remove Adventurers(Clone)
-  m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: 
-  adventurerNames:
-  - Red
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,12 +13,11 @@ MonoBehaviour:
   m_Name: Bandit Raid
   m_EditorClassIdentifier: 
   ScenarioTitle: Bandit Raid Takes its Toll
-  ScenarioText: 'Three Adventurers (and 23 villagers) have been struck down protecting
-    our town from a clan or nearby marauders. '
+  ScenarioText: Three Adventurers (and 23 villagers) have been struck down protecting
+    our town from a clan or nearby marauders. They didn't even try to steal anything,
+    they're just jerks.
   ScenarioBackground: {fileID: 0}
-  Choices:
-  - {fileID: 2806359146785441729}
-  - {fileID: 7858163021182870844}
+  Choices: []
   minChaos: 0
   minThreat: 0
   minWealth: 0
@@ -42,8 +25,9 @@ MonoBehaviour:
   maxThreat: 0
   maxWealth: 0
   weight: 0
-  eventOutcomes: []
---- !u!114 &2806359146785441729
+  EventOutcomes:
+  - {fileID: 2056828757709682750}
+--- !u!114 &2056828757709682750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,13 +36,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Make Choice
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: Remove Adventurers(Clone)
   m_EditorClassIdentifier: 
-  ChoiceTitle: Make Choice
-  ChoiceText: 
-  PossibleOutcomes:
-  - {fileID: 6544387140945141549}
+  OutcomeName: 
+  OutcomeFlavourText: 3 adventurers were killed
+  adventurerNames:
+  - 
+  - 
+  - 
+  kill: 1
 --- !u!114 &6544387140945141549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,19 +64,4 @@ MonoBehaviour:
   - 
   - 
   - 
---- !u!114 &7858163021182870844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Remove Red
-  m_EditorClassIdentifier: 
-  ChoiceTitle: Remove Red
-  ChoiceText: 
-  PossibleOutcomes:
-  - {fileID: -2677079579589401081}
+  kill: 0

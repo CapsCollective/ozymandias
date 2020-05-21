@@ -13,12 +13,21 @@ public enum Metric
     Satisfaction,
     Effectiveness,
     Spending,
-    Defense
+    Defense,
+    Threat, //per turn
+    Chaos,
+}
+
+public enum BuildingTypes
+{
+    Inn,
+    Blacksmith,
+    ItemShop,
+    Bar
 }
 
 public class GameManager : MonoBehaviour
 {
-
     public static Action OnNewTurn;
     public static Action OnUpdateUI;
     
@@ -34,83 +43,70 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public Dictionary<Metric, int> modifiers = new Dictionary<Metric, int>();
+    
     [ReadOnly] [SerializeField] private List<Adventurer> adventurers = new List<Adventurer>();
 
     [ReadOnly] [SerializeField] public List<BuildingStats> buildings = new List<BuildingStats>();
-
-    /*public List<Building> Buildings
-    {
-        get
-        {
-            return GameObject.FindGameObjectsWithTag("Building").Select(x => x.GetComponent<Building>()).ToList();
-        }
-    }*/
-
+    
     [ReadOnly] [SerializeField] private int availableAdventurers;
-
     public int AvailableAdventurers
     {
-        get { return availableAdventurers = adventurers.Count(x => x.assignedQuest == null) + AdventurersMod; }
+        get { return availableAdventurers = adventurers.Count(x => x.assignedQuest == null); }
     }
 
     [ReadOnly] [SerializeField] private int accommodation;
-
     public int Accommodation
     {
         get { return accommodation = buildings.Where(x => x.operational).Sum(x => x.accommodation); }
     }
 
     [ReadOnly] [SerializeField] private int satisfaction;
-
     public int Satisfaction
     {
-        get { return satisfaction = buildings.Where(x => x.operational).Sum(x => x.satisfaction) + SatisfactionMod; }
+        get { return satisfaction = buildings.Where(x => x.operational).Sum(x => x.satisfaction) + modifiers[Metric.Satisfaction]; }
     }
 
     [ReadOnly] [SerializeField] private int effectiveness;
-
     public int Effectiveness
     {
-        get { return effectiveness = buildings.Where(x => x.operational).Sum(x => x.effectiveness); }
+        get { return effectiveness = buildings.Where(x => x.operational).Sum(x => x.effectiveness) + modifiers[Metric.Effectiveness]; }
     }
 
     [ReadOnly] [SerializeField] private int spending;
-
     public int Spending
     {
-        get { return spending = buildings.Where(x => x.operational).Sum(x => x.spending); }
+        get { return spending = buildings.Where(x => x.operational).Sum(x => x.spending) + modifiers[Metric.Spending]; }
     }
 
     [ReadOnly] [SerializeField] private int defense;
-
     public int Defense
     {
         get
         {
             return defense = AvailableAdventurers * Effectiveness +
-                             buildings.Where(x => x.operational).Sum(x => x.defense) + DefenseMod;
+                             buildings.Where(x => x.operational).Sum(x => x.defense) +
+                             modifiers[Metric.Defense];
         }
     }
 
     [ReadOnly] [SerializeField] private int chaos;
-
     public int Chaos
     {
-        get { return chaos = AvailableAdventurers / (Satisfaction + 1) + ChaosMod; }
+        get { return chaos = AvailableAdventurers / (Satisfaction + 1) + modifiers[Metric.Chaos]; }
     }
 
     [ReadOnly] [SerializeField] private int wealthPerTurn;
-
     public int WealthPerTurn
     {
         get { return wealthPerTurn = Spending * AvailableAdventurers; }
     }
 
     [SerializeField] private int threat;
-
     public int Threat
     {
-        get { return threat + ThreatMod; }
+        get { return threat; }
         private set { threat = value; }
     }
 
@@ -133,10 +129,6 @@ public class GameManager : MonoBehaviour
         return false;
     }
     
-
-    [ReadOnly]
-    public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod, SatisfactionMod;
-
     public void AddAdventurer()
     {
         adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
@@ -151,27 +143,26 @@ public class GameManager : MonoBehaviour
         adventurers.Add(adventurer);
     }
     
-    public void RemoveAdventurer() //Removes a random adventurer, ensuring they aren't special
+    public void RemoveAdventurer(bool kill) //Removes a random adventurer, ensuring they aren't special
     {
         Adventurer toRemove = adventurers[Random.Range(0, adventurers.Count)];
         if (toRemove.isSpecial)
         {
-            RemoveAdventurer(); // Try again!
+            RemoveAdventurer(kill); // Try again!
         }
         else
         {
             adventurers.Remove(toRemove);
-            toRemove.transform.parent = GameObject.Find("Graveyard").transform; //I REALLY hope we make use of this at some point
+            if (kill) toRemove.transform.parent = GameObject.Find("Graveyard").transform; //I REALLY hope we make use of this at some point
         }
     }
-    public void RemoveAdventurer(string adventurerName) // Deletes an adventurer by name
+    public void RemoveAdventurer(string adventurerName, bool kill) // Deletes an adventurer by name
     {
         Adventurer toRemove = GameObject.Find(adventurerName)?.GetComponent<Adventurer>();
         if (!toRemove) return;
         adventurers.Remove(toRemove);
-        toRemove.transform.parent = GameObject.Find("Graveyard").transform;
+        if (kill) toRemove.transform.parent = GameObject.Find("Graveyard").transform;
     }
-    
     
     [Button("StartGame")]
     public void StartGame()
@@ -181,10 +172,11 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in GameObject.Find("Buildings").transform) Destroy(child.gameObject);
         adventurers = new List<Adventurer>();
         buildings = new List<BuildingStats>();
+        // Set all mods to 0 at start
+        foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers.Add(mod, 0);
 
         // Start game with 5 Adventurers
         for (int i = 0; i < 5; i++) AddAdventurer();
-        
 
         CurrentWealth = 50;
         threat = 1;
@@ -198,14 +190,11 @@ public class GameManager : MonoBehaviour
     [Button("Next Turn")]
     public void NextTurn()
     {
-        if (adventurers.Count() < Accommodation) AddAdventurer();
-        Threat += buildings.Count;
+        //if (adventurers.Count() < Accommodation) AddAdventurer();
+        Threat += buildings.Count + modifiers[Metric.Threat];
         CurrentWealth = WealthPerTurn;
 
-        ChaosMod = 0;
-        AdventurersMod = 0;
-        DefenseMod = 0;
-        SatisfactionMod = 0;
+        foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;
 
         OnNewTurn?.Invoke();
         UpdateUi();
@@ -250,16 +239,9 @@ public class GameManager : MonoBehaviour
 
     private void BuildGuildHall()
     {
-        //TODO: Should place in the center of your town
-        //Need to call the click place manager for a virtual place if possible
-        //Instantiate(guildHall, GameObject.Find("Buildings").transform).GetComponent<Building>().Build();
-
         //Build Guild Hall in the center of the map
-        //map.Occupy(guildHall, map.transform.position);
-
         map.CreateBuilding(guildHall, map.transform.position);
     }
-
 
     private List<string> shownTutorials = new List<string>();
     public void ShowTutorial(string tutorialName)
@@ -269,5 +251,4 @@ public class GameManager : MonoBehaviour
         dialogueManager.StartDialogue(tutorialName);
         shownTutorials.Add(tutorialName);
     }
-
 }

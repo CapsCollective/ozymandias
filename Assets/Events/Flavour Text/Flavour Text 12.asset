@@ -25,4 +25,22 @@ MonoBehaviour:
   maxThreat: 0
   maxWealth: 0
   weight: 0
-  eventOutcomes: []
+  EventOutcomes:
+  - {fileID: 1098204887201390731}
+--- !u!114 &1098204887201390731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  OutcomeName: 
+  OutcomeFlavourText: +5% spending for 3 turns while we sell all this 'wood'
+  StatToChange: 3
+  Amount: 5
+  Turns: 3

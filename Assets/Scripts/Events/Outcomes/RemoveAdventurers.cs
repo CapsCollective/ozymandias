@@ -7,13 +7,14 @@ using static GameManager;
 public class RemoveAdventurers : Outcome
 {
     public List<string> adventurerNames;
-    
+    // To shreds, you say?
+    public bool kill; // If they move to the graveyard or just disappear
     public override bool Execute()
     {
         for (int i = 0; i < adventurerNames.Count; i++)
         {
-            if (adventurerNames[i] != "") Manager.RemoveAdventurer(adventurerNames[i]);
-            else Manager.RemoveAdventurer();
+            if (adventurerNames[i] != "") Manager.RemoveAdventurer(adventurerNames[i], kill);
+            else Manager.RemoveAdventurer(kill);
         }
         return true;
     }

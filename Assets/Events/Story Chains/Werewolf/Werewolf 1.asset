@@ -45,7 +45,7 @@ MonoBehaviour:
   maxThreat: 0
   maxWealth: 0
   weight: 0
-  eventOutcomes: []
+  EventOutcomes: []
 --- !u!114 &2707728269844793250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,11 +59,8 @@ MonoBehaviour:
   m_Name: Turn them away, I don't trust them
   m_EditorClassIdentifier: 
   ChoiceTitle: Turn them away, I don't trust them
-  ChoiceText: 'They return back into the dark forest, looking for a more welcoming
+  ChoiceText: They return back into the dark forest, looking for a more welcoming
     home.
-
-
-    The town is unhappy with your ruthless leadership.'
   PossibleOutcomes:
   - {fileID: 4985601282046543001}
 --- !u!114 &3711671296783633845
@@ -78,8 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
   m_Name: New Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: The travelers take up residence
-  OutcomeFlavourText: 
+  OutcomeName: 
+  OutcomeFlavourText: +2 adventurers.
   adventurers:
   - {fileID: 11400000, guid: d8f0402a50694ea418fd075d7a350b3b, type: 2}
   - {fileID: 11400000, guid: 95fa95a4e700c0e468515709e0960dd3, type: 2}
@@ -96,7 +93,8 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   OutcomeName: 
-  OutcomeFlavourText: 
-  StatToChange: 4
+  OutcomeFlavourText: The town is unhappy with your ruthless leadership. -10% Satisfaction
+    for 2 turns.
+  StatToChange: 1
   Amount: -10
   Turns: 2
