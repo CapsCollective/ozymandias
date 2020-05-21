@@ -23,11 +23,11 @@ public class ScenarioEditor : EditorWindow
     private TextField tfScenarioDescription;
     private ObjectField ofBackground;
     private ListView choiceListView;
-    private ListView listOutcomes;
+    private ListView listChoiceOutcomes;
+    private ListView listEventOutcomes;
     private ToolbarMenu menuEventOutcomes;
     private ToolbarMenu menuChoiceOutcomes;
     private ToolbarSearchField librarySearchField;
-    Button btnEditDefaultOutcome;
     private List<Event> eventsList = new List<Event>();
 
     // Search Stuff
@@ -80,16 +80,11 @@ public class ScenarioEditor : EditorWindow
         tfScenarioTitle = root.Query<TextField>("tfScenarioName");
         tfScenarioDescription = root.Query<TextField>("tfScenarioDescription");
         ofBackground = root.Query<ObjectField>("ofBackground");
-        listOutcomes = root.Query<ListView>("listOutcomes");
+        listChoiceOutcomes = root.Query<ListView>("listChoiceOutcomes");
         ofBackground.objectType = typeof(Sprite);
         //VisualElement choiceUI = root.Query("ChoiceTemplate");
+        listEventOutcomes = root.Query<ListView>("listEventOutcomes");
 
-        btnEditDefaultOutcome = root.Query<Button>("btnEditDefaultOutcome");
-        btnEditDefaultOutcome.clickable.clicked += () =>
-        {
-            //if (scenario.defaultOutcome != null)
-            //    selectedOutcome = new SerializedObject(scenario.defaultOutcome);
-        };
 
         var outcomes = AssetDatabase.FindAssets($"t:{typeof(Outcome)}");
         menuEventOutcomes = root.Query<ToolbarMenu>("menuEventOutcomes");
@@ -99,8 +94,11 @@ public class ScenarioEditor : EditorWindow
             var outcome = AssetDatabase.LoadAssetAtPath<Outcome>(outcomePath);
             Action<DropdownMenuAction> dropdownAction = (a) =>
             {
-                //scenario.defaultOutcome = Instantiate(outcome);
-                //btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + scenario.defaultOutcome.name;
+                Outcome newOutcome = Instantiate(outcome);
+                scenario.EventOutcomes.Add(newOutcome);
+                AssetDatabase.AddObjectToAsset(newOutcome, scenario);
+                listEventOutcomes.itemsSource = scenario.EventOutcomes;
+                listEventOutcomes.Refresh();
             };
             menuEventOutcomes.menu.InsertAction(i, outcome.name, dropdownAction, DropdownMenuAction.Status.Normal);
         }
@@ -168,6 +166,56 @@ public class ScenarioEditor : EditorWindow
         };
     }
 
+    private void SetupEventOutcomes()
+    {
+        Func<VisualElement> makeItem = () =>
+        {
+            var visualElement = new VisualElement();
+            visualElement.style.flexDirection = FlexDirection.Row;
+            visualElement.style.flexGrow = 1f;
+            visualElement.style.flexShrink = 0f;
+            visualElement.style.flexBasis = 0f;
+
+            var txt = new Label();
+            txt.style.flexGrow = 1f;
+            txt.style.flexShrink = 0f;
+            txt.style.flexBasis = 0f;
+            txt.style.alignSelf = Align.Center;
+            visualElement.Add(txt);
+
+            var deleteBtn = new Button();
+            deleteBtn.style.flexGrow = 0.01f;
+            deleteBtn.style.flexShrink = 0f;
+            deleteBtn.style.flexBasis = 0f;
+            deleteBtn.style.alignContent = Align.Center;
+            deleteBtn.text = "X";
+            visualElement.Add(deleteBtn);
+
+            return visualElement;
+        };
+
+        Action<VisualElement, int> bindItem = (e, i) =>
+        {
+            e.style.backgroundColor = colors[i % 2];
+            (e.ElementAt(0) as Label).text = scenario.EventOutcomes[i].name;
+            (e.ElementAt(1) as Button).clicked += () =>
+            {
+                AssetDatabase.RemoveObjectFromAsset(scenario.EventOutcomes[i]);
+                scenario.EventOutcomes.RemoveAt(i);
+                listEventOutcomes.Refresh();
+            };
+        };
+
+        listEventOutcomes.itemsSource = scenario.EventOutcomes;
+        listEventOutcomes.itemHeight = 20;
+        listEventOutcomes.makeItem = makeItem;
+        listEventOutcomes.bindItem = bindItem;
+        listEventOutcomes.onItemChosen += (o) =>
+        {
+            selectedOutcome = new SerializedObject((Outcome)o);
+        };
+    }
+
     private void NewOutcome()
     {
         Outcome newOutcome = new Outcome()
@@ -220,11 +268,11 @@ public class ScenarioEditor : EditorWindow
             };
         };
 
-        listOutcomes.itemsSource = selectedChoice.PossibleOutcomes;
-        listOutcomes.itemHeight = 20;
-        listOutcomes.makeItem = makeItem;
-        listOutcomes.bindItem = bindItem;
-        listOutcomes.onItemChosen += (o) =>
+        listChoiceOutcomes.itemsSource = selectedChoice.PossibleOutcomes;
+        listChoiceOutcomes.itemHeight = 20;
+        listChoiceOutcomes.makeItem = makeItem;
+        listChoiceOutcomes.bindItem = bindItem;
+        listChoiceOutcomes.onItemChosen += (o) =>
         {
             selectedOutcome = new SerializedObject((Outcome)o);
         };
@@ -311,11 +359,7 @@ public class ScenarioEditor : EditorWindow
             tfScenarioDescription.SetValueWithoutNotify(scenario.ScenarioText);
             tfScenarioDescription.Bind(serializedObject);
             ofBackground.value = scenario.ScenarioBackground;
-
-            //if (scenario.defaultOutcome != null)
-            //    btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + scenario.defaultOutcome.name;
-            //else
-            //    btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + "None";
+            SetupEventOutcomes();
 
             RefreshScenarioList();
         }
