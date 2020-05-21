@@ -100,6 +100,7 @@ public class ScenarioEditor : EditorWindow
                 scenario.EventOutcomes.Add(newOutcome);
                 AssetDatabase.AddObjectToAsset(newOutcome, scenario);
                 listEventOutcomes.itemsSource = scenario.EventOutcomes;
+                AssetDatabase.SaveAssets();
                 listEventOutcomes.Refresh();
             };
             menuEventOutcomes.menu.InsertAction(i, outcome.name, dropdownAction, DropdownMenuAction.Status.Normal);
@@ -117,6 +118,7 @@ public class ScenarioEditor : EditorWindow
                     Outcome newOutcome = Instantiate(outcome);
                     selectedChoice.PossibleOutcomes.Add(newOutcome);
                     AssetDatabase.AddObjectToAsset(newOutcome, selectedChoice);
+                    AssetDatabase.SaveAssets();
                     RefreshOutcomesList();
                 }
             };
@@ -179,6 +181,7 @@ public class ScenarioEditor : EditorWindow
                 AssetDatabase.RemoveObjectFromAsset(scenario.EventOutcomes[i]);
                 scenario.EventOutcomes.RemoveAt(i);
                 listEventOutcomes.Refresh();
+                AssetDatabase.SaveAssets();
             };
         };
 
@@ -214,6 +217,7 @@ public class ScenarioEditor : EditorWindow
             {
                 AssetDatabase.RemoveObjectFromAsset(selectedChoice.PossibleOutcomes[i]);
                 selectedChoice.PossibleOutcomes.RemoveAt(i);
+                AssetDatabase.SaveAssets();
                 RefreshOutcomesList();
             };
         };
@@ -224,6 +228,7 @@ public class ScenarioEditor : EditorWindow
         listChoiceOutcomes.bindItem = bindItem;
         listChoiceOutcomes.onItemChosen += (o) =>
         {
+            AssetDatabase.SaveAssets();
             selectedOutcome = new SerializedObject((Outcome)o);
         };
     }
@@ -258,6 +263,7 @@ public class ScenarioEditor : EditorWindow
         AssetDatabase.AddObjectToAsset(newChoice, scenario);
         scenario.Choices.Add(newChoice);
         RefreshScenarioList();
+        AssetDatabase.SaveAssets();
     }
 
     private void RefreshScenarioList()
@@ -274,6 +280,7 @@ public class ScenarioEditor : EditorWindow
                 scenario.Choices.RemoveAt(i);
                 choiceListView.itemsSource = scenario.Choices;
                 choiceListView.Refresh();
+                AssetDatabase.SaveAssets();
             };
         };
 
@@ -287,6 +294,7 @@ public class ScenarioEditor : EditorWindow
             LoadChoice((Choice)e);
             selectedChoice = (Choice)e;
             RefreshOutcomesList();
+            AssetDatabase.SaveAssets();
         };
     }
 
