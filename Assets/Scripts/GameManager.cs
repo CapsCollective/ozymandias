@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
+using Random = UnityEngine.Random;
 
 public enum Metric
 {
@@ -149,6 +150,28 @@ public class GameManager : MonoBehaviour
         adventurer.isSpecial = adventurerDetails.isSpecial;
         adventurers.Add(adventurer);
     }
+    
+    public void RemoveAdventurer() //Removes a random adventurer, ensuring they aren't special
+    {
+        Adventurer toRemove = adventurers[Random.Range(0, adventurers.Count)];
+        if (toRemove.isSpecial)
+        {
+            RemoveAdventurer(); // Try again!
+        }
+        else
+        {
+            adventurers.Remove(toRemove);
+            toRemove.transform.parent = GameObject.Find("Graveyard").transform; //I REALLY hope we make use of this at some point
+        }
+    }
+    public void RemoveAdventurer(string adventurerName) // Deletes an adventurer by name
+    {
+        Adventurer toRemove = GameObject.Find(adventurerName)?.GetComponent<Adventurer>();
+        if (!toRemove) return;
+        adventurers.Remove(toRemove);
+        toRemove.transform.parent = GameObject.Find("Graveyard").transform;
+    }
+    
     
     [Button("StartGame")]
     public void StartGame()
