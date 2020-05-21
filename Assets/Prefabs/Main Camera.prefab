@@ -57,7 +57,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.05
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -97,11 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce97ecd94c94945448bdc4f99d101bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 3.5
-  scrollSpeed: 15
-  rotateSpeed: 180
-  minHeight: 4
-  maxHeight: 15
+  dragSpeed: 3
+  scrollSpeed: 3
+  rotateSpeed: 3
+  minHeight: 5
+  maxHeight: 25
+  minAngle: 25
+  maxAngle: 60
 --- !u!54 &4826372568487654229
 Rigidbody:
   m_ObjectHideFlags: 0
