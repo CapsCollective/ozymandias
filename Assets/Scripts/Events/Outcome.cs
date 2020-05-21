@@ -6,8 +6,7 @@ public class Outcome : ScriptableObject
 {
 
     public string OutcomeName;
-    public Event ChainEvent;
-    public int ChainEventMaxTurnsAway = 3;
+    public string OutcomeFlavourText;
 
     private static string[] dummyReplies =
     {
@@ -24,6 +23,6 @@ public class Outcome : ScriptableObject
 
     public virtual string GetOutcomeString()
     {
-        return "";// dummyReplies[Random.Range(0, 3)];
+        return OutcomeFlavourText;
     }
 }

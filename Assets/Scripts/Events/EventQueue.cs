@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System;
+using UnityEngine.Analytics;
 
 public class EventQueue : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class EventQueue : MonoBehaviour
     public static Action<StatChange> OnNewStatEffect;
     public static Action<StatChange> OnStatEffectComplete;
 
+    public static string outcomeString;
+
     public void Awake()
     {
         OnNewStatEffect += HandleNewStatEffect;
@@ -30,6 +33,8 @@ public class EventQueue : MonoBehaviour
 
     private void ProcessEvents()
     {
+        outcomeString = "";
+
         CurrentEvents.Clear();
 
         for (int i = 0; i < StatEffects.Count; i++)
@@ -43,9 +48,6 @@ public class EventQueue : MonoBehaviour
         {
             for (int i = 0; i < EventsQueue.Count; i++)
             {
-                if (EventsQueue[i].defaultOutcome == null)
-                    EventsQueue[i].defaultOutcome = defaultOutcome;
-
                 // If the event has choices
                 if (EventsQueue[i].Choices.Count > 0)
                 {
@@ -63,18 +65,22 @@ public class EventQueue : MonoBehaviour
                 // If there is a default outcome
                 // We execute that
                 bool execute = false;
-                if (EventsQueue[i].defaultOutcome != null)
+                if (EventsQueue[i].eventOutcomes.Count > 0)
                 {
-                    execute = EventsQueue[i].defaultOutcome.Execute();
-                    if (execute)
+                    foreach (Outcome o in EventsQueue[i].eventOutcomes)
                     {
-                        CurrentEvents.Add(EventsQueue[i]);
-                        EventsQueue.RemoveAt(i);
-                        break;
+                        execute = o.Execute();
+                        if (execute)
+                        {
+                            CurrentEvents.Add(EventsQueue[i]);
+                            EventsQueue.RemoveAt(i);
+                            Debug.Log(o.GetOutcomeString());
+                            outcomeString += $"\n" + o.GetOutcomeString();
+                            execute = false;
+                        }
                     }
-
-                    if (EventsQueue[i].defaultOutcome.ChainEvent != null)
-                        HandleChainEvent(EventsQueue[i].defaultOutcome);
+                    Debug.Log(outcomeString);
+                    break;
                 }
             }
             if (CurrentEvents.Count == 3)
@@ -101,7 +107,7 @@ public class EventQueue : MonoBehaviour
 
     public void HandleChainEvent(Outcome outcome)
     {
-        if(outcome.ChainEvent != null)
-            EventsQueue.RandomInsert(outcome.ChainEvent, outcome.ChainEventMaxTurnsAway * 3);
+        //if(outcome.ChainEvent != null)
+        //    EventsQueue.RandomInsert(outcome.ChainEvent, outcome.ChainEventMaxTurnsAway * 3);
     }
 }

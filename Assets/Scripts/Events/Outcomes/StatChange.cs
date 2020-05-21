@@ -48,13 +48,16 @@ public class StatChange : Outcome
                 Manager.ThreatMod += Amount;
                 break;
         }
-
+        
         Debug.Log($"{StatToChange} was changed by {Amount}. {Turns} turns remaining.");
         Turns--;
     }
 
     public override string GetOutcomeString()
     {
-        return $"{StatToChange} has been changed by {Amount} for {Turns} turns";
+        if(OutcomeFlavourText != "")
+            return StatToChange +" has been changed by " + Amount +" for " + Turns + " turns";
+
+        return OutcomeFlavourText;
     }
 }

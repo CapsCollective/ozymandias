@@ -87,8 +87,8 @@ public class ScenarioEditor : EditorWindow
         btnEditDefaultOutcome = root.Query<Button>("btnEditDefaultOutcome");
         btnEditDefaultOutcome.clickable.clicked += () =>
         {
-            if (scenario.defaultOutcome != null)
-                selectedOutcome = new SerializedObject(scenario.defaultOutcome);
+            //if (scenario.defaultOutcome != null)
+            //    selectedOutcome = new SerializedObject(scenario.defaultOutcome);
         };
 
         var outcomes = AssetDatabase.FindAssets($"t:{typeof(Outcome)}");
@@ -99,8 +99,8 @@ public class ScenarioEditor : EditorWindow
             var outcome = AssetDatabase.LoadAssetAtPath<Outcome>(outcomePath);
             Action<DropdownMenuAction> dropdownAction = (a) =>
             {
-                scenario.defaultOutcome = Instantiate(outcome);
-                btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + scenario.defaultOutcome.name;
+                //scenario.defaultOutcome = Instantiate(outcome);
+                //btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + scenario.defaultOutcome.name;
             };
             menuEventOutcomes.menu.InsertAction(i, outcome.name, dropdownAction, DropdownMenuAction.Status.Normal);
         }
@@ -312,10 +312,10 @@ public class ScenarioEditor : EditorWindow
             tfScenarioDescription.Bind(serializedObject);
             ofBackground.value = scenario.ScenarioBackground;
 
-            if (scenario.defaultOutcome != null)
-                btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + scenario.defaultOutcome.name;
-            else
-                btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + "None";
+            //if (scenario.defaultOutcome != null)
+            //    btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + scenario.defaultOutcome.name;
+            //else
+            //    btnEditDefaultOutcome.text = EDIT_DEFAULT_BTN_TEXT + "None";
 
             RefreshScenarioList();
         }
