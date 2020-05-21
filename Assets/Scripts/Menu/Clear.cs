@@ -55,14 +55,13 @@ public class Clear : MonoBehaviour
     //Finds cells to highlight and checks validity
     public void Highlight()
     {
+        //TODO: Refactor out as is a duplicate of the script in Clear
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit, LayerMask.GetMask("Surface","UI"));
-        
         // Check if new cells need to be highlighted
         Cell closest = map.GetCell(hit.point);
         
         canClear = !map.IsValid(closest);
-
         highlighted[0] = closest;
         
         Map.HighlightState state = canClear ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
@@ -101,13 +100,8 @@ public class Clear : MonoBehaviour
     
     public void ClearSpace(Cell[] cellsToClear)
     {
-        if (Manager.Spend(clearCost))
-        {
-            map.Clear(cellsToClear);
-        }
-
+        if (Manager.Spend(clearCost)) map.Clear(cellsToClear);
         // Currently clears buildings and terrain, but needs to only clear the latter
-
         //ExitClearMode();
     }
 }

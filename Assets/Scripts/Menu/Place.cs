@@ -9,8 +9,6 @@ public class Place : MonoBehaviour
 {
     private Map map;
     public Click selectedObject;
-    public Hover hoverObject;
-    //public GameObject buildingInstantiated;
     private RaycastHit hit;
     private Camera cam;
     private EventSystem eventSystem;
@@ -37,19 +35,6 @@ public class Place : MonoBehaviour
         if (!selectedObject || eventSystem.IsPointerOverGameObject()) return;
         
         Highlight();
-        
-        // building Instantiated not actually used for placement anymore
-        // if (!buildingInstantiated)
-        // {
-        //     if (hit.collider)
-        //     {
-        //         buildingInstantiated = Instantiate(selectedObject.building, hit.point, transform.rotation);
-        //     }
-        // }
-        // else
-        // {
-        //     buildingInstantiated.transform.position = hit.point;
-        // }
     }
     
     private bool Highlight()
@@ -59,6 +44,7 @@ public class Place : MonoBehaviour
         
         // Check if new cells need to be highlighted
         Cell closest = map.GetCell(hit.point);
+        
         BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
         Cell[] cells = map.GetCells(closest, building);
 
@@ -82,7 +68,6 @@ public class Place : MonoBehaviour
             Physics.Raycast(ray, out hit);
             if (hit.collider && !EventSystem.current.IsPointerOverGameObject())
             {
-                //Destroy(buildingInstantiated);
                 map.CreateBuilding(selectedObject.building, hit.point);
                 selectedObject = null;
             }
@@ -91,23 +76,7 @@ public class Place : MonoBehaviour
     
     private void RightClick()
     {
-        //TODO: Why is this here? Do this in hover instead
-        if (hoverObject && hoverObject.isHovered && !hoverObject.instantiatedHelper)
-        {
-            hoverObject.InfoBox();
-        }
-        else if (hoverObject && hoverObject.isHovered && hoverObject.instantiatedHelper)
-        {
-            Destroy(hoverObject.instantiatedHelper);
-        }
-        
         if (!selectedObject) return;
-        //TODO: Replace with actual rotation
-        //buildingInstantiated.transform.Rotate(0,30,0);
+        //TODO: Add rotation
     }
-    
-    // public void NewSelection()
-    // {
-    //     Destroy(buildingInstantiated);
-    // }
 }
