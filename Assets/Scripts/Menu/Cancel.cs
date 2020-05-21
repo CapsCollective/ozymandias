@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Cancel : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
+public class Cancel : MonoBehaviour
 {
     private EventSystem eventSystem;
     private Button button;
@@ -50,30 +50,8 @@ public class Cancel : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    // public void OnPointerEnter(PointerEventData eventData)
-    // {
-    //     place.buildingInstantiated.gameObject.SetActive(false);
-    //     previousSelect = eventSystem.currentSelectedGameObject;
-    //     eventSystem.SetSelectedGameObject(gameObject);
-    //     previousClick = place.selectedObject;
-    //     place.selectedObject = null;
-    //     
-    // }
-
-    // public void OnPointerExit(PointerEventData eventData)
-    // {
-    //     place.buildingInstantiated.gameObject.SetActive(true);
-    //     if (eventSystem.currentSelectedGameObject)
-    //     {
-    //         eventSystem.SetSelectedGameObject(previousSelect);
-    //         place.selectedObject = previousClick;
-    //     }
-    // }
-
     public void CancelSelection()
     {
-        place.selectedObject = null;
-        // Destroy(place.buildingInstantiated);
-        // place.buildingInstantiated = null;
+        place.Deselect();
     }
 }

@@ -19,11 +19,8 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
         place = FindObjectOfType<Place>();
         image = GetComponent<Image>();
         button = GetComponent<Button>();
-    }
-
-    public void OnEnable()
-    {
         eventSystem = EventSystem.current;
+
     }
 
     public void Update()
@@ -49,10 +46,10 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
             eventSystem.SetSelectedGameObject(gameObject);
         }
     }
-
+    
     public void OnPointerUp(PointerEventData pointerEventData)
     {
-        place.selectedObject = null;
+        place.Deselect();
         eventSystem.SetSelectedGameObject(null);
     }
 }

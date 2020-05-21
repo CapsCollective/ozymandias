@@ -62,16 +62,27 @@ public class Place : MonoBehaviour
     
     private void LeftClick()
     {
-        if (selectedObject && Manager.CurrentWealth >= selectedObject.building.GetComponent<BuildingStats>().baseCost)
+        if (!selectedObject) return;
+        if (eventSystem.currentSelectedGameObject &&
+            eventSystem.currentSelectedGameObject.gameObject != selectedObject.gameObject)
         {
-            Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-            Physics.Raycast(ray, out hit);
-            if (hit.collider && !EventSystem.current.IsPointerOverGameObject())
-            {
-                map.CreateBuilding(selectedObject.building, hit.point);
-                selectedObject = null;
-            }
+            Deselect();
+            return;
         }
+        //Don't actually know if this check is nessessary considering it limits selecting otherwise, but we'll keep it here for now
+        if (Manager.CurrentWealth < selectedObject.building.GetComponent<BuildingStats>().baseCost) return;
+        
+        Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+        Physics.Raycast(ray, out hit);
+
+        if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
+        map.CreateBuilding(selectedObject.building, hit.point);
+        Deselect();
+    }
+
+    public void Deselect()
+    {
+        selectedObject = null;
     }
     
     private void RightClick()
