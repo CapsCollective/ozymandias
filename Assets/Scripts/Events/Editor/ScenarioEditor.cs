@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using UnityEditor.IMGUI.Controls;
 using System.Linq;
+using UnityEngine.Analytics;
 
 public class ScenarioEditor : EditorWindow
 {
@@ -86,7 +87,8 @@ public class ScenarioEditor : EditorWindow
         listEventOutcomes = root.Query<ListView>("listEventOutcomes");
 
 
-        var outcomes = AssetDatabase.FindAssets($"t:{typeof(Outcome)}");
+        string[] folders = new string[] { "Assets/Events/Outcomes" };
+        var outcomes = AssetDatabase.FindAssets($"t:{typeof(Outcome)}", folders);
         menuEventOutcomes = root.Query<ToolbarMenu>("menuEventOutcomes");
         for (int i = 0; i < outcomes.Length; i++)
         {
@@ -168,37 +170,11 @@ public class ScenarioEditor : EditorWindow
 
     private void SetupEventOutcomes()
     {
-        Func<VisualElement> makeItem = () =>
-        {
-            var visualElement = new VisualElement();
-            visualElement.style.flexDirection = FlexDirection.Row;
-            visualElement.style.flexGrow = 1f;
-            visualElement.style.flexShrink = 0f;
-            visualElement.style.flexBasis = 0f;
-
-            var txt = new Label();
-            txt.style.flexGrow = 1f;
-            txt.style.flexShrink = 0f;
-            txt.style.flexBasis = 0f;
-            txt.style.alignSelf = Align.Center;
-            visualElement.Add(txt);
-
-            var deleteBtn = new Button();
-            deleteBtn.style.flexGrow = 0.01f;
-            deleteBtn.style.flexShrink = 0f;
-            deleteBtn.style.flexBasis = 0f;
-            deleteBtn.style.alignContent = Align.Center;
-            deleteBtn.text = "X";
-            visualElement.Add(deleteBtn);
-
-            return visualElement;
-        };
-
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             e.style.backgroundColor = colors[i % 2];
-            (e.ElementAt(0) as Label).text = scenario.EventOutcomes[i].name;
-            (e.ElementAt(1) as Button).clicked += () =>
+            (e as Label).text = scenario.EventOutcomes[i].name;
+            (e.ElementAt(0) as Button).clicked += () =>
             {
                 AssetDatabase.RemoveObjectFromAsset(scenario.EventOutcomes[i]);
                 scenario.EventOutcomes.RemoveAt(i);
@@ -208,7 +184,7 @@ public class ScenarioEditor : EditorWindow
 
         listEventOutcomes.itemsSource = scenario.EventOutcomes;
         listEventOutcomes.itemHeight = 20;
-        listEventOutcomes.makeItem = makeItem;
+        listEventOutcomes.makeItem = MakeListItem;
         listEventOutcomes.bindItem = bindItem;
         listEventOutcomes.onItemChosen += (o) =>
         {
@@ -230,37 +206,11 @@ public class ScenarioEditor : EditorWindow
 
     private void RefreshOutcomesList()
     {
-        Func<VisualElement> makeItem = () =>
-        {
-            var visualElement = new VisualElement();
-            visualElement.style.flexDirection = FlexDirection.Row;
-            visualElement.style.flexGrow = 1f;
-            visualElement.style.flexShrink = 0f;
-            visualElement.style.flexBasis = 0f;
-
-            var txt = new Label();
-            txt.style.flexGrow = 1f;
-            txt.style.flexShrink = 0f;
-            txt.style.flexBasis = 0f;
-            txt.style.alignSelf = Align.Center;
-            visualElement.Add(txt);
-
-            var deleteBtn = new Button();
-            deleteBtn.style.flexGrow = 0.01f;
-            deleteBtn.style.flexShrink = 0f;
-            deleteBtn.style.flexBasis = 0f;
-            deleteBtn.style.alignContent = Align.Center;
-            deleteBtn.text = "X";
-            visualElement.Add(deleteBtn);
-
-            return visualElement;
-        };
-
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             e.style.backgroundColor = colors[i % 2];
-            (e.ElementAt(0) as Label).text = selectedChoice.PossibleOutcomes[i].name;
-            (e.ElementAt(1) as Button).clicked += () => 
+            (e as Label).text = selectedChoice.PossibleOutcomes[i].name;
+            (e.ElementAt(0) as Button).clicked += () => 
             {
                 AssetDatabase.RemoveObjectFromAsset(selectedChoice.PossibleOutcomes[i]);
                 selectedChoice.PossibleOutcomes.RemoveAt(i);
@@ -270,7 +220,7 @@ public class ScenarioEditor : EditorWindow
 
         listChoiceOutcomes.itemsSource = selectedChoice.PossibleOutcomes;
         listChoiceOutcomes.itemHeight = 20;
-        listChoiceOutcomes.makeItem = makeItem;
+        listChoiceOutcomes.makeItem = MakeListItem;
         listChoiceOutcomes.bindItem = bindItem;
         listChoiceOutcomes.onItemChosen += (o) =>
         {
@@ -318,12 +268,19 @@ public class ScenarioEditor : EditorWindow
             e.style.backgroundColor = colors[i % 2];
             (e as Label).text = scenario.Choices[i].ChoiceTitle;
             (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
+            (e.ElementAt(0) as Button).clicked += () =>
+            {
+                AssetDatabase.RemoveObjectFromAsset(scenario.Choices[i]);
+                scenario.Choices.RemoveAt(i);
+                choiceListView.itemsSource = scenario.Choices;
+                choiceListView.Refresh();
+            };
         };
 
         choiceListView = root.Query<ListView>("listChoices");
         choiceListView.itemsSource = scenario.Choices;
         choiceListView.itemHeight = 20;
-        choiceListView.makeItem = makeItem;
+        choiceListView.makeItem = MakeListItem;
         choiceListView.bindItem = bindItem;
         choiceListView.onItemChosen += (e) =>
         {
@@ -397,5 +354,25 @@ public class ScenarioEditor : EditorWindow
             listViewLibrary.itemsSource = searchList.ToList();
             listViewLibrary.Refresh();
         }
+    }
+
+    private VisualElement MakeListItem()
+    {
+        var txt = new Label();
+        txt.style.flexGrow = 1f;
+        txt.style.flexShrink = 0f;
+        txt.style.flexBasis = 0f;
+        txt.style.flexDirection = FlexDirection.RowReverse;
+        txt.style.alignSelf = Align.Center;
+
+        var deleteBtn = new Button();
+        deleteBtn.style.flexGrow = 0.01f;
+        deleteBtn.style.flexShrink = 0f;
+        deleteBtn.style.flexBasis = 0f;
+        deleteBtn.style.alignContent = Align.Center;
+        deleteBtn.text = "X";
+        txt.Add(deleteBtn);
+
+        return txt;
     }
 }
