@@ -12,6 +12,8 @@ public class Place : MonoBehaviour
     private RaycastHit hit;
     private Camera cam;
     private EventSystem eventSystem;
+
+    private int rotation;
     
     // HIGHLIGHTING
     private Cell[] highlighted = new Cell[0];
@@ -46,7 +48,7 @@ public class Place : MonoBehaviour
         Cell closest = map.GetCell(hit.point);
         
         BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
-        Cell[] cells = map.GetCells(closest, building);
+        Cell[] cells = map.GetCells(closest, building, rotation);
 
         // Check if cells are valid
         bool valid = map.IsValid(cells);
@@ -76,7 +78,7 @@ public class Place : MonoBehaviour
         Physics.Raycast(ray, out hit);
 
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
-        map.CreateBuilding(selectedObject.building, hit.point);
+        map.CreateBuilding(selectedObject.building, hit.point, rotation);
         Deselect();
     }
 
@@ -88,6 +90,6 @@ public class Place : MonoBehaviour
     private void RightClick()
     {
         if (!selectedObject) return;
-        //TODO: Add rotation
+        rotation++;
     }
 }
