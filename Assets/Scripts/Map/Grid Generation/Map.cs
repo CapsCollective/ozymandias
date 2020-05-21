@@ -52,9 +52,9 @@ public class Map : MonoBehaviour
         return new Cell[0];
     }
 
-    public Cell[] GetCells(Cell root, BuildingStructure building)
+    public Cell[] GetCells(Cell root, BuildingStructure building, int rotation = 0)
     {
-        return mapLayout.GetCells(root, building);
+        return mapLayout.GetCells(root, building, rotation);
     }
 
     public void Generate()
@@ -78,16 +78,17 @@ public class Map : MonoBehaviour
         building.Fit(vertices);
     }
 
-    public void CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition)
+    public void CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0)
     {
         GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
         BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
 
         Cell root = GetCell(worldPosition);
-        Cell[] cells = GetCells(root, building);
+        Cell[] cells = GetCells(root, building, rotation);
 
         if (IsValid(cells))
         {
+            mapLayout.Align(cells, rotation);
             buildingInstance.GetComponent<BuildingStats>().Build();
             Occupy(building, cells);
         }

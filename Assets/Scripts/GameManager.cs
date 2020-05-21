@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
+using Random = UnityEngine.Random;
 
 public enum Metric
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     public static Action OnNewTurn;
     public static Action OnUpdateUI;
+    
     private static GameManager instance;
 
     public static GameManager Manager
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     public int Satisfaction
     {
-        get { return satisfaction = buildings.Where(x => x.operational).Sum(x => x.satisfaction); }
+        get { return satisfaction = buildings.Where(x => x.operational).Sum(x => x.satisfaction) + SatisfactionMod; }
     }
 
     [ReadOnly] [SerializeField] private int effectiveness;
@@ -132,14 +134,44 @@ public class GameManager : MonoBehaviour
     }
     
 
-    [HideInInspector]
-    public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod;
+    [ReadOnly]
+    public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod, SatisfactionMod;
 
     public void AddAdventurer()
     {
         adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
-        
     }
+    public void AddAdventurer(AdventurerDetails adventurerDetails)
+    {
+        Adventurer adventurer = Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform)
+            .GetComponent<Adventurer>();
+        adventurer.name = adventurerDetails.name;
+        adventurer.category = adventurerDetails.category;
+        adventurer.isSpecial = adventurerDetails.isSpecial;
+        adventurers.Add(adventurer);
+    }
+    
+    public void RemoveAdventurer() //Removes a random adventurer, ensuring they aren't special
+    {
+        Adventurer toRemove = adventurers[Random.Range(0, adventurers.Count)];
+        if (toRemove.isSpecial)
+        {
+            RemoveAdventurer(); // Try again!
+        }
+        else
+        {
+            adventurers.Remove(toRemove);
+            toRemove.transform.parent = GameObject.Find("Graveyard").transform; //I REALLY hope we make use of this at some point
+        }
+    }
+    public void RemoveAdventurer(string adventurerName) // Deletes an adventurer by name
+    {
+        Adventurer toRemove = GameObject.Find(adventurerName)?.GetComponent<Adventurer>();
+        if (!toRemove) return;
+        adventurers.Remove(toRemove);
+        toRemove.transform.parent = GameObject.Find("Graveyard").transform;
+    }
+    
     
     [Button("StartGame")]
     public void StartGame()
@@ -173,6 +205,7 @@ public class GameManager : MonoBehaviour
         ChaosMod = 0;
         AdventurersMod = 0;
         DefenseMod = 0;
+        SatisfactionMod = 0;
 
         OnNewTurn?.Invoke();
         UpdateUi();
@@ -185,13 +218,9 @@ public class GameManager : MonoBehaviour
         UpdateUi();
     }
 
-    // Legacy
-    //public UiUpdater[] uiUpdates;
     public void UpdateUi()
     {
         OnUpdateUI?.Invoke();
-        // Legacy
-        //foreach (var uiUpdater in uiUpdates) uiUpdater.UpdateUi();        
     }
 
     private void Start()

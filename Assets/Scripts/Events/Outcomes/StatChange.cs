@@ -12,7 +12,8 @@ public class StatChange : Outcome
         Chaos,
         Defense,
         Adventurers,
-        Threat
+        Threat,
+        Satisfaction
     }
 
     public StatToEffect StatToChange;
@@ -52,6 +53,9 @@ public class StatChange : Outcome
                 break;
             case StatToEffect.Threat:
                 Manager.ThreatMod += Amount;
+                break;
+            case StatToEffect.Satisfaction:
+                Manager.SatisfactionMod += Amount;
                 break;
         }
         

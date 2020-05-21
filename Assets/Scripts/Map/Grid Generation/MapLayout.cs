@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Map Layout", menuName = "Map Layout", order = 50)]
@@ -50,46 +49,102 @@ public class MapLayout : ScriptableObject
     }
 
     // GRID QUERYING
-    public Cell Step(Cell root, int direction)
+    public Cell Step(Cell root, BuildingStructure.Direction direction)
     {
-        Cell step = null;
+        Cell next = null;
 
-        Vertex left = root.Vertices[direction];
-        Vertex right = root.Vertices[(direction + 1) % 4];
+        Vertex left = root.Vertices[(int)direction];
+        Vertex right = root.Vertices[((int)direction + 1) % 4];
 
         foreach (Cell neighbour in CellGraph.GetAdjacent(root))
         {
-            if (!neighbour.Occupied && neighbour.Vertices.Contains(left) && neighbour.Vertices.Contains(right))
+            if (neighbour.Vertices.Contains(left) && neighbour.Vertices.Contains(right))
             {
-                step = neighbour;
-
-                while (neighbour.Vertices.IndexOf(left) != direction)
-                {
-                    Vertex end = neighbour.Vertices[3];
-                    neighbour.Vertices.Remove(end);
-                    neighbour.Vertices.Insert(0, end);
-                }
-
+                next = neighbour;
                 break;
             }
         }
 
-        return step;
+        return next;
     }
 
-    public Cell[] GetCells(Cell root, BuildingStructure building)
+    public Cell Step(Cell root, BuildingStructure.Direction[] directions, int offset = 0)
+    {
+        Cell current = root;
+
+        foreach (BuildingStructure.Direction direction in directions)
+        {
+            int pivotIndex = ((int)direction + offset) % 4;
+            int whatItShouldBe = (pivotIndex + 3) % 4;
+
+            Vertex pivot = current.Vertices[pivotIndex];
+
+            BuildingStructure.Direction offsetDirection = (BuildingStructure.Direction)pivotIndex;
+
+            current = Step(current, offsetDirection);
+            if (current == null) break;
+
+            int whatItIs = current.Vertices.IndexOf(pivot);
+
+            offset = (offset + ((whatItIs - whatItShouldBe + 4) % 4)) % 4;
+        }
+
+        return current;
+    }
+
+    public void Align(Cell[] cells, int rotation = 0)
+    {
+        List<Cell> visited = new List<Cell>();
+        Queue<Cell> queue = new Queue<Cell>();
+
+        cells[0].RotateCell(rotation);
+
+        queue.Enqueue(cells[0]);
+        while (queue.Count > 0)
+        {
+            Cell root = queue.Dequeue();
+            foreach (Cell other in cells)
+            {
+                if (!visited.Contains(other) && CellGraph.IsAdjacent(root, other) && !queue.Contains(other))
+                {
+                    Align(root, other);
+                    
+                    queue.Enqueue(other);
+                }
+            }
+            visited.Add(root);
+        }
+    }
+
+    private void Align(Cell root, Cell other)
+    {
+        Vertex pivot = root.Vertices[0];
+        for (int i = 0; i < 4; i++)
+        {
+            if (other.Vertices.Contains(root.Vertices[i]) && other.Vertices.Contains(root.Vertices[(i + 1) % 4]))
+            {
+                pivot = root.Vertices[i];
+                break;
+            }
+        }
+
+        int pivotIndexInRoot = root.Vertices.IndexOf(pivot);
+
+        int whatItIs = other.Vertices.IndexOf(pivot);
+        int whatItShouldBe = (pivotIndexInRoot + 3) % 4;
+
+        int rotations = (whatItIs - whatItShouldBe + 4) % 4;
+
+        other.RotateCell(rotations);
+    }
+
+    public Cell[] GetCells(Cell root, BuildingStructure building, int rotation = 0)
     {
         List<Cell> cells = new List<Cell>();
 
         foreach (BuildingStructure.SectionInfo sectionInfo in building.sections)
         {
-            Cell newCell = root;
-            foreach (BuildingStructure.Direction direction in sectionInfo.directions)
-            {
-                newCell = Step(newCell, (int)direction);
-                if (newCell == null) break;
-            }
-
+            Cell newCell = Step(root, sectionInfo.directions.ToArray(), rotation);
             cells.Add(newCell);
         }
 
