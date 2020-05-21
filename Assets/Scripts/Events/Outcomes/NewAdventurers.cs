@@ -6,13 +6,14 @@ using static GameManager;
 [CreateAssetMenu]
 public class NewAdventurers : Outcome
 {
-    public int count;
-
+    public List<AdventurerDetails> adventurers;
+    
     public override bool Execute()
     {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < adventurers.Count; i++)
         {
-            Manager.AddAdventurer();
+            if (adventurers[i] != null) Manager.AddAdventurer(adventurers[i]);
+            else Manager.AddAdventurer();
         }
         return true;
     }

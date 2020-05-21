@@ -11,7 +11,8 @@ public class StatChange : Outcome
         Chaos,
         Defense,
         Adventurers,
-        Threat
+        Threat,
+        Satisfaction
     }
 
     public StatToEffect StatToChange;
@@ -47,6 +48,9 @@ public class StatChange : Outcome
             case StatToEffect.Threat:
                 Manager.ThreatMod += Amount;
                 break;
+            case StatToEffect.Satisfaction:
+                Manager.SatisfactionMod += Amount;
+                break;
         }
         
         Debug.Log($"{StatToChange} was changed by {Amount}. {Turns} turns remaining.");
@@ -55,7 +59,7 @@ public class StatChange : Outcome
 
     public override string GetOutcomeString()
     {
-        if(OutcomeFlavourText != "")
+        if(OutcomeFlavourText == "")
             return StatToChange +" has been changed by " + Amount +" for " + Turns + " turns";
 
         return OutcomeFlavourText;

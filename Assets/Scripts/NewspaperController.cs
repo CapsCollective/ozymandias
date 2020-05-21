@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameManager;
 
 public class NewspaperController : MonoBehaviour
 {
@@ -79,6 +80,7 @@ public class NewspaperController : MonoBehaviour
         OnOutcomeSelected?.Invoke(currentEvents[0].Choices[choice].PossibleOutcomes[0]);
         // TODO call the game logic with the selected choice with the following:
         // currentEvents[0].Choices[choice]
+        Manager.UpdateUi();
     }
 
     private Event[] GetEvents()
