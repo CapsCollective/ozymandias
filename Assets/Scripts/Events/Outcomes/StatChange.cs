@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using UnityEngine;
 using static GameManager;
 
@@ -19,18 +20,23 @@ public class StatChange : Outcome
     public int Amount;
     public int Turns;
 
+    private int turnsLeft;
+    //[SerializeField] private int turns;
 
     public override bool Execute()
     {
-        EventQueue.OnNewStatEffect?.Invoke(Instantiate(this));
+        turnsLeft = Turns;
+        OnNewTurn += ProcessStatChange;
+        ProcessStatChange();
         return true;
     }
 
     public void ProcessStatChange()
     {
-        if(Turns == 0)
+        if (turnsLeft == 0)
         {
-            EventQueue.OnStatEffectComplete?.Invoke(this);
+            OnNewTurn -= ProcessStatChange;
+            //EventQueue.OnStatEffectComplete?.Invoke(this);
             return;
         }
 
@@ -53,14 +59,14 @@ public class StatChange : Outcome
                 break;
         }
         
-        Debug.Log($"{StatToChange} was changed by {Amount}. {Turns} turns remaining.");
-        Turns--;
+        Debug.Log($"{StatToChange} was changed by {Amount}. {turnsLeft} turns remaining.");
+        turnsLeft--;
     }
 
     public override string GetOutcomeString()
     {
         if(OutcomeFlavourText == "")
-            return StatToChange +" has been changed by " + Amount +" for " + Turns + " turns";
+            return "•" + StatToChange +" has been changed by " + Amount +" for " + turnsLeft + " turns";
 
         return OutcomeFlavourText;
     }

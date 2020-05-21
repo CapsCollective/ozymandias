@@ -15,18 +15,16 @@ public class EventQueue : MonoBehaviour
     public List<Event> CurrentEvents = new List<Event>(3);
     
     [ReorderableList]
-    public List<StatChange> StatEffects = new List<StatChange>();
+    public List<IPersistentEvent> PersistentEvents = new List<IPersistentEvent>();
 
     public static Action<List<Event>> OnEventsProcessed;
-    public static Action<StatChange> OnNewStatEffect;
-    public static Action<StatChange> OnStatEffectComplete;
+    public static Action<StatChange> OnNewPersistentEvent;
+    //public static Action<StatChange> OnPersistentEventComplete;
 
     public static string outcomeString;
 
     public void Awake()
     {
-        OnNewStatEffect += HandleNewStatEffect;
-        OnStatEffectComplete += RemoveStatEffect;
         GameManager.OnNewTurn += ProcessEvents;
         NewspaperController.OnOutcomeSelected += HandleChainEvent;
     }
@@ -36,11 +34,6 @@ public class EventQueue : MonoBehaviour
         outcomeString = "";
 
         CurrentEvents.Clear();
-
-        for (int i = 0; i < StatEffects.Count; i++)
-        {
-            StatEffects[i].ProcessStatChange();
-        }
 
         bool hasChoices = false;    
 
@@ -65,23 +58,29 @@ public class EventQueue : MonoBehaviour
                 // If there is a default outcome
                 // We execute that
                 bool execute = false;
-                if (EventsQueue[i].eventOutcomes.Count > 0)
+                if (EventsQueue[i].EventOutcomes.Count > 0)
                 {
-                    foreach (Outcome o in EventsQueue[i].eventOutcomes)
+                    foreach (Outcome o in EventsQueue[i].EventOutcomes)
                     {
                         execute = o.Execute();
                         if (execute)
                         {
-                            CurrentEvents.Add(EventsQueue[i]);
-                            EventsQueue.RemoveAt(i);
                             Debug.Log(o.GetOutcomeString());
-                            outcomeString += $"\n" + o.GetOutcomeString();
+                            outcomeString += o.GetOutcomeString() + "\n";
                             execute = false;
                         }
+                        else
+                            break;
                     }
+                    CurrentEvents.Add(EventsQueue[i]);
+                    EventsQueue.RemoveAt(i);
                     Debug.Log(outcomeString);
                     break;
                 }
+
+                CurrentEvents.Add(EventsQueue[i]);
+                EventsQueue.RemoveAt(i);
+                break;
             }
             if (CurrentEvents.Count == 3)
             {
@@ -90,19 +89,6 @@ public class EventQueue : MonoBehaviour
             }
         }
         OnEventsProcessed?.Invoke(CurrentEvents);
-    }
-
-    private void HandleNewStatEffect(StatChange statEffect)
-    {
-        Debug.Log("Testing?");
-        StatChange sc = Instantiate(statEffect) as StatChange;
-        sc.ProcessStatChange();
-        StatEffects.Add(sc);
-    }
-
-    private void RemoveStatEffect(StatChange statEffect)
-    {
-        StatEffects.Remove(statEffect);
     }
 
     public void HandleChainEvent(Outcome outcome)
