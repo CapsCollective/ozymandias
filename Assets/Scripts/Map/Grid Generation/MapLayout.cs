@@ -86,10 +86,56 @@ public class MapLayout : ScriptableObject
 
             int whatItIs = current.Vertices.IndexOf(pivot);
 
-            offset = (offset + ( (whatItIs - whatItShouldBe + 4) % 4) ) % 4;
+            offset = (offset + ((whatItIs - whatItShouldBe + 4) % 4)) % 4;
         }
 
         return current;
+    }
+
+    public void Align(Cell[] cells, int rotation = 0)
+    {
+        List<Cell> visited = new List<Cell>();
+        Queue<Cell> queue = new Queue<Cell>();
+
+        cells[0].RotateCell(rotation);
+
+        queue.Enqueue(cells[0]);
+        while (queue.Count > 0)
+        {
+            Cell root = queue.Dequeue();
+            foreach (Cell other in cells)
+            {
+                if (!visited.Contains(other) && CellGraph.IsAdjacent(root, other) && !queue.Contains(other))
+                {
+                    Align(root, other);
+                    
+                    queue.Enqueue(other);
+                }
+            }
+            visited.Add(root);
+        }
+    }
+
+    private void Align(Cell root, Cell other)
+    {
+        Vertex pivot = root.Vertices[0];
+        for (int i = 0; i < 4; i++)
+        {
+            if (other.Vertices.Contains(root.Vertices[i]) && other.Vertices.Contains(root.Vertices[(i + 1) % 4]))
+            {
+                pivot = root.Vertices[i];
+                break;
+            }
+        }
+
+        int pivotIndexInRoot = root.Vertices.IndexOf(pivot);
+
+        int whatItIs = other.Vertices.IndexOf(pivot);
+        int whatItShouldBe = (pivotIndexInRoot + 3) % 4;
+
+        int rotations = (whatItIs - whatItShouldBe + 4) % 4;
+
+        other.RotateCell(rotations);
     }
 
     public Cell[] GetCells(Cell root, BuildingStructure building, int rotation = 0)

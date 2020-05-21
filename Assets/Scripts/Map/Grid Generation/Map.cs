@@ -95,6 +95,7 @@ public class Map : MonoBehaviour
 
         if (IsValid(cells))
         {
+            mapLayout.Align(cells, rotation);
             buildingInstance.GetComponent<BuildingStats>().Build();
             Occupy(building, cells);
         }
