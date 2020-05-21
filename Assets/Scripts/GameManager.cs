@@ -18,8 +18,9 @@ public enum Metric
     Chaos,
 }
 
-public enum BuildingTypes
+public enum BuildingType
 {
+    GuildHall,
     Inn,
     Blacksmith,
     ItemShop,
@@ -123,7 +124,6 @@ public class GameManager : MonoBehaviour
         if (currentWealth >= amount)
         {
             currentWealth -= amount;
-            UpdateUi();
             return true;
         }
         return false;
@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviour
 
     public void Build(BuildingStats building)
     {
-        CurrentWealth -= building.baseCost;
+        //CurrentWealth -= building.baseCost;
         buildings.Add(building);
         UpdateUi();
     }
@@ -229,6 +229,12 @@ public class GameManager : MonoBehaviour
             default: return 0;
         }
     }
+
+    public int BuildingCount(BuildingType type)
+    {
+        return buildings.Count(x => x.type == type);
+    }
+    
 
     [HorizontalLine()] 
     

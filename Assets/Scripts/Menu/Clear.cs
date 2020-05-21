@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class Clear : MonoBehaviour
 {
+    public const float costScale = 1.15f;
+    
     private RaycastHit hit;
     private Cell[] highlighted = new Cell[1];
     private Map map;
@@ -17,8 +19,11 @@ public class Clear : MonoBehaviour
     private bool clearMode = false;
     private bool canClear = false;
     
-    public int clearCost = 5;
+    public int baseCost = 5;
 
+    private int clearCount = 0;
+    
+    public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(costScale, clearCount));
 
     private void Awake()
     {
@@ -41,7 +46,7 @@ public class Clear : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
         
-        if (Manager.CurrentWealth < clearCost)
+        if (Manager.CurrentWealth < ScaledCost)
         {
             ExitClearMode();
             return;
@@ -100,7 +105,10 @@ public class Clear : MonoBehaviour
     
     public void ClearSpace(Cell[] cellsToClear)
     {
-        if (Manager.Spend(clearCost)) map.Clear(cellsToClear);
+        if (!Manager.Spend(ScaledCost)) return;
+        map.Clear(cellsToClear);
+        clearCount++;
+        Manager.UpdateUi();
         // Currently clears buildings and terrain, but needs to only clear the latter
         //ExitClearMode();
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class Map : MonoBehaviour
 {
@@ -78,24 +79,25 @@ public class Map : MonoBehaviour
         building.Fit(vertices);
     }
 
-    public void CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0)
+    public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0)
     {
         GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
+        BuildingStats stats = buildingInstance.GetComponent<BuildingStats>();
         BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
 
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building, rotation);
-
-        if (IsValid(cells))
+        
+        if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
             mapLayout.Align(cells, rotation);
-            buildingInstance.GetComponent<BuildingStats>().Build();
+            stats.Build();
             Occupy(building, cells);
+            return true;
         }
-        else
-        {
-            Destroy(buildingInstance);
-        }
+        
+        Destroy(buildingInstance);
+        return false;
     }
 
     public bool IsValid(Cell[] cells)

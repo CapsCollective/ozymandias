@@ -71,15 +71,12 @@ public class Place : MonoBehaviour
             Deselect();
             return;
         }
-        //Don't actually know if this check is nessessary considering it limits selecting otherwise, but we'll keep it here for now
-        if (Manager.CurrentWealth < selectedObject.building.GetComponent<BuildingStats>().baseCost) return;
         
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
 
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
-        map.CreateBuilding(selectedObject.building, hit.point, rotation);
-        Deselect();
+        if (map.CreateBuilding(selectedObject.building, hit.point, rotation)) Deselect();
     }
 
     public void Deselect()
