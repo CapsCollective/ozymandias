@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,7 +14,7 @@ public enum AdventurerCategory
 [Serializable]
 public class Adventurer : MonoBehaviour
 {
-    private string[] firstNames = { "Lydan", "Syrin", "Ptorik", "Joz", "Varog", "Gethrod", "Hezra", "Feron", "Ophni",
+    private static string[] firstNames = { "Lydan", "Syrin", "Ptorik", "Joz", "Varog", "Gethrod", "Hezra", "Feron", "Ophni",
         "Colborn", "Fintis", "Gatlin", "Jinto", "Hagalbar", "Krinn", "Lenox", "Revvyn", "Hodus", "Dimian", "Paskel", 
         "Kontas", "Weston", "Azamarr", "Jather", "Tekren", "Jareth", "Adon", "Zaden", "Eune", "Graff", "Tez", "Jessop", 
         "Gunnar", "Pike", "Domnhar", "Baske", "Jerrick", "Mavrek", "Riordan", "Wulfe", "Straus", "Tyvrik", "Henndar", 
@@ -35,7 +34,7 @@ public class Adventurer : MonoBehaviour
         "Hartie", "Beela", "Leska", "Vemery", "Lunex", "Fidess", "Tisette", "Partha"
     };
     
-    private string[] lastNames = { "Bonebreaker", "Ashheart", "Marblecleaver", "Mountainkiller", "Seabreaker",
+    private static string[] lastNames = { "Bonebreaker", "Ashheart", "Marblecleaver", "Mountainkiller", "Seabreaker",
         "Clearmaul", "Lonesurge", "Honorbane", "Bouldergrain", "Claw", "Bluechief", "Hallowdrifter", "Netherbleeder",
         "Terrarock", "Sacredlight", "Rosetalon", "Barleyless", "Winterhunter", "Twoforest", "Deadshield", "Woodcloud",
         "Loneflaw", "Landsword", "Sheephunter", "Gazersea", "Landthunder", "Shieldgazer", "Whitesilver", "Starcloak",
@@ -61,26 +60,30 @@ public class Adventurer : MonoBehaviour
 
     public AdventurerCategory category;
 
+    public bool isSpecial; // Works as a regular adventurer but is required for certain events so wont be removed
+
     public void Awake()
     {
-        name = firstNames[Random.Range(0, firstNames.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+        Random.InitState(GetInstanceID());
+        name = NewName();
+        category = NewCategory();
+    }
+
+    public static string NewName()
+    {
+        return firstNames[Random.Range(0, firstNames.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
+    }
+
+    public static AdventurerCategory NewCategory()
+    {
         switch (Random.Range(0, 5))
         {
-            case 0:
-                category = AdventurerCategory.Brawler;
-                break;
-            case 1:
-                category = AdventurerCategory.Outrider;
-                break;
-            case 2:
-                category = AdventurerCategory.Performer;
-                break;
-            case 3:
-                category = AdventurerCategory.Diviner;
-                break;
-            case 4:
-                category = AdventurerCategory.Conduit;
-                break;
+            case 0: return AdventurerCategory.Brawler;
+            case 1: return AdventurerCategory.Outrider;
+            case 2: return AdventurerCategory.Performer;
+            case 3: return AdventurerCategory.Diviner;
+            case 4: return AdventurerCategory.Conduit;
+            default: return AdventurerCategory.Brawler;
         }
     }
 }

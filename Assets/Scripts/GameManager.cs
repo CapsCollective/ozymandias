@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     public int Satisfaction
     {
-        get { return satisfaction = buildings.Where(x => x.operational).Sum(x => x.satisfaction); }
+        get { return satisfaction = buildings.Where(x => x.operational).Sum(x => x.satisfaction) + SatisfactionMod; }
     }
 
     [ReadOnly] [SerializeField] private int effectiveness;
@@ -133,13 +133,21 @@ public class GameManager : MonoBehaviour
     }
     
 
-    [HideInInspector]
-    public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod;
+    [ReadOnly]
+    public int AdventurersMod, ChaosMod, DefenseMod, ThreatMod, SatisfactionMod;
 
     public void AddAdventurer()
     {
         adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
-        
+    }
+    public void AddAdventurer(AdventurerDetails adventurerDetails)
+    {
+        Adventurer adventurer = Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform)
+            .GetComponent<Adventurer>();
+        adventurer.name = adventurerDetails.name;
+        adventurer.category = adventurerDetails.category;
+        adventurer.isSpecial = adventurerDetails.isSpecial;
+        adventurers.Add(adventurer);
     }
     
     [Button("StartGame")]
@@ -174,6 +182,7 @@ public class GameManager : MonoBehaviour
         ChaosMod = 0;
         AdventurersMod = 0;
         DefenseMod = 0;
+        SatisfactionMod = 0;
 
         OnNewTurn?.Invoke();
         UpdateUi();
