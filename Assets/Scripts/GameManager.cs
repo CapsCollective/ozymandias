@@ -207,6 +207,14 @@ public class GameManager : MonoBehaviour
         UpdateUi();
     }
 
+    public void Demolish(BuildingStats building)
+    {
+        map.Clear(building.GetComponent<BuildingStructure>());
+        if (!building.terrain) buildings.Remove(building);
+        Destroy(building.gameObject);
+        UpdateUi();
+    }
+    
     public void UpdateUi()
     {
         OnUpdateUI?.Invoke();

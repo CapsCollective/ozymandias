@@ -19,18 +19,20 @@ public class Map : MonoBehaviour
     public Color gridColor;
     public Color occupiedColor;
 
-    private MeshFilter _meshFilter;
+    private MeshFilter meshFilter;
+    private Camera cam;
 
     public enum HighlightState { Inactive, Valid, Invalid }
 
     private void Awake()
     {
+        cam = Camera.main;
         Generate();
     }
 
     public void Highlight(Cell[] cells, HighlightState state)
     {
-        Vector2[] uv = _meshFilter.sharedMesh.uv;
+        Vector2[] uv = meshFilter.sharedMesh.uv;
 
         foreach (Cell cell in cells)
         {
@@ -40,31 +42,51 @@ public class Map : MonoBehaviour
                 uv[vertexIndex].x = (int)state / 2f;
         }
 
-        _meshFilter.sharedMesh.uv = uv;
+        meshFilter.sharedMesh.uv = uv;
     }
 
+    // Gets the closest cell to the cursor
+    public Cell GetCellFromMouse()
+    {
+        Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, LayerMask.GetMask("Surface","UI"));
+        return GetCell(hit.point);
+    }
+    
+    // Gets the closest cell by world position
     public Cell GetCell(Vector3 worldPosition)
     {
         return mapLayout.GetClosest(transform.InverseTransformPoint(worldPosition));
     }
-
+    
+    // Gets all cells within radius of a world position
     public Cell[] GetCells(Vector3 worldPosition, float worldRadius)
     {
+        // TODO: Implement
         return new Cell[0];
     }
 
+    // Gets all cells a building would take up given its root and rotation
     public Cell[] GetCells(Cell root, BuildingStructure building, int rotation = 0)
     {
         return mapLayout.GetCells(root, building, rotation);
     }
-
+    
+    // Gets all cells of a currently placed building
+    public Cell[] GetCells(BuildingStructure building)
+    {
+        return mapLayout.GetCells(building);
+    }
+    
     public void Generate()
     {
         mapLayout.Generate(mapLayout.seed);
-        _meshFilter = GetComponent<MeshFilter>();
-        _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
+        meshFilter = GetComponent<MeshFilter>();
+        meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
-
+    
+    // Occupies and fits a building onto the map
     private void Occupy(BuildingStructure building, Cell[] cells)
     {
         Vector3[][] vertices = new Vector3[cells.Length][];
@@ -79,6 +101,7 @@ public class Map : MonoBehaviour
         building.Fit(vertices);
     }
 
+    // Tries to create and place a building from a world position and rotation, returns if successful
     public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0)
     {
         GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
@@ -99,7 +122,7 @@ public class Map : MonoBehaviour
         Destroy(buildingInstance);
         return false;
     }
-
+    
     public bool IsValid(Cell[] cells)
     {
         bool valid = true;
@@ -114,18 +137,23 @@ public class Map : MonoBehaviour
     {
         return cell != null && !cell.Occupied;
     }
-
-    public void Clear(Cell cell)
+    
+    public void Clear(BuildingStructure building)
     {
-        mapLayout.Clear(cell);
+        Clear(GetCells(building)[0]); // Destroys the building from its root
     }
-
+    
     public void Clear(Cell[] cells)
     {
         foreach (Cell cell in cells)
-            mapLayout.Clear(cell);
+            Clear(cell);
     }
 
+    public void Clear(Cell root)
+    {
+        mapLayout.Clear(root);
+    }
+    
     public Vector3[] CellUnitToWorld(Cell cell)
     {
         Vector3[] vertices = new Vector3[4];
