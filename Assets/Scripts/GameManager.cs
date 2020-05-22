@@ -20,11 +20,12 @@ public enum Metric
 
 public enum BuildingType
 {
+    Terrain,
+    Bar,
+    Blacksmith,
     GuildHall,
     Inn,
-    Blacksmith,
-    ItemShop,
-    Bar
+    ItemShop
 }
 
 public class GameManager : MonoBehaviour
@@ -44,7 +45,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public Dictionary<Metric, int> modifiers = new Dictionary<Metric, int>();
     
     [ReadOnly] [SerializeField] private List<Adventurer> adventurers = new List<Adventurer>();
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int availableAdventurers;
     public int AvailableAdventurers
     {
-        get { return availableAdventurers = adventurers.Count(x => x.assignedQuest == null); }
+        get { return availableAdventurers = adventurers.Count(x => !x.assignedQuest); }
     }
 
     [ReadOnly] [SerializeField] private int accommodation;
@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
     {
         adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
     }
+    
     public void AddAdventurer(AdventurerDetails adventurerDetails)
     {
         Adventurer adventurer = Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform)
@@ -183,8 +184,7 @@ public class GameManager : MonoBehaviour
         BuildGuildHall();
         
         // Run the menu tutorial system dialogue
-        // Commented out for now, players can trigger from the help button
-        dialogueManager?.StartDialogue("menu_tutorial");
+        dialogueManager.StartDialogue("menu_tutorial");
     }
 
     [Button("Next Turn")]
@@ -196,6 +196,8 @@ public class GameManager : MonoBehaviour
 
         foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;
 
+        eventQueue.ProcessEvents();
+        
         OnNewTurn?.Invoke();
         UpdateUi();
     }
@@ -209,6 +211,12 @@ public class GameManager : MonoBehaviour
 
     public void Demolish(BuildingStats building)
     {
+        if (building.type == BuildingType.GuildHall)
+        {
+            //TODO: Add an 'are you sure?' dialogue
+            eventQueue.AddEvent(guildHallDestroyed, true);
+        }
+        
         map.Clear(building.GetComponent<BuildingStructure>());
         if (!building.terrain) buildings.Remove(building);
         Destroy(building.gameObject);
@@ -242,14 +250,21 @@ public class GameManager : MonoBehaviour
     {
         return buildings.Count(x => x.type == type);
     }
-    
+
+    public void GameOver()
+    {
+        
+    }
 
     [HorizontalLine()] 
     
-    public GameObject adventurerPrefab;
-    public DialogueManager dialogueManager;
     public Map map;
+    public EventQueue eventQueue;
+    public DialogueManager dialogueManager;
+    
+    public GameObject adventurerPrefab;
     public GameObject guildHall;
+    public Event guildHallDestroyed;
 
     private void BuildGuildHall()
     {

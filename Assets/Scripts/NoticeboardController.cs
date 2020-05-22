@@ -10,7 +10,8 @@ public class NoticeboardController : MonoBehaviour
 
     public void UpdateDisplay()
     {
-        // Fetch the currently active events
+        // Commenting out since it's unused and has a lot of deprecated stuff
+        /*// Fetch the currently active events
         var events = GetEvents();
 
         // Create a new mapping for previously posted events
@@ -38,7 +39,7 @@ public class NoticeboardController : MonoBehaviour
         }
         
         // Set the new flyer mappings
-        flyerMappings = newMappings;
+        flyerMappings = newMappings*/;
     }
 
     private Event[] GetEvents()

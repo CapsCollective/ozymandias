@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Choice : ScriptableObject
 {
-    public string ChoiceTitle;
-    public string ChoiceText;
+    public string description;
 
-    public List<Outcome> PossibleOutcomes = new List<Outcome>();
+    public List<Outcome> outcomes = new List<Outcome>();
 }
