@@ -21,7 +21,7 @@ public class Outcome : ScriptableObject
         
         foreach (Outcome outcome in outcomes)
         {
-            if (outcome.Execute() && outcome.Description != "") description += "•" + outcome.Description + "\n";
+            if (outcome.Execute() && outcome.Description != "") description += "• " + outcome.Description + "\n";
         }
         return description;
     }

@@ -23,15 +23,6 @@ public class NewspaperController : MonoBehaviour
     
     private void Awake()
     {
-        GameManager.OnNewTurn += () =>
-        {
-            for (var i = 0; i < choiceList.Length; i++)
-            {
-                //choiceList[i].GetComponentInChildren<Text>().text = "This is a choice you can select it by clicking on it";
-                choiceList[i].interactable = false;
-            }
-        };
-
         EventQueue.OnEventsProcessed += UpdateDisplay;
     }
 
@@ -60,7 +51,6 @@ public class NewspaperController : MonoBehaviour
     public void SetChoiceActive(int choice, bool active)
     {
         choiceList[choice].gameObject.SetActive(active);
-        choiceList[choice].interactable = active;
         fillerList[choice].text = active ? "" : FillerText;
         if (active) choiceList[choice].GetComponentInChildren<Text>().text = choiceEvent.choices[choice].name;
     }
@@ -69,6 +59,8 @@ public class NewspaperController : MonoBehaviour
     {
         articleList[0].AddChoiceOutcome (choiceEvent.MakeChoice(choice));
         continueButton.enabled = true;
+        for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
+        
         Manager.UpdateUi();
     }
     

@@ -43,6 +43,7 @@ public class EventQueue : MonoBehaviour
         if (headliners.Count > 0)
         {
             current.Add(headliners.First.Value);
+            outcomeDescriptions.Add(headliners.First.Value.Execute());
             headliners.RemoveFirst();
         }
 
@@ -65,13 +66,15 @@ public class EventQueue : MonoBehaviour
     {
         EventType type;
 
-        int i = Random.Range(0, 2);
+        int i = Random.Range(0, 3);
 
         switch (i)
         {
             case 0: type = EventType.Flavour;
                 break;
             case 1: type = EventType.Adventurers;
+                break;
+            case 2: type = EventType.Chaos;
                 break;
             default: type = EventType.Flavour;
                 break;
