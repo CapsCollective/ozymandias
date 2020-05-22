@@ -14,8 +14,6 @@ public class Place : MonoBehaviour
     private EventSystem eventSystem;
 
     private int rotation;
-    
-    // HIGHLIGHTING
     private Cell[] highlighted = new Cell[0];
 
     private void Awake()
@@ -36,30 +34,14 @@ public class Place : MonoBehaviour
 
         if (!selectedObject || eventSystem.IsPointerOverGameObject()) return;
         
-        Highlight();
-    }
-    
-    private bool Highlight()
-    {
-        Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-        Physics.Raycast(ray, out hit);
-        
-        // Check if new cells need to be highlighted
-        Cell closest = map.GetCell(hit.point);
+        Cell closest = map.GetCellFromMouse();
         
         BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
-        Cell[] cells = map.GetCells(closest, building, rotation);
-
-        // Check if cells are valid
-        bool valid = map.IsValid(cells);
-
-        // Highlight cells
-        highlighted = cells;
-
-        Map.HighlightState state = valid ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
-        map.Highlight(highlighted, state);
         
-        return valid;
+        highlighted = map.GetCells(closest, building, rotation);
+
+        Map.HighlightState state = map.IsValid(highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+        map.Highlight(highlighted, state);
     }
     
     private void LeftClick()
