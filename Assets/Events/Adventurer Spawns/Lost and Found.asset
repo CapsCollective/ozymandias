@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: New Choice
   m_EditorClassIdentifier: 
-  ChoiceTitle: New Choice
-  ChoiceText: 
-  PossibleOutcomes: []
+  description: 
+  outcomes: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,22 +26,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: Lost and Found
   m_EditorClassIdentifier: 
-  ScenarioTitle: Lost and Found
-  ScenarioText: Some good news today as a band of lost adventurers have stumbled
-    onto our town. They claim to have to come from a far away land somewhere east
-    of here, but what, we aren't good enough? This is your home now!
-  ScenarioBackground: {fileID: 0}
-  Choices: []
+  headline: Lost and Found
+  article: "Some good news today as a band of lost adventurers have stumbled\r onto
+    our town. They claim to have to come from a far away land somewhere east\r of
+    here, but what, we aren't good enough? This is your home now!"
+  image: {fileID: 0}
   type: 1
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes:
+  outcomes:
   - {fileID: 6273681676176468047}
+  choices: []
 --- !u!114 &6273681676176468047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,8 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
   m_Name: New Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: 4 new adventurers join us, completely 'of their own will'
+  customDescription: 
   adventurers:
   - {fileID: 0}
   - {fileID: 0}
@@ -74,6 +72,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: New Choice
   m_EditorClassIdentifier: 
-  ChoiceTitle: New Choice
-  ChoiceText: 
-  PossibleOutcomes: []
+  description: 
+  outcomes: []

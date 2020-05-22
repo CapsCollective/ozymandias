@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: Magic Wood
   m_EditorClassIdentifier: 
-  ScenarioTitle: Magic Wood Found in Nearby Forest!
-  ScenarioText: "Silkhelm, otherwise known as \u2018Living Wood\u2019 has been discovered.
+  headline: Magic Wood Found in Nearby Forest!
+  article: "Silkhelm, otherwise known as \u2018Living Wood\u2019 has been discovered.
     This supernaturally strong wood is lucrative, so if you've got an axe free, get
-    chopping! Warning, faint screaming may be heard, and should be ignored."
-  ScenarioBackground: {fileID: 0}
-  Choices: []
+    chopping! Warning, faint screaming may be heard, and should be ignored.\r"
+  image: {fileID: 0}
   type: 3
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes:
+  outcomes:
   - {fileID: 1098204887201390731}
+  choices: []
 --- !u!114 &1098204887201390731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,8 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: +5% spending for 3 turns while we sell all this 'wood'
+  customDescription: +5% spending for 3 turns while we sell all this 'wood'
   StatToChange: 3
   Amount: 5
   Turns: 3

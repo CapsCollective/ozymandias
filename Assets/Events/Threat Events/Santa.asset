@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: Your village is terrified (-10% Satisfaction)
+  customDescription: Your village is terrified (-10% Satisfaction next turn)
   StatToChange: 1
   Amount: -10
   Turns: 1
@@ -29,24 +28,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: Santa
   m_EditorClassIdentifier: 
-  ScenarioTitle: Ho Ho Horror
-  ScenarioText: An Evil Wizard dressed all in red with a sleigh and reindeer blazed
-    through town scaring residents and adventurers alike. The sound of his haunting
-    laugh caused a few of our resident elves to flee in terror at the sound of their
-    former master.
-  ScenarioBackground: {fileID: 0}
-  Choices: []
+  headline: Ho Ho Horror!
+  article: "An Evil Wizard dressed all in red with a sleigh and reindeer blazed\r
+    through town scaring residents and adventurers alike. The sound of his haunting\r
+    laugh caused a few of our resident elves to flee in terror at the sound of their\r
+    former master."
+  image: {fileID: 0}
   type: 2
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes:
+  outcomes:
   - {fileID: 4317875650670658602}
   - {fileID: -4926950199246871018}
+  choices: []
 --- !u!114 &4317875650670658602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,8 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
   m_Name: Remove Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: Elves Flee
-  OutcomeFlavourText: 3 Adventures fled into the forest, never to be seen again
+  customDescription: 3 Adventures fled into the forest, never to be seen again
   adventurerNames:
   - 
   - 

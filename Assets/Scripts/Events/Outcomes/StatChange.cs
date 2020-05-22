@@ -38,11 +38,13 @@ public class StatChange : Outcome
         turnsLeft--;
     }
 
-    public override string GetOutcomeString()
+    public override string Description
     {
-        if(OutcomeFlavourText == "")
-            return "•" + StatToChange +" has been changed by " + Amount +" for " + turnsLeft + " turns";
-
-        return OutcomeFlavourText;
+        get
+        {
+            if (customDescription != "") return customDescription;
+            if (Amount > 0) return StatToChange + " has increased by " + Amount + " for " + turnsLeft + " turns";
+            return StatToChange + " has decreased by " + Amount + " for " + turnsLeft + " turns";
+        }
     }
 }

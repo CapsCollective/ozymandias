@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
   m_Name: New Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: 3 villagers have become Diviners!
+  customDescription: 
   adventurers:
   - {fileID: 0}
   - {fileID: 0}
@@ -30,24 +29,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: The Chosen One (of Many)
   m_EditorClassIdentifier: 
-  ScenarioTitle: The Chosen One (of Many)
-  ScenarioText: 'Three villagers have committed to going on a holy quest after receiving
+  headline: The Chosen One (of Many)
+  article: "Three villagers have committed to going on a holy quest after receiving
     pamphlets in the mail, claiming they are the chosen one. The goal of this quest
     is unknown, but involves leaving a portion of their earnings in an unmarked bag
     on the outside of town, and converting as many followers to do the same. The
     origin of these pamphlets are unknown but were sent to nearly every home over
-    the night.
-
-'
-  ScenarioBackground: {fileID: 0}
-  Choices: []
+    the night.\r"
+  image: {fileID: 0}
   type: 1
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes:
+  outcomes:
   - {fileID: -3042495487615819708}
+  choices: []

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
   m_Name: New Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: 1 adventurer joins!
+  customDescription: 
   adventurers:
   - {fileID: 0}
 --- !u!114 &11400000
@@ -28,20 +27,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: The Drunken Master
   m_EditorClassIdentifier: 
-  ScenarioTitle: The Drunken Master
-  ScenarioText: "A true change of heart today, as the town drunk made the revelation
-    he is an excellent combatant while drunk during a bar fight. He vows after his
-    hangover dies down, he\u2019s decided to turn his life around and join the adventures
+  headline: The Drunken Master
+  article: "A true change of heart today, as the town drunk made the revelation he
+    is an excellent combatant while drunk during a bar fight. He vows after his hangover
+    dies down, he\u2019s decided to turn his life around and join the adventures
     guild, on the provision he\u2019s given a steady supply of beer."
-  ScenarioBackground: {fileID: 0}
-  Choices: []
+  image: {fileID: 0}
   type: 1
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes:
+  outcomes:
   - {fileID: -2352857513790566846}
+  choices: []

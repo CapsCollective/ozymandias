@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: World's Gobliniest Human
   m_EditorClassIdentifier: 
-  ScenarioTitle: World's Gobliniest Human
-  ScenarioText: "A great disturbance to village life yesterday as the goblin alarm
-    was raised and a supposed threat was apprehended by town guards, after extensive
+  headline: World's Gobliniest Human
+  article: "A great disturbance to village life yesterday as the goblin alarm was
+    raised and a supposed threat was apprehended by town guards, after extensive
     interrogation and scrying village officials came to the conclusion that it was
     in fact not a goblin but instead just a very short, ugly, slightly green man.
     Regardless, he's joined the adventuring guild.\r"
-  ScenarioBackground: {fileID: 0}
-  Choices: []
+  image: {fileID: 0}
   type: 0
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes:
+  outcomes:
   - {fileID: 8569393559495319280}
+  choices: []
 --- !u!114 &8569393559495319280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,7 +42,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
   m_Name: New Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: 1 adventurer joins!
+  customDescription: 
   adventurers:
   - {fileID: 0}

@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class Outcome : ScriptableObject
 {
-
-    public string OutcomeName;
-    public string OutcomeFlavourText;
-
-    private static string[] dummyReplies =
-    {
-        "• Chaos has increased!",
-        "• Chaos has increased!\n• Efficiency has increased!",
-        "• Chaos has increased!\n• Efficiency has increased!\n• Something else has increased!"
-    };
+    public string customDescription; //An override description for custom outcomes
+    public virtual string Description { get {
+        return customDescription;
+    } }
 
     // What happens when this is executed
     public virtual bool Execute()
     {
         return false;
     }
-
-    public virtual string GetOutcomeString()
+    
+    public static string Execute(List<Outcome> outcomes)
     {
-        return OutcomeFlavourText;
+        string description = "";
+        
+        foreach (Outcome outcome in outcomes)
+        {
+            if (outcome.Execute() && outcome.Description != "") description += "•" + outcome.Description + "\n";
+        }
+        return description;
     }
 }

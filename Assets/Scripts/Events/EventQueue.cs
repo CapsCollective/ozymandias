@@ -3,96 +3,133 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System;
-using UnityEngine.Analytics;
+using System.Linq;
+using Random = UnityEngine.Random;
 
 public class EventQueue : MonoBehaviour
 {
-    [ReorderableList]
-    public List<Event> EventsQueue = new List<Event>();
-
-    [ReorderableList]
-    public List<Event> CurrentEvents = new List<Event>(3);
+    private const int MinQueueEvents = 2; // The minimum events in the queue to store
+    private const int MinPoolEvents = 2; // The minumum events in the pool to 
     
     [ReorderableList]
-    public List<IPersistentEvent> PersistentEvents = new List<IPersistentEvent>();
+    public LinkedList<Event> headliners = new LinkedList<Event>();
+    public LinkedList<Event> others = new LinkedList<Event>();
 
-    public static Action<List<Event>> OnEventsProcessed;
-    public static Action<StatChange> OnNewPersistentEvent;
-    //public static Action<StatChange> OnPersistentEventComplete;
-
-    public static string outcomeString;
-
+    public Dictionary<EventType, LinkedList<Event>> eventPools = new Dictionary<EventType, LinkedList<Event>>(); //Events to randomly add to the queue
+    
+    [ReadOnly] public List<Event> current = new List<Event>(4);
+    [ReadOnly] public List<string> outcomeDescriptions = new List<string>(4);
+    
+    public static Action<List<Event>, List<string>> OnEventsProcessed;
+    
+    public Event[] allEvents;
+    
     public void Awake()
     {
-        GameManager.OnNewTurn += ProcessEvents;
-        NewspaperController.OnOutcomeSelected += HandleChainEvent;
+        Random.InitState((int)DateTime.Now.Ticks);
+
+        //TODO: Figure out best way to autoload events
+        
+        //allEvents = Resources.LoadAll<Event>("Events");
+        //Init shuffled event pools pool
+        foreach (EventType type in Enum.GetValues(typeof(EventType))) eventPools.Add(type, Shuffle(type));
     }
 
-    private void ProcessEvents()
+    public void ProcessEvents()
     {
-        outcomeString = "";
+        current.Clear();
+        outcomeDescriptions.Clear();
 
-        CurrentEvents.Clear();
-
-        bool hasChoices = false;    
-
-        for (int e = 0; e < CurrentEvents.Capacity; e++)
+        if (headliners.Count > 0)
         {
-            for (int i = 0; i < EventsQueue.Count; i++)
-            {
-                // If the event has choices
-                if (EventsQueue[i].Choices.Count > 0)
-                {
-                    if (!hasChoices)
-                    {
-                        hasChoices = true;
-                        CurrentEvents.Insert(0, EventsQueue[i]);
-                        EventsQueue.RemoveAt(i);
-                        break;
-                    }
-                    else
-                        continue;
-                }
-
-                // If there is a default outcome
-                // We execute that
-                bool execute = false;
-                if (EventsQueue[i].EventOutcomes.Count > 0)
-                {
-                    foreach (Outcome o in EventsQueue[i].EventOutcomes)
-                    {
-                        execute = o.Execute();
-                        if (execute)
-                        {
-                            Debug.Log(o.GetOutcomeString());
-                            outcomeString += o.GetOutcomeString() + "\n";
-                            execute = false;
-                        }
-                        else
-                            break;
-                    }
-                    CurrentEvents.Add(EventsQueue[i]);
-                    EventsQueue.RemoveAt(i);
-                    Debug.Log(outcomeString);
-                    break;
-                }
-
-                CurrentEvents.Add(EventsQueue[i]);
-                EventsQueue.RemoveAt(i);
-                break;
-            }
-            if (CurrentEvents.Count == 3)
-            {
-                hasChoices = false;
-                break;
-            }
+            current.Add(headliners.First.Value);
+            headliners.RemoveFirst();
         }
-        OnEventsProcessed?.Invoke(CurrentEvents);
+
+        while (current.Count < 3)
+        {
+            if (others.Count < MinQueueEvents) {AddEvent(PickRandom()); continue;}
+            Event e = others.First.Value;
+            others.RemoveFirst();
+            current.Add(e); 
+            outcomeDescriptions.Add(e.Execute());
+        }
+        
+        current.Add(PickRandom(EventType.Advert));
+        outcomeDescriptions.Add("");
+        
+        OnEventsProcessed?.Invoke(current, outcomeDescriptions);
     }
 
-    public void HandleChainEvent(Outcome outcome)
+    public Event PickRandom()
     {
-        //if(outcome.ChainEvent != null)
-        //    EventsQueue.RandomInsert(outcome.ChainEvent, outcome.ChainEventMaxTurnsAway * 3);
+        EventType type;
+
+        int i = Random.Range(0, 2);
+
+        switch (i)
+        {
+            case 0: type = EventType.Flavour;
+                break;
+            case 1: type = EventType.Adventurers;
+                break;
+            default: type = EventType.Flavour;
+                break;
+        }
+        return PickRandom(type);
+    }
+
+    public Event PickRandom(EventType type)
+    {
+        while (true) // Repeats until valid event is found
+        {
+            if (eventPools[type].Count == 0) eventPools[type] = Shuffle(type);
+            
+            Event e = eventPools[type].First.Value;
+            eventPools[type].RemoveFirst();
+            if (ValidEvent(e)) return e;
+        }
+    }
+
+    public void AddEvent(Event e, bool toFront = false)
+    {
+        if (e.headliner || e.choices.Count > 0)
+        {
+            if (toFront) headliners.AddFirst(e);
+            else headliners.AddLast(e);
+        }
+        else
+        {
+            if (toFront) others.AddFirst(e);
+            else others.AddLast(e);
+        }
+    }
+
+    public LinkedList<Event> Shuffle(EventType type) // Returns a shuffled list of all events of a certain type
+    {
+        List<Event> events = allEvents.Where(x => x.type == type).ToList();
+        LinkedList<Event> shuffled = new LinkedList<Event>();
+        while (events.Count != 0)
+        {
+            shuffled.AddLast(events.PopRandom());
+        }
+        return shuffled;
+    }
+
+    public bool ValidEvent(Event e)
+    {
+        //TODO: Implement
+        return true;
+    }
+}
+
+public static class MyExtensions
+{
+    public static T PopRandom<T>(this List<T> list)
+    {
+        int i = Random.Range(0, list.Count);
+        T value = list[i];
+        list.RemoveAt(i);
+        return value;
     }
 }

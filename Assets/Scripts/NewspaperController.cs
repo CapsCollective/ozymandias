@@ -7,99 +7,85 @@ using static GameManager;
 
 public class NewspaperController : MonoBehaviour
 {
+    private const string FillerText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+    
     // Serialised Fields
+    #pragma warning disable 0649
     [SerializeField] private Text newspaperTitle;
-    [SerializeField] private GameObject[] articleList;
+    [SerializeField] private EventDisplayManager[] articleList;
     [SerializeField] private Image articleImage;
     [SerializeField] private Button[] choiceList;
     [SerializeField] private Text[] fillerList;
+    [SerializeField] private Button continueButton;
 
-    // Private Fields
-    private Event[] currentEvents;
 
-    public static Action<Outcome> OnOutcomeSelected;
-
+    private Event choiceEvent;
+    
     private void Awake()
     {
         GameManager.OnNewTurn += () =>
         {
             for (var i = 0; i < choiceList.Length; i++)
             {
-                choiceList[i].GetComponentInChildren<Text>().text = "This is a choice you can select it by clicking on it";
+                //choiceList[i].GetComponentInChildren<Text>().text = "This is a choice you can select it by clicking on it";
                 choiceList[i].interactable = false;
             }
         };
 
-        EventQueue.OnEventsProcessed += (list) =>
-        {
-            currentEvents = list.ToArray();
-            UpdateDisplay();
-        };
+        EventQueue.OnEventsProcessed += UpdateDisplay;
     }
 
-    public void UpdateDisplay()
+    public void UpdateDisplay(List<Event> events, List<string> descriptions)
     {
-        // Fetch the currently active events and add the advertisement
-        //currentEvents = GetEvents();
-        currentEvents = currentEvents.Append(GetNewspaperAd()).ToArray();
-
+        choiceEvent = events[0];
+        if (choiceEvent.choices.Count > 0) continueButton.enabled = false;
+        
         // Set the image for the main article and a newspaper title
-        if(currentEvents[0].ScenarioBackground != null)
-            articleImage.sprite = currentEvents[0].ScenarioBackground;
+        if(events[0].image != null) articleImage.sprite = events[0].image;
         newspaperTitle.text = GetNewspaperTitle();
 
-        // Assign the remaining events to the unused flyers, setting their states and recording mappings
-        for (var i = 0; i < currentEvents.Length; i++)
+        // Assign the remaining events to the corresponding spots
+        for (int i = 0; i < events.Count; i++)
         {
-            var isAd = i == currentEvents.Length-1;
-            articleList[i].GetComponent<EventDisplayManager>().SetEvent(currentEvents[i], !isAd);
+            articleList[i].SetEvent(events[i], descriptions[i], i != events.Count - 1);
         }
 
         // Set all event choices on button texts
         for (var i = 0; i < choiceList.Length; i++)
         {
-            if (i < currentEvents[0].Choices.Count)
-            {
-                choiceList[i].gameObject.SetActive(true);
-                choiceList[i].GetComponentInChildren<Text>().text = currentEvents[0].Choices[i].ChoiceTitle;
-                choiceList[i].interactable = true;
-                fillerList[i].text = "";
-            }
-            else
-            {
-                fillerList[i].text = "smaller event description text that contains more details on the quest. The particulars and flavour text are mostly contained within this section and allow the player to engage with the world on a narrative level. This is the smaller event description text that contains more details on the quest. The particulars and flavour text are mostly contained within this section and allow the player to engage with the world on a narrative level. This is the sm";
-                choiceList[i].gameObject.SetActive(false);
-            }
+            SetChoiceActive(i, i < choiceEvent.choices.Count);
         }
+    }
+
+    public void SetChoiceActive(int choice, bool active)
+    {
+        choiceList[choice].gameObject.SetActive(active);
+        choiceList[choice].interactable = active;
+        fillerList[choice].text = active ? "" : FillerText;
+        if (active) choiceList[choice].GetComponentInChildren<Text>().text = choiceEvent.choices[choice].name;
     }
     
     public void OnChoiceSelected(int choice)
     {
-        currentEvents[0].Choices[choice].PossibleOutcomes[0].Execute();
-        Array.ForEach(choiceList, b => b.interactable = false);
-        OnOutcomeSelected?.Invoke(currentEvents[0].Choices[choice].PossibleOutcomes[0]);
-        // TODO call the game logic with the selected choice with the following:
-        // currentEvents[0].Choices[choice]
+        articleList[0].AddChoiceOutcome (choiceEvent.MakeChoice(choice));
+        continueButton.enabled = true;
         Manager.UpdateUi();
     }
-
-    private Event[] GetEvents()
-    {
-        throw new System.NotImplementedException();
-    }
-
+    
     private string GetNewspaperTitle()
     {
         return "{ " + "The Wizarding Post" + " }";
         // TODO randomly generate newspaper names
     }
     
-    private Event GetNewspaperAd()
-    {
-        var e = ScriptableObject.CreateInstance<Event>();
-        e.ScenarioTitle = "LESSER POTIONS FOR LESSER HEROES!\nWhatever your strength, we've got you covered at PotionBarn!";
-        e.ScenarioText = "Rude potion-sellers getting you down? Then come on down to where the potions aren't too hot or too cold for you, because they're just alright.";
-        return e;
-        // TODO randomly generate ads
-    }
+    // private Event GetNewspaperAd()
+    // {
+    //     return adverts[0];
+    //     // TODO Add more adverts and pick them at random
+    //     var e = ScriptableObject.CreateInstance<Event>();
+    //     e.ScenarioTitle = "LESSER POTIONS FOR LESSER HEROES!\nWhatever your strength, we've got you covered at PotionBarn!";
+    //     e.ScenarioText = "Rude potion-sellers getting you down? Then come on down to where the potions aren't too hot or too cold for you, because they're just alright.";
+    //     return e;
+    //     // TODO randomly generate ads
+    // }
 }

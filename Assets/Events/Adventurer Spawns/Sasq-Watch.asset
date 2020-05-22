@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
   m_Name: New Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: 2 adventures join!
+  customDescription: 
   adventurers:
   - {fileID: 0}
   - {fileID: 0}
@@ -29,20 +28,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: Sasq-Watch
   m_EditorClassIdentifier: 
-  ScenarioTitle: Sasq-Watch
-  ScenarioText: "A pair of adventurers came to our town, claiming to be tracking
-    an illusive huge footed creature, and have decided to stay until they have solid
-    proof. While many doubt it\u2019s existence, due to the low quality of sketches
-    drawn, the team they are accurate, and the beast is just blurry."
-  ScenarioBackground: {fileID: 0}
-  Choices: []
+  headline: Sasq-Watch
+  article: "A pair of adventurers came to our town, claiming to be tracking an illusive
+    huge footed creature, and have decided to stay until they have solid proof. While
+    many doubt it\u2019s existence, due to the low quality of sketches drawn, the
+    team they are accurate, and the beast is just blurry."
+  image: {fileID: 0}
   type: 1
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes:
-  - {fileID: -7142808779275044407}
+  outcomes:
+  - {fileID: 5921214071275323494, guid: 6759791c339314e47b6f29e311ed7cc0, type: 2}
+  choices: []
