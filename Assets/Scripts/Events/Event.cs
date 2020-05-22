@@ -1,6 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+
+public enum EventType
+{
+    Flavour,
+    Adventurers,
+    Threat,
+    Chaos,
+    Endgame
+}
 
 [CreateAssetMenu(fileName = "Scenario")][System.Serializable]
 public class Event : ScriptableObject
@@ -11,6 +21,8 @@ public class Event : ScriptableObject
 
     public List<Choice> Choices = new List<Choice>();
 
+    public EventType type;
+    
     public float minChaos;
     public float minThreat;
     public float minWealth;

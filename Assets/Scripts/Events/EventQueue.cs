@@ -7,7 +7,6 @@ using UnityEngine.Analytics;
 
 public class EventQueue : MonoBehaviour
 {
-    [SerializeField] private Outcome defaultOutcome;
     [ReorderableList]
     public List<Event> EventsQueue = new List<Event>();
 
