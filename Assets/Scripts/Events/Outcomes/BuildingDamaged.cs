@@ -6,19 +6,15 @@ using static GameManager;
 [CreateAssetMenu]
 public class BuildingDamaged : Outcome
 {
-    public GameObject BuildingType;
+    public BuildingType type;
 
     public override bool Execute()
     {
-        for (int i = 0; i < Manager.buildings.Count; i++)
+        foreach (BuildingStats building in Manager.buildings)
         {
-            if (i == Manager.buildings.Count)
-                return false;
-            if(Manager.buildings[i].gameObject.name.Contains(BuildingType.name))
+            if(building.type == type)
             {
-                var curBuilding = Manager.buildings[i];
-                Manager.buildings.RemoveAt(i);
-                Destroy(curBuilding.gameObject);
+                Manager.Demolish(building);
                 return true;
             }
         }
