@@ -43,21 +43,19 @@ public class EventQueue : MonoBehaviour
         if (headliners.Count > 0)
         {
             current.Add(headliners.First.Value);
-            outcomeDescriptions.Add(headliners.First.Value.Execute());
             headliners.RemoveFirst();
         }
 
         while (current.Count < 3)
         {
             if (others.Count < MinQueueEvents) {AddEvent(PickRandom()); continue;}
-            Event e = others.First.Value;
+            current.Add(others.First.Value);
             others.RemoveFirst();
-            current.Add(e); 
-            outcomeDescriptions.Add(e.Execute());
         }
         
         current.Add(PickRandom(EventType.Advert));
-        outcomeDescriptions.Add("");
+
+        foreach (Event e in current) outcomeDescriptions.Add(e.Execute());
         
         OnEventsProcessed?.Invoke(current, outcomeDescriptions);
     }

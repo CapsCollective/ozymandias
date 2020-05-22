@@ -34,7 +34,6 @@ public class StatChange : Outcome
 
         Manager.modifiers[StatToChange] += Amount;
 
-        Debug.Log($"{StatToChange} was changed by {Amount}. {turnsLeft} turns remaining.");
         turnsLeft--;
     }
 

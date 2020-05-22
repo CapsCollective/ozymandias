@@ -183,6 +183,8 @@ public class GameManager : MonoBehaviour
         threat = 1;
         BuildGuildHall();
         
+        eventQueue.AddEvent(openingEvent, true);
+        
         // Run the menu tutorial system dialogue
         dialogueManager.StartDialogue("menu_tutorial");
     }
@@ -264,7 +266,9 @@ public class GameManager : MonoBehaviour
     
     public GameObject adventurerPrefab;
     public GameObject guildHall;
+    public Event openingEvent;
     public Event guildHallDestroyed;
+    
 
     private void BuildGuildHall()
     {
