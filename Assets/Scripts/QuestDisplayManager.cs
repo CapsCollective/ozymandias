@@ -7,11 +7,12 @@ public class QuestDisplayManager : MonoBehaviour
     [SerializeField] private Text titleText;
     [SerializeField] private Text descriptionText;
     [SerializeField] private Text statsText;
-    [SerializeField] private Button sendButton;
+    [SerializeField] public Button sendButton;
 
     private void Start()
     {
         sendButton.onClick.AddListener(OnButtonClick);
+        sendButton.gameObject.SetActive(false);
     }
 
     private static void OnButtonClick()
@@ -24,5 +25,10 @@ public class QuestDisplayManager : MonoBehaviour
         titleText.text = q.QuestTitle;
         descriptionText.text = q.QuestDescription;
         statsText.text = $"Adventurers: {q.Adventurers}\n     Duration: {q.Turns}\n            Cost: {30}";
+    }
+
+    public void SetDisplaying(bool displaying)
+    {
+        sendButton.gameObject.SetActive(displaying);
     }
 }
