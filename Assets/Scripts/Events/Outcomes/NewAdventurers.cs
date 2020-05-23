@@ -32,7 +32,7 @@ public class NewAdventurers : Outcome
             if (customDescription != "") return customDescription;
             Random.InitState((int)DateTime.Now.Ticks);
             return  adventurers.Count + " adventurer" +
-                    (adventurers.Count > 1 ? "s" : "") + " have " +
+                    (adventurers.Count > 1 ? "s have " : " has ") +
                     Descriptors[Random.Range(0, Descriptors.Length)];
         }
     }

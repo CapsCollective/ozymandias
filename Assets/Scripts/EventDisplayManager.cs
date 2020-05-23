@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EventDisplayManager : MonoBehaviour
 {
     #pragma warning disable 0649
     [SerializeField] private Text titleText;
-    [SerializeField] private Text descriptionText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Text outcomeText;
 
     public void SetEvent(Event e, string outcome, bool upper = false)
