@@ -7,22 +7,23 @@ using UnityEngine.EventSystems;
 
 public class Clear : MonoBehaviour
 {
-    private RaycastHit hit;
+    public const float costScale = 1.15f;
+    
     private Cell[] highlighted = new Cell[1];
     private Map map;
-    private Camera cam;
     private Image image;
     private EventSystem eventSystem;    
 
     private bool clearMode = false;
-    private bool canClear = false;
+    private BuildingStructure selectedBuilding;
+    private int clearCount = 0;
     
-    public int clearCost = 5;
-
+    public int baseCost = 5;
+    
+    public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(costScale, clearCount));
 
     private void Awake()
     {
-        cam = Camera.main;
         map = Manager.map;
         eventSystem = EventSystem.current;
         
@@ -35,13 +36,13 @@ public class Clear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        canClear = false;
+        selectedBuilding = null;
         if (!clearMode) return;
         
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
         
-        if (Manager.CurrentWealth < clearCost)
+        if (Manager.CurrentWealth < ScaledCost)
         {
             ExitClearMode();
             return;
@@ -49,32 +50,19 @@ public class Clear : MonoBehaviour
 
         if (eventSystem.IsPointerOverGameObject()) return;
         
-        Highlight();
-    }
+        Cell closest = map.GetCellFromMouse();
 
-    //Finds cells to highlight and checks validity
-    public void Highlight()
-    {
-        //TODO: Refactor out as is a duplicate of the script in Clear
-        Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-        Physics.Raycast(ray, out hit, LayerMask.GetMask("Surface","UI"));
-        // Check if new cells need to be highlighted
-        Cell closest = map.GetCell(hit.point);
+        selectedBuilding = closest.occupant;
+        if (selectedBuilding) highlighted = map.GetCells(selectedBuilding);
+        else highlighted[0] = closest;
         
-        canClear = !map.IsValid(closest);
-        highlighted[0] = closest;
-        
-        Map.HighlightState state = canClear ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+        Map.HighlightState state = selectedBuilding ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
         map.Highlight(highlighted, state);
-
-        ////////////TODO: Find the building in the cell, get the other cells it occupies, and highlight all of those cells //////////////
-
-        //////////////////////////////////////////////////////////////////
     }
-
+    
     public void LeftClick()
     {
-        if (clearMode && canClear) ClearSpace(highlighted);
+        if (clearMode && selectedBuilding) ClearBuilding();
         if (eventSystem.currentSelectedGameObject && eventSystem.currentSelectedGameObject.gameObject != gameObject) ExitClearMode();
     }
     
@@ -98,10 +86,12 @@ public class Clear : MonoBehaviour
         highlighted = new Cell[1];
     }
     
-    public void ClearSpace(Cell[] cellsToClear)
+    public void ClearBuilding()
     {
-        if (Manager.Spend(clearCost)) map.Clear(cellsToClear);
-        // Currently clears buildings and terrain, but needs to only clear the latter
+        if (!Manager.Spend(ScaledCost)) return;
+        BuildingStats building = selectedBuilding.GetComponent<BuildingStats>();
+        if (building.terrain) clearCount++;
+        Manager.Demolish(building);
         //ExitClearMode();
     }
 }

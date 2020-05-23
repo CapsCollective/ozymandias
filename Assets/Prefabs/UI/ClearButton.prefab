@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.86, y: 6.380001}
-  m_SizeDelta: {x: 46.3, y: 45.58}
+  m_AnchoredPosition: {x: 3, y: -2}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4948591485811535839
 CanvasRenderer:
@@ -76,9 +76,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: -0.97
-  m_Text: '$5
-
-'
+  m_Text: 5
 --- !u!1 &8171228687913504636
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +90,7 @@ GameObject:
   - component: {fileID: 8171228687913504635}
   - component: {fileID: 8171228687913504634}
   - component: {fileID: 8470713524370089664}
+  - component: {fileID: 1677381902}
   m_Layer: 5
   m_Name: ClearButton
   m_TagString: Untagged
@@ -221,4 +220,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8720f9284480a4fb7287a74b7cf20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearCost: 5
+  baseCost: 5
+--- !u!114 &1677381902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8171228687913504636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96231e207d363e4c88b7e9bc0480880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: {fileID: 12813500335773152}

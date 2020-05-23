@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2677079579589401081
+--- !u!114 &-1899190093601914456
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
   m_Name: Remove Adventurers(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: 
-  OutcomeFlavourText: 
+  customDescription: 
   adventurerNames:
-  - Red
+  - 
+  - 
+  - 
+  kill: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,68 +30,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: Bandit Raid
   m_EditorClassIdentifier: 
-  ScenarioTitle: Bandit Raid Takes its Toll
-  ScenarioText: 'Three Adventurers (and 23 villagers) have been struck down protecting
-    our town from a clan or nearby marauders. '
-  ScenarioBackground: {fileID: 0}
-  Choices:
-  - {fileID: 2806359146785441729}
-  - {fileID: 7858163021182870844}
+  headline: Bandit Raid Takes its Toll
+  article: Three Adventurers (and 23 villagers) have been struck down protecting
+    our town from a clan or nearby marauders. They didn't even try to steal anything,
+    they're just jerks.
+  image: {fileID: 0}
+  type: 2
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  eventOutcomes: []
---- !u!114 &2806359146785441729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Make Choice
-  m_EditorClassIdentifier: 
-  ChoiceTitle: Make Choice
-  ChoiceText: 
-  PossibleOutcomes:
-  - {fileID: 6544387140945141549}
---- !u!114 &6544387140945141549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: Remove Adventurers(Clone)
-  m_EditorClassIdentifier: 
-  OutcomeName: Dead Adventurers
-  OutcomeFlavourText: -3 Adventurers
-  adventurerNames:
-  - 
-  - 
-  - 
---- !u!114 &7858163021182870844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Remove Red
-  m_EditorClassIdentifier: 
-  ChoiceTitle: Remove Red
-  ChoiceText: 
-  PossibleOutcomes:
-  - {fileID: -2677079579589401081}
+  outcomes:
+  - {fileID: -1899190093601914456}
+  choices:
+  - {fileID: 0}
