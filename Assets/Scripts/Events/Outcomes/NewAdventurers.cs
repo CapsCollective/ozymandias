@@ -22,7 +22,7 @@ public class NewAdventurers : Outcome
     }
 
     private static string[] Descriptors = {
-        "taken up residence.", "joined the fight!", "found a new home.", "started questing"
+        "taken up residence.", "joined the fight!", "found a new home.", "started questing."
     };
     
     public override string Description
@@ -32,7 +32,7 @@ public class NewAdventurers : Outcome
             if (customDescription != "") return customDescription;
             Random.InitState((int)DateTime.Now.Ticks);
             return  adventurers.Count + " adventurer" +
-                    (adventurers.Count > 1 ? "s" : "") + " have " +
+                    (adventurers.Count > 1 ? "s have " : " has ") +
                     Descriptors[Random.Range(0, Descriptors.Length)];
         }
     }
