@@ -257,7 +257,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        newspaperController.GameOver();
+        newspaperController.GameOver();            
     }
 
     [HorizontalLine()] 

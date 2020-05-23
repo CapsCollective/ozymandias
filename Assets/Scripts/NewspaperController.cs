@@ -65,4 +65,9 @@ public class NewspaperController : MonoBehaviour
         continueButton.gameObject.SetActive(false);
         gameOverButton.gameObject.SetActive(true);
     }
+
+    private void OnDestroy()
+    {
+        EventQueue.OnEventsProcessed -= UpdateDisplay;
+    }
 }
