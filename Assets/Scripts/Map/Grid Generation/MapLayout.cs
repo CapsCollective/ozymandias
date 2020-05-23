@@ -193,7 +193,7 @@ public class MapLayout : ScriptableObject
             for (int itRow = 0; itRow < verticesInColumn; itRow++)
             {
                 float y = yStep * (itRow - ((verticesInColumn - 1) / 2f));
-                Vertex newVertex = new Vertex(new Vector3(x, y, 0));
+                Vertex newVertex = new Vertex(new Vector3(x, y, 0), false, false);
 
                 VertexGraph.Add(newVertex);
             }
@@ -383,6 +383,258 @@ public class MapLayout : ScriptableObject
                     vertex.SetPosition(Vector3.Lerp(vertex, averagedPosition, relaxStrength));
             }
         }
+    }
+
+    public void GenerateMap(int seed)
+    {
+        Random.InitState(seed);
+
+        CreateVertices();
+
+        CreateEdges();
+
+        RemoveEdges();
+
+        Subdivide();
+
+        foreach (Vertex root in VertexGraph.GetData())
+            foreach (Vertex adjacent in VertexGraph.GetAdjacent(root))
+                Debug.DrawLine(root, adjacent);
+
+        //foreach (Vertex root in VertexGraph.GetData())
+        //    Debug.DrawLine(new Vector3(-2, 0, 0), root, Color.red);
+
+        Debug.Log("NUMVERTICES: " + VertexGraph.Count);
+
+        Relax();
+
+        CalculateCells();
+    }
+
+    private void CreateVertices()
+    {
+        VertexGraph = new Graph<Vertex>();
+
+        int minCol = -depth;
+        int maxCol = depth;
+
+        float xStep = Mathf.Cos(Mathf.PI / 6f) / depth;
+        float yStep = 1f / depth;
+
+        for (int itCol = minCol; itCol <= maxCol; itCol++)
+        {
+            int verticesInColumn = (depth * 2 + 1) - Mathf.Abs(itCol);
+            float x = xStep * itCol;
+
+            for (int itRow = 0; itRow < verticesInColumn; itRow++)
+            {
+                float y = yStep * (itRow - ((verticesInColumn - 1) / 2f));
+
+                bool boundary = itCol == minCol || itCol == maxCol || itRow == 0 || itRow == verticesInColumn - 1;
+                bool split = false;
+
+                Vertex newVertex = new Vertex(new Vector3(x, y, 0), split, boundary);
+
+                VertexGraph.Add(newVertex);
+            }
+        }
+    }
+
+    private void CreateEdges()
+    {
+        int minCol = -depth;
+        int maxCol = depth;
+
+        int vertexIndex = 0;
+
+        for (int itCol = minCol; itCol <= maxCol; itCol++)
+        {
+            int verticesInColumn = (depth * 2 + 1) - Mathf.Abs(itCol);
+
+            for (int itRow = 0; itRow < verticesInColumn; itRow++)
+            {
+                if (itRow != verticesInColumn - 1)
+                {
+                    VertexGraph.CreateEdge(vertexIndex, vertexIndex + 1);
+                }
+                if (itCol < 0)
+                {
+                    VertexGraph.CreateEdge(vertexIndex, vertexIndex + verticesInColumn + 1);
+                    VertexGraph.CreateEdge(vertexIndex, vertexIndex + verticesInColumn);
+                }
+                if (itCol > 0)
+                {
+                    VertexGraph.CreateEdge(vertexIndex, vertexIndex - verticesInColumn);
+                    VertexGraph.CreateEdge(vertexIndex, vertexIndex - verticesInColumn - 1);
+                }
+
+                vertexIndex++;
+            }
+        }
+    }
+
+    private void RemoveEdges()
+    {
+        // Creating a new vertex graph based off the current, and remove edges between boundary vertices
+        Graph<Vertex> selectionGraph = new Graph<Vertex>(VertexGraph);
+        List<Vertex> boundaryNeighbours;
+
+        foreach (Vertex root in selectionGraph.GetData())
+        {
+            boundaryNeighbours = new List<Vertex>();
+            foreach (Vertex neighbour in selectionGraph.GetAdjacent(root))
+            {
+                if (root.Boundary && neighbour.Boundary) boundaryNeighbours.Add(neighbour);
+            }
+
+            foreach (Vertex neighbour in boundaryNeighbours)
+            {
+                selectionGraph.DestroyEdge(root, neighbour);
+            }
+        }
+
+        while (selectionGraph.GetData().Count > 0)
+        {
+            Vertex root = selectionGraph.GetData()[Random.Range(0, selectionGraph.Count)];
+            if (selectionGraph.GetAdjacent(root).Count == 0)
+            {
+                selectionGraph.Remove(root);
+                continue;
+            }
+
+            Vertex neighbour = selectionGraph.GetAdjacent(root)[Random.Range(0, selectionGraph.GetAdjacent(root).Count)];
+
+            selectionGraph.DestroyEdge(root, neighbour);
+            VertexGraph.DestroyEdge(root, neighbour);
+
+            List<Vertex> common = new List<Vertex>();
+            foreach (Vertex nRoot in VertexGraph.GetAdjacent(root))
+            {
+                foreach (Vertex nNeighbour in VertexGraph.GetAdjacent(neighbour))
+                {
+                    if (nRoot == nNeighbour) common.Add(nRoot);
+                }
+            }
+
+            foreach (Vertex vertex in common)
+            {
+                selectionGraph.DestroyEdge(root, vertex);
+                selectionGraph.DestroyEdge(neighbour, vertex);
+            }
+        }
+    }
+
+    private void Subdivide()
+    {
+        // Edge Splitting
+        Graph<Vertex> splitGraph = new Graph<Vertex>(VertexGraph);
+        splitGraph.RemoveEdges();
+
+        foreach (Vertex root in VertexGraph.GetData())
+        {
+            foreach (Vertex neighbour in VertexGraph.GetAdjacent(root))
+            {
+                if (!splitGraph.HasSharedNeighbours(root, neighbour))
+                {
+                    bool boundary = root.Boundary && neighbour.Boundary;
+                    bool split = true;
+                    
+                    Vertex interp = new Vertex((root + neighbour) / 2f, split, boundary);
+
+                    splitGraph.Add(interp);
+                    splitGraph.CreateEdge(root, interp);
+                    splitGraph.CreateEdge(neighbour, interp);
+                }
+            }
+        }
+
+        // Split Vertex Linking
+        Dictionary<Vertex, List<Vertex>> subdivisions = new Dictionary<Vertex, List<Vertex>>();
+        int maxDepth = 4;
+
+        foreach (Vertex split in splitGraph.GetData())
+        {
+            if (split.Split)
+            {
+                Vertex A = splitGraph.GetAdjacent(split)[0];
+                Vertex B = splitGraph.GetAdjacent(split)[1];
+
+                List<List<Vertex>> paths = VertexGraph.IndirectDFS(A, B, maxDepth);
+
+                foreach (List<Vertex> path in paths)
+                {
+                    List<Vertex> splits = new List<Vertex>();
+                    for (int i = 0; i < path.Count; i++)
+                    {
+                        splits.Add(splitGraph.SharedNeighbours(path[i], path[(i + 1) % path.Count])[0]);
+                    }
+
+                    if (!ListsMatch(splits, subdivisions))
+                    {
+                        Vector3 divPos = new Vector3();
+                        foreach (Vertex splitVert in splits)
+                        {
+                            divPos += splitVert;
+                        }
+                        divPos /= splits.Count;
+
+                        subdivisions.Add(new Vertex(divPos, true, false), splits);
+                    }
+                }
+            }
+        }
+
+
+        foreach (KeyValuePair<Vertex, List<Vertex>> pair in subdivisions)
+        {
+            splitGraph.Add(pair.Key);
+            foreach (Vertex value in pair.Value)
+                splitGraph.CreateEdge(value, pair.Key);
+        }
+
+        VertexGraph = splitGraph;
+    }
+
+    private void Relax()
+    {
+    }
+
+    private void CalculateCells()
+    {
+        CellGraph = new Graph<Cell>();
+        Graph<Vertex> dupGraph = new Graph<Vertex>(VertexGraph);
+
+        while (dupGraph.Count > 0)
+        {
+            Vertex root = dupGraph.GetData()[0];
+
+            // Do the stuff
+            List<List<Vertex>> paths = dupGraph.IndirectDFS(root, root, 5);
+            foreach (List<Vertex> path in paths)
+            {
+                CellGraph.Add(new Cell(path[0], path[1], path[2], path[3]));
+            }
+
+            dupGraph.Remove(root);
+        }
+
+        Debug.Log(CellGraph.Count);
+    }
+
+    private bool ListsMatch<T>(List<T> a, Dictionary<T, List<T>> b)
+    {
+        foreach (List<T> bT in b.Values)
+            if (ListsMatch(a, bT)) return true;
+
+        return false;
+    }
+
+    private bool ListsMatch<T>(List<T> a, List<T> b)
+    {
+        foreach (T aT in a)
+            if (!b.Contains(aT)) return false;
+
+        return true;
     }
 
     // MESH GENERATION
