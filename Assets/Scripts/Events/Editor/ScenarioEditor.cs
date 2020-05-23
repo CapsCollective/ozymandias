@@ -30,6 +30,7 @@ public class ScenarioEditor : EditorWindow
     private ToolbarMenu menuChoiceOutcomes;
     private ToolbarSearchField librarySearchField;
     private List<Event> eventsList = new List<Event>();
+    private EnumField enumEventType;
 
     // Search Stuff
     private IEnumerable<Event> searchList;
@@ -67,8 +68,16 @@ public class ScenarioEditor : EditorWindow
         Button btnNewEvent = root.Query<Button>("btnNewEvent");
         btnNewEvent.clickable.clicked += SaveScenario;
 
-        //Button btnNewOutcome = root.Query<Button>("btnNewOutcome");
-        //btnNewOutcome.clickable.clicked += NewOutcome;
+        Button btnSelectAsset = root.Query<Button>("btnSelectAsset");
+        btnSelectAsset.clickable.clicked += () => Selection.activeObject = scenario;
+
+        enumEventType = root.Query<EnumField>("enumEventType");
+        enumEventType.Init(Event.EventType.Adventurers);
+        enumEventType.RegisterValueChangedCallback((e) =>
+        {
+            if(scenario != null)
+                scenario.type = (Event.EventType)e.newValue;
+        });
 
         librarySearchField = root.Query<ToolbarSearchField>("searchLibrary");
         librarySearchField.RegisterCallback<KeyDownEvent>(e =>
@@ -165,6 +174,7 @@ public class ScenarioEditor : EditorWindow
         listViewLibrary.bindItem = bindItem;
         listViewLibrary.onItemChosen += (o) =>
         {
+            AssetDatabase.SaveAssets();
             scenario = o as Event;
             RefreshScenario();
         };
@@ -192,6 +202,7 @@ public class ScenarioEditor : EditorWindow
         listEventOutcomes.onItemChosen += (o) =>
         {
             selectedOutcome = new SerializedObject((Outcome)o);
+            AssetDatabase.SaveAssets();
         };
     }
 
@@ -272,7 +283,7 @@ public class ScenarioEditor : EditorWindow
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             e.style.backgroundColor = colors[i % 2];
-            (e as Label).text = scenario.choices[i].description;
+            (e as Label).text = scenario.choices[i].name;
             (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
             (e.ElementAt(0) as Button).clicked += () =>
             {
@@ -300,9 +311,9 @@ public class ScenarioEditor : EditorWindow
 
     private void LoadChoice(Choice c)
     {
-        TextField tfChoiceName = root.Query<TextField>("tfChoiceName");
-        tfChoiceName.SetValueWithoutNotify(c.description);
-        tfChoiceName.RegisterValueChangedCallback((s) => {
+        TextField tfChoiceDescription = root.Query<TextField>("tfChoiceDescription");
+        tfChoiceDescription.SetValueWithoutNotify(c.description);
+        tfChoiceDescription.RegisterValueChangedCallback((s) => {
             scenario.choices[choiceListView.selectedIndex].description = s.newValue;
             scenario.choices[choiceListView.selectedIndex].name = s.newValue;
             choiceListView.Refresh();
@@ -324,6 +335,7 @@ public class ScenarioEditor : EditorWindow
             tfScenarioDescription.SetValueWithoutNotify(scenario.article);
             tfScenarioDescription.Bind(serializedObject);
             ofBackground.value = scenario.image;
+            enumEventType.Init(scenario.type);
             SetupEventOutcomes();
 
             RefreshScenarioList();

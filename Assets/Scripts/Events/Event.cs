@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public enum EventType
-{
-    Flavour,
-    Adventurers,
-    Threat,
-    Chaos,
-    Endgame,
-    Chain,
-    Special,
-    Advert
-}
-
 [CreateAssetMenu(fileName = "Scenario")][System.Serializable]
 public class Event : ScriptableObject
 {
+    public enum EventType
+    {
+        Flavour,
+        Adventurers,
+        Threat,
+        Chaos,
+        Endgame,
+        Chain,
+        Special,
+        Advert
+    }
+
     public string headline;
     [TextArea(3,8)] public string article;
     public Sprite image;

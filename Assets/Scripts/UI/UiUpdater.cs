@@ -10,5 +10,10 @@ public abstract class UiUpdater : MonoBehaviour
         GameManager.OnUpdateUI += UpdateUi;
     }
 
+    private void OnDestroy()
+    {
+        GameManager.OnUpdateUI -= UpdateUi;
+    }
+
     public abstract void UpdateUi();
 }
