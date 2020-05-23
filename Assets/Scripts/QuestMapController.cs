@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class NoticeboardController : MonoBehaviour
+public class QuestMapController : MonoBehaviour
 {
     // Fields
     [SerializeField] private GameObject[] flyerList;
@@ -11,38 +11,38 @@ public class NoticeboardController : MonoBehaviour
     public void UpdateDisplay()
     {
         // Commenting out since it's unused and has a lot of deprecated stuff
-        /*// Fetch the currently active events
-        var events = GetEvents();
+        // Fetch the currently active quests
+        var quests = GetQuests();
 
-        // Create a new mapping for previously posted events
-        var newMappings = events.Where(ev => flyerMappings.ContainsKey(ev.ScenarioTitle))
-            .ToDictionary(ev => ev.ScenarioTitle, ev => flyerMappings[ev.ScenarioTitle]);
+        // Create a new mapping for previously posted quests
+        var newMappings = quests.Where(q => flyerMappings.ContainsKey(q.QuestTitle))
+            .ToDictionary(q => q.QuestTitle, q => flyerMappings[q.QuestTitle]);
         
-        // Remove events that have already been mapped
-        events = events.Where(e => !newMappings.Keys.Contains(e.ScenarioTitle)).ToArray();
+        // Remove quests that have already been mapped
+        quests = quests.Where(q => !newMappings.Keys.Contains(q.QuestTitle)).ToArray();
         
         // Create a shuffled array of unused flyers
         var unusedFlyers = flyerList.Where(f => !flyerMappings.Values.Contains(f)).ToArray()
             .OrderBy(x => new System.Random().Next(1, 8)).ToArray();
         
-        // Assign the remaining events to the unused flyers, setting their states and recording mappings
+        // Assign the remaining quests to the unused flyers, setting their states and recording mappings
         for (var i = 0; i < unusedFlyers.Length; i++)
         {
-            if (i < events.Length)
+            if (i < quests.Length)
             {
                 unusedFlyers[i].SetActive(true);
-                unusedFlyers[i].GetComponent<EventDisplayManager>().SetEvent(events[i]);
-                newMappings.Add(events[i].ScenarioTitle, unusedFlyers[i]);
+                unusedFlyers[i].GetComponent<QuestDisplayManager>().SetQuest(quests[i]);
+                newMappings.Add(quests[i].QuestTitle, unusedFlyers[i]);
             }
             else
                 unusedFlyers[i].SetActive(false);
         }
         
         // Set the new flyer mappings
-        flyerMappings = newMappings*/;
+        flyerMappings = newMappings;
     }
 
-    private Event[] GetEvents()
+    private Quest[] GetQuests()
     {
         throw new System.NotImplementedException();
     }
