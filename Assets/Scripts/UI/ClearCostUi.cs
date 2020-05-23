@@ -8,6 +8,6 @@ public class ClearCostUi : UiUpdater
     public Text cost;
     public override void UpdateUi()
     {
-        cost.text = GetComponent<Clear>().ScaledCost.ToString();
+        cost.text = "Cost: " + GetComponent<Clear>().ScaledCost;
     }
 }
