@@ -7,6 +7,30 @@ public class QuestMapController : MonoBehaviour
     // Fields
     [SerializeField] private GameObject[] flyerList;
     private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
+    private HighlightOnHover displayingFlyerComponent;
+
+    private void Start()
+    {
+        foreach (var flyer in flyerList)
+        {
+            flyer.GetComponent<HighlightOnHover>().callbackMethod = OnFlyerClick;
+        }
+    }
+
+    private void Update()
+    {
+        if (!Input.GetMouseButtonDown(0) || !displayingFlyerComponent) return;
+        if (displayingFlyerComponent.mouseOver) return;
+        displayingFlyerComponent.ResetDisplay();
+        displayingFlyerComponent = null;
+    }
+
+    private void OnFlyerClick(GameObject flyer)
+    {
+        if (displayingFlyerComponent) return;
+        displayingFlyerComponent = flyer.GetComponent<HighlightOnHover>();
+        displayingFlyerComponent.DisplaySelected();
+    }
 
     public void UpdateDisplay()
     {
