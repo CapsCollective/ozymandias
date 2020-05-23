@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5310536114517495875
+--- !u!114 &-2974465702101039901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,38 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   StatToChange: 1
-  Amount: 5
-  Turns: 5
---- !u!114 &-2199845909788861087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: Stat Change(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: 
-  StatToChange: 2
-  Amount: -3
-  Turns: 5
---- !u!114 &-2016801114065334152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: Flavour Text(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: Smashing the crabs to pieces has been great exercise!
---- !u!114 &-487042889847760454
+  Amount: 10
+  Turns: 3
+--- !u!114 &-388712630953201036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,13 +26,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Tonight we feast!
+  m_Name: "Send out an expedition to cull these aqueous critters!\r"
   m_EditorClassIdentifier: 
-  description: Tonight we feast!
+  description: "Send out an expedition to cull these aqueous critters!\r"
   outcomes:
-  - {fileID: 1451837827470189156}
-  - {fileID: -2199845909788861087}
-  - {fileID: -5310536114517495875}
+  - {fileID: 8134744506996109343}
+  - {fileID: -2974465702101039901}
+  - {fileID: -155332725422496249}
+--- !u!114 &-155332725422496249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: Remove Adventurers(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: However, the group awoke an ancient kungfu rat master in process,
+    and were wiped out (-3 Adventurers).
+  adventurerNames:
+  - 
+  - 
+  - 
+  - 
+  kill: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,11 +63,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Crabs
+  m_Name: Sewer Slimes
   m_EditorClassIdentifier: 
-  headline: Crabs!
-  article: There are too many crabs!
-  image: {fileID: 21300000, guid: 81734682161e51d45b1917ff3aeb6746, type: 3}
+  headline: A Sticky Situation
+  article: The sewers have been overrun by slimes due to the excess waste produced
+    by the town. These aren't the happy go-lucky slimes featured in the story "A
+    quest of dragons"!
+  image: {fileID: 21300000, guid: cb24f40302f8aaa4c83529786fcec145, type: 3}
   type: 0
   headliner: 0
   minChaos: 0
@@ -87,9 +80,9 @@ MonoBehaviour:
   maxWealth: 0
   outcomes: []
   choices:
-  - {fileID: -487042889847760454}
-  - {fileID: 6807836616848578861}
---- !u!114 &1451837827470189156
+  - {fileID: -388712630953201036}
+  - {fileID: 7008984578618199889}
+--- !u!114 &4074771745068411069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,9 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: Flavour Text(Clone)
   m_EditorClassIdentifier: 
-  customDescription: While delicious, everyone is too bloated now to fight. Just
-    gonna have a quick lie down...
---- !u!114 &6807836616848578861
+  customDescription: The slimes have been pushed back into the depths. For now.
+--- !u!114 &7008984578618199889
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,13 +105,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send adventurers to clear them out.
+  m_Name: Poke at the sewer with a stick, see if it clears up
   m_EditorClassIdentifier: 
-  description: Send adventurers to clear them out.
+  description: Poke at the sewer with a stick, see if it clears up
   outcomes:
-  - {fileID: -2016801114065334152}
-  - {fileID: 7820212843733379569}
---- !u!114 &7820212843733379569
+  - {fileID: 4074771745068411069}
+  - {fileID: 7479567249521704604}
+--- !u!114 &7479567249521704604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +123,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  customDescription: 
-  StatToChange: 2
-  Amount: 3
-  Turns: 5
+  customDescription: Things smell much better now (+5 satisfaction for 3 turns)
+  StatToChange: 1
+  Amount: 5
+  Turns: 3
+--- !u!114 &8134744506996109343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: The slimes have been purged completely!

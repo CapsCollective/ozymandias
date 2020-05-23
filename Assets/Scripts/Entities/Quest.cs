@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class Quest : ScriptableObject
 {
     public int Turns = 5;

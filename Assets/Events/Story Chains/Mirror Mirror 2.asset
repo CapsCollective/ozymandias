@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1899190093601914456
+--- !u!114 &-7255646222000946879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: Remove Adventurers(Clone)
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  adventurerNames:
-  - 
-  - 
-  - 
-  kill: 1
+  StatToChange: 3
+  Amount: 10
+  Turns: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,15 +26,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Bandit Raid
+  m_Name: Mirror Mirror 2
   m_EditorClassIdentifier: 
-  headline: Bandit Raid Takes its Toll
-  article: Three Adventurers (and 23 villagers) have been struck down protecting
-    our town from a clan or nearby marauders. They didn't even try to steal anything,
-    they're just jerks.
-  image: {fileID: 21300000, guid: 2573032232992b746899488da8752944, type: 3}
-  type: 2
-  headliner: 0
+  headline: The Pauper is a Princess!
+  article: We recieved an envoy from a far away kingdom today, with the good news
+    that Emma who recently vanished by a trickster merchant was in fact turned into
+    a princess! She sends some treasures as a thanks.
+  image: {fileID: 21300000, guid: f1f255b0367a85d4f8fe728a9c9179ab, type: 3}
+  type: 5
+  headliner: 1
   minChaos: 0
   minThreat: 0
   minWealth: 0
@@ -44,5 +42,5 @@ MonoBehaviour:
   maxThreat: 0
   maxWealth: 0
   outcomes:
-  - {fileID: -1899190093601914456}
+  - {fileID: -7255646222000946879}
   choices: []

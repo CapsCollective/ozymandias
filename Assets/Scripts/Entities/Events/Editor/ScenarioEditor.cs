@@ -59,7 +59,7 @@ public class ScenarioEditor : EditorWindow
 
         eventsList.Clear();
 
-        var rootVisualElement = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(@"Assets/Scripts/Events/Editor/ScenarioUI.uxml");
+        var rootVisualElement = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(@"Assets/Scripts/Entities/Events/Editor/ScenarioUI.uxml");
         rootVisualElement.CloneTree(root);
 
         Button btnNewChoice = root.Query<Button>("btnNewChoice");

@@ -1,6 +1,95 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5310536114517495875
+--- !u!114 &-2933783463695604158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: The merchant's guild starts shopping elsewhere.
+--- !u!114 &-1215225799142485802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  StatToChange: 3
+  Amount: -10
+  Turns: 3
+--- !u!114 &-549647925963456022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: We will not negotiate with Trollorists!
+  m_EditorClassIdentifier: 
+  description: We will not negotiate with Trollorists!
+  outcomes:
+  - {fileID: 3661987297709272218}
+  - {fileID: 4357266811816839174}
+  - {fileID: 4152398327409897048}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Troll Union
+  m_EditorClassIdentifier: 
+  headline: Trolling for Tariffs
+  article: "Amid rising tensions between local merchants and the bridge-troll union,
+    union faction official, Moh'rgen Mork'hol, has threatened to lock down bridges
+    along several strategic trade routes in an effort to raise minimum toll rates
+    for union members.\r"
+  image: {fileID: 21300000, guid: cb374d44b70eb2b4e8cabaccb595d26e, type: 3}
+  type: 3
+  headliner: 0
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  outcomes: []
+  choices:
+  - {fileID: 7523120586660365033}
+  - {fileID: -549647925963456022}
+--- !u!114 &3661987297709272218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: We'll have to ration supplies while this is all worked out.
+--- !u!114 &4152398327409897048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,9 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   StatToChange: 1
-  Amount: 5
-  Turns: 5
---- !u!114 &-2199845909788861087
+  Amount: -5
+  Turns: 2
+--- !u!114 &4357266811816839174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,22 +119,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   StatToChange: 2
-  Amount: -3
-  Turns: 5
---- !u!114 &-2016801114065334152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: Flavour Text(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: Smashing the crabs to pieces has been great exercise!
---- !u!114 &-487042889847760454
+  Amount: -5
+  Turns: 2
+--- !u!114 &7523120586660365033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,83 +131,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Tonight we feast!
+  m_Name: Authorise the Troll Toll
   m_EditorClassIdentifier: 
-  description: Tonight we feast!
+  description: Authorise the Troll Toll
   outcomes:
-  - {fileID: 1451837827470189156}
-  - {fileID: -2199845909788861087}
-  - {fileID: -5310536114517495875}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Crabs
-  m_EditorClassIdentifier: 
-  headline: Crabs!
-  article: There are too many crabs!
-  image: {fileID: 21300000, guid: 81734682161e51d45b1917ff3aeb6746, type: 3}
-  type: 0
-  headliner: 0
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
-  outcomes: []
-  choices:
-  - {fileID: -487042889847760454}
-  - {fileID: 6807836616848578861}
---- !u!114 &1451837827470189156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: Flavour Text(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: While delicious, everyone is too bloated now to fight. Just
-    gonna have a quick lie down...
---- !u!114 &6807836616848578861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send adventurers to clear them out.
-  m_EditorClassIdentifier: 
-  description: Send adventurers to clear them out.
-  outcomes:
-  - {fileID: -2016801114065334152}
-  - {fileID: 7820212843733379569}
---- !u!114 &7820212843733379569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: Stat Change(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: 
-  StatToChange: 2
-  Amount: 3
-  Turns: 5
+  - {fileID: -2933783463695604158}
+  - {fileID: -1215225799142485802}
