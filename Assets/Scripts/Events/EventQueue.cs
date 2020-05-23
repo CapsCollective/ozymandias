@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using System;
 using System.Linq;
 using Random = UnityEngine.Random;
+using EventType = Event.EventType;
 
 public class EventQueue : MonoBehaviour
 {
