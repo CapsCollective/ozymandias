@@ -33,6 +33,7 @@ public class HighlightOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void ResetDisplay()
     {
         displaying = false;
+        gameObject.GetComponent<QuestDisplayManager>().SetDisplaying(false);
         transform.localScale = startScale;
         transform.localPosition = startPos;
     }
@@ -40,6 +41,7 @@ public class HighlightOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void DisplaySelected()
     {
         displaying = true;
+        gameObject.GetComponent<QuestDisplayManager>().SetDisplaying(true);
         transform.localScale = startScale * 4;
         transform.localPosition = Vector3.zero;
         transform.SetSiblingIndex(10);
