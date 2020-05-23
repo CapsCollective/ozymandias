@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: Stat Change
-  OutcomeFlavourText: 
+  customDescription: 
   StatToChange: 1
   Amount: -3
   Turns: 5
@@ -29,10 +28,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: Eat Them
   m_EditorClassIdentifier: 
-  ChoiceTitle: Eat Them
-  ChoiceText: Everyone ate too much crab. They're all so full they can barely move.
-  PossibleOutcomes:
-  - {fileID: -2199845909788861087}
+  description: 
+  outcomes: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,20 +42,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: Crabs
   m_EditorClassIdentifier: 
-  ScenarioTitle: Crabs
-  ScenarioText: There are too many crabs!
-  ScenarioBackground: {fileID: 0}
-  Choices:
-  - {fileID: 6807836616848578861}
-  - {fileID: -487042889847760454}
+  headline: 
+  article: 
+  image: {fileID: 21300000, guid: 81734682161e51d45b1917ff3aeb6746, type: 3}
+  type: 0
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
   maxChaos: 0
   maxThreat: 0
   maxWealth: 0
-  weight: 0
-  EventOutcomes: []
+  outcomes: []
+  choices: []
 --- !u!114 &6807836616848578861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,11 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: Send Adventurers After Them
   m_EditorClassIdentifier: 
-  ChoiceTitle: Send Adventurers After Them
-  ChoiceText: The adventurers have been hitting the crabs for weeks now. They are
-    strong enough to take on te toughest of crabs now.
-  PossibleOutcomes:
-  - {fileID: 7820212843733379569}
+  description: 
+  outcomes: []
 --- !u!114 &7820212843733379569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,8 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  OutcomeName: Stat Change
-  OutcomeFlavourText: 
+  customDescription: 
   StatToChange: 1
   Amount: 3
   Turns: 5
