@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class QuestDisplayManager : MonoBehaviour
 {
+    #pragma warning disable 0649
     [SerializeField] private Text titleText;
     [SerializeField] private Text simpleTitleText;
     [SerializeField] private Text descriptionText;
