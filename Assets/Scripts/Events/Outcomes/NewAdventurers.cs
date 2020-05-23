@@ -22,7 +22,7 @@ public class NewAdventurers : Outcome
     }
 
     private static string[] Descriptors = {
-        "taken up residence.", "joined the fight!", "found a new home.", "started questing"
+        "taken up residence.", "joined the fight!", "found a new home.", "started questing."
     };
     
     public override string Description

@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         get
         {
             if (!instance)
-                instance = Resources.FindObjectsOfTypeAll<GameManager>().FirstOrDefault();
+                instance = FindObjectsOfType<GameManager>()[0];
             return instance;
         }
     }
@@ -199,8 +199,9 @@ public class GameManager : MonoBehaviour
         foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;
 
         eventQueue.ProcessEvents();
-        
+
         OnNewTurn?.Invoke();
+        
         UpdateUi();
     }
 
@@ -216,7 +217,8 @@ public class GameManager : MonoBehaviour
         if (building.type == BuildingType.GuildHall)
         {
             //TODO: Add an 'are you sure?' dialogue
-            eventQueue.AddEvent(guildHallDestroyed, true);
+            foreach (var e in guildHallDestroyedEvents) eventQueue.AddEvent(e, true);
+            NextTurn();
         }
         
         map.Clear(building.GetComponent<BuildingStructure>());
@@ -255,7 +257,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        
+        newspaperController.GameOver();
     }
 
     [HorizontalLine()] 
@@ -263,13 +265,13 @@ public class GameManager : MonoBehaviour
     public Map map;
     public EventQueue eventQueue;
     public DialogueManager dialogueManager;
+    public NewspaperController newspaperController;
     
     public GameObject adventurerPrefab;
     public GameObject guildHall;
     public Event openingEvent;
-    public Event guildHallDestroyed;
+    public Event[] guildHallDestroyedEvents;
     
-
     private void BuildGuildHall()
     {
         //Build Guild Hall in the center of the map
