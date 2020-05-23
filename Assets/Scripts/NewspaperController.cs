@@ -13,6 +13,7 @@ public class NewspaperController : MonoBehaviour
     [SerializeField] private Image articleImage;
     [SerializeField] private Button[] choiceList;
     [SerializeField] private Button continueButton;
+    [SerializeField] private Button gameOverButton;
     
     private Event choiceEvent;
     
@@ -57,5 +58,11 @@ public class NewspaperController : MonoBehaviour
     {
         return "{ " + "The Wizarding Post" + " }";
         // TODO randomly generate newspaper names
+    }
+
+    public void GameOver()
+    {
+        continueButton.gameObject.SetActive(false);
+        gameOverButton.gameObject.SetActive(true);
     }
 }

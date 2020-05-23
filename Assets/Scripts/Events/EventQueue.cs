@@ -39,7 +39,7 @@ public class EventQueue : MonoBehaviour
     {
         current.Clear();
         outcomeDescriptions.Clear();
-
+        
         if (headliners.Count > 0)
         {
             current.Add(headliners.First.Value);
