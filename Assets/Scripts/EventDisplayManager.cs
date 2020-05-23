@@ -14,6 +14,7 @@ public class EventDisplayManager : MonoBehaviour
         titleText.text = upper ? e.headline.ToUpper() : e.headline;
         descriptionText.text = e.article;
         outcomeText.text = outcome;
+        outcomeText.gameObject.SetActive(!outcome.Equals(""));
     }
 
     public void AddChoiceOutcome(string outcome)

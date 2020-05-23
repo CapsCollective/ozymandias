@@ -28,7 +28,7 @@ public class NewspaperController : MonoBehaviour
         if (choiceEvent.choices.Count > 0) continueButton.enabled = false;
         
         // Set the image for the main article and a newspaper title
-        if(events[0].image != null) articleImage.sprite = events[0].image;
+        if(!events[0].image) articleImage.sprite = events[0].image;
         newspaperTitle.text = GetNewspaperTitle();
 
         // Assign the remaining events to the corresponding spots

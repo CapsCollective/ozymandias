@@ -23,6 +23,6 @@ public class Outcome : ScriptableObject
         {
             if (outcome.Execute() && outcome.Description != "") description += "• " + outcome.Description + "\n";
         }
-        return description;
+        return description.TrimEnd('\n');
     }
 }
