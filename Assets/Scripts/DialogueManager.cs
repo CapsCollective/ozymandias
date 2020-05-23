@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    #pragma warning disable 0649
     [SerializeField] private Text dialogueWindowText;
     private string[] dialogueEvents;
 

@@ -30,6 +30,7 @@ public class ScenarioEditor : EditorWindow
     private ToolbarMenu menuChoiceOutcomes;
     private ToolbarSearchField librarySearchField;
     private List<Event> eventsList = new List<Event>();
+    private EnumField enumEventType;
 
     // Search Stuff
     private IEnumerable<Event> searchList;
@@ -67,8 +68,16 @@ public class ScenarioEditor : EditorWindow
         Button btnNewEvent = root.Query<Button>("btnNewEvent");
         btnNewEvent.clickable.clicked += SaveScenario;
 
-        //Button btnNewOutcome = root.Query<Button>("btnNewOutcome");
-        //btnNewOutcome.clickable.clicked += NewOutcome;
+        Button btnSelectAsset = root.Query<Button>("btnSelectAsset");
+        btnSelectAsset.clickable.clicked += () => Selection.activeObject = scenario;
+
+        enumEventType = root.Query<EnumField>("enumEventType");
+        enumEventType.Init(Event.EventType.Adventurers);
+        enumEventType.RegisterValueChangedCallback((e) =>
+        {
+            if(scenario != null)
+                scenario.type = (Event.EventType)e.newValue;
+        });
 
         librarySearchField = root.Query<ToolbarSearchField>("searchLibrary");
         librarySearchField.RegisterCallback<KeyDownEvent>(e =>
@@ -97,9 +106,9 @@ public class ScenarioEditor : EditorWindow
             Action<DropdownMenuAction> dropdownAction = (a) =>
             {
                 Outcome newOutcome = Instantiate(outcome);
-                scenario.EventOutcomes.Add(newOutcome);
+                scenario.outcomes.Add(newOutcome);
                 AssetDatabase.AddObjectToAsset(newOutcome, scenario);
-                listEventOutcomes.itemsSource = scenario.EventOutcomes;
+                listEventOutcomes.itemsSource = scenario.outcomes;
                 AssetDatabase.SaveAssets();
                 listEventOutcomes.Refresh();
             };
@@ -116,7 +125,7 @@ public class ScenarioEditor : EditorWindow
                 if (selectedChoice != null)
                 {
                     Outcome newOutcome = Instantiate(outcome);
-                    selectedChoice.PossibleOutcomes.Add(newOutcome);
+                    selectedChoice.outcomes.Add(newOutcome);
                     AssetDatabase.AddObjectToAsset(newOutcome, selectedChoice);
                     AssetDatabase.SaveAssets();
                     RefreshOutcomesList();
@@ -135,7 +144,7 @@ public class ScenarioEditor : EditorWindow
 
     private void OnSearch(string s)
     {
-        searchList = eventsList.Where((x) => x.ScenarioTitle.ToLower().Contains(s.ToLower()));
+        searchList = eventsList.Where((x) => x.headline.ToLower().Contains(s.ToLower()));
         Debug.Log(searchList.ToList().Count());
         listViewLibrary.itemsSource = searchList.ToList();
 
@@ -155,16 +164,17 @@ public class ScenarioEditor : EditorWindow
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             (e as Label).style.backgroundColor = colors[i % 2];
-            (e as Label).text = searchList.ToList()[i].ScenarioTitle;
+            (e as Label).text = searchList.ToList()[i].headline;
             (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
         };
-        eventsList.Sort((x, y) => string.Compare(x.ScenarioTitle, y.ScenarioTitle));
+        eventsList.Sort((x, y) => string.Compare(x.headline, y.headline));
         searchList = eventsList;
         listViewLibrary.itemsSource = searchList.ToList();
         listViewLibrary.makeItem = makeItem;
         listViewLibrary.bindItem = bindItem;
         listViewLibrary.onItemChosen += (o) =>
         {
+            AssetDatabase.SaveAssets();
             scenario = o as Event;
             RefreshScenario();
         };
@@ -175,23 +185,24 @@ public class ScenarioEditor : EditorWindow
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             e.style.backgroundColor = colors[i % 2];
-            (e as Label).text = scenario.EventOutcomes[i].name;
+            (e as Label).text = scenario.outcomes[i].name;
             (e.ElementAt(0) as Button).clicked += () =>
             {
-                AssetDatabase.RemoveObjectFromAsset(scenario.EventOutcomes[i]);
-                scenario.EventOutcomes.RemoveAt(i);
+                AssetDatabase.RemoveObjectFromAsset(scenario.outcomes[i]);
+                scenario.outcomes.RemoveAt(i);
                 listEventOutcomes.Refresh();
                 AssetDatabase.SaveAssets();
             };
         };
 
-        listEventOutcomes.itemsSource = scenario.EventOutcomes;
+        listEventOutcomes.itemsSource = scenario.outcomes;
         listEventOutcomes.itemHeight = 20;
         listEventOutcomes.makeItem = MakeListItem;
         listEventOutcomes.bindItem = bindItem;
         listEventOutcomes.onItemChosen += (o) =>
         {
             selectedOutcome = new SerializedObject((Outcome)o);
+            AssetDatabase.SaveAssets();
         };
     }
 
@@ -199,11 +210,11 @@ public class ScenarioEditor : EditorWindow
     {
         Outcome newOutcome = new Outcome()
         {
-            OutcomeName = "New Outcome"
+            name = "New Outcome"
         };
-        newOutcome.OutcomeName = "New Outcome";
+        newOutcome.name = "New Outcome";
         AssetDatabase.AddObjectToAsset(newOutcome, selectedChoice);
-        selectedChoice.PossibleOutcomes.Add(newOutcome);
+        selectedChoice.outcomes.Add(newOutcome);
         RefreshOutcomesList();
     }
 
@@ -212,17 +223,17 @@ public class ScenarioEditor : EditorWindow
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             e.style.backgroundColor = colors[i % 2];
-            (e as Label).text = selectedChoice.PossibleOutcomes[i].name;
+            (e as Label).text = selectedChoice.outcomes[i].name;
             (e.ElementAt(0) as Button).clicked += () => 
             {
-                AssetDatabase.RemoveObjectFromAsset(selectedChoice.PossibleOutcomes[i]);
-                selectedChoice.PossibleOutcomes.RemoveAt(i);
+                AssetDatabase.RemoveObjectFromAsset(selectedChoice.outcomes[i]);
+                selectedChoice.outcomes.RemoveAt(i);
                 AssetDatabase.SaveAssets();
                 RefreshOutcomesList();
             };
         };
 
-        listChoiceOutcomes.itemsSource = selectedChoice.PossibleOutcomes;
+        listChoiceOutcomes.itemsSource = selectedChoice.outcomes;
         listChoiceOutcomes.itemHeight = 20;
         listChoiceOutcomes.makeItem = MakeListItem;
         listChoiceOutcomes.bindItem = bindItem;
@@ -257,11 +268,11 @@ public class ScenarioEditor : EditorWindow
     {
         Choice newChoice = new Choice()
         {
-            ChoiceTitle = "New Choice"
+            description = "New Choice"
         };
         newChoice.name = "New Choice";
         AssetDatabase.AddObjectToAsset(newChoice, scenario);
-        scenario.Choices.Add(newChoice);
+        scenario.choices.Add(newChoice);
         RefreshScenarioList();
         AssetDatabase.SaveAssets();
     }
@@ -272,20 +283,20 @@ public class ScenarioEditor : EditorWindow
         Action<VisualElement, int> bindItem = (e, i) =>
         {
             e.style.backgroundColor = colors[i % 2];
-            (e as Label).text = scenario.Choices[i].ChoiceTitle;
+            (e as Label).text = scenario.choices[i].name;
             (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
             (e.ElementAt(0) as Button).clicked += () =>
             {
-                AssetDatabase.RemoveObjectFromAsset(scenario.Choices[i]);
-                scenario.Choices.RemoveAt(i);
-                choiceListView.itemsSource = scenario.Choices;
+                AssetDatabase.RemoveObjectFromAsset(scenario.choices[i]);
+                scenario.choices.RemoveAt(i);
+                choiceListView.itemsSource = scenario.choices;
                 choiceListView.Refresh();
                 AssetDatabase.SaveAssets();
             };
         };
 
         choiceListView = root.Query<ListView>("listChoices");
-        choiceListView.itemsSource = scenario.Choices;
+        choiceListView.itemsSource = scenario.choices;
         choiceListView.itemHeight = 20;
         choiceListView.makeItem = MakeListItem;
         choiceListView.bindItem = bindItem;
@@ -300,17 +311,17 @@ public class ScenarioEditor : EditorWindow
 
     private void LoadChoice(Choice c)
     {
-        TextField tfChoiceName = root.Query<TextField>("tfChoiceName");
-        tfChoiceName.SetValueWithoutNotify(c.ChoiceTitle);
-        tfChoiceName.RegisterValueChangedCallback((s) => {
-            scenario.Choices[choiceListView.selectedIndex].ChoiceTitle = s.newValue;
-            scenario.Choices[choiceListView.selectedIndex].name = s.newValue;
+        TextField tfChoiceDescription = root.Query<TextField>("tfChoiceDescription");
+        tfChoiceDescription.SetValueWithoutNotify(c.description);
+        tfChoiceDescription.RegisterValueChangedCallback((s) => {
+            scenario.choices[choiceListView.selectedIndex].description = s.newValue;
+            scenario.choices[choiceListView.selectedIndex].name = s.newValue;
             choiceListView.Refresh();
         });
 
-        TextField tfChoiceText = root.Query<TextField>("tfChoiceDescription");
-        tfChoiceText.SetValueWithoutNotify(c.ChoiceText);
-        tfChoiceText.RegisterValueChangedCallback((s) => scenario.Choices[choiceListView.selectedIndex].ChoiceText = s.newValue);
+        // TextField tfChoiceText = root.Query<TextField>("tfChoiceDescription");
+        // tfChoiceText.SetValueWithoutNotify(c.ChoiceText);
+        // tfChoiceText.RegisterValueChangedCallback((s) => scenario.choices[choiceListView.selectedIndex].ChoiceText = s.newValue);
     }
 
     private void RefreshScenario()
@@ -318,12 +329,13 @@ public class ScenarioEditor : EditorWindow
         if (scenario != null)
         {
             var serializedObject = new SerializedObject(scenario);
-            tfScenarioTitle.SetValueWithoutNotify(scenario.ScenarioTitle);
+            tfScenarioTitle.SetValueWithoutNotify(scenario.headline);
             tfScenarioTitle.Bind(serializedObject);
             tfScenarioTitle.RegisterCallback<UnityEngine.UIElements.FocusOutEvent>(e => OnSearch(""));
-            tfScenarioDescription.SetValueWithoutNotify(scenario.ScenarioText);
+            tfScenarioDescription.SetValueWithoutNotify(scenario.article);
             tfScenarioDescription.Bind(serializedObject);
-            ofBackground.value = scenario.ScenarioBackground;
+            ofBackground.value = scenario.image;
+            enumEventType.Init(scenario.type);
             SetupEventOutcomes();
 
             RefreshScenarioList();
@@ -352,13 +364,13 @@ public class ScenarioEditor : EditorWindow
     {
         string file = EditorUtility.SaveFilePanel("Save Scenario", "Assets/Events", "New Event", "asset");
         file = file.Replace(Application.dataPath, "Assets");
-        Event newEvent = new Event { ScenarioTitle = "New Event", name = "New Event" };
+        Event newEvent = new Event { headline = "New Event", name = "New Event" };
         if (!string.IsNullOrEmpty(file))
         {
             AssetDatabase.CreateAsset(newEvent, $"{file}");
             eventsList.Add(newEvent);
             searchList = eventsList;
-            eventsList.Sort((x, y) => string.Compare(x.ScenarioTitle, y.ScenarioTitle));
+            eventsList.Sort((x, y) => string.Compare(x.headline, y.headline));
             listViewLibrary.itemsSource = searchList.ToList();
             listViewLibrary.Refresh();
         }

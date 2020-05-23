@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static GameManager;
 
 [CreateAssetMenu]
@@ -19,8 +21,15 @@ public class StatChange : Outcome
     {
         turnsLeft = Turns;
         OnNewTurn += ProcessStatChange;
+        SceneManager.activeSceneChanged += HandleSceneChange;
         ProcessStatChange();
         return true;
+    }
+
+    private void HandleSceneChange(Scene a, Scene b)
+    { 
+        OnNewTurn -= ProcessStatChange;
+        SceneManager.activeSceneChanged -= HandleSceneChange;
     }
 
     public void ProcessStatChange()
@@ -34,15 +43,16 @@ public class StatChange : Outcome
 
         Manager.modifiers[StatToChange] += Amount;
 
-        Debug.Log($"{StatToChange} was changed by {Amount}. {turnsLeft} turns remaining.");
         turnsLeft--;
     }
 
-    public override string GetOutcomeString()
+    public override string Description
     {
-        if(OutcomeFlavourText == "")
-            return "•" + StatToChange +" has been changed by " + Amount +" for " + turnsLeft + " turns";
-
-        return OutcomeFlavourText;
+        get
+        {
+            if (customDescription != "") return customDescription;
+            if (Amount > 0) return StatToChange + " has increased by " + Amount + " for " + turnsLeft + " turns";
+            return StatToChange + " has decreased by " + Amount + " for " + turnsLeft + " turns";
+        }
     }
 }
