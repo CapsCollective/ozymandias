@@ -5,14 +5,17 @@ public class QuestDisplayManager : MonoBehaviour
 {
     #pragma warning disable 0649
     [SerializeField] private Text titleText;
+    [SerializeField] private Text simpleTitleText;
     [SerializeField] private Text descriptionText;
     [SerializeField] private Text statsText;
-    [SerializeField] public Button sendButton;
+    [SerializeField] private Button sendButton;
+    [SerializeField] private GameObject displayContent;
+    [SerializeField] private GameObject simpleContent;
 
     private void Start()
     {
         sendButton.onClick.AddListener(OnButtonClick);
-        sendButton.gameObject.SetActive(false);
+        SetDisplaying(false);
     }
 
     private static void OnButtonClick()
@@ -23,12 +26,14 @@ public class QuestDisplayManager : MonoBehaviour
     public void SetQuest(Quest q)
     {
         titleText.text = q.QuestTitle;
+        simpleTitleText.text = q.QuestTitle;
         descriptionText.text = q.QuestDescription;
-        statsText.text = $"Adventurers: {q.Adventurers}\n     Duration: {q.Turns}\n            Cost: {30}";
+        statsText.text = $"Adventurers: {q.Adventurers}\nDuration: {q.Turns}\nCost: {30}";
     }
 
     public void SetDisplaying(bool displaying)
     {
-        sendButton.gameObject.SetActive(displaying);
+        displayContent.SetActive(displaying);
+        simpleContent.SetActive(!displaying);
     }
 }
