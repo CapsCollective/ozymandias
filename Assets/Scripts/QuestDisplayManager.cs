@@ -21,7 +21,7 @@ public class QuestDisplayManager : MonoBehaviour
     public void SetQuest(Quest q)
     {
         titleText.text = q.QuestTitle;
-        descriptionText.text = "This is a stock standard quest description that I added because I couldn't find the relevant field on the object.";
+        descriptionText.text = q.QuestDescription;
         statsText.text = $"Adventurers: {q.Adventurers}\n     Duration: {q.Turns}\n            Cost: {30}";
     }
 }
