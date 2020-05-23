@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour
     private Vector3 dragOrigin, cameraOrigin, rotateAxis;
     private float rotateOrigin;
     private bool dragging, rotating;
+
     
     [Range(1,10)]
     public int
@@ -30,6 +31,7 @@ public class CameraMovement : MonoBehaviour
         cam = GetComponent<Camera>();
         rb = GetComponent<Rigidbody>();
     }
+
 
     void Update()
     {
