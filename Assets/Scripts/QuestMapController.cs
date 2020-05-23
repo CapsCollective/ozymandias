@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class NoticeboardController : MonoBehaviour
+public class QuestMapController : MonoBehaviour
 {
     // Fields
     [SerializeField] private GameObject[] flyerList;
