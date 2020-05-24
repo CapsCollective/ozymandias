@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Debug Outcome", menuName = "Outcomes/Debug")]
 public class DebugOutcome : Outcome
 {
     [TextArea]
