@@ -20,5 +20,6 @@ public class EventDisplayManager : MonoBehaviour
     public void AddChoiceOutcome(string outcome)
     {
         outcomeText.text += outcome;
+        outcomeText.gameObject.SetActive(!outcome.Equals(""));
     }
 }

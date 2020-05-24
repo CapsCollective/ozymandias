@@ -266,6 +266,7 @@ public class GameManager : MonoBehaviour
     public EventQueue eventQueue;
     public DialogueManager dialogueManager;
     public NewspaperController newspaperController;
+    public MenuManager menuManager;
     
     public GameObject adventurerPrefab;
     public GameObject guildHall;
