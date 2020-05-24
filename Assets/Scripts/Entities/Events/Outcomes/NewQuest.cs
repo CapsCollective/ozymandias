@@ -14,11 +14,19 @@ public class NewQuest : Outcome
     {
         if (QuestMapController.QuestList.Count <= 8)
         {
-            Debug.Log("Testing Quest Add");
             QuestMapController.AddQuest(Quest);
             return true;
         }
 
         return false;
+    }
+    
+    public override string Description
+    {
+        get
+        {
+            if (customDescription != "") return customDescription;
+            return "New quest added: " + Quest.QuestTitle;
+        }
     }
 }

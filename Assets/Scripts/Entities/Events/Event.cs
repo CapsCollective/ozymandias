@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using NaughtyAttributes;
 using UnityEngine;
+using static GameManager;
 
 [CreateAssetMenu(fileName = "Scenario")][System.Serializable]
 public class Event : ScriptableObject
@@ -47,6 +49,12 @@ public class Event : ScriptableObject
     public string MakeChoice(int choice)
     {
         return Outcome.Execute(choices[choice].outcomes);
+    }
+
+    [Button()] // Debug to test specific events
+    public void AddToQueue()
+    {
+        Manager.eventQueue.AddEvent(this, true);
     }
     
 }
