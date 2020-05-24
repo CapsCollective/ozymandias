@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using static GameManager;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Chain Event Outcome", menuName = "Outcomes/Chain Event")]
 public class ChainEvent : Outcome
 {
     public Event next;

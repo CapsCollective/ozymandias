@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Building Damaged Outcome", menuName = "Outcomes/Building Damaged")]
+
 public class BuildingDamaged : Outcome
 {
     public BuildingType type;

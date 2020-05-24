@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,12 +10,17 @@ public class QuestMapController : MonoBehaviour
     private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
     private HighlightOnHover displayingFlyerComponent;
 
+    public static Action OnNewQuest;
+    public static List<Quest> QuestList = new List<Quest>(8);
+
     private void Start()
     {
         foreach (var flyer in flyerList)
         {
             flyer.GetComponent<HighlightOnHover>().callbackMethod = OnFlyerClick;
         }
+
+        OnNewQuest += UpdateDisplay;
     }
 
     private void Update()
@@ -68,7 +74,17 @@ public class QuestMapController : MonoBehaviour
 
     private Quest[] GetQuests()
     {
-        throw new System.NotImplementedException();
+        return QuestList.ToArray();
     }
 
+    public static void AddQuest(Quest q)
+    {
+        QuestList.Add(q);
+        OnNewQuest?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        OnNewQuest -= UpdateDisplay;
+    }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GameManager;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
 public class StatChange : Outcome
 {
 

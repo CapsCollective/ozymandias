@@ -12,19 +12,23 @@ public class QuestDisplayManager : MonoBehaviour
     [SerializeField] private GameObject displayContent;
     [SerializeField] private GameObject simpleContent;
 
+    private Quest flyerQuest;
+
     private void Start()
     {
         sendButton.onClick.AddListener(OnButtonClick);
         SetDisplaying(false);
     }
 
-    private static void OnButtonClick()
+    private void OnButtonClick()
     {
         print("button clicked!");
+        flyerQuest.StartQuest();
     }
 
     public void SetQuest(Quest q)
     {
+        flyerQuest = q;
         titleText.text = q.QuestTitle;
         simpleTitleText.text = q.QuestTitle;
         descriptionText.text = q.QuestDescription;
