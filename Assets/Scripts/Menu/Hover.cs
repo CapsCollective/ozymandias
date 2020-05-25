@@ -19,7 +19,7 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     private GameObject helper;
     //private bool isHovered;
     private bool faded = true;
-    private float fadeDuration = 0.4f;
+    private float fadeDuration = 0.25f;
     /*
     private void Awake()
     {
@@ -73,6 +73,7 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 
     public void InfoInstantiate(GameObject info, Vector3 offset)
     {
+        if (!info) return;
         helper = Instantiate(info, transform, false);
         helper.transform.localPosition = offset;
         CanvasGroup canvasGroup = helper.GetComponent<CanvasGroup>();
@@ -87,19 +88,19 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
                 InfoInstantiate(helperPrefab[0], new Vector3(0, 100, 0));
                 break;
             case UIType.threat:
-                InfoInstantiate(helperPrefab[1], new Vector3(0, -150, 0));
+                InfoInstantiate(helperPrefab[1], new Vector3(0, -80, 0));
                 break;
             case UIType.quest:
-                InfoInstantiate(helperPrefab[2], new Vector3(0, 150, 0));
+                InfoInstantiate(helperPrefab[2], new Vector3(0, 100, 0));
                 break;
             case UIType.destroy:
-                InfoInstantiate(helperPrefab[3], new Vector3(0, 150, 0));
+                InfoInstantiate(helperPrefab[3], new Vector3(0, 100, 0));
                 break;
             case UIType.money:
-                InfoInstantiate(helperPrefab[4], new Vector3(0, 150, 0));
+                InfoInstantiate(helperPrefab[4], new Vector3(30, 150, 0));
                 break;
             case UIType.sidebar:
-                InfoInstantiate(helperPrefab[5], new Vector3(-150, 0, 0));
+                InfoInstantiate(helperPrefab[5], new Vector3(-100, 0, 0));
                 break;
         }
     }
