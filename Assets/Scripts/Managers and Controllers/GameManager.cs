@@ -28,12 +28,45 @@ public enum Metric
 public enum BuildingType
 {
     Terrain,
-    Tavern,
-    Blacksmith,
+    Ruins,
     GuildHall,
+    //Weaponry
+    Blacksmith,
+    Tannery, // Built far away from other places
+    Armourer,
+    //Magic
+    Enchanters,
+    Alchemists,
+    Jewellers, //Doubles as Luxury
+    //Equipment
+    Tailor,
+    DungeoneringStore, //Needs a better name
+    Hospital, // Medical supplies?
+    //Training: Class specific expensive buildings (quest unlocks?)
+    Arena, //Doubles as Entertainment
+    HuntingLodge, //Doubles as Food
+    PerformanceHall, //Doubles as Entertainment
+    Monastery, //Doubles as Accommodation
+    Library, //Doubles as Magic
+    //Food
+    Farm,
+    Bakery,
+    Fishmongers, // Built near shoreline
+    //Entertainment
+    //TODO: More Entertainment Buildings
+    Tavern,
+    //Luxury
+    Herbalist,
+    CurioShop, // Needs renaming
+    Cartographers,
+    //Accommodation
+    //TODO: More Housing
     Inn,
-    GeneralStore,
-    House
+    House,
+    //Defense
+    Wall,
+    Barracks, // Doubles as housing??
+    Outpost
 }
 
 public class GameManager : MonoBehaviour

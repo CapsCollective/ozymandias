@@ -5,7 +5,9 @@ using static GameManager;
 
 public class BuildingStats : MonoBehaviour
 {
-    public const float costScale = 1.15f;
+    [TextArea(3,5)]
+    public string description;
+    public float costScale = 1.15f; // Set for each building based on how many you're expecting player to buy
     public bool operational = false;
     public bool terrain;
 
