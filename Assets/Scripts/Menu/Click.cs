@@ -26,7 +26,7 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
     public void Update()
     {
         //TODO: Move into a ui updater class
-        if (building.GetComponent<BuildingStats>().baseCost > Manager.CurrentWealth)
+        if (building.GetComponent<BuildingStats>().ScaledCost > Manager.Wealth)
         {
             image.color = button.colors.disabledColor;
             GetComponent<CanvasGroup>().blocksRaycasts = false;

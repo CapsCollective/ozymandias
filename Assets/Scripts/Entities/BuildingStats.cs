@@ -11,12 +11,18 @@ public class BuildingStats : MonoBehaviour
 
     public BuildingType type;
 
+    
+    
     public int  
         baseCost,
-        satisfaction,
-        effectiveness,
-        spending,
         accommodation,
+        weaponry,
+        magic,
+        equipment,
+        food,
+        entertainment,
+        luxury,
+        spending,
         defense;
 
     public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(costScale, Manager.BuildingCount(type)));
