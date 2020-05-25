@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return defense = AvailableAdventurers * Effectiveness +
+            return defense = (AvailableAdventurers * Effectiveness) / 100 +
                              buildings.Where(x => x.operational).Sum(x => x.defense) +
                              modifiers[Metric.Defense];
         }
