@@ -145,7 +145,6 @@ public class ScenarioEditor : EditorWindow
     private void OnSearch(string s)
     {
         searchList = eventsList.Where((x) => x.headline.ToLower().Contains(s.ToLower()));
-        Debug.Log(searchList.ToList().Count());
         listViewLibrary.itemsSource = searchList.ToList();
 
         listViewLibrary.Refresh();
@@ -331,9 +330,11 @@ public class ScenarioEditor : EditorWindow
             var serializedObject = new SerializedObject(scenario);
             tfScenarioTitle.SetValueWithoutNotify(scenario.headline);
             tfScenarioTitle.Bind(serializedObject);
+            tfScenarioTitle.RegisterValueChangedCallback((s) => scenario.headline = s.newValue);
             tfScenarioTitle.RegisterCallback<UnityEngine.UIElements.FocusOutEvent>(e => OnSearch(""));
             tfScenarioDescription.SetValueWithoutNotify(scenario.article);
             tfScenarioDescription.Bind(serializedObject);
+            tfScenarioDescription.RegisterValueChangedCallback((s) => scenario.article = s.newValue);
             ofBackground.value = scenario.image;
             enumEventType.Init(scenario.type);
             SetupEventOutcomes();
