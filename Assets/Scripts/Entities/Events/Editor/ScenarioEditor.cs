@@ -14,7 +14,7 @@ public class ScenarioEditor : EditorWindow
 
     const string EDIT_DEFAULT_BTN_TEXT = "Edit Default Outcome: ";
 
-    Event scenario;
+    public Event scenario;
     private VisualElement root;
     private Choice selectedChoice;
     private SerializedObject selectedOutcome;
@@ -36,7 +36,6 @@ public class ScenarioEditor : EditorWindow
     private IEnumerable<Event> searchList;
     private string searchString;
 
-
     private Color[] colors =
     {
         new Color(0.74f, 0.74f, 0.74f),
@@ -50,6 +49,23 @@ public class ScenarioEditor : EditorWindow
         ScenarioEditor editor = (ScenarioEditor)EditorWindow.GetWindow(typeof(ScenarioEditor));
         editor.name = "Event Editor";
         editor.Show();
+    }
+
+    [UnityEditor.Callbacks.OnOpenAsset(1)]
+    public static bool OnOpenAsset(int instanceID, int line)
+    {
+        string assetPath = AssetDatabase.GetAssetPath(instanceID);
+        Event e = AssetDatabase.LoadAssetAtPath<Event>(assetPath);
+        if (e != null)
+        {
+            ScenarioEditor editor = (ScenarioEditor)EditorWindow.GetWindow(typeof(ScenarioEditor));
+            editor.name = "Event Editor";
+            editor.Show();
+            editor.scenario = e;
+            editor.RefreshScenario();
+            return true;
+        }
+        return false;
     }
 
 
