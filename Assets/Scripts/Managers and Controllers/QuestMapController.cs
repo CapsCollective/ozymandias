@@ -6,6 +6,7 @@ using UnityEngine;
 public class QuestMapController : MonoBehaviour
 {
     // Fields
+    #pragma warning disable 0649
     [SerializeField] private GameObject[] flyerList;
     private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
     private HighlightOnHover displayingFlyerComponent;
