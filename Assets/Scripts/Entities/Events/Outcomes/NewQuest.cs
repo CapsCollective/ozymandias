@@ -1,18 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using NaughtyAttributes;
 
-public class NewQuest : MonoBehaviour
+[CreateAssetMenu(fileName = "New Quest Outcome", menuName = "Outcomes/New Quest")]
+public class NewQuest : Outcome
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Quest Quest;
 
-    // Update is called once per frame
-    void Update()
+    [Button]
+    public override bool Execute()
     {
-        
+        if (QuestMapController.QuestList.Count <= 8)
+        {
+            QuestMapController.AddQuest(Quest);
+            return true;
+        }
+
+        return false;
+    }
+    
+    public override string Description
+    {
+        get
+        {
+            if (customDescription != "") return customDescription;
+            return "New quest added: " + Quest.QuestTitle;
+        }
     }
 }

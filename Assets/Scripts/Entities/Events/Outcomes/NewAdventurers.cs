@@ -5,7 +5,7 @@ using UnityEngine;
 using static GameManager;
 using Random = UnityEngine.Random;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New Adventurers Outcome", menuName = "Outcomes/New Adventurers")]
 public class NewAdventurers : Outcome
 {
     public List<AdventurerDetails> adventurers;

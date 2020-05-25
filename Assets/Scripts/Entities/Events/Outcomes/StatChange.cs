@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GameManager;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
 public class StatChange : Outcome
 {
 
@@ -51,8 +51,8 @@ public class StatChange : Outcome
         get
         {
             if (customDescription != "") return customDescription;
-            if (Amount > 0) return StatToChange + " has increased by " + Amount + " for " + turnsLeft + " turns";
-            return StatToChange + " has decreased by " + Amount + " for " + turnsLeft + " turns";
+            if (Amount > 0) return StatToChange + " has increased by " + Amount + " for " + turnsLeft + " turns.";
+            return StatToChange + " has decreased by " + Amount + " for " + turnsLeft + " turns.";
         }
     }
 }

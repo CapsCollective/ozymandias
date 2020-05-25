@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Remove Adventurers Outcome", menuName = "Outcomes/Remove Adventurers")]
 public class RemoveAdventurers : Outcome
 {
     public List<string> adventurerNames;

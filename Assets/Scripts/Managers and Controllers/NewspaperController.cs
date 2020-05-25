@@ -67,6 +67,11 @@ public class NewspaperController : MonoBehaviour
         gameOverButton.gameObject.SetActive(true);
     }
 
+    public void QuestToMenu()
+    {
+        Manager.menuManager.QuitToMenu();
+    }
+    
     private void OnDestroy()
     {
         EventQueue.OnEventsProcessed -= UpdateDisplay;
