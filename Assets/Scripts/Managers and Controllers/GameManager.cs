@@ -40,8 +40,8 @@ public enum BuildingType
     Jewellers, //Doubles as Luxury
     //Equipment
     Tailor,
-    DungeoneringStore, //Needs a better name
-    Hospital, // Medical supplies?
+    SupplyShop, //Could use a better name
+    Apothecary, // Medical supplies
     //Training: Class specific expensive buildings (quest unlocks?)
     Arena, //Doubles as Entertainment
     HuntingLodge, //Doubles as Food
@@ -53,20 +53,19 @@ public enum BuildingType
     Bakery,
     Fishmongers, // Built near shoreline
     //Entertainment
-    //TODO: More Entertainment Buildings
     Tavern,
+    Plaza, //Public space full of entertainers
     //Luxury
     Herbalist,
     CurioShop, // Needs renaming
     Cartographers,
     //Accommodation
-    //TODO: More Housing
     Inn,
     House,
     //Defense
     Wall,
     Barracks, // Doubles as housing??
-    Outpost
+    GuardOutpost
 }
 
 public class GameManager : MonoBehaviour

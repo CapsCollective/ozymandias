@@ -5,7 +5,7 @@ using static GameManager;
 
 public class ThreatBar : UiUpdater
 {
-    private const int BarWidth = 570;
+    private const int BarWidth = 470;
 
     public RectTransform threatArea;
 

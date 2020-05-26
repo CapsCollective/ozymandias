@@ -11,24 +11,24 @@ public class Clear : MonoBehaviour
     
     private Cell[] highlighted = new Cell[1];
     private Map map;
-    private Image image;
-    private EventSystem eventSystem;    
+    private EventSystem eventSystem;  
 
     private bool clearMode = false;
     private BuildingStructure selectedBuilding;
     private int clearCount = 0;
     
     public int baseCost = 5;
-    
+
+    public Image icon;
+    public Sprite deselected;
+    public Sprite selected;
+
     public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(costScale, clearCount));
 
     private void Awake()
     {
         map = Manager.map;
         eventSystem = EventSystem.current;
-        
-        image = GetComponent<Image>();
-        image.color = Color.white;
 
         ClickManager.OnLeftClick += LeftClick;
     }
@@ -75,15 +75,15 @@ public class Clear : MonoBehaviour
     public void EnterClearMode()
     {
         clearMode = true;
-        image.color = Color.gray;
+        icon.sprite = selected;
     }
 
     public void ExitClearMode()
     {
         clearMode = false;
-        image.color = Color.white;
-        map.Highlight(highlighted, Map.HighlightState.Inactive);
+        map?.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
+        icon.sprite = deselected;
     }
     
     public void ClearBuilding()
