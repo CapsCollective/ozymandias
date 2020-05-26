@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
 using static GameManager;
 
-[CreateAssetMenu(fileName = "Scenario")][System.Serializable]
+[CreateAssetMenu(fileName = "Event")][System.Serializable]
 public class Event : ScriptableObject
 {
     public enum EventType

@@ -9667,6 +9667,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94de6f2f33a356546ae842a375a90c30, type: 3}
+--- !u!1 &1705711970 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6526104003194437922, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5475721258442272883}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1705711971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705711970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helperPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  uiType: 0
 --- !u!4 &1719987873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8027057538268539328, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
@@ -10263,19 +10288,30 @@ MonoBehaviour:
   buildings: []
   availableAdventurers: 0
   accommodation: 0
-  satisfaction: 0
+  weaponry: 0
+  magic: 0
+  equipment: 0
+  training: 0
   effectiveness: 0
+  food: 0
+  entertainment: 0
+  luxury: 0
+  satisfaction: 0
   spending: 0
   defense: 0
   chaos: 0
   wealthPerTurn: 0
+  wealth: 0
+  threatPerTurn: 0
   threat: 1
-  currentWealth: 0
   map: {fileID: 254812625}
   eventQueue: {fileID: 1870573931}
   dialogueManager: {fileID: 816033485}
   newspaperController: {fileID: 286736544}
   menuManager: {fileID: 1870573934}
+  adventurersContainer: {fileID: 581453738}
+  buildingsContainer: {fileID: 1006936788}
+  graveyard: {fileID: 1224148117}
   adventurerPrefab: {fileID: 9065601146984005551, guid: e7b4df92e6146c04a9826d1d5cd989c7,
     type: 3}
   guildHall: {fileID: 2190574654203646117, guid: 04424b6d11be9014b97bbf3e5155198a,

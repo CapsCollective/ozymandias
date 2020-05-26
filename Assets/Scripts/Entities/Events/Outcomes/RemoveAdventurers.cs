@@ -11,11 +11,12 @@ public class RemoveAdventurers : Outcome
     public bool kill; // If they move to the graveyard or just disappear
     public override bool Execute()
     {
+        int failed = 0;
         for (int i = 0; i < adventurerNames.Count; i++)
         {
-            if (adventurerNames[i] != "") Manager.RemoveAdventurer(adventurerNames[i], kill);
-            else Manager.RemoveAdventurer(kill);
+            if (adventurerNames[i] != "") failed += Manager.RemoveAdventurer(adventurerNames[i], kill) ? 0 : 1;
+            else failed += Manager.RemoveAdventurer(kill) ? 0 : 1;
         }
-        return true;
+        return failed == 0;
     }
 }

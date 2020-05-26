@@ -42,7 +42,7 @@ public class Clear : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
         
-        if (Manager.CurrentWealth < ScaledCost)
+        if (Manager.Wealth < ScaledCost)
         {
             ExitClearMode();
             return;
