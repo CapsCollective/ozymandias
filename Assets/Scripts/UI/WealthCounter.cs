@@ -11,7 +11,7 @@ public class WealthCounter : UiUpdater
     // Update is called once per frame
     public override void UpdateUi()
     {
-        wealth.text = "$" + Manager.CurrentWealth +
-                      " / " + Manager.WealthPerTurn;
+        wealth.text = Manager.Wealth +
+                      " (+" + Manager.WealthPerTurn + ")";
     }
 }
