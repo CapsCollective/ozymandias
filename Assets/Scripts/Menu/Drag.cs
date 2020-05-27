@@ -161,7 +161,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         //Destroy(placeHolder);
 
-        if (Manager.CurrentWealth >= building.GetComponent<BuildingStats>().baseCost)
+        if (Manager.Wealth >= building.GetComponent<BuildingStats>().ScaledCost)
         {
             // This how we do it now ;)
             map.CreateBuilding(building, buildingInstantiated.transform.position);
