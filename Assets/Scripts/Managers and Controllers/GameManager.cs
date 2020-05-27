@@ -108,19 +108,31 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int weaponry;
     public int Weaponry
     {
-        get { return weaponry = buildings.Where(x => x.operational).Sum(x => x.weaponry); }
+        get {
+            return weaponry = Mathf.Clamp(100 * 
+                buildings.Where(x => x.operational).Sum(x => x.weaponry) / AvailableAdventurers,
+                0, 100);
+        }
     }
     
     [ReadOnly] [SerializeField] private int magic;
     public int Magic
     {
-        get { return magic = buildings.Where(x => x.operational).Sum(x => x.magic); }
+        get {
+            return magic = Mathf.Clamp(100 * 
+                buildings.Where(x => x.operational).Sum(x => x.magic) / AvailableAdventurers,
+                0, 100);
+        }
     }
     
     [ReadOnly] [SerializeField] private int equipment;
     public int Equipment
     {
-        get { return equipment = buildings.Where(x => x.operational).Sum(x => x.equipment); }
+        get {
+            return equipment = Mathf.Clamp(100 * 
+                buildings.Where(x => x.operational).Sum(x => x.equipment) / AvailableAdventurers,
+                0, 100);
+        }
     }
 
     [ReadOnly] [SerializeField] private int training;
@@ -134,12 +146,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return effectiveness = Mathf.Clamp(0, 
-                Mathf.Clamp(25 * Weaponry / AvailableAdventurers, 0, 25) +
-                Mathf.Clamp(25 * Magic / AvailableAdventurers, 0, 25) +
-                Mathf.Clamp(25 * Equipment / AvailableAdventurers, 0, 25) +
-                Mathf.Clamp(25 * Training / AvailableAdventurers, 0, 25) +
-                modifiers[Metric.Effectiveness], 100);
+            return effectiveness = Mathf.Clamp(0, Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
         }
     }
     
@@ -148,19 +155,39 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int food;
     public int Food
     {
-        get { return food = buildings.Where(x => x.operational).Sum(x => x.food); }
+        get {
+            return food = Mathf.Clamp(100 * 
+            buildings.Where(x => x.operational).Sum(x => x.food) / AvailableAdventurers,
+            0, 100);
+        }
     }
     
     [ReadOnly] [SerializeField] private int entertainment;
     public int Entertainment
     {
-        get { return entertainment = buildings.Where(x => x.operational).Sum(x => x.entertainment); }
+        get {
+            return entertainment = Mathf.Clamp(100 * 
+                buildings.Where(x => x.operational).Sum(x => x.entertainment) / AvailableAdventurers,
+                0, 100);
+        }
     }
     
     [ReadOnly] [SerializeField] private int luxury;
     public int Luxury
     {
-        get { return effectiveness = buildings.Where(x => x.operational).Sum(x => x.luxury); }
+        get {
+            return luxury = Mathf.Clamp(100 * 
+                buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers,
+                0, 100);
+        }
+    }
+
+    public int OvercrowdingMod
+    {
+        get
+        {
+            return Mathf.Min(0, Accommodation - AvailableAdventurers); //lose 1% satisfaction per adventurer over capacity
+        }
     }
     
     [ReadOnly] [SerializeField] private int satisfaction;
@@ -168,12 +195,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return satisfaction = Mathf.Clamp(0, 
-                Mathf.Clamp(40 * Food / AvailableAdventurers, 0, 40) +
-                Mathf.Clamp(40 * Entertainment / AvailableAdventurers, 0, 40) +
-                Mathf.Clamp(20 * Luxury / AvailableAdventurers, 0, 20) +
-                Mathf.Min(0, Accommodation - AvailableAdventurers) + //lose 1% satisfaction per adventurer over capacity
-                modifiers[Metric.Satisfaction], 100);
+            return satisfaction = Mathf.Clamp(0, Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
         }
     }
 
@@ -305,7 +327,7 @@ public class GameManager : MonoBehaviour
     [Button("Next Turn")]
     public void NextTurn()
     {
-        Threat += buildings.Count + modifiers[Metric.Threat];
+        Threat += ThreatPerTurn;
         Wealth += WealthPerTurn;
 
         foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;

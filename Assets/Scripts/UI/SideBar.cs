@@ -7,9 +7,26 @@ using static GameManager;
 
 public class SideBar : UiUpdater
 {
-    public TextMeshProUGUI adventurers, spending;
+    public TextMeshProUGUI
+        adventurers,
+        spending,
+        adventurersLarge,
+        spendingLarge,
+        effectivenessModifier,
+        satisfactionModifier,
+        overcrowdingModifier;
 
-    public BarFill effectiveness, satisfaction;
+    public BarFill
+        effectiveness,
+        satisfaction,
+        effectivenessLarge,
+        satisfactionLarge,
+        equipment,
+        weaponry,
+        magic,
+        food,
+        entertainment,
+        luxury;
 
     public Toggle toggleSize;
     public RectTransform toggleSizeIcon;
@@ -21,9 +38,31 @@ public class SideBar : UiUpdater
     {
         adventurers.text = Manager.AvailableAdventurers + " / " + Manager.Accommodation;
         spending.text = "x" + (Manager.Spending / 100f).ToString("0.00");
+        adventurersLarge.text = "Adventurers " + adventurers.text;
+        spendingLarge.text = "Spending " + spending.text;
+
+        int mod = Manager.modifiers[Metric.Effectiveness];
+        effectivenessModifier.gameObject.SetActive(mod != 0);
+        effectivenessModifier.text = (mod > 0 ? "+" : "") + mod + " from event modifiers"; 
         
-        satisfaction.SetBar(Manager.Satisfaction);
+        mod = Manager.modifiers[Metric.Satisfaction];
+        satisfactionModifier.gameObject.SetActive(mod != 0);
+        satisfactionModifier.text = (mod > 0 ? "+" : "") + mod + " from event modifiers";
+
+        mod = Manager.OvercrowdingMod;
+        overcrowdingModifier.gameObject.SetActive(mod != 0);
+        satisfactionModifier.text = mod + " from overcrowding";
+
         effectiveness.SetBar(Manager.Effectiveness);
+        satisfaction.SetBar(Manager.Satisfaction);
+        effectivenessLarge.SetBar(Manager.Effectiveness);
+        satisfactionLarge.SetBar(Manager.Satisfaction);
+        equipment.SetBar(Manager.Equipment);
+        weaponry.SetBar(Manager.Weaponry);
+        magic.SetBar(Manager.Magic);
+        food.SetBar(Manager.Food);
+        entertainment.SetBar(Manager.Entertainment);
+        luxury.SetBar(Manager.Luxury);
     }
 
     public void ToggleSize()
