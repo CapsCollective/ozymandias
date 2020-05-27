@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Random = UnityEngine.Random;
 using EventType = Event.EventType;
+using System.Runtime.InteropServices;
 
 public class EventQueue : MonoBehaviour
 {
@@ -65,19 +66,24 @@ public class EventQueue : MonoBehaviour
     {
         EventType type;
 
-        int i = Random.Range(0, 3);
+        int adventurerW = GameManager.Manager.Satisfaction < 50 ? 13 : 33;
+        if (GameManager.Manager.AvailableAdventurers < GameManager.Manager.Accommodation * 0.5f)
+            adventurerW += 13;
+        int chaosW = GameManager.Manager.Satisfaction < 50 ? 33 : 13;
+        //int flavourW = 99 - chaosW - adventurerW; Don't think I need this
+        int i = Random.Range(0, 100);
 
-        switch (i)
-        {
-            case 0: type = EventType.Flavour;
-                break;
-            case 1: type = EventType.Adventurers;
-                break;
-            case 2: type = EventType.Chaos;
-                break;
-            default: type = EventType.Flavour;
-                break;
-        }
+
+        if (i <= adventurerW)
+            type = EventType.Adventurers;
+        else if (i <= adventurerW + chaosW)
+            type = EventType.Chaos;
+        else
+            type = EventType.Flavour;
+
+        // Uncomment these to see how the weights work.
+        //Debug.Log($"{adventurerW} | {chaosW} | {flavourW}");
+        //Debug.Log($"{i} | {type}");
         return PickRandom(type);
     }
 

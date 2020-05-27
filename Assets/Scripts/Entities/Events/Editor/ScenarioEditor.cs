@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 using UnityEditor.IMGUI.Controls;
 using System.Linq;
 using UnityEngine.Analytics;
+using UnityEditor.VersionControl;
 
 public class ScenarioEditor : EditorWindow
 {
@@ -343,14 +344,12 @@ public class ScenarioEditor : EditorWindow
     {
         if (scenario != null)
         {
+            AssetDatabase.SaveAssets();
             var serializedObject = new SerializedObject(scenario);
-            tfScenarioTitle.SetValueWithoutNotify(scenario.headline);
-            tfScenarioTitle.Bind(serializedObject);
-            tfScenarioTitle.RegisterValueChangedCallback((s) => scenario.headline = s.newValue);
-            tfScenarioTitle.RegisterCallback<UnityEngine.UIElements.FocusOutEvent>(e => OnSearch(""));
-            tfScenarioDescription.SetValueWithoutNotify(scenario.article);
-            tfScenarioDescription.Bind(serializedObject);
-            tfScenarioDescription.RegisterValueChangedCallback((s) => scenario.article = s.newValue);
+            tfScenarioTitle.BindProperty(serializedObject.FindProperty("headline"));
+            tfScenarioTitle.RegisterCallback<FocusOutEvent>(e => AssetDatabase.SaveAssets());
+            tfScenarioDescription.BindProperty(serializedObject.FindProperty("article"));
+            tfScenarioDescription.RegisterCallback<FocusOutEvent>(e => AssetDatabase.SaveAssets());
             ofBackground.value = scenario.image;
             enumEventType.Init(scenario.type);
             SetupEventOutcomes();
