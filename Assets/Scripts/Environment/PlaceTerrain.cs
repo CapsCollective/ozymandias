@@ -12,19 +12,28 @@ public class PlaceTerrain : MonoBehaviour
     public int numberRadius = 1;
     
     private bool isPlaced = false;
+    public bool isAesthetic = false;
 
     private void Awake()
     {
-        if (!map)
+        if (!isAesthetic)
         {
-            map = GameObject.FindObjectOfType<Map>();
+            if (!map)
+            {
+                map = GameObject.FindObjectOfType<Map>();
+            }
+            lm = LayerMask.GetMask("Surface", "Terrain");
+            PlaceTerrain pt = terrainBuilding.GetComponent<PlaceTerrain>();
+            if (pt)
+            {
+                pt.enabled = false;
+            }
         }
-        lm = LayerMask.GetMask("Surface","Terrain");
-        PlaceTerrain pt = terrainBuilding.GetComponent<PlaceTerrain>();
-        if (pt)
+        else
         {
-            pt.enabled = false;
+            this.enabled = false;
         }
+        
     }
 
     // Start is called before the first frame update
@@ -40,14 +49,18 @@ public class PlaceTerrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isPlaced)
+        if (!isAesthetic)
         {
-            if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
+            if (!isPlaced)
             {
-                Place();
+                if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
+                {
+                    Place();
+                }
+
             }
-                
         }
+        
     }
 
     public void Place()
