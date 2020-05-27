@@ -51,7 +51,7 @@ public class SideBar : UiUpdater
 
         mod = Manager.OvercrowdingMod;
         overcrowdingModifier.gameObject.SetActive(mod != 0);
-        satisfactionModifier.text = mod + " from overcrowding";
+        overcrowdingModifier.text = mod + " from overcrowding";
 
         effectiveness.SetBar(Manager.Effectiveness);
         satisfaction.SetBar(Manager.Satisfaction);
