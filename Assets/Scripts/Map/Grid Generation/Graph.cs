@@ -18,7 +18,12 @@ public class Graph<T>
     public Graph(Graph<T> oldGraph)
     {
         Data = new List<T>(oldGraph.Data);
-        Map = new Dictionary<T, List<T>>(oldGraph.Map);
+        Map = new Dictionary<T, List<T>>();
+        
+        foreach (T key in oldGraph.Map.Keys)
+        {
+            Map.Add(key, new List<T>(oldGraph.Map[key]));
+        }
     }
 
     public List<T> GetData()
@@ -29,6 +34,97 @@ public class Graph<T>
     public bool Contains(T toCheck)
     {
         return Data.Contains(toCheck);
+    }
+
+    public void RemoveEdges()
+    {
+        foreach (T key in Map.Keys)
+            Map[key].Clear();
+    }
+
+    public List<List<T>> OneWayDFS(T root, T target, int limit)
+    {
+        List<List<T>> paths = new List<List<T>>();
+
+        Stack<T> stack = new Stack<T>();
+
+        OneWayVisit(root, root, target, ref paths, ref stack, limit);
+
+        return paths;
+    }
+
+    private void OneWayVisit(T current, T previous, T target, ref List<List<T>> paths, ref Stack<T> stack, int limit)
+    {
+        stack.Push(current);
+
+        if (current.Equals(target) && stack.Count > 1)
+        {
+            List<T> currentPath = new List<T>(stack);
+            paths.Add(currentPath);
+        }
+        else if (stack.Count < limit)
+        {
+            foreach (T neighbour in Map[current])
+            {
+                if (!neighbour.Equals(previous)) OneWayVisit(neighbour, current, target, ref paths, ref stack, limit);
+            }
+        }
+
+        stack.Pop();
+    }
+
+    public List<List<T>> IndirectDFS(T root, T dest, int limit)
+    {
+        List<List<T>> paths = new List<List<T>>();
+
+        Stack<T> stack = new Stack<T>();
+
+        IndirectVisit(root, root, dest, ref paths, ref stack, limit);
+
+        return paths;
+    }
+
+    private void IndirectVisit(T root, T current, T dest, ref List<List<T>> paths, ref Stack<T> stack, int limit)
+    {
+        stack.Push(current);
+
+        if (current.Equals(dest) && stack.Count > 1)
+        {
+            List<T> currentPath = new List<T>(stack);
+            paths.Add(currentPath);
+        }
+        else if (stack.Count < limit)
+        {
+            foreach (T neighbour in Map[current])
+            {
+                if (!(neighbour.Equals(dest) && current.Equals(root)) && !stack.Contains(neighbour))
+                    IndirectVisit(root, neighbour, dest, ref paths, ref stack, limit);
+            }
+        }
+
+        stack.Pop();
+    }
+
+    public bool HasSharedNeighbours(T v1, T v2)
+    {
+        foreach (T n1 in Map[v1])
+        {
+            foreach (T n2 in Map[v2])
+            {
+                if (n1.Equals(n2)) return true;
+            }
+        }
+        return false;
+    }
+
+    public List<T> SharedNeighbours(T v1, T v2)
+    {
+        List<T> shared = new List<T>();
+        foreach (T n1 in Map[v1])
+            foreach (T n2 in Map[v2])
+                if (n1.Equals(n2))
+                    shared.Add(n1);
+        return shared;
     }
 
     public void Add(T toAdd)

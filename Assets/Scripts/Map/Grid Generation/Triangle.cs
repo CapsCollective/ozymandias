@@ -27,13 +27,15 @@ public class Triangle
             subVertices.Add(Vertices[i]);
             subVertices.Add(
                 new Vertex(
-                    (Vertices[i] + Vertices[(i + 1) % Vertices.Count]) / 2
+                    (Vertices[i] + Vertices[(i + 1) % Vertices.Count]) / 2,
+                    false,
+                    false
                     )
                 );
         }
 
         // STEP 2. Create the central vertex
-        Vertex centralVertex = new Vertex((subVertices[0] + subVertices[2] + subVertices[4]) / 3);
+        Vertex centralVertex = new Vertex((subVertices[0] + subVertices[2] + subVertices[4]) / 3, false, false);
 
         // STEP 3. Iterate through the border vertices and create cells
         for (int i = 0; i < 3; i++)

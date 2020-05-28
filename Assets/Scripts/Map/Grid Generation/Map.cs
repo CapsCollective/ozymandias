@@ -6,11 +6,11 @@ using static GameManager;
 public class Map : MonoBehaviour
 {
     public MapLayout mapLayout;
+
+    [Header("Debug Settings")]
     public bool selectingVertex;
     public int selectedVertex;
     public int selectedCell;
-
-    [Header("Debug Settings")]
     public bool debug;
     public float vertexRadius;
     public Color selectedColor;
@@ -81,9 +81,9 @@ public class Map : MonoBehaviour
     
     public void Generate()
     {
-        mapLayout.Generate(mapLayout.seed);
-        meshFilter = GetComponent<MeshFilter>();
-        meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
+        mapLayout.GenerateMap(mapLayout.seed);
+        _meshFilter = GetComponent<MeshFilter>();
+        _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
     
     // Occupies and fits a building onto the map
@@ -98,7 +98,7 @@ public class Map : MonoBehaviour
 
         mapLayout.Occupy(building, cells);
 
-        building.Fit(vertices);
+        building.Fit(vertices, mapLayout.heightFactor);
     }
 
     // Tries to create and place a building from a world position and rotation, returns if successful

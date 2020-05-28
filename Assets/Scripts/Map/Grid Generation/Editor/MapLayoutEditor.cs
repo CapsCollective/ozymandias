@@ -12,6 +12,6 @@ public class MapLayoutEditor : Editor
         DrawDefaultInspector();
 
         if (GUILayout.Button("Generate"))
-            script.Generate(script.seed);
+            script.GenerateMap(script.seed);
     }
 }
