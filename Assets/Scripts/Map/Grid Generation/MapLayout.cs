@@ -44,8 +44,6 @@ public class MapLayout : ScriptableObject
                 cell.Clear();
 
             BuildingMap.Remove(building);
-
-            Destroy(building.gameObject);
         }
     }
 
@@ -169,6 +167,11 @@ public class MapLayout : ScriptableObject
         return closest;
     }
 
+    public Cell[] GetCells(BuildingStructure building) //Gets all cells a building occupies
+    {
+        return BuildingMap[building].ToArray();
+    }
+    
     // GRID GENERATION
     public void Generate(int seed)
     {
