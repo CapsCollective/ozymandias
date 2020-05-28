@@ -19,7 +19,7 @@ public class Map : MonoBehaviour
     public Color gridColor;
     public Color occupiedColor;
 
-    private MeshFilter meshFilter;
+    private MeshFilter _meshFilter;
     private Camera cam;
 
     public enum HighlightState { Inactive, Valid, Invalid }
@@ -32,7 +32,7 @@ public class Map : MonoBehaviour
 
     public void Highlight(Cell[] cells, HighlightState state)
     {
-        Vector2[] uv = meshFilter.sharedMesh.uv;
+        Vector2[] uv = _meshFilter.sharedMesh.uv;
 
         foreach (Cell cell in cells)
         {
@@ -42,7 +42,7 @@ public class Map : MonoBehaviour
                 uv[vertexIndex].x = (int)state / 2f;
         }
 
-        meshFilter.sharedMesh.uv = uv;
+        _meshFilter.sharedMesh.uv = uv;
     }
 
     // Gets the closest cell to the cursor
