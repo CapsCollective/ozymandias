@@ -24,7 +24,7 @@ public class Section : MonoBehaviour
     }
 
     // Class Functions
-    public void Fit(Vector3[] corners)
+    public void Fit(Vector3[] corners, float heightFactor)
     {
         _meshFilter = GetComponent<MeshFilter>();
 

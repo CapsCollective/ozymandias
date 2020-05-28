@@ -6,11 +6,11 @@ using static GameManager;
 public class Map : MonoBehaviour
 {
     public MapLayout mapLayout;
+
+    [Header("Debug Settings")]
     public bool selectingVertex;
     public int selectedVertex;
     public int selectedCell;
-
-    [Header("Debug Settings")]
     public bool debug;
     public float vertexRadius;
     public Color selectedColor;
@@ -60,7 +60,7 @@ public class Map : MonoBehaviour
 
     public void Generate()
     {
-        mapLayout.Generate(mapLayout.seed);
+        mapLayout.GenerateMap(mapLayout.seed);
         _meshFilter = GetComponent<MeshFilter>();
         _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
     }
@@ -76,7 +76,7 @@ public class Map : MonoBehaviour
 
         mapLayout.Occupy(building, cells);
 
-        building.Fit(vertices);
+        building.Fit(vertices, mapLayout.heightFactor);
     }
 
     public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0)

@@ -7,6 +7,7 @@ public class MapLayout : ScriptableObject
     public int depth;
     public int seed;
 
+    public float heightFactor;
     public float lineWeight;
 
     public int relaxIterations;
@@ -397,15 +398,6 @@ public class MapLayout : ScriptableObject
 
         Subdivide();
 
-        foreach (Vertex root in VertexGraph.GetData())
-            foreach (Vertex adjacent in VertexGraph.GetAdjacent(root))
-                Debug.DrawLine(root, adjacent);
-
-        //foreach (Vertex root in VertexGraph.GetData())
-        //    Debug.DrawLine(new Vector3(-2, 0, 0), root, Color.red);
-
-        Debug.Log("NUMVERTICES: " + VertexGraph.Count);
-
         Relax();
 
         CalculateCells();
@@ -597,6 +589,25 @@ public class MapLayout : ScriptableObject
 
     private void Relax()
     {
+        for (int i = 0; i < relaxIterations; i++)
+        {
+            foreach (Vertex vertex in VertexGraph.GetData())
+            {
+                if (vertex.Boundary) continue;
+
+                Vector3 averagedPosition = vertex;
+
+                foreach (Vertex neighbour in VertexGraph.GetAdjacent(vertex))
+                {
+                    averagedPosition += neighbour;
+                }
+
+                averagedPosition /= VertexGraph.GetAdjacent(vertex).Count + 1;
+
+                if (VertexGraph.GetAdjacent(vertex).Count + 1 > 3)
+                    vertex.SetPosition(Vector3.Lerp(vertex, averagedPosition, relaxStrength));
+            }
+        }
     }
 
     private void CalculateCells()
@@ -609,16 +620,32 @@ public class MapLayout : ScriptableObject
             Vertex root = dupGraph.GetData()[0];
 
             // Do the stuff
-            List<List<Vertex>> paths = dupGraph.IndirectDFS(root, root, 5);
+            List<List<Vertex>> paths = dupGraph.OneWayDFS(root, root, 5);
             foreach (List<Vertex> path in paths)
             {
-                CellGraph.Add(new Cell(path[0], path[1], path[2], path[3]));
+                Cell newCell = new Cell(path[0], path[1], path[2], path[3]);
+                if (!CellGraph.Contains(newCell))
+                    CellGraph.Add(newCell);
             }
 
             dupGraph.Remove(root);
         }
 
-        Debug.Log(CellGraph.Count);
+        // Establish cell adjacency
+        foreach (Cell root in CellGraph.GetData())
+        {
+            foreach (Cell other in CellGraph.GetData())
+            {
+                int sharedVertices = 0;
+
+                foreach (Vertex rootVertex in root.Vertices)
+                    if (other.Vertices.Contains(rootVertex))
+                        sharedVertices++;
+
+                if (sharedVertices == 2)
+                    CellGraph.CreateEdge(root, other);
+            }
+        }
     }
 
     private bool ListsMatch<T>(List<T> a, Dictionary<T, List<T>> b)

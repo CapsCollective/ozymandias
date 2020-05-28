@@ -36,7 +36,8 @@ public class Cell
 
     public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD)
     {
-        Vertices = new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
+        bool cw = Vector3.Cross(vertexB - vertexA, vertexC - vertexA).z > 0;
+        Vertices =  cw ? new List<Vertex> { vertexD, vertexC, vertexB, vertexA } : new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
     }
 
     public void Clear()

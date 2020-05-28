@@ -42,22 +42,51 @@ public class Graph<T>
             Map[key].Clear();
     }
 
-    public List<List<T>> IndirectDFS(T root, T dest, int limit)
+    public List<List<T>> OneWayDFS(T root, T target, int limit)
     {
         List<List<T>> paths = new List<List<T>>();
-        List<T> visited = new List<T>();
 
         Stack<T> stack = new Stack<T>();
 
-        Visit(root, root, dest, ref paths, ref visited, ref stack, limit);
+        OneWayVisit(root, root, target, ref paths, ref stack, limit);
 
         return paths;
     }
 
-    private void Visit(T root, T current, T dest, ref List<List<T>> paths, ref List<T> visited, ref Stack<T> stack, int limit)
+    private void OneWayVisit(T current, T previous, T target, ref List<List<T>> paths, ref Stack<T> stack, int limit)
     {
         stack.Push(current);
-        visited.Add(current);
+
+        if (current.Equals(target) && stack.Count > 1)
+        {
+            List<T> currentPath = new List<T>(stack);
+            paths.Add(currentPath);
+        }
+        else if (stack.Count < limit)
+        {
+            foreach (T neighbour in Map[current])
+            {
+                if (!neighbour.Equals(previous)) OneWayVisit(neighbour, current, target, ref paths, ref stack, limit);
+            }
+        }
+
+        stack.Pop();
+    }
+
+    public List<List<T>> IndirectDFS(T root, T dest, int limit)
+    {
+        List<List<T>> paths = new List<List<T>>();
+
+        Stack<T> stack = new Stack<T>();
+
+        IndirectVisit(root, root, dest, ref paths, ref stack, limit);
+
+        return paths;
+    }
+
+    private void IndirectVisit(T root, T current, T dest, ref List<List<T>> paths, ref Stack<T> stack, int limit)
+    {
+        stack.Push(current);
 
         if (current.Equals(dest) && stack.Count > 1)
         {
@@ -69,9 +98,10 @@ public class Graph<T>
             foreach (T neighbour in Map[current])
             {
                 if (!(neighbour.Equals(dest) && current.Equals(root)) && !stack.Contains(neighbour))
-                    Visit(root, neighbour, dest, ref paths, ref visited, ref stack, limit);
+                    IndirectVisit(root, neighbour, dest, ref paths, ref stack, limit);
             }
         }
+
         stack.Pop();
     }
 
