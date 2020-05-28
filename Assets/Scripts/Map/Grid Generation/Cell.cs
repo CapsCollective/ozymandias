@@ -36,7 +36,8 @@ public class Cell
 
     public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD)
     {
-        Vertices = new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
+        bool cw = Vector3.Cross(vertexB - vertexA, vertexC - vertexA).z > 0;
+        Vertices =  cw ? new List<Vertex> { vertexD, vertexC, vertexB, vertexA } : new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
     }
 
     public void Clear()
@@ -60,13 +61,15 @@ public class Cell
             subVertices.Add(Vertices[i]);
             subVertices.Add(
                 new Vertex(
-                    (Vertices[i] + Vertices[(i + 1) % Vertices.Count]) / 2
+                    (Vertices[i] + Vertices[(i + 1) % Vertices.Count]) / 2,
+                    false,
+                    false
                     )
                 );
         }
 
         // STEP 2. Create the central vertex
-        Vertex centralVertex = new Vertex((subVertices[0] + subVertices[2] + subVertices[4] + subVertices[6]) / 4);
+        Vertex centralVertex = new Vertex((subVertices[0] + subVertices[2] + subVertices[4] + subVertices[6]) / 4, false, false);
 
         // STEP 3. Iterate through the border vertices and create cells
         for (int i = 0; i < 4; i++)

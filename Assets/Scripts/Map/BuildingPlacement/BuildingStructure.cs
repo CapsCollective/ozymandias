@@ -11,12 +11,12 @@ public class BuildingStructure : MonoBehaviour
     public enum Direction { Left, Forward, Right, Back }
 
     // Class Functions
-    public void Fit(Vector3[][] vertices)
+    public void Fit(Vector3[][] vertices, float heightFactor)
     {
         for (int i = 0; i < sections.Count; i++)
         {
             Section section = Instantiate(sections[i].prefab, transform).GetComponent<Section>();
-            section.Fit(vertices[i]);
+            section.Fit(vertices[i], heightFactor);
         }
 
     }

@@ -6,9 +6,14 @@ public class Vertex
 {
     private Vector3 position;
 
-    public Vertex(Vector3 _position)
+    public bool Split { get; }
+    public bool Boundary { get; }
+
+    public Vertex(Vector3 _position, bool _split, bool _boundary)
     {
         position = _position;
+        Split = _split;
+        Boundary = _boundary;
     }
 
     public void SetPosition(Vector3 newPosition)
