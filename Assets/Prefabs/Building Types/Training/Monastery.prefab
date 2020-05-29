@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2190574654203646116}
   - component: {fileID: 358868533062668719}
   m_Layer: 0
-  m_Name: Blacksmith
+  m_Name: Monastery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,6 +51,15 @@ MonoBehaviour:
   - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
       type: 3}
     directions: 02000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 0200000002000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 03000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 0300000003000000
 --- !u!114 &358868533062668719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,24 +72,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 'Adventurers need a steady supply of sharpened steel to keep themselves
-    from getting sliced.
+  description: 'Having an offical sacred site to connect with and live amongst the
+    divine enhances the powers (and tithes) of the holiest among us.
 
 
-    Effectiveness(Weaponry) ++
+    Provides
+    Effectiveness(Diviner Training)
 
-    Spending +'
-  scaleSpeed: 0
+    Provides 10 Accommodation
+
+    Spending
+    ++'
+  scaleSpeed: 3
   operational: 0
   terrain: 0
-  type: 6
-  baseCost: 25
-  accommodation: 0
-  weaponry: 2
+  type: 15
+  baseCost: 300
+  accommodation: 10
+  weaponry: 0
   magic: 0
   equipment: 0
   food: 0
   entertainment: 0
   luxury: 0
-  spending: 1
+  spending: 2
   defense: 0

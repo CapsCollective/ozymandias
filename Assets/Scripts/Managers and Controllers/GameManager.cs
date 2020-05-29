@@ -30,18 +30,18 @@ public enum BuildingType
     Terrain,
     Ruins,
     GuildHall,
+    //Equipment
+    GeneralStore, //Better name?
+    Tailor,
+    Apothecary,
     //Weaponry
     Blacksmith,
-    Tannery, // Built far away from other places
-    Armourer,
+    Leatherworks,
+    Armourer, //Doubles as Defense
     //Magic
-    Enchanters,
     Alchemists,
+    Enchanters,
     Jewellers, //Doubles as Luxury
-    //Equipment
-    Tailor,
-    SupplyShop, //Could use a better name
-    Apothecary, // Medical supplies
     //Training: Class specific expensive buildings (quest unlocks?)
     Arena, //Doubles as Entertainment
     HuntingLodge, //Doubles as Food
@@ -51,21 +51,22 @@ public enum BuildingType
     //Food
     Farm,
     Bakery,
-    Fishmongers, // Built near shoreline
+    Brewery,
     //Entertainment
     Tavern,
-    Plaza, //Public space full of entertainers
+    Plaza,
+    Bathhouse,
     //Luxury
     Herbalist,
-    CurioShop, // Needs renaming
     Cartographers,
     //Accommodation
     Inn,
     House,
+    Barracks, // Doubles as housing
     //Defense
-    Wall,
-    Barracks, // Doubles as housing??
-    GuardOutpost
+    GuardOutpost,
+    //Misc
+    Graveyard
 }
 
 public class GameManager : MonoBehaviour

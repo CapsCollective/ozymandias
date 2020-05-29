@@ -48,6 +48,9 @@ MonoBehaviour:
   - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
       type: 3}
     directions: 
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 02000000
 --- !u!114 &358868533062668719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,17 +63,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Provides the basics of food
-  costScale: 1.15
+  description: 'Gives the villagers something to do, and provides a steady food source.
+
+
+    Food
+    ++'
+  scaleSpeed: 0
   operational: 0
   terrain: 0
-  type: 3
-  baseCost: 20
+  type: 17
+  baseCost: 15
   accommodation: 0
   weaponry: 0
   magic: 0
   equipment: 0
-  food: 4
+  food: 2
   entertainment: 0
   luxury: 0
   spending: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2190574654203646116}
   - component: {fileID: 358868533062668719}
   m_Layer: 0
-  m_Name: Blacksmith
+  m_Name: Library
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,16 @@ MonoBehaviour:
     directions: 
   - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
       type: 3}
+    directions: 00000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 0000000001000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
     directions: 02000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 0200000003000000
 --- !u!114 &358868533062668719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,24 +72,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 'Adventurers need a steady supply of sharpened steel to keep themselves
-    from getting sliced.
+  description: 'Through intense study (and a bit of luck), Conduits can unlock new
+    potentials to their powers, and work out how not to tear apart the universe in
+    doing so.
 
 
-    Effectiveness(Weaponry) ++
+    Provides Effectiveness(Performer Training)
 
-    Spending +'
-  scaleSpeed: 0
+    Effectiveness(Magic)
+    +6'
+  scaleSpeed: 3
   operational: 0
   terrain: 0
-  type: 6
-  baseCost: 25
+  type: 16
+  baseCost: 300
   accommodation: 0
-  weaponry: 2
-  magic: 0
+  weaponry: 0
+  magic: 6
   equipment: 0
   food: 0
   entertainment: 0
   luxury: 0
-  spending: 1
+  spending: 0
   defense: 0
