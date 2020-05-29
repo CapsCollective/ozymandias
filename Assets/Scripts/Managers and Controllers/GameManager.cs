@@ -325,9 +325,12 @@ public class GameManager : MonoBehaviour
         dialogueManager.StartDialogue("menu_tutorial");
     }
 
+
+    public int turnCounter = 0;
     [Button("Next Turn")]
     public void NextTurn()
     {
+        turnCounter++;
         Threat += ThreatPerTurn;
         Wealth += WealthPerTurn;
 
