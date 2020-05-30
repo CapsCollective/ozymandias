@@ -238,6 +238,9 @@ public class GameManager : MonoBehaviour
 
         foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;
 
+        if ((float)Threat / (Defense + Threat) > 0.8f)
+            foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
+        
         eventQueue.ProcessEvents();
 
         OnNewTurn?.Invoke();
@@ -296,7 +299,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        newspaperController.GameOver();            
+        newspaperController.GameOver();          
     }
 
     [HorizontalLine()] 
@@ -313,6 +316,8 @@ public class GameManager : MonoBehaviour
     public GameObject guildHall;
     public Event openingEvent;
     public Event[] guildHallDestroyedEvents;
+    public Event[] supportWithdrawnEvents;
+
     
     private void BuildGuildHall()
     {
