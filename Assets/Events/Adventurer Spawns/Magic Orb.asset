@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5901677876553364287
+--- !u!114 &-5855615549581893009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
   m_Name: New Adventurers(Clone)
   m_EditorClassIdentifier: 
-  customDescription: Taako, Magnus, and Merle settle in (+3 Adventurers)
+  customDescription: 
   adventurers:
-  - {fileID: 11400000, guid: f95fa48ddb3a58444adb01ba17e2166c, type: 2}
-  - {fileID: 11400000, guid: b8443b9a461c1fe42803c8d14d0e683e, type: 2}
-  - {fileID: 11400000, guid: 44d7e9871407cef49aeaf02e1d1a94fd, type: 2}
+  - {fileID: 11400000, guid: 07a1b647f5628f04abf724f8ebfc7b6f, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,13 +25,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Adventure Zone
+  m_Name: Magic Orb
   m_EditorClassIdentifier: 
-  headline: A Zone for Adventure
-  article: Three hero's refering to themselves as "Tres Horny Boys" have stumbled
-    into our area, claiming to be from another world. "I don't know if we're licenced
-    for being here" quotes the parties Diviner Merle.
-  image: {fileID: 21300000, guid: 24a823986e525244a92f912d41a475df, type: 3}
+  headline: The Orb of Awakening
+  article: Local innkeeper Veronica Stalwart has gained supernatural powers after
+    she touched an orb containing the soul of a long dead god while cleaning. "I
+    promise to use these powers for good, no matter WHAT the being inside of me says!"
+    quotes Veronica.
+  image: {fileID: 21300000, guid: cb374d44b70eb2b4e8cabaccb595d26e, type: 3}
   type: 1
   headliner: 0
   minChaos: 0
@@ -43,5 +42,5 @@ MonoBehaviour:
   maxThreat: 0
   maxWealth: 0
   outcomes:
-  - {fileID: -5901677876553364287}
+  - {fileID: -5855615549581893009}
   choices: []

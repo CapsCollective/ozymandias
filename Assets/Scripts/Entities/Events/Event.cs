@@ -18,7 +18,8 @@ public class Event : ScriptableObject
         Endgame,
         Chain,
         Special,
-        Advert
+        Advert,
+        GameOver
     }
 
     public string headline;
