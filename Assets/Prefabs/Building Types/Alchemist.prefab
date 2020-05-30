@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2190574654203646116}
   - component: {fileID: 358868533062668719}
   m_Layer: 0
-  m_Name: Blacksmith
+  m_Name: Alchemist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,12 @@ MonoBehaviour:
   - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
       type: 3}
     directions: 
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 00000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 02000000
 --- !u!114 &358868533062668719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,15 +66,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
-  costScale: 1.15
+  description: 'Magical potion''s and remedies are what''s needed to keep your adventurers
+    in top shape.
+
+
+    Effectiveness(Magic) ++
+
+    Spending +'
+  scaleSpeed: 0
   operational: 0
   terrain: 0
-  type: 3
-  baseCost: 20
+  type: 9
+  baseCost: 30
   accommodation: 0
-  weaponry: 3
-  magic: 0
+  weaponry: 0
+  magic: 2
   equipment: 0
   food: 0
   entertainment: 0

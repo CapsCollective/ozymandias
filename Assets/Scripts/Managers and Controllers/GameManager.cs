@@ -30,18 +30,18 @@ public enum BuildingType
     Terrain,
     Ruins,
     GuildHall,
+    //Equipment
+    GeneralStore, //Better name?
+    Tailor,
+    Apothecary,
     //Weaponry
     Blacksmith,
-    Tannery, // Built far away from other places
-    Armourer,
+    Leatherworks,
+    Armourer, //Doubles as Defense
     //Magic
-    Enchanters,
     Alchemists,
+    Enchanters,
     Jewellers, //Doubles as Luxury
-    //Equipment
-    Tailor,
-    SupplyShop, //Could use a better name
-    Apothecary, // Medical supplies
     //Training: Class specific expensive buildings (quest unlocks?)
     Arena, //Doubles as Entertainment
     HuntingLodge, //Doubles as Food
@@ -51,21 +51,22 @@ public enum BuildingType
     //Food
     Farm,
     Bakery,
-    Fishmongers, // Built near shoreline
+    Brewery,
     //Entertainment
     Tavern,
-    Plaza, //Public space full of entertainers
+    Plaza,
+    Bathhouse,
     //Luxury
     Herbalist,
-    CurioShop, // Needs renaming
     Cartographers,
     //Accommodation
     Inn,
     House,
+    Barracks, // Doubles as housing
     //Defense
-    Wall,
-    Barracks, // Doubles as housing??
-    GuardOutpost
+    GuardOutpost,
+    //Misc
+    Graveyard
 }
 
 public class GameManager : MonoBehaviour
@@ -92,172 +93,72 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] public List<BuildingStats> buildings = new List<BuildingStats>();
     
     [ReadOnly] [SerializeField] private int availableAdventurers;
-    public int AvailableAdventurers
-    {
-        get { return availableAdventurers = adventurers.Count(x => !x.assignedQuest); }
-    }
-
+    public int AvailableAdventurers => availableAdventurers = adventurers.Count(x => !x.assignedQuest);
+    
     [ReadOnly] [SerializeField] private int accommodation;
-    public int Accommodation
-    {
-        get { return accommodation = buildings.Where(x => x.operational).Sum(x => x.accommodation); }
-    }
+    public int Accommodation => accommodation = buildings.Where(x => x.operational).Sum(x => x.accommodation);
 
     [HorizontalLine]
     
     [ReadOnly] [SerializeField] private int weaponry;
-    public int Weaponry
-    {
-        get {
-            return weaponry = Mathf.Clamp(100 * 
-                buildings.Where(x => x.operational).Sum(x => x.weaponry) / AvailableAdventurers,
-                0, 100);
-        }
-    }
+    public int Weaponry => weaponry = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.weaponry) / AvailableAdventurers, 0, 100);
     
     [ReadOnly] [SerializeField] private int magic;
-    public int Magic
-    {
-        get {
-            return magic = Mathf.Clamp(100 * 
-                buildings.Where(x => x.operational).Sum(x => x.magic) / AvailableAdventurers,
-                0, 100);
-        }
-    }
+    public int Magic => magic = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.magic) / AvailableAdventurers, 0, 100);
     
     [ReadOnly] [SerializeField] private int equipment;
-    public int Equipment
-    {
-        get {
-            return equipment = Mathf.Clamp(100 * 
-                buildings.Where(x => x.operational).Sum(x => x.equipment) / AvailableAdventurers,
-                0, 100);
-        }
-    }
+    public int Equipment => equipment = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.equipment) / AvailableAdventurers,0, 100);
 
     [ReadOnly] [SerializeField] private int training;
-    public int Training
-    {
-        get { return training = 0; } // TODO: work out the specifics of this
-    }
-    
+    public int Training => training = 0; // TODO: work out the specifics of this
+
     [ReadOnly] [SerializeField] private int effectiveness;
-    public int Effectiveness
-    {
-        get
-        {
-            return effectiveness = Mathf.Clamp(0, Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
-        }
-    }
+    public int Effectiveness => effectiveness = Mathf.Clamp(0, Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
     
     [HorizontalLine]
     
     [ReadOnly] [SerializeField] private int food;
-    public int Food
-    {
-        get {
-            return food = Mathf.Clamp(100 * 
-            buildings.Where(x => x.operational).Sum(x => x.food) / AvailableAdventurers,
-            0, 100);
-        }
-    }
-    
+    public int Food => food = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.food) / AvailableAdventurers, 0, 100);
+
     [ReadOnly] [SerializeField] private int entertainment;
-    public int Entertainment
-    {
-        get {
-            return entertainment = Mathf.Clamp(100 * 
-                buildings.Where(x => x.operational).Sum(x => x.entertainment) / AvailableAdventurers,
-                0, 100);
-        }
-    }
+    public int Entertainment => entertainment = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.entertainment) / AvailableAdventurers, 0, 100);
     
     [ReadOnly] [SerializeField] private int luxury;
-    public int Luxury
-    {
-        get {
-            return luxury = Mathf.Clamp(100 * 
-                buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers,
-                0, 100);
-        }
-    }
+    public int Luxury => luxury = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers, 0, 100);
 
-    public int OvercrowdingMod
-    {
-        get
-        {
-            return Mathf.Min(0, Accommodation - AvailableAdventurers); //lose 1% satisfaction per adventurer over capacity
-        }
-    }
-    
+    public int OvercrowdingMod => Mathf.Min(0, Accommodation - AvailableAdventurers); //lose 1% satisfaction per adventurer over capacity
+        
     [ReadOnly] [SerializeField] private int satisfaction;
-    public int Satisfaction
-    {
-        get
-        {
-            return satisfaction = Mathf.Clamp(0, Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
-        }
-    }
+    public int Satisfaction => satisfaction = Mathf.Clamp(0, Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
 
     [HorizontalLine]
     
     [ReadOnly] [SerializeField] private int spending;
-    public int Spending
-    {
-        get { return spending = 100 + buildings.Where(x => x.operational).Sum(x => x.spending) + modifiers[Metric.Spending]; }
-    }
+    public int Spending => spending = 100 + buildings.Where(x => x.operational).Sum(x => x.spending) + modifiers[Metric.Spending];
 
     [ReadOnly] [SerializeField] private int defense;
-    public int Defense
-    {
-        get
-        {
-            return defense = (AvailableAdventurers * Effectiveness) / 100 +
-                             buildings.Where(x => x.operational).Sum(x => x.defense) +
-                             modifiers[Metric.Defense];
-        }
-    }
+    public int Defense => defense = AvailableAdventurers * Effectiveness / 30 + buildings.Where(x => x.operational).Sum(x => x.defense) + modifiers[Metric.Defense];
 
     [ReadOnly] [SerializeField] private int chaos;
-    public int Chaos
-    {
-        get { return chaos = AvailableAdventurers * (100 - Satisfaction); }
-    }
+    public int Chaos => chaos = AvailableAdventurers * (100 - Satisfaction);
 
     [ReadOnly] [SerializeField] private int wealthPerTurn;
-    public int WealthPerTurn
-    {
-        get { return wealthPerTurn = Spending * AvailableAdventurers / 10; } //10 gold per adventurer times spending
-    }
-    
+    public int WealthPerTurn => wealthPerTurn = Spending * AvailableAdventurers / 10; //10 gold per adventurer times spending
+
     [SerializeField] private int wealth;
-    public int Wealth
-    {
-        get { return wealth; }
-        private set { wealth = value; }
-    }    
+    public int Wealth => wealth;
     
     [ReadOnly] [SerializeField] private int threatPerTurn;
-    public int ThreatPerTurn
-    {
-        get { return buildings.Count + modifiers[Metric.Threat]; } //10 gold per adventurer times spending
-    }
-    
+    public int ThreatPerTurn => threatPerTurn = 3 + (2 * turnCounter) + modifiers[Metric.Threat];
+
     [SerializeField] private int threat;
-    public int Threat
-    {
-        get { return threat; }
-        private set { threat = value; }
-    }
+    public int Threat => threat;
 
     public bool Spend(int amount)
     {
-        if (wealth >= amount)
-        {
-            wealth -= amount;
-            return true;
-        }
-        return false;
+        if (wealth < amount) return false;
+        wealth -= amount;
+        return true;
     }
     
     public void AddAdventurer()
@@ -285,6 +186,7 @@ public class GameManager : MonoBehaviour
             
             adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
+            else Destroy(toRemove);
             return true;
         }
 
@@ -297,6 +199,7 @@ public class GameManager : MonoBehaviour
         if (!toRemove) return false;
         adventurers.Remove(toRemove);
         if (kill) toRemove.transform.parent = graveyard.transform;
+        else Destroy(toRemove);
         return true;
     }
     
@@ -315,7 +218,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 5; i++) AddAdventurer();
 
         wealth = 50;
-        threat = 1;
+        threat = 3;
         BuildGuildHall();
         
         eventQueue.AddEvent(openingEvent, true);
@@ -324,14 +227,20 @@ public class GameManager : MonoBehaviour
         dialogueManager.StartDialogue("menu_tutorial");
     }
 
+
+    public int turnCounter = 0;
     [Button("Next Turn")]
     public void NextTurn()
     {
-        Threat += ThreatPerTurn;
-        Wealth += WealthPerTurn;
+        turnCounter++;
+        threat += ThreatPerTurn;
+        wealth += WealthPerTurn;
 
         foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;
 
+        if ((float)Threat / (Defense + Threat) > 0.8f)
+            foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
+        
         eventQueue.ProcessEvents();
 
         OnNewTurn?.Invoke();
@@ -390,7 +299,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        newspaperController.GameOver();            
+        newspaperController.GameOver();          
     }
 
     [HorizontalLine()] 
@@ -407,6 +316,8 @@ public class GameManager : MonoBehaviour
     public GameObject guildHall;
     public Event openingEvent;
     public Event[] guildHallDestroyedEvents;
+    public Event[] supportWithdrawnEvents;
+
     
     private void BuildGuildHall()
     {

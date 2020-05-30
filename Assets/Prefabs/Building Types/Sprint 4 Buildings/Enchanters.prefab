@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2190574654203646117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2190574654203646119}
+  - component: {fileID: 2190574654203646116}
+  - component: {fileID: 358868533062668719}
+  m_Layer: 0
+  m_Name: Enchanters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2190574654203646119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2190574654203646117}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2190574654203646116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2190574654203646117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sections:
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 00000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 02000000
+  - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
+      type: 3}
+    directions: 03000000
+--- !u!114 &358868533062668719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2190574654203646117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 'Having a sword is good. Having a FIRE sword is even better! And that''s
+    just the start of what can be done with enchanting.
+
+
+    Effectiveness(Magic)
+    +++
+
+    Spending ++'
+  scaleSpeed: 1
+  operational: 0
+  terrain: 0
+  type: 10
+  baseCost: 50
+  accommodation: 0
+  weaponry: 0
+  magic: 3
+  equipment: 0
+  food: 0
+  entertainment: 0
+  luxury: 0
+  spending: 2
+  defense: 0
