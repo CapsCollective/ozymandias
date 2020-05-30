@@ -6,6 +6,7 @@ using UnityEngine;
 public class Section : MonoBehaviour
 {
     // Member variables
+    public int clockwiseRotations;
     public Transform cornerParent;
 
     private MeshFilter _meshFilter;
@@ -26,6 +27,16 @@ public class Section : MonoBehaviour
     // Class Functions
     public void Fit(Vector3[] corners, float heightFactor)
     {
+        // Rotate the mesh
+        for (int i = 0; i < clockwiseRotations; i++)
+        {
+            Vector3 temp = corners[0];
+            corners[0] = corners[3];
+            corners[3] = corners[2];
+            corners[2] = corners[1];
+            corners[1] = temp;
+        }
+
         _meshFilter = GetComponent<MeshFilter>();
 
         CalculateVertexCoordinates();
