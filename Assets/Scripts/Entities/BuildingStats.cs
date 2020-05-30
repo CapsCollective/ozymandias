@@ -51,6 +51,7 @@ public class BuildingStats : MonoBehaviour
     public void Build()
     {
         operational = true;
+        name = name.Replace("(Clone)", "");
         if(!terrain) Manager.Build(this);
     }
 }
