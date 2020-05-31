@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
  * In addition, making enumerators for this script so it adapts to the need of each ui object as opposed to having to make a new script each time
  */ 
 
-public enum UIType {building, threat, quest, destroy, money, sidebar  };
+public enum UIType {building, threat, quest, destroy, money, adventurers, satisfaction, efficiency, spending };
 
 public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
@@ -92,16 +92,25 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
                 InfoInstantiate(helperPrefab[1], new Vector3(0, -80, 0));
                 break;
             case UIType.quest:
-                InfoInstantiate(helperPrefab[2], new Vector3(0, 100, 0));
+                InfoInstantiate(helperPrefab[2], new Vector3(0, 80, 0));
                 break;
             case UIType.destroy:
-                InfoInstantiate(helperPrefab[3], new Vector3(0, 100, 0));
+                InfoInstantiate(helperPrefab[3], new Vector3(0, 80, 0));
                 break;
             case UIType.money:
-                InfoInstantiate(helperPrefab[4], new Vector3(30, 150, 0));
+                InfoInstantiate(helperPrefab[4], new Vector3(50, 150, 0));
                 break;
-            case UIType.sidebar:
+            case UIType.adventurers:
                 InfoInstantiate(helperPrefab[5], new Vector3(-100, 0, 0));
+                break;
+            case UIType.satisfaction:
+                InfoInstantiate(helperPrefab[6], new Vector3(-100, 0, 0));
+                break;
+            case UIType.efficiency:
+                InfoInstantiate(helperPrefab[7], new Vector3(-100, 0, 0));
+                break;
+            case UIType.spending:
+                InfoInstantiate(helperPrefab[8], new Vector3(-100, 0, 0));
                 break;
         }
     }
