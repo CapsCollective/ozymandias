@@ -14,7 +14,7 @@ public class Section : MonoBehaviour
 
     // Properties
     private string FileName { get { return MeshFilter.sharedMesh.name + ".json"; } }
-    private string Directory { get { return Application.dataPath + "/Section Data/"; } }
+    private string Directory { get { return Application.streamingAssetsPath + "/Section Data/"; } }
     public string FilePath { get { return Directory + FileName; } }
 
     private MeshFilter MeshFilter
@@ -79,7 +79,10 @@ public class Section : MonoBehaviour
     {
         SectionData sectionData = new SectionData(MeshFilter, cornerParent);
         File.WriteAllText(FilePath, JsonUtility.ToJson(sectionData));
+
+        #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
+        #endif
     }
 
     private SectionData Load()
