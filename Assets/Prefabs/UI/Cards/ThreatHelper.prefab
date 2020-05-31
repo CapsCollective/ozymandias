@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 46.5}
+  m_AnchoredPosition: {x: 0, y: 45.2}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1190828944
@@ -76,7 +76,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Details
+  m_Text: 'Threat Bar
 
 '
 --- !u!1 &2971664735073291325
@@ -113,8 +113,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 32.8, y: -14.3}
-  m_SizeDelta: {x: 160, y: 106.56732}
+  m_AnchoredPosition: {x: -0.64, y: 0}
+  m_SizeDelta: {x: 289.65286, y: 95.2}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8530885381261662555
 CanvasRenderer:
@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 4986941033365176959}
   - component: {fileID: 4311823371050612564}
   - component: {fileID: 4369125850565169039}
+  - component: {fileID: 1278866836974896137}
   m_Layer: 5
   m_Name: ThreatHelper
   m_TagString: Untagged
@@ -196,7 +197,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 125}
+  m_SizeDelta: {x: 300, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4986941033365176959
 CanvasRenderer:
@@ -246,3 +247,15 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &1278866836974896137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821676634747878105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09493f71b9f4855498b0cccd127e8039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
