@@ -9,6 +9,7 @@ namespace Managers_and_Controllers
 {
     public class JukeboxController : MonoBehaviour
     {
+        [SerializeField] private Camera gameCamera;
         [SerializeField] private AudioSource ambiancePlayer;
         [SerializeField] private AudioSource musicPlayer;
         [SerializeField] private AudioClip[] tracks;
@@ -17,6 +18,13 @@ namespace Managers_and_Controllers
         private void Start()
         {
             OnTrackEnded();
+        }
+
+        private void Update()
+        {
+            var ambiancePosition = gameCamera.transform.position;
+            ambiancePosition.y = 0f;
+            ambiancePlayer.transform.position = ambiancePosition;
         }
 
         private AudioClip GetUnplayedTrack()
