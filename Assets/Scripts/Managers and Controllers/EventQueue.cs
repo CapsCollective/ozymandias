@@ -25,6 +25,9 @@ public class EventQueue : MonoBehaviour
     public static Action<List<Event>, List<string>> OnEventsProcessed;
     
     public Event[] allEvents;
+
+    [Tooltip("Events in this array are ignored by the Add All button")]
+    public Event[] filterEvents;
     
     public void Awake()
     {
