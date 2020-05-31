@@ -1,17 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 public class Section : MonoBehaviour
 {
     // Member variables
+    public int clockwiseRotations;
     public Transform cornerParent;
 
     private MeshFilter _meshFilter;
 
     // Properties
-    private SectionData sectionData;
+    private string FileName { get { return MeshFilter.sharedMesh.name + ".json"; } }
+    private string Directory { get { return Application.dataPath + "/Section Data/"; } }
+    public string FilePath { get { return Directory + FileName; } }
+
+    private MeshFilter MeshFilter
+    {
+        get { return _meshFilter ? _meshFilter : _meshFilter = GetComponent<MeshFilter>(); }
+    }
 
     // MonoBehaviour Functions
     private void OnDrawGizmos()
@@ -26,17 +35,20 @@ public class Section : MonoBehaviour
     // Class Functions
     public void Fit(Vector3[] corners, float heightFactor)
     {
-        _meshFilter = GetComponent<MeshFilter>();
-        Vector3[] worldVertices = _meshFilter.sharedMesh.vertices;
+        for (int i = 0; i < clockwiseRotations; i++)
+        {
+            Vector3 temp = corners[0];
+            corners[0] = corners[1];
+            corners[1] = corners[2];
+            corners[2] = corners[3];
+            corners[3] = temp;
+        }
 
-        for (int i = 0; i < worldVertices.Length; i++)
-            worldVertices[i] = transform.TransformPoint(worldVertices[i]);
+        // Retrieve the section data
+        SectionData sectionData = GetSectionData();
 
-        sectionData = new SectionData();
-        sectionData.Calculate(worldVertices, cornerParent);
-
-        Vector3[] planePositions = new Vector3[_meshFilter.mesh.vertexCount];
-
+        // Calculate new vertex positions
+        Vector3[] planePositions = new Vector3[MeshFilter.mesh.vertexCount];
         for (int i = 0; i < planePositions.Length; i++)
         {
             Vector3 i0 = Vector3.Lerp(corners[0], corners[3], sectionData[i].x);
@@ -47,29 +59,53 @@ public class Section : MonoBehaviour
             planePositions[i].y += heightFactor * sectionData[i].y;
         }
 
-        Vector3[] vertices = _meshFilter.mesh.vertices;
+        // Apply morphed vertices to Mesh Filter
+        MeshFilter.mesh.vertices = planePositions;
 
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            vertices[i] = planePositions[i];
-        }
+        MeshFilter.mesh.RecalculateNormals();
+        MeshFilter.mesh.RecalculateBounds();
+        MeshFilter.mesh.RecalculateTangents();
+    }
 
-        _meshFilter.mesh.vertices = vertices;
-        _meshFilter.mesh.RecalculateNormals();
-        _meshFilter.mesh.RecalculateBounds();
-        _meshFilter.mesh.RecalculateTangents();
+    public SectionData GetSectionData()
+    {
+        if (!File.Exists(FilePath))
+            Save();
+
+        return Load();
+    }
+
+    public void Save()
+    {
+        SectionData sectionData = new SectionData(MeshFilter, cornerParent);
+        File.WriteAllText(FilePath, JsonUtility.ToJson(sectionData));
+        UnityEditor.AssetDatabase.Refresh();
+    }
+
+    private SectionData Load()
+    {
+        return JsonUtility.FromJson<SectionData>(File.ReadAllText(FilePath));
     }
 
     [System.Serializable]
     public class SectionData
     {
-        private Vector3[] VertexCoordinates;
+        public Vector3[] VertexCoordinates;
 
-        public void Calculate(Vector3[] worldVertices, Transform cornerParent)
+        public SectionData(MeshFilter meshFilter, Transform cornerParent)
         {
+            VertexCoordinates = Calculate(meshFilter, cornerParent);
+        }
+
+        public static Vector3[] Calculate(MeshFilter mf, Transform cornerParent)
+        {
+            Vector3[] worldVertices = mf.sharedMesh.vertices;
+            for (int i = 0; i < worldVertices.Length; i++)
+                worldVertices[i] = mf.transform.TransformPoint(worldVertices[i]);
+
             int vertexCount = worldVertices.Length;
             Vector3[] vertices = worldVertices;
-            VertexCoordinates = new Vector3[vertexCount];
+            Vector3[] uv = new Vector3[vertexCount];
 
             Vector3 p0 = cornerParent.GetChild(0).position;
             Vector3 p1 = cornerParent.GetChild(1).position;
@@ -79,8 +115,10 @@ public class Section : MonoBehaviour
             for (int i = 0; i < vertexCount; i++)
             {
                 Vector3 p = vertices[i];
-                VertexCoordinates[i] = CalculateUV(p, p0, p1, p2, p3);
+                uv[i] = CalculateUV(p, p0, p1, p2, p3);
             }
+
+            return uv;
         }
 
         private static Vector3 CalculateUV(Vector3 p, Vector3 a, Vector3 b, Vector3 c, Vector3 d)
@@ -95,15 +133,9 @@ public class Section : MonoBehaviour
             return Vector3.Dot(AP, AB) / Vector3.Dot(AB, AB);
         }
 
-        public static implicit operator Vector3[](SectionData data)
-        {
-            return data.VertexCoordinates;
-        }
-
         public Vector3 this[int index]
         {
             get => VertexCoordinates[index];
-            set => VertexCoordinates[index] = value;
         }
     }
 }
