@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
+using UnityEngine.Analytics;
 using Random = UnityEngine.Random;
 
 public enum Metric
@@ -225,6 +226,8 @@ public class GameManager : MonoBehaviour
         
         // Run the menu tutorial system dialogue
         dialogueManager.StartDialogue("menu_tutorial");
+        Analytics.EnableCustomEvent("New Turn", true);
+        Analytics.enabled = true;
     }
 
 
@@ -244,7 +247,11 @@ public class GameManager : MonoBehaviour
         eventQueue.ProcessEvents();
 
         OnNewTurn?.Invoke();
-        
+        var ev = Analytics.CustomEvent("New Turn", new Dictionary<string, object>{
+            { "turn_no", turnCounter },
+            { "chaos_lvl", Chaos }
+        });
+        Debug.Log(ev);
         UpdateUi();
     }
 
