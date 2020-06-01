@@ -70,6 +70,7 @@ namespace Managers_and_Controllers
             musicPlayer.clip = track;
             musicPlayer.Play();
             StartCoroutine(StartFade(currentAmbiencePlayer, 5f, 0.2f));
+            StartCoroutine(StartFade(townAmbiencePlayer, 5f, 0.2f));
             StartCoroutine(StartFade(musicPlayer, 2f, 1f));
             StartCoroutine(Wait(track.length - 2f, OnTrackEnded));
         }
@@ -78,6 +79,7 @@ namespace Managers_and_Controllers
         {
             StartCoroutine(StartFade(musicPlayer, 2f, 0f, true));
             StartCoroutine(StartFade(currentAmbiencePlayer, 5f, 1f));
+            StartCoroutine(StartFade(townAmbiencePlayer, 5f, 1f));
             StartCoroutine(Wait(20f, OnAmbianceEnded));
         }
 
