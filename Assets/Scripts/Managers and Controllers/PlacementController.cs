@@ -5,13 +5,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static GameManager;
 
-public class Place : MonoBehaviour
+public class PlacementController : MonoBehaviour
 {
+    public static BuildingSelect selectedObject;
+
     private Map map;
-    public Click selectedObject;
     private RaycastHit hit;
     private Camera cam;
-    private EventSystem eventSystem;
 
     private int rotation;
     private Cell[] highlighted = new Cell[0];
@@ -20,7 +20,6 @@ public class Place : MonoBehaviour
     {
         cam = Camera.main;
         map = Manager.map;
-        eventSystem = EventSystem.current;
         
         ClickManager.OnLeftClick += LeftClick;
         ClickManager.OnRightClick += RightClick;
@@ -32,11 +31,11 @@ public class Place : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
 
-        if (!selectedObject || eventSystem.IsPointerOverGameObject()) return;
+        if (!selectedObject || EventSystem.current.IsPointerOverGameObject()) return;
         
         Cell closest = map.GetCellFromMouse();
         
-        BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
+        BuildingStructure building = selectedObject.buildingPrefab.GetComponent<BuildingStructure>();
         
         highlighted = map.GetCells(closest, building, rotation);
 
@@ -47,22 +46,17 @@ public class Place : MonoBehaviour
     private void LeftClick()
     {
         if (!selectedObject) return;
-        if (eventSystem.currentSelectedGameObject &&
-            eventSystem.currentSelectedGameObject.gameObject != selectedObject.gameObject)
-        {
-            Deselect();
-            return;
-        }
-        
+
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
 
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
-        if (map.CreateBuilding(selectedObject.building, hit.point, rotation)) Deselect();
+        if (map.CreateBuilding(selectedObject.buildingPrefab, hit.point, rotation)) Deselect();
     }
 
     public void Deselect()
     {
+        selectedObject.toggle.Select();
         selectedObject = null;
     }
     

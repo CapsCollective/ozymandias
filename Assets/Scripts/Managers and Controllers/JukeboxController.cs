@@ -8,6 +8,7 @@ namespace Managers_and_Controllers
 {
     public class JukeboxController : MonoBehaviour
     {
+        #pragma warning disable 0649
         [SerializeField] private Camera gameCamera;
         [SerializeField] private GameObject gameMap;
         [SerializeField] private AudioSource townAmbiencePlayer;

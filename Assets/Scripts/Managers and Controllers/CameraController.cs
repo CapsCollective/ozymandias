@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CameraMovement : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     private Rigidbody rb;
     private Camera cam;
