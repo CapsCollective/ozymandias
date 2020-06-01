@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Managers_and_Controllers
 {
@@ -61,7 +60,7 @@ namespace Managers_and_Controllers
             if (playlist.Count <= 0)
                 playlist = new List<AudioClip>(tracks);
             playlist.Shuffle();
-            return playlist.PopRandom();;
+            return playlist.PopRandom();
         }
 
         private void OnAmbianceEnded()
