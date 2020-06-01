@@ -70,7 +70,7 @@ public class EventQueue : MonoBehaviour
         EventType type;
 
         int adventurerW = GameManager.Manager.Satisfaction < 50 ? 13 : 33;
-        if (GameManager.Manager.AvailableAdventurers < GameManager.Manager.Accommodation * 0.5f)
+        if (GameManager.Manager.AvailableAdventurers < GameManager.Manager.Accommodation * 0.75f)
             adventurerW += 13;
         int chaosW = GameManager.Manager.Satisfaction < 50 ? 33 : 13;
         //int flavourW = 99 - chaosW - adventurerW; Don't think I need this
