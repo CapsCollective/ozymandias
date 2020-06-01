@@ -10,6 +10,8 @@ namespace Managers_and_Controllers
     public class JukeboxController : MonoBehaviour
     {
         [SerializeField] private Camera gameCamera;
+        [SerializeField] private GameObject gameMap;
+        [SerializeField] private AudioSource townAmbiencePlayer;
         [SerializeField] private AudioSource natureAmbiencePlayer;
         [SerializeField] private AudioSource waterAmbiencePlayer;
         [SerializeField] private AudioSource musicPlayer;
@@ -20,6 +22,7 @@ namespace Managers_and_Controllers
 
         private void Start()
         {
+            townAmbiencePlayer.transform.position = gameMap.transform.position;
             currentAmbiencePlayer = natureAmbiencePlayer;
             OnTrackEnded();
         }
