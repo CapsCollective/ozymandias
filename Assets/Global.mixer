@@ -14,6 +14,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &-3239977329218345169
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Water
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 29846557cad964899a370a3d7133c5d2
+  m_Children: []
+  m_Volume: 2110263713f434d0c8db94abcda444d9
+  m_Pitch: 1b9830688ef38495696a499aca2727ae
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 3905720840455669250}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &-894853675168892271
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -69,6 +88,7 @@ AudioMixerController:
     - 8e1f76ec7d82a4e0d96fd730e9d704f4
     - 9502fcf6811e247ae80c7acbe41ab9dd
     - 5edd719b5e8504d7f90908d58ff0fd18
+    - 29846557cad964899a370a3d7133c5d2
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -117,6 +137,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: deec6916fdf974b889dddbf48f480595
   m_FloatValues:
+    2110263713f434d0c8db94abcda444d9: -0.08374883
     ad0dfaa976f0d4c31b35be2e16b67ff5: 10.437403
     1a22f68fa7b7541efb143c2130b97188: 9.757735
   m_TransitionOverrides: {}
@@ -131,6 +152,7 @@ AudioMixerGroupController:
   m_GroupID: 8e1f76ec7d82a4e0d96fd730e9d704f4
   m_Children:
   - {fileID: 5434969528089321822}
+  - {fileID: -3239977329218345169}
   m_Volume: 1a22f68fa7b7541efb143c2130b97188
   m_Pitch: be75f6faf7e334ac2879f2af16e56d7b
   m_Send: 00000000000000000000000000000000
@@ -140,13 +162,27 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &3905720840455669250
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 9261ea7ca45154be68af89bd3d8160a1
+  m_EffectName: Attenuation
+  m_MixLevel: 3ea7bb3b9ab0646639fbf7f8333a8f9c
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &5434969528089321822
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Nature Sounds
+  m_Name: Nature
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 9502fcf6811e247ae80c7acbe41ab9dd
   m_Children: []
