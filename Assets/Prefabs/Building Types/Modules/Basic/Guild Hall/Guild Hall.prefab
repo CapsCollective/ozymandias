@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1263116729105003461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1263116729105003458}
+  - component: {fileID: 1263116729105003456}
+  - component: {fileID: 1263116729105003459}
+  m_Layer: 0
+  m_Name: Guild Hall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1263116729105003458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263116729105003461}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1263116729105003456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263116729105003461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sections:
+  - prefab: {fileID: 4430338829548512258, guid: f5fd97c996e5e5f4ebffd867cfb0b0f1,
+      type: 3}
+    directions: 
+  - prefab: {fileID: 8716396363306372237, guid: 1dc4446b4b03982438099a0d44492f92,
+      type: 3}
+    directions: 00000000
+  - prefab: {fileID: 5850422358800233842, guid: 38657a287d6de024381e7c64e752e014,
+      type: 3}
+    directions: 0000000000000000
+  - prefab: {fileID: 9154215088064386976, guid: 8450d50933641034a9db10f4fd4bf47f,
+      type: 3}
+    directions: 000000000000000001000000
+  - prefab: {fileID: 2442090315632762313, guid: 80998b140892d6a44a32e4dbf6f2f7d4,
+      type: 3}
+    directions: 00000000000000000100000002000000
+  - prefab: {fileID: 3970598131823282281, guid: 6ac9d36253fcaa245ac16d5bb5c14c4a,
+      type: 3}
+    directions: 0000000000000000010000000200000002000000
+--- !u!114 &1263116729105003459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263116729105003461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 'The regional outpost for the adventuring guilds of the world. All
+    officially registered adventurers go through here.
+
+
+    Provides just enough
+    to get a town up and running.'
+  scaleSpeed: 0
+  operational: 0
+  terrain: 0
+  type: 2
+  baseCost: 0
+  accommodation: 10
+  weaponry: 2
+  magic: 2
+  equipment: 4
+  food: 5
+  entertainment: 0
+  luxury: 0
+  spending: 0
+  defense: 25
