@@ -10,21 +10,47 @@ namespace Managers_and_Controllers
     public class JukeboxController : MonoBehaviour
     {
         [SerializeField] private Camera gameCamera;
-        [SerializeField] private AudioSource ambiancePlayer;
+        [SerializeField] private AudioSource natureAmbiencePlayer;
+        [SerializeField] private AudioSource waterAmbiencePlayer;
         [SerializeField] private AudioSource musicPlayer;
         [SerializeField] private AudioClip[] tracks;
+        
         private List<AudioClip> playlist = new List<AudioClip>();
+        private AudioSource currentAmbiencePlayer;
 
         private void Start()
         {
+            currentAmbiencePlayer = natureAmbiencePlayer;
             OnTrackEnded();
         }
 
         private void Update()
         {
+            CheckAmbiencePlayer();
             var ambiancePosition = gameCamera.transform.position;
             ambiancePosition.y = 0f;
-            ambiancePlayer.transform.position = ambiancePosition;
+            currentAmbiencePlayer.transform.position = ambiancePosition;
+        }
+
+        
+        private void CheckAmbiencePlayer()
+        {
+            if(Physics.Raycast(gameCamera.transform.position,Vector3.down, out var hit, 30f))
+            {
+                if (currentAmbiencePlayer != natureAmbiencePlayer)
+                    SwitchAmbiences(waterAmbiencePlayer, natureAmbiencePlayer);
+            }
+            else{
+                if (currentAmbiencePlayer != waterAmbiencePlayer)
+                    SwitchAmbiences(natureAmbiencePlayer, waterAmbiencePlayer);
+            }
+        }
+
+        private void SwitchAmbiences(AudioSource from, AudioSource to)
+        {
+            StartCoroutine(StartFade(to, 2f, currentAmbiencePlayer.volume));
+            currentAmbiencePlayer = to;
+            StartCoroutine(StartFade(from, 2f, 0f));
         }
 
         private AudioClip GetUnplayedTrack()
@@ -40,7 +66,7 @@ namespace Managers_and_Controllers
             var track = GetUnplayedTrack();
             musicPlayer.clip = track;
             musicPlayer.Play();
-            StartCoroutine(StartFade(ambiancePlayer, 5f, 0.2f));
+            StartCoroutine(StartFade(currentAmbiencePlayer, 5f, 0.2f));
             StartCoroutine(StartFade(musicPlayer, 2f, 1f));
             StartCoroutine(Wait(track.length - 2f, OnTrackEnded));
         }
@@ -48,7 +74,7 @@ namespace Managers_and_Controllers
         private void OnTrackEnded()
         {
             StartCoroutine(StartFade(musicPlayer, 2f, 0f, true));
-            StartCoroutine(StartFade(ambiancePlayer, 5f, 1f));
+            StartCoroutine(StartFade(currentAmbiencePlayer, 5f, 1f));
             StartCoroutine(Wait(20f, OnAmbianceEnded));
         }
 
