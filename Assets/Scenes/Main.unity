@@ -2001,7 +2001,6 @@ GameObject:
   - component: {fileID: 1870573929}
   - component: {fileID: 1870573931}
   - component: {fileID: 1870573932}
-  - component: {fileID: 1870573933}
   - component: {fileID: 1870573934}
   m_Layer: 0
   m_Name: Game Manager
@@ -2048,6 +2047,7 @@ MonoBehaviour:
   dialogueManager: {fileID: 816033485}
   newspaperController: {fileID: 286736544}
   menuManager: {fileID: 1870573934}
+  placementController: {fileID: 1894982300}
   adventurersContainer: {fileID: 581453738}
   buildingsContainer: {fileID: 1006936788}
   graveyard: {fileID: 1224148117}
@@ -2149,18 +2149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSpeed: 0.2
---- !u!114 &1870573933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1870573928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f694d8845e15154db96b0a3a88fa47a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1870573934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2171,6 +2159,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4a320a4ca5147643a9429add28e3aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1894982300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4020114589471263462, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5475721258442272883}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f694d8845e15154db96b0a3a88fa47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1910823197 stripped

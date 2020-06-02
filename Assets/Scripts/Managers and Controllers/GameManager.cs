@@ -309,7 +309,7 @@ public class GameManager : MonoBehaviour
     public DialogueManager dialogueManager;
     public NewspaperController newspaperController;
     public MenuManager menuManager;
-
+    public PlacementController placementController;
 
     public GameObject adventurersContainer, buildingsContainer, graveyard;
     public GameObject adventurerPrefab;

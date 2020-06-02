@@ -9,6 +9,8 @@ using static GameManager;
 
 public class BuildingSelect : UiUpdater
 {
+    public const int Deselected = -1;
+    public int position;
     public GameObject buildingPrefab;
     public TextMeshProUGUI title;
     public Image icon;
@@ -25,14 +27,14 @@ public class BuildingSelect : UiUpdater
         if (toggle.isOn && !active)
         {
             toggle.isOn = false;
-            PlacementController.selectedObject = null;
+            PlacementController.Selected = Deselected;
         }
         toggle.interactable = building.ScaledCost <= Manager.Wealth;
     }
 
     public void ToggleSelect()
     {
-        if (toggle.isOn) PlacementController.selectedObject = this;
-        else PlacementController.selectedObject = null;
+        if (toggle.isOn) PlacementController.Selected = position;
+        else PlacementController.Selected = Deselected;
     }
 }

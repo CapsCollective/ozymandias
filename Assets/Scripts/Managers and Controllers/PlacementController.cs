@@ -7,8 +7,12 @@ using static GameManager;
 
 public class PlacementController : MonoBehaviour
 {
-    public static BuildingSelect selectedObject;
-
+    public const int Deselected = -1;
+    public static int Selected = Deselected;
+    public BuildingSelect[] cards;
+    public List<GameObject> allBuildings = new List<GameObject>();
+    private List<GameObject> remainingBuildings = new List<GameObject>();
+    
     private Map map;
     private RaycastHit hit;
     private Camera cam;
@@ -23,6 +27,10 @@ public class PlacementController : MonoBehaviour
         
         ClickManager.OnLeftClick += LeftClick;
         ClickManager.OnRightClick += RightClick;
+
+        OnNewTurn += NewCards;
+        
+        remainingBuildings = new List<GameObject>(allBuildings);
     }
 
     void Update()
@@ -31,11 +39,11 @@ public class PlacementController : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
 
-        if (!selectedObject || EventSystem.current.IsPointerOverGameObject()) return;
+        if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
         
         Cell closest = map.GetCellFromMouse();
         
-        BuildingStructure building = selectedObject.buildingPrefab.GetComponent<BuildingStructure>();
+        BuildingStructure building = cards[Selected].buildingPrefab.GetComponent<BuildingStructure>();
         
         highlighted = map.GetCells(closest, building, rotation);
 
@@ -45,24 +53,37 @@ public class PlacementController : MonoBehaviour
     
     private void LeftClick()
     {
-        if (!selectedObject) return;
+        if (Selected == Deselected) return;
 
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
 
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
-        if (map.CreateBuilding(selectedObject.buildingPrefab, hit.point, rotation)) Deselect();
-    }
-
-    public void Deselect()
-    {
-        selectedObject.toggle.Select();
-        selectedObject = null;
+        int i = Selected;
+        if (map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation))
+        {
+            NewCard(i);
+            cards[i].toggle.isOn = false;
+            Selected = Deselected;
+        }
+        Manager.UpdateUi();
     }
     
     private void RightClick()
     {
-        if (!selectedObject) return;
+        if (Selected == Deselected) return;
         rotation++;
     }
+
+    public void NewCards()
+    {
+        for (int i = 0; i < 3; i++) NewCard(i);
+    }
+
+    public void NewCard(int i)
+    {
+        if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(allBuildings);
+        cards[i].buildingPrefab = remainingBuildings.PopRandom();
+    }
+
 }
