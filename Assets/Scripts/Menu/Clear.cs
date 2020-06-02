@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
 using UnityEngine.EventSystems;
 
-public class Clear : MonoBehaviour
+public class Clear : UiUpdater
 {
     public const float costScale = 1.15f;
     
@@ -13,7 +14,6 @@ public class Clear : MonoBehaviour
     private Map map;
     private EventSystem eventSystem;  
 
-    private bool clearMode = false;
     private BuildingStructure selectedBuilding;
     private int clearCount = 0;
     
@@ -22,10 +22,25 @@ public class Clear : MonoBehaviour
     public Image icon;
     public Sprite deselected;
     public Sprite selected;
-
+    
+    public Toggle toggle;
+    
     public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(costScale, clearCount));
 
-    private void Awake()
+    public TextMeshProUGUI cost;
+    public override void UpdateUi()
+    {
+        cost.text = "Cost: " + GetComponent<Clear>().ScaledCost;
+        bool active = Manager.Wealth >= ScaledCost;
+        if (!active)
+        {
+            toggle.isOn = false;
+            ExitClearMode();
+        }
+        toggle.interactable = active;
+    }
+    
+    private void Start()
     {
         map = Manager.map;
         eventSystem = EventSystem.current;
@@ -37,17 +52,11 @@ public class Clear : MonoBehaviour
     void Update()
     {
         selectedBuilding = null;
-        if (!clearMode) return;
+        if (!toggle.isOn) return;
         
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
         
-        if (Manager.Wealth < ScaledCost)
-        {
-            ExitClearMode();
-            return;
-        }
-
         if (eventSystem.IsPointerOverGameObject()) return;
         
         Cell closest = map.GetCellFromMouse();
@@ -62,25 +71,22 @@ public class Clear : MonoBehaviour
     
     public void LeftClick()
     {
-        if (clearMode && selectedBuilding) ClearBuilding();
-        if (eventSystem.currentSelectedGameObject && eventSystem.currentSelectedGameObject.gameObject != gameObject) ExitClearMode();
+        if (toggle.isOn && selectedBuilding) ClearBuilding();
     }
     
     public void ToggleClearMode()
     {
-        if (clearMode) ExitClearMode();
+        if (!toggle.isOn) ExitClearMode();
         else EnterClearMode();
     }
 
     public void EnterClearMode()
     {
-        clearMode = true;
         icon.sprite = selected;
     }
 
     public void ExitClearMode()
     {
-        clearMode = false;
         map?.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
         icon.sprite = deselected;
@@ -92,6 +98,5 @@ public class Clear : MonoBehaviour
         BuildingStats building = selectedBuilding.GetComponent<BuildingStats>();
         if (building.terrain) clearCount++;
         Manager.Demolish(building);
-        //ExitClearMode();
     }
 }

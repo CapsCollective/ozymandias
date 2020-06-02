@@ -5,20 +5,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static GameManager;
-
-public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
+/*
+public class BuildingSelect : MonoBehaviour
 {
-    public GameObject building;
-    private EventSystem eventSystem;
-    private Place place;
-    private Button button;
+    
     private Image image;
 
     private void Awake()
     {
-        place = FindObjectOfType<Place>();
         image = GetComponent<Image>();
-        button = GetComponent<Button>();
+        toggle = GetComponent<toggle>();
         eventSystem = EventSystem.current;
 
     }
@@ -37,21 +33,9 @@ public class Click : MonoBehaviour, IPointerClickHandler, IPointerUpHandler
             GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
     }
-
-    public void OnPointerClick(PointerEventData pointerEventData)
-    {
-        if (pointerEventData.button == PointerEventData.InputButton.Left)
-        {
-            place.selectedObject = this;
-            eventSystem.SetSelectedGameObject(gameObject);
-        }
-    }
     
-    public void OnPointerUp(PointerEventData pointerEventData)
-    {
-        place.Deselect();
-        eventSystem.SetSelectedGameObject(null);
-    }
+    
 }
 
 
+*/
