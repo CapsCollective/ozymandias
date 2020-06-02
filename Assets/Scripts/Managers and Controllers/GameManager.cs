@@ -247,17 +247,24 @@ public class GameManager : MonoBehaviour
         eventQueue.ProcessEvents();
 
         OnNewTurn?.Invoke();
-        var ev = Analytics.CustomEvent("New Turn", new Dictionary<string, object>{
-            { "turn_no", turnCounter },
-            { "chaos_lvl", Chaos }
-        });
-        Debug.Log(ev);
+        if (turnCounter % 5 == 0)
+        {
+            var ev = Analytics.CustomEvent("Turn Counter", new Dictionary<string, object>
+            {
+                { "turn_number", turnCounter }
+            });
+        }
         UpdateUi();
     }
 
     public void Build(BuildingStats building)
     {
         buildings.Add(building);
+        var analyticEvent = Analytics.CustomEvent("Building Built", new Dictionary<string, object>
+        {
+            {"building_type", building.name },
+        });
+        Debug.Log(analyticEvent);
         UpdateUi();
     }
 
