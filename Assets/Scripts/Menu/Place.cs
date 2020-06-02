@@ -7,6 +7,8 @@ using static GameManager;
 
 public class Place : MonoBehaviour
 {
+    [SerializeField] private GameObject rotateIcon;
+    private GameObject rotateIconInstantiation;
     private Map map;
     public Click selectedObject;
     private RaycastHit hit;
@@ -32,8 +34,21 @@ public class Place : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
 
-        if (!selectedObject || eventSystem.IsPointerOverGameObject()) return;
-        
+        if (!selectedObject || eventSystem.IsPointerOverGameObject())
+        {
+            if (rotateIconInstantiation) Destroy(rotateIconInstantiation);
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+        Physics.Raycast(ray, out hit);
+        if (!rotateIconInstantiation)
+        {
+            if (hit.collider) rotateIconInstantiation = Instantiate(rotateIcon, hit.point, transform.rotation);
+
+        }
+        else rotateIconInstantiation.transform.position = hit.point;
+
         Cell closest = map.GetCellFromMouse();
         
         BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
