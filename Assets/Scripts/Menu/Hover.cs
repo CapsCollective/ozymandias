@@ -92,13 +92,13 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
                 InfoInstantiate(helperPrefab[1], new Vector3(0, -80, 0));
                 break;
             case UIType.quest:
-                InfoInstantiate(helperPrefab[2], new Vector3(0, 80, 0));
+                InfoInstantiate(helperPrefab[2], new Vector3(0, 70, 0));
                 break;
             case UIType.destroy:
                 InfoInstantiate(helperPrefab[3], new Vector3(0, 80, 0));
                 break;
             case UIType.money:
-                InfoInstantiate(helperPrefab[4], new Vector3(50, 150, 0));
+                InfoInstantiate(helperPrefab[4], new Vector3(50, 110, 0));
                 break;
             case UIType.adventurers:
                 InfoInstantiate(helperPrefab[5], new Vector3(-100, 0, 0));
