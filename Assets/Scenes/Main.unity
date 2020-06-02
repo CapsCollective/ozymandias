@@ -188,8 +188,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4826372568487654230, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
 --- !u!20 &74590738 stripped
 Camera:
@@ -322,32 +321,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 590490301}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &240691716 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4826372568487654225, guid: a8b3db9615e6d554aa03443f13361c3e,
-    type: 3}
-  m_PrefabInstance: {fileID: 74590737}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &240691718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 240691716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dragSpeed: 3
-  scrollSpeed: 3
-  rotateSpeed: 3
-  minHeight: 5
-  maxHeight: 25
-  minAngle: 30
-  maxAngle: 60
-  invertScroll: 0
 --- !u!1 &254812624
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,6 +3282,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4020114589471263462, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
+        type: 3}
+      propertyPath: rotateIcon
+      value: 
+      objectReference: {fileID: 1044555147244664527, guid: 6cdf3bb8c8eaa554e87510f833e7f4d6,
+        type: 3}
     - target: {fileID: 4681505970929513062, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
         type: 3}
       propertyPath: m_AnchorMin.y
