@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Management.Instrumentation;
 using TMPro;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;

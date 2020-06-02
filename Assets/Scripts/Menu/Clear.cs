@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class Clear : UiUpdater
 {
-    public const float costScale = 1.15f;
+    public const float costScale = 1.10f;
     
     private Cell[] highlighted = new Cell[1];
     private Map map;

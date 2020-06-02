@@ -19,7 +19,7 @@ public class MenuManager : MonoBehaviour
         AsyncOperation gameLevel = SceneManager.LoadSceneAsync("Main");
         while (!gameLevel.isDone)
         {
-            float progress = Mathf.Clamp01(gameLevel.progress / 0.9f);
+            float progress = Mathf.Clamp01((gameLevel.progress+0.05f) / 0.9f);
             progressBar.value = progress;
             yield return null;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using Managers_and_Controllers;
 using NaughtyAttributes;
+using UnityEngine.Analytics;
 using Random = UnityEngine.Random;
 
 public enum Metric
@@ -235,6 +236,8 @@ public class GameManager : MonoBehaviour
         
         // Run the menu tutorial system dialogue
         dialogueManager.StartDialogue("menu_tutorial");
+        Analytics.EnableCustomEvent("New Turn", true);
+        Analytics.enabled = true;
     }
 
 
@@ -254,13 +257,24 @@ public class GameManager : MonoBehaviour
         eventQueue.ProcessEvents();
 
         OnNewTurn?.Invoke();
-        
+        if (turnCounter % 5 == 0)
+        {
+            var ev = Analytics.CustomEvent("Turn Counter", new Dictionary<string, object>
+            {
+                { "turn_number", turnCounter }
+            });
+        }
         UpdateUi();
     }
 
     public void Build(BuildingStats building)
     {
         buildings.Add(building);
+        var analyticEvent = Analytics.CustomEvent("Building Built", new Dictionary<string, object>
+        {
+            {"building_type", building.name },
+        });
+        Debug.Log(analyticEvent);
         UpdateUi();
     }
 
