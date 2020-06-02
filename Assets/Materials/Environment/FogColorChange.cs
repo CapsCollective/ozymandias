@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 
 public class FogColorChange : MonoBehaviour
 {
     public MeshRenderer mr;
-    public GameManager gm;
+    private GameManager gm;
     public Transform blocker;
     
     [SerializeField] private float ratio;
