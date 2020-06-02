@@ -5,15 +5,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static GameManager;
 
-public class Place : MonoBehaviour
+public class PlacementController : MonoBehaviour
 {
-    [SerializeField] private GameObject rotateIcon;
+    public const int Deselected = -1;
+    public static int Selected = Deselected;
+    public BuildingSelect[] cards;
+    public List<GameObject> allBuildings = new List<GameObject>();
+    private List<GameObject> remainingBuildings = new List<GameObject>();
+    
+    public GameObject rotateIcon;
     private GameObject rotateIconInstantiation;
+
     private Map map;
-    public Click selectedObject;
     private RaycastHit hit;
     private Camera cam;
-    private EventSystem eventSystem;
 
     private int rotation;
     private Cell[] highlighted = new Cell[0];
@@ -22,10 +27,13 @@ public class Place : MonoBehaviour
     {
         cam = Camera.main;
         map = Manager.map;
-        eventSystem = EventSystem.current;
         
         ClickManager.OnLeftClick += LeftClick;
         ClickManager.OnRightClick += RightClick;
+
+        OnNewTurn += NewCards;
+        
+        remainingBuildings = new List<GameObject>(allBuildings);
     }
 
     void Update()
@@ -34,12 +42,14 @@ public class Place : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
 
-        if (!selectedObject || eventSystem.IsPointerOverGameObject())
+        if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
+        /*
         {
             if (rotateIconInstantiation) Destroy(rotateIconInstantiation);
             return;
-        }
+        }*/
 
+        /* Removing for now because i don't think this is the right approach
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
         Physics.Raycast(ray, out hit);
         if (!rotateIconInstantiation)
@@ -48,10 +58,11 @@ public class Place : MonoBehaviour
 
         }
         else rotateIconInstantiation.transform.position = hit.point;
+        */
 
         Cell closest = map.GetCellFromMouse();
         
-        BuildingStructure building = selectedObject.building.GetComponent<BuildingStructure>();
+        BuildingStructure building = cards[Selected].buildingPrefab.GetComponent<BuildingStructure>();
         
         highlighted = map.GetCells(closest, building, rotation);
 
@@ -61,29 +72,37 @@ public class Place : MonoBehaviour
     
     private void LeftClick()
     {
-        if (!selectedObject) return;
-        if (eventSystem.currentSelectedGameObject &&
-            eventSystem.currentSelectedGameObject.gameObject != selectedObject.gameObject)
-        {
-            Deselect();
-            return;
-        }
-        
+        if (Selected == Deselected) return;
+
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
 
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
-        if (map.CreateBuilding(selectedObject.building, hit.point, rotation)) Deselect();
-    }
-
-    public void Deselect()
-    {
-        selectedObject = null;
+        int i = Selected;
+        if (map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation))
+        {
+            NewCard(i);
+            cards[i].toggle.isOn = false;
+            Selected = Deselected;
+        }
+        Manager.UpdateUi();
     }
     
     private void RightClick()
     {
-        if (!selectedObject) return;
+        if (Selected == Deselected) return;
         rotation++;
     }
+
+    public void NewCards()
+    {
+        for (int i = 0; i < 3; i++) NewCard(i);
+    }
+
+    public void NewCard(int i)
+    {
+        if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(allBuildings);
+        cards[i].buildingPrefab = remainingBuildings.PopRandom();
+    }
+
 }
