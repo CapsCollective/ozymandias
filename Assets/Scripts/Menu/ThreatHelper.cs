@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ThreatHelper : MonoBehaviour
 {
@@ -9,10 +9,10 @@ public class ThreatHelper : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        transform.Find("Text").GetComponent<Text>().text =
-            "The threat bar represents how close your town is to impending doom. More dangerous events occur as threat rises until it ruins the town." + "\n" +
-            "Currently you have: " + gameManager.Threat + " threat out of 100" + "\n" +
-            "Currently you are gaining: " + gameManager.ThreatPerTurn + " threat every turn" + "\n" +
-            "Reduce threat by getting more adventurers, improving their efficiency and making your townsfolk more happy";
+        transform.Find("Text").GetComponent<TextMeshProUGUI>().text =
+            "The threat bar represents how close your town is to impending doom." + "\n" +
+            "Reduce threat by getting more adventurers, improving their efficiency and making your townsfolk more happy" + "\n" +
+            "<b>Currently you have:</b> " + "<i><color=orange>" + gameManager.Threat + "/100 threat" + "</color></i>" + "\n" +
+            "<b>Currently you are gaining:</b> " + "<i><color=orange>" + gameManager.ThreatPerTurn + " threat every turn" + "</color></i>" + "\n";
     }
 }

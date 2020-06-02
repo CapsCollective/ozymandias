@@ -628,6 +628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4078315920186688971}
   - component: {fileID: 1736250519170778802}
+  - component: {fileID: 845251386822779622}
   m_Layer: 5
   m_Name: Quest Map
   m_TagString: Untagged
@@ -664,6 +665,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2303582961935125720}
   m_CullTransparentMesh: 0
+--- !u!114 &845251386822779622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2303582961935125720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helperPrefab:
+  - {fileID: 8821676634747878105, guid: 5b097f4587debfc49839b22ca8cfbd7b, type: 3}
+  - {fileID: 8821676634747878105, guid: 92f895ad0bc6e3144938fa36c54cd9d2, type: 3}
+  - {fileID: 8821676634747878105, guid: 212bbff14bb324243a95978edc189914, type: 3}
+  - {fileID: 8821676634747878105, guid: c81576f4b0204a7478ff828a09c9a6c3, type: 3}
+  - {fileID: 8821676634747878105, guid: 2fd50fbabaa3c7a44ba742948838b188, type: 3}
+  - {fileID: 8821676634747878105, guid: 9b4fee818cb1d784db3e43121b608940, type: 3}
+  uiType: 2
 --- !u!1 &2500298157797475743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1588,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: newspaper_tutorial
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &6082582144644223510
@@ -2480,7 +2501,7 @@ PrefabInstance:
         type: 3}
       propertyPath: buildingPrefab
       value: 
-      objectReference: {fileID: 5515095820390957752, guid: a6a242af6c33090409ba6ac88cfacc3e,
+      objectReference: {fileID: 1422530078004020647, guid: 334e3cc01e9d90849b10712ad0f8e699,
         type: 3}
     - target: {fileID: 2195661305675732071, guid: 2c0a6c823c901084e90f2ca24239156d,
         type: 3}

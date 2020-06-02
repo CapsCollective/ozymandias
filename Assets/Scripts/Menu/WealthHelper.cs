@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class WealthHelper : MonoBehaviour
 {
@@ -9,9 +9,10 @@ public class WealthHelper : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        transform.Find("Text").GetComponent<Text>().text = "Wealth is the currency in which you spend on creating buildings and clearing out terrain" + "\n"
-                                                            + "Currently you have: " + gameManager.Wealth + " gold" + "\n"
-                                                            + "Currently you are earning: " + gameManager.WealthPerTurn + " gold per turn";
+        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = 
+            "Wealth is the currency in which you spend on creating buildings and clearing out terrain" + "\n"
+          + "<b>Currently you have:</b> " + "<i><color=orange>" + gameManager.Wealth + " gold</color></i>" + "\n"
+          + "<b>Currently you are earning:</b> " + "<i><color=orange>" + gameManager.WealthPerTurn + " gold/turn</color></i>";
     }
 
 }
