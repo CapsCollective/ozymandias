@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Cancel : MonoBehaviour
+/*public class Cancel : MonoBehaviour
 {
     private EventSystem eventSystem;
     private Button button;
@@ -54,4 +54,4 @@ public class Cancel : MonoBehaviour
     {
         place.Deselect();
     }
-}
+}*/

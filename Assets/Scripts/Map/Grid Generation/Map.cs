@@ -114,8 +114,8 @@ public class Map : MonoBehaviour
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
             mapLayout.Align(cells, rotation);
-            stats.Build();
             Occupy(building, cells);
+            stats.Build();
             return true;
         }
         

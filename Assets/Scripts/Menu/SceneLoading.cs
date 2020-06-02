@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SceneLoading : MonoBehaviour
 {
+    #pragma warning disable 0649
     [SerializeField] private Image progressBar;
     void Start()
     {
