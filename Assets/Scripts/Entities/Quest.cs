@@ -12,6 +12,7 @@ public class Quest : ScriptableObject
     [Range(0, 1)] public float Difficulty;
     public float QuestDifficulty { get => Difficulty; }
     public string QuestTitle;
+    [TextArea]
     public string QuestDescription;
     public Event QuestCompleteEvent;
 
