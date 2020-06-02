@@ -96,6 +96,9 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int availableAdventurers;
     public int AvailableAdventurers => availableAdventurers = adventurers.Count(x => !x.assignedQuest);
     
+    [ReadOnly] [SerializeField] private int removableAdventurers;
+    public int RemovableAdventurers => removableAdventurers = adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
+    
     [ReadOnly] [SerializeField] private int accommodation;
     public int Accommodation => accommodation = buildings.Where(x => x.operational).Sum(x => x.accommodation);
 
@@ -161,6 +164,16 @@ public class GameManager : MonoBehaviour
         wealth -= amount;
         return true;
     }
+
+    public Adventurer AssignAdventurer(Quest q)
+    {
+        List<Adventurer> removable = adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
+        if (removable.Count == 0) return null;
+
+        int randomIndex = Random.Range(0, removable.Count);
+        removable[randomIndex].assignedQuest = q;
+        return removable[randomIndex];
+    }
     
     public void AddAdventurer()
     {
@@ -179,19 +192,15 @@ public class GameManager : MonoBehaviour
 
     public bool RemoveAdventurer(bool kill) //Removes a random adventurer, ensuring they aren't special
     {
-        int randomIndex = Random.Range(0, adventurers.Count);
-        for (int i = 0; i < adventurers.Count; i++)
-        {
-            Adventurer toRemove = adventurers[(i + randomIndex) % adventurers.Count];
-            if (toRemove.isSpecial || toRemove.assignedQuest) continue;
+        List<Adventurer> removable = adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
+        if (removable.Count == 0) return false;
+        int randomIndex = Random.Range(0, removable.Count);
+        Adventurer toRemove = removable[randomIndex];
             
-            adventurers.Remove(toRemove);
-            if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
-            else Destroy(toRemove);
-            return true;
-        }
-
-        return false;
+        adventurers.Remove(toRemove);
+        if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
+        else Destroy(toRemove);
+        return true;
     }
 
     public bool RemoveAdventurer(string adventurerName, bool kill) // Deletes an adventurer by name

@@ -11,6 +11,7 @@ namespace Managers_and_Controllers
     public class NewspaperController : MonoBehaviour
     {
         // Serialised Fields
+        #pragma warning disable 0649
         [SerializeField] private Text titleText;
         [SerializeField] private EventDisplayManager[] articleList;
         [SerializeField] private Image articleImage;

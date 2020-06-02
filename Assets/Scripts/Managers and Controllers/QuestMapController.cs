@@ -22,6 +22,7 @@ public class QuestMapController : MonoBehaviour
         }
 
         OnNewQuest += UpdateDisplay;
+        UpdateDisplay();
     }
 
     private void Update()
