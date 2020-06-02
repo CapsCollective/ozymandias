@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace Managers_and_Controllers
         
         private void CheckAmbiencePlayer()
         {
-            if(Physics.Raycast(gameCamera.transform.position,Vector3.down, out var hit, 30f))
+            if(Physics.Raycast(gameCamera.transform.position,Vector3.down, out _, 30f))
             {
                 if (currentAmbiencePlayer != natureAmbiencePlayer)
                     SwitchAmbiences(waterAmbiencePlayer, natureAmbiencePlayer);
@@ -104,6 +105,7 @@ namespace Managers_and_Controllers
         }
         
         [Button("Skip Section")]
+        [UsedImplicitly]
         private void SkipSection()
         {
             StopAllCoroutines();
