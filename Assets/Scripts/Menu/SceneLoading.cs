@@ -16,7 +16,7 @@ public class SceneLoading : MonoBehaviour
     IEnumerator LoadAsyncOperation()
     {
         AsyncOperation gameLevel = SceneManager.LoadSceneAsync("Main");
-        while (gameLevel.progress < 1)
+        while (!gameLevel.isDone)
         {
             progressBar.fillAmount = gameLevel.progress;
             yield return new WaitForEndOfFrame();
