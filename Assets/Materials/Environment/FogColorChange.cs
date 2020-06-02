@@ -7,7 +7,6 @@ using static GameManager;
 public class FogColorChange : MonoBehaviour
 {
     public MeshRenderer mr;
-    private GameManager gm;
     public Transform blocker;
     
     [SerializeField] private float ratio;
@@ -60,7 +59,7 @@ public class FogColorChange : MonoBehaviour
 
     public void SetColor()
     {
-        ratio = ((float)gm.Threat / ((float)gm.Defense + (float)gm.Threat))-0.2f;
+        ratio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat))-0.2f;
         currentEm = Color.Lerp(origEm, deadEm, ratio);
         currentCol = Color.Lerp(origCol, deadCol, ratio);
         currentBlend = Mathf.Lerp(origBlend, finalBlend, ratio);
