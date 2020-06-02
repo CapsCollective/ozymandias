@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Managers_and_Controllers;
 using NaughtyAttributes;
 using Random = UnityEngine.Random;
 
@@ -309,7 +310,7 @@ public class GameManager : MonoBehaviour
     public DialogueManager dialogueManager;
     public NewspaperController newspaperController;
     public MenuManager menuManager;
-
+    public PlacementController placementController;
 
     public GameObject adventurersContainer, buildingsContainer, graveyard;
     public GameObject adventurerPrefab;

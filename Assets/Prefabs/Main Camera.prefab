@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4826372568487654228}
   - component: {fileID: 4826372568487654227}
   - component: {fileID: 4826372568487654226}
-  - component: {fileID: 4826372568487654230}
   - component: {fileID: 4826372568487654229}
+  - component: {fileID: 240691718}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -85,25 +85,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4826372568487654225}
   m_Enabled: 1
---- !u!114 &4826372568487654230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4826372568487654225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce97ecd94c94945448bdc4f99d101bb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dragSpeed: 3
-  scrollSpeed: 3
-  rotateSpeed: 3
-  minHeight: 5
-  maxHeight: 25
-  minAngle: 25
-  maxAngle: 60
 --- !u!54 &4826372568487654229
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -120,3 +101,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &240691718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826372568487654225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragSpeed: 3
+  scrollSpeed: 3
+  rotateSpeed: 3
+  minHeight: 5
+  maxHeight: 25
+  minAngle: 30
+  maxAngle: 60
+  invertScroll: 0
