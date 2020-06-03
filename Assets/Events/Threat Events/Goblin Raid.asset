@@ -16,6 +16,35 @@ MonoBehaviour:
   outcomes:
   - {fileID: 7288116118394355820}
   - {fileID: 4683237258390817899}
+--- !u!114 &-7336819564011800612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: Remove Adventurers(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  adventurerNames:
+  - 
+  kill: 0
+--- !u!114 &-2535532758401859984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: The scouts were ambushed, and one was struck down while escaping
 --- !u!114 &-2278837932667058203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,12 +55,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send adventurers after them
+  m_Name: Send scouts after them!
   m_EditorClassIdentifier: 
-  description: Send adventurers after them
+  description: Send scouts after them!
   outcomes:
-  - {fileID: 5054638937238971413}
-  - {fileID: 2853567954521064530}
+  - {fileID: -2535532758401859984}
+  - {fileID: -7336819564011800612}
+  - {fileID: 5427943375661240944}
+  - {fileID: 7807313350048339474}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,8 +79,8 @@ MonoBehaviour:
   article: Some Goblins were spotted nearby the town. Residents have said they have
     been stealing supplies from the town. They hope the mayor does something about
     them.
-  image: {fileID: 0}
-  type: 3
+  image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
+  type: 2
   headliner: 0
   minChaos: 0
   minThreat: 0
@@ -61,22 +92,6 @@ MonoBehaviour:
   choices:
   - {fileID: -2278837932667058203}
   - {fileID: -7494940983849263564}
---- !u!114 &2853567954521064530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: Stat Change(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: 
-  StatToChange: 1
-  Amount: 3
-  Turns: 3
 --- !u!114 &4683237258390817899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,9 +106,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   StatToChange: 3
-  Amount: -3
+  Amount: -5
   Turns: 3
---- !u!114 &5054638937238971413
+--- !u!114 &5427943375661240944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,13 +117,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: Remove Adventurers(Clone)
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
   m_EditorClassIdentifier: 
-  customDescription: An adventurer was killed in battle but the Goblins have left.
-  adventurerNames:
-  - 
-  kill: 1
+  customDescription: However, we did find the location of their camp!
 --- !u!114 &7288116118394355820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,4 +133,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: Flavour Text(Clone)
   m_EditorClassIdentifier: 
-  customDescription: They realised you're a pushover.
+  customDescription: They realise you're a pushover, but leave you be.
+--- !u!114 &7807313350048339474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: New Quest(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  Quest: {fileID: 11400000, guid: 5345c3458d38f4d408340c1012d1e401, type: 2}
