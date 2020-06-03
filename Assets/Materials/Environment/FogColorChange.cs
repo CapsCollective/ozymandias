@@ -9,28 +9,28 @@ public class FogColorChange : MonoBehaviour
     public MeshRenderer mr;
     public Transform blocker;
     
-    [SerializeField] private float ratio;
-    private float oldRatio;
-    private float newRatio;
-    public float lerpTime=1f;
+    private float ratio;
+    //private float oldRatio;
+    //private float newRatio;
+    //public float lerpTime=1f;
 
-    [SerializeField] private Color origEm;
-    [SerializeField] private Color currentEm;
+    private Color origEm;
+    private Color currentEm;
 
-    [SerializeField] private Color origCol;
-    [SerializeField] private Color currentCol;
+    private Color origCol;
+    private Color currentCol;
 
-    [SerializeField] private float origBlend;
-    [SerializeField] private float currentBlend;
+    private float origBlend;
+    private float currentBlend;
 
-    [SerializeField] private float origBlocker;
-    [SerializeField] private float currentBlocker;
+    private float origBlocker;
+    private float currentBlocker;
 
-    [SerializeField] private Color origFogCol;
-    [SerializeField] private Color currentFogCol;
+    private Color origFogCol;
+    private Color currentFogCol;
 
-    [SerializeField] private float origFogDensity;
-    [SerializeField] private float currentFogDensity;
+    private float origFogDensity;
+    private float currentFogDensity;
 
     public Color deadEm;
     public Color deadCol;
@@ -50,7 +50,7 @@ public class FogColorChange : MonoBehaviour
 
     private bool Setup()
     {
-        oldRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
+        //oldRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
         origEm = mr.material.GetColor("_EmissionColor");
         origCol = mr.material.GetColor("_Color");
         origBlend = mr.material.GetFloat("_DistortionBlend");
@@ -117,6 +117,7 @@ public class FogColorChange : MonoBehaviour
     public void SetColor()
     {
         ratio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat))-0.2f;
+
         currentEm = Color.Lerp(origEm, deadEm, ratio);
         currentCol = Color.Lerp(origCol, deadCol, ratio);
         currentBlend = Mathf.Lerp(origBlend, finalBlend, ratio);
