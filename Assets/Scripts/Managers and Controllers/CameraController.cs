@@ -1,7 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static GameManager;
 
 public class CameraController : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class CameraController : MonoBehaviour
     private float rotateOrigin;
     private bool dragging, rotating;
 
+    public Vector3 startPos, startRot;
+    public Button centerButton;
+    public TextMeshProUGUI centerButtonText;
+    private bool crRunning = false;
     
     [Range(1,10)]
     public int
@@ -31,7 +37,6 @@ public class CameraController : MonoBehaviour
         cam = GetComponent<Camera>();
         rb = GetComponent<Rigidbody>();
     }
-
 
     void Update()
     {
@@ -87,6 +92,32 @@ public class CameraController : MonoBehaviour
                     rb.AddForce(new Vector3(0, dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0));
             }
         }
+        
+        float dist = Vector3.Magnitude(transform.position);
+        centerButton.gameObject.SetActive(dist > 50);
+        if (dist < 50) return;
+        if (dist < 80) centerButtonText.text = "Return to Town";
+        else if (dist < 120) centerButtonText.text = "Please, Return to Town";
+        else if (dist < 160) centerButtonText.text = "There's nothing here";
+        else
+        {
+            StartCoroutine(ManualCenter());
+            centerButtonText.text = "Fine, I'll do it myself";
+        }
+    }
+
+    public void Center()
+    {
+        transform.position = startPos;
+        transform.eulerAngles = startRot;
+    }
+
+    IEnumerator ManualCenter()
+    {
+        crRunning = true;
+        yield return new WaitForSeconds(2);
+        Center();
+        crRunning = false;
     }
     
     public static float Remap (float value, float min1, float max1, float min2, float max2) {
