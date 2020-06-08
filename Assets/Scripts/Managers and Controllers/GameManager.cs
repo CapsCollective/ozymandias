@@ -75,6 +75,7 @@ public enum BuildingType
 public class GameManager : MonoBehaviour
 {
     public static Action OnNewTurn;
+    public static Action OnNextTurn;
     public static Action OnUpdateUI;
     
     private static GameManager instance;
@@ -254,9 +255,13 @@ public class GameManager : MonoBehaviour
 
         if ((float)Threat / (Defense + Threat) > 0.8f)
             foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
-        
         eventQueue.ProcessEvents();
+        OnNextTurn?.Invoke();
+        //NewTurn();
+    }
 
+    public void NewTurn()
+    {
         OnNewTurn?.Invoke();
         if (turnCounter % 5 == 0)
         {

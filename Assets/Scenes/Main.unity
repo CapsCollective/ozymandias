@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_Sun: {fileID: 938970612}
+  m_IndirectSpecularColor: {r: 0.18140137, g: 0.22702515, b: 0.30738246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1221,7 +1221,7 @@ PrefabInstance:
     - target: {fileID: 800053112244380791, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 800053112563267525, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
@@ -2955,8 +2955,8 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_Bias: 0
+    m_NormalBias: 0.51
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
       e00: 1
@@ -2984,7 +2984,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -3001,13 +3001,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938970611}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.38751557, y: 0, z: 0, w: 0.9218632}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.6, y: 0, z: 0}
 --- !u!1001 &949001330
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3732,6 +3732,7 @@ GameObject:
   - component: {fileID: 1870573931}
   - component: {fileID: 1870573932}
   - component: {fileID: 1870573934}
+  - component: {fileID: 1870573933}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3926,6 +3927,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSpeed: 0.2
+--- !u!114 &1870573933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870573928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a22edc5c1cc7cb4ab47f6647a145c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sun: {fileID: 938970612}
+  sunSetTime: 2
 --- !u!114 &1870573934
 MonoBehaviour:
   m_ObjectHideFlags: 0
