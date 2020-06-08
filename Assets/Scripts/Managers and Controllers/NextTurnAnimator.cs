@@ -13,6 +13,8 @@ public class NextTurnAnimator : MonoBehaviour
     private float t = 0f;
     private float x = 0f;
 
+    private Color ambCol;
+
     void Awake()
     {
         GameManager.OnNextTurn += OnNextTurn;
@@ -39,6 +41,7 @@ public class NextTurnAnimator : MonoBehaviour
 
     public void OnNextTurn()
     {
+        ambCol = RenderSettings.ambientLight;
         StartCoroutine(AnimateSun());
 
     }
@@ -52,8 +55,10 @@ public class NextTurnAnimator : MonoBehaviour
             if(!glowflyPS.isEmitting&& (x>170 || x < 10))
             {
                 glowflyPS.Play();
+                RenderSettings.ambientLight = Color.Lerp(ambCol * 0.25f, ambCol, t / sunSetTime);
             }
             sun.transform.eulerAngles = new Vector3(x, sun.transform.rotation.y, sun.transform.rotation.z);
+            RenderSettings.ambientLight = Color.Lerp(ambCol, ambCol * 0.25f, t / sunSetTime);
             yield return null;
         }
         t = 0f;
