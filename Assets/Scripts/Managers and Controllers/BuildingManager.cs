@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using NaughtyAttributes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    public List<GameObject> AllBuildings = new List<GameObject>();
+    [ReorderableList] public List<GameObject> AllBuildings = new List<GameObject>();
 
     public static BuildingManager instance;
 
