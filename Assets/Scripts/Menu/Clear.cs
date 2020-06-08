@@ -94,9 +94,16 @@ public class Clear : UiUpdater
     
     public void ClearBuilding()
     {
-        if (!Manager.Spend(ScaledCost)) return;
+        
         BuildingStats building = selectedBuilding.GetComponent<BuildingStats>();
-        if (building.terrain) clearCount++;
-        Manager.Demolish(building);
+        print(building.type);
+        if (building.type != BuildingType.Lake)
+        {
+            if (!Manager.Spend(ScaledCost)) return;
+            if (building.terrain) clearCount++;
+
+            Manager.Demolish(building);
+        }
+        
     }
 }
