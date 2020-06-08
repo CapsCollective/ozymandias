@@ -33,7 +33,7 @@ public class PlacementController : MonoBehaviour
 
         OnNewTurn += NewCards;
         
-        remainingBuildings = new List<GameObject>(allBuildings);
+        remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
     }
 
     void Update()
@@ -101,7 +101,7 @@ public class PlacementController : MonoBehaviour
 
     public void NewCard(int i)
     {
-        if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(allBuildings);
+        if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
         cards[i].buildingPrefab = remainingBuildings.PopRandom();
     }
 
