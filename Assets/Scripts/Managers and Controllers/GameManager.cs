@@ -30,6 +30,7 @@ public enum Metric
 public enum BuildingType
 {
     Terrain,
+    Lake,
     Ruins,
     GuildHall,
     //Equipment
