@@ -7,6 +7,7 @@ public class NextTurnAnimator : MonoBehaviour
 {
     public Light sun;
     public float sunSetTime = 2f;
+    public ParticleSystem glowflyPS;
 
     private float orig_angle;
     private float t = 0f;
@@ -39,6 +40,7 @@ public class NextTurnAnimator : MonoBehaviour
     public void OnNextTurn()
     {
         StartCoroutine(AnimateSun());
+
     }
 
     public IEnumerator AnimateSun()
@@ -47,6 +49,10 @@ public class NextTurnAnimator : MonoBehaviour
         {
             t += Time.deltaTime;
             x = Mathf.Lerp(orig_angle, orig_angle + 360f, t / sunSetTime);
+            if(!glowflyPS.isEmitting&& (x>170 || x < 10))
+            {
+                glowflyPS.Play();
+            }
             sun.transform.eulerAngles = new Vector3(x, sun.transform.rotation.y, sun.transform.rotation.z);
             yield return null;
         }
