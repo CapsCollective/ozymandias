@@ -10,9 +10,10 @@ public class FogColorChange : MonoBehaviour
     public Transform blocker;
     
     private float ratio;
-    //private float oldRatio;
-    //private float newRatio;
-    //public float lerpTime=1f;
+    private float oldRatio;
+    private float newRatio;
+    public float lerpTime = 1f;
+    private float t = 0f;
 
     private Color origEm;
     private Color currentEm;
@@ -42,6 +43,16 @@ public class FogColorChange : MonoBehaviour
 
     private bool isSetup = false;
 
+    private void Awake()
+    {
+        GameManager.OnUpdateUI += UpdateFog;
+    }
+    private void OnDestroy()
+    {
+        GameManager.OnUpdateUI -= UpdateFog;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +61,7 @@ public class FogColorChange : MonoBehaviour
 
     private bool Setup()
     {
-        //oldRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
+        oldRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
         origEm = mr.material.GetColor("_EmissionColor");
         origCol = mr.material.GetColor("_Color");
         origBlend = mr.material.GetFloat("_DistortionBlend");
@@ -71,47 +82,46 @@ public class FogColorChange : MonoBehaviour
         {
             isSetup = Setup();
         }
-        else if(isSetup)
+        
+    }
+
+    public void UpdateFog()
+    {
+        if (isSetup)
         {
-            SetColor();
+            newRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
+            StartCoroutine(ShiftingFog());
         }
         
     }
 
-    //public void UpdateFog()
-    //{
-    //    newRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
-    //    StartCoroutine(ShiftingFog());
-    //}
+    private IEnumerator ShiftingFog()
+    {
+        while (t<lerpTime)
+        {
+            float updateRatio = Mathf.Lerp(oldRatio, newRatio, t / lerpTime);
 
-    //private IEnumerator ShiftingFog()
-    //{
-    //    float updateRatio = oldRatio;
-    //    while (Mathf.Abs(newRatio-updateRatio) > 0.001)
-    //    {
-    //        currentEm = Color.Lerp(origEm, deadEm, updateRatio);
-    //        currentCol = Color.Lerp(origCol, deadCol, updateRatio);
-    //        currentBlend = Mathf.Lerp(origBlend, finalBlend, updateRatio);
-    //        currentBlocker = Mathf.Lerp(origBlocker, finalBlocker, updateRatio);
-    //        currentFogCol = Color.Lerp(origFogCol, finalFogCol, ratio);
-    //        currentFogDensity = Mathf.Lerp(origFogDensity, finalFogDensity, updateRatio);
+            currentEm = Color.Lerp(origEm, deadEm, updateRatio);
+            currentCol = Color.Lerp(origCol, deadCol, updateRatio);
+            currentBlend = Mathf.Lerp(origBlend, finalBlend, updateRatio);
+            currentBlocker = Mathf.Lerp(origBlocker, finalBlocker, updateRatio);
+            currentFogCol = Color.Lerp(origFogCol, finalFogCol, updateRatio);
+            currentFogDensity = Mathf.Lerp(origFogDensity, finalFogDensity, updateRatio);
 
-    //        mr.material.SetColor("_EmissionColor", currentEm);
-    //        mr.material.SetColor("_Color", currentCol);
-    //        mr.material.SetFloat("_DistortionBlend", currentBlend);
-    //        blocker.localScale = new Vector3(currentBlocker, currentBlocker, currentBlocker);
-    //        RenderSettings.fogColor = currentFogCol;
-    //        RenderSettings.fogDensity = currentFogDensity;
-    //        RenderSettings.ambientLight = currentFogCol;
+            mr.material.SetColor("_EmissionColor", currentEm);
+            mr.material.SetColor("_Color", currentCol);
+            mr.material.SetFloat("_DistortionBlend", currentBlend);
+            blocker.localScale = new Vector3(currentBlocker, currentBlocker, currentBlocker);
+            RenderSettings.fogColor = currentFogCol;
+            RenderSettings.fogDensity = currentFogDensity;
+            RenderSettings.ambientLight = currentFogCol;
 
-    //        updateRatio += (ratio - oldRatio) * Time.deltaTime / lerpTime;
-    //        yield return null;
-    //    }
-
-
-    //    oldRatio = ratio;
-    //    yield return null;
-    //}
+            t += Time.deltaTime;
+            yield return null;
+        }
+        t = 0f;
+        oldRatio = newRatio;
+    }
 
 
     public void SetColor()
