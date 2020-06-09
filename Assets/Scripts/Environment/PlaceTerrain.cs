@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlaceTerrain : MonoBehaviour
@@ -9,81 +10,31 @@ public class PlaceTerrain : MonoBehaviour
     public float distance = 1.5f;
     private LayerMask lm;
     public GameObject terrainBuilding;
-    public int numberRadius = 1;
     
-    private bool isPlaced = false;
-    public bool isAesthetic = false;
-
+    public int rotation = 0;
+    
     private void Awake()
     {
-        if (!isAesthetic)
-        {
-            if (!map)
-            {
-                map = GameObject.FindObjectOfType<Map>();
-            }
-            lm = LayerMask.GetMask("Surface", "Terrain");
-            PlaceTerrain pt = terrainBuilding.GetComponent<PlaceTerrain>();
-            if (pt)
-            {
-                pt.enabled = false;
-            }
-        }
-        else
-        {
-            this.enabled = false;
-        }
-        
+        lm = LayerMask.GetMask("Surface", "Terrain");
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
-        //{
-        //    Place();
-        //}
-          
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (!isAesthetic)
-        {
-            if (!isPlaced)
-            {
-                if (Vector3.Distance(transform.position, map.transform.position) <= map.transform.lossyScale.x)
-                {
-                    Place();
-                }
-
-            }
-        }
-        
+        if (!map) map = FindObjectOfType<Map>();
+        Place();
+        enabled = false;
     }
 
     public void Place()
     {
-        if (!isPlaced)
+        if (GetSurfaceHit())
         {
-            isPlaced = true;
-            if (map)
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
             {
-                if (GetSurfaceHit())
-                {
-                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
-                    {
-                        map.CreateBuilding(terrainBuilding, hit.point);
-
-                        Destroy(gameObject);
-                    }
-
-                }
+                map.CreateBuilding(terrainBuilding, hit.point, rotation);
+                Destroy(gameObject);
             }
         }
-        
-        
     }
 
     public bool GetSurfaceHit()
