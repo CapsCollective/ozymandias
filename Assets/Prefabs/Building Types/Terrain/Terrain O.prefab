@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &898312258798222061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 898312258798222051}
+  - component: {fileID: 898312258798222060}
+  - component: {fileID: 898312258798222050}
+  m_Layer: 0
+  m_Name: Terrain O
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &898312258798222051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898312258798222061}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &898312258798222060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898312258798222061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sections:
+  - prefab: {fileID: 4888587676969015135, guid: 011d1099213bbe7448f3639ef6843454,
+      type: 3}
+    directions: 
+  - prefab: {fileID: 4888587676969015135, guid: 011d1099213bbe7448f3639ef6843454,
+      type: 3}
+    directions: 00000000
+  - prefab: {fileID: 8254682334459258621, guid: ac7d8bf91fb22ed48b3860642d175e0e,
+      type: 3}
+    directions: 01000000
+  - prefab: {fileID: 8254682334459258621, guid: ac7d8bf91fb22ed48b3860642d175e0e,
+      type: 3}
+    directions: 0100000000000000
+--- !u!114 &898312258798222050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898312258798222061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: It's trees and stuff
+  icon: {fileID: 0}
+  scaleSpeed: 2
+  operational: 0
+  terrain: 1
+  type: 0
+  baseCost: 0
+  accommodation: 0
+  weaponry: 0
+  magic: 0
+  equipment: 0
+  food: 0
+  entertainment: 0
+  luxury: 0
+  spending: 0
+  defense: 0

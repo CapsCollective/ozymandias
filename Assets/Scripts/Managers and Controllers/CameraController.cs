@@ -99,7 +99,7 @@ public class CameraController : MonoBehaviour
         if (dist < 80) centerButtonText.text = "Return to Town";
         else if (dist < 120) centerButtonText.text = "Please, Return to Town";
         else if (dist < 160) centerButtonText.text = "There's nothing here";
-        else
+        else if (!crRunning)
         {
             StartCoroutine(ManualCenter());
             centerButtonText.text = "Fine, I'll do it myself";
@@ -115,7 +115,7 @@ public class CameraController : MonoBehaviour
     IEnumerator ManualCenter()
     {
         crRunning = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         Center();
         crRunning = false;
     }

@@ -107,10 +107,14 @@ public class Map : MonoBehaviour
         GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
         BuildingStats stats = buildingInstance.GetComponent<BuildingStats>();
         BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
-
+        PlaceTerrain placeTerrain = buildingInstance.GetComponent<PlaceTerrain>();
+        if (placeTerrain) placeTerrain.rotation = rotation;
+        
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building, rotation);
         
+        buildingInstance.transform.position = worldPosition;
+
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
             mapLayout.Align(cells, rotation);

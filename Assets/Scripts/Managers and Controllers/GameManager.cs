@@ -30,7 +30,6 @@ public enum Metric
 public enum BuildingType
 {
     Terrain,
-    Lake,
     Ruins,
     GuildHall,
     //Equipment
@@ -40,7 +39,7 @@ public enum BuildingType
     //Weaponry
     Blacksmith,
     Leatherworks,
-    Armourer, //Doubles as Defense
+    Armoury, //Doubles as Defense
     //Magic
     Alchemists,
     Enchanters,
@@ -69,7 +68,8 @@ public enum BuildingType
     //Defense
     GuardOutpost,
     //Misc
-    Graveyard
+    Graveyard,
+    Lake
 }
 
 public class GameManager : MonoBehaviour
