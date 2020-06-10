@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class Clear : UiUpdater
 {
-    public const float costScale = 1.10f;
+    public const float costScale = 1.03f;
     
     private Cell[] highlighted = new Cell[1];
     private Map map;
@@ -17,7 +17,7 @@ public class Clear : UiUpdater
     private BuildingStructure selectedBuilding;
     private int clearCount = 0;
     
-    public int baseCost = 5;
+    public int baseCost = 30;
 
     public Image icon;
     public Sprite deselected;
