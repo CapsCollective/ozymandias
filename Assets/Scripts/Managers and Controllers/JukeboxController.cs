@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Managers_and_Controllers
 {
@@ -15,16 +16,21 @@ namespace Managers_and_Controllers
         [SerializeField] private AudioSource townAmbiencePlayer;
         [SerializeField] private AudioSource natureAmbiencePlayer;
         [SerializeField] private AudioSource waterAmbiencePlayer;
+        [SerializeField] private AudioSource nightAmbiencePlayer;
+        [SerializeField] private AudioSource sfxPlayer;
         [SerializeField] private AudioSource musicPlayer;
+        [SerializeField] private AudioClip morningClip;
         [SerializeField] private AudioClip[] tracks;
-        
+
         private List<AudioClip> playlist = new List<AudioClip>();
+        private AudioSource landAmbiencePlayer;
         private AudioSource currentAmbiencePlayer;
 
         private void Start()
         {
             townAmbiencePlayer.transform.position = gameMap.transform.position;
-            currentAmbiencePlayer = natureAmbiencePlayer;
+            landAmbiencePlayer = natureAmbiencePlayer;
+            currentAmbiencePlayer = landAmbiencePlayer;
             OnTrackEnded();
         }
 
@@ -36,17 +42,36 @@ namespace Managers_and_Controllers
             currentAmbiencePlayer.transform.position = ambiancePosition;
         }
 
+        public void StartNightAmbience()
+        {
+            landAmbiencePlayer = nightAmbiencePlayer;
+            StartCoroutine(StartFade(nightAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
+            StartCoroutine(StartFade(natureAmbiencePlayer, .5f, 0f));
+            StartCoroutine(StartFade(townAmbiencePlayer, .5f, 0f));
+            StartCoroutine(Wait(2f, EndNightAmbience));
+        }
         
+        private void EndNightAmbience()
+        {
+            landAmbiencePlayer = natureAmbiencePlayer;
+            StartCoroutine(StartFade(townAmbiencePlayer, .5f, 1f));
+            StartCoroutine(StartFade(natureAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
+            StartCoroutine(StartFade(nightAmbiencePlayer, .5f, 0f));
+            if (Random.Range(0, 5) != 0) return;
+            sfxPlayer.clip = morningClip;
+            sfxPlayer.Play();
+        }
+
         private void CheckAmbiencePlayer()
         {
             if(Physics.Raycast(gameCamera.transform.position,Vector3.down, out _, 30f))
             {
-                if (currentAmbiencePlayer != natureAmbiencePlayer)
-                    SwitchAmbiences(waterAmbiencePlayer, natureAmbiencePlayer);
+                if (currentAmbiencePlayer != landAmbiencePlayer)
+                    SwitchAmbiences(waterAmbiencePlayer, landAmbiencePlayer);
             }
             else{
                 if (currentAmbiencePlayer != waterAmbiencePlayer)
-                    SwitchAmbiences(natureAmbiencePlayer, waterAmbiencePlayer);
+                    SwitchAmbiences(landAmbiencePlayer, waterAmbiencePlayer);
             }
         }
 
