@@ -28,6 +28,7 @@ namespace Managers_and_Controllers
 
         private void Start()
         {
+            GameManager.OnNextTurn += StartNightAmbience;
             townAmbiencePlayer.transform.position = gameMap.transform.position;
             landAmbiencePlayer = natureAmbiencePlayer;
             currentAmbiencePlayer = landAmbiencePlayer;
@@ -42,7 +43,7 @@ namespace Managers_and_Controllers
             currentAmbiencePlayer.transform.position = ambiancePosition;
         }
 
-        public void StartNightAmbience()
+        private void StartNightAmbience()
         {
             landAmbiencePlayer = nightAmbiencePlayer;
             StartCoroutine(StartFade(nightAmbiencePlayer, .5f, currentAmbiencePlayer.volume));

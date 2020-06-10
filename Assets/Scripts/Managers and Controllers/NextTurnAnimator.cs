@@ -9,8 +9,6 @@ public class NextTurnAnimator : MonoBehaviour
     public Light sun;
     public float sunSetTime = 2f;
     public ParticleSystem glowflyPS;
-    
-    [SerializeField] private JukeboxController jukebox;
     private float orig_angle;
     private float t = 0f;
     private float x = 0f;
@@ -32,7 +30,6 @@ public class NextTurnAnimator : MonoBehaviour
     {
         ambCol = RenderSettings.ambientLight;
         StartCoroutine(AnimateSun());
-        jukebox.StartNightAmbience();
     }
 
     public IEnumerator AnimateSun()
