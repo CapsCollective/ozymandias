@@ -21,14 +21,24 @@ namespace Managers_and_Controllers
         [SerializeField] private TextMeshProUGUI turnCounter;
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
+        [SerializeField] private DialogueManager dialogueManager;
         private Event choiceEvent;
         private string newspaperTitle;
+        private bool shownTutorial;
     
         private void Awake()
         {
             newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + newspaperTitle + " }";
             EventQueue.OnEventsProcessed += UpdateDisplay;
+            GameManager.OnNewTurn += OnNewTurn;
+        }
+
+        private void OnNewTurn()
+        {
+            if (shownTutorial) return;
+            shownTutorial = true;
+            dialogueManager.StartDialogue("menu_tutorial");
         }
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
