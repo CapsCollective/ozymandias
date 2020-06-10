@@ -33,6 +33,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-918558223233536857
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 9bd147dccc83f4938a8d4a7a03ef3ac7
+  m_EffectName: Attenuation
+  m_MixLevel: 41ba72d65452b4239a7c710bb6547fc4
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-894853675168892271
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -90,6 +104,7 @@ AudioMixerController:
     - 5edd719b5e8504d7f90908d58ff0fd18
     - 29846557cad964899a370a3d7133c5d2
     - 982ddb6acda0e44ddaccbf6f87460b10
+    - fcc25e95be43b4f12b111803bbaed092
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -157,11 +172,31 @@ AudioMixerGroupController:
   - {fileID: 5434969528089321822}
   - {fileID: -3239977329218345169}
   - {fileID: 7772007973185987114}
+  - {fileID: 3621745811779651320}
   m_Volume: 1a22f68fa7b7541efb143c2130b97188
   m_Pitch: be75f6faf7e334ac2879f2af16e56d7b
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -3716324880432427423}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &3621745811779651320
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Night
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: fcc25e95be43b4f12b111803bbaed092
+  m_Children: []
+  m_Volume: a56dba420e152443e9b2ae21dc82e318
+  m_Pitch: 796653b9e40a14a0983e2cf54521ee4c
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -918558223233536857}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0

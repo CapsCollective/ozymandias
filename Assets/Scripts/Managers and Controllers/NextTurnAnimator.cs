@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Managers_and_Controllers;
 using UnityEngine;
 using static GameManager;
 
@@ -8,7 +9,8 @@ public class NextTurnAnimator : MonoBehaviour
     public Light sun;
     public float sunSetTime = 2f;
     public ParticleSystem glowflyPS;
-
+    
+    [SerializeField] private JukeboxController jukebox;
     private float orig_angle;
     private float t = 0f;
     private float x = 0f;
@@ -26,24 +28,11 @@ public class NextTurnAnimator : MonoBehaviour
         GameManager.OnNextTurn -= OnNextTurn;
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnNextTurn()
     {
         ambCol = RenderSettings.ambientLight;
         StartCoroutine(AnimateSun());
-
+        jukebox.StartNightAmbience();
     }
 
     public IEnumerator AnimateSun()
