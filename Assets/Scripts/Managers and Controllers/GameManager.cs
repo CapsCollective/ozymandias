@@ -354,13 +354,4 @@ public class GameManager : MonoBehaviour
         //Build Guild Hall in the center of the map
         map.CreateBuilding(guildHall, map.transform.position);
     }
-
-    private List<string> shownTutorials = new List<string>();
-    public void ShowTutorial(string tutorialName)
-    {
-        if (shownTutorials.Contains(tutorialName))
-            return;
-        dialogueManager.StartDialogue(tutorialName);
-        shownTutorials.Add(tutorialName);
-    }
 }
