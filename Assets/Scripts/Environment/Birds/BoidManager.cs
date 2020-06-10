@@ -11,12 +11,15 @@ public class BoidManager : MonoBehaviour {
     public Transform target;
     Boid[] boids;
 
-    void Start () {
+    void Start ()
+    {
+        // Disable the boid compute shaders for OSX and Linux
+        enabled = (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer);
+
         boids = FindObjectsOfType<Boid> ();
         foreach (Boid b in boids) {
             b.Initialize (settings, target);
         }
-
     }
 
     void Update () {
