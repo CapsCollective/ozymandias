@@ -20,7 +20,6 @@ public class BoidManager : MonoBehaviour {
         foreach (Boid b in boids) {
             b.Initialize (settings, target);
         }
-
     }
 
     void Update () {

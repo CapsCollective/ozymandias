@@ -41,7 +41,9 @@ public class PlacementController : MonoBehaviour
         // Clear previous highlights
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
-
+        
+        rotateIcon.SetActive(Selected != Deselected);
+        
         if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
         /*
         {

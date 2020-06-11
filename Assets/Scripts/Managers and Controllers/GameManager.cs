@@ -30,7 +30,6 @@ public enum Metric
 public enum BuildingType
 {
     Terrain,
-    Lake,
     Ruins,
     GuildHall,
     //Equipment
@@ -40,7 +39,7 @@ public enum BuildingType
     //Weaponry
     Blacksmith,
     Leatherworks,
-    Armourer, //Doubles as Defense
+    Armoury, //Doubles as Defense
     //Magic
     Alchemists,
     Enchanters,
@@ -69,7 +68,8 @@ public enum BuildingType
     //Defense
     GuardOutpost,
     //Misc
-    Graveyard
+    Graveyard,
+    Lake
 }
 
 public class GameManager : MonoBehaviour
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
     public int Training => training = 0; // TODO: work out the specifics of this
 
     [ReadOnly] [SerializeField] private int effectiveness;
-    public int Effectiveness => effectiveness = Mathf.Clamp(0, Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
+    public int Effectiveness => effectiveness = Mathf.Clamp(0, 1 + Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
     
     [HorizontalLine]
     
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
     public int OvercrowdingMod => Mathf.Min(0, Accommodation - AvailableAdventurers); //lose 1% satisfaction per adventurer over capacity
         
     [ReadOnly] [SerializeField] private int satisfaction;
-    public int Satisfaction => satisfaction = Mathf.Clamp(0, Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
+    public int Satisfaction => satisfaction = Mathf.Clamp(0, 1+ Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
 
     [HorizontalLine]
     
@@ -353,14 +353,5 @@ public class GameManager : MonoBehaviour
     {
         //Build Guild Hall in the center of the map
         map.CreateBuilding(guildHall, map.transform.position);
-    }
-
-    private List<string> shownTutorials = new List<string>();
-    public void ShowTutorial(string tutorialName)
-    {
-        if (shownTutorials.Contains(tutorialName))
-            return;
-        dialogueManager.StartDialogue(tutorialName);
-        shownTutorials.Add(tutorialName);
     }
 }
