@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int luxury;
     public int Luxury => luxury = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers, 0, 100);
 
-    public int OvercrowdingMod => Mathf.Min(0, Accommodation - AvailableAdventurers); //lose 1% satisfaction per adventurer over capacity
+    public int OvercrowdingMod => Mathf.Min(0, (Accommodation - AvailableAdventurers) * 3); //lose 1% satisfaction per adventurer over capacity
         
     [ReadOnly] [SerializeField] private int satisfaction;
     public int Satisfaction => satisfaction = Mathf.Clamp(0, 1+ Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
@@ -259,7 +259,11 @@ public class GameManager : MonoBehaviour
         wealth += wealthPerTurn;
         turnCounter++;
 
-        foreach (var mod in modifiers.Keys.ToList()) modifiers[mod] = 0;
+        modifiers[Metric.Defense] = 0;
+        modifiers[Metric.Threat] = 0;
+        modifiers[Metric.Spending] = 0;
+        modifiers[Metric.Effectiveness] = 0;
+        modifiers[Metric.Satisfaction] = 0;
         
         if (ThreatLevel > 90)
             foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
@@ -361,5 +365,13 @@ public class GameManager : MonoBehaviour
     {
         //Build Guild Hall in the center of the map
         map.CreateBuilding(guildHall, map.transform.position);
+    }
+
+    private void OnDestroy()
+    {
+        instance = null;
+        OnNewTurn = null;
+        OnNextTurn = null;
+        OnUpdateUI = null;
     }
 }
