@@ -229,7 +229,11 @@ public class GameManager : MonoBehaviour
         adventurers = new List<Adventurer>();
         buildings = new List<BuildingStats>();
         // Set all mods to 0 at start
-        foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers.Add(mod, 0);
+        modifiers.Add(Metric.Defense, 0);
+        modifiers.Add(Metric.Threat, 0);
+        modifiers.Add(Metric.Spending, 0);
+        modifiers.Add(Metric.Effectiveness, 0);
+        modifiers.Add(Metric.Satisfaction, 0);
 
         // Start game with 5 Adventurers
         for (int i = 0; i < 5; i++) AddAdventurer();
@@ -255,8 +259,8 @@ public class GameManager : MonoBehaviour
         wealth += wealthPerTurn;
         turnCounter++;
 
-        foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;
-
+        foreach (var mod in modifiers.Keys.ToList()) modifiers[mod] = 0;
+        
         if (ThreatLevel > 90)
             foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
         eventQueue.ProcessEvents();

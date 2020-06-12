@@ -63,7 +63,7 @@ namespace Managers_and_Controllers
         public void SetChoiceActive(int choice, bool active)
         {
             choiceList[choice].gameObject.SetActive(active);
-            if (active) choiceList[choice].GetComponentInChildren<Text>().text = choiceEvent.choices[choice].name;
+            if (active) choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text = choiceEvent.choices[choice].name;
         }
     
         public void OnChoiceSelected(int choice)

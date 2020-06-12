@@ -25,8 +25,8 @@ public class NewQuest : Outcome
     {
         get
         {
-            if (customDescription != "") return customDescription;
-            return "New quest added: " + Quest.QuestTitle;
+            if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
+            return "<color=#007000ff>New quest added: " + Quest.QuestTitle + "</color>";
         }
     }
 }

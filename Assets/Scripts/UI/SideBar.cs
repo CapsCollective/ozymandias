@@ -37,7 +37,8 @@ public class SideBar : UiUpdater
     // Update is called once per frame
     public override void UpdateUi()
     {
-        adventurers.text = Manager.AvailableAdventurers + " / " + Manager.Accommodation;
+        bool overCapacity = Manager.AvailableAdventurers - Manager.Accommodation > 0;
+        adventurers.text = (overCapacity ? "<color=red>" : "") + Manager.AvailableAdventurers + (overCapacity ? "</color>" : "") + " / " + Manager.Accommodation;
         spending.text = "x" + (Manager.Spending / 100f).ToString("0.00");
         adventurersLarge.text = "Adventurers " + adventurers.text;
         spendingLarge.text = "Spending " + spending.text;

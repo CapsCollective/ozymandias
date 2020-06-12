@@ -29,11 +29,13 @@ public class NewAdventurers : Outcome
     {
         get
         {
-            if (customDescription != "") return customDescription;
+            if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
             Random.InitState((int)DateTime.Now.Ticks);
-            return  adventurers.Count + " adventurer" +
+            return "<color=#007000ff>" +
+                    adventurers.Count + " adventurer" +
                     (adventurers.Count > 1 ? "s have " : " has ") +
-                    Descriptors[Random.Range(0, Descriptors.Length)];
+                    Descriptors[Random.Range(0, Descriptors.Length)]+
+                    "</color>";
         }
     }
     

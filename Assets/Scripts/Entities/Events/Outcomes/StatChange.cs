@@ -50,9 +50,13 @@ public class StatChange : Outcome
     {
         get
         {
-            if (customDescription != "") return customDescription;
-            if (Amount > 0) return StatToChange + " has increased by " + Amount + " for " + turnsLeft + " turns.";
-            return StatToChange + " has decreased by " + Amount + " for " + turnsLeft + " turns.";
+            string color;
+            if ((StatToChange == Metric.Threat && Amount > 0) || (StatToChange != Metric.Threat && Amount < 0)) color = "#820000ff";
+            else color = "#007000ff";
+                
+            if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
+            if (Amount > 0) return "<color="+color+">" + StatToChange + " has increased by " + Amount + " for " + Turns + " turns.</color>";
+            return "<color="+color+">" + StatToChange + " has decreased by " + Amount + " for " + Turns + " turns.</color>";
         }
     }
 }
