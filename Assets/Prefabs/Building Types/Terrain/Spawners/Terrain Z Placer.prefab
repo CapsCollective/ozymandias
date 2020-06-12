@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &454044182329843987
+--- !u!1 &898312258798222061
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 454044182329843997}
-  - component: {fileID: 454044182329843996}
-  - component: {fileID: 1544858549326216651}
+  - component: {fileID: 898312258798222051}
+  - component: {fileID: 898312258798222060}
+  - component: {fileID: 898312258798222050}
+  - component: {fileID: 8881592148534280061}
   m_Layer: 0
-  m_Name: Guard Outpost
+  m_Name: Terrain Z Placer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &454044182329843997
+--- !u!4 &898312258798222051
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454044182329843987}
+  m_GameObject: {fileID: 898312258798222061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,51 +33,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &454044182329843996
+--- !u!114 &898312258798222060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454044182329843987}
+  m_GameObject: {fileID: 898312258798222061}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sections:
-  - prefab: {fileID: 1670491663238159179, guid: cbfb993e2ab5ce64e9dad4fc2b27c0c7,
+  - prefab: {fileID: 8254682334459258621, guid: ac7d8bf91fb22ed48b3860642d175e0e,
       type: 3}
     directions: 
-  - prefab: {fileID: 8026297451037323778, guid: 17c70f5ed2ac5b743a12011494d88465,
+  - prefab: {fileID: 8254682334459258621, guid: ac7d8bf91fb22ed48b3860642d175e0e,
       type: 3}
     directions: 02000000
-  - prefab: {fileID: 6239572652144479255, guid: 409cf46df9f6bbb4e8c51295b91b35b5,
+  - prefab: {fileID: 8254682334459258621, guid: ac7d8bf91fb22ed48b3860642d175e0e,
       type: 3}
-    directions: 03000000
---- !u!114 &1544858549326216651
+    directions: 01000000
+  - prefab: {fileID: 8254682334459258621, guid: ac7d8bf91fb22ed48b3860642d175e0e,
+      type: 3}
+    directions: 0100000000000000
+--- !u!114 &898312258798222050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454044182329843987}
+  m_GameObject: {fileID: 898312258798222061}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e99a3977f93343a45829ff94d8a81868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 'Gives jobs to all those wannabe adventurers who just couldn''t make
-    it. Keeps a lookout for trouble.
-
-
-    Provides a small fixed amount of Defense.'
-  icon: {fileID: 21300000, guid: 0958fdc1d779ed348b5985d0091db1cb, type: 3}
-  scaleSpeed: 0
+  description: It's trees and stuff
+  icon: {fileID: 0}
+  scaleSpeed: 2
   operational: 0
-  terrain: 0
-  type: 28
-  baseCost: 40
+  terrain: 1
+  type: 0
+  baseCost: 0
   accommodation: 0
   weaponry: 0
   magic: 0
@@ -85,4 +85,22 @@ MonoBehaviour:
   entertainment: 0
   luxury: 0
   spending: 0
-  defense: 10
+  defense: 0
+--- !u!114 &8881592148534280061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898312258798222061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748b7c8bf9b55e34ebd5aa1b7db774de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 0}
+  distance: 1.5
+  terrainBuilding: {fileID: 898312258798222061, guid: eed7281d910db2346ab35599917a7f53,
+    type: 3}
+  dontPlace: 1
+  rotation: 0

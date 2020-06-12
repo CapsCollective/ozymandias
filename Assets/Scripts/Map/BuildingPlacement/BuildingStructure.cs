@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BuildingStructure : MonoBehaviour
 {
+    public bool indestructable;
     // Member Variables
     public List<SectionInfo> sections;
 

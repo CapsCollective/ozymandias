@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class Clear : UiUpdater
 {
-    public const float costScale = 1.10f;
+    public const float costScale = 1.03f;
     
     private Cell[] highlighted = new Cell[1];
     private Map map;
@@ -17,7 +17,7 @@ public class Clear : UiUpdater
     private BuildingStructure selectedBuilding;
     private int clearCount = 0;
     
-    public int baseCost = 5;
+    public int baseCost = 30;
 
     public Image icon;
     public Sprite deselected;
@@ -65,7 +65,7 @@ public class Clear : UiUpdater
         if (selectedBuilding) highlighted = map.GetCells(selectedBuilding);
         else highlighted[0] = closest;
         
-        Map.HighlightState state = selectedBuilding ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+        Map.HighlightState state = selectedBuilding && !selectedBuilding.indestructable ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
         map.Highlight(highlighted, state);
     }
     
@@ -94,16 +94,10 @@ public class Clear : UiUpdater
     
     public void ClearBuilding()
     {
-        
+        if (selectedBuilding.indestructable) return;
         BuildingStats building = selectedBuilding.GetComponent<BuildingStats>();
-        print(building.type);
-        if (building.type != BuildingType.Lake)
-        {
-            if (!Manager.Spend(ScaledCost)) return;
-            if (building.terrain) clearCount++;
-
-            Manager.Demolish(building);
-        }
-        
+        if (!Manager.Spend(ScaledCost)) return;
+        if (building.terrain) clearCount++;
+        Manager.Demolish(building);
     }
 }
