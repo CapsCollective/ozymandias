@@ -37,10 +37,10 @@ public class ThreatBar : UiUpdater
     {
         t += Time.deltaTime * 3;
         Color color = nextTurnThreatFill.color;
-        color.a = Mathf.Lerp(0, 0.4f, Mathf.Sin(t));
+        color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(t)+1)/2);
         nextTurnThreatFill.color = color;
         color = nextTurnDefenseFill.color;
-        color.a = Mathf.Lerp(0, 0.4f, Mathf.Sin(t));
+        color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(t)+1)/2);
         nextTurnDefenseFill.color = color;
     }
 }
