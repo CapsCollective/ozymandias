@@ -265,7 +265,7 @@ public class GameManager : MonoBehaviour
         modifiers[Metric.Effectiveness] = 0;
         modifiers[Metric.Satisfaction] = 0;
         
-        if (ThreatLevel > 90)
+        if (ThreatLevel >= 100)
             foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
         eventQueue.ProcessEvents();
         OnNextTurn?.Invoke();
