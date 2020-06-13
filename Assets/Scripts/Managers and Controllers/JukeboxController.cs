@@ -14,6 +14,7 @@ namespace Managers_and_Controllers
         public static JukeboxController Instance { get; private set; }
         
         #pragma warning disable 0649
+        [SerializeField] private bool sfxOnly;
         [SerializeField] private Camera gameCamera;
         [SerializeField] private GameObject gameMap;
         [SerializeField] private AudioSource townAmbiencePlayer;
@@ -42,6 +43,7 @@ namespace Managers_and_Controllers
 
         private void Start()
         {
+            if (sfxOnly) return;
             GameManager.OnNextTurn += StartNightAmbience;
             townAmbiencePlayer.transform.position = gameMap.transform.position;
             landAmbiencePlayer = natureAmbiencePlayer;
@@ -51,6 +53,7 @@ namespace Managers_and_Controllers
 
         private void Update()
         {
+            if (sfxOnly) return;
             CheckAmbiencePlayer();
             var ambiancePosition = gameCamera.transform.position;
             ambiancePosition.y = 0f;
