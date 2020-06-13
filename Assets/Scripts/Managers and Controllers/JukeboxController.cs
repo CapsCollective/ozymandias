@@ -37,6 +37,7 @@ namespace Managers_and_Controllers
 
         public void PlayClick()
         {
+            sfxPlayer.volume = .8f;
             sfxPlayer.clip = clickClip;
             sfxPlayer.Play();
         }
@@ -76,6 +77,7 @@ namespace Managers_and_Controllers
             StartCoroutine(StartFade(natureAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
             StartCoroutine(StartFade(nightAmbiencePlayer, .5f, 0f));
             if (Random.Range(0, 5) != 2) return;
+            sfxPlayer.volume = .1f;
             sfxPlayer.clip = morningClip;
             sfxPlayer.Play();
         }
