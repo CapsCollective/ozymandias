@@ -21,7 +21,6 @@ public class StatChange : Outcome
     {
         turnsLeft = Turns;
         OnNewTurn += ProcessStatChange;
-        ProcessStatChange();
         return true;
     }
     
@@ -35,6 +34,7 @@ public class StatChange : Outcome
 
         Manager.modifiers[StatToChange] += Amount;
 
+        if (turnsLeft == -1) return;
         turnsLeft--;
     }
 
@@ -43,12 +43,16 @@ public class StatChange : Outcome
         get
         {
             string color;
-            if ((StatToChange == Metric.Threat && Amount > 0) || (StatToChange != Metric.Threat && Amount < 0)) color = "#820000ff";
+            if (StatToChange == Metric.Threat && Amount > 0 || StatToChange != Metric.Threat && Amount < 0) color = "#820000ff";
             else color = "#007000ff";
                 
             if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
-            if (Amount > 0) return "<color="+color+">" + StatToChange + " has increased by " + Amount + " for " + Turns + " turns.</color>";
-            return "<color="+color+">" + StatToChange + " has decreased by " + Amount + " for " + Turns + " turns.</color>";
+            string desc = "";
+            if (Amount > 0) desc += "<color="+color+">" + StatToChange + " has increased by " + Amount;
+            else desc += "<color="+color+">" + StatToChange + " has decreased by " + Amount;
+            
+            if (turnsLeft != -1) desc += " for " + Turns + " turns.";
+            return desc + "</color>";
         }
     }
 }
