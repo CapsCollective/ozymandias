@@ -5237,7 +5237,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000265474, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 800053112151562219, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
@@ -7294,6 +7294,7 @@ GameObject:
   - component: {fileID: 1870573932}
   - component: {fileID: 1870573934}
   - component: {fileID: 1870573933}
+  - component: {fileID: 1870573935}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -7517,6 +7518,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadingScreen: {fileID: 0}
   progressBar: {fileID: 0}
+--- !u!114 &1870573935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870573928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f208b155d5ad4e74892f5f1604a8f5aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllBuildings:
+  - {fileID: 5720474190711111019, guid: 0e7797257452bd24681fdf3af5224a03, type: 3}
+  - {fileID: 2934313578275689168, guid: 16433d4718343c348b92fa9800d33910, type: 3}
+  - {fileID: 1422530078004020647, guid: 334e3cc01e9d90849b10712ad0f8e699, type: 3}
+  - {fileID: 7412343278648512332, guid: bde05f1e782db32468a6858838bf7159, type: 3}
+  - {fileID: 454044182329843987, guid: 80af1897525f14f47b8132fc14ddd745, type: 3}
+  - {fileID: 1263116729105003461, guid: 1c0b4c7a5e780fb4bb0d76d8e3c8688f, type: 3}
+  - {fileID: 5078547694136969219, guid: da61adf06e0f49648a942f0e5a3848fb, type: 3}
+  - {fileID: 4746249198091460304, guid: aa460c1377cdf774fa158d57f986a7e5, type: 3}
+  - {fileID: 5515095820390957752, guid: a6a242af6c33090409ba6ac88cfacc3e, type: 3}
 --- !u!114 &1894982300 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4020114589471263462, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    [ReorderableList] public List<GameObject> AllBuildings = new List<GameObject>();
+    public List<GameObject> AllBuildings = new List<GameObject>();
 
     public static BuildingManager instance;
 
