@@ -23,6 +23,7 @@ namespace Managers_and_Controllers
         [SerializeField] private AudioSource sfxPlayer;
         [SerializeField] private AudioSource musicPlayer;
         [SerializeField] private AudioClip morningClip;
+        [SerializeField] private AudioClip clickClip;
         [SerializeField] private AudioClip[] tracks;
 
         private List<AudioClip> playlist = new List<AudioClip>();
@@ -32,6 +33,13 @@ namespace Managers_and_Controllers
         private void Awake() {
             Instance = this;
         }
+
+        public void PlayClick()
+        {
+            sfxPlayer.clip = clickClip;
+            sfxPlayer.Play();
+        }
+
         private void Start()
         {
             GameManager.OnNextTurn += StartNightAmbience;
