@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.1825413, g: 0.22825247, b: 0.3072147, a: 1}
+  m_IndirectSpecularColor: {r: 0.18254107, g: 0.22825208, b: 0.30721408, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8452,6 +8452,7 @@ GameObject:
   - component: {fileID: 798030913793396876}
   - component: {fileID: 798030913793396877}
   - component: {fileID: 9075955739670085705}
+  - component: {fileID: 798030913793396878}
   m_Layer: 5
   m_Name: Newspaper Button
   m_TagString: Untagged
@@ -8542,6 +8543,18 @@ MonoBehaviour:
           m_StringArgument: menu_tutorial
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &798030913793396878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798030913793396875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbf702e6b7f40eea835e5bc3bcb449d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &798030913793396879
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9482,6 +9495,7 @@ GameObject:
   - component: {fileID: 6828880155099549009}
   - component: {fileID: 6828880155099549008}
   - component: {fileID: 2891987272196414868}
+  - component: {fileID: 6828880155099549016}
   m_Layer: 5
   m_Name: Exit Button
   m_TagString: Untagged
@@ -9510,6 +9524,18 @@ RectTransform:
   m_AnchoredPosition: {x: -35, y: -20}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6828880155099549016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6828880155099549014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbf702e6b7f40eea835e5bc3bcb449d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &6837540955077459906
 CanvasRenderer:
   m_ObjectHideFlags: 0
