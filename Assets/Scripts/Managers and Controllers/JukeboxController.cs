@@ -10,7 +10,11 @@ namespace Managers_and_Controllers
 {
     public class JukeboxController : MonoBehaviour
     {
+        // Instance field
+        public static JukeboxController Instance { get; private set; }
+        
         #pragma warning disable 0649
+        [SerializeField] private bool sfxOnly;
         [SerializeField] private Camera gameCamera;
         [SerializeField] private GameObject gameMap;
         [SerializeField] private AudioSource townAmbiencePlayer;
@@ -20,14 +24,26 @@ namespace Managers_and_Controllers
         [SerializeField] private AudioSource sfxPlayer;
         [SerializeField] private AudioSource musicPlayer;
         [SerializeField] private AudioClip morningClip;
+        [SerializeField] private AudioClip clickClip;
         [SerializeField] private AudioClip[] tracks;
 
         private List<AudioClip> playlist = new List<AudioClip>();
         private AudioSource landAmbiencePlayer;
         private AudioSource currentAmbiencePlayer;
 
+        private void Awake() {
+            Instance = this;
+        }
+
+        public void PlayClick()
+        {
+            sfxPlayer.clip = clickClip;
+            sfxPlayer.Play();
+        }
+
         private void Start()
         {
+            if (sfxOnly) return;
             GameManager.OnNextTurn += StartNightAmbience;
             townAmbiencePlayer.transform.position = gameMap.transform.position;
             landAmbiencePlayer = natureAmbiencePlayer;
@@ -37,6 +53,7 @@ namespace Managers_and_Controllers
 
         private void Update()
         {
+            if (sfxOnly) return;
             CheckAmbiencePlayer();
             var ambiancePosition = gameCamera.transform.position;
             ambiancePosition.y = 0f;
@@ -58,7 +75,7 @@ namespace Managers_and_Controllers
             StartCoroutine(StartFade(townAmbiencePlayer, .5f, 1f));
             StartCoroutine(StartFade(natureAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
             StartCoroutine(StartFade(nightAmbiencePlayer, .5f, 0f));
-            if (Random.Range(0, 5) != 0) return;
+            if (Random.Range(0, 5) != 2) return;
             sfxPlayer.clip = morningClip;
             sfxPlayer.Play();
         }
