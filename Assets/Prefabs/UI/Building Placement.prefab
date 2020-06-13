@@ -1,5 +1,78 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &560091394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 560091395}
+  - component: {fileID: 560091397}
+  - component: {fileID: 560091396}
+  m_Layer: 5
+  m_Name: Rotate Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &560091395
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560091394}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5475721258133621091}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 33, y: 70}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &560091397
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560091394}
+  m_CullTransparentMesh: 0
+--- !u!114 &560091396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560091394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.9019608}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 64b6cc5f7d18ddc4b8af5c695d884531, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &148192818407029088
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8720f9284480a4fb7287a74b7cf20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseCost: 15
+  baseCost: 30
   icon: {fileID: 1371007070835093400}
   deselected: {fileID: 21300000, guid: 00c303b31a45e4b4e9a652f7bdc0e703, type: 3}
   selected: {fileID: 21300000, guid: 7af0445314f7ac841a7efc7b28a3be2d, type: 3}
@@ -1280,6 +1353,7 @@ RectTransform:
   - {fileID: 2439107564716753180}
   - {fileID: 2736580178061869614}
   - {fileID: 4681505970929513062}
+  - {fileID: 560091395}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1366,14 +1440,13 @@ MonoBehaviour:
   - {fileID: 454044182329843987, guid: 2b6ea1cb2ccd3fc489c3f453ccb08771, type: 3}
   - {fileID: 454044182329843987, guid: 0a00c3e8239232245b755789ca69aaa0, type: 3}
   - {fileID: 2190574654203646117, guid: e1a869c3d30b9af4fb4770ff2c0a2069, type: 3}
-  - {fileID: 2190574654203646117, guid: 3465ee3c27fdd06479724389a2371835, type: 3}
+  - {fileID: 2190574654203646117, guid: 6e6834ce45b3c50468182392204f9bde, type: 3}
   - {fileID: 454044182329843987, guid: 80af1897525f14f47b8132fc14ddd745, type: 3}
   - {fileID: 1286813015557461132, guid: 71f2065bd812f8b45b65c5d68392e7db, type: 3}
   - {fileID: 37101018649108413, guid: 8b0809b7bf577bb41a4af793bd5a5f52, type: 3}
   - {fileID: 2190574654203646117, guid: cce62d25dad74974191b66b576218fe9, type: 3}
   - {fileID: 2190574654203646117, guid: 23b10ee8a3bae7e42878734f8bd2c741, type: 3}
-  - {fileID: 2190574654203646117, guid: 6e6834ce45b3c50468182392204f9bde, type: 3}
-  rotateIcon: {fileID: 0}
+  rotateIcon: {fileID: 560091394}
 --- !u!1 &6006604149010271098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,6 +1676,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: newspaper_tutorial
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &6082582144644223510
 GameObject:

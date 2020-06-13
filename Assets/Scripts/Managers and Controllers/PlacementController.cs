@@ -41,7 +41,9 @@ public class PlacementController : MonoBehaviour
         // Clear previous highlights
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
-
+        
+        rotateIcon.SetActive(Selected != Deselected);
+        
         if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
         /*
         {
@@ -73,7 +75,6 @@ public class PlacementController : MonoBehaviour
     private void LeftClick()
     {
         if (Selected == Deselected) return;
-
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
 
@@ -104,5 +105,4 @@ public class PlacementController : MonoBehaviour
         if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
         cards[i].buildingPrefab = remainingBuildings.PopRandom();
     }
-
 }
