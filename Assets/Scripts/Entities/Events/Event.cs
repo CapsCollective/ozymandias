@@ -12,14 +12,15 @@ public class Event : ScriptableObject
     public enum EventType
     {
         Flavour,
-        Adventurers,
+        AdventurersJoin,
         Threat,
         Chaos,
         Endgame,
         Chain,
         Special,
         Advert,
-        GameOver
+        GameOver,
+        AdventurersLeave
     }
 
     public string headline;

@@ -78,7 +78,7 @@ public class EventQueue : MonoBehaviour
 
 
         if (i <= adventurerW)
-            type = EventType.Adventurers;
+            type = EventType.AdventurersJoin;
         else if (i <= adventurerW + chaosW)
             type = EventType.Chaos;
         else
