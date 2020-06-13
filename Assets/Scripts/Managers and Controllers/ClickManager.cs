@@ -17,9 +17,15 @@ public class ClickManager : MonoBehaviour
     void LateUpdate()
     {
         if (Input.GetMouseButtonDown(0)) time0 = Time.time;
-        if (Input.GetMouseButtonUp(0) && Time.time - time0 < clickSpeed) OnLeftClick.Invoke();
+        if (Input.GetMouseButtonUp(0) && Time.time - time0 < clickSpeed) OnLeftClick?.Invoke();
         
         if (Input.GetMouseButtonDown(1)) time1 = Time.time;
-        if (Input.GetMouseButtonUp(1) && Time.time - time1 < clickSpeed) OnRightClick.Invoke();
+        if (Input.GetMouseButtonUp(1) && Time.time - time1 < clickSpeed) OnRightClick?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        OnLeftClick = null;
+        OnRightClick = null;
     }
 }

@@ -21,7 +21,6 @@ namespace Managers_and_Controllers
         [SerializeField] private TextMeshProUGUI turnCounter;
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
-        [SerializeField] private DialogueManager dialogueManager;
         private Event choiceEvent;
         private string newspaperTitle;
         private bool shownTutorial;
@@ -38,7 +37,7 @@ namespace Managers_and_Controllers
         {
             if (shownTutorial) return;
             shownTutorial = true;
-            dialogueManager.StartDialogue("menu_tutorial");
+            Manager.dialogueManager.StartDialogue("menu_tutorial");
         }
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
@@ -102,11 +101,6 @@ namespace Managers_and_Controllers
             continueButton.enabled = state;
             continueButtonContent.SetActive(state);
             disableButtonContent.SetActive(!state);
-        }
-
-        private void OnDestroy()
-        {
-            EventQueue.OnEventsProcessed -= UpdateDisplay;
         }
     }
 }

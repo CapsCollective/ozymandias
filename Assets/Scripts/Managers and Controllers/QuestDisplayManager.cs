@@ -24,6 +24,7 @@ public class QuestDisplayManager : MonoBehaviour
     private void OnButtonClick()
     {
         flyerQuest.StartQuest();
+        GetComponent<HighlightOnHover>().mouseOver = false;
         gameObject.SetActive(false);
     }
 

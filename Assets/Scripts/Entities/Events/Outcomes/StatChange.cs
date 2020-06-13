@@ -21,23 +21,15 @@ public class StatChange : Outcome
     {
         turnsLeft = Turns;
         OnNewTurn += ProcessStatChange;
-        SceneManager.activeSceneChanged += HandleSceneChange;
         ProcessStatChange();
         return true;
     }
-
-    private void HandleSceneChange(Scene a, Scene b)
-    { 
-        OnNewTurn -= ProcessStatChange;
-        SceneManager.activeSceneChanged -= HandleSceneChange;
-    }
-
+    
     public void ProcessStatChange()
     {
         if (turnsLeft == 0)
         {
             OnNewTurn -= ProcessStatChange;
-            //EventQueue.OnStatEffectComplete?.Invoke(this);
             return;
         }
 

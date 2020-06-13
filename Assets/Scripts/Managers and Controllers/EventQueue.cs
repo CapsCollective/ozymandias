@@ -132,6 +132,11 @@ public class EventQueue : MonoBehaviour
         //TODO: Implement
         return true;
     }
+
+    private void OnDestroy()
+    {
+        OnEventsProcessed = null;
+    }
 }
 
 public static class MyExtensions
