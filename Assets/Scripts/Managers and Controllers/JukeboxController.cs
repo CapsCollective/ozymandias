@@ -72,7 +72,7 @@ namespace Managers_and_Controllers
             StartCoroutine(StartFade(townAmbiencePlayer, .5f, 1f));
             StartCoroutine(StartFade(natureAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
             StartCoroutine(StartFade(nightAmbiencePlayer, .5f, 0f));
-            if (Random.Range(0, 5) != 0) return;
+            if (Random.Range(0, 5) != 2) return;
             sfxPlayer.clip = morningClip;
             sfxPlayer.Play();
         }
