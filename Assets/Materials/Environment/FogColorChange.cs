@@ -45,23 +45,12 @@ public class FogColorChange : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.OnUpdateUI += UpdateFog;
-    }
-    private void OnDestroy()
-    {
-        GameManager.OnUpdateUI -= UpdateFog;
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        OnUpdateUI += UpdateFog;
     }
 
     private bool Setup()
     {
-        oldRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
+        oldRatio = Manager.ThreatLevel / 100f;
         origEm = mr.material.GetColor("_EmissionColor");
         origCol = mr.material.GetColor("_Color");
         origBlend = mr.material.GetFloat("_DistortionBlend");
@@ -82,14 +71,13 @@ public class FogColorChange : MonoBehaviour
         {
             isSetup = Setup();
         }
-        
     }
 
     public void UpdateFog()
     {
         if (isSetup)
         {
-            newRatio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat)) - 0.2f;
+            newRatio = Manager.ThreatLevel / 100f;
             StartCoroutine(ShiftingFog());
         }
         
@@ -126,7 +114,7 @@ public class FogColorChange : MonoBehaviour
 
     public void SetColor()
     {
-        ratio = ((float)Manager.Threat / ((float)Manager.Defense + (float)Manager.Threat))-0.2f;
+        ratio = Manager.ThreatLevel / 100f;
 
         currentEm = Color.Lerp(origEm, deadEm, ratio);
         currentCol = Color.Lerp(origCol, deadCol, ratio);

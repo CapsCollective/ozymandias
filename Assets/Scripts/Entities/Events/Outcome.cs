@@ -5,9 +5,7 @@ using UnityEngine;
 public class Outcome : ScriptableObject
 {
     public string customDescription; //An override description for custom outcomes
-    public virtual string Description { get {
-        return customDescription;
-    } }
+    public virtual string Description => customDescription;
 
     // What happens when this is executed
     public virtual bool Execute()

@@ -75,7 +75,6 @@ public class PlacementController : MonoBehaviour
     private void LeftClick()
     {
         if (Selected == Deselected) return;
-
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
 
@@ -106,5 +105,4 @@ public class PlacementController : MonoBehaviour
         if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(allBuildings);
         cards[i].buildingPrefab = remainingBuildings.PopRandom();
     }
-
 }
