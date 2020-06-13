@@ -45,19 +45,19 @@ public class SideBar : UiUpdater
 
         int mod = Manager.modifiers[Metric.Spending];
         spendingModifier.gameObject.SetActive(mod != 0);
-        spendingModifier.text = (mod > 0 ? "+" : "") + mod + " from event modifiers"; 
+        spendingModifier.text = (mod > 0 ? "<color=green>+" : "<color=red>") + mod + "%</color> from event modifiers"; 
         
         mod = Manager.modifiers[Metric.Effectiveness];
         effectivenessModifier.gameObject.SetActive(mod != 0);
-        effectivenessModifier.text = (mod > 0 ? "+" : "") + mod + " from event modifiers"; 
+        effectivenessModifier.text = (mod > 0 ? "<color=green>+" : "<color=red>") + mod + "%</color> from event modifiers";
         
         mod = Manager.modifiers[Metric.Satisfaction];
         satisfactionModifier.gameObject.SetActive(mod != 0);
-        satisfactionModifier.text = (mod > 0 ? "+" : "") + mod + " from event modifiers";
+        satisfactionModifier.text = (mod > 0 ? "<color=green>+" : "<color=red>") + mod + "%</color> from event modifiers";
 
         mod = Manager.OvercrowdingMod;
         overcrowdingModifier.gameObject.SetActive(mod != 0);
-        overcrowdingModifier.text = mod + " from overcrowding";
+        overcrowdingModifier.text = "<color=red>"+ mod + "%</color> from overcrowding";
 
         effectiveness.SetBar(Manager.Effectiveness);
         satisfaction.SetBar(Manager.Satisfaction);
