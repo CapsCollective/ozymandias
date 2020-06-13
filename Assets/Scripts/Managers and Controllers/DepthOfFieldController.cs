@@ -24,7 +24,7 @@ public class DepthOfFieldController : MonoBehaviour
         volume.weight = Mathf.InverseLerp(cc.maxHeight, cc.minHeight, transform.position.y);
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, LayerMask.NameToLayer("Default")))
         {
             depthOfField.focusDistance.value = hit.distance;
         }
