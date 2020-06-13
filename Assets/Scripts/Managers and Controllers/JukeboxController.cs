@@ -10,6 +10,9 @@ namespace Managers_and_Controllers
 {
     public class JukeboxController : MonoBehaviour
     {
+        // Instance field
+        public static JukeboxController Instance { get; private set; }
+        
         #pragma warning disable 0649
         [SerializeField] private Camera gameCamera;
         [SerializeField] private GameObject gameMap;
@@ -26,6 +29,9 @@ namespace Managers_and_Controllers
         private AudioSource landAmbiencePlayer;
         private AudioSource currentAmbiencePlayer;
 
+        private void Awake() {
+            Instance = this;
+        }
         private void Start()
         {
             GameManager.OnNextTurn += StartNightAmbience;
