@@ -17,10 +17,11 @@ public class StatChange : Outcome
     private int turnsLeft;
     //[SerializeField] private int turns;
 
-    public override bool Execute()
+    public override bool Execute(bool fromChoice)
     {
         turnsLeft = Turns;
         OnNewTurn += ProcessStatChange;
+        if (fromChoice) ProcessStatChange();
         return true;
     }
     

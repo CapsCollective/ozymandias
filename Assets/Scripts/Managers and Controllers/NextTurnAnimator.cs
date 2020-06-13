@@ -21,11 +21,6 @@ public class NextTurnAnimator : MonoBehaviour
         orig_angle = sun.transform.eulerAngles.x;
     }
 
-    private void OnDestroy()
-    {
-        GameManager.OnNextTurn -= OnNextTurn;
-    }
-
     public void OnNextTurn()
     {
         ambCol = RenderSettings.ambientLight;

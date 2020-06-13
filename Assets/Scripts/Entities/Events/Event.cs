@@ -53,7 +53,7 @@ public class Event : ScriptableObject
 
     public string MakeChoice(int choice)
     {
-        return Outcome.Execute(choices[choice].outcomes);
+        return Outcome.Execute(choices[choice].outcomes, true);
     }
 
     [Button()] // Debug to test specific events
