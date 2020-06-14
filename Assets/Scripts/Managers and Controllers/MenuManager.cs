@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
 {
     //We need each object so that we can update their appearance to reflect player prefs
     //loading
-    public GameObject LoadingScreen;
+    public GameObject loadingScreen;
     public Slider progressBar;
 
     //resolution selection
@@ -21,7 +21,7 @@ public class MenuManager : MonoBehaviour
     public AudioMixer audioMixer;
     public Slider musicSlider;
     public Slider ambienceSlider;
-    public Slider SFXSlider;
+    public Slider sfxSlider;
 
     //fullscreen
     public Toggle fullscreenToggle;
@@ -32,47 +32,37 @@ public class MenuManager : MonoBehaviour
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string optionTemp = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(optionTemp);
-
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
+            string optionText = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(optionText);
         }
         resolutionDropdown.AddOptions(options);
 
         ////////////load from player prefs//////////
         //fullscreen
-        bool intToBool;
-        if (PlayerPrefs.GetInt("Fullscreen") == 1)
-        {
-            intToBool = true;
-        }
-        else
-        {
-            intToBool = false;
-        }
-        SetFullScreen(intToBool);
-        fullscreenToggle.isOn = intToBool;
-        
+        bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        SetFullScreen(isFullscreen);
+        fullscreenToggle.isOn = isFullscreen;
+
         //resolution
-        SetResolution(PlayerPrefs.GetInt("Resolution"));
-        resolutionDropdown.value = PlayerPrefs.GetInt("Resolution");
+        int res = PlayerPrefs.GetInt("Resolution", resolutions.Length - 1); //Default to max res
+        SetResolution(res);
+        resolutionDropdown.value = res;
 
         resolutionDropdown.RefreshShownValue();
         //sound
-        SetMusicVolume(PlayerPrefs.GetFloat("Music"));
-        musicSlider.value = PlayerPrefs.GetFloat("Music");
+        float val = PlayerPrefs.GetFloat("Music", musicSlider.maxValue);
+        SetMusicVolume(val);
+        musicSlider.value = val;
 
-        SetAmbienceVolume(PlayerPrefs.GetFloat("Ambience"));
-        ambienceSlider.value = PlayerPrefs.GetFloat("Ambience");
+        val = PlayerPrefs.GetFloat("Ambience", ambienceSlider.maxValue);
+        SetAmbienceVolume(val);
+        ambienceSlider.value = val;
 
+        val = PlayerPrefs.GetFloat("Ambience", sfxSlider.maxValue);
         SetSFXVolume(PlayerPrefs.GetFloat("SFX"));
-        SFXSlider.value = PlayerPrefs.GetFloat("SFX");
+        sfxSlider.value = PlayerPrefs.GetFloat("SFX");
         //////////////////////////////////////////////
     }
 
@@ -83,7 +73,7 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator LoadAsyncOperation()
     {
-        LoadingScreen.SetActive(true);
+        loadingScreen.SetActive(true);
         AsyncOperation gameLevel = SceneManager.LoadSceneAsync("Main");
         while (!gameLevel.isDone)
         {
@@ -106,16 +96,7 @@ public class MenuManager : MonoBehaviour
     public void SetFullScreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-        int boolToInt;
-        if (isFullscreen)
-        {
-            boolToInt = 1;
-        }
-        else
-        {
-            boolToInt = 0;
-        }
-        PlayerPrefs.SetInt("FullScreen", boolToInt);
+        PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
     }
 
     public void SetResolution(int resolutionIndex)
