@@ -6,11 +6,11 @@ using System;
 using System.Linq;
 using Random = UnityEngine.Random;
 using EventType = Event.EventType;
-using System.Runtime.InteropServices;
+using static GameManager;
 
 public class EventQueue : MonoBehaviour
 {
-    private const int MinQueueEvents = 2; // The minimum events in the queue to store
+    private const int MinQueueEvents = 3; // The minimum events in the queue to store
     private const int MinPoolEvents = 2; // The minumum events in the pool to 
     
     [ReorderableList]
@@ -53,7 +53,7 @@ public class EventQueue : MonoBehaviour
 
         while (current.Count < 3)
         {
-            if (others.Count < MinQueueEvents) {AddEvent(PickRandom()); continue;}
+            if (others.Count < MinQueueEvents) { AddRandomSelection(); continue; }
             current.Add(others.First.Value);
             others.RemoveFirst();
         }
@@ -65,10 +65,28 @@ public class EventQueue : MonoBehaviour
         OnEventsProcessed?.Invoke(current, outcomeDescriptions);
     }
 
-    public Event PickRandom()
+    public void AddRandomSelection()
     {
-        EventType type;
-
+        List<Event> eventPool = new List<Event>();
+        
+        for (int j = 0; j < 3; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
+        if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos)); // 30% flat chance to spawn
+        
+        // Start spawning threat events at 60, and gets more likely the higher it gets
+        if (Manager.ThreatLevel > 60 && Random.Range(0,100) > Manager.ThreatLevel) eventPool.Add(PickRandom(EventType.Threat));
+        if (Manager.Satisfaction < 30 || (Random.Range(0,100) > 10 && Manager.turnCounter < 5)) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+        
+        //Keeps adventurer count roughly at a fair level
+        if (Manager.TotalAdventurers < 7 + Manager.turnCounter && Manager.Satisfaction > 40) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+        // Catchup if falling behind
+        if (Manager.TotalAdventurers < 2 + Manager.turnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+        // 
+        if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+        
+        while (eventPool.Count > 0) AddEvent(eventPool.PopRandom()); // Add events in random order
+        
+        /*EventType type;
+        
         int adventurerW = GameManager.Manager.Satisfaction < 50 ? 13 : 33;
         if (GameManager.Manager.AvailableAdventurers < GameManager.Manager.Accommodation * 0.75f)
             adventurerW += 13;
@@ -87,7 +105,7 @@ public class EventQueue : MonoBehaviour
         // Uncomment these to see how the weights work.
         //Debug.Log($"{adventurerW} | {chaosW} | {flavourW}");
         //Debug.Log($"{i} | {type}");
-        return PickRandom(type);
+        return PickRandom(type);*/
     }
 
     public Event PickRandom(EventType type)
