@@ -8,6 +8,7 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
+    public bool mainMenu;
     //We need each object so that we can update their appearance to reflect player prefs
     //loading
     public GameObject loadingScreen;
@@ -25,9 +26,10 @@ public class MenuManager : MonoBehaviour
 
     //fullscreen
     public Toggle fullscreenToggle;
-
+    
     private void Start()
     {
+        if (!mainMenu) return;
         //generate a list of available resolutions
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
@@ -60,9 +62,9 @@ public class MenuManager : MonoBehaviour
         SetAmbienceVolume(val);
         ambienceSlider.value = val;
 
-        val = PlayerPrefs.GetFloat("Ambience", sfxSlider.maxValue);
-        SetSFXVolume(PlayerPrefs.GetFloat("SFX"));
-        sfxSlider.value = PlayerPrefs.GetFloat("SFX");
+        val = PlayerPrefs.GetFloat("SFX", sfxSlider.maxValue);
+        SetSFXVolume(val);
+        sfxSlider.value = val;
         //////////////////////////////////////////////
     }
 

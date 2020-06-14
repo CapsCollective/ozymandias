@@ -1,7 +1,9 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
+using static QuestMapController;
 
 public class QuestDisplayManager : MonoBehaviour
 {
@@ -13,8 +15,8 @@ public class QuestDisplayManager : MonoBehaviour
     [SerializeField] private GameObject displayContent;
     [SerializeField] private GameObject simpleContent;
 
-    private Quest flyerQuest;
-
+    public Quest flyerQuest;
+    
     private void Start()
     {
         sendButton.onClick.AddListener(OnButtonClick);
@@ -25,7 +27,7 @@ public class QuestDisplayManager : MonoBehaviour
     {
         flyerQuest.StartQuest();
         GetComponent<HighlightOnHover>().mouseOver = false;
-        gameObject.SetActive(false);
+        QuestMap.RemoveQuest(flyerQuest);
     }
 
     public void SetQuest(Quest q)

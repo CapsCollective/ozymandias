@@ -2,27 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class QuestMapController : MonoBehaviour
 {
     // Fields
     #pragma warning disable 0649
-    [SerializeField] private GameObject[] flyerList;
-    private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
+    [SerializeField] private List<QuestDisplayManager> availableFlyers = new List<QuestDisplayManager>();
+    [SerializeField] private List<QuestDisplayManager> usedFlyers = new List<QuestDisplayManager>();
+    [SerializeField] private QuestCounter counter;
+    //private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
     private HighlightOnHover displayingFlyerComponent;
-
-    public static Action OnNewQuest;
-    public static List<Quest> QuestList = new List<Quest>(8);
-
+    
+    private static QuestMapController instance;
+    public static QuestMapController QuestMap
+    {
+        get
+        {
+            if (!instance)
+                instance = FindObjectsOfType<QuestMapController>()[0];
+            return instance;
+        }
+    }
+    
     private void Start()
     {
-        foreach (var flyer in flyerList)
+        foreach (var flyer in availableFlyers)
         {
             flyer.GetComponent<HighlightOnHover>().callbackMethod = OnFlyerClick;
         }
-
-        OnNewQuest += UpdateDisplay;
-        UpdateDisplay();
     }
 
     private void Update()
@@ -39,54 +47,29 @@ public class QuestMapController : MonoBehaviour
         displayingFlyerComponent = flyer.GetComponent<HighlightOnHover>();
         displayingFlyerComponent.DisplaySelected();
     }
-
-    public void UpdateDisplay()
+    
+    public bool AddQuest(Quest q)
     {
-        // Commenting out since it's unused and has a lot of deprecated stuff
-        // Fetch the currently active quests
-        var quests = GetQuests();
-
-        // Create a new mapping for previously posted quests
-        var newMappings = quests.Where(q => flyerMappings.ContainsKey(q.QuestTitle))
-            .ToDictionary(q => q.QuestTitle, q => flyerMappings[q.QuestTitle]);
-        
-        // Remove quests that have already been mapped
-        quests = quests.Where(q => !newMappings.Keys.Contains(q.QuestTitle)).ToArray();
-        
-        // Create a shuffled array of unused flyers
-        var unusedFlyers = flyerList.Where(f => !flyerMappings.Values.Contains(f)).ToArray()
-            .OrderBy(x => new System.Random().Next(1, 8)).ToArray();
-        
-        // Assign the remaining quests to the unused flyers, setting their states and recording mappings
-        for (var i = 0; i < unusedFlyers.Length; i++)
-        {
-            if (i < quests.Length)
-            {
-                unusedFlyers[i].SetActive(true);
-                unusedFlyers[i].GetComponent<QuestDisplayManager>().SetQuest(quests[i]);
-                newMappings.Add(quests[i].QuestTitle, unusedFlyers[i]);
-            }
-            else
-                unusedFlyers[i].SetActive(false);
-        }
-        
-        // Set the new flyer mappings
-        flyerMappings = newMappings;
+        if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.flyerQuest == q)) return false;
+        QuestDisplayManager flyer = availableFlyers.PopRandom();
+        flyer.gameObject.SetActive(true);
+        flyer.SetQuest(q);
+        usedFlyers.Add(flyer);
+        counter.UpdateCounter(usedFlyers.Count, true);
+        return true;
     }
-
-    private Quest[] GetQuests()
+    
+    public void RemoveQuest(Quest q)
     {
-        return QuestList.ToArray();
-    }
-
-    public static void AddQuest(Quest q)
-    {
-        QuestList.Add(q);
-        OnNewQuest?.Invoke();
+        QuestDisplayManager flyer = usedFlyers.Find(x => x.flyerQuest == q);
+        flyer.gameObject.SetActive(false);
+        usedFlyers.Remove(flyer);
+        counter.UpdateCounter(usedFlyers.Count);
+        availableFlyers.Add(flyer);
     }
 
     private void OnDestroy()
     {
-        OnNewQuest -= UpdateDisplay;
+        instance = null;
     }
 }
