@@ -24,7 +24,7 @@ public class EventQueue : MonoBehaviour
     
     public static Action<List<Event>, List<string>> OnEventsProcessed;
     
-    public Event[] allEvents;
+    public List<Event> allEvents;
 
     [Tooltip("Events in this array are ignored by the Add All button")]
     public Event[] filterEvents;
@@ -98,7 +98,11 @@ public class EventQueue : MonoBehaviour
             
             Event e = eventPools[type].First.Value;
             eventPools[type].RemoveFirst();
-            if (ValidEvent(e)) return e;
+            if (ValidEvent(e))
+            {
+                if (e.oneTime) allEvents.Remove(e);
+                return e;
+            }
         }
     }
 
