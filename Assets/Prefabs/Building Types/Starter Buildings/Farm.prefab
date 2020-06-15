@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1422530078004020641}
   - component: {fileID: 1422530078004020646}
   - component: {fileID: 1422530078004020640}
+  - component: {fileID: -1667649082604640660}
   m_Layer: 0
   m_Name: Farm
   m_TagString: Untagged
@@ -51,6 +52,8 @@ MonoBehaviour:
   - prefab: {fileID: 9141398861399822811, guid: e781e598dd5aa2b40b293f6ae09746be,
       type: 3}
     directions: 02000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &1422530078004020640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,3 +87,22 @@ MonoBehaviour:
   luxury: 0
   spending: 0
   defense: 0
+--- !u!95 &-1667649082604640660
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422530078004020647}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

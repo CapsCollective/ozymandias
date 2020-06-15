@@ -87,7 +87,7 @@ public class Map : MonoBehaviour
     }
     
     // Occupies and fits a building onto the map
-    private void Occupy(BuildingStructure building, Cell[] cells)
+    private void Occupy(BuildingStructure building, Cell[] cells, bool animate = false)
     {
         Vector3[][] vertices = new Vector3[cells.Length][];
 
@@ -98,11 +98,11 @@ public class Map : MonoBehaviour
 
         mapLayout.Occupy(building, cells);
 
-        building.Fit(vertices, mapLayout.heightFactor);
+        building.Fit(vertices, mapLayout.heightFactor, animate);
     }
 
     // Tries to create and place a building from a world position and rotation, returns if successful
-    public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0)
+    public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0, bool animate = true)
     {
         GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
         BuildingStats stats = buildingInstance.GetComponent<BuildingStats>();
@@ -112,13 +112,18 @@ public class Map : MonoBehaviour
         
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building, rotation);
-        
-        buildingInstance.transform.position = worldPosition;
+
+        Vector3 centre = new Vector3();
+        foreach (Cell cell in cells)
+            centre += cell.Centre;
+        centre /= cells.Length;
+
+        buildingInstance.transform.position = transform.TransformPoint(centre);
 
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
             mapLayout.Align(cells, rotation);
-            Occupy(building, cells);
+            Occupy(building, cells, animate);
             stats.Build();
             return true;
         }

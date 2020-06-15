@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2190574654203646119}
   - component: {fileID: 2190574654203646116}
   - component: {fileID: 358868533062668719}
+  - component: {fileID: -4050256499332587473}
   m_Layer: 0
   m_Name: Bath House
   m_TagString: Untagged
@@ -56,6 +57,8 @@ MonoBehaviour:
     directions: 02000000
   - prefab: {fileID: 117222089155844661, guid: fa5182e456a6d7244a382f19c46dde33, type: 3}
     directions: 0200000002000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &358868533062668719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,3 +93,22 @@ MonoBehaviour:
   luxury: 0
   spending: 0
   defense: 0
+--- !u!95 &-4050256499332587473
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2190574654203646117}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

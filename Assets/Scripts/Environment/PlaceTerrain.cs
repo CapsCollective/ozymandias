@@ -31,7 +31,7 @@ public class PlaceTerrain : MonoBehaviour
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
             {
-                map.CreateBuilding(terrainBuilding, hit.point, rotation);
+                map.CreateBuilding(terrainBuilding, hit.point, rotation, animate: false);
                 Destroy(gameObject);
             }
         }

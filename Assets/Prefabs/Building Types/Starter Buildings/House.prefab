@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4746249198091460306}
   - component: {fileID: 4746249198091460307}
   - component: {fileID: 4746249198091460317}
+  - component: {fileID: 7129780765797938555}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -47,6 +48,8 @@ MonoBehaviour:
   sections:
   - prefab: {fileID: 310647785430848519, guid: 699b7165eb99c98448ad4c7527ea66cc, type: 3}
     directions: 
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &4746249198091460317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +72,7 @@ MonoBehaviour:
   operational: 0
   terrain: 0
   type: 26
+  primaryStat: 0
   baseCost: 10
   accommodation: 1
   weaponry: 0
@@ -79,3 +83,22 @@ MonoBehaviour:
   luxury: 0
   spending: 0
   defense: 0
+--- !u!95 &7129780765797938555
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746249198091460304}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

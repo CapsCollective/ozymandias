@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7412343278648512334}
   - component: {fileID: 7412343278648512333}
   - component: {fileID: 7412343278648512335}
+  - component: {fileID: -164596348916853642}
   m_Layer: 0
   m_Name: General Store
   m_TagString: Untagged
@@ -50,6 +51,8 @@ MonoBehaviour:
     directions: 
   - prefab: {fileID: 109120893004568002, guid: c3dd968054d5f0142bfa2d95bbd55ded, type: 3}
     directions: 02000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &7412343278648512335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,3 +88,22 @@ MonoBehaviour:
   luxury: 0
   spending: 1
   defense: 0
+--- !u!95 &-164596348916853642
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412343278648512332}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

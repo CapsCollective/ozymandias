@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 454044182329843997}
   - component: {fileID: 454044182329843996}
   - component: {fileID: 1544858549326216651}
+  - component: {fileID: -2868640590780795139}
   m_Layer: 0
   m_Name: Brewery
   m_TagString: Untagged
@@ -54,6 +55,8 @@ MonoBehaviour:
   - prefab: {fileID: 4656057957952714449, guid: f40447335018edd4b9ec0f11ef7914a5,
       type: 3}
     directions: 03000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &1544858549326216651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,3 +92,22 @@ MonoBehaviour:
   luxury: 0
   spending: 1
   defense: 0
+--- !u!95 &-2868640590780795139
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454044182329843987}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
