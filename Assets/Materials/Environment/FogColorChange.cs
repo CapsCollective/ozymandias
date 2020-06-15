@@ -30,8 +30,11 @@ public class FogColorChange : MonoBehaviour
     private Color origFogCol;
     private Color currentFogCol;
 
-    private float origFogDensity;
-    private float currentFogDensity;
+    private float origFogFarDist;
+    private float currentFogFarDist;
+
+    private float origFogNearDist;
+    private float currentFogNearDist;
 
     public Color deadEm;
     public Color deadCol;
@@ -39,7 +42,8 @@ public class FogColorChange : MonoBehaviour
     public float finalBlend;
     public float finalBlocker;
     public Color finalFogCol;
-    public float finalFogDensity;
+    public float finalFogNearDist;
+    public float finalFogFarDist;
 
     private bool isSetup = false;
 
@@ -59,7 +63,8 @@ public class FogColorChange : MonoBehaviour
             origBlocker = blocker.localScale.x;
         }
         origFogCol = RenderSettings.fogColor;
-        origFogDensity = RenderSettings.fogDensity;
+        origFogNearDist = RenderSettings.fogStartDistance;
+        origFogFarDist = RenderSettings.fogEndDistance;
 
         return true;
     }
@@ -94,14 +99,16 @@ public class FogColorChange : MonoBehaviour
             currentBlend = Mathf.Lerp(origBlend, finalBlend, updateRatio);
             currentBlocker = Mathf.Lerp(origBlocker, finalBlocker, updateRatio);
             currentFogCol = Color.Lerp(origFogCol, finalFogCol, updateRatio);
-            currentFogDensity = Mathf.Lerp(origFogDensity, finalFogDensity, updateRatio);
+            currentFogNearDist = Mathf.Lerp(origFogNearDist, finalFogNearDist, updateRatio);
+            currentFogFarDist = Mathf.Lerp(origFogFarDist, finalFogFarDist, updateRatio);
 
             mr.material.SetColor("_EmissionColor", currentEm);
             mr.material.SetColor("_Color", currentCol);
             mr.material.SetFloat("_DistortionBlend", currentBlend);
             blocker.localScale = new Vector3(currentBlocker, currentBlocker, currentBlocker);
             RenderSettings.fogColor = currentFogCol;
-            RenderSettings.fogDensity = currentFogDensity;
+            RenderSettings.fogStartDistance = currentFogNearDist;
+            RenderSettings.fogEndDistance = currentFogFarDist;
             RenderSettings.ambientLight = currentFogCol;
 
             t += Time.deltaTime;
@@ -112,23 +119,23 @@ public class FogColorChange : MonoBehaviour
     }
 
 
-    public void SetColor()
-    {
-        ratio = Manager.ThreatLevel / 100f;
+    //public void SetColor()
+    //{
+    //    ratio = Manager.ThreatLevel / 100f;
 
-        currentEm = Color.Lerp(origEm, deadEm, ratio);
-        currentCol = Color.Lerp(origCol, deadCol, ratio);
-        currentBlend = Mathf.Lerp(origBlend, finalBlend, ratio);
-        currentBlocker = Mathf.Lerp(origBlocker, finalBlocker, ratio);
-        currentFogCol = Color.Lerp(origFogCol, finalFogCol, ratio);
-        currentFogDensity = Mathf.Lerp(origFogDensity, finalFogDensity, ratio);
+    //    currentEm = Color.Lerp(origEm, deadEm, ratio);
+    //    currentCol = Color.Lerp(origCol, deadCol, ratio);
+    //    currentBlend = Mathf.Lerp(origBlend, finalBlend, ratio);
+    //    currentBlocker = Mathf.Lerp(origBlocker, finalBlocker, ratio);
+    //    currentFogCol = Color.Lerp(origFogCol, finalFogCol, ratio);
+    //    currentFogDensity = Mathf.Lerp(origFogDensity, finalFogDensity, ratio);
 
-        mr.material.SetColor("_EmissionColor", currentEm);
-        mr.material.SetColor("_Color", currentCol);
-        mr.material.SetFloat("_DistortionBlend", currentBlend);
-        blocker.localScale = new Vector3(currentBlocker, currentBlocker, currentBlocker);
-        RenderSettings.fogColor = currentFogCol;
-        RenderSettings.fogDensity = currentFogDensity;
-        RenderSettings.ambientLight = currentFogCol;
-    }
+    //    mr.material.SetColor("_EmissionColor", currentEm);
+    //    mr.material.SetColor("_Color", currentCol);
+    //    mr.material.SetFloat("_DistortionBlend", currentBlend);
+    //    blocker.localScale = new Vector3(currentBlocker, currentBlocker, currentBlocker);
+    //    RenderSettings.fogColor = currentFogCol;
+    //    RenderSettings.fogDensity = currentFogDensity;
+    //    RenderSettings.ambientLight = currentFogCol;
+    //}
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Managers_and_Controllers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,14 +14,13 @@ public class PlacementController : MonoBehaviour
     public List<GameObject> allBuildings = new List<GameObject>();
     private List<GameObject> remainingBuildings = new List<GameObject>();
     
-    //public GameObject rotateIcon;
-
     private Map map;
     private RaycastHit hit;
     private Camera cam;
 
     private int rotation;
     private Cell[] highlighted = new Cell[0];
+    private static int _previousSelected = Selected;
 
     private void Awake()
     {
@@ -41,9 +41,19 @@ public class PlacementController : MonoBehaviour
         // Clear previous highlights
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
-        
-        //rotateIcon.SetActive(Selected != Deselected);
-        
+
+        if (_previousSelected != Selected)
+        {
+            if (CursorController.Instance.currentCursor != CursorController.CursorType.Destroy)
+            {
+                var cursor = (Selected != Deselected)
+                    ? CursorController.CursorType.Build
+                    : CursorController.CursorType.Pointer;
+                CursorController.Instance.SwitchCursor(cursor);
+                _previousSelected = Selected;
+            }
+        }
+
         if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
 
         Cell closest = map.GetCellFromMouse();
