@@ -28,7 +28,11 @@ public class RemoveAdventurers : Outcome
         get
         {
             if (customDescription != "") return "<color=#820000ff>" + customDescription + "</color>";
-            return "<color=#820000ff>" + adventurerNames.Count + "adventurers have been lost</color>";
+            return "<color=#820000ff>" +
+                   adventurerNames.Count +
+                   " adventurer" +
+                   (adventurerNames.Count > 1 ? "s have " : " has ") +
+                   "been lost</color>";
         }
     }
 }

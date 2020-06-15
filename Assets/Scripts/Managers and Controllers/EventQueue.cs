@@ -70,17 +70,24 @@ public class EventQueue : MonoBehaviour
         List<Event> eventPool = new List<Event>();
         
         for (int j = 0; j < 3; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
-        if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos)); // 30% flat chance to spawn
-        
+        if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos)); // 30% flat chance to spawn chaos
+        if (Random.Range(0,100) < 20) eventPool.Add(PickRandom(EventType.Blueprint)); // 20% flat chance to spawn blueprint
+
         // Start spawning threat events at 60, and gets more likely the higher it gets
-        if (Manager.ThreatLevel > 60 && Random.Range(0,100) > Manager.ThreatLevel) eventPool.Add(PickRandom(EventType.Threat));
-        if (Manager.Satisfaction < 30 || (Random.Range(0,100) > 10 && Manager.turnCounter < 5)) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+        if (Manager.ThreatLevel > 60 && Random.Range(0,100) < Manager.ThreatLevel) eventPool.Add(PickRandom(EventType.Threat));
+        
+        // Fixed 10% spawn rate for challenge
+        if (Manager.turnCounter > 5 && Random.Range(0,100) > 90) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+        
+        //Variable rate for < 50 and 30, should cause a mass exodus
+        if (Manager.turnCounter > 5 && Manager.Satisfaction - Random.Range(10,50) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+        if (Manager.turnCounter > 5 && Manager.Satisfaction - Random.Range(10,30) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
         
         //Keeps adventurer count roughly at a fair level
-        if (Manager.TotalAdventurers < 7 + Manager.turnCounter && Manager.Satisfaction > 40) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+        if (Manager.TotalAdventurers < 7 + Manager.turnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         // Catchup if falling behind
-        if (Manager.TotalAdventurers < 2 + Manager.turnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
-        // 
+        if (Manager.TotalAdventurers < 4 + Manager.turnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+        // More if high satisfaction
         if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         
         while (eventPool.Count > 0) AddEvent(eventPool.PopRandom()); // Add events in random order
