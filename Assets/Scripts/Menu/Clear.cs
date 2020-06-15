@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Managers_and_Controllers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -83,6 +84,7 @@ public class Clear : UiUpdater
     public void EnterClearMode()
     {
         icon.sprite = selected;
+        CursorController.Instance.SwitchCursor(CursorController.CursorType.Destroy);
     }
 
     public void ExitClearMode()
@@ -90,6 +92,8 @@ public class Clear : UiUpdater
         map?.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
         icon.sprite = deselected;
+        if (CursorController.Instance.currentCursor == CursorController.CursorType.Destroy)
+            CursorController.Instance.SwitchCursor(CursorController.CursorType.Pointer);
     }
     
     public void ClearBuilding()
