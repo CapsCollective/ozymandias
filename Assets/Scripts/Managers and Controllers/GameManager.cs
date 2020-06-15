@@ -307,7 +307,7 @@ public class GameManager : MonoBehaviour
         
         map.Clear(building.GetComponent<BuildingStructure>());
         if (!building.terrain) buildings.Remove(building);
-        Destroy(building.gameObject);
+        //Destroy(building.gameObject);
         UpdateUi();
     }
     

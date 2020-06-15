@@ -96,8 +96,10 @@ public class Clear : UiUpdater
     {
         if (selectedBuilding.indestructable) return;
         BuildingStats building = selectedBuilding.GetComponent<BuildingStats>();
+        BuildingStructure buildingStructure = selectedBuilding.GetComponent<BuildingStructure>();
         if (!Manager.Spend(ScaledCost)) return;
         if (building.terrain) clearCount++;
+        buildingStructure.Clear();
         Manager.Demolish(building);
     }
 }

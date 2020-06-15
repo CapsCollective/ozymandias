@@ -114,9 +114,16 @@ public class Map : MonoBehaviour
         Cell[] cells = GetCells(root, building, rotation);
 
         Vector3 centre = new Vector3();
+        int cellCount = 0;
         foreach (Cell cell in cells)
-            centre += cell.Centre;
-        centre /= cells.Length;
+        {
+            if (cell != null)
+            {
+                centre += cell.Centre;
+                cellCount++;
+            }
+        }
+        centre /= cellCount;
 
         buildingInstance.transform.position = transform.TransformPoint(centre);
 

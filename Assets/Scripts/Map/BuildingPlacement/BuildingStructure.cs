@@ -9,6 +9,7 @@ public class BuildingStructure : MonoBehaviour
     public bool indestructable;
 
     public string buildTrigger = "Build";
+    public string clearTrigger = "Clear";
 
     private Animator _animator;
     private Animator Animator {  get { return _animator ? _animator : _animator = GetComponent<Animator>(); } }
@@ -25,9 +26,17 @@ public class BuildingStructure : MonoBehaviour
             section.Fit(vertices[i], heightFactor);
         }
 
-        Debug.Log(buildTrigger + " : " + animate);
-
         if (animate) Animator.SetTrigger(buildTrigger);
+    }
+
+    public void Clear()
+    {
+        Animator.SetTrigger(clearTrigger);
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 
     // Structs
