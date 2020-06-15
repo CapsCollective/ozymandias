@@ -20,7 +20,8 @@ public class Event : ScriptableObject
         Special,
         Advert,
         GameOver,
-        AdventurersLeave
+        AdventurersLeave,
+        Blueprint
     }
 
     public string headline;
@@ -44,7 +45,7 @@ public class Event : ScriptableObject
     [Tooltip("Up to 4 choices, with their own outcomes")]
     public List<Choice> choices = new List<Choice>();
 
-    public bool OneTime;
+    public bool oneTime;
     
     public string Execute() // Run the event's and return the outcome's description
     {

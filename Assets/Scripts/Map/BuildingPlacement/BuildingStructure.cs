@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Managers_and_Controllers;
 using UnityEngine;
 
 public class BuildingStructure : MonoBehaviour
@@ -60,5 +61,15 @@ public class BuildingStructure : MonoBehaviour
     {
         public GameObject prefab;
         public List<Direction> directions;
+    }
+
+    public void PlayBuildSound()
+    {
+        JukeboxController.Instance.PlayBuild();
+    }
+    
+    public void PlayDestroySound()
+    {
+        JukeboxController.Instance.PlayDestroy();
     }
 }

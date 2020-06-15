@@ -96,6 +96,9 @@ public class GameManager : MonoBehaviour
 
     [ReadOnly] [SerializeField] public List<BuildingStats> buildings = new List<BuildingStats>();
     
+    [ReadOnly] [SerializeField] private int totalAdventurers;
+    public int TotalAdventurers => totalAdventurers = adventurers.Count;
+    
     [ReadOnly] [SerializeField] private int availableAdventurers;
     public int AvailableAdventurers => availableAdventurers = adventurers.Count(x => !x.assignedQuest);
     
@@ -133,7 +136,7 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int luxury;
     public int Luxury => luxury = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers, 0, 100);
 
-    public int OvercrowdingMod => Mathf.Min(0, (Accommodation - AvailableAdventurers) * 3); //lose 1% satisfaction per adventurer over capacity
+    public int OvercrowdingMod => Mathf.Min(0, (Accommodation - AvailableAdventurers) * 5); //lose 5% satisfaction per adventurer over capacity
         
     [ReadOnly] [SerializeField] private int satisfaction;
     public int Satisfaction => satisfaction = Mathf.Clamp(0, 1+ Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
@@ -244,8 +247,8 @@ public class GameManager : MonoBehaviour
         
         eventQueue.AddEvent(openingEvent, true);
         
-        // Run the menu tutorial system dialogue
-        dialogueManager.StartDialogue("menu_tutorial");
+        // Run the tutorial video
+        TutorialPlayerController.Instance.PlayClip(0);
         Analytics.EnableCustomEvent("New Turn", true);
         Analytics.enabled = true;
     }
@@ -253,6 +256,12 @@ public class GameManager : MonoBehaviour
     public int turnCounter = 0;
     [Button("Next Turn")]
     public void NextTurn()
+    {
+        OnNextTurn?.Invoke();
+        //NewTurn();
+    }
+
+    public void NewTurn()
     {
         threatLevel += ChangePerTurn;
         if (threatLevel < 0) threatLevel = 0;
@@ -268,12 +277,7 @@ public class GameManager : MonoBehaviour
         if (ThreatLevel >= 100)
             foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
         eventQueue.ProcessEvents();
-        OnNextTurn?.Invoke();
-        //NewTurn();
-    }
-
-    public void NewTurn()
-    {
+        
         OnNewTurn?.Invoke();
         if (turnCounter % 5 == 0)
         {
@@ -348,7 +352,6 @@ public class GameManager : MonoBehaviour
     
     public Map map;
     public EventQueue eventQueue;
-    public DialogueManager dialogueManager;
     public NewspaperController newspaperController;
     public MenuManager menuManager;
     public PlacementController placementController;
@@ -364,7 +367,7 @@ public class GameManager : MonoBehaviour
     private void BuildGuildHall()
     {
         //Build Guild Hall in the center of the map
-        map.CreateBuilding(guildHall, map.transform.position, animate: true);
+        map.CreateBuilding(guildHall, map.transform.position, animate: false);
     }
 
     private void OnDestroy()

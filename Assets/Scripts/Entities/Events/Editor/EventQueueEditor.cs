@@ -33,7 +33,7 @@ public class EventQueueEditor : Editor
 
                 allEvents.Add(eevent);
             }
-            e.allEvents = allEvents.ToArray();
+            e.allEvents = allEvents.ToList();
         }
     }
 }

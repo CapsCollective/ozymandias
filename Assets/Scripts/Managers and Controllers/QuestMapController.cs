@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Managers_and_Controllers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,7 @@ public class QuestMapController : MonoBehaviour
     [SerializeField] private QuestCounter counter;
     //private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
     private HighlightOnHover displayingFlyerComponent;
+    private bool shownTutorial;
     
     private static QuestMapController instance;
     public static QuestMapController QuestMap
@@ -24,7 +26,14 @@ public class QuestMapController : MonoBehaviour
             return instance;
         }
     }
-    
+
+    public void OnOpened()
+    {
+        if (shownTutorial) return;
+        shownTutorial = true;
+        TutorialPlayerController.Instance.PlayClip(2);
+    }
+
     private void Start()
     {
         foreach (var flyer in availableFlyers)
