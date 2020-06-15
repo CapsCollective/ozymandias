@@ -244,8 +244,8 @@ public class GameManager : MonoBehaviour
         
         eventQueue.AddEvent(openingEvent, true);
         
-        // Run the menu tutorial system dialogue
-        dialogueManager.StartDialogue("menu_tutorial");
+        // Run the tutorial video
+        TutorialPlayerController.Instance.PlayClip(0);
         Analytics.EnableCustomEvent("New Turn", true);
         Analytics.enabled = true;
     }
@@ -348,7 +348,6 @@ public class GameManager : MonoBehaviour
     
     public Map map;
     public EventQueue eventQueue;
-    public DialogueManager dialogueManager;
     public NewspaperController newspaperController;
     public MenuManager menuManager;
     public PlacementController placementController;
