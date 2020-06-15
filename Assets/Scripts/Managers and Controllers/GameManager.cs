@@ -257,6 +257,12 @@ public class GameManager : MonoBehaviour
     [Button("Next Turn")]
     public void NextTurn()
     {
+        OnNextTurn?.Invoke();
+        //NewTurn();
+    }
+
+    public void NewTurn()
+    {
         threatLevel += ChangePerTurn;
         if (threatLevel < 0) threatLevel = 0;
         wealth += wealthPerTurn;
@@ -271,12 +277,7 @@ public class GameManager : MonoBehaviour
         if (ThreatLevel >= 100)
             foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
         eventQueue.ProcessEvents();
-        OnNextTurn?.Invoke();
-        //NewTurn();
-    }
-
-    public void NewTurn()
-    {
+        
         OnNewTurn?.Invoke();
         if (turnCounter % 5 == 0)
         {
