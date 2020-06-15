@@ -50,7 +50,7 @@ public class StatChange : Outcome
             if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
             string desc = "";
             if (Amount > 0) desc += "<color="+color+">" + StatToChange + " has increased by " + Amount;
-            else desc += "<color="+color+">" + StatToChange + " has decreased by " + Amount;
+            else desc += "<color="+color+">" + StatToChange + " has decreased by " + Mathf.Abs(Amount);
             
             if (turnsLeft != -1) desc += " for " + Turns + " turns.";
             return desc + "</color>";

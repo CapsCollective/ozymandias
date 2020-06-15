@@ -12,7 +12,7 @@ public class BuildingUnlock : Outcome
     [Button]
     public override bool Execute()
     {
-        if (Building == null)
+        if (!Building)
             return false;
 
         if (!BuildingManager.BuildManager.AllBuildings.Contains(Building))
@@ -26,4 +26,6 @@ public class BuildingUnlock : Outcome
         // Add some spending instead?
         return false;
     }
+
+    public override string Description => "<color=#007000ff>Building Type Unlocked: " + Building.name + "!</color>";
 }

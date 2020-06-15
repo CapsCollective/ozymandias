@@ -31,9 +31,9 @@ public class BuildingStats : MonoBehaviour
         get {
             switch (scaleSpeed)
             {
-                case ScaleSpeed.Slow: return 1.15f; 
-                case ScaleSpeed.Medium: return 1.20f;
-                case ScaleSpeed.Fast: return 1.25f;
+                case ScaleSpeed.Slow: return 1.20f; 
+                case ScaleSpeed.Medium: return 1.25f;
+                case ScaleSpeed.Fast: return 1.30f;
                 case ScaleSpeed.Special: return 1.5f;
                 default: return 1;
             }
