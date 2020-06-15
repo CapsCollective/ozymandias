@@ -367,7 +367,7 @@ public class GameManager : MonoBehaviour
     private void BuildGuildHall()
     {
         //Build Guild Hall in the center of the map
-        map.CreateBuilding(guildHall, map.transform.position, animate: true);
+        map.CreateBuilding(guildHall, map.transform.position, animate: false);
     }
 
     private void OnDestroy()
