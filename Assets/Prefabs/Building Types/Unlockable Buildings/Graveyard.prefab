@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2190574654203646119}
   - component: {fileID: 2190574654203646116}
   - component: {fileID: 358868533062668719}
+  - component: {fileID: -8601007544483309900}
   m_Layer: 0
   m_Name: Graveyard
   m_TagString: Untagged
@@ -54,6 +55,8 @@ MonoBehaviour:
   - prefab: {fileID: 7627071939724331137, guid: ccba1b7a0ac5aea418a5d6c1ab771abf,
       type: 3}
     directions: 02000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &358868533062668719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +79,7 @@ MonoBehaviour:
   operational: 0
   terrain: 0
   type: 29
+  primaryStat: 0
   baseCost: 50
   accommodation: 0
   weaponry: 0
@@ -86,3 +90,22 @@ MonoBehaviour:
   luxury: 0
   spending: 0
   defense: 0
+--- !u!95 &-8601007544483309900
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2190574654203646117}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

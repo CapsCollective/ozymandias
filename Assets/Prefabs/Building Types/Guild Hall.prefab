@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1263116729105003458}
   - component: {fileID: 1263116729105003456}
   - component: {fileID: 1263116729105003459}
+  - component: {fileID: -1055934317847095422}
   m_Layer: 0
   m_Name: Guild Hall
   m_TagString: Untagged
@@ -63,6 +64,8 @@ MonoBehaviour:
   - prefab: {fileID: 3970598131823282281, guid: 6ac9d36253fcaa245ac16d5bb5c14c4a,
       type: 3}
     directions: 0000000000000000010000000200000002000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &1263116729105003459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,3 +100,22 @@ MonoBehaviour:
   luxury: 1
   spending: 0
   defense: 0
+--- !u!95 &-1055934317847095422
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263116729105003461}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

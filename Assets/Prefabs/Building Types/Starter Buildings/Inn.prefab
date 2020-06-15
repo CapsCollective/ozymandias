@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1286813015557461122}
   - component: {fileID: 1286813015557461123}
   - component: {fileID: 209078681290459220}
+  - component: {fileID: 8938394157806781959}
   m_Layer: 0
   m_Name: Inn
   m_TagString: Untagged
@@ -44,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indestructable: 0
   sections:
   - prefab: {fileID: 2798797904473383651, guid: 58a9f97c30def0245818ed95fedafdc6,
       type: 3}
@@ -55,6 +55,8 @@ MonoBehaviour:
   - prefab: {fileID: 2635411650018971984, guid: c7622640371af864bbfcc097b865a0bf,
       type: 3}
     directions: 03000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &209078681290459220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,3 +90,22 @@ MonoBehaviour:
   luxury: 0
   spending: 0
   defense: 0
+--- !u!95 &8938394157806781959
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286813015557461132}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5720474190711111016}
   - component: {fileID: 5720474190711111017}
   - component: {fileID: 5720474190711111018}
+  - component: {fileID: 3745209522159130256}
   m_Layer: 0
   m_Name: Alchemist's
   m_TagString: Untagged
@@ -54,6 +55,8 @@ MonoBehaviour:
   - prefab: {fileID: 7976277632680714915, guid: 72e2bb58fc70e034ba8cb47e75665ecc,
       type: 3}
     directions: 02000000
+  indestructable: 0
+  buildTrigger: Build
 --- !u!114 &5720474190711111018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,3 +92,22 @@ MonoBehaviour:
   luxury: 0
   spending: 1
   defense: 0
+--- !u!95 &3745209522159130256
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720474190711111019}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -307,7 +307,7 @@ public class GameManager : MonoBehaviour
         
         map.Clear(building.GetComponent<BuildingStructure>());
         if (!building.terrain) buildings.Remove(building);
-        Destroy(building.gameObject);
+        //Destroy(building.gameObject);
         UpdateUi();
     }
     
@@ -364,7 +364,7 @@ public class GameManager : MonoBehaviour
     private void BuildGuildHall()
     {
         //Build Guild Hall in the center of the map
-        map.CreateBuilding(guildHall, map.transform.position);
+        map.CreateBuilding(guildHall, map.transform.position, animate: true);
     }
 
     private void OnDestroy()

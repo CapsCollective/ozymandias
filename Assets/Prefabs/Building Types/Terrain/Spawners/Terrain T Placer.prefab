@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 898312258798222060}
   - component: {fileID: 898312258798222050}
   - component: {fileID: -555380720745749892}
+  - component: {fileID: -2088274243813631965}
   m_Layer: 0
   m_Name: Terrain T Placer
   m_TagString: Untagged
@@ -58,6 +59,9 @@ MonoBehaviour:
   - prefab: {fileID: 8254682334459258621, guid: ac7d8bf91fb22ed48b3860642d175e0e,
       type: 3}
     directions: 03000000
+  indestructable: 0
+  buildTrigger: Build
+  clearTrigger: Clear
 --- !u!114 &898312258798222050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +80,7 @@ MonoBehaviour:
   operational: 0
   terrain: 1
   type: 0
+  primaryStat: 0
   baseCost: 0
   accommodation: 0
   weaponry: 0
@@ -102,5 +107,23 @@ MonoBehaviour:
   distance: 1.5
   terrainBuilding: {fileID: 898312258798222061, guid: 674394480704c184995d22479d3a1672,
     type: 3}
-  dontPlace: 1
   rotation: 0
+--- !u!95 &-2088274243813631965
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898312258798222061}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
