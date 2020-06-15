@@ -31,9 +31,10 @@ public class PlacementController : MonoBehaviour
         ClickManager.OnLeftClick += LeftClick;
         ClickManager.OnRightClick += RightClick;
 
-        OnNewTurn += NewCards;
+        OnNextTurn += NewCards;
         
-        remainingBuildings = new List<GameObject>(allBuildings);
+        remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
+        for (int i = 0; i < 3; i++) cards[i].buildingPrefab = remainingBuildings.PopRandom();
     }
 
     void Update()
@@ -41,7 +42,9 @@ public class PlacementController : MonoBehaviour
         // Clear previous highlights
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
-
+        
+        rotateIcon.SetActive(Selected != Deselected);
+        
         if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
         /*
         {
@@ -73,7 +76,6 @@ public class PlacementController : MonoBehaviour
     private void LeftClick()
     {
         if (Selected == Deselected) return;
-
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         Physics.Raycast(ray, out hit);
 
@@ -81,7 +83,7 @@ public class PlacementController : MonoBehaviour
         int i = Selected;
         if (map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation))
         {
-            NewCard(i);
+            StartCoroutine(NewCard(i));
             cards[i].toggle.isOn = false;
             Selected = Deselected;
         }
@@ -96,13 +98,25 @@ public class PlacementController : MonoBehaviour
 
     public void NewCards()
     {
-        for (int i = 0; i < 3; i++) NewCard(i);
+        GetComponent<ToggleGroup>().SetAllTogglesOff();
+        for (int i = 0; i < 3; i++) StartCoroutine(NewCard(i));
     }
 
-    public void NewCard(int i)
+    public IEnumerator NewCard(int i)
     {
-        if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(allBuildings);
+        RectTransform transform = cards[i].GetComponent<RectTransform>();
+        for (int j = 0; j < 30; j++)
+        {
+            transform.anchoredPosition -= new Vector2(0,2.5f);
+            yield return null;
+        }
+        if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
         cards[i].buildingPrefab = remainingBuildings.PopRandom();
+        Manager.UpdateUi();
+        for (int j = 0; j < 30; j++)
+        {
+            transform.anchoredPosition += new Vector2(0,2.5f);
+            yield return null;
+        }
     }
-
 }

@@ -29,8 +29,8 @@ public class BuildingDamaged : Outcome
     {
         get
         {
-            if (customDescription != "") return customDescription;
-            return   "A " + buildingName + " has been destroyed";
+            if (customDescription != "") return "<color=#820000ff>" + customDescription + "</color>";
+            return "<color=#820000ff>A " + buildingName + " has been destroyed</color>";
         }
     }
 }

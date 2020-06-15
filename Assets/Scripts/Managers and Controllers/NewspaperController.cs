@@ -23,12 +23,21 @@ namespace Managers_and_Controllers
         [SerializeField] private GameObject disableButtonContent;
         private Event choiceEvent;
         private string newspaperTitle;
+        private bool shownTutorial;
     
         private void Awake()
         {
             newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + newspaperTitle + " }";
             EventQueue.OnEventsProcessed += UpdateDisplay;
+            GameManager.OnNewTurn += OnNewTurn;
+        }
+
+        private void OnNewTurn()
+        {
+            if (shownTutorial) return;
+            shownTutorial = true;
+            TutorialPlayerController.Instance.PlayClip(1);
         }
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
@@ -53,7 +62,7 @@ namespace Managers_and_Controllers
         public void SetChoiceActive(int choice, bool active)
         {
             choiceList[choice].gameObject.SetActive(active);
-            if (active) choiceList[choice].GetComponentInChildren<Text>().text = choiceEvent.choices[choice].name;
+            if (active) choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text = choiceEvent.choices[choice].name;
         }
     
         public void OnChoiceSelected(int choice)
@@ -92,11 +101,6 @@ namespace Managers_and_Controllers
             continueButton.enabled = state;
             continueButtonContent.SetActive(state);
             disableButtonContent.SetActive(!state);
-        }
-
-        private void OnDestroy()
-        {
-            EventQueue.OnEventsProcessed -= UpdateDisplay;
         }
     }
 }

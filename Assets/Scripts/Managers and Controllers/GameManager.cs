@@ -39,7 +39,7 @@ public enum BuildingType
     //Weaponry
     Blacksmith,
     Leatherworks,
-    Armourer, //Doubles as Defense
+    Armoury, //Doubles as Defense
     //Magic
     Alchemists,
     Enchanters,
@@ -68,12 +68,14 @@ public enum BuildingType
     //Defense
     GuardOutpost,
     //Misc
-    Graveyard
+    Graveyard,
+    Lake
 }
 
 public class GameManager : MonoBehaviour
 {
     public static Action OnNewTurn;
+    public static Action OnNextTurn;
     public static Action OnUpdateUI;
     
     private static GameManager instance;
@@ -93,6 +95,9 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private List<Adventurer> adventurers = new List<Adventurer>();
 
     [ReadOnly] [SerializeField] public List<BuildingStats> buildings = new List<BuildingStats>();
+    
+    [ReadOnly] [SerializeField] private int totalAdventurers;
+    public int TotalAdventurers => totalAdventurers = adventurers.Count;
     
     [ReadOnly] [SerializeField] private int availableAdventurers;
     public int AvailableAdventurers => availableAdventurers = adventurers.Count(x => !x.assignedQuest);
@@ -118,7 +123,7 @@ public class GameManager : MonoBehaviour
     public int Training => training = 0; // TODO: work out the specifics of this
 
     [ReadOnly] [SerializeField] private int effectiveness;
-    public int Effectiveness => effectiveness = Mathf.Clamp(0, Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
+    public int Effectiveness => effectiveness = Mathf.Clamp(0, 1 + Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
     
     [HorizontalLine]
     
@@ -131,19 +136,16 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int luxury;
     public int Luxury => luxury = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers, 0, 100);
 
-    public int OvercrowdingMod => Mathf.Min(0, Accommodation - AvailableAdventurers); //lose 1% satisfaction per adventurer over capacity
+    public int OvercrowdingMod => Mathf.Min(0, (Accommodation - AvailableAdventurers) * 5); //lose 5% satisfaction per adventurer over capacity
         
     [ReadOnly] [SerializeField] private int satisfaction;
-    public int Satisfaction => satisfaction = Mathf.Clamp(0, Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
+    public int Satisfaction => satisfaction = Mathf.Clamp(0, 1+ Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
 
     [HorizontalLine]
     
     [ReadOnly] [SerializeField] private int spending;
     public int Spending => spending = 100 + buildings.Where(x => x.operational).Sum(x => x.spending) + modifiers[Metric.Spending];
-
-    [ReadOnly] [SerializeField] private int defense;
-    public int Defense => defense = AvailableAdventurers * Effectiveness / 30 + buildings.Where(x => x.operational).Sum(x => x.defense) + modifiers[Metric.Defense];
-
+    
     [ReadOnly] [SerializeField] private int chaos;
     public int Chaos => chaos = AvailableAdventurers * (100 - Satisfaction);
 
@@ -153,11 +155,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int wealth;
     public int Wealth => wealth;
     
-    [ReadOnly] [SerializeField] private int threatPerTurn;
-    public int ThreatPerTurn => threatPerTurn = 3 + (2 * turnCounter) + modifiers[Metric.Threat];
+    [ReadOnly] [SerializeField] private int defense;
+    public int Defense => defense = 
+        AvailableAdventurers * Effectiveness / 30 + 
+        buildings.Where(x => x.operational).Sum(x => x.defense) + modifiers[Metric.Defense];
+    
+    [ReadOnly] [SerializeField] private int threat;
+    public int Threat => threat = 12 + (3 * turnCounter) + modifiers[Metric.Threat];
 
-    [SerializeField] private int threat;
-    public int Threat => threat;
+    public int ChangePerTurn => Threat - Defense; // How much the top bar shifts each turn
+    
+    [SerializeField] private int threatLevel;
+    public int ThreatLevel => threatLevel; // Percentage of how far along the threat is.
 
     public bool Spend(int amount)
     {
@@ -223,39 +232,52 @@ public class GameManager : MonoBehaviour
         adventurers = new List<Adventurer>();
         buildings = new List<BuildingStats>();
         // Set all mods to 0 at start
-        foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers.Add(mod, 0);
+        modifiers.Add(Metric.Defense, 0);
+        modifiers.Add(Metric.Threat, 0);
+        modifiers.Add(Metric.Spending, 0);
+        modifiers.Add(Metric.Effectiveness, 0);
+        modifiers.Add(Metric.Satisfaction, 0);
 
         // Start game with 5 Adventurers
         for (int i = 0; i < 5; i++) AddAdventurer();
 
+        threatLevel = 30;
         wealth = 50;
-        threat = 3;
         BuildGuildHall();
         
         eventQueue.AddEvent(openingEvent, true);
         
-        // Run the menu tutorial system dialogue
-        dialogueManager.StartDialogue("menu_tutorial");
+        // Run the tutorial video
+        TutorialPlayerController.Instance.PlayClip(0);
         Analytics.EnableCustomEvent("New Turn", true);
         Analytics.enabled = true;
     }
-
 
     public int turnCounter = 0;
     [Button("Next Turn")]
     public void NextTurn()
     {
+        OnNextTurn?.Invoke();
+        //NewTurn();
+    }
+
+    public void NewTurn()
+    {
+        threatLevel += ChangePerTurn;
+        if (threatLevel < 0) threatLevel = 0;
+        wealth += wealthPerTurn;
         turnCounter++;
-        threat += ThreatPerTurn;
-        wealth += WealthPerTurn;
 
-        foreach (Metric mod in Enum.GetValues(typeof(Metric))) modifiers[mod] = 0;
-
-        if ((float)Threat / (Defense + Threat) > 0.8f)
-            foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
+        modifiers[Metric.Defense] = 0;
+        modifiers[Metric.Threat] = 0;
+        modifiers[Metric.Spending] = 0;
+        modifiers[Metric.Effectiveness] = 0;
+        modifiers[Metric.Satisfaction] = 0;
         
+        if (ThreatLevel >= 100)
+            foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
         eventQueue.ProcessEvents();
-
+        
         OnNewTurn?.Invoke();
         if (turnCounter % 5 == 0)
         {
@@ -289,7 +311,7 @@ public class GameManager : MonoBehaviour
         
         map.Clear(building.GetComponent<BuildingStructure>());
         if (!building.terrain) buildings.Remove(building);
-        Destroy(building.gameObject);
+        //Destroy(building.gameObject);
         UpdateUi();
     }
     
@@ -330,7 +352,6 @@ public class GameManager : MonoBehaviour
     
     public Map map;
     public EventQueue eventQueue;
-    public DialogueManager dialogueManager;
     public NewspaperController newspaperController;
     public MenuManager menuManager;
     public PlacementController placementController;
@@ -346,15 +367,14 @@ public class GameManager : MonoBehaviour
     private void BuildGuildHall()
     {
         //Build Guild Hall in the center of the map
-        map.CreateBuilding(guildHall, map.transform.position);
+        map.CreateBuilding(guildHall, map.transform.position, animate: false);
     }
 
-    private List<string> shownTutorials = new List<string>();
-    public void ShowTutorial(string tutorialName)
+    private void OnDestroy()
     {
-        if (shownTutorials.Contains(tutorialName))
-            return;
-        dialogueManager.StartDialogue(tutorialName);
-        shownTutorials.Add(tutorialName);
+        instance = null;
+        OnNewTurn = null;
+        OnNextTurn = null;
+        OnUpdateUI = null;
     }
 }

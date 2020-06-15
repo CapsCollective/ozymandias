@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6338871188165876096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: END - Kobold Mine
+  m_EditorClassIdentifier: 
+  customDescription: The celebration is a night to be remembered.
+--- !u!114 &-4075183997258997688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: We regain the wealth of the mine (+10% Spending)
+  StatToChange: 3
+  Amount: 10
+  Turns: -1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Kobold Mine END
+  m_EditorClassIdentifier: 
+  headline: This Mine is MINE!
+  article: The adventurers sabotaged the Kobold operations, and have taken the mine
+    back! As celebration the victorious party has converted the Kobolds crude explosives
+    into fireworks and are hosting a celebration.
+  image: {fileID: 0}
+  type: 5
+  headliner: 1
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  outcomes:
+  - {fileID: -4075183997258997688}
+  - {fileID: -6338871188165876096}
+  - {fileID: 3935371763068613285}
+  choices: []
+  OneTime: 0
+--- !u!114 &3935371763068613285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  StatToChange: 1
+  Amount: 5
+  Turns: 4

@@ -44,6 +44,8 @@ public class MapLayout : ScriptableObject
                 cell.Clear();
 
             BuildingMap.Remove(building);
+
+            building.Clear();
         }
     }
 

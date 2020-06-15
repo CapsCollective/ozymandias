@@ -22,4 +22,17 @@ public class RemoveAdventurers : Outcome
         }
         return true;
     }
+    
+    public override string Description
+    {
+        get
+        {
+            if (customDescription != "") return "<color=#820000ff>" + customDescription + "</color>";
+            return "<color=#820000ff>" +
+                   adventurerNames.Count +
+                   " adventurer" +
+                   (adventurerNames.Count > 1 ? "s have " : " has ") +
+                   "been lost</color>";
+        }
+    }
 }

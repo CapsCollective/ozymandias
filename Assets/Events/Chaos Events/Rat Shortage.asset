@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-573003006515395422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: Oh no, the mice are too strong! They'll never be able to defeat
+    them!
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,6 +43,7 @@ MonoBehaviour:
   choices:
   - {fileID: 3209768051148161497}
   - {fileID: 4089419817076585830}
+  OneTime: 0
 --- !u!114 &1194198898320717657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41,9 +56,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  customDescription: 
+  customDescription: The rats are perfect (+5 Effectiveness for 4 turns)
   StatToChange: 2
   Amount: 5
+  Turns: 4
+--- !u!114 &2031666057529318842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  StatToChange: 3
+  Amount: -3
   Turns: 4
 --- !u!114 &3209768051148161497
 MonoBehaviour:
@@ -60,22 +91,8 @@ MonoBehaviour:
   description: 
   outcomes:
   - {fileID: 1194198898320717657}
---- !u!114 &3239684904531573049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: Stat Change(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: 
-  StatToChange: 2
-  Amount: -3
-  Turns: 5
+  - {fileID: 8576086216102355819}
+  - {fileID: 2031666057529318842}
 --- !u!114 &4089419817076585830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,4 +107,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   outcomes:
-  - {fileID: 3239684904531573049}
+  - {fileID: -573003006515395422}
+  - {fileID: 6980265341579130049}
+--- !u!114 &6980265341579130049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  StatToChange: 2
+  Amount: -3
+  Turns: 4
+--- !u!114 &8576086216102355819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: They take their payment in installments...

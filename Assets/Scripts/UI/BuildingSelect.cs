@@ -21,6 +21,10 @@ public class BuildingSelect : UiUpdater
         title.text = building.name;
         cost.text = "Cost: " + building.ScaledCost;
         icon.sprite = building.icon;
+        Color colour = building.IconColour;
+        //title.color = colour;
+        icon.color = colour;
+        //cost.color = colour;
         bool active = building.ScaledCost <= Manager.Wealth;
         if (toggle.isOn && !active)
         {

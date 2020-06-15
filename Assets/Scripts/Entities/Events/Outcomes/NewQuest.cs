@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using NaughtyAttributes;
+using static QuestMapController;
 
 [CreateAssetMenu(fileName = "New Quest Outcome", menuName = "Outcomes/New Quest")]
 public class NewQuest : Outcome
@@ -12,21 +13,15 @@ public class NewQuest : Outcome
     [Button]
     public override bool Execute()
     {
-        if (QuestMapController.QuestList.Count <= 8)
-        {
-            QuestMapController.AddQuest(Quest);
-            return true;
-        }
-
-        return false;
+            return QuestMap.AddQuest(Quest);
     }
     
     public override string Description
     {
         get
         {
-            if (customDescription != "") return customDescription;
-            return "New quest added: " + Quest.QuestTitle;
+            if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
+            return "<color=#007000ff>New quest added: " + Quest.QuestTitle + "</color>";
         }
     }
 }

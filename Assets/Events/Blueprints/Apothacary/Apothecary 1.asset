@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4202548657869890182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: Chain Event(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 3026bd8e43e60ef48a5ffafeab4b7f80, type: 2}
+  toFront: 0
+--- !u!114 &-3133865784971274578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  StatToChange: 3
+  Amount: 5
+  Turns: 3
+--- !u!114 &-1220522842446470365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: New Adventurers(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: Dr. Soansew sets up shop. (+1 Adventurer)
+  adventurers:
+  - {fileID: 11400000, guid: 978ebac93fd7d7845ac6980080f64da6, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Apothecary 1
+  m_EditorClassIdentifier: 
+  headline: The Good (Enough) Doctor
+  article: "A traveling merchant by the name of \"Dr. Soansew, the Merchant of Smoke
+    and Mirrors\" has rocked up over the night, bringing with him the finest in potions
+    and magics. He claims to be a Diviner who 'worships the coin and the coin alone'.
+    He seems proficient in the art of debt collection at the very least.\r"
+  image: {fileID: 21300000, guid: d6698d3a82060034e80d17911beacdeb, type: 3}
+  type: 10
+  headliner: 1
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  outcomes:
+  - {fileID: -4202548657869890182}
+  - {fileID: -1220522842446470365}
+  - {fileID: -3133865784971274578}
+  choices: []
+  oneTime: 1

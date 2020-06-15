@@ -10,32 +10,28 @@ public class ThreatBar : UiUpdater
     private const int BarWidth = 510;
     
     public RectTransform threatArea;
-    public RectTransform nextTurnArea;
-    public Image gameOverMarker;
-    public Image gameOverIcon;
+    public RectTransform nextTurnThreatArea;
+    public RectTransform nextTurnDefenseArea;
+    public Image nextTurnThreatFill;
+    public Image nextTurnDefenseFill;
 
-    public int currentWidth, nextTurnWidth;
-    
     public override void UpdateUi()
     {
-        float fillPercentage = Manager.Threat / (float)(Manager.Threat + Manager.Defense);
-        currentWidth = (int)(BarWidth * fillPercentage);
-        
-        nextTurnWidth = BarWidth * (Manager.Threat + Manager.ThreatPerTurn) / (Manager.Threat + Manager.Defense + Manager.ThreatPerTurn);
-        threatArea.sizeDelta = new Vector2(currentWidth, threatArea.sizeDelta.y);
-
-        Color color = gameOverMarker.color;
-
-        color.a = Mathf.Clamp((fillPercentage - 0.5f) * 5, 0, 1f); // from 0 - 1 between 50-70%;
-        
-        gameOverMarker.color = color;
-        gameOverIcon.color = color;
+        int nextTurn = Manager.ThreatLevel + Manager.ChangePerTurn;
+        threatArea.sizeDelta = new Vector2(BarWidth * Manager.ThreatLevel / 100f, threatArea.sizeDelta.y);
+        nextTurnThreatArea.sizeDelta = new Vector2(BarWidth * nextTurn / 100f, nextTurnThreatArea.sizeDelta.y);
+        nextTurnDefenseArea.sizeDelta = new Vector2(BarWidth * (1 - nextTurn / 100f), nextTurnDefenseArea.sizeDelta.y);
     }
 
-    private float f = 0;
+    private float t = 0;
     public void Update()
     {
-        int width = (int)Mathf.Lerp(currentWidth, nextTurnWidth, (Mathf.Sin(f+=Time.deltaTime*3)+1)/2);
-        nextTurnArea.sizeDelta = new Vector2(width, threatArea.sizeDelta.y);
+        t += Time.deltaTime * 3;
+        Color color = nextTurnThreatFill.color;
+        color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(t)+1)/2);
+        nextTurnThreatFill.color = color;
+        color = nextTurnDefenseFill.color;
+        color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(t)+1)/2);
+        nextTurnDefenseFill.color = color;
     }
 }

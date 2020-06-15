@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Neck Snapping
+  m_EditorClassIdentifier: 
+  headline: Taken Too Far
+  article: Adventurer, known as the town Jester, unfortunately lost his life last
+    night after he was performing one of his famous bits. The performer pretends
+    to twist his head around, but had unfortunately twisted his head too far. The
+    audience stated that his last words were "Hey guys, Watch this"
+  image: {fileID: 21300000, guid: 0f12237e91c21cc4c94d15fcb2bb8922, type: 3}
+  type: 9
+  headliner: 0
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  outcomes:
+  - {fileID: 3326797553925146196}
+  choices: []
+  oneTime: 0
+--- !u!114 &3326797553925146196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: Remove Adventurers(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  adventurerNames:
+  - 
+  kill: 1

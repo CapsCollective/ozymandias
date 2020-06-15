@@ -8,12 +8,7 @@ public class ShowOnNewTurn : MonoBehaviour
     {
         GameManager.OnNewTurn += OnNewTurn;
     }
-
-    private void OnDestroy()
-    {
-        GameManager.OnNewTurn -= OnNewTurn;
-    }
-
+    
     void Start()
     {
         GetComponent<Canvas>().enabled = false;

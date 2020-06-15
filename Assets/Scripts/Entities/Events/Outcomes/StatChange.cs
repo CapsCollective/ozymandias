@@ -17,32 +17,25 @@ public class StatChange : Outcome
     private int turnsLeft;
     //[SerializeField] private int turns;
 
-    public override bool Execute()
+    public override bool Execute(bool fromChoice)
     {
         turnsLeft = Turns;
         OnNewTurn += ProcessStatChange;
-        SceneManager.activeSceneChanged += HandleSceneChange;
-        ProcessStatChange();
+        if (fromChoice) ProcessStatChange();
         return true;
     }
-
-    private void HandleSceneChange(Scene a, Scene b)
-    { 
-        OnNewTurn -= ProcessStatChange;
-        SceneManager.activeSceneChanged -= HandleSceneChange;
-    }
-
+    
     public void ProcessStatChange()
     {
         if (turnsLeft == 0)
         {
             OnNewTurn -= ProcessStatChange;
-            //EventQueue.OnStatEffectComplete?.Invoke(this);
             return;
         }
 
         Manager.modifiers[StatToChange] += Amount;
 
+        if (turnsLeft == -1) return;
         turnsLeft--;
     }
 
@@ -50,9 +43,17 @@ public class StatChange : Outcome
     {
         get
         {
-            if (customDescription != "") return customDescription;
-            if (Amount > 0) return StatToChange + " has increased by " + Amount + " for " + turnsLeft + " turns.";
-            return StatToChange + " has decreased by " + Amount + " for " + turnsLeft + " turns.";
+            string color;
+            if (StatToChange == Metric.Threat && Amount > 0 || StatToChange != Metric.Threat && Amount < 0) color = "#820000ff";
+            else color = "#007000ff";
+                
+            if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
+            string desc = "";
+            if (Amount > 0) desc += "<color="+color+">" + StatToChange + " has increased by " + Amount;
+            else desc += "<color="+color+">" + StatToChange + " has decreased by " + Mathf.Abs(Amount);
+            
+            if (turnsLeft != -1) desc += " for " + Turns + " turns.";
+            return desc + "</color>";
         }
     }
 }

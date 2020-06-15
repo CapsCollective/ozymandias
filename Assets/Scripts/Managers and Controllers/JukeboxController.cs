@@ -4,49 +4,110 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Managers_and_Controllers
 {
     public class JukeboxController : MonoBehaviour
     {
+        // Instance field
+        public static JukeboxController Instance { get; private set; }
+        
         #pragma warning disable 0649
+        [SerializeField] private bool sfxOnly;
         [SerializeField] private Camera gameCamera;
         [SerializeField] private GameObject gameMap;
         [SerializeField] private AudioSource townAmbiencePlayer;
         [SerializeField] private AudioSource natureAmbiencePlayer;
         [SerializeField] private AudioSource waterAmbiencePlayer;
+        [SerializeField] private AudioSource nightAmbiencePlayer;
+        [SerializeField] private AudioSource sfxPlayer;
         [SerializeField] private AudioSource musicPlayer;
+        [SerializeField] private AudioClip morningClip;
+        [SerializeField] private AudioClip clickClip;
+        [SerializeField] private AudioClip buildClip;
+        [SerializeField] private AudioClip destroyClip;
         [SerializeField] private AudioClip[] tracks;
-        
+
         private List<AudioClip> playlist = new List<AudioClip>();
+        private AudioSource landAmbiencePlayer;
         private AudioSource currentAmbiencePlayer;
+
+        private void Awake() {
+            Instance = this;
+        }
+
+        public void PlayClick()
+        {
+            sfxPlayer.volume = .8f;
+            sfxPlayer.clip = clickClip;
+            sfxPlayer.Play();
+        }
+        
+        public void PlayBuild()
+        {
+            sfxPlayer.volume = .4f;
+            sfxPlayer.clip = buildClip;
+            sfxPlayer.Play();
+        }
+        
+        public void PlayDestroy()
+        {
+            sfxPlayer.volume = .1f;
+            sfxPlayer.clip = destroyClip;
+            sfxPlayer.Play();
+        }
 
         private void Start()
         {
+            if (sfxOnly) return;
+            GameManager.OnNextTurn += StartNightAmbience;
             townAmbiencePlayer.transform.position = gameMap.transform.position;
-            currentAmbiencePlayer = natureAmbiencePlayer;
+            landAmbiencePlayer = natureAmbiencePlayer;
+            currentAmbiencePlayer = landAmbiencePlayer;
             OnTrackEnded();
         }
 
         private void Update()
         {
+            if (sfxOnly) return;
             CheckAmbiencePlayer();
             var ambiancePosition = gameCamera.transform.position;
             ambiancePosition.y = 0f;
             currentAmbiencePlayer.transform.position = ambiancePosition;
         }
 
+        private void StartNightAmbience()
+        {
+            landAmbiencePlayer = nightAmbiencePlayer;
+            StartCoroutine(StartFade(nightAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
+            StartCoroutine(StartFade(natureAmbiencePlayer, .5f, 0f));
+            StartCoroutine(StartFade(townAmbiencePlayer, .5f, 0f));
+            StartCoroutine(Wait(2f, EndNightAmbience));
+        }
         
+        private void EndNightAmbience()
+        {
+            landAmbiencePlayer = natureAmbiencePlayer;
+            StartCoroutine(StartFade(townAmbiencePlayer, .5f, 1f));
+            StartCoroutine(StartFade(natureAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
+            StartCoroutine(StartFade(nightAmbiencePlayer, .5f, 0f));
+            if (Random.Range(0, 5) != 2) return;
+            sfxPlayer.volume = .1f;
+            sfxPlayer.clip = morningClip;
+            sfxPlayer.Play();
+        }
+
         private void CheckAmbiencePlayer()
         {
             if(Physics.Raycast(gameCamera.transform.position,Vector3.down, out _, 30f))
             {
-                if (currentAmbiencePlayer != natureAmbiencePlayer)
-                    SwitchAmbiences(waterAmbiencePlayer, natureAmbiencePlayer);
+                if (currentAmbiencePlayer != landAmbiencePlayer)
+                    SwitchAmbiences(waterAmbiencePlayer, landAmbiencePlayer);
             }
             else{
                 if (currentAmbiencePlayer != waterAmbiencePlayer)
-                    SwitchAmbiences(natureAmbiencePlayer, waterAmbiencePlayer);
+                    SwitchAmbiences(landAmbiencePlayer, waterAmbiencePlayer);
             }
         }
 
