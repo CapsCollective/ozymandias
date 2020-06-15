@@ -12,7 +12,10 @@ public class BuildingStructure : MonoBehaviour
     public string clearTrigger = "Clear";
 
     private Animator _animator;
-    private Animator Animator {  get { return _animator ? _animator : _animator = GetComponent<Animator>(); } }
+    private Animator Animator { get { return _animator ? _animator : _animator = GetComponent<Animator>(); } }
+
+    private ParticleSystem _particleSystem;
+    private ParticleSystem ParticleSystem { get { return _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>(); } }
 
     // Enums
     public enum Direction { Left, Forward, Right, Back }
@@ -27,6 +30,18 @@ public class BuildingStructure : MonoBehaviour
         }
 
         if (animate) Animator.SetTrigger(buildTrigger);
+    }
+
+    public void Burst()
+    {
+        ParticleSystem.Play();
+    }
+
+    public void ChangeParticleSystemParent()
+    {
+        ParticleSystem.transform.parent = null;
+        var psMain = ParticleSystem.main;
+        psMain.stopAction = ParticleSystemStopAction.Destroy;
     }
 
     public void Clear()
