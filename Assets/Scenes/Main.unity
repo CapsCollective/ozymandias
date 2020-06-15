@@ -5938,18 +5938,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 842521020}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &816033485 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7951437184783720095, guid: 7ff3d390f402a43edba5ab7c3737240d,
-    type: 3}
-  m_PrefabInstance: {fileID: 761263918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a4738056a99549628790b452b3630b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &816033486 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7951437184783720088, guid: 7ff3d390f402a43edba5ab7c3737240d,
@@ -8392,6 +8380,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 392258469}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1982052109 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3474786468687807421, guid: 4c27b6b31af534719ab0461acc6cf46b,
+    type: 3}
+  m_PrefabInstance: {fileID: 392258469}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f7410b6ee024ad58c03b1b9520ae39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2043065004 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6311456194911492521, guid: ce0b0cfa5964fcb43b084c7067e940af,
@@ -9324,7 +9324,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 816033485}
+      objectReference: {fileID: 1982052109}
     - target: {fileID: 6828880154878820963, guid: 8733eb19a47e06246848033330e070b6,
         type: 3}
       propertyPath: m_Colors.m_SelectedColor.r
@@ -9339,6 +9339,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828880154878820963, guid: 8733eb19a47e06246848033330e070b6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayClip
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828880154878820963, guid: 8733eb19a47e06246848033330e070b6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6828880154878820964, guid: 8733eb19a47e06246848033330e070b6,
         type: 3}
