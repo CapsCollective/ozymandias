@@ -5,11 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class MapAnimator : MonoBehaviour
 {
-    public bool cursorEffect;
-
-    public RuntimeAnimatorController effect;
-    public RuntimeAnimatorController noEffect;
-
     public string floodTrigger = "Flood";
     public string drainTrigger = "Drain";
     public string effectOrigin = "_Origin";
@@ -23,8 +18,6 @@ public class MapAnimator : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _meshRenderer = GetComponent<MeshRenderer>();
-
-        _animator.runtimeAnimatorController = cursorEffect ? effect : noEffect;
     }
 
     private void LateUpdate()
