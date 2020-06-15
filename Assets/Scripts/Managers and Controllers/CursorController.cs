@@ -11,6 +11,7 @@ namespace Managers_and_Controllers
         [SerializeField] private Texture2D destroyCursor;
         private Texture2D[] cursors;
         private readonly Vector2 hotspot = new Vector2(10, 15);
+        public CursorType currentCursor = CursorType.Pointer;
 
         public enum CursorType
         {
@@ -24,6 +25,7 @@ namespace Managers_and_Controllers
 
         public void SwitchCursor(CursorType cursorType)
         {
+            currentCursor = cursorType;
             Cursor.SetCursor(cursors[(int) cursorType], hotspot, CursorMode.Auto);
         }
     }

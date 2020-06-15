@@ -44,11 +44,14 @@ public class PlacementController : MonoBehaviour
 
         if (_previousSelected != Selected)
         {
-            var cursor = (Selected != Deselected)
-                ? CursorController.CursorType.Build
-                : CursorController.CursorType.Pointer;
-            CursorController.Instance.SwitchCursor(cursor);
-            _previousSelected = Selected;
+            if (CursorController.Instance.currentCursor != CursorController.CursorType.Destroy)
+            {
+                var cursor = (Selected != Deselected)
+                    ? CursorController.CursorType.Build
+                    : CursorController.CursorType.Pointer;
+                CursorController.Instance.SwitchCursor(cursor);
+                _previousSelected = Selected;
+            }
         }
 
 

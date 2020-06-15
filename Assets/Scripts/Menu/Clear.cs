@@ -92,7 +92,8 @@ public class Clear : UiUpdater
         map?.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[1];
         icon.sprite = deselected;
-        CursorController.Instance.SwitchCursor(CursorController.CursorType.Pointer);
+        if (CursorController.Instance.currentCursor == CursorController.CursorType.Destroy)
+            CursorController.Instance.SwitchCursor(CursorController.CursorType.Pointer);
     }
     
     public void ClearBuilding()
