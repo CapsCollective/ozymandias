@@ -13,8 +13,7 @@ public class PlacementController : MonoBehaviour
     public List<GameObject> allBuildings = new List<GameObject>();
     private List<GameObject> remainingBuildings = new List<GameObject>();
     
-    public GameObject rotateIcon;
-    private GameObject rotateIconInstantiation;
+    //public GameObject rotateIcon;
 
     private Map map;
     private RaycastHit hit;
@@ -43,25 +42,9 @@ public class PlacementController : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
         
-        rotateIcon.SetActive(Selected != Deselected);
+        //rotateIcon.SetActive(Selected != Deselected);
         
         if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
-        /*
-        {
-            if (rotateIconInstantiation) Destroy(rotateIconInstantiation);
-            return;
-        }*/
-
-        /* Removing for now because i don't think this is the right approach
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-        Physics.Raycast(ray, out hit);
-        if (!rotateIconInstantiation)
-        {
-            if (hit.collider) rotateIconInstantiation = Instantiate(rotateIcon, hit.point, transform.rotation);
-
-        }
-        else rotateIconInstantiation.transform.position = hit.point;
-        */
 
         Cell closest = map.GetCellFromMouse();
         
