@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-6258041693274619347
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 3f59344417e524ad1b08465437d7cfd9
+  m_EffectName: Attenuation
+  m_MixLevel: ef8259b0228f04891b29bcad2c9d3f2c
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-5065770153009158499
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Video
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: acdd320f45371463bb044badfca6fc78
+  m_Children: []
+  m_Volume: 32b90c56c8f6b466489b38ab0a85a376
+  m_Pitch: 80d7fd20e969442c4b0753c2409b886f
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -6258041693274619347}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &-3716324880432427423
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -126,6 +159,7 @@ AudioMixerController:
     - 982ddb6acda0e44ddaccbf6f87460b10
     - fcc25e95be43b4f12b111803bbaed092
     - 879f2466152204ae88626519f23d3fc0
+    - acdd320f45371463bb044badfca6fc78
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -142,6 +176,7 @@ AudioMixerGroupController:
   - {fileID: 2690480681714441769}
   - {fileID: -646204135393016676}
   - {fileID: 5004256848796584745}
+  - {fileID: -5065770153009158499}
   m_Volume: 782283defc2ec4190987b40b69b66ce6
   m_Pitch: 9d4ea5746e67744ba97df1ad23ec07de
   m_Send: 00000000000000000000000000000000
@@ -176,6 +211,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: deec6916fdf974b889dddbf48f480595
   m_FloatValues:
     ebdd7322415af4573bb3325d5acdedc8: 9.757735
+    32b90c56c8f6b466489b38ab0a85a376: 0
     c8e053e60ad33402f99e7333de5ad202: -9.833286
     2110263713f434d0c8db94abcda444d9: 9.925879
     ad0dfaa976f0d4c31b35be2e16b67ff5: -0.002441872

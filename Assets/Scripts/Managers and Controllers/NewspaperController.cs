@@ -37,7 +37,7 @@ namespace Managers_and_Controllers
         {
             if (shownTutorial) return;
             shownTutorial = true;
-            Manager.dialogueManager.StartDialogue("menu_tutorial");
+            TutorialPlayerController.Instance.PlayClip(1);
         }
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
