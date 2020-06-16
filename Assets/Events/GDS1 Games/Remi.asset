@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Remi
+  m_EditorClassIdentifier: 
+  headline: Can't Stand Remi
+  article: A sickly adventurer by the name of Remi has joined our town today, claiming
+    he harneses the power of his overpowered immune system to overwhelm his foes.
+  image: {fileID: 21300000, guid: 6200abe5a1ab666498c58272e04f64dd, type: 3}
+  type: 1
+  headliner: 0
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  outcomes:
+  - {fileID: 4026764788761840141}
+  choices: []
+  oneTime: 1
+--- !u!114 &4026764788761840141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: New Adventurers(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  adventurers:
+  - {fileID: 11400000, guid: 327268876aa665944b20fea42889cff7, type: 2}

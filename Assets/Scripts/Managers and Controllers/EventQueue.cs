@@ -87,6 +87,7 @@ public class EventQueue : MonoBehaviour
         if (Manager.TotalAdventurers < 7 + Manager.turnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         // Catchup if falling behind
         if (Manager.TotalAdventurers < 4 + Manager.turnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+        if (Manager.TotalAdventurers < Manager.turnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         // More if high satisfaction
         if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         
