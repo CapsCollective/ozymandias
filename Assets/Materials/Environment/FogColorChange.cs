@@ -8,6 +8,8 @@ public class FogColorChange : MonoBehaviour
 {
     public MeshRenderer mr;
     public Transform blocker;
+    public Transform oceanBlocker;
+    public SpriteRenderer waterBlockSR;
     
     private float ratio;
     private float oldRatio;
@@ -26,6 +28,15 @@ public class FogColorChange : MonoBehaviour
 
     private float origBlocker;
     private float currentBlocker;
+
+    private float origOceanBlocker;
+    private float currentOceanBlocker;
+
+    private float origOceanAlpha =1f;
+    private float currentOceanAlpha;
+    public float finalOceanAlpha;
+
+
 
     private Color origFogCol;
     private Color currentFogCol;
@@ -61,6 +72,10 @@ public class FogColorChange : MonoBehaviour
         if (blocker)
         {
             origBlocker = blocker.localScale.x;
+        }
+        if (oceanBlocker)
+        {
+            origOceanBlocker = oceanBlocker.localScale.y;
         }
         origFogCol = RenderSettings.fogColor;
         origFogNearDist = RenderSettings.fogStartDistance;
@@ -98,6 +113,8 @@ public class FogColorChange : MonoBehaviour
             currentCol = Color.Lerp(origCol, deadCol, updateRatio);
             currentBlend = Mathf.Lerp(origBlend, finalBlend, updateRatio);
             currentBlocker = Mathf.Lerp(origBlocker, finalBlocker, updateRatio);
+            currentOceanBlocker = Mathf.Lerp(origOceanBlocker, 0f, updateRatio);
+            currentOceanAlpha = Mathf.Lerp(origOceanAlpha, finalOceanAlpha, updateRatio);
             currentFogCol = Color.Lerp(origFogCol, finalFogCol, updateRatio);
             currentFogNearDist = Mathf.Lerp(origFogNearDist, finalFogNearDist, updateRatio);
             currentFogFarDist = Mathf.Lerp(origFogFarDist, finalFogFarDist, updateRatio);
@@ -106,6 +123,8 @@ public class FogColorChange : MonoBehaviour
             mr.material.SetColor("_Color", currentCol);
             mr.material.SetFloat("_DistortionBlend", currentBlend);
             blocker.localScale = new Vector3(currentBlocker, currentBlocker, currentBlocker);
+            waterBlockSR.color = new Color(waterBlockSR.color.r, waterBlockSR.color.g, waterBlockSR.color.b, currentOceanAlpha);
+            //oceanBlocker.localScale = new Vector3(oceanBlocker.localScale.x, currentOceanBlocker, oceanBlocker.localScale.z);
             RenderSettings.fogColor = currentFogCol;
             RenderSettings.fogStartDistance = currentFogNearDist;
             RenderSettings.fogEndDistance = currentFogFarDist;
