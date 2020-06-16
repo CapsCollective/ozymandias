@@ -6,6 +6,7 @@ using Managers_and_Controllers;
 using NaughtyAttributes;
 using UnityEngine.Analytics;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 using static AchievementManager;
 using Random = UnityEngine.Random;
 
@@ -293,6 +294,7 @@ public class GameManager : MonoBehaviour
                 { "turn_number", turnCounter }
             });
         }
+        EnterMenu();
         UpdateUi();
     }
 
@@ -362,6 +364,18 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         newspaperController.GameOver();          
+    }
+
+    public bool inMenu = false;
+    public void EnterMenu()
+    {
+        inMenu = true;
+        placementController.GetComponent<ToggleGroup>().SetAllTogglesOff();
+    }
+    
+    public void ExitMenu()
+    {
+        inMenu = false;
     }
 
     [HorizontalLine()] 

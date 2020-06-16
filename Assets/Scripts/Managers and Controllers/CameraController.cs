@@ -40,6 +40,8 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        if (Manager.inMenu) return;
+        
         if (!rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             dragOrigin = Input.mousePosition;
@@ -57,8 +59,8 @@ public class CameraController : MonoBehaviour
             }
         }
         
-        if (Input.GetMouseButtonUp(0)) dragging = false;
-        if (Input.GetMouseButtonUp(1)) rotating = false;
+        if (!Input.GetMouseButton(0)) dragging = false;
+        if (!Input.GetMouseButton(1)) rotating = false;
 
         if (dragging)
         {
