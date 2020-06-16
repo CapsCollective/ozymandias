@@ -174,7 +174,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242044662684752475}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -300,15 +300,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bae01c73fe1a47d5886c737648d1539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flyerList:
-  - {fileID: 8648271584700569432}
-  - {fileID: 4282153186506786353}
-  - {fileID: 4282153187206432022}
-  - {fileID: 4282153187885108064}
-  - {fileID: 4282153186894340511}
-  - {fileID: 4282153187014135545}
-  - {fileID: 4282153186251964023}
-  - {fileID: 4282153186160192192}
+  availableFlyers:
+  - {fileID: 5261776545222598963}
+  - {fileID: 750979012701745242}
+  - {fileID: 750979011184178045}
+  - {fileID: 750979011863510283}
+  - {fileID: 750979013089155060}
+  - {fileID: 750979011120724114}
+  - {fileID: 750979012369434652}
+  - {fileID: 750979012212661419}
+  usedFlyers: []
+  counter: {fileID: 0}
 --- !u!1 &5943075395208369840
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +464,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flyer (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -579,18 +586,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8, type: 3}
---- !u!1 &4282153187014135545 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
-    type: 3}
-  m_PrefabInstance: {fileID: 242044662509070678}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5982003140987381896 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044662509070678}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &750979011120724114 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+    type: 3}
+  m_PrefabInstance: {fileID: 242044662509070678}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &242044662705431225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -602,6 +615,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flyer (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
@@ -720,12 +738,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8, type: 3}
---- !u!1 &4282153187206432022 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+--- !u!114 &750979011184178045 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044662705431225}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5982003141043102567 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
@@ -743,6 +767,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flyer (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
@@ -861,18 +890,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8, type: 3}
---- !u!1 &4282153187885108064 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
-    type: 3}
-  m_PrefabInstance: {fileID: 242044662848416975}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5982003140649086225 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044662848416975}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &750979011863510283 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+    type: 3}
+  m_PrefabInstance: {fileID: 242044662848416975}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &242044663391050200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -884,6 +919,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flyer (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
@@ -1008,12 +1048,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 242044663391050200}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4282153186251964023 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+--- !u!114 &750979012369434652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044663391050200}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &242044663833005423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1025,6 +1071,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flyer (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
@@ -1143,18 +1194,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8, type: 3}
---- !u!1 &4282153186160192192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
-    type: 3}
-  m_PrefabInstance: {fileID: 242044663833005423}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5982003142080367793 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044663833005423}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &750979012212661419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+    type: 3}
+  m_PrefabInstance: {fileID: 242044663833005423}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &242044664038671920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1166,6 +1223,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flyer (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
@@ -1284,12 +1346,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8, type: 3}
---- !u!1 &4282153186894340511 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+--- !u!114 &750979013089155060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044664038671920}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5982003141875255278 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
@@ -1307,6 +1375,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flyer (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
@@ -1425,15 +1498,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8, type: 3}
---- !u!224 &5982003141486403648 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+--- !u!114 &750979012701745242 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044664157462942}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4282153186506786353 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &5982003141486403648 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 242044664157462942}
   m_PrefabAsset: {fileID: 0}
@@ -1448,6 +1527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flyer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
         type: 3}
@@ -1566,15 +1650,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8, type: 3}
---- !u!224 &1183829484750811433 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+--- !u!114 &5261776545222598963 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 664255897177821636, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 4625897051031843063}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8648271584700569432 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4050611781669300143, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &1183829484750811433 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5791543905282621918, guid: 7dfdae4f2a2a04ea8ac6a04417fb9db8,
     type: 3}
   m_PrefabInstance: {fileID: 4625897051031843063}
   m_PrefabAsset: {fileID: 0}

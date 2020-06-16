@@ -5,6 +5,7 @@ using System.Linq;
 using Managers_and_Controllers;
 using NaughtyAttributes;
 using UnityEngine.Analytics;
+using static AchievementManager;
 using Random = UnityEngine.Random;
 
 public enum Metric
@@ -305,6 +306,7 @@ public class GameManager : MonoBehaviour
         if (building.type == BuildingType.GuildHall)
         {
             //TODO: Add an 'are you sure?' dialogue
+            Achievements.Unlock("Now Why Would You Do That?");
             foreach (var e in guildHallDestroyedEvents) eventQueue.AddEvent(e, true);
             NextTurn();
         }
