@@ -1940,6 +1940,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cfa59083800bf4bb4c5597029f3993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockedColor: {r: 1, g: 1, b: 1, a: 1}
+  unlockedColor: {r: 0, g: 0.78431374, b: 0, a: 1}
+  progressBar: {fileID: 4458543975867540924}
+  villageBadge: {fileID: 4458543976460243681}
+  cityBadge: {fileID: 4458543975972148123}
+  kingdomBadge: {fileID: 4458543977292407522}
   notification: {fileID: 0}
 --- !u!223 &7883713843571112331
 Canvas:
@@ -1948,7 +1954,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4458543976497520598}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -2572,6 +2578,7 @@ GameObject:
   - component: {fileID: 6336559736628085468}
   - component: {fileID: 609228276370566836}
   - component: {fileID: 4754374697583902790}
+  - component: {fileID: 190422953}
   m_Layer: 5
   m_Name: Exit Button
   m_TagString: Untagged
@@ -2691,6 +2698,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &190422953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6517446274517067437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbf702e6b7f40eea835e5bc3bcb449d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7891072991648035331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2883,7 +2902,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6119218306376636853}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5777778
+  m_Size: 0.57777774
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

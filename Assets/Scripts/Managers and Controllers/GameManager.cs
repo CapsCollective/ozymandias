@@ -5,6 +5,7 @@ using System.Linq;
 using Managers_and_Controllers;
 using NaughtyAttributes;
 using UnityEngine.Analytics;
+using UnityEngine.SocialPlatforms.Impl;
 using static AchievementManager;
 using Random = UnityEngine.Random;
 
@@ -189,6 +190,7 @@ public class GameManager : MonoBehaviour
     public void AddAdventurer()
     {
         adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
+        Achievements.SetCitySize(TotalAdventurers);
     }
     
     public void AddAdventurer(AdventurerDetails adventurerDetails)
@@ -199,6 +201,7 @@ public class GameManager : MonoBehaviour
         adventurer.category = adventurerDetails.category;
         adventurer.isSpecial = adventurerDetails.isSpecial;
         adventurers.Add(adventurer);
+        Achievements.SetCitySize(TotalAdventurers);
     }
 
     public bool RemoveAdventurer(bool kill) //Removes a random adventurer, ensuring they aren't special
@@ -211,6 +214,7 @@ public class GameManager : MonoBehaviour
         adventurers.Remove(toRemove);
         if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
         else Destroy(toRemove);
+        Achievements.SetCitySize(TotalAdventurers);
         return true;
     }
 
@@ -221,6 +225,7 @@ public class GameManager : MonoBehaviour
         adventurers.Remove(toRemove);
         if (kill) toRemove.transform.parent = graveyard.transform;
         else Destroy(toRemove);
+        Achievements.SetCitySize(AvailableAdventurers);
         return true;
     }
     
