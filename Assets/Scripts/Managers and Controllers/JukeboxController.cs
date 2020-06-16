@@ -33,6 +33,8 @@ namespace Managers_and_Controllers
         private AudioSource landAmbiencePlayer;
         private AudioSource currentAmbiencePlayer;
 
+        public LayerMask waterDetectLM;
+
         private void Awake() {
             Instance = this;
         }
@@ -100,7 +102,7 @@ namespace Managers_and_Controllers
 
         private void CheckAmbiencePlayer()
         {
-            if(Physics.Raycast(gameCamera.transform.position,Vector3.down, out _, 30f))
+            if(Physics.Raycast(gameCamera.transform.position,Vector3.down, out _, 30f, waterDetectLM))
             {
                 if (currentAmbiencePlayer != landAmbiencePlayer)
                     SwitchAmbiences(waterAmbiencePlayer, landAmbiencePlayer);
