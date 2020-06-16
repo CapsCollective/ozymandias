@@ -8,7 +8,6 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-    public bool mainMenu;
     //We need each object so that we can update their appearance to reflect player prefs
     //loading
     public GameObject loadingScreen;
@@ -29,14 +28,13 @@ public class MenuManager : MonoBehaviour
     
     private void Start()
     {
-        if (!mainMenu) return;
         //generate a list of available resolutions
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string optionText = resolutions[i].width + " x " + resolutions[i].height;
+            string optionText = resolutions[i].width + " x " + resolutions[i].height + " " + resolutions[i].refreshRate + "Hz";
             options.Add(optionText);
         }
         resolutionDropdown.AddOptions(options);
