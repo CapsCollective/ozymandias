@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.18028475, g: 0.22571509, b: 0.30692318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028507, g: 0.22571546, b: 0.30692363, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -495,9 +495,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5f890b718ef094c990ab9c537a2f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clear: {fileID: 5475721258442272884}
   floodTrigger: Flood
   drainTrigger: Drain
   effectOrigin: _Origin
+  flooded: 0
 --- !u!114 &256605850 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 750979012369434652, guid: 01c86027eaf30494c9fbf44acafc3465,
@@ -9844,6 +9846,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e, type: 3}
+--- !u!114 &5475721258442272884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2568525565556819396, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5475721258442272883}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8720f9284480a4fb7287a74b7cf20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6097737571714777337
 GameObject:
   m_ObjectHideFlags: 0
