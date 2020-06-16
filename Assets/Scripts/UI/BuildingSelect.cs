@@ -19,7 +19,7 @@ public class BuildingSelect : UiUpdater
     {
         BuildingStats building = buildingPrefab.GetComponent<BuildingStats>();
         title.text = building.name;
-        cost.text = "Cost: " + building.ScaledCost;
+        cost.text = building.ScaledCost.ToString();
         icon.sprite = building.icon;
         Color colour = building.IconColour;
         //title.color = colour;
