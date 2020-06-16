@@ -27,7 +27,6 @@ public class DepthOfFieldController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100f, layerMask))
         {
-            Debug.Log(hit.collider.name);
             depthOfField.focusDistance.value = hit.distance;
         }
     }
