@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Managers_and_Controllers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,15 +14,13 @@ public class PlacementController : MonoBehaviour
     public List<GameObject> allBuildings = new List<GameObject>();
     private List<GameObject> remainingBuildings = new List<GameObject>();
     
-    public GameObject rotateIcon;
-    private GameObject rotateIconInstantiation;
-
     private Map map;
     private RaycastHit hit;
     private Camera cam;
 
     private int rotation;
     private Cell[] highlighted = new Cell[0];
+    private static int _previousSelected = Selected;
 
     private void Awake()
     {
@@ -42,26 +41,20 @@ public class PlacementController : MonoBehaviour
         // Clear previous highlights
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
-        
-        rotateIcon.SetActive(Selected != Deselected);
-        
-        if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
-        /*
-        {
-            if (rotateIconInstantiation) Destroy(rotateIconInstantiation);
-            return;
-        }*/
 
-        /* Removing for now because i don't think this is the right approach
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-        Physics.Raycast(ray, out hit);
-        if (!rotateIconInstantiation)
+        if (_previousSelected != Selected)
         {
-            if (hit.collider) rotateIconInstantiation = Instantiate(rotateIcon, hit.point, transform.rotation);
-
+            if (CursorController.Instance.currentCursor != CursorController.CursorType.Destroy)
+            {
+                var cursor = (Selected != Deselected)
+                    ? CursorController.CursorType.Build
+                    : CursorController.CursorType.Pointer;
+                CursorController.Instance.SwitchCursor(cursor);
+                _previousSelected = Selected;
+            }
         }
-        else rotateIconInstantiation.transform.position = hit.point;
-        */
+
+        if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
 
         Cell closest = map.GetCellFromMouse();
         

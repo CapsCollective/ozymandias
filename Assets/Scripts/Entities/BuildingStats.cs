@@ -44,12 +44,12 @@ public class BuildingStats : MonoBehaviour
         get {
             switch (primaryStat)
             {
-                case Metric.Equipment: return new Color(1,1,0.667f);
-                case Metric.Weaponry: return new Color(1,0.667f,0.667f);
-                case Metric.Magic: return new Color(0.8f,0.55f,1);
+                case Metric.Equipment: return new Color(1,1,0.212f);
+                case Metric.Weaponry: return new Color(1,0.45f,0.45f);
+                case Metric.Magic: return new Color(0.8f,0.44f,1);
                 case Metric.Food: return new Color(0.667f,1,0.667f);
                 case Metric.Entertainment: return new Color(0.5f,1,1);
-                case Metric.Luxuries: return new Color(1,0.8f,0.667f);
+                case Metric.Luxuries: return new Color(1, 0.650f, 0.203f);
                 case Metric.Defense: return new Color(0.5f,0.6f,1);
                 default: return new Color(1,1,1);
             }

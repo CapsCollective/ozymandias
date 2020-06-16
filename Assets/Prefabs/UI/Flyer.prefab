@@ -615,12 +615,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8301887, g: 0.69610304, b: 0.44250622, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 17e2b15d7a0a7a848973204fb0766ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cec1b4f26e87749dc9e0b034d8a339e5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -661,6 +661,7 @@ MonoBehaviour:
   sendButton: {fileID: 3973125541270198487}
   displayContent: {fileID: 2026168753594004713}
   simpleContent: {fileID: 1798810374026095953}
+  flyerQuest: {fileID: 0}
 --- !u!1 &5064266856794737336
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,14 +795,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.92941177, g: 0.92941177, b: 0.92941177, a: 0.41960785}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -175234875932784041, guid: 6e50bd0b0eb5fc848b2c0b249f1c9266,
-    type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ce3e03a47b6a54121b44a1a4c22a7d20, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -830,12 +830,12 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 0.9019608}
-    m_HighlightedColor: {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 0.9019608}
-    m_PressedColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.9019608}
-    m_SelectedColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 0.9411765}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.9019608}
+    m_HighlightedColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0.9019608}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.9019608}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.9411765}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
+    m_ColorMultiplier: 3
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
@@ -937,8 +937,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280558628
+  m_fontColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -6,6 +6,11 @@
 		_Inactive ("Inactive Color", Color) = (1, 1, 1, 1)
 		_Active ("Active Color", Color) = (1, 1, 1, 1)
 		_Invalid ("Invalid Color", Color) = (1, 1, 1, 1)
+
+		_Effect ("Effect Color", Color) = (1, 1, 1, 1)
+		_Origin ("World-Space Effect Origin", Vector) = (0, 0, 0, 0)
+		_Radius ("World-Space Effect Radius", Float) = 10
+		_Exponent ("Exponent", Float) = 1
     }
 
     SubShader
@@ -32,18 +37,25 @@
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+				float3 worldPos : TEXCOORD1;
             };
 
             sampler2D _Mask;
 			float4 _Inactive;
 			float4 _Active;
 			float4 _Invalid;
+
+			float4 _Effect;
+			float4 _Origin;
+			float _Radius;
+			float _Exponent;
             
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
+				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
 
@@ -60,7 +72,10 @@
 				else
 					col = _Invalid;
 
-                return col;
+				float dist = distance(i.worldPos, _Origin);
+				float effect = pow(saturate(dist / _Radius), _Exponent);
+				
+                return lerp(col, _Effect, effect);
             }
             ENDCG
         }

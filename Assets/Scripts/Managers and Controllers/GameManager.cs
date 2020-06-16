@@ -5,6 +5,8 @@ using System.Linq;
 using Managers_and_Controllers;
 using NaughtyAttributes;
 using UnityEngine.Analytics;
+using UnityEngine.SocialPlatforms.Impl;
+using static AchievementManager;
 using Random = UnityEngine.Random;
 
 public enum Metric
@@ -123,7 +125,7 @@ public class GameManager : MonoBehaviour
     public int Training => training = 0; // TODO: work out the specifics of this
 
     [ReadOnly] [SerializeField] private int effectiveness;
-    public int Effectiveness => effectiveness = Mathf.Clamp(0, 1 + Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 100);
+    public int Effectiveness => effectiveness = Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 0, 100);
     
     [HorizontalLine]
     
@@ -188,6 +190,7 @@ public class GameManager : MonoBehaviour
     public void AddAdventurer()
     {
         adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
+        Achievements.SetCitySize(TotalAdventurers);
     }
     
     public void AddAdventurer(AdventurerDetails adventurerDetails)
@@ -198,6 +201,7 @@ public class GameManager : MonoBehaviour
         adventurer.category = adventurerDetails.category;
         adventurer.isSpecial = adventurerDetails.isSpecial;
         adventurers.Add(adventurer);
+        Achievements.SetCitySize(TotalAdventurers);
     }
 
     public bool RemoveAdventurer(bool kill) //Removes a random adventurer, ensuring they aren't special
@@ -210,6 +214,7 @@ public class GameManager : MonoBehaviour
         adventurers.Remove(toRemove);
         if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
         else Destroy(toRemove);
+        Achievements.SetCitySize(TotalAdventurers);
         return true;
     }
 
@@ -220,6 +225,7 @@ public class GameManager : MonoBehaviour
         adventurers.Remove(toRemove);
         if (kill) toRemove.transform.parent = graveyard.transform;
         else Destroy(toRemove);
+        Achievements.SetCitySize(AvailableAdventurers);
         return true;
     }
     
@@ -263,6 +269,7 @@ public class GameManager : MonoBehaviour
 
     public void NewTurn()
     {
+        placedThisTurn = 0;
         threatLevel += ChangePerTurn;
         if (threatLevel < 0) threatLevel = 0;
         wealth += wealthPerTurn;
@@ -289,9 +296,14 @@ public class GameManager : MonoBehaviour
         UpdateUi();
     }
 
+    private int placedThisTurn = 0;
     public void Build(BuildingStats building)
     {
         buildings.Add(building);
+
+        if(++placedThisTurn >= 5) Achievements.Unlock("I'm Saving Up!");
+        if (buildings.Count >= 30 && Clear.ClearCount == 0) Achievements.Unlock("One With Nature");
+        
         var analyticEvent = Analytics.CustomEvent("Building Built", new Dictionary<string, object>
         {
             {"building_type", building.name },
@@ -305,6 +317,7 @@ public class GameManager : MonoBehaviour
         if (building.type == BuildingType.GuildHall)
         {
             //TODO: Add an 'are you sure?' dialogue
+            Achievements.Unlock("Now Why Would You Do That?");
             foreach (var e in guildHallDestroyedEvents) eventQueue.AddEvent(e, true);
             NextTurn();
         }
@@ -317,6 +330,9 @@ public class GameManager : MonoBehaviour
     
     public void UpdateUi()
     {
+        if (AvailableAdventurers >= 20 && Effectiveness == 100) Achievements.Unlock("Top of Their Game");
+        if (AvailableAdventurers >= 20 && Satisfaction == 100) Achievements.Unlock("A Jolly Good Show");
+        
         OnUpdateUI?.Invoke();
     }
 

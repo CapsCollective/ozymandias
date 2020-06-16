@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -11,7 +10,8 @@ namespace Managers_and_Controllers
         public static TutorialPlayerController Instance { get; private set; }
         
         [SerializeField] private VideoPlayer player;
-        [SerializeField] private GameObject controls;
+        [SerializeField] private GameObject playerControls;
+        [SerializeField] private GameObject selectControls;
         [SerializeField] private VideoClip[] tutorialVideos;
 
         private int currentClip;
@@ -21,27 +21,35 @@ namespace Managers_and_Controllers
             Instance = this;
             canvas = GetComponent<Canvas>();
         }
-
-        public void PlayClip(int clipIndex)
+        
+        public void OpenTutorial(int clipIndex)
         {
+            Instance.PlayClip(clipIndex, true);
+        }
+
+        public void PlayClip(int clipIndex, bool showVideoSelect = false)
+        {
+            selectControls.SetActive(showVideoSelect);
             canvas.enabled = true;
             currentClip = clipIndex;
-            controls.SetActive(false);
+            playerControls.SetActive(false);
+            StopAllCoroutines();
             StartCoroutine(StartClip(currentClip));
         }
 
         private IEnumerator StartClip(int clipIndex)
         {
+            player.Stop();
             player.clip = tutorialVideos[clipIndex];
             player.Play();
             yield return new WaitForSeconds((float) player.length + 1);
-            controls.SetActive(true);
+            playerControls.SetActive(true);
         }
 
         public void Replay()
         {
             StartCoroutine(StartClip(currentClip));
-            controls.SetActive(false);
+            playerControls.SetActive(false);
         }
 
         public void OnClose()
