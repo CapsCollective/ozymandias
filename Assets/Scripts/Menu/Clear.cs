@@ -26,6 +26,9 @@ public class Clear : UiUpdater
     
     public Toggle toggle;
     
+    public Image costBadge;
+    public Color gold, grey;
+    
     public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, ClearCount));
 
     public TextMeshProUGUI cost;
@@ -39,6 +42,7 @@ public class Clear : UiUpdater
             ExitClearMode();
         }
         toggle.interactable = active;
+        costBadge.color = active ? gold : grey;
     }
     
     private void Start()
