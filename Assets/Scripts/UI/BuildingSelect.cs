@@ -14,7 +14,9 @@ public class BuildingSelect : UiUpdater
     public Image icon;
     public TextMeshProUGUI cost;
     public Toggle toggle;
-
+    public Image costBadge;
+    public Color gold, grey;
+    
     public override void UpdateUi()
     {
         BuildingStats building = buildingPrefab.GetComponent<BuildingStats>();
@@ -22,16 +24,16 @@ public class BuildingSelect : UiUpdater
         cost.text = building.ScaledCost.ToString();
         icon.sprite = building.icon;
         Color colour = building.IconColour;
-        //title.color = colour;
         icon.color = colour;
-        //cost.color = colour;
         bool active = building.ScaledCost <= Manager.Wealth;
         if (toggle.isOn && !active)
         {
             toggle.isOn = false;
             PlacementController.Selected = Deselected;
         }
-        toggle.interactable = building.ScaledCost <= Manager.Wealth;
+        bool interactable = building.ScaledCost <= Manager.Wealth;
+        toggle.interactable = interactable;
+        costBadge.color = interactable ? gold : grey;
     }
 
     public void ToggleSelect()
