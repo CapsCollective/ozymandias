@@ -51,7 +51,7 @@ public class BuildingStats : MonoBehaviour
                 case Metric.Entertainment: return new Color(0.5f,1,1);
                 case Metric.Luxuries: return new Color(1, 0.650f, 0.203f);
                 case Metric.Defense: return new Color(0.5f,0.6f,1);
-                default: return new Color(1,1,1);
+                default: return new Color(1f,1f,1f);
             }
         }
     }

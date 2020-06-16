@@ -7,6 +7,7 @@ public class DepthOfFieldController : MonoBehaviour
 {
     [SerializeField] private PostProcessProfile profile;
     [SerializeField] private PostProcessVolume volume;
+    [SerializeField] private LayerMask layerMask;
     private DepthOfField depthOfField;
     private Camera cam;
     private CameraController cc;
@@ -24,7 +25,7 @@ public class DepthOfFieldController : MonoBehaviour
         volume.weight = Mathf.InverseLerp(cc.maxHeight, cc.minHeight, transform.position.y);
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, LayerMask.NameToLayer("Default")))
+        if (Physics.Raycast(ray, out hit, 100f, layerMask))
         {
             depthOfField.focusDistance.value = hit.distance;
         }
