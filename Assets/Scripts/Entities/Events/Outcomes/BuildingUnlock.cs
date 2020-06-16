@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static GameManager;
+using static AchievementManager;
+using static BuildingManager;
 
 [CreateAssetMenu(fileName = "Building Unlock", menuName = "Outcomes/Building Unlock")]
 public class BuildingUnlock : Outcome
@@ -15,10 +17,13 @@ public class BuildingUnlock : Outcome
         if (!Building)
             return false;
 
-        if (!BuildingManager.BuildManager.AllBuildings.Contains(Building))
+        if (!BuildManager.AllBuildings.Contains(Building))
         {
-            BuildingManager.BuildManager.AllBuildings.Add(Building);
+            BuildManager.AllBuildings.Add(Building);
             Debug.Log($"Building Unlocked: {Building}");
+            Achievements.Unlock("A Helping Hand");
+            if (BuildManager.AllBuildings.Count >= 14) //9 plus the 5 unlocked
+                Achievements.Unlock("Modern Influences");
             return true;
         }
 

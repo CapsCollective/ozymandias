@@ -9,14 +9,14 @@ using UnityEngine.EventSystems;
 
 public class Clear : UiUpdater
 {
-    public const float costScale = 1.03f;
+    public const float CostScale = 1.03f;
     
     private Cell[] highlighted = new Cell[1];
     private Map map;
     private EventSystem eventSystem;  
 
     private BuildingStructure selectedBuilding;
-    private int clearCount = 0;
+    public static int ClearCount = 0;
     
     public int baseCost = 30;
 
@@ -26,12 +26,12 @@ public class Clear : UiUpdater
     
     public Toggle toggle;
     
-    public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(costScale, clearCount));
+    public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, ClearCount));
 
     public TextMeshProUGUI cost;
     public override void UpdateUi()
     {
-        cost.text = "Cost: " + GetComponent<Clear>().ScaledCost;
+        cost.text = GetComponent<Clear>().ScaledCost.ToString();
         bool active = Manager.Wealth >= ScaledCost;
         if (!active)
         {
@@ -102,8 +102,14 @@ public class Clear : UiUpdater
         BuildingStats building = selectedBuilding.GetComponent<BuildingStats>();
         BuildingStructure buildingStructure = selectedBuilding.GetComponent<BuildingStructure>();
         if (!Manager.Spend(ScaledCost)) return;
-        if (building.terrain) clearCount++;
+        if (building.terrain) ClearCount++;
         buildingStructure.Clear();
         Manager.Demolish(building);
     }
+    
+    private void OnDestroy()
+    {
+        ClearCount = 0;
+    }
+    
 }

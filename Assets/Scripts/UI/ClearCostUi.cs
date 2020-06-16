@@ -9,6 +9,6 @@ public class ClearCostUi : UiUpdater
     public TextMeshProUGUI cost;
     public override void UpdateUi()
     {
-        cost.text = "Cost: " + GetComponent<Clear>().ScaledCost;
+        cost.text = GetComponent<Clear>().ScaledCost.ToString();
     }
 }
