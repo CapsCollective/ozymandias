@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.18028475, g: 0.22571509, b: 0.30692318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028507, g: 0.22571546, b: 0.30692363, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5865,6 +5865,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 547615914, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1000265474, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5933,7 +5937,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 800053112672030529, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 1326989231475366802, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140836452065953554, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296040985596141891, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5296040985596141891, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
+    - {fileID: 1326989231475366802, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
+    - {fileID: 547615914, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
 --- !u!1 &581453738
 GameObject:
@@ -8938,6 +8965,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1677310818 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 800053112672030529, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+    type: 3}
+  m_PrefabInstance: {fileID: 547615912}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1677310822
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677310818}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1678624394
 GameObject:
   m_ObjectHideFlags: 0
@@ -10184,6 +10231,11 @@ PrefabInstance:
       propertyPath: gameMap
       value: 
       objectReference: {fileID: 254812624}
+    - target: {fileID: 5148712862687700338, guid: e11742c242ee24d22ab05b2846c9f3ea,
+        type: 3}
+      propertyPath: waterDetectLM.m_Bits
+      value: 25165825
+      objectReference: {fileID: 0}
     - target: {fileID: 5148712862687700339, guid: e11742c242ee24d22ab05b2846c9f3ea,
         type: 3}
       propertyPath: m_LocalPosition.x
