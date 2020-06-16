@@ -11,7 +11,6 @@ public class PlacementController : MonoBehaviour
     public const int Deselected = -1;
     public static int Selected = Deselected;
     public BuildingSelect[] cards;
-    public List<GameObject> allBuildings = new List<GameObject>();
     private List<GameObject> remainingBuildings = new List<GameObject>();
     
     private Map map;
@@ -104,7 +103,20 @@ public class PlacementController : MonoBehaviour
             yield return null;
         }
         if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
-        cards[i].buildingPrefab = remainingBuildings.PopRandom();
+        bool valid = false;
+        
+        // Confirm no duplicate buildings
+        while (!valid)
+        {
+            valid = true;
+            cards[i].buildingPrefab = remainingBuildings.PopRandom();
+            for (int j = 0; j < 3; j++)
+            {
+                if (i == j) continue;
+                if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
+            }
+        }
+        
         Manager.UpdateUi();
         for (int j = 0; j < 30; j++)
         {
