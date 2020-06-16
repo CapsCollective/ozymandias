@@ -97,7 +97,7 @@ public class FogColorChange : MonoBehaviour
     {
         if (isSetup)
         {
-            newRatio = Manager.ThreatLevel / 100f;
+            newRatio = (Manager.ThreatLevel / 100f)-0.25f;
             StartCoroutine(ShiftingFog());
         }
         
