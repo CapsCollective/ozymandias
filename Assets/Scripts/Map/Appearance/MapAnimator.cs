@@ -5,14 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class MapAnimator : MonoBehaviour
 {
+    public Clear clear;
+
     public string floodTrigger = "Flood";
     public string drainTrigger = "Drain";
     public string effectOrigin = "_Origin";
 
+    public bool flooded = false;
+
     private Animator _animator;
     private MeshRenderer _meshRenderer;
-
-    private int prevSelected = -1;
 
     private void Awake()
     {
@@ -24,21 +26,25 @@ public class MapAnimator : MonoBehaviour
     {
         UpdateEffectOrigin();
 
-        if (PlacementController.Selected != prevSelected)
-        {
-            Debug.Log(PlacementController.Selected + " : " + prevSelected);
+        if ((PlacementController.Selected != PlacementController.Deselected || clear.toggle.isOn) && !flooded)
+            Flood();
+        
+        if ((PlacementController.Selected == PlacementController.Deselected && !clear.toggle.isOn) && flooded)
+            Drain();
 
-            if (PlacementController.Selected != PlacementController.Deselected)
-                Fill();
-            else
-                Drain();
-        }
-        prevSelected = PlacementController.Selected;
     }
 
-    public void Drain() { _animator.SetTrigger(drainTrigger); }
+    public void Drain()
+    {
+        flooded = false;
+        _animator.SetTrigger(drainTrigger);
+    }
 
-    public void Fill() { _animator.SetTrigger(floodTrigger); }
+    public void Flood()
+    {
+        flooded = true;
+        _animator.SetTrigger(floodTrigger);
+    }
 
     private void UpdateEffectOrigin()
     {
