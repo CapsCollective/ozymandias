@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.18028475, g: 0.22571509, b: 0.30692318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028507, g: 0.22571546, b: 0.30692363, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -614,6 +614,9 @@ MonoBehaviour:
   vertexColor: {r: 0, g: 0, b: 0, a: 0}
   gridColor: {r: 0, g: 0, b: 0, a: 1}
   occupiedColor: {r: 1, g: 1, b: 1, a: 1}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 83886080
 --- !u!23 &254812626
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11346,6 +11349,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020114589471263462, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 83886080
       objectReference: {fileID: 0}
     - target: {fileID: 4681505970929513062, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
         type: 3}

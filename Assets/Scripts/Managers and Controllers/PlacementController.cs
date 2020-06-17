@@ -20,6 +20,7 @@ public class PlacementController : MonoBehaviour
     private int rotation;
     private Cell[] highlighted = new Cell[0];
     private static int _previousSelected = Selected;
+    public LayerMask layerMask;
 
     private void Awake()
     {
@@ -69,8 +70,8 @@ public class PlacementController : MonoBehaviour
     {
         if (Selected == Deselected) return;
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-        Physics.Raycast(ray, out hit);
-
+        Physics.Raycast(ray, out hit, 200f,layerMask);
+        
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
         int i = Selected;
         if (map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation))
