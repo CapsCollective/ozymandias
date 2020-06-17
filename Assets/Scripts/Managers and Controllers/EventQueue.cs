@@ -71,7 +71,7 @@ public class EventQueue : MonoBehaviour
         
         for (int j = 0; j < 3; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
         if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos)); // 30% flat chance to spawn chaos
-        if (Random.Range(0,100) < 20) eventPool.Add(PickRandom(EventType.Blueprint)); // 20% flat chance to spawn blueprint
+        if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Blueprint)); // 20% flat chance to spawn blueprint
 
         // Start spawning threat events at 60, and gets more likely the higher it gets
         if (Manager.ThreatLevel > 60 && Random.Range(0,100) < Manager.ThreatLevel) eventPool.Add(PickRandom(EventType.Threat));
