@@ -60,7 +60,7 @@ public class SideBar : UiUpdater
         luxury.SetBar(Manager.Luxury);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(layout);
-        parent.sizeDelta = new Vector2(145, layout.rect.height);
-        mask.sizeDelta = new Vector2(145, layout.rect.height);
+        parent.sizeDelta = new Vector2(150, layout.rect.height);
+        mask.sizeDelta = new Vector2(150, layout.rect.height);
     }
 }

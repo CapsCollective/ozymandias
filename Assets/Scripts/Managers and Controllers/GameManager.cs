@@ -95,9 +95,9 @@ public class GameManager : MonoBehaviour
 
     public Dictionary<Metric, int> modifiers = new Dictionary<Metric, int>();
     
-    [ReadOnly] [SerializeField] private List<Adventurer> adventurers = new List<Adventurer>();
+    [ReadOnly] public List<Adventurer> adventurers = new List<Adventurer>();
 
-    [ReadOnly] [SerializeField] public List<BuildingStats> buildings = new List<BuildingStats>();
+    [ReadOnly] public List<BuildingStats> buildings = new List<BuildingStats>();
     
     [ReadOnly] [SerializeField] private int totalAdventurers;
     public int TotalAdventurers => totalAdventurers = adventurers.Count;
