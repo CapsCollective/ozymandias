@@ -50,7 +50,7 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 
     public IEnumerator Fade(CanvasGroup canvasGroup, float start, float end)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         float counter = 0f;
         while (counter < fadeDuration)
         {
