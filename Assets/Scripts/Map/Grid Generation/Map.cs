@@ -18,6 +18,7 @@ public class Map : MonoBehaviour
     public Color vertexColor;
     public Color gridColor;
     public Color occupiedColor;
+    public LayerMask layerMask;
 
     private MeshFilter _meshFilter;
     private Camera cam;
@@ -50,7 +51,7 @@ public class Map : MonoBehaviour
     {
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
         RaycastHit hit;
-        Physics.Raycast(ray, out hit, LayerMask.GetMask("Surface","UI"));
+        Physics.Raycast(ray, out hit, 200f, layerMask);
         return GetCell(hit.point);
     }
     
