@@ -26,17 +26,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190828941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5933494975854923506}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.10000992, y: 27.3}
-  m_SizeDelta: {x: 160, y: 13.278297}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1190828944
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_textAlignment: 258
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -182,16 +182,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2971664735073291325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5933494975854923506}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.099999905, y: 6.1500015}
-  m_SizeDelta: {x: 160, y: 55.36667}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: -20, y: -40}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8530885381261662555
 CanvasRenderer:
@@ -219,7 +219,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: How much you have to spend on buildings, clearing, and quests. The left
+    number is your current total, and the right is how much you get each turn. You
+    gain wealth based on the number of Adventurers times their Spending rate.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -255,7 +257,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -289,13 +291,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -1.1838226, w: 0}
   m_textInfo:
     textComponent: {fileID: 5583759884401086696}
-    characterCount: 0
+    characterCount: 224
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 40
+    wordCount: 41
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 5
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -326,7 +328,7 @@ GameObject:
   - component: {fileID: 3713744697681677443}
   - component: {fileID: 3132993703024160045}
   m_Layer: 5
-  m_Name: MoneyHelper
+  m_Name: WealthHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,8 +352,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 6, y: 28.56}
-  m_SizeDelta: {x: 182.00354, y: 87.88823}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 220, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4986941033365176959
 CanvasRenderer:
@@ -398,7 +400,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8821676634747878105}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

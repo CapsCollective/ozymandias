@@ -26,17 +26,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190828941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5933494975854923506}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: -20, y: -50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1190828944
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -182,17 +182,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2971664735073291325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5933494975854923506}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.19983, y: 8.8}
-  m_SizeDelta: {x: 94.00702, y: 35.16127}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -35}
+  m_SizeDelta: {x: -20, y: -40}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8530885381261662555
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Clear selected terrain and buildings for a cost
+  m_text: Pay to clear selected terrain and buildings
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -289,12 +289,12 @@ MonoBehaviour:
   m_margin: {x: 4.676445, y: 0, z: 4.359436, w: 0}
   m_textInfo:
     textComponent: {fileID: 7864907831189376109}
-    characterCount: 47
+    characterCount: 43
     spriteCount: 0
-    spaceCount: 7
-    wordCount: 8
+    spaceCount: 6
+    wordCount: 7
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 4311823371050612564}
   - component: {fileID: 6565418654471808087}
   m_Layer: 5
-  m_Name: DestroyHelper
+  m_Name: ClearHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,7 +350,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120, y: 75}
+  m_SizeDelta: {x: 120, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4986941033365176959
 CanvasRenderer:
@@ -397,7 +397,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8821676634747878105}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
