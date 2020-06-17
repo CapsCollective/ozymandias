@@ -9,7 +9,7 @@ public class BuildingHelper : MonoBehaviour
     public void FillText(GameObject originalObject)
     {
         buildingStats = originalObject.GetComponent<BuildingSelect>().buildingPrefab.GetComponent<BuildingStats>();
-        transform.Find("Title").GetComponent<TextMeshProUGUI>().text = buildingStats.type.ToString();
+        transform.Find("Title").GetComponent<TextMeshProUGUI>().text = "~ "+buildingStats.name+" ~";
         transform.Find("Text").GetComponent<TextMeshProUGUI>().text = buildingStats.description;
         
     }

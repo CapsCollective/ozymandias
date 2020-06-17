@@ -85,14 +85,14 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
         switch (ui)
         {
             case UIType.building:
-                InfoInstantiate(helperPrefab[0], new Vector3(0, 100, 0));
+                InfoInstantiate(helperPrefab[0], new Vector3(0, 110, 0));
                 if (helper) helper.GetComponent<BuildingHelper>().FillText(gameObject);
                 break;
             case UIType.threat:
                 InfoInstantiate(helperPrefab[1], new Vector3(0, -80, 0));
                 break;
             case UIType.quest:
-                InfoInstantiate(helperPrefab[2], new Vector3(0, 70, 0));
+                InfoInstantiate(helperPrefab[2], new Vector3(0, 60, 0));
                 break;
             case UIType.destroy:
                 InfoInstantiate(helperPrefab[3], new Vector3(0, 80, 0));
