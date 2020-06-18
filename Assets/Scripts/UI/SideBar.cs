@@ -10,7 +10,6 @@ public class SideBar : UiUpdater
     public RectTransform parent, mask, layout;
     
     public TextMeshProUGUI
-        adventurers,
         spending,
         spendingModifier,
         effectivenessModifier,
@@ -30,8 +29,6 @@ public class SideBar : UiUpdater
     // Update is called once per frame
     public override void UpdateUi()
     {
-        bool overCapacity = Manager.AvailableAdventurers - Manager.Accommodation > 0;
-        adventurers.text = "Adventurers: " + (overCapacity ? "<color=red>" : "") + Manager.AvailableAdventurers + (overCapacity ? "</color>" : "") + " / " + Manager.Accommodation;
         spending.text = "Spending: x" + (Manager.Spending / 100f).ToString("0.00");
         
         int mod = Manager.modifiers[Metric.Spending];
@@ -60,7 +57,7 @@ public class SideBar : UiUpdater
         luxury.SetBar(Manager.Luxury);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(layout);
-        parent.sizeDelta = new Vector2(145, layout.rect.height);
-        mask.sizeDelta = new Vector2(145, layout.rect.height);
+        parent.sizeDelta = new Vector2(150, layout.rect.height);
+        mask.sizeDelta = new Vector2(150, layout.rect.height);
     }
 }

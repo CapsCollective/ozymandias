@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using static GameManager;
 
 public enum AdventurerCategory
 {
@@ -40,7 +41,7 @@ public class Adventurer : MonoBehaviour
         "Loneflaw", "Landsword", "Sheephunter", "Gazersea", "Landthunder", "Shieldgazer", "Whitesilver", "Starcloak",
         "Moorplains", "Tonguewulf", "Swordblade", "Mountainshade", "Maw", "Leafhiltsheep", "Oakborn", "Blackshadow", 
         "Powerbitter", "Bloodstar", "Rainshortear", "Goldcloak", "Mazegreen", "Mourneforge", "Cyanoaken", "Lynx", 
-        "Eyeswyrm", "Starsteel", "Moorhalf", "Wyrmfullfire", "Halfwinter", "Breakerspear", "Glazeman", "Blurelf", 
+        "Eyeswyrm", "Starsteel", "Moorhalf", "Wyrmfire", "Halfwinter", "Breakerspear", "Glazeman", "Blurelf", 
         "Gazerbush", "Hamershine", "Commonseeker", "Roughwhirl", "Laughingsnout", "Orbstrike", "Ambersnarl", 
         "Crowstrike", "Runebraid", "Stillblade", "Hallowedsorrow", "Mildbreath", "Fogforge", "Albilon", "Ginerisey", 
         "Brichazac", "Lomadieu", "Bellevé", "Dudras", "Chanassard", "Ronchessac", "Chamillet", "Bougaitelet", 
@@ -62,11 +63,14 @@ public class Adventurer : MonoBehaviour
 
     public bool isSpecial; // Works as a regular adventurer but is required for certain events so wont be removed
 
+    public int turnJoined;
+    
     public void Awake()
     {
         Random.InitState(GetInstanceID());
         name = NewName();
         category = NewCategory();
+        turnJoined = Manager.turnCounter;
     }
 
     public static string NewName()

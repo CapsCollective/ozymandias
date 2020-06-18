@@ -11,76 +11,48 @@ using UnityEngine.EventSystems;
 
 public enum UIType {building, threat, quest, destroy, money, adventurers, satisfaction, efficiency, spending };
 
-public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
+public class Tooltip : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
-    [SerializeField] private GameObject[] helperPrefab = new GameObject[5];
-    //building[0], threat[1], quest[2], destroy[3], money[4], sidebar[5]
-    public UIType uiType;
-    private GameObject helper;
-    //private bool isHovered;
-    private bool faded = true;
-    private float fadeDuration = 0.25f;
-    /*
-    private void Awake()
-    {
-        ClickManager.OnRightClick += RightClick;
-    }
+    //[SerializeField] private GameObject[] helperPrefab = new GameObject[5];
+    public GameObject tooltipPrefab;
+    public Vector3 offset;
+
+    public float delay = 0.2f;
+    public float fadeDuration = 0.3f;
     
-    public void RightClick()
-    {
-        if (!isHovered) return;
-        if (helper) Destroy(helper);
-        else InfoBox();
-    }
-    */
+    //building[0], threat[1], quest[2], destroy[3], money[4], sidebar[5]
+    //public UIType uiType;
+    private GameObject tooltipInstance;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //isHovered = true;
-        UIGet(uiType);
-        faded = !faded;
+        StartCoroutine(CreateTooltip());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Destroy(helper);
-        //isHovered = false;
-        faded = !faded;
-}
+        Destroy(tooltipInstance);
+    }
 
-    public IEnumerator Fade(CanvasGroup canvasGroup, float start, float end)
+    private IEnumerator CreateTooltip()
     {
-        yield return new WaitForSeconds(0.2f);
+        tooltipInstance = Instantiate(tooltipPrefab, transform, false);
+        tooltipInstance.transform.localPosition = offset;
+        CanvasGroup canvasGroup = tooltipInstance.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+        yield return new WaitForSeconds(delay);
+
         float counter = 0f;
         while (counter < fadeDuration)
         {
             counter += Time.deltaTime;
-            if (canvasGroup) canvasGroup.alpha = Mathf.Lerp(start, end, counter / fadeDuration);
+            if (canvasGroup) canvasGroup.alpha = Mathf.Lerp(0, 1, counter / fadeDuration);
 
             yield return null;
         }
     }
-    
-    /*
-    public void InfoBox()
-    {
-        if (!helperPrefab) return;
-        helper = Instantiate(helperPrefab, transform, false);
-        helper.transform.localPosition = new Vector3(0, 150, 0);
-    }
-    */
 
-
-    public void InfoInstantiate(GameObject info, Vector3 offset)
-    {
-        if (!info) return;
-        helper = Instantiate(info, transform, false);
-        helper.transform.localPosition = offset;
-        CanvasGroup canvasGroup = helper.GetComponent<CanvasGroup>();
-        StartCoroutine(Fade(canvasGroup, canvasGroup.alpha, faded ? 1 : 0 ));
-    }
-
-    private void UIGet(UIType ui)
+    /*private void UIGet(UIType ui)
     {
         switch (ui)
         {
@@ -113,5 +85,5 @@ public class Hover : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
                 InfoInstantiate(helperPrefab[8], new Vector3(-100, 0, 0));
                 break;
         }
-    }
+    }*/
 }

@@ -1,16 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 public class BuildingHelper : MonoBehaviour
 {
-    BuildingStats buildingStats;
-
-    public void FillText(GameObject originalObject)
+    public TextMeshProUGUI title, description;
+    private void Start()
     {
-        buildingStats = originalObject.GetComponent<BuildingSelect>().buildingPrefab.GetComponent<BuildingStats>();
-        transform.Find("Title").GetComponent<TextMeshProUGUI>().text = "~ "+buildingStats.name+" ~";
-        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = buildingStats.description;
-        
+        BuildingStats buildingStats = transform.parent.GetComponent<BuildingSelect>().buildingPrefab.GetComponent<BuildingStats>();
+        title.text = "~ " + buildingStats.name + " ~";
+        description.text = buildingStats.description;
     }
 }
