@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1190828942}
   - component: {fileID: 1190828944}
-  - component: {fileID: 8228590887181090550}
+  - component: {fileID: 8232154862018680213}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -45,7 +45,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190828941}
   m_CullTransparentMesh: 0
---- !u!114 &8228590887181090550
+--- !u!114 &8232154862018680213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ~ Effectiveness ~
+  m_text: ~ Wealth ~
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -132,8 +132,8 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 8228590887181090550}
-    characterCount: 17
+    textComponent: {fileID: 8232154862018680213}
+    characterCount: 10
     spriteCount: 0
     spaceCount: 2
     wordCount: 2
@@ -166,7 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9037864690760737561}
   - component: {fileID: 8530885381261662555}
-  - component: {fileID: 3702490213439487167}
+  - component: {fileID: 5583759884401086696}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -201,7 +201,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2971664735073291325}
   m_CullTransparentMesh: 0
---- !u!114 &3702490213439487167
+--- !u!114 &5583759884401086696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,8 +219,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Providing your Adventurers with enough Equipment, Weaponry, and Magic makes
-    your adventurers more effective, producing more Defense.
+  m_text: How much you have to spend on buildings, clearing, and quests. The left
+    number is your current total, and the right is how much you get each turn. You
+    gain wealth based on the number of Adventurers times their Spending rate.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -266,7 +267,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 210
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -287,13 +288,13 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -1.1838226, w: 0}
   m_textInfo:
-    textComponent: {fileID: 3702490213439487167}
-    characterCount: 132
+    textComponent: {fileID: 5583759884401086696}
+    characterCount: 224
     spriteCount: 0
-    spaceCount: 16
-    wordCount: 17
+    spaceCount: 40
+    wordCount: 41
     linkCount: 0
     lineCount: 5
     pageCount: 1
@@ -324,9 +325,10 @@ GameObject:
   - component: {fileID: 5933494975854923506}
   - component: {fileID: 4986941033365176959}
   - component: {fileID: 4311823371050612564}
-  - component: {fileID: 2146216884663671505}
+  - component: {fileID: 3713744697681677443}
+  - component: {fileID: 3132993703024160045}
   m_Layer: 5
-  m_Name: EffectivenessHelper
+  m_Name: WealthHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -348,10 +350,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 145, y: 100}
+  m_SizeDelta: {x: 240, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4986941033365176959
 CanvasRenderer:
@@ -374,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23429157, g: 0.30668205, b: 0.4245283, a: 1}
+  m_Color: {r: 0.2875854, g: 0.27256143, b: 0.46226418, a: 0.9411765}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -390,7 +392,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &2146216884663671505
+--- !u!225 &3713744697681677443
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -402,3 +404,15 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &3132993703024160045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821676634747878105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136048d76b0058a4d99189416d10b117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
