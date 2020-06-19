@@ -2,6 +2,7 @@
 {
     Properties
     {
+		_BlendTex ("Blend Texture", 2D) = "white" {}
 		_Ground ("Ground Color", Color) = (1, 1, 1, 1)
 		_Height ("Blend Height", Float) = 1
 		_Exponent ("Blend Exponent", Float) = 1
@@ -47,10 +48,10 @@
         }
         ENDCG
 
-		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+		Tags { "RenderType"="Opaque" "Queue"="Geometry" }
         LOD 200
 		Cull Off
-		//Blend SrcAlpha OneMinusSrcAlpha
+		Blend SrcAlpha OneMinusSrcAlpha
         CGPROGRAM
         #pragma surface surf Standard fullforwardshadows vertex:vert //alpha:fade
         #pragma target 3.0
@@ -58,12 +59,15 @@
         {
             float2 uv_MainTex;
 			float4 objectPos;
+			float3 worldNormal;
+			float3 worldPos;
         };
 
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
 
+		sampler2D _BlendTex;
 		float4 _Ground;
 		float _Height;
 		float _Exponent;
@@ -74,14 +78,24 @@
 
 		void vert(inout appdata_full v, out Input o)
 		{
+			o.worldNormal = UnityObjectToWorldNormal(v.normal);
 			v.normal = mul(unity_WorldToObject, float3(0, 1, 0));
 			UNITY_INITIALIZE_OUTPUT(Input, o);
 			o.objectPos = v.vertex;
+			o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 		}
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-			half blendStrength = pow(saturate(_Height - IN.objectPos.y), _Exponent);
+			float scale = 1;
+			
+			float x = tex2D(_BlendTex, float2(IN.worldPos.y, IN.worldPos.z) / scale).r;
+			float y = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.z) / scale).r;
+			float z = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.y) / scale).r;
+
+			float blendSamp = saturate(x * IN.worldNormal.x) + saturate(y * IN.worldNormal.y) + saturate(z * IN.worldNormal.z);
+
+			half blendStrength = pow(saturate(_Height - IN.worldPos.y), _Exponent) * saturate(blendSamp + .5);
 			fixed4 c = _Ground;
 			if (blendStrength < 0.5)
 				discard;
