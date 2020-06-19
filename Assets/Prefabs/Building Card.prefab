@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 148296248180898097}
   - component: {fileID: 48138235528182356}
   - component: {fileID: 2912211027578987853}
+  - component: {fileID: 1246899683348919709}
   m_Layer: 5
   m_Name: Details
   m_TagString: Untagged
@@ -105,7 +106,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 0.9411765}
     m_PressedColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.9411765}
     m_SelectedColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 0.9411765}
-    m_DisabledColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.7058824}
+    m_DisabledColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 0.9411765}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -164,6 +165,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bbf702e6b7f40eea835e5bc3bcb449d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &1246899683348919709
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282987803699252788}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1833600919477185028
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +603,7 @@ MonoBehaviour:
   costBadge: {fileID: 2594720555151189565}
   gold: {r: 1, g: 0.78431374, b: 0, a: 1}
   grey: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+  canvasGroup: {fileID: 1246899683348919709}
 --- !u!1 &6032791411199744166
 GameObject:
   m_ObjectHideFlags: 0

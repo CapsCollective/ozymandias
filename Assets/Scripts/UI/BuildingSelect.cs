@@ -16,6 +16,7 @@ public class BuildingSelect : UiUpdater
     public Toggle toggle;
     public Image costBadge;
     public Color gold, grey;
+    public CanvasGroup canvasGroup;
     
     public override void UpdateUi()
     {
@@ -34,6 +35,7 @@ public class BuildingSelect : UiUpdater
         bool interactable = building.ScaledCost <= Manager.Wealth;
         toggle.interactable = interactable;
         costBadge.color = interactable ? gold : grey;
+        canvasGroup.alpha = interactable ? 1 : 0.4f;
     }
 
     public void ToggleSelect()
