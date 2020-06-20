@@ -98,9 +98,9 @@ public class PlacementController : MonoBehaviour
     public IEnumerator NewCard(int i)
     {
         RectTransform transform = cards[i].GetComponent<RectTransform>();
-        for (int j = 0; j < 30; j++)
+        for (int j = 0; j < 15; j++)
         {
-            transform.anchoredPosition -= new Vector2(0,2.5f);
+            transform.anchoredPosition -= new Vector2(0,5f);
             yield return null;
         }
         if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
@@ -119,9 +119,9 @@ public class PlacementController : MonoBehaviour
         }
         
         Manager.UpdateUi();
-        for (int j = 0; j < 30; j++)
+        for (int j = 0; j < 15; j++)
         {
-            transform.anchoredPosition += new Vector2(0,2.5f);
+            transform.anchoredPosition += new Vector2(0,5f);
             yield return null;
         }
     }

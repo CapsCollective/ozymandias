@@ -35,7 +35,7 @@ public class Clear : UiUpdater
     public TextMeshProUGUI cost;
     public override void UpdateUi()
     {
-        cost.text = GetComponent<Clear>().ScaledCost.ToString();
+        cost.text = ScaledCost.ToString();
         bool active = Manager.Wealth >= ScaledCost;
         if (!active)
         {

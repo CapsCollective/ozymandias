@@ -12,6 +12,7 @@ public class BuildingSelect : UiUpdater
     public GameObject buildingPrefab;
     public TextMeshProUGUI title;
     public Image icon;
+    public Image selected;
     public TextMeshProUGUI cost;
     public Toggle toggle;
     public Image costBadge;
@@ -26,6 +27,7 @@ public class BuildingSelect : UiUpdater
         icon.sprite = building.icon;
         Color colour = building.IconColour;
         icon.color = colour;
+        selected.color = colour;
         bool active = building.ScaledCost <= Manager.Wealth;
         if (toggle.isOn && !active)
         {
