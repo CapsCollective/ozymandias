@@ -14,8 +14,7 @@ public class QuestMapController : MonoBehaviour
     [SerializeField] private QuestCounter counter;
     //private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
     private HighlightOnHover displayingFlyerComponent;
-    private bool shownTutorial;
-    
+
     private static QuestMapController instance;
     public static QuestMapController QuestMap
     {
@@ -29,8 +28,8 @@ public class QuestMapController : MonoBehaviour
 
     public void OnOpened()
     {
-        if (shownTutorial) return;
-        shownTutorial = true;
+        if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
+        PlayerPrefs.SetInt("tutorial_video_quests", 1);
         TutorialPlayerController.Instance.PlayClip(2);
     }
 
