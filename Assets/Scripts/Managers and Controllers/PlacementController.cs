@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Managers_and_Controllers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,6 +22,8 @@ public class PlacementController : MonoBehaviour
     private Cell[] highlighted = new Cell[0];
     private static int _previousSelected = Selected;
     public LayerMask layerMask;
+    [SerializeField] private float tweenTime;
+    [SerializeField] private Ease tweenEase;
 
     private void Awake()
     {
@@ -57,15 +60,15 @@ public class PlacementController : MonoBehaviour
         if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
 
         Cell closest = map.GetCellFromMouse();
-        
+
         BuildingStructure building = cards[Selected].buildingPrefab.GetComponent<BuildingStructure>();
-        
+
         highlighted = map.GetCells(closest, building, rotation);
 
         Map.HighlightState state = map.IsValid(highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
         map.Highlight(highlighted, state);
     }
-    
+
     private void LeftClick()
     {
         if (Selected == Deselected) return;
@@ -76,7 +79,7 @@ public class PlacementController : MonoBehaviour
         int i = Selected;
         if (map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation))
         {
-            StartCoroutine(NewCard(i));
+            NewCardTween(i);
             cards[i].toggle.isOn = false;
             Selected = Deselected;
         }
@@ -92,20 +95,24 @@ public class PlacementController : MonoBehaviour
     public void NewCards()
     {
         GetComponent<ToggleGroup>().SetAllTogglesOff();
-        for (int i = 0; i < 3; i++) StartCoroutine(NewCard(i));
+        for (int i = 0; i < 3; i++) NewCardTween(i);
     }
 
-    public IEnumerator NewCard(int i)
+    public void NewCardTween(int i)
     {
         RectTransform transform = cards[i].GetComponent<RectTransform>();
-        for (int j = 0; j < 15; j++)
+        transform.DOAnchorPosY(-100, tweenTime).SetEase(tweenEase).OnComplete(() =>
         {
-            transform.anchoredPosition -= new Vector2(0,5f);
-            yield return null;
-        }
+            ChangeCard(i);
+            transform.DOAnchorPosY(0, 0.5f).SetEase(tweenEase);
+        });
+    }
+
+    private void ChangeCard(int i)
+    {
         if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
         bool valid = false;
-        
+
         // Confirm no duplicate buildings
         while (!valid)
         {
@@ -117,12 +124,7 @@ public class PlacementController : MonoBehaviour
                 if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
             }
         }
-        
+
         Manager.UpdateUi();
-        for (int j = 0; j < 15; j++)
-        {
-            transform.anchoredPosition += new Vector2(0,5f);
-            yield return null;
-        }
     }
 }
