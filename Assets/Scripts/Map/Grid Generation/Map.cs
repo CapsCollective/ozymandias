@@ -22,6 +22,7 @@ public class Map : MonoBehaviour
 
     private MeshFilter _meshFilter;
     private Camera cam;
+    private Vector2[] uv;
 
     public enum HighlightState { Inactive, Valid, Invalid }
 
@@ -33,7 +34,8 @@ public class Map : MonoBehaviour
 
     public void Highlight(Cell[] cells, HighlightState state)
     {
-        Vector2[] uv = _meshFilter.sharedMesh.uv;
+        if(uv == null)
+            uv = _meshFilter.sharedMesh.uv;
 
         foreach (Cell cell in cells)
         {

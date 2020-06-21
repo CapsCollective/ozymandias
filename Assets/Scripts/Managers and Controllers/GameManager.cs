@@ -256,7 +256,12 @@ public class GameManager : MonoBehaviour
         eventQueue.AddEvent(openingEvent, true);
         
         // Run the tutorial video
-        TutorialPlayerController.Instance.PlayClip(0);
+        if (PlayerPrefs.GetInt("tutorial_video_basics", 0) == 0)
+        {
+            PlayerPrefs.SetInt("tutorial_video_basics", 1);
+            TutorialPlayerController.Instance.PlayClip(0);
+        }
+
         Analytics.EnableCustomEvent("New Turn", true);
         Analytics.enabled = true;
     }
