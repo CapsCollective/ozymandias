@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-105536479037405734
+--- !u!114 &-3419933441122564662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: START - Kidnapped
+  m_Name: New Quest(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  Quest: {fileID: 11400000, guid: 2cbd8100781b38849bf396a448ba7cfd, type: 2}
+  Quest: {fileID: 11400000, guid: c11c64bd015c3d241b51981581662cbf, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,14 +24,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: START_Kidnapped
+  m_Name: Help Neighbour
   m_EditorClassIdentifier: 
-  headline: Kidnapped Adventurers
-  article: There has been rumours of some kidnapped adventurers being held by goblins
-    nearby. If we track their camp we might be able to sneak them out!
-  image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
-  type: 1
-  headliner: 1
+  headline: Neighbourly Defense
+  article: Another settlement needs our help! Word has come in that a nearby town
+    is under attack and if we could lend a few of our adventurers "that'd be tops".
+  image: {fileID: 21300000, guid: 4f09b82c7c5485042b9ab938fe367276, type: 3}
+  type: 11
+  headliner: 0
   minChaos: 0
   minThreat: 0
   minWealth: 0
@@ -39,6 +39,6 @@ MonoBehaviour:
   maxThreat: 0
   maxWealth: 0
   outcomes:
-  - {fileID: -105536479037405734}
+  - {fileID: -3419933441122564662}
   choices: []
-  oneTime: 1
+  oneTime: 0

@@ -10358,6 +10358,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 00ff60ae6a8cbde42ae48608adbacbf0, type: 2}
   - {fileID: 11400000, guid: e3e65f0e5e4dc1543ac639ba1b58f34f, type: 2}
   - {fileID: 11400000, guid: 519ecb3994e69984c8c35edc8364118e, type: 2}
+  nextBuildingUnlock: 10
   filterEvents: []
 --- !u!114 &1870573932
 MonoBehaviour:
@@ -10371,7 +10372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbcd6bd0475e554408d78930434ad013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSpeed: 0.2
+  clickSpeed: 0.25
 --- !u!114 &1870573933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10647,6 +10648,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2079180552}
     m_Modifications:
+    - target: {fileID: 11125641216971934, guid: ce0b0cfa5964fcb43b084c7067e940af,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11125641216971934, guid: ce0b0cfa5964fcb43b084c7067e940af,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11125641216971934, guid: ce0b0cfa5964fcb43b084c7067e940af,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11125641216971934, guid: ce0b0cfa5964fcb43b084c7067e940af,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1810377563890441156, guid: ce0b0cfa5964fcb43b084c7067e940af,
         type: 3}
       propertyPath: m_AnchorMin.y

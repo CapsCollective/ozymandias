@@ -26,7 +26,7 @@ public class EventQueue : MonoBehaviour
     
     public List<Event> allEvents;
 
-    public int nextBuildingUnlock = 10;
+    private int nextBuildingUnlock = 10;
 
     [Tooltip("Events in this array are ignored by the Add All button")]
     public Event[] filterEvents;
@@ -35,10 +35,6 @@ public class EventQueue : MonoBehaviour
     {
         Random.InitState((int)DateTime.Now.Ticks);
 
-        //TODO: Figure out best way to autoload events
-        
-        //allEvents = Resources.LoadAll<Event>("Events");
-        //Init shuffled event pools pool
         foreach (EventType type in Enum.GetValues(typeof(EventType))) eventPools.Add(type, Shuffle(type));
     }
 
@@ -79,13 +75,16 @@ public class EventQueue : MonoBehaviour
             nextBuildingUnlock += 10;
         }
 
-        //Keeps adventurer count roughly at a fair level
+        // Keeps adventurer count roughly at a fair level
         if (Manager.TotalAdventurers < 7 + Manager.turnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         // Catchup if falling behind
         if (Manager.TotalAdventurers < 4 + Manager.turnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         if (Manager.TotalAdventurers < Manager.turnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         // More if high satisfaction
         if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+        
+        // Fill up to 5 quests if unfilled
+        if(Random.Range(0,5) > QuestMapController.QuestMap.ActiveQuests) eventPool.Add(PickRandom(EventType.Radiant));
         
         if (Manager.turnCounter >= 5)
         {
@@ -99,7 +98,7 @@ public class EventQueue : MonoBehaviour
             
             // Fixed 10% spawn rate for challenge
             if (Random.Range(0,100) < 10) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-            //Variable rate for < 50 and 30, should cause a mass exodus
+            // Variable rate for < 50 and 30, should cause a mass exodus
             if (Manager.Satisfaction - Random.Range(10,50) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
             if (Manager.Satisfaction - Random.Range(10,30) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
         }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8732800097116917044
+--- !u!114 &-8957309257903465604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Quest(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  Quest: {fileID: 11400000, guid: 219d8d81d38bb7047abdf34b8b9140d3, type: 2}
+  Quest: {fileID: 11400000, guid: 28fe78c3e01af2b41ba366c0895b164b, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,15 +24,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: START - Madmans Treasure
+  m_Name: 10 MacGuffins
   m_EditorClassIdentifier: 
-  headline: Local Madman Discloses "Totally Real Treasure"
-  article: "Everyone's favourite raving lunatic, Old Man Penterghast, is finally
-    back in town much to the delight of the many tavern patrons left un-pestered
-    during his absence. In an exclusive interview, the beloved, old kook mentioned
-    a great treasure hidden in the forests.\r"
-  image: {fileID: 21300000, guid: 9dcd333b99e57554fb347973c6af8dc0, type: 3}
-  type: 3
+  headline: The Search for Plot Contrivances
+  article: Adventurers are begging for mysterious 'MacGuffins', we don't fully understand
+    they do, but apparently they are incredibly important.
+  image: {fileID: 21300000, guid: 993002e7a83839e46a98632d649416cf, type: 3}
+  type: 11
   headliner: 0
   minChaos: 0
   minThreat: 0
@@ -41,6 +39,6 @@ MonoBehaviour:
   maxThreat: 0
   maxWealth: 0
   outcomes:
-  - {fileID: -8732800097116917044}
+  - {fileID: -8957309257903465604}
   choices: []
-  OneTime: 1
+  oneTime: 0

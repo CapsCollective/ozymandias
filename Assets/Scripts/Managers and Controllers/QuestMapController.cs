@@ -26,6 +26,8 @@ public class QuestMapController : MonoBehaviour
         }
     }
 
+    public int ActiveQuests => usedFlyers.Count;
+    
     public void OnOpened()
     {
         if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
