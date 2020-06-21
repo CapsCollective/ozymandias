@@ -9,6 +9,7 @@ public class MapLayout : ScriptableObject
 
     public float heightFactor;
     public float lineWeight;
+    public float roadWeight;
 
     public int relaxIterations;
     [Range(0f, 1f)] public float relaxStrength;
@@ -18,6 +19,7 @@ public class MapLayout : ScriptableObject
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
     public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
     public Dictionary<BuildingStructure, List<Cell>> BuildingMap = new Dictionary<BuildingStructure, List<Cell>>();
+    public Graph<Vertex> RoadGraph = new Graph<Vertex>();
 
     // BUILDING PLACEMENT
     public void Occupy(BuildingStructure building, Cell[] cells)
@@ -50,6 +52,105 @@ public class MapLayout : ScriptableObject
     }
 
     // GRID QUERYING
+    public List<Vertex> ConvexHull(List<Vertex> included)
+    {
+        Graph<Vertex> dupGraph = new Graph<Vertex>(VertexGraph);
+        for (int i = dupGraph.Count - 1; i >= 0; i--)
+        {
+            if (!included.Contains(dupGraph.GetData()[i]))
+                dupGraph.Remove(dupGraph.GetData()[i]);
+        }
+
+        List<Vertex> path = dupGraph.OneWayDFS(included[0], included[0], 20)[0];
+        return path;
+    }
+
+    public Vertex ClosestRoad(Vertex target)
+    {
+        if (RoadGraph.Count == 0)
+            return null;
+        Vertex closest = RoadGraph.GetData()[0];
+
+        foreach (Vertex vertex in RoadGraph.GetData())
+        {
+            if (Vector3.Distance(target, vertex) < Vector3.Distance(target, closest))
+                closest = vertex;
+        }
+
+        return closest;
+    }
+
+    public List<Vertex> AStar(Vertex root, Vertex target, int iterationLimit)
+    {
+        List<Vertex> path = new List<Vertex>();
+
+        List<Vertex> open = new List<Vertex>() { root };
+        Dictionary<Vertex, Costs> costs = new Dictionary<Vertex, Costs>();
+        List<Vertex> closed = new List<Vertex>();
+
+        for (int iteration = 0; iteration < iterationLimit; iteration++)
+        {
+            Vertex current = open[0];
+            for (int i = 1; i < open.Count; i++)
+                if (costs[open[i]].FCost < costs[current].FCost) current = open[i];
+
+            open.Remove(current);
+            closed.Add(current);
+
+            if (current.Equals(target))
+            {
+                path.Add(root);
+                path.Add(target);
+
+                Vertex parent = costs[current].Parent;
+                while (parent != root)
+                {
+                    path.Insert(1, parent);
+                    parent = costs[parent].Parent;
+                }
+                break;
+            }
+
+            foreach (Vertex neighbour in VertexGraph.GetAdjacent(current))
+            {
+                float GCost = Vector3.Distance(neighbour, root);
+                float HCost = Vector3.Distance(neighbour, target);
+                float FCost = GCost + HCost;
+
+                if (closed.Contains(neighbour))
+                    continue;
+
+                if ((costs.ContainsKey(neighbour) && costs[neighbour].FCost >= FCost) || !open.Contains(neighbour))
+                {
+                    if (costs.ContainsKey(neighbour))
+                        costs.Remove(neighbour);
+                    costs.Add(neighbour, new Costs(current, GCost, HCost, FCost));
+
+                    if (!open.Contains(neighbour))
+                        open.Add(neighbour);
+                }
+            }
+        }
+
+        return path;
+    }
+
+    private struct Costs
+    {
+        public float GCost { get; }
+        public float HCost { get; }
+        public float FCost { get; }
+        public Vertex Parent { get; }
+
+        public Costs(Vertex _Parent, float _GCost, float _HCost, float _FCost)
+        {
+            Parent = _Parent;
+            GCost = _GCost;
+            HCost = _HCost;
+            FCost = _FCost;
+        }
+    }
+
     public Cell Step(Cell root, BuildingStructure.Direction direction)
     {
         Cell next = null;
@@ -166,6 +267,17 @@ public class MapLayout : ScriptableObject
             }
         }
 
+        return closest;
+    }
+
+    public Vertex GetClosestVertex(Vector3 unitPos)
+    {
+        if (VertexGraph.Count == 0)
+            return null;
+        Vertex closest = VertexGraph.GetData()[0];
+        foreach (Vertex vertex in VertexGraph.GetData())
+            if (Vector3.Distance(unitPos, vertex) < Vector3.Distance(unitPos, closest))
+                closest = vertex;
         return closest;
     }
 
@@ -712,6 +824,102 @@ public class MapLayout : ScriptableObject
         };
     }
 
+    public Mesh GenerateRoad(Vertex from, Vertex to, int iterationLimit)
+    {
+        List<Vertex> path = AStar(from, to, iterationLimit);
+
+        int vertexCount = (path.Count - 1) * 4;
+        Vector3[] vertices = new Vector3[vertexCount];
+        Vector2[] uv = new Vector2[vertexCount];
+        int[] triangles = new int[(path.Count - 1) * 6];
+
+        RoadGraph.Add(path[0]);
+        for (int i = 0; i < path.Count - 1; i++)
+        {
+            if (!RoadGraph.Contains(path[i + 1])) RoadGraph.Add(path[i + 1]);
+            RoadGraph.CreateEdge(path[i], path[i + 1]);
+
+            Vertex root = path[i];
+            Vertex neighbour = path[i + 1];
+
+            Vector3 toNeighbour = neighbour - root;
+            Vector3 direction = toNeighbour.normalized;
+            Vector3 cross = Vector3.Cross(direction, Vector3.forward);
+
+            vertices[i * 4 + 0] = root - cross * roadWeight / 2f;
+            vertices[i * 4 + 1] = neighbour - cross * roadWeight / 2f;
+            vertices[i * 4 + 2] = root + cross * roadWeight / 2f;
+            vertices[i * 4 + 3] = neighbour + cross * roadWeight / 2f;
+
+            uv[i * 4 + 0] = Vector2.zero;
+            uv[i * 4 + 1] = Vector2.zero;
+            uv[i * 4 + 2] = Vector2.zero;
+            uv[i * 4 + 3] = Vector2.zero;
+
+            triangles[i * 6 + 0] = i * 4 + 0;
+            triangles[i * 6 + 1] = i * 4 + 1;
+            triangles[i * 6 + 2] = i * 4 + 2;
+            triangles[i * 6 + 3] = i * 4 + 2;
+            triangles[i * 6 + 4] = i * 4 + 1;
+            triangles[i * 6 + 5] = i * 4 + 3;
+        }
+
+        Mesh road = new Mesh()
+        {
+            vertices = vertices,
+            uv = uv,
+            triangles = triangles
+        };
+        return road;
+    }
+
+    public Mesh GenerateRoad(List<Vertex> path)
+    {
+        int vertexCount = (path.Count - 1) * 4;
+        Vector3[] vertices = new Vector3[vertexCount];
+        Vector2[] uv = new Vector2[vertexCount];
+        int[] triangles = new int[(path.Count - 1) * 6];
+
+        if (!RoadGraph.Contains(path[0])) RoadGraph.Add(path[0]);
+        for (int i = 0; i < path.Count - 1; i++)
+        {
+            if (!RoadGraph.Contains(path[i + 1])) RoadGraph.Add(path[i + 1]);
+            RoadGraph.CreateEdge(path[i], path[i + 1]);
+
+            Vertex root = path[i];
+            Vertex neighbour = path[i + 1];
+
+            Vector3 toNeighbour = neighbour - root;
+            Vector3 direction = toNeighbour.normalized;
+            Vector3 cross = Vector3.Cross(direction, Vector3.forward);
+
+            vertices[i * 4 + 0] = root - cross * roadWeight / 2f;
+            vertices[i * 4 + 1] = neighbour - cross * roadWeight / 2f;
+            vertices[i * 4 + 2] = root + cross * roadWeight / 2f;
+            vertices[i * 4 + 3] = neighbour + cross * roadWeight / 2f;
+
+            uv[i * 4 + 0] = Vector2.zero;
+            uv[i * 4 + 1] = Vector2.zero;
+            uv[i * 4 + 2] = Vector2.zero;
+            uv[i * 4 + 3] = Vector2.zero;
+
+            triangles[i * 6 + 0] = i * 4 + 0;
+            triangles[i * 6 + 1] = i * 4 + 1;
+            triangles[i * 6 + 2] = i * 4 + 2;
+            triangles[i * 6 + 3] = i * 4 + 2;
+            triangles[i * 6 + 4] = i * 4 + 1;
+            triangles[i * 6 + 5] = i * 4 + 3;
+        }
+
+        Mesh road = new Mesh()
+        {
+            vertices = vertices,
+            uv = uv,
+            triangles = triangles
+        };
+        return road;
+    }
+
     public Mesh GenerateEdgeMesh()
     {
         Graph<Vertex> dupVertexGraph = new Graph<Vertex>(VertexGraph);
@@ -722,9 +930,9 @@ public class MapLayout : ScriptableObject
 
         for (int i = dupVertexGraph.Count - 1; i >= 0; i--)
         {
-            foreach (Vertex neighbour in dupVertexGraph.GetAdjacent(dupVertexGraph.GetData()[i]))
+            Vertex root = dupVertexGraph.GetData()[i];
+            foreach (Vertex neighbour in dupVertexGraph.GetAdjacent(root))
             {
-                Vector3 root = dupVertexGraph.GetData()[i];
                 Vector3 toNeighbour = neighbour - root;
                 Vector3 direction = toNeighbour.normalized;
                 Vector3 cross = Vector3.Cross(direction, Vector3.forward);
@@ -732,10 +940,10 @@ public class MapLayout : ScriptableObject
                 vertices.AddRange(
                     new Vector3[]
                     {
-                        root - cross * lineWeight / 2f,
-                        neighbour - cross * lineWeight / 2f,
-                        root + cross * lineWeight / 2f,
-                        neighbour + cross * lineWeight / 2f
+                        root - cross * roadWeight / 2f,
+                        neighbour - cross * roadWeight / 2f,
+                        root + cross * roadWeight / 2f,
+                        neighbour + cross * roadWeight / 2f
                     }
                     );
 

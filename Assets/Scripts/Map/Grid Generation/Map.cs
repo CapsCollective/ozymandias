@@ -20,7 +20,8 @@ public class Map : MonoBehaviour
     public Color occupiedColor;
     public LayerMask layerMask;
 
-    private MeshFilter _meshFilter;
+    private MeshFilter gridMF;
+    public MeshFilter roadMF;
     private Camera cam;
 
     public enum HighlightState { Inactive, Valid, Invalid }
@@ -31,9 +32,49 @@ public class Map : MonoBehaviour
         Generate();
     }
 
+    public void GenerateRoad(Vertex from, Vertex to)
+    {
+        CombineInstance[] combine = new CombineInstance[]
+        {
+            new CombineInstance()
+            {
+                mesh = mapLayout.GenerateRoad(from, to, 2000),
+                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix
+            },
+            new CombineInstance()
+            {
+                mesh = roadMF.mesh,
+                transform = Matrix4x4.identity
+            }
+        };
+
+        roadMF.sharedMesh = new Mesh();
+        roadMF.sharedMesh.CombineMeshes(combine);
+    }
+
+    public void GenerateRoad(List<Vertex> path)
+    {
+        CombineInstance[] combine = new CombineInstance[]
+        {
+            new CombineInstance()
+            {
+                mesh = mapLayout.GenerateRoad(path),
+                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix
+            },
+            new CombineInstance()
+            {
+                mesh = roadMF.mesh,
+                transform = Matrix4x4.identity
+            }
+        };
+
+        roadMF.sharedMesh = new Mesh();
+        roadMF.sharedMesh.CombineMeshes(combine);
+    }
+
     public void Highlight(Cell[] cells, HighlightState state)
     {
-        Vector2[] uv = _meshFilter.sharedMesh.uv;
+        Vector2[] uv = gridMF.sharedMesh.uv;
 
         foreach (Cell cell in cells)
         {
@@ -43,7 +84,7 @@ public class Map : MonoBehaviour
                 uv[vertexIndex].x = (int)state / 2f;
         }
 
-        _meshFilter.sharedMesh.uv = uv;
+        gridMF.sharedMesh.uv = uv;
     }
 
     // Gets the closest cell to the cursor
@@ -83,8 +124,9 @@ public class Map : MonoBehaviour
     public void Generate()
     {
         mapLayout.GenerateMap(mapLayout.seed);
-        _meshFilter = GetComponent<MeshFilter>();
-        _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
+        gridMF = GetComponent<MeshFilter>();
+        gridMF.sharedMesh = mapLayout.GenerateCellMesh();
+        roadMF.sharedMesh = new Mesh();//mapLayout.GenerateEdgeMesh();
     }
     
     // Occupies and fits a building onto the map
@@ -130,6 +172,25 @@ public class Map : MonoBehaviour
 
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
+            // Road generation
+            if (animate)
+            {
+                if (mapLayout.RoadGraph.Count > 0)
+                {
+                    Vertex roadTarget = mapLayout.ClosestRoad(cells[0].Vertices[0]);
+                    GenerateRoad(cells[0].Vertices[0], roadTarget);
+                }
+
+                List<Vertex> included = new List<Vertex>();
+                foreach (Cell cell in cells)
+                    foreach (Vertex vertex in cell.Vertices)
+                        if (!included.Contains(vertex))
+                            included.Add(vertex);
+
+                List<Vertex> path = mapLayout.ConvexHull(included);
+                GenerateRoad(path);
+            }
+
             mapLayout.Align(cells, rotation);
             Occupy(building, cells, animate);
             stats.Build();
