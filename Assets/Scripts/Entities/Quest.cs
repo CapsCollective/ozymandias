@@ -1,31 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using static GameManager;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu]
 public class Quest : ScriptableObject
 {
-    public int Turns = 5;
-    public int Adventurers = 0;
-    public int Cost = 0;
-    [Range(0, 1)] public float Difficulty;
-    public float QuestDifficulty { get => Difficulty; }
-    public string QuestTitle;
-    [TextArea]
-    public string QuestDescription;
-    public Event QuestCompleteEvent;
+    public int turns = 5;
+    public int adventurers = 2;
+    [Range(0.5f, 3f)] public float costScale = 1.5f; // How many turns worth of gold to send, sets cost when created.
+    [ReadOnly] public int cost = 0; 
+    
+    public string title;
+    [TextArea] public string description;
+    public Event completeEvent; // Keep empty if randomly chosen
+    public Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
     private int turnsLeft;
     private List<Adventurer> assigned;
     
-    public void StartQuest() 
+    public void StartQuest()
     {
+        if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
         assigned = new List<Adventurer>();
-        turnsLeft = Turns;
-        Manager.Spend(Cost);
-        for (int i = 0; i < Adventurers; i++) assigned.Add(Manager.AssignAdventurer(this));
+        turnsLeft = turns;
+        Manager.Spend(cost);
+        for (int i = 0; i < adventurers; i++) assigned.Add(Manager.AssignAdventurer(this));
         GameManager.OnNewTurn += OnNewTurn;
         Manager.UpdateUi();
     }
@@ -35,7 +38,7 @@ public class Quest : ScriptableObject
         if (turnsLeft == 1)
         {
             // Adds to queue turn before so it appears next turn
-            if (QuestCompleteEvent) Manager.eventQueue.AddEvent(QuestCompleteEvent, true);
+            if (completeEvent) Manager.eventQueue.AddEvent(completeEvent, true);
             else Debug.LogError("Quest was completed with no event.");
         }
         if(turnsLeft == 0)
@@ -44,9 +47,9 @@ public class Quest : ScriptableObject
             foreach (var adventurer in assigned) adventurer.assignedQuest = null;
             assigned = new List<Adventurer>();
             GameManager.OnNewTurn -= OnNewTurn;
-            Debug.Log($"Quest Complete: {QuestTitle}");
+            Debug.Log($"Quest Complete: {title}");
         }
-        Debug.Log($"Quest in progress: {QuestTitle}. {turnsLeft} turns remaining.");
+        Debug.Log($"Quest in progress: {title}. {turnsLeft} turns remaining.");
         turnsLeft--;
     }
 

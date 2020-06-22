@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int equipment;
     public int Equipment => equipment = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.equipment) / AvailableAdventurers,0, 100);
 
-    [ReadOnly] [SerializeField] private int training;
-    public int Training => training = 0; // TODO: work out the specifics of this
+    //[ReadOnly] [SerializeField] private int training;
+    //public int Training => training = 0; // TODO: work out the specifics of this
 
     [ReadOnly] [SerializeField] private int effectiveness;
     public int Effectiveness => effectiveness = Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 0, 100);
@@ -139,9 +139,11 @@ public class GameManager : MonoBehaviour
     public int Luxury => luxury = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers, 0, 100);
 
     public int OvercrowdingMod => Mathf.Min(0, (Accommodation - AvailableAdventurers) * 5); //lose 5% satisfaction per adventurer over capacity
-        
+    
+    public int LowThreatMod => Mathf.Min(0, (ThreatLevel - 20) * 2); //lose up to 40% satisfaction from low threat
+    
     [ReadOnly] [SerializeField] private int satisfaction;
-    public int Satisfaction => satisfaction = Mathf.Clamp(0, 1+ Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 100);
+    public int Satisfaction => satisfaction = Mathf.Clamp(1 + Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + LowThreatMod + modifiers[Metric.Satisfaction], 0, 100);
 
     [HorizontalLine]
     
@@ -247,7 +249,7 @@ public class GameManager : MonoBehaviour
         // Start game with 5 Adventurers
         for (int i = 0; i < 5; i++) AddAdventurer();
 
-        threatLevel = 30;
+        threatLevel = 40;
         wealth = 50;
         BuildGuildHall();
         
@@ -374,7 +376,7 @@ public class GameManager : MonoBehaviour
     public void EnterMenu()
     {
         inMenu = true;
-        placementController.GetComponent<ToggleGroup>().SetAllTogglesOff();
+        placementManager.GetComponent<ToggleGroup>().SetAllTogglesOff();
     }
     
     public void ExitMenu()
@@ -388,7 +390,7 @@ public class GameManager : MonoBehaviour
     public EventQueue eventQueue;
     public NewspaperController newspaperController;
     public MenuManager menuManager;
-    public PlacementController placementController;
+    public PlacementManager placementManager;
 
     public GameObject adventurersContainer, buildingsContainer, graveyard;
     public GameObject adventurerPrefab;

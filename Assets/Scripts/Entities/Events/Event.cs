@@ -21,7 +21,8 @@ public class Event : ScriptableObject
         Advert,
         GameOver,
         AdventurersLeave,
-        Blueprint
+        Blueprint,
+        Radiant
     }
 
     public string headline;

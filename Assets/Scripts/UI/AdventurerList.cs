@@ -12,7 +12,7 @@ public class AdventurerList : MonoBehaviour
     {
         foreach (Transform child in transform) Destroy(child.gameObject);
 
-        foreach (Adventurer adventurer in Manager.adventurers.OrderByDescending(x => x.assignedQuest ? x.assignedQuest.QuestTitle : "").ThenByDescending(x => x.turnJoined))
+        foreach (Adventurer adventurer in Manager.adventurers.OrderByDescending(x => x.assignedQuest ? x.assignedQuest.title : "").ThenByDescending(x => x.turnJoined))
         {
             GameObject row = Instantiate(rowPrefab, transform);
             row.GetComponent<AdventurerRow>().Display(adventurer);

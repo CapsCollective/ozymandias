@@ -26,6 +26,8 @@ public class QuestMapController : MonoBehaviour
         }
     }
 
+    public int ActiveQuests => usedFlyers.Count;
+    
     public void OnOpened()
     {
         if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
@@ -61,6 +63,7 @@ public class QuestMapController : MonoBehaviour
         if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.flyerQuest == q)) return false;
         QuestDisplayManager flyer = availableFlyers.PopRandom();
         flyer.gameObject.SetActive(true);
+        q.cost = (int)(GameManager.Manager.WealthPerTurn * q.costScale);
         flyer.SetQuest(q);
         usedFlyers.Add(flyer);
         counter.UpdateCounter(usedFlyers.Count, true);

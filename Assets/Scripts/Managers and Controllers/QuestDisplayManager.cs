@@ -33,8 +33,8 @@ public class QuestDisplayManager : MonoBehaviour
     public void SetQuest(Quest q)
     {
         flyerQuest = q;
-        titleText.text = q.QuestTitle;
-        descriptionText.text = q.QuestDescription;
+        titleText.text = q.title;
+        descriptionText.text = q.description;
     }
 
     public void SetDisplaying(bool displaying)
@@ -43,17 +43,17 @@ public class QuestDisplayManager : MonoBehaviour
         simpleContent.SetActive(!displaying);
         if (displaying && flyerQuest)
         {
-            bool enoughAdventurers = Manager.RemovableAdventurers > flyerQuest.Adventurers;
-            bool enoughMoney = Manager.Wealth >= flyerQuest.Cost;
+            bool enoughAdventurers = Manager.RemovableAdventurers > flyerQuest.adventurers;
+            bool enoughMoney = Manager.Wealth >= flyerQuest.cost;
             
             statsText.text =
                 (enoughAdventurers ? "" : "<color=#820000ff>") + 
-                "Adventurers: " + flyerQuest.Adventurers +
+                "Adventurers: " + flyerQuest.adventurers +
                 (enoughAdventurers ? "" : "</color>") +
                 (enoughMoney ? "" : "<color=#820000ff>") +
-                "\nCost: " + flyerQuest.Cost +
+                "\nCost: " + flyerQuest.cost +
                 (enoughMoney ? "" : "</color>") +
-                "\nDuration: " + flyerQuest.Turns + " turns";
+                "\nDuration: " + flyerQuest.turns + " turns";
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
         }

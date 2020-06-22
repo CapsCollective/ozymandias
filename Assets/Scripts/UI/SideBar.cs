@@ -14,7 +14,8 @@ public class SideBar : UiUpdater
         spendingModifier,
         effectivenessModifier,
         satisfactionModifier,
-        overcrowdingModifier;
+        overcrowdingModifier,
+        lowThreatModifier;
 
     public BarFill
         effectiveness,
@@ -46,6 +47,10 @@ public class SideBar : UiUpdater
         mod = Manager.OvercrowdingMod;
         overcrowdingModifier.gameObject.SetActive(mod != 0);
         overcrowdingModifier.text = "<color=red>"+ mod + "%</color> from overcrowding";
+        
+        mod = Manager.LowThreatMod;
+        lowThreatModifier.gameObject.SetActive(mod != 0);
+        lowThreatModifier.text = "<color=red>"+ mod + "%</color> from a lack of adventure";
 
         effectiveness.SetBar(Manager.Effectiveness);
         satisfaction.SetBar(Manager.Satisfaction);

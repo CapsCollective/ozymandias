@@ -32,7 +32,7 @@ public class BuildingSelect : UiUpdater
         if (toggle.isOn && !active)
         {
             toggle.isOn = false;
-            PlacementController.Selected = Deselected;
+            PlacementManager.Selected = Deselected;
         }
         bool interactable = building.ScaledCost <= Manager.Wealth;
         toggle.interactable = interactable;
@@ -42,7 +42,7 @@ public class BuildingSelect : UiUpdater
 
     public void ToggleSelect()
     {
-        if (toggle.isOn) PlacementController.Selected = position;
-        else PlacementController.Selected = Deselected;
+        if (toggle.isOn) PlacementManager.Selected = position;
+        else PlacementManager.Selected = Deselected;
     }
 }
