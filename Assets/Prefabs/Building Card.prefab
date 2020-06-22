@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 148296248180898097}
   - component: {fileID: 48138235528182356}
   - component: {fileID: 2912211027578987853}
+  - component: {fileID: 1246899683348919709}
   m_Layer: 5
   m_Name: Details
   m_TagString: Untagged
@@ -105,7 +106,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 0.9411765}
     m_PressedColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.9411765}
     m_SelectedColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 0.9411765}
-    m_DisabledColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.7058824}
+    m_DisabledColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 0.9411765}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -164,6 +165,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bbf702e6b7f40eea835e5bc3bcb449d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &1246899683348919709
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282987803699252788}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1833600919477185028
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -22.900024}
+  m_AnchoredPosition: {x: 0, y: -22}
   m_SizeDelta: {x: 30, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1400779532034710148
@@ -418,7 +431,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -10.9}
+  m_AnchoredPosition: {x: 0, y: -10}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4366158987513656300
@@ -563,14 +576,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helperPrefab:
-  - {fileID: 8821676634747878105, guid: 5b097f4587debfc49839b22ca8cfbd7b, type: 3}
-  - {fileID: 8821676634747878105, guid: 92f895ad0bc6e3144938fa36c54cd9d2, type: 3}
-  - {fileID: 8821676634747878105, guid: 212bbff14bb324243a95978edc189914, type: 3}
-  - {fileID: 8821676634747878105, guid: c81576f4b0204a7478ff828a09c9a6c3, type: 3}
-  - {fileID: 8821676634747878105, guid: 2fd50fbabaa3c7a44ba742948838b188, type: 3}
-  - {fileID: 8821676634747878105, guid: 9b4fee818cb1d784db3e43121b608940, type: 3}
-  uiType: 0
+  tooltipPrefab: {fileID: 8821676634747878105, guid: 5b097f4587debfc49839b22ca8cfbd7b,
+    type: 3}
+  offset: {x: 0, y: 105, z: 0}
+  delay: 0.2
+  fadeDuration: 0.3
 --- !u!114 &6910274632750649465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,11 +598,13 @@ MonoBehaviour:
     type: 3}
   title: {fileID: 1551233564915507176}
   icon: {fileID: 7869008655357973436}
+  selected: {fileID: 7587569482643570286}
   cost: {fileID: 7271020167235206046}
   toggle: {fileID: 148296248180898097}
   costBadge: {fileID: 2594720555151189565}
   gold: {r: 1, g: 0.78431374, b: 0, a: 1}
   grey: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+  canvasGroup: {fileID: 1246899683348919709}
 --- !u!1 &6032791411199744166
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +712,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15.900024}
+  m_AnchoredPosition: {x: 0, y: -12}
   m_SizeDelta: {x: -10, y: 15}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5625020809781369014

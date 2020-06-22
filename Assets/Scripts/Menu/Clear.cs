@@ -28,13 +28,14 @@ public class Clear : UiUpdater
     
     public Image costBadge;
     public Color gold, grey;
+    public CanvasGroup canvasGroup;
     
     public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, ClearCount));
 
     public TextMeshProUGUI cost;
     public override void UpdateUi()
     {
-        cost.text = GetComponent<Clear>().ScaledCost.ToString();
+        cost.text = ScaledCost.ToString();
         bool active = Manager.Wealth >= ScaledCost;
         if (!active)
         {
@@ -43,6 +44,7 @@ public class Clear : UiUpdater
         }
         toggle.interactable = active;
         costBadge.color = active ? gold : grey;
+        canvasGroup.alpha = active ? 1 : 0.4f;
     }
     
     private void Start()

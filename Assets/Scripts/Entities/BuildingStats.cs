@@ -59,9 +59,9 @@ public class BuildingStats : MonoBehaviour
     public int  
         baseCost,
         accommodation,
+        equipment,
         weaponry,
         magic,
-        equipment,
         food,
         entertainment,
         luxury,
