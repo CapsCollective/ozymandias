@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int equipment;
     public int Equipment => equipment = Mathf.Clamp(100 * buildings.Where(x => x.operational).Sum(x => x.equipment) / AvailableAdventurers,0, 100);
 
-    [ReadOnly] [SerializeField] private int training;
-    public int Training => training = 0; // TODO: work out the specifics of this
+    //[ReadOnly] [SerializeField] private int training;
+    //public int Training => training = 0; // TODO: work out the specifics of this
 
     [ReadOnly] [SerializeField] private int effectiveness;
     public int Effectiveness => effectiveness = Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 0, 100);
@@ -376,7 +376,7 @@ public class GameManager : MonoBehaviour
     public void EnterMenu()
     {
         inMenu = true;
-        placementController.GetComponent<ToggleGroup>().SetAllTogglesOff();
+        placementManager.GetComponent<ToggleGroup>().SetAllTogglesOff();
     }
     
     public void ExitMenu()
@@ -390,7 +390,7 @@ public class GameManager : MonoBehaviour
     public EventQueue eventQueue;
     public NewspaperController newspaperController;
     public MenuManager menuManager;
-    public PlacementController placementController;
+    public PlacementManager placementManager;
 
     public GameObject adventurersContainer, buildingsContainer, graveyard;
     public GameObject adventurerPrefab;

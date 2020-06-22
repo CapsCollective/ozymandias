@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using Managers_and_Controllers;
 using UnityEngine;
@@ -7,24 +6,25 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static GameManager;
 
-public class PlacementController : MonoBehaviour
+public class PlacementManager : MonoBehaviour
 {
     public const int Deselected = -1;
     public static int Selected = Deselected;
-    public BuildingSelect[] cards;
-    private List<GameObject> remainingBuildings = new List<GameObject>();
     
+    #pragma warning disable 0649
+    [SerializeField] private BuildingSelect[] cards;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float tweenTime;
+    [SerializeField] private Ease tweenEase;
+    
+    private List<GameObject> remainingBuildings = new List<GameObject>();
     private Map map;
     private RaycastHit hit;
     private Camera cam;
-
     private int rotation;
     private Cell[] highlighted = new Cell[0];
-    private static int _previousSelected = Selected;
-    public LayerMask layerMask;
-    [SerializeField] private float tweenTime;
-    [SerializeField] private Ease tweenEase;
-
+    private int previousSelected = Selected;
+    
     private void Awake()
     {
         cam = Camera.main;
@@ -45,7 +45,7 @@ public class PlacementController : MonoBehaviour
         map.Highlight(highlighted, Map.HighlightState.Inactive);
         highlighted = new Cell[0];
 
-        if (_previousSelected != Selected)
+        if (previousSelected != Selected)
         {
             if (CursorController.Instance.currentCursor != CursorController.CursorType.Destroy)
             {
@@ -53,7 +53,7 @@ public class PlacementController : MonoBehaviour
                     ? CursorController.CursorType.Build
                     : CursorController.CursorType.Pointer;
                 CursorController.Instance.SwitchCursor(cursor);
-                _previousSelected = Selected;
+                previousSelected = Selected;
             }
         }
 

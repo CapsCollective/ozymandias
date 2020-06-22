@@ -13,6 +13,6 @@ public class AdventurerRow : MonoBehaviour
         nameText.text = adventurer.name;
         classText.text = adventurer.category.ToString();
         daysText.text = (Manager.turnCounter - adventurer.turnJoined) + " Days";
-        locationText.text = adventurer.assignedQuest ? adventurer.assignedQuest.QuestTitle : "In Town";
+        locationText.text = adventurer.assignedQuest ? adventurer.assignedQuest.title : "In Town";
     }
 }

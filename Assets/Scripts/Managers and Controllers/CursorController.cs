@@ -6,9 +6,11 @@ namespace Managers_and_Controllers
     {
         public static CursorController Instance { get; private set; }
         
+        #pragma warning disable 0649
         [SerializeField] private Texture2D pointerCursor;
         [SerializeField] private Texture2D buildCursor;
         [SerializeField] private Texture2D destroyCursor;
+        
         private Texture2D[] cursors;
         private readonly Vector2[] hotspots = new []
         {
