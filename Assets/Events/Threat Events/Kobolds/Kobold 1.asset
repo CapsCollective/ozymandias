@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Kobold 1
-  m_EditorClassIdentifier: 
-  headline: Kobolds Spotted Near Town
-  article: "Kobolds have taken over a nearby mine, and were seen nibbling on the
-    minerals. \n\nThey were then chased back to town while the Kobolds yelled at
-    them to get off their property."
-  image: {fileID: 21300000, guid: 45eb79c94e7878d49af89bbc99942e62, type: 3}
-  type: 2
-  headliner: 1
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
-  outcomes:
-  - {fileID: -8004775218300514849}
-  - {fileID: -2612054349667142835}
-  choices: []
-  oneTime: 1
 --- !u!114 &-8004775218300514849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,3 +30,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   Quest: {fileID: 11400000, guid: 5ce15702a390b8f4e898214c488f155d, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Kobold 1
+  m_EditorClassIdentifier: 
+  headline: Kobolds Spotted Near Town
+  article: Kobolds have taken over a nearby mine, and were seen nibbling on the minerals.
+    They were then chased back to town while the Kobolds yelled at them to get off
+    their property.
+  image: {fileID: 21300000, guid: 45eb79c94e7878d49af89bbc99942e62, type: 3}
+  type: 2
+  headliner: 1
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  outcomes:
+  - {fileID: -8004775218300514849}
+  - {fileID: -2612054349667142835}
+  choices: []
+  oneTime: 1

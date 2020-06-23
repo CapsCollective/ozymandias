@@ -83,11 +83,11 @@ public class EventQueue : MonoBehaviour
         // More if high satisfaction
         if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         
-        // Fill up to 5 quests if unfilled
-        if(Random.Range(0,5) > QuestMapController.QuestMap.ActiveQuests) eventPool.Add(PickRandom(EventType.Radiant));
-        
         if (Manager.turnCounter >= 5)
         {
+            // Fill up to 5 quests if unfilled
+            if(Random.Range(0,5) > QuestMapController.QuestMap.ActiveQuests) eventPool.Add(PickRandom(EventType.Radiant));
+            
             // 30% flat chance to spawn chaos
             if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos));
             //Variable rate for < 50
