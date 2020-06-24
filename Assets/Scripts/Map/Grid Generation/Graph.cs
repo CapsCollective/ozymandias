@@ -26,6 +26,23 @@ public class Graph<T>
         }
     }
 
+    public Graph(Graph<T> oldGraph, List<T> toInclude)
+    {
+        Data = new List<T>();
+        foreach (T include in toInclude)
+            if (!Data.Contains(include))
+                Data.Add(include);
+        Map = new Dictionary<T, List<T>>();
+
+        foreach (T include in toInclude)
+        {
+            if (oldGraph.Contains(include))
+                foreach (T neighbour in oldGraph.GetAdjacent(include))
+                    if (Contains(neighbour))
+                        CreateEdge(include, neighbour);
+        }
+    }
+
     public List<T> GetData()
     {
         return Data;

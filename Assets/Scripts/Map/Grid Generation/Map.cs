@@ -32,44 +32,73 @@ public class Map : MonoBehaviour
         Generate();
     }
 
-    public void GenerateRoad(Vertex from, Vertex to)
+    private void AddRoad(Mesh road)
     {
-        CombineInstance[] combine = new CombineInstance[]
+        CombineInstance[] longs = new CombineInstance[]
         {
-            new CombineInstance()
-            {
-                mesh = mapLayout.GenerateRoad(from, to, 2000),
-                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix
-            },
-            new CombineInstance()
+            new CombineInstance() // longs from existing road mesh
             {
                 mesh = roadMF.mesh,
-                transform = Matrix4x4.identity
+                transform = Matrix4x4.identity,
+                subMeshIndex = 0
+            },
+            new CombineInstance() // longs from new road mesh
+            {
+                mesh = road,
+                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix,
+                subMeshIndex = 0
+            }
+        };
+
+        CombineInstance[] corners = new CombineInstance[]
+        {
+            new CombineInstance() // corners from existing road mesh
+            {
+                mesh = roadMF.mesh,
+                transform = Matrix4x4.identity,
+                subMeshIndex = 1
+            },
+            new CombineInstance() // corners from new road mesh
+            {
+                mesh = road,
+                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix,
+                subMeshIndex = 1
             }
         };
 
         roadMF.sharedMesh = new Mesh();
-        roadMF.sharedMesh.CombineMeshes(combine);
+
+        Mesh longMesh = new Mesh();
+        longMesh.CombineMeshes(longs, true);
+
+        Mesh cornerMesh = new Mesh();
+        cornerMesh.CombineMeshes(corners, true);
+
+        CombineInstance[] components = new CombineInstance[]
+        {
+            new CombineInstance()
+            {
+                mesh = longMesh,
+                transform = Matrix4x4.identity
+            },
+            new CombineInstance()
+            {
+                mesh = cornerMesh,
+                transform = Matrix4x4.identity
+            }
+        };
+
+        roadMF.sharedMesh.CombineMeshes(components, false);
+    }
+
+    public void GenerateRoad(Vertex from, Vertex to)
+    {
+        AddRoad(mapLayout.GenerateRoad(from, to, 2000));
     }
 
     public void GenerateRoad(List<Vertex> path)
     {
-        CombineInstance[] combine = new CombineInstance[]
-        {
-            new CombineInstance()
-            {
-                mesh = mapLayout.GenerateRoad(path),
-                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix
-            },
-            new CombineInstance()
-            {
-                mesh = roadMF.mesh,
-                transform = Matrix4x4.identity
-            }
-        };
-
-        roadMF.sharedMesh = new Mesh();
-        roadMF.sharedMesh.CombineMeshes(combine);
+        AddRoad(mapLayout.GenerateRoad(path));
     }
 
     public void Highlight(Cell[] cells, HighlightState state)
@@ -126,7 +155,7 @@ public class Map : MonoBehaviour
         mapLayout.GenerateMap(mapLayout.seed);
         gridMF = GetComponent<MeshFilter>();
         gridMF.sharedMesh = mapLayout.GenerateCellMesh();
-        roadMF.sharedMesh = new Mesh();//mapLayout.GenerateEdgeMesh();
+        roadMF.sharedMesh = new Mesh();
     }
     
     // Occupies and fits a building onto the map
@@ -177,8 +206,22 @@ public class Map : MonoBehaviour
             {
                 if (mapLayout.RoadGraph.Count > 0)
                 {
-                    Vertex roadTarget = mapLayout.ClosestRoad(cells[0].Vertices[0]);
-                    GenerateRoad(cells[0].Vertices[0], roadTarget);
+                    Vertex roadStart = cells[0].Vertices[0];
+                    Vertex roadTarget = mapLayout.ClosestRoad(roadStart);
+
+                    foreach (Cell cell in cells)
+                    {
+                        foreach (Vertex vertex in cell.Vertices)
+                        {
+                            if (Vector3.Distance(vertex, mapLayout.ClosestRoad(vertex)) < Vector3.Distance(roadStart, roadTarget))
+                            {
+                                roadStart = vertex;
+                                roadTarget = mapLayout.ClosestRoad(roadStart);
+                            }
+                        }
+                    }
+
+                    GenerateRoad(roadStart, roadTarget);
                 }
 
                 List<Vertex> included = new List<Vertex>();
@@ -188,6 +231,7 @@ public class Map : MonoBehaviour
                             included.Add(vertex);
 
                 List<Vertex> path = mapLayout.ConvexHull(included);
+
                 GenerateRoad(path);
             }
 
