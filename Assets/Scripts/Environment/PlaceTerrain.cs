@@ -18,19 +18,20 @@ public class PlaceTerrain : MonoBehaviour
         lm = LayerMask.GetMask("Surface", "Terrain");
     }
 
-    void Update()
-    {
-        if (!map) map = FindObjectOfType<Map>();
-        Place();
-        enabled = false;
-    }
+    //void Update()
+    //{
+    //    if (!map) map = FindObjectOfType<Map>();
+    //    Place();
+    //    enabled = false;
+    //}
 
     public void Place()
-    {
+    { 
         if (GetSurfaceHit())
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
             {
+                Debug.Log(map);
                 map.CreateBuilding(terrainBuilding, hit.point, rotation, animate: false);
                 Destroy(gameObject);
             }
