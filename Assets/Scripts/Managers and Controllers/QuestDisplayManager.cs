@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
 using static QuestMapController;
+using Random = UnityEngine.Random;
 
 public class QuestDisplayManager : MonoBehaviour
 {
@@ -29,10 +30,12 @@ public class QuestDisplayManager : MonoBehaviour
     {
         flyerQuest.StartQuest();
         GetComponent<HighlightOnHover>().mouseOver = false;
+        var stampRotation = Random.Range(-3f, 3f) * 2f;
         foreach (var stamp in stamps)
         {
             sendButton.gameObject.SetActive(false);
             stamp.SetActive(true);
+            stamp.transform.rotation = Quaternion.AngleAxis(stampRotation, Vector3.forward);
         }
 
         JukeboxController.Instance.PlayStamp();
