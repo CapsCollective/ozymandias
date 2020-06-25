@@ -1,4 +1,5 @@
 ﻿using System;
+using Managers_and_Controllers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class QuestDisplayManager : MonoBehaviour
     [SerializeField] private Button sendButton;
     [SerializeField] private GameObject displayContent;
     [SerializeField] private GameObject simpleContent;
+    [SerializeField] private GameObject[] stamps;
 
     public Quest flyerQuest;
     
@@ -27,7 +29,13 @@ public class QuestDisplayManager : MonoBehaviour
     {
         flyerQuest.StartQuest();
         GetComponent<HighlightOnHover>().mouseOver = false;
-        QuestMap.RemoveQuest(flyerQuest);
+        foreach (var stamp in stamps)
+        {
+            sendButton.gameObject.SetActive(false);
+            stamp.SetActive(true);
+        }
+
+        JukeboxController.Instance.PlayStamp();
     }
 
     public void SetQuest(Quest q)
@@ -35,6 +43,11 @@ public class QuestDisplayManager : MonoBehaviour
         flyerQuest = q;
         titleText.text = q.title;
         descriptionText.text = q.description;
+        sendButton.gameObject.SetActive(true);
+        foreach (var stamp in stamps)
+        {
+            stamp.SetActive(false);
+        }
     }
 
     public void SetDisplaying(bool displaying)
