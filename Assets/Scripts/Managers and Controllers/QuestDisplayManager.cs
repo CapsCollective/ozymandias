@@ -30,7 +30,8 @@ public class QuestDisplayManager : MonoBehaviour
     {
         flyerQuest.StartQuest();
         GetComponent<HighlightOnHover>().mouseOver = false;
-        var stampRotation = Random.Range(-3f, 3f) * 2f;
+        var stampRotation = Random.Range(3f, 6f);
+        stampRotation = (Random.value < 0.5) ? stampRotation : -stampRotation;
         foreach (var stamp in stamps)
         {
             sendButton.gameObject.SetActive(false);

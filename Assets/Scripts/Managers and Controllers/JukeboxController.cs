@@ -63,7 +63,7 @@ namespace Managers_and_Controllers
         
         public void PlayStamp()
         {
-            sfxPlayer.volume = .6f;
+            sfxPlayer.volume = .4f;
             sfxPlayer.clip = stampClip;
             sfxPlayer.Play();
         }
