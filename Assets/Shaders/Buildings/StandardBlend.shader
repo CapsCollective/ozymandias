@@ -6,6 +6,8 @@
 		_Ground ("Ground Color", Color) = (1, 1, 1, 1)
 		_Height ("Blend Height", Float) = 1
 		_Exponent ("Blend Exponent", Float) = 1
+		_Scale ("Blend Scale", Float) = 1
+		_Stretch ("Blend Stretch", Float) = 1
 
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
@@ -50,10 +52,9 @@
 
 		Tags { "RenderType"="Opaque" "Queue"="Geometry" }
         LOD 200
-		Cull Off
 		Blend SrcAlpha OneMinusSrcAlpha
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows vertex:vert //alpha:fade
+        #pragma surface surf Standard fullforwardshadows vertex:vert
         #pragma target 3.0
         struct Input
         {
@@ -71,6 +72,8 @@
 		float4 _Ground;
 		float _Height;
 		float _Exponent;
+		float _Scale;
+		float _Stretch;
 
         UNITY_INSTANCING_BUFFER_START(Props)
             // put more per-instance properties here
@@ -78,100 +81,32 @@
 
 		void vert(inout appdata_full v, out Input o)
 		{
-			o.worldNormal = UnityObjectToWorldNormal(v.normal);
-			v.normal = mul(unity_WorldToObject, float3(0, 1, 0));
 			UNITY_INITIALIZE_OUTPUT(Input, o);
 			o.objectPos = v.vertex;
 			o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+			o.worldNormal = UnityObjectToWorldNormal(v.normal);
 		}
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-			float scale = 1;
-			
-			float x = tex2D(_BlendTex, float2(IN.worldPos.y, IN.worldPos.z) / scale).r;
-			float y = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.z) / scale).r;
-			float z = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.y) / scale).r;
+			float x = tex2D(_BlendTex, float2(IN.worldPos.y, IN.worldPos.z) / _Scale).r;
+			float y = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.z) / _Scale).r;
+			float z = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.y) / _Scale).r;
 
 			float blendSamp = saturate(x * IN.worldNormal.x) + saturate(y * IN.worldNormal.y) + saturate(z * IN.worldNormal.z);
-
-			half blendStrength = pow(saturate(_Height - IN.worldPos.y), _Exponent) * saturate(blendSamp + .5);
+			blendSamp = y;
+			half blendStrength = pow(saturate(_Height - IN.worldPos.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(dot(IN.worldNormal, float3(0, 1, 0))));
 			fixed4 c = _Ground;
+
 			if (blendStrength < 0.5)
 				discard;
+
             o.Albedo = c.rgb;
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
-            o.Alpha = blendStrength;
+            o.Alpha = c.a;
         }
         ENDCG
-
-		// Blending pass
-		// 1. Align all vertex normals with the terrain (world-space positive Y)
-		// 2. Sample a noise texture with triplanar mapping
-		// 3. Combine the noise and the local Y position to create a blending strength
-		// 4. Alpha-based blending using the blending strength, return the colour of the terrain
-
-		/*
-		Pass
-        {
-			Tags { "RenderType"="Opaque" "Queue"="Transparent" }
-			Blend SrcAlpha OneMinusSrcAlpha
-
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
-
-            #include "UnityCG.cginc"
-
-            struct appdata
-            {
-                float4 vertex : POSITION;
-				float3 normal : NORMAL;
-                float2 uv : TEXCOORD0;
-            };
-
-            struct v2f
-            {
-                float4 vertex : SV_POSITION;
-				float3 normal : NORMAL;
-                float2 uv : TEXCOORD0;
-				float4 objectPos : TEXCOORD1;
-                UNITY_FOG_COORDS(2)
-            };
-
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-
-			float4 _Ground;
-			float _Height;
-			float _Exponent;
-
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				o.normal = float3(0, 1, 0);
-				o.objectPos = v.vertex;
-                UNITY_TRANSFER_FOG(o, o.vertex);
-                return o;
-            }
-
-            float4 frag (v2f i) : SV_Target
-            {
-                float4 col = _Ground;
-				float blendStrength = pow(saturate(_Height - i.objectPos.y), _Exponent);
-				
-				col.a = blendStrength;
-				UNITY_APPLY_FOG(i.fogCoord, col);
-				return col;
-            }
-            ENDCG
-        }
-		*/
     }
     FallBack "Diffuse"
 }
