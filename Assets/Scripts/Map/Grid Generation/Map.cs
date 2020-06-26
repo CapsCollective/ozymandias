@@ -6,22 +6,22 @@ using static GameManager;
 public class Map : MonoBehaviour
 {
     public MapLayout mapLayout;
+    public MeshFilter roadMF;
 
     [Header("Debug Settings")]
-    public bool selectingVertex;
-    public int selectedVertex;
-    public int selectedCell;
+    //public bool selectingVertex;
+    //public int selectedVertex;
+    //public int selectedCell;
     public bool debug;
-    public float vertexRadius;
-    public Color selectedColor;
-    public Color adjacentColor;
-    public Color vertexColor;
-    public Color gridColor;
-    public Color occupiedColor;
+    //public float vertexRadius;
+    //public Color selectedColor;
+    //public Color adjacentColor;
+    //public Color vertexColor;
+    //public Color gridColor;
+    //public Color occupiedColor;
     public LayerMask layerMask;
 
     private MeshFilter gridMF;
-    public MeshFilter roadMF;
     private Camera cam;
 
     public enum HighlightState { Inactive, Valid, Invalid }
@@ -91,15 +91,15 @@ public class Map : MonoBehaviour
         roadMF.sharedMesh.CombineMeshes(components, false);
     }
 
-    public void GenerateRoad(Vertex from, Vertex to)
-    {
-        AddRoad(mapLayout.GenerateRoad(from, to, 2000));
-    }
+    //public void GenerateRoad(Vertex from, Vertex to)
+    //{
+    //    AddRoad(mapLayout.GenerateRoad(from, to, 2000));
+    //}
 
-    public void GenerateRoad(List<Vertex> path)
-    {
-        AddRoad(mapLayout.GenerateRoad(path));
-    }
+    //public void GenerateRoad(List<Vertex> path)
+    //{
+    //    AddRoad(mapLayout.GenerateRoad(path));
+    //}
 
     public void Highlight(Cell[] cells, HighlightState state)
     {
@@ -201,38 +201,12 @@ public class Map : MonoBehaviour
 
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
-            // Road generation
             if (animate)
             {
-                if (mapLayout.RoadGraph.Count > 0)
-                {
-                    Vertex roadStart = cells[0].Vertices[0];
-                    Vertex roadTarget = mapLayout.ClosestRoad(roadStart);
+                List<Vertex> vertices = mapLayout.GetVertices(cells);
 
-                    foreach (Cell cell in cells)
-                    {
-                        foreach (Vertex vertex in cell.Vertices)
-                        {
-                            if (Vector3.Distance(vertex, mapLayout.ClosestRoad(vertex)) < Vector3.Distance(roadStart, roadTarget))
-                            {
-                                roadStart = vertex;
-                                roadTarget = mapLayout.ClosestRoad(roadStart);
-                            }
-                        }
-                    }
-
-                    GenerateRoad(roadStart, roadTarget);
-                }
-
-                List<Vertex> included = new List<Vertex>();
-                foreach (Cell cell in cells)
-                    foreach (Vertex vertex in cell.Vertices)
-                        if (!included.Contains(vertex))
-                            included.Add(vertex);
-
-                List<Vertex> path = mapLayout.ConvexHull(included);
-
-                GenerateRoad(path);
+                mapLayout.CreateRoad(vertices);
+                roadMF.sharedMesh = mapLayout.GenerateRoadMesh();
             }
 
             mapLayout.Align(cells, rotation);
@@ -291,52 +265,63 @@ public class Map : MonoBehaviour
         if (mapLayout && debug)
         {
             Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.color = vertexColor;
 
-            foreach (Vertex root in mapLayout.VertexGraph.GetData())
+            Gizmos.color = Color.white;
+            foreach (Vertex root in mapLayout.RoadGraph.GetData())
             {
-                Gizmos.DrawSphere(root, vertexRadius);
-            }
-
-            Gizmos.color = gridColor;
-            foreach (Cell cell in mapLayout.CellGraph.GetData())
-            {
-                cell.DrawCell();
-            }
-
-            if (selectingVertex && mapLayout.VertexGraph.Count > 0)
-            {
-                selectedVertex = Mathf.Clamp(selectedVertex, 0, mapLayout.VertexGraph.Count - 1);
-
-                Gizmos.color = selectedColor;
-                Gizmos.DrawSphere(mapLayout.VertexGraph.GetData()[selectedVertex], vertexRadius);
-
-                Gizmos.color = adjacentColor;
-                foreach (Vertex adjacent in mapLayout.VertexGraph.GetAdjacent(mapLayout.VertexGraph.GetData()[selectedVertex]))
-                    Gizmos.DrawSphere(adjacent, vertexRadius);
-            }
-            else if (mapLayout.CellGraph.Count > 0)
-            {
-                selectedCell = Mathf.Clamp(selectedCell, 0, mapLayout.CellGraph.Count - 1);
-
-                Gizmos.color = adjacentColor;
-                foreach (Cell adjacent in mapLayout.CellGraph.GetAdjacent(mapLayout.CellGraph.GetData()[selectedCell]))
-                    adjacent.DrawCell();
-
-                Gizmos.color = selectedColor;
-                mapLayout.CellGraph.GetData()[selectedCell].DrawCell();
-                for (int i = 0; i < 4; i++)
+                Gizmos.DrawSphere(root, .003f);
+                foreach (Vertex neighbour in mapLayout.RoadGraph.GetAdjacent(root))
                 {
-                    Gizmos.color = Color.Lerp(Color.blue, Color.red, (float)i / 3);
-                    Gizmos.DrawSphere(mapLayout.CellGraph.GetData()[selectedCell].Vertices[i], vertexRadius);
+                    Gizmos.DrawLine(root, neighbour);
                 }
             }
 
-            Gizmos.color = occupiedColor;
-            foreach (Cell cell in mapLayout.CellGraph.GetData())
-            {
-                if (cell.Occupied) cell.DrawCell();
-            }
+            //Gizmos.color = vertexColor;
+
+            //foreach (Vertex root in mapLayout.VertexGraph.GetData())
+            //{
+            //    Gizmos.DrawSphere(root, vertexRadius);
+            //}
+
+            //Gizmos.color = gridColor;
+            //foreach (Cell cell in mapLayout.CellGraph.GetData())
+            //{
+            //    cell.DrawCell();
+            //}
+
+            //if (selectingVertex && mapLayout.VertexGraph.Count > 0)
+            //{
+            //    selectedVertex = Mathf.Clamp(selectedVertex, 0, mapLayout.VertexGraph.Count - 1);
+
+            //    Gizmos.color = selectedColor;
+            //    Gizmos.DrawSphere(mapLayout.VertexGraph.GetData()[selectedVertex], vertexRadius);
+
+            //    Gizmos.color = adjacentColor;
+            //    foreach (Vertex adjacent in mapLayout.VertexGraph.GetAdjacent(mapLayout.VertexGraph.GetData()[selectedVertex]))
+            //        Gizmos.DrawSphere(adjacent, vertexRadius);
+            //}
+            //else if (mapLayout.CellGraph.Count > 0)
+            //{
+            //    selectedCell = Mathf.Clamp(selectedCell, 0, mapLayout.CellGraph.Count - 1);
+
+            //    Gizmos.color = adjacentColor;
+            //    foreach (Cell adjacent in mapLayout.CellGraph.GetAdjacent(mapLayout.CellGraph.GetData()[selectedCell]))
+            //        adjacent.DrawCell();
+
+            //    Gizmos.color = selectedColor;
+            //    mapLayout.CellGraph.GetData()[selectedCell].DrawCell();
+            //    for (int i = 0; i < 4; i++)
+            //    {
+            //        Gizmos.color = Color.Lerp(Color.blue, Color.red, (float)i / 3);
+            //        Gizmos.DrawSphere(mapLayout.CellGraph.GetData()[selectedCell].Vertices[i], vertexRadius);
+            //    }
+            //}
+
+            //Gizmos.color = occupiedColor;
+            //foreach (Cell cell in mapLayout.CellGraph.GetData())
+            //{
+            //    if (cell.Occupied) cell.DrawCell();
+            //}
         }
     }
 }

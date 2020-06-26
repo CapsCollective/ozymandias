@@ -52,6 +52,17 @@ public class MapLayout : ScriptableObject
     }
 
     // GRID QUERYING
+    public List<Vertex> GetVertices(Cell[] cells)
+    {
+        List<Vertex> vertices = new List<Vertex>();
+        foreach (Cell cell in cells)
+            foreach (Vertex vertex in cell.Vertices)
+                if (!vertices.Contains(vertex))
+                    vertices.Add(vertex);
+
+        return vertices;
+    }
+
     public List<Vertex> ConvexHull(List<Vertex> included)
     {
         List<Vertex> path = new List<Vertex>();
@@ -117,6 +128,7 @@ public class MapLayout : ScriptableObject
     {
         if (RoadGraph.Count == 0)
             return null;
+
         Vertex closest = RoadGraph.GetData()[0];
 
         foreach (Vertex vertex in RoadGraph.GetData())
@@ -833,6 +845,63 @@ public class MapLayout : ScriptableObject
     }
 
     // MESH GENERATION
+    public Mesh GenerateRoadMesh()
+    {
+        List<CombineInstance> longs = new List<CombineInstance>();
+        List<CombineInstance> corners = new List<CombineInstance>();
+
+        Graph<Vertex> dupGraph = new Graph<Vertex>(RoadGraph);
+        for (int i = dupGraph.Count - 1; i >= 0; i--)
+        {
+            Vertex root = dupGraph.GetData()[i];
+            foreach (Vertex adjacent in dupGraph.GetAdjacent(root))
+            {
+                longs.Add(
+                    new CombineInstance()
+                    {
+                        mesh = QuadFromVertices(root, adjacent),
+                        transform = Matrix4x4.identity
+                    }
+                    );
+            }
+
+            corners.Add(
+                new CombineInstance()
+                {
+                    mesh = QuadFromVertex(root),
+                    transform = Matrix4x4.identity
+                }
+                );
+
+            dupGraph.RemoveAt(i);
+        }
+
+        Mesh longMesh = new Mesh();
+        longMesh.CombineMeshes(longs.ToArray());
+
+        Mesh cornerMesh = new Mesh();
+        cornerMesh.CombineMeshes(corners.ToArray());
+
+        CombineInstance[] components = new CombineInstance[]
+        {
+            new CombineInstance()
+            {
+                mesh = longMesh,
+                transform = Matrix4x4.identity
+            },
+            new CombineInstance()
+            {
+                mesh = cornerMesh,
+                transform = Matrix4x4.identity
+            }
+        };
+
+        Mesh roadMesh = new Mesh();
+        roadMesh.CombineMeshes(components, false);
+
+        return roadMesh;
+    }
+
     public Mesh GenerateCellMesh()
     {
         List<Vector3> vertices = new List<Vector3>();
@@ -875,69 +944,69 @@ public class MapLayout : ScriptableObject
         };
     }
 
-    public Mesh GenerateRoad(Vertex from, Vertex to, int iterationLimit)
-    {
-        List<Vertex> path = AStar(VertexGraph, from, to, iterationLimit);
-        return GenerateRoad(path);
-    }
+    //public Mesh GenerateRoad(Vertex from, Vertex to, int iterationLimit)
+    //{
+    //    List<Vertex> path = AStar(VertexGraph, from, to, iterationLimit);
+    //    return GenerateRoad(path);
+    //}
 
-    public Mesh GenerateRoad(List<Vertex> path)
-    {
-        if (path.Count == 0) return new Mesh();
+    //public Mesh GenerateRoad(List<Vertex> path)
+    //{
+    //    if (path.Count == 0) return new Mesh();
 
-        CombineInstance[] longs = new CombineInstance[path.Count - 1];
-        CombineInstance[] corners = new CombineInstance[path.Count];
+    //    CombineInstance[] longs = new CombineInstance[path.Count - 1];
+    //    CombineInstance[] corners = new CombineInstance[path.Count];
 
-        for (int i = 0; i < path.Count; i++)
-        {
-            if (!RoadGraph.Contains(path[i]))
-                RoadGraph.Add(path[i]);
+    //    for (int i = 0; i < path.Count; i++)
+    //    {
+    //        if (!RoadGraph.Contains(path[i]))
+    //            RoadGraph.Add(path[i]);
 
-            corners[i] = new CombineInstance()
-            {
-                mesh = QuadFromVertex(path[i]),
-                transform = Matrix4x4.identity
-            };
+    //        corners[i] = new CombineInstance()
+    //        {
+    //            mesh = QuadFromVertex(path[i]),
+    //            transform = Matrix4x4.identity
+    //        };
 
-            if (i == path.Count - 1) continue;
+    //        if (i == path.Count - 1) continue;
 
-            if (!RoadGraph.Contains(path[i + 1]))
-                RoadGraph.Add(path[i + 1]);
+    //        if (!RoadGraph.Contains(path[i + 1]))
+    //            RoadGraph.Add(path[i + 1]);
 
-            RoadGraph.CreateEdge(path[i], path[i + 1]);
+    //        RoadGraph.CreateEdge(path[i], path[i + 1]);
 
-            longs[i] = new CombineInstance()
-            {
-                mesh = QuadFromVertices(path[i], path[i + 1]),
-                transform = Matrix4x4.identity
-            };
-        }
+    //        longs[i] = new CombineInstance()
+    //        {
+    //            mesh = QuadFromVertices(path[i], path[i + 1]),
+    //            transform = Matrix4x4.identity
+    //        };
+    //    }
 
-        Mesh longMesh = new Mesh();
-        longMesh.CombineMeshes(longs);
+    //    Mesh longMesh = new Mesh();
+    //    longMesh.CombineMeshes(longs);
 
-        Mesh cornerMesh = new Mesh();
-        cornerMesh.CombineMeshes(corners);
+    //    Mesh cornerMesh = new Mesh();
+    //    cornerMesh.CombineMeshes(corners);
 
-        CombineInstance[] components = new CombineInstance[]
-        {
-            new CombineInstance()
-            {
-                mesh = longMesh,
-                transform = Matrix4x4.identity
-            },
-            new CombineInstance()
-            {
-                mesh = cornerMesh,
-                transform = Matrix4x4.identity
-            }
-        };
+    //    CombineInstance[] components = new CombineInstance[]
+    //    {
+    //        new CombineInstance()
+    //        {
+    //            mesh = longMesh,
+    //            transform = Matrix4x4.identity
+    //        },
+    //        new CombineInstance()
+    //        {
+    //            mesh = cornerMesh,
+    //            transform = Matrix4x4.identity
+    //        }
+    //    };
 
-        Mesh road = new Mesh();
-        road.CombineMeshes(components, false);
+    //    Mesh road = new Mesh();
+    //    road.CombineMeshes(components, false);
 
-        return road;
-    }
+    //    return road;
+    //}
 
     private Mesh QuadFromVertex(Vertex centre)
     {
@@ -1059,5 +1128,67 @@ public class MapLayout : ScriptableObject
             uv = uv.ToArray(),
             triangles = triangles.ToArray()
         };
+    }
+
+    // ROAD GENERATION
+    public void CreateRoad(List<Vertex> vertices)
+    {
+        // Create a list of vertices included in the building
+
+        // Remove existing intersecting roads
+        foreach (Vertex included in vertices)
+        {
+            if (!RoadGraph.Contains(included)) continue;
+            Vertex[] adjacent = RoadGraph.GetAdjacent(included).ToArray();
+            for (int i = adjacent.Length - 1; i >= 0; i--)
+            {
+                if (vertices.Contains(adjacent[i]))
+                    RoadGraph.DestroyEdge(included, adjacent[i]);
+            }
+        }
+
+        // Create a perimeter path around the included vertices
+        List<Vertex> perimeter = ConvexHull(vertices);
+
+        // Create a road linking the perimeter to the existing road graph
+        if (RoadGraph.Count > 0 && perimeter.Count > 0)
+        {
+            Vertex roadStart = perimeter[0];
+            Vertex roadTarget = ClosestRoad(roadStart);
+            float minDistance = Vector3.Distance(roadStart, roadTarget);
+
+            foreach (Vertex vertex in perimeter)
+            {
+                Vertex closest = ClosestRoad(vertex);
+                float distance = Vector3.Distance(closest, vertex);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    roadStart = vertex;
+                    roadTarget = closest;
+                }
+            }
+
+            List<Vertex> road = AStar(VertexGraph, roadStart, roadTarget, 2000);
+
+            // Add the road to the RoadGraph
+            AddRoad(road);
+        }
+
+        // Add the perimeter to RoadGraph
+        AddRoad(perimeter);
+    }
+
+    private void AddRoad(List<Vertex> road)
+    {
+        for (int i = 0; i < road.Count; i++)
+        {
+            if (!RoadGraph.Contains(road[i]))
+                RoadGraph.Add(road[i]);
+
+            if (i > 0 && !RoadGraph.IsAdjacent(road[i], road[i - 1]))
+                RoadGraph.CreateEdge(road[i], road[i - 1]);
+        }
     }
 }
