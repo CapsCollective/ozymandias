@@ -1,9 +1,11 @@
 ﻿using System;
+using Managers_and_Controllers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
 using static QuestMapController;
+using Random = UnityEngine.Random;
 
 public class QuestDisplayManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class QuestDisplayManager : MonoBehaviour
     [SerializeField] private Button sendButton;
     [SerializeField] private GameObject displayContent;
     [SerializeField] private GameObject simpleContent;
+    [SerializeField] private GameObject[] stamps;
 
     public Quest flyerQuest;
     
@@ -27,14 +30,28 @@ public class QuestDisplayManager : MonoBehaviour
     {
         flyerQuest.StartQuest();
         GetComponent<HighlightOnHover>().mouseOver = false;
-        QuestMap.RemoveQuest(flyerQuest);
+        var stampRotation = Random.Range(3f, 6f);
+        stampRotation = (Random.value < 0.5) ? stampRotation : -stampRotation;
+        foreach (var stamp in stamps)
+        {
+            sendButton.gameObject.SetActive(false);
+            stamp.SetActive(true);
+            stamp.transform.rotation = Quaternion.AngleAxis(stampRotation, Vector3.forward);
+        }
+
+        JukeboxController.Instance.PlayStamp();
     }
 
     public void SetQuest(Quest q)
     {
         flyerQuest = q;
-        titleText.text = q.QuestTitle;
-        descriptionText.text = q.QuestDescription;
+        titleText.text = q.title;
+        descriptionText.text = q.description;
+        sendButton.gameObject.SetActive(true);
+        foreach (var stamp in stamps)
+        {
+            stamp.SetActive(false);
+        }
     }
 
     public void SetDisplaying(bool displaying)
@@ -43,17 +60,17 @@ public class QuestDisplayManager : MonoBehaviour
         simpleContent.SetActive(!displaying);
         if (displaying && flyerQuest)
         {
-            bool enoughAdventurers = Manager.RemovableAdventurers > flyerQuest.Adventurers;
-            bool enoughMoney = Manager.Wealth >= flyerQuest.Cost;
+            bool enoughAdventurers = Manager.RemovableAdventurers > flyerQuest.adventurers;
+            bool enoughMoney = Manager.Wealth >= flyerQuest.cost;
             
             statsText.text =
                 (enoughAdventurers ? "" : "<color=#820000ff>") + 
-                "Adventurers: " + flyerQuest.Adventurers +
+                "Adventurers: " + flyerQuest.adventurers +
                 (enoughAdventurers ? "" : "</color>") +
                 (enoughMoney ? "" : "<color=#820000ff>") +
-                "\nCost: " + flyerQuest.Cost +
+                "\nCost: " + flyerQuest.cost +
                 (enoughMoney ? "" : "</color>") +
-                "\nDuration: " + flyerQuest.Turns + " turns";
+                "\nDuration: " + flyerQuest.turns + " turns";
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
         }

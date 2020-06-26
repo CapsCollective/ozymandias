@@ -23,6 +23,7 @@ public class Map : MonoBehaviour
 
     private MeshFilter gridMF;
     private Camera cam;
+    private Vector2[] uv;
 
     public enum HighlightState { Inactive, Valid, Invalid }
 
@@ -103,7 +104,8 @@ public class Map : MonoBehaviour
 
     public void Highlight(Cell[] cells, HighlightState state)
     {
-        Vector2[] uv = gridMF.sharedMesh.uv;
+        if(uv == null)
+            uv = gridMF.sharedMesh.uv;
 
         foreach (Cell cell in cells)
         {
@@ -124,13 +126,13 @@ public class Map : MonoBehaviour
         Physics.Raycast(ray, out hit, 200f, layerMask);
         return GetCell(hit.point);
     }
-    
+
     // Gets the closest cell by world position
     public Cell GetCell(Vector3 worldPosition)
     {
         return mapLayout.GetClosest(transform.InverseTransformPoint(worldPosition));
     }
-    
+
     // Gets all cells within radius of a world position
     public Cell[] GetCells(Vector3 worldPosition, float worldRadius)
     {
@@ -143,13 +145,13 @@ public class Map : MonoBehaviour
     {
         return mapLayout.GetCells(root, building, rotation);
     }
-    
+
     // Gets all cells of a currently placed building
     public Cell[] GetCells(BuildingStructure building)
     {
         return mapLayout.GetCells(building);
     }
-    
+
     public void Generate()
     {
         mapLayout.GenerateMap(mapLayout.seed);
@@ -157,7 +159,7 @@ public class Map : MonoBehaviour
         gridMF.sharedMesh = mapLayout.GenerateCellMesh();
         roadMF.sharedMesh = new Mesh();
     }
-    
+
     // Occupies and fits a building onto the map
     private void Occupy(BuildingStructure building, Cell[] cells, bool animate = false)
     {
@@ -181,7 +183,7 @@ public class Map : MonoBehaviour
         BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
         PlaceTerrain placeTerrain = buildingInstance.GetComponent<PlaceTerrain>();
         if (placeTerrain) placeTerrain.rotation = rotation;
-        
+
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building, rotation);
 
@@ -214,11 +216,11 @@ public class Map : MonoBehaviour
             stats.Build();
             return true;
         }
-        
+
         Destroy(buildingInstance);
         return false;
     }
-    
+
     public bool IsValid(Cell[] cells)
     {
         bool valid = true;
@@ -233,12 +235,12 @@ public class Map : MonoBehaviour
     {
         return cell != null && !cell.Occupied;
     }
-    
+
     public void Clear(BuildingStructure building)
     {
         Clear(GetCells(building)[0]); // Destroys the building from its root
     }
-    
+
     public void Clear(Cell[] cells)
     {
         foreach (Cell cell in cells)
@@ -249,7 +251,7 @@ public class Map : MonoBehaviour
     {
         mapLayout.Clear(root);
     }
-    
+
     public Vector3[] CellUnitToWorld(Cell cell)
     {
         Vector3[] vertices = new Vector3[4];

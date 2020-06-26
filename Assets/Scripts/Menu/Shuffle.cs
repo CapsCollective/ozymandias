@@ -20,7 +20,7 @@ public class Shuffle : UiUpdater
     public Color gold, grey;
     public CanvasGroup canvasGroup;
     public TextMeshProUGUI cost;
-    public PlacementController placementController;
+    public PlacementManager placementManager;
     
     public override void UpdateUi()
     {
@@ -35,7 +35,7 @@ public class Shuffle : UiUpdater
     {
         if (!Manager.Spend(ScaledCost)) return;
         ShuffleCount++;
-        placementController.NewCards();
+        placementManager.NewCards();
         Manager.UpdateUi();
         StartCoroutine(RotateIcon());
     }

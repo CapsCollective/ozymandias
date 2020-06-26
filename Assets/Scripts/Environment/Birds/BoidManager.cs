@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 
 public class BoidManager : MonoBehaviour {
 
@@ -14,7 +15,7 @@ public class BoidManager : MonoBehaviour {
     {
         // Set boid manager to not use compute shaders for macOS and Linux
         usesComputeShader = (Application.platform == RuntimePlatform.WindowsEditor || 
-                             Application.platform == RuntimePlatform.WindowsPlayer);
+                            Application.platform == RuntimePlatform.WindowsPlayer);
         
         boids = FindObjectsOfType<Boid> ();
         foreach (Boid b in boids) {
@@ -46,8 +47,7 @@ public class BoidManager : MonoBehaviour {
                 int threadGroups = Mathf.CeilToInt(numBoids / (float) threadGroupSize);
                 compute.Dispatch(0, threadGroups, 1, 1);
 
-                boidBuffer.GetData(boidData);
-
+                AsyncGPUReadback.Request(boidBuffer);
                 UpdateBoids(boidData);
                 
                 boidBuffer.Release();

@@ -5,6 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class DepthOfFieldController : MonoBehaviour
 {
+    #pragma warning disable 0649
     [SerializeField] private PostProcessProfile profile;
     [SerializeField] private PostProcessVolume volume;
     [SerializeField] private LayerMask layerMask;

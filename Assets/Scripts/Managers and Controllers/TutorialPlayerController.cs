@@ -11,6 +11,7 @@ namespace Managers_and_Controllers
         // Instance field
         public static TutorialPlayerController Instance { get; private set; }
         
+        #pragma warning disable 0649
         [SerializeField] private VideoPlayer player;
         [SerializeField] private GameObject playerControls;
         [SerializeField] private Text timeDisplayText;
