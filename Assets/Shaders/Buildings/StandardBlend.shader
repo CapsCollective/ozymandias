@@ -56,12 +56,11 @@
         CGPROGRAM
         #pragma surface surf Standard fullforwardshadows vertex:vert
         #pragma target 3.0
+
         struct Input
         {
-            float2 uv_MainTex;
-			float4 objectPos;
-			float3 worldNormal;
-			float3 worldPos;
+			float3 blendDot;
+			float3 worldPosition;
         };
 
         half _Glossiness;
@@ -82,20 +81,17 @@
 		void vert(inout appdata_full v, out Input o)
 		{
 			UNITY_INITIALIZE_OUTPUT(Input, o);
-			o.objectPos = v.vertex;
-			o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-			o.worldNormal = UnityObjectToWorldNormal(v.normal);
+			o.worldPosition = mul(unity_ObjectToWorld, v.vertex).xyz;
+			o.blendDot = dot(UnityObjectToWorldNormal(v.normal), float3(0, 1, 0));
+			
+			v.normal = normalize(mul(unity_WorldToObject, float3(0, 1, 0)));
 		}
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-			float x = tex2D(_BlendTex, float2(IN.worldPos.y, IN.worldPos.z) / _Scale).r;
-			float y = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.z) / _Scale).r;
-			float z = tex2D(_BlendTex, float2(IN.worldPos.x, IN.worldPos.y) / _Scale).r;
+			float blendSamp = tex2D(_BlendTex, float2(IN.worldPosition.x, IN.worldPosition.z) / _Scale).r;
 
-			float blendSamp = saturate(x * IN.worldNormal.x) + saturate(y * IN.worldNormal.y) + saturate(z * IN.worldNormal.z);
-			blendSamp = y;
-			half blendStrength = pow(saturate(_Height - IN.worldPos.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(dot(IN.worldNormal, float3(0, 1, 0))));
+			half blendStrength = pow(saturate(_Height - IN.worldPosition.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(IN.blendDot));
 			fixed4 c = _Ground;
 
 			if (blendStrength < 0.5)
