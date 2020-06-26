@@ -12,6 +12,7 @@ public class BuildingSelect : UiUpdater
     public GameObject buildingPrefab;
     public TextMeshProUGUI title;
     public Image icon;
+    public Image selected;
     public TextMeshProUGUI cost;
     public Toggle toggle;
     public Image costBadge;
@@ -26,11 +27,12 @@ public class BuildingSelect : UiUpdater
         icon.sprite = building.icon;
         Color colour = building.IconColour;
         icon.color = colour;
+        selected.color = colour;
         bool active = building.ScaledCost <= Manager.Wealth;
         if (toggle.isOn && !active)
         {
             toggle.isOn = false;
-            PlacementController.Selected = Deselected;
+            PlacementManager.Selected = Deselected;
         }
         bool interactable = building.ScaledCost <= Manager.Wealth;
         toggle.interactable = interactable;
@@ -40,7 +42,7 @@ public class BuildingSelect : UiUpdater
 
     public void ToggleSelect()
     {
-        if (toggle.isOn) PlacementController.Selected = position;
-        else PlacementController.Selected = Deselected;
+        if (toggle.isOn) PlacementManager.Selected = position;
+        else PlacementManager.Selected = Deselected;
     }
 }

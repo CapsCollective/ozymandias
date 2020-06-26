@@ -26,10 +26,10 @@ public class MapAnimator : MonoBehaviour
     {
         UpdateEffectOrigin();
 
-        if ((PlacementController.Selected != PlacementController.Deselected || clear.toggle.isOn) && !flooded)
+        if ((PlacementManager.Selected != PlacementManager.Deselected || clear.toggle.isOn) && !flooded)
             Flood();
         
-        if ((PlacementController.Selected == PlacementController.Deselected && !clear.toggle.isOn) && flooded)
+        if ((PlacementManager.Selected == PlacementManager.Deselected && !clear.toggle.isOn) && flooded)
             Drain();
 
     }

@@ -23,8 +23,7 @@ namespace Managers_and_Controllers
         [SerializeField] private GameObject disableButtonContent;
         private Event choiceEvent;
         private string newspaperTitle;
-        private bool shownTutorial;
-    
+
         private void Awake()
         {
             newspaperTitle = GetNewspaperTitle();
@@ -35,8 +34,8 @@ namespace Managers_and_Controllers
 
         private void OnNewTurn()
         {
-            if (shownTutorial) return;
-            shownTutorial = true;
+            if (PlayerPrefs.GetInt("tutorial_video_events", 0) > 0) return;
+            PlayerPrefs.SetInt("tutorial_video_events", 1);
             TutorialPlayerController.Instance.PlayClip(1);
         }
 

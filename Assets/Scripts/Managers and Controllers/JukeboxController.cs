@@ -27,6 +27,7 @@ namespace Managers_and_Controllers
         [SerializeField] private AudioClip clickClip;
         [SerializeField] private AudioClip buildClip;
         [SerializeField] private AudioClip destroyClip;
+        [SerializeField] private AudioClip stampClip;
         [SerializeField] private AudioClip[] tracks;
 
         private List<AudioClip> playlist = new List<AudioClip>();
@@ -57,6 +58,13 @@ namespace Managers_and_Controllers
         {
             sfxPlayer.volume = .1f;
             sfxPlayer.clip = destroyClip;
+            sfxPlayer.Play();
+        }
+        
+        public void PlayStamp()
+        {
+            sfxPlayer.volume = .4f;
+            sfxPlayer.clip = stampClip;
             sfxPlayer.Play();
         }
 

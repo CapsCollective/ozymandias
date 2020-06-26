@@ -14,8 +14,7 @@ public class QuestMapController : MonoBehaviour
     [SerializeField] private QuestCounter counter;
     //private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
     private HighlightOnHover displayingFlyerComponent;
-    private bool shownTutorial;
-    
+
     private static QuestMapController instance;
     public static QuestMapController QuestMap
     {
@@ -27,10 +26,12 @@ public class QuestMapController : MonoBehaviour
         }
     }
 
+    public int ActiveQuests => usedFlyers.Count;
+    
     public void OnOpened()
     {
-        if (shownTutorial) return;
-        shownTutorial = true;
+        if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
+        PlayerPrefs.SetInt("tutorial_video_quests", 1);
         TutorialPlayerController.Instance.PlayClip(2);
     }
 
@@ -62,6 +63,7 @@ public class QuestMapController : MonoBehaviour
         if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.flyerQuest == q)) return false;
         QuestDisplayManager flyer = availableFlyers.PopRandom();
         flyer.gameObject.SetActive(true);
+        q.cost = (int)(GameManager.Manager.WealthPerTurn * q.costScale);
         flyer.SetQuest(q);
         usedFlyers.Add(flyer);
         counter.UpdateCounter(usedFlyers.Count, true);
