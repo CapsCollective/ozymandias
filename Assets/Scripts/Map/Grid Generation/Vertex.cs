@@ -20,6 +20,11 @@ public class Vertex
     {
         position = newPosition;
     }
+    
+    public Vector3 GetPosition()
+    {
+        return position;
+    }
 
     public static implicit operator Vector3(Vertex vertex)
     {
