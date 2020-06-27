@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 358868533062668719}
   m_Layer: 0
   m_Name: Library
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,6 +60,9 @@ MonoBehaviour:
   - prefab: {fileID: 7796857822984970954, guid: f3303b8ef0b3c454f81eb30a101465ac,
       type: 3}
     directions: 0200000003000000
+  indestructable: 0
+  buildTrigger: Build
+  clearTrigger: Clear
 --- !u!114 &358868533062668719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,15 +84,17 @@ MonoBehaviour:
 
     Effectiveness(Magic)
     +6'
+  icon: {fileID: 0}
   scaleSpeed: 3
   operational: 0
   terrain: 0
   type: 16
+  primaryStat: 0
   baseCost: 300
   accommodation: 0
+  equipment: 0
   weaponry: 0
   magic: 6
-  equipment: 0
   food: 0
   entertainment: 0
   luxury: 0
