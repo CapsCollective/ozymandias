@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using static GameManager;
 
@@ -10,10 +11,12 @@ namespace Managers_and_Controllers
     {
         [SerializeField] private GameObject adventurerModel;
         [SerializeField] private Map map;
-        [SerializeField] private float adventurerSpeed = .5f;
+        [SerializeField] private float adventurerSpeed = .3f;
         [SerializeField] private float wanderingUpdateFrequency = 3f;
+        [SerializeField] private float partyScatter = .5f;
         
         private MapLayout mapLayout;
+        private List<Vertex> boundaryVerts;
         private readonly Dictionary<GameObject, List<Vector3>> activeAdventurers = 
             new Dictionary<GameObject, List<Vector3>>();
 
@@ -21,6 +24,7 @@ namespace Managers_and_Controllers
         {
             mapLayout = map.mapLayout;
             InvokeRepeating(nameof(CheckWandering), 1f, wanderingUpdateFrequency);
+            boundaryVerts = mapLayout.VertexGraph.GetData().Where(v => v.Boundary).ToList();
         }
 
 
@@ -74,6 +78,30 @@ namespace Managers_and_Controllers
             var path = mapLayout.AStar(mapLayout.RoadGraph,start, end)
                 .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
             activeAdventurers.Add(CreateAdventurer(start), path);
+            yield return null;
+        }
+
+        [Button("Send on Quest")]
+        private void TestQuest()
+        {
+            StartCoroutine(SpawnQuestingAdventurers(5));
+        }
+
+        private IEnumerator SpawnQuestingAdventurers(int num)
+        {
+            Vertex start = null;
+            var end = boundaryVerts[Random.Range(0, boundaryVerts.Count)];
+            while (start == null)
+                start = GetRandomBuildingVertex();
+
+            var path = mapLayout.AStar(mapLayout.VertexGraph,start, end)
+                .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
+
+            for (var i = 0; i < num; i++)
+            {
+                activeAdventurers.Add(CreateAdventurer(start), path);
+                yield return new WaitForSeconds(partyScatter);
+            }
             yield return null;
         }
 
