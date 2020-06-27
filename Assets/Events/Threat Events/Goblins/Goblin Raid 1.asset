@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Goblin Raid 1
+  m_EditorClassIdentifier: 
+  headline: Goblins!
+  article: Some Goblins were spotted nearby the town. Residents have said they have
+    been stealing supplies from the town. They hope the mayor does something about
+    them.
+  image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
+  type: 2
+  headliner: 0
+  minChaos: 0
+  minThreat: 0
+  minWealth: 0
+  maxChaos: 0
+  maxThreat: 0
+  maxWealth: 0
+  outcomes: []
+  choices:
+  - {fileID: -2278837932667058203}
+  - {fileID: -7494940983849263564}
+  oneTime: 1
 --- !u!114 &-7494940983849263564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,36 +79,6 @@ MonoBehaviour:
   - {fileID: -7336819564011800612}
   - {fileID: 5427943375661240944}
   - {fileID: 7807313350048339474}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Goblin Raid
-  m_EditorClassIdentifier: 
-  headline: Goblins!
-  article: Some Goblins were spotted nearby the town. Residents have said they have
-    been stealing supplies from the town. They hope the mayor does something about
-    them.
-  image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
-  type: 2
-  headliner: 0
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
-  outcomes: []
-  choices:
-  - {fileID: -2278837932667058203}
-  - {fileID: -7494940983849263564}
-  oneTime: 1
 --- !u!114 &4683237258390817899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: START Goblin Raid
+  m_Name: Goblin Raid 1
   m_EditorClassIdentifier: 
   customDescription: They realise you're a pushover, but leave you be.
 --- !u!114 &7807313350048339474
