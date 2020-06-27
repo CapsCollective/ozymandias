@@ -18,6 +18,7 @@ public class Trail : MonoBehaviour
         }
         else
         {
+            transform.position = waypointArray[2].position;
             StartCoroutine(Decay());
         }
     }
