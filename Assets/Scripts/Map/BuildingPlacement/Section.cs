@@ -10,6 +10,8 @@ public class Section : MonoBehaviour
     public int clockwiseRotations;
     public Transform cornerParent;
 
+    public bool debug;
+
     private MeshFilter _meshFilter;
 
     // Properties
@@ -25,10 +27,13 @@ public class Section : MonoBehaviour
     // MonoBehaviour Functions
     private void OnDrawGizmos()
     {
-        for (int i = 0; i < 5; i++)
+        if (debug)
         {
-            Gizmos.color = Color.Lerp(Color.blue, Color.red, i / (4.0f));
-            Gizmos.DrawSphere(cornerParent.GetChild(i).position, .1f);
+            for (int i = 0; i < 5; i++)
+            {
+                Gizmos.color = Color.Lerp(Color.blue, Color.red, i / (4.0f));
+                Gizmos.DrawSphere(cornerParent.GetChild(i).position, .1f);
+            }
         }
     }
 

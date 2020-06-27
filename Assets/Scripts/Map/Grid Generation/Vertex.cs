@@ -28,7 +28,7 @@ public class Vertex
 
     public static bool operator ==(Vertex first, Vertex second)
     {
-        return (Vector3)first == second;
+        return first.GetHashCode() == second.GetHashCode() && (Vector3)first == second;
     }
 
     public static bool operator !=(Vertex first, Vertex second)

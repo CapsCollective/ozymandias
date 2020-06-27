@@ -9,6 +9,7 @@ public class MapLayout : ScriptableObject
 
     public float heightFactor;
     public float lineWeight;
+    public float roadWeight;
 
     public int relaxIterations;
     [Range(0f, 1f)] public float relaxStrength;
@@ -18,6 +19,7 @@ public class MapLayout : ScriptableObject
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
     public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
     public Dictionary<BuildingStructure, List<Cell>> BuildingMap = new Dictionary<BuildingStructure, List<Cell>>();
+    public Graph<Vertex> RoadGraph = new Graph<Vertex>();
 
     // BUILDING PLACEMENT
     public void Occupy(BuildingStructure building, Cell[] cells)
@@ -50,6 +52,168 @@ public class MapLayout : ScriptableObject
     }
 
     // GRID QUERYING
+    public List<Vertex> GetVertices(Cell[] cells)
+    {
+        List<Vertex> vertices = new List<Vertex>();
+        foreach (Cell cell in cells)
+            foreach (Vertex vertex in cell.Vertices)
+                if (!vertices.Contains(vertex))
+                    vertices.Add(vertex);
+
+        return vertices;
+    }
+
+    public List<Vertex> ConvexHull(List<Vertex> included)
+    {
+        List<Vertex> path = new List<Vertex>();
+
+        // Ensure that the first is on the path
+        Vertex p = included[0];
+        for (int i = 1; i < included.Count; i++)
+            if (((Vector3)included[i]).x < ((Vector3)p).x)
+                p = included[i];
+
+        path.Add(p);
+
+        while (path.Count == 1 || path[path.Count - 1] != path[0])
+        {
+            // Initialise the set of possible points
+            List<Vertex> s = new List<Vertex>(included);            
+
+            Vertex q = s[0];
+            foreach (Vertex n in s)
+            {
+                if (n == p)
+                    continue;
+                bool isNext = true;
+                foreach (Vertex r in s)
+                {
+                    if (r != p && Vector3.Cross(p - n, r - n).z > 0)
+                        isNext = false;
+                }
+                if (isNext) q = n;
+            }
+
+            path.Add(q);
+            p = q;
+        }
+
+        Dictionary<Vertex, List<Vertex>> toInclude = new Dictionary<Vertex, List<Vertex>>();
+        
+        Graph<Vertex> dupGraph = new Graph<Vertex>(VertexGraph);
+        for (int i = dupGraph.Count - 1; i >= 0; i--)
+            if (!included.Contains(dupGraph.GetData()[i]))
+                dupGraph.RemoveAt(i);
+
+        for (int i = 0; i < path.Count - 1; i++)
+        {
+            toInclude.Add(
+                path[i],
+                AStar(dupGraph, path[i], path[(i + 1) % path.Count], 2000)
+                );
+        }
+
+        foreach (Vertex key in toInclude.Keys)
+        {
+            path.InsertRange(
+                (path.IndexOf(key) + 1) % path.Count,
+                toInclude[key].GetRange(1, toInclude[key].Count - 2)
+                );
+        }
+
+        return path;
+    }
+
+    public Vertex ClosestRoad(Vertex target)
+    {
+        if (RoadGraph.Count == 0)
+            return null;
+
+        Vertex closest = RoadGraph.GetData()[0];
+
+        foreach (Vertex vertex in RoadGraph.GetData())
+        {
+            if (Vector3.Distance(target, vertex) < Vector3.Distance(target, closest))
+                closest = vertex;
+        }
+
+        return closest;
+    }
+
+    public List<Vertex> AStar(Graph<Vertex> set, Vertex root, Vertex target, int iterationLimit)
+    {
+        List<Vertex> path = new List<Vertex>();
+
+        if (root == target)
+            return path;
+
+        List<Vertex> open = new List<Vertex>() { root };
+        Dictionary<Vertex, Costs> costs = new Dictionary<Vertex, Costs>();
+        List<Vertex> closed = new List<Vertex>();
+
+        for (int iteration = 0; iteration < iterationLimit; iteration++)
+        {
+            Vertex current = open[0];
+            for (int i = 1; i < open.Count; i++)
+                if (costs[open[i]].FCost < costs[current].FCost) current = open[i];
+
+            open.Remove(current);
+            closed.Add(current);
+
+            if (current.Equals(target))
+            {
+                path.Add(root);
+                path.Add(target);
+
+                Vertex parent = costs[current].Parent;
+                while (parent != root)
+                {
+                    path.Insert(1, parent);
+                    parent = costs[parent].Parent;
+                }
+                break;
+            }
+
+            foreach (Vertex neighbour in set.GetAdjacent(current))
+            {
+                float GCost = Vector3.Distance(neighbour, root);
+                float HCost = Vector3.Distance(neighbour, target);
+                float FCost = GCost + HCost;
+
+                if (closed.Contains(neighbour))
+                    continue;
+
+                if ((costs.ContainsKey(neighbour) && costs[neighbour].FCost >= FCost) || !open.Contains(neighbour))
+                {
+                    if (costs.ContainsKey(neighbour))
+                        costs.Remove(neighbour);
+                    costs.Add(neighbour, new Costs(current, GCost, HCost, FCost));
+
+                    if (!open.Contains(neighbour))
+                        open.Add(neighbour);
+                }
+            }
+        }
+
+        return path;
+    }
+
+    private struct Costs
+    {
+        public float GCost { get; }
+        public float HCost { get; }
+        public float FCost { get; }
+        public Vertex Parent { get; }
+
+        public Costs(Vertex _Parent, float _GCost, float _HCost, float _FCost)
+        {
+            Parent = _Parent;
+            GCost = _GCost;
+            HCost = _HCost;
+            FCost = _FCost;
+        }
+    }
+
     public Cell Step(Cell root, BuildingStructure.Direction direction)
     {
         Cell next = null;
@@ -166,6 +330,17 @@ public class MapLayout : ScriptableObject
             }
         }
 
+        return closest;
+    }
+
+    public Vertex GetClosestVertex(Vector3 unitPos)
+    {
+        if (VertexGraph.Count == 0)
+            return null;
+        Vertex closest = VertexGraph.GetData()[0];
+        foreach (Vertex vertex in VertexGraph.GetData())
+            if (Vector3.Distance(unitPos, vertex) < Vector3.Distance(unitPos, closest))
+                closest = vertex;
         return closest;
     }
 
@@ -670,6 +845,63 @@ public class MapLayout : ScriptableObject
     }
 
     // MESH GENERATION
+    public Mesh GenerateRoadMesh()
+    {
+        List<CombineInstance> longs = new List<CombineInstance>();
+        List<CombineInstance> corners = new List<CombineInstance>();
+
+        Graph<Vertex> dupGraph = new Graph<Vertex>(RoadGraph);
+        for (int i = dupGraph.Count - 1; i >= 0; i--)
+        {
+            Vertex root = dupGraph.GetData()[i];
+            foreach (Vertex adjacent in dupGraph.GetAdjacent(root))
+            {
+                longs.Add(
+                    new CombineInstance()
+                    {
+                        mesh = QuadFromVertices(root, adjacent),
+                        transform = Matrix4x4.identity
+                    }
+                    );
+            }
+
+            corners.Add(
+                new CombineInstance()
+                {
+                    mesh = QuadFromVertex(root),
+                    transform = Matrix4x4.identity
+                }
+                );
+
+            dupGraph.RemoveAt(i);
+        }
+
+        Mesh longMesh = new Mesh();
+        longMesh.CombineMeshes(longs.ToArray());
+
+        Mesh cornerMesh = new Mesh();
+        cornerMesh.CombineMeshes(corners.ToArray());
+
+        CombineInstance[] components = new CombineInstance[]
+        {
+            new CombineInstance()
+            {
+                mesh = longMesh,
+                transform = Matrix4x4.identity
+            },
+            new CombineInstance()
+            {
+                mesh = cornerMesh,
+                transform = Matrix4x4.identity
+            }
+        };
+
+        Mesh roadMesh = new Mesh();
+        roadMesh.CombineMeshes(components, false);
+
+        return roadMesh;
+    }
+
     public Mesh GenerateCellMesh()
     {
         List<Vector3> vertices = new List<Vector3>();
@@ -712,6 +944,136 @@ public class MapLayout : ScriptableObject
         };
     }
 
+    //public Mesh GenerateRoad(Vertex from, Vertex to, int iterationLimit)
+    //{
+    //    List<Vertex> path = AStar(VertexGraph, from, to, iterationLimit);
+    //    return GenerateRoad(path);
+    //}
+
+    //public Mesh GenerateRoad(List<Vertex> path)
+    //{
+    //    if (path.Count == 0) return new Mesh();
+
+    //    CombineInstance[] longs = new CombineInstance[path.Count - 1];
+    //    CombineInstance[] corners = new CombineInstance[path.Count];
+
+    //    for (int i = 0; i < path.Count; i++)
+    //    {
+    //        if (!RoadGraph.Contains(path[i]))
+    //            RoadGraph.Add(path[i]);
+
+    //        corners[i] = new CombineInstance()
+    //        {
+    //            mesh = QuadFromVertex(path[i]),
+    //            transform = Matrix4x4.identity
+    //        };
+
+    //        if (i == path.Count - 1) continue;
+
+    //        if (!RoadGraph.Contains(path[i + 1]))
+    //            RoadGraph.Add(path[i + 1]);
+
+    //        RoadGraph.CreateEdge(path[i], path[i + 1]);
+
+    //        longs[i] = new CombineInstance()
+    //        {
+    //            mesh = QuadFromVertices(path[i], path[i + 1]),
+    //            transform = Matrix4x4.identity
+    //        };
+    //    }
+
+    //    Mesh longMesh = new Mesh();
+    //    longMesh.CombineMeshes(longs);
+
+    //    Mesh cornerMesh = new Mesh();
+    //    cornerMesh.CombineMeshes(corners);
+
+    //    CombineInstance[] components = new CombineInstance[]
+    //    {
+    //        new CombineInstance()
+    //        {
+    //            mesh = longMesh,
+    //            transform = Matrix4x4.identity
+    //        },
+    //        new CombineInstance()
+    //        {
+    //            mesh = cornerMesh,
+    //            transform = Matrix4x4.identity
+    //        }
+    //    };
+
+    //    Mesh road = new Mesh();
+    //    road.CombineMeshes(components, false);
+
+    //    return road;
+    //}
+
+    private Mesh QuadFromVertex(Vertex centre)
+    {
+        Vector3 direction = Vector3.up;
+        Vector3 cross = Vector3.right;
+
+        Vector3[] vertices = new Vector3[]
+        {
+            centre - direction * roadWeight / 2f - cross * roadWeight / 2f,
+            centre + direction * roadWeight / 2f - cross * roadWeight / 2f,
+            centre - direction * roadWeight / 2f + cross * roadWeight / 2f,
+            centre + direction * roadWeight / 2f + cross * roadWeight / 2f
+        };
+
+        Vector2[] uv = new Vector2[]
+        {
+            Vector2.zero,
+            Vector2.up,
+            Vector2.right,
+            Vector2.one
+        };
+
+        int[] triangles = new int[] { 0, 1, 2, 2, 1, 3 };
+
+        Mesh quad = new Mesh()
+        {
+            vertices = vertices,
+            uv = uv,
+            triangles = triangles
+        };
+
+        return quad;
+    }
+
+    private Mesh QuadFromVertices(Vertex from, Vertex to)
+    {
+        Vector3 direction = (to - from).normalized;
+        Vector3 cross = Vector3.Cross(direction, Vector3.forward);
+
+        Vector3[] vertices = new Vector3[]
+        {
+            from - cross * roadWeight / 2f,
+            to - cross * roadWeight / 2f,
+            from + cross * roadWeight / 2f,
+            to + cross * roadWeight / 2f
+        };
+
+        Vector2[] uv = new Vector2[]
+        {
+            Vector2.zero,
+            Vector2.up,
+            Vector2.right,
+            Vector2.one
+        };
+
+        int[] triangles = new int[] { 0, 1, 2, 2, 1, 3 };
+
+        Mesh quad = new Mesh()
+        {
+            vertices = vertices,
+            uv = uv,
+            triangles = triangles
+        };
+
+        return quad;
+    }
+
     public Mesh GenerateEdgeMesh()
     {
         Graph<Vertex> dupVertexGraph = new Graph<Vertex>(VertexGraph);
@@ -722,9 +1084,9 @@ public class MapLayout : ScriptableObject
 
         for (int i = dupVertexGraph.Count - 1; i >= 0; i--)
         {
-            foreach (Vertex neighbour in dupVertexGraph.GetAdjacent(dupVertexGraph.GetData()[i]))
+            Vertex root = dupVertexGraph.GetData()[i];
+            foreach (Vertex neighbour in dupVertexGraph.GetAdjacent(root))
             {
-                Vector3 root = dupVertexGraph.GetData()[i];
                 Vector3 toNeighbour = neighbour - root;
                 Vector3 direction = toNeighbour.normalized;
                 Vector3 cross = Vector3.Cross(direction, Vector3.forward);
@@ -732,10 +1094,10 @@ public class MapLayout : ScriptableObject
                 vertices.AddRange(
                     new Vector3[]
                     {
-                        root - cross * lineWeight / 2f,
-                        neighbour - cross * lineWeight / 2f,
-                        root + cross * lineWeight / 2f,
-                        neighbour + cross * lineWeight / 2f
+                        root - cross * roadWeight / 2f,
+                        neighbour - cross * roadWeight / 2f,
+                        root + cross * roadWeight / 2f,
+                        neighbour + cross * roadWeight / 2f
                     }
                     );
 
@@ -766,5 +1128,67 @@ public class MapLayout : ScriptableObject
             uv = uv.ToArray(),
             triangles = triangles.ToArray()
         };
+    }
+
+    // ROAD GENERATION
+    public void CreateRoad(List<Vertex> vertices)
+    {
+        // Create a list of vertices included in the building
+
+        // Remove existing intersecting roads
+        foreach (Vertex included in vertices)
+        {
+            if (!RoadGraph.Contains(included)) continue;
+            Vertex[] adjacent = RoadGraph.GetAdjacent(included).ToArray();
+            for (int i = adjacent.Length - 1; i >= 0; i--)
+            {
+                if (vertices.Contains(adjacent[i]))
+                    RoadGraph.DestroyEdge(included, adjacent[i]);
+            }
+        }
+
+        // Create a perimeter path around the included vertices
+        List<Vertex> perimeter = ConvexHull(vertices);
+
+        // Create a road linking the perimeter to the existing road graph
+        if (RoadGraph.Count > 0 && perimeter.Count > 0)
+        {
+            Vertex roadStart = perimeter[0];
+            Vertex roadTarget = ClosestRoad(roadStart);
+            float minDistance = Vector3.Distance(roadStart, roadTarget);
+
+            foreach (Vertex vertex in perimeter)
+            {
+                Vertex closest = ClosestRoad(vertex);
+                float distance = Vector3.Distance(closest, vertex);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    roadStart = vertex;
+                    roadTarget = closest;
+                }
+            }
+
+            List<Vertex> road = AStar(VertexGraph, roadStart, roadTarget, 2000);
+
+            // Add the road to the RoadGraph
+            AddRoad(road);
+        }
+
+        // Add the perimeter to RoadGraph
+        AddRoad(perimeter);
+    }
+
+    private void AddRoad(List<Vertex> road)
+    {
+        for (int i = 0; i < road.Count; i++)
+        {
+            if (!RoadGraph.Contains(road[i]))
+                RoadGraph.Add(road[i]);
+
+            if (i > 0 && !RoadGraph.IsAdjacent(road[i], road[i - 1]))
+                RoadGraph.CreateEdge(road[i], road[i - 1]);
+        }
     }
 }

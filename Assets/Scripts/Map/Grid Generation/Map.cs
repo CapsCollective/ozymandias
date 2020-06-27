@@ -6,21 +6,22 @@ using static GameManager;
 public class Map : MonoBehaviour
 {
     public MapLayout mapLayout;
+    public MeshFilter roadMF;
 
     [Header("Debug Settings")]
-    public bool selectingVertex;
-    public int selectedVertex;
-    public int selectedCell;
+    //public bool selectingVertex;
+    //public int selectedVertex;
+    //public int selectedCell;
     public bool debug;
-    public float vertexRadius;
-    public Color selectedColor;
-    public Color adjacentColor;
-    public Color vertexColor;
-    public Color gridColor;
-    public Color occupiedColor;
+    //public float vertexRadius;
+    //public Color selectedColor;
+    //public Color adjacentColor;
+    //public Color vertexColor;
+    //public Color gridColor;
+    //public Color occupiedColor;
     public LayerMask layerMask;
 
-    private MeshFilter _meshFilter;
+    private MeshFilter gridMF;
     private Camera cam;
     private Vector2[] uv;
 
@@ -32,10 +33,79 @@ public class Map : MonoBehaviour
         Generate();
     }
 
+    private void AddRoad(Mesh road)
+    {
+        CombineInstance[] longs = new CombineInstance[]
+        {
+            new CombineInstance() // longs from existing road mesh
+            {
+                mesh = roadMF.mesh,
+                transform = Matrix4x4.identity,
+                subMeshIndex = 0
+            },
+            new CombineInstance() // longs from new road mesh
+            {
+                mesh = road,
+                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix,
+                subMeshIndex = 0
+            }
+        };
+
+        CombineInstance[] corners = new CombineInstance[]
+        {
+            new CombineInstance() // corners from existing road mesh
+            {
+                mesh = roadMF.mesh,
+                transform = Matrix4x4.identity,
+                subMeshIndex = 1
+            },
+            new CombineInstance() // corners from new road mesh
+            {
+                mesh = road,
+                transform = roadMF.transform.localToWorldMatrix * transform.worldToLocalMatrix,
+                subMeshIndex = 1
+            }
+        };
+
+        roadMF.sharedMesh = new Mesh();
+
+        Mesh longMesh = new Mesh();
+        longMesh.CombineMeshes(longs, true);
+
+        Mesh cornerMesh = new Mesh();
+        cornerMesh.CombineMeshes(corners, true);
+
+        CombineInstance[] components = new CombineInstance[]
+        {
+            new CombineInstance()
+            {
+                mesh = longMesh,
+                transform = Matrix4x4.identity
+            },
+            new CombineInstance()
+            {
+                mesh = cornerMesh,
+                transform = Matrix4x4.identity
+            }
+        };
+
+        roadMF.sharedMesh.CombineMeshes(components, false);
+    }
+
+    //public void GenerateRoad(Vertex from, Vertex to)
+    //{
+    //    AddRoad(mapLayout.GenerateRoad(from, to, 2000));
+    //}
+
+    //public void GenerateRoad(List<Vertex> path)
+    //{
+    //    AddRoad(mapLayout.GenerateRoad(path));
+    //}
+
     public void Highlight(Cell[] cells, HighlightState state)
     {
         if(uv == null)
-            uv = _meshFilter.sharedMesh.uv;
+            uv = gridMF.sharedMesh.uv;
 
         foreach (Cell cell in cells)
         {
@@ -45,7 +115,7 @@ public class Map : MonoBehaviour
                 uv[vertexIndex].x = (int)state / 2f;
         }
 
-        _meshFilter.sharedMesh.uv = uv;
+        gridMF.sharedMesh.uv = uv;
     }
 
     // Gets the closest cell to the cursor
@@ -56,13 +126,13 @@ public class Map : MonoBehaviour
         Physics.Raycast(ray, out hit, 200f, layerMask);
         return GetCell(hit.point);
     }
-    
+
     // Gets the closest cell by world position
     public Cell GetCell(Vector3 worldPosition)
     {
         return mapLayout.GetClosest(transform.InverseTransformPoint(worldPosition));
     }
-    
+
     // Gets all cells within radius of a world position
     public Cell[] GetCells(Vector3 worldPosition, float worldRadius)
     {
@@ -75,20 +145,21 @@ public class Map : MonoBehaviour
     {
         return mapLayout.GetCells(root, building, rotation);
     }
-    
+
     // Gets all cells of a currently placed building
     public Cell[] GetCells(BuildingStructure building)
     {
         return mapLayout.GetCells(building);
     }
-    
+
     public void Generate()
     {
         mapLayout.GenerateMap(mapLayout.seed);
-        _meshFilter = GetComponent<MeshFilter>();
-        _meshFilter.sharedMesh = mapLayout.GenerateCellMesh();
+        gridMF = GetComponent<MeshFilter>();
+        gridMF.sharedMesh = mapLayout.GenerateCellMesh();
+        roadMF.sharedMesh = new Mesh();
     }
-    
+
     // Occupies and fits a building onto the map
     private void Occupy(BuildingStructure building, Cell[] cells, bool animate = false)
     {
@@ -112,7 +183,7 @@ public class Map : MonoBehaviour
         BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
         PlaceTerrain placeTerrain = buildingInstance.GetComponent<PlaceTerrain>();
         if (placeTerrain) placeTerrain.rotation = rotation;
-        
+
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building, rotation);
 
@@ -132,16 +203,24 @@ public class Map : MonoBehaviour
 
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
+            if (animate)
+            {
+                List<Vertex> vertices = mapLayout.GetVertices(cells);
+
+                mapLayout.CreateRoad(vertices);
+                roadMF.sharedMesh = mapLayout.GenerateRoadMesh();
+            }
+
             mapLayout.Align(cells, rotation);
             Occupy(building, cells, animate);
             stats.Build();
             return true;
         }
-        
+
         Destroy(buildingInstance);
         return false;
     }
-    
+
     public bool IsValid(Cell[] cells)
     {
         bool valid = true;
@@ -156,12 +235,12 @@ public class Map : MonoBehaviour
     {
         return cell != null && !cell.Occupied;
     }
-    
+
     public void Clear(BuildingStructure building)
     {
         Clear(GetCells(building)[0]); // Destroys the building from its root
     }
-    
+
     public void Clear(Cell[] cells)
     {
         foreach (Cell cell in cells)
@@ -172,7 +251,7 @@ public class Map : MonoBehaviour
     {
         mapLayout.Clear(root);
     }
-    
+
     public Vector3[] CellUnitToWorld(Cell cell)
     {
         Vector3[] vertices = new Vector3[4];
@@ -188,52 +267,63 @@ public class Map : MonoBehaviour
         if (mapLayout && debug)
         {
             Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.color = vertexColor;
 
-            foreach (Vertex root in mapLayout.VertexGraph.GetData())
+            Gizmos.color = Color.white;
+            foreach (Vertex root in mapLayout.RoadGraph.GetData())
             {
-                Gizmos.DrawSphere(root, vertexRadius);
-            }
-
-            Gizmos.color = gridColor;
-            foreach (Cell cell in mapLayout.CellGraph.GetData())
-            {
-                cell.DrawCell();
-            }
-
-            if (selectingVertex && mapLayout.VertexGraph.Count > 0)
-            {
-                selectedVertex = Mathf.Clamp(selectedVertex, 0, mapLayout.VertexGraph.Count - 1);
-
-                Gizmos.color = selectedColor;
-                Gizmos.DrawSphere(mapLayout.VertexGraph.GetData()[selectedVertex], vertexRadius);
-
-                Gizmos.color = adjacentColor;
-                foreach (Vertex adjacent in mapLayout.VertexGraph.GetAdjacent(mapLayout.VertexGraph.GetData()[selectedVertex]))
-                    Gizmos.DrawSphere(adjacent, vertexRadius);
-            }
-            else if (mapLayout.CellGraph.Count > 0)
-            {
-                selectedCell = Mathf.Clamp(selectedCell, 0, mapLayout.CellGraph.Count - 1);
-
-                Gizmos.color = adjacentColor;
-                foreach (Cell adjacent in mapLayout.CellGraph.GetAdjacent(mapLayout.CellGraph.GetData()[selectedCell]))
-                    adjacent.DrawCell();
-
-                Gizmos.color = selectedColor;
-                mapLayout.CellGraph.GetData()[selectedCell].DrawCell();
-                for (int i = 0; i < 4; i++)
+                Gizmos.DrawSphere(root, .003f);
+                foreach (Vertex neighbour in mapLayout.RoadGraph.GetAdjacent(root))
                 {
-                    Gizmos.color = Color.Lerp(Color.blue, Color.red, (float)i / 3);
-                    Gizmos.DrawSphere(mapLayout.CellGraph.GetData()[selectedCell].Vertices[i], vertexRadius);
+                    Gizmos.DrawLine(root, neighbour);
                 }
             }
 
-            Gizmos.color = occupiedColor;
-            foreach (Cell cell in mapLayout.CellGraph.GetData())
-            {
-                if (cell.Occupied) cell.DrawCell();
-            }
+            //Gizmos.color = vertexColor;
+
+            //foreach (Vertex root in mapLayout.VertexGraph.GetData())
+            //{
+            //    Gizmos.DrawSphere(root, vertexRadius);
+            //}
+
+            //Gizmos.color = gridColor;
+            //foreach (Cell cell in mapLayout.CellGraph.GetData())
+            //{
+            //    cell.DrawCell();
+            //}
+
+            //if (selectingVertex && mapLayout.VertexGraph.Count > 0)
+            //{
+            //    selectedVertex = Mathf.Clamp(selectedVertex, 0, mapLayout.VertexGraph.Count - 1);
+
+            //    Gizmos.color = selectedColor;
+            //    Gizmos.DrawSphere(mapLayout.VertexGraph.GetData()[selectedVertex], vertexRadius);
+
+            //    Gizmos.color = adjacentColor;
+            //    foreach (Vertex adjacent in mapLayout.VertexGraph.GetAdjacent(mapLayout.VertexGraph.GetData()[selectedVertex]))
+            //        Gizmos.DrawSphere(adjacent, vertexRadius);
+            //}
+            //else if (mapLayout.CellGraph.Count > 0)
+            //{
+            //    selectedCell = Mathf.Clamp(selectedCell, 0, mapLayout.CellGraph.Count - 1);
+
+            //    Gizmos.color = adjacentColor;
+            //    foreach (Cell adjacent in mapLayout.CellGraph.GetAdjacent(mapLayout.CellGraph.GetData()[selectedCell]))
+            //        adjacent.DrawCell();
+
+            //    Gizmos.color = selectedColor;
+            //    mapLayout.CellGraph.GetData()[selectedCell].DrawCell();
+            //    for (int i = 0; i < 4; i++)
+            //    {
+            //        Gizmos.color = Color.Lerp(Color.blue, Color.red, (float)i / 3);
+            //        Gizmos.DrawSphere(mapLayout.CellGraph.GetData()[selectedCell].Vertices[i], vertexRadius);
+            //    }
+            //}
+
+            //Gizmos.color = occupiedColor;
+            //foreach (Cell cell in mapLayout.CellGraph.GetData())
+            //{
+            //    if (cell.Occupied) cell.DrawCell();
+            //}
         }
     }
 }
