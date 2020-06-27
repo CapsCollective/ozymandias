@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
+using static GameManager;
 
 namespace Managers_and_Controllers
 {
@@ -22,10 +23,16 @@ namespace Managers_and_Controllers
         
         private void Update()
         {
+            if (activeAdventurers.Count < Manager.AvailableAdventurers)
+            {
+                SpawnWanderingAdventurer();
+            }
+            
+            var adventurersToRemove = new List<GameObject>();
             foreach (var adventurerPath in activeAdventurers)
             {
                 var adventurer = adventurerPath.Key;
-                if (adventurerPath.Value.Count >= 0)
+                if (adventurerPath.Value.Count > 0)
                 {
                     var path = adventurerPath.Value;
                     adventurer.transform.position = Vector3.MoveTowards(
@@ -35,13 +42,20 @@ namespace Managers_and_Controllers
                 }
                 else
                 {
-                    activeAdventurers.Remove(adventurer);
+                    adventurersToRemove.Add(adventurer);
                 }
             }
+
+            foreach (var adventurer in adventurersToRemove)
+            {
+                activeAdventurers.Remove(adventurer);
+                Destroy(adventurer);
+            }
+            adventurersToRemove.Clear();
         }
 
         [Button("Spawn")]
-        private void Spawn()
+        private void SpawnWanderingAdventurer()
         {
             var start = mapLayout.RoadGraph.GetData()[0];
             var end = mapLayout.RoadGraph.GetData()[2];
