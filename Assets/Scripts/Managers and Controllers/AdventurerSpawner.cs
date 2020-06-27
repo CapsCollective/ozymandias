@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +10,8 @@ namespace Managers_and_Controllers
     {
         [SerializeField] private GameObject adventurerModel;
         [SerializeField] private Map map;
-        [SerializeField] private float speed = .5f;
+        [SerializeField] private float adventurerSpeed = .5f;
+        [SerializeField] private float wanderingUpdateFrequency = 3f;
         
         private MapLayout mapLayout;
         private readonly Dictionary<GameObject, List<Vector3>> activeAdventurers = 
@@ -18,15 +20,21 @@ namespace Managers_and_Controllers
         private void Start()
         {
             mapLayout = map.mapLayout;
+            InvokeRepeating(nameof(CheckWandering), 1f, wanderingUpdateFrequency);
         }
-        
+
+
+        private void CheckWandering()
+        {
+            if (activeAdventurers.Count < Manager.buildings.Count - 1 && 
+                activeAdventurers.Count < Manager.AvailableAdventurers)
+            {
+                StartCoroutine(SpawnWanderingAdventurer());
+            }
+        }
+
         private void Update()
         {
-            if (Manager.buildings.Count > 1 && activeAdventurers.Count < Manager.AvailableAdventurers)
-            {
-                SpawnWanderingAdventurer();
-            }
-            
             var adventurersToRemove = new List<GameObject>();
             foreach (var adventurerPath in activeAdventurers)
             {
@@ -35,7 +43,8 @@ namespace Managers_and_Controllers
                 {
                     var path = adventurerPath.Value;
                     adventurer.transform.position = Vector3.MoveTowards(
-                        adventurer.transform.position, path[0], speed * Time.deltaTime);
+                        adventurer.transform.position, path[0], 
+                        adventurerSpeed * Time.deltaTime);
                     if (Vector3.Distance(adventurer.transform.position, path[0]) < 0.1f)
                         adventurerPath.Value.RemoveAt(0);
                 }
@@ -53,29 +62,29 @@ namespace Managers_and_Controllers
             adventurersToRemove.Clear();
         }
         
-        private void SpawnWanderingAdventurer()
+        private IEnumerator SpawnWanderingAdventurer()
         {
             Vertex start = null;
             Vertex end = null;
-            while (start == null || end == null)
-            {
+            while (start == null)
                 start = GetRandomBuildingVertex();
+            while (end == null)
                 end = GetRandomBuildingVertex();
-            }
 
             var path = mapLayout.AStar(mapLayout.RoadGraph,start, end)
                 .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
             activeAdventurers.Add(CreateAdventurer(start), path);
+            yield return null;
         }
 
         private Vertex GetRandomBuildingVertex()
         {
             var buildings = mapLayout.BuildingMap.Keys.ToList();
             var building = buildings[Random.Range(0, buildings.Count)];
-            var unfilteredVerts = mapLayout.BuildingMap[building]
-                [Random.Range(0, mapLayout.BuildingMap[building].Count)].Vertices;
-            var filteredVerts = unfilteredVerts
-                .Where(v => mapLayout.RoadGraph.GetData().Contains(v)).ToList();
+            var unfilteredVerts = mapLayout.BuildingMap[building].SelectMany(c => c.Vertices).ToList();
+            var filteredVerts = unfilteredVerts.Where(v => mapLayout.RoadGraph.GetData().Contains(v)).ToList();
+            if (filteredVerts.Count == 0)
+                print("Found 0 verts on road map");
             return filteredVerts.Count > 0 ? filteredVerts[Random.Range(0, filteredVerts.Count)] : null;
         }
 
