@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 using static GameManager;
 
@@ -23,7 +22,7 @@ namespace Managers_and_Controllers
         
         private void Update()
         {
-            if (activeAdventurers.Count < Manager.AvailableAdventurers)
+            if (Manager.buildings.Count > 1 && activeAdventurers.Count < Manager.AvailableAdventurers)
             {
                 SpawnWanderingAdventurer();
             }
@@ -53,16 +52,31 @@ namespace Managers_and_Controllers
             }
             adventurersToRemove.Clear();
         }
-
-        [Button("Spawn")]
+        
         private void SpawnWanderingAdventurer()
         {
-            var start = mapLayout.RoadGraph.GetData()[0];
-            var end = mapLayout.RoadGraph.GetData()[2];
-            var a = CreateAdventurer(start);
+            Vertex start = null;
+            Vertex end = null;
+            while (start == null || end == null)
+            {
+                start = GetRandomBuildingVertex();
+                end = GetRandomBuildingVertex();
+            }
+
             var path = mapLayout.AStar(mapLayout.RoadGraph,start, end)
                 .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
-            activeAdventurers.Add(a, path);
+            activeAdventurers.Add(CreateAdventurer(start), path);
+        }
+
+        private Vertex GetRandomBuildingVertex()
+        {
+            var buildings = mapLayout.BuildingMap.Keys.ToList();
+            var building = buildings[Random.Range(0, buildings.Count)];
+            var unfilteredVerts = mapLayout.BuildingMap[building]
+                [Random.Range(0, mapLayout.BuildingMap[building].Count)].Vertices;
+            var filteredVerts = unfilteredVerts
+                .Where(v => mapLayout.RoadGraph.GetData().Contains(v)).ToList();
+            return filteredVerts.Count > 0 ? filteredVerts[Random.Range(0, filteredVerts.Count)] : null;
         }
 
         private GameObject CreateAdventurer(Vertex vertex)
