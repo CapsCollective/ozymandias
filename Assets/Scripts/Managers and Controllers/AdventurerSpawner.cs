@@ -27,7 +27,6 @@ namespace Managers_and_Controllers
             boundaryVerts = mapLayout.VertexGraph.GetData().Where(v => v.Boundary).ToList();
         }
 
-
         private void CheckWandering()
         {
             if (activeAdventurers.Count < Manager.buildings.Count - 1 && 
@@ -68,12 +67,11 @@ namespace Managers_and_Controllers
         
         private IEnumerator SpawnWanderingAdventurer()
         {
-            Vertex start = null;
-            Vertex end = null;
-            while (start == null)
-                start = GetRandomBuildingVertex();
-            while (end == null)
-                end = GetRandomBuildingVertex();
+            var start = GetRandomBuildingVertex();
+            var end = GetRandomBuildingVertex();
+            
+            // Safety check for null vertex issue - should be fixed, but safety first
+            if (start == null || end == null) yield return null;
 
             var path = mapLayout.AStar(mapLayout.RoadGraph,start, end)
                 .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
@@ -108,12 +106,11 @@ namespace Managers_and_Controllers
         private Vertex GetRandomBuildingVertex()
         {
             var buildings = mapLayout.BuildingMap.Keys.ToList();
+            buildings = buildings.Where(bs => bs.gameObject.CompareTag("Building")).ToList();
             var building = buildings[Random.Range(0, buildings.Count)];
             var unfilteredVerts = mapLayout.BuildingMap[building].SelectMany(c => c.Vertices).ToList();
             var filteredVerts = unfilteredVerts.Where(v => mapLayout.RoadGraph.GetData().Contains(v)).ToList();
-            if (filteredVerts.Count == 0)
-                print("Found 0 verts on road map");
-            return filteredVerts.Count > 0 ? filteredVerts[Random.Range(0, filteredVerts.Count)] : null;
+            return filteredVerts[Random.Range(0, filteredVerts.Count)];
         }
 
         private GameObject CreateAdventurer(Vertex vertex)
