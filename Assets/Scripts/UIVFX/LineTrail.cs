@@ -32,16 +32,6 @@ public class LineTrail : MonoBehaviour
 
     IEnumerator Scale()
     {
-        /*
-        yield return new WaitForSeconds(0.3f);
-        iTween.ScaleBy(destination, new Vector3(1.1f, 1.1f, 1.1f), 0.1f);
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleBy(destination, new Vector3(0.909f, 0.909f, 0.909f), 0.1f);
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleBy(destination, new Vector3(1.1f, 1.1f, 1.1f), 0.1f);
-        yield return new WaitForSeconds(0.05f);
-        iTween.ScaleBy(destination, new Vector3(0.909f, 0.909f, 0.909f), 0.1f);
-        */
         yield return new WaitForSeconds(0.35f);
         iTween.ScaleAdd(destination, new Vector3(0.1f, 0.1f, 0.1f), 0.1f);
         yield return new WaitForSeconds(0.1f);
