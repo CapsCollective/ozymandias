@@ -29,7 +29,7 @@ public class Map : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
-        //Generate();
+        Generate();
     }
 
     public void Highlight(Cell[] cells, HighlightState state)

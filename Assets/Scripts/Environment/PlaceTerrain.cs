@@ -12,18 +12,18 @@ public class PlaceTerrain : MonoBehaviour
     public GameObject terrainBuilding;
     
     public int rotation = 0;
-    
-    //private void Awake()
-    //{
-    //    lm = LayerMask.GetMask("Surface", "Terrain");
-    //}
 
-    //void Update()
-    //{
-    //    if (!map) map = FindObjectOfType<Map>();
-    //    Place();
-    //    enabled = false;
-    //}
+    private void Awake()
+    {
+        lm = LayerMask.GetMask("Surface", "Terrain");
+    }
+
+    void Update()
+    {
+        if (!map) map = FindObjectOfType<Map>();
+        Place();
+        enabled = false;
+    }
 
     public void Place()
     {
@@ -34,7 +34,7 @@ public class PlaceTerrain : MonoBehaviour
             {
                 Debug.Log(map);
                 map.CreateBuilding(terrainBuilding, hit.point, rotation, animate: false);
-                //Destroy(gameObject);
+                Destroy(gameObject);
             }
         }
     }

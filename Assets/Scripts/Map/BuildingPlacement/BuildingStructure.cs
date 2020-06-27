@@ -21,6 +21,11 @@ public class BuildingStructure : MonoBehaviour
     // Enums
     public enum Direction { Left, Forward, Right, Back }
 
+    public void Start()
+    {
+        StaticBatchingUtility.Combine(gameObject);
+    }
+
     // Class Functions
     public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
     {
