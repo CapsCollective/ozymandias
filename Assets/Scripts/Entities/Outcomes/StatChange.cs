@@ -4,22 +4,23 @@ using System.Xml.Schema;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using static GameManager;
 
 [CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
 public class StatChange : Outcome
 {
 
-    public Metric StatToChange;
-    public int Amount;
-    public int Turns;
+    public Metric statToChange;
+    public int amount;
+    public int turns;
 
     private int turnsLeft;
     //[SerializeField] private int turns;
 
     public override bool Execute(bool fromChoice)
     {
-        turnsLeft = Turns;
+        turnsLeft = turns;
         OnNewTurn += ProcessStatChange;
         if (fromChoice) ProcessStatChange();
         return true;
@@ -33,7 +34,7 @@ public class StatChange : Outcome
             return;
         }
 
-        Manager.modifiers[StatToChange] += Amount;
+        Manager.modifiers[statToChange] += amount;
 
         if (turnsLeft == -1) return;
         turnsLeft--;
@@ -44,15 +45,15 @@ public class StatChange : Outcome
         get
         {
             string color;
-            if (StatToChange == Metric.Threat && Amount > 0 || StatToChange != Metric.Threat && Amount < 0) color = "#820000ff";
+            if (statToChange == Metric.Threat && amount > 0 || statToChange != Metric.Threat && amount < 0) color = "#820000ff";
             else color = "#007000ff";
                 
             if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
             string desc = "";
-            if (Amount > 0) desc += "<color="+color+">" + StatToChange + " has increased by " + Amount;
-            else desc += "<color="+color+">" + StatToChange + " has decreased by " + Mathf.Abs(Amount);
+            if (amount > 0) desc += "<color="+color+">" + statToChange + " has increased by " + amount;
+            else desc += "<color="+color+">" + statToChange + " has decreased by " + Mathf.Abs(amount);
             
-            if (turnsLeft != -1) desc += " for " + Turns + " turns.";
+            if (turnsLeft != -1) desc += " for " + turns + " turns.";
             return desc + "</color>";
         }
     }

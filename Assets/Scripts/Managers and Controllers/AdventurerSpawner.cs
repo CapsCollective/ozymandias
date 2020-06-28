@@ -9,6 +9,7 @@ namespace Managers_and_Controllers
 {
     public class AdventurerSpawner : MonoBehaviour
     {
+        #pragma warning disable 0649
         [SerializeField] private GameObject adventurerModel;
         [SerializeField] private Map map;
         [SerializeField] private float adventurerSpeed = .3f;

@@ -17,12 +17,21 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 862325695c2f4744caaa922412144b4c, type: 3}
   type: 5
   headliner: 0
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
-  outcomes: []
+  outcomes:
+  - {fileID: 5541745754487408203}
   choices: []
   oneTime: 0
+--- !u!114 &5541745754487408203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: Quest Complete
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 7fc348e93bacd5e45804d2b87bfa961c, type: 2}

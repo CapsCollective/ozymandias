@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using NaughtyAttributes;
+using UnityEngine.Serialization;
 using static QuestMapController;
 
 [CreateAssetMenu(fileName = "New Quest Outcome", menuName = "Outcomes/New Quest")]
 public class NewQuest : Outcome
 {
-    public Quest Quest;
+    public Quest quest;
 
     [Button]
     public override bool Execute()
     {
-            return QuestMap.AddQuest(Quest);
+        return QuestMap.AddQuest(quest);
     }
     
     public override string Description
@@ -21,7 +22,7 @@ public class NewQuest : Outcome
         get
         {
             if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
-            return "<color=#007000ff>New quest added: " + Quest.title + "</color>";
+            return "<color=#007000ff>New quest added: " + quest.title + "</color>";
         }
     }
 }

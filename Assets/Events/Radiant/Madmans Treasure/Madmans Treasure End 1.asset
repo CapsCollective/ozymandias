@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3129793651064006079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: Quest Complete
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 219d8d81d38bb7047abdf34b8b9140d3, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20,15 +34,10 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 459132235c75a564f93bab0b03a006d8, type: 3}
   type: 5
   headliner: 1
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
   outcomes:
   - {fileID: 2017485384288608980}
   - {fileID: 5905028790704016351}
+  - {fileID: -3129793651064006079}
   choices: []
   oneTime: 0
 --- !u!114 &2017485384288608980
@@ -44,9 +53,9 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  StatToChange: 3
-  Amount: 10
-  Turns: 2
+  statToChange: 3
+  amount: 10
+  turns: 2
 --- !u!114 &5905028790704016351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +69,6 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  StatToChange: 2
-  Amount: 3
-  Turns: 3
+  statToChange: 2
+  amount: 3
+  turns: 3
