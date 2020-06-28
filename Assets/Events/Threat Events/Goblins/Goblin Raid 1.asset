@@ -19,12 +19,6 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
   type: 2
   headliner: 0
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
   outcomes: []
   choices:
   - {fileID: -2278837932667058203}
@@ -42,7 +36,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: Pay them off
   m_EditorClassIdentifier: 
-  description: Pay them off
   outcomes:
   - {fileID: 7288116118394355820}
   - {fileID: 4683237258390817899}
@@ -74,7 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: Send scouts after them!
   m_EditorClassIdentifier: 
-  description: Send scouts after them!
   outcomes:
   - {fileID: -7336819564011800612}
   - {fileID: 5427943375661240944}
@@ -92,9 +84,9 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  StatToChange: 3
-  Amount: -5
-  Turns: 3
+  statToChange: 3
+  amount: -5
+  turns: 3
 --- !u!114 &5427943375661240944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,4 +126,4 @@ MonoBehaviour:
   m_Name: New Quest(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  Quest: {fileID: 11400000, guid: 5345c3458d38f4d408340c1012d1e401, type: 2}
+  quest: {fileID: 11400000, guid: 5345c3458d38f4d408340c1012d1e401, type: 2}

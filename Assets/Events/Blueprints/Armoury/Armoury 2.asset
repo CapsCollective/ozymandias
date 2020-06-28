@@ -13,8 +13,22 @@ MonoBehaviour:
   m_Name: Building Unlock(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  Building: {fileID: 2190574654203646117, guid: b3755f77875625847841a8304740a1a4,
+  building: {fileID: 2190574654203646117, guid: b3755f77875625847841a8304740a1a4,
     type: 3}
+--- !u!114 &-6899505493225569669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: Quest Complete
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 1796a4542f1532f498a0403c73a1cb4a, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,13 +49,8 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: f063f6be4aa872c4e802f4cb63985a93, type: 3}
   type: 5
   headliner: 1
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
   outcomes:
   - {fileID: -7064876407240182560}
+  - {fileID: -6899505493225569669}
   choices: []
   oneTime: 0

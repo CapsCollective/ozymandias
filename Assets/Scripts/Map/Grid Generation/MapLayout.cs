@@ -140,7 +140,7 @@ public class MapLayout : ScriptableObject
         return closest;
     }
 
-    public List<Vertex> AStar(Graph<Vertex> set, Vertex root, Vertex target, int iterationLimit)
+    public List<Vertex> AStar(Graph<Vertex> set, Vertex root, Vertex target, int iterationLimit = 2000)
     {
         List<Vertex> path = new List<Vertex>();
 

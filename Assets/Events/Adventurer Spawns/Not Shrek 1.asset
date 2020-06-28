@@ -28,7 +28,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: Strike up a bargain
   m_EditorClassIdentifier: 
-  description: Strike up a bargain
   outcomes:
   - {fileID: -4138815976682747772}
 --- !u!114 &11400000
@@ -49,12 +48,6 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: f0c6025864c4c7b4483e442a7197bd0a, type: 3}
   type: 1
   headliner: 0
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
   outcomes: []
   choices:
   - {fileID: -1055677317904433246}
@@ -85,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: Leave him be
   m_EditorClassIdentifier: 
-  description: Leave him be
   outcomes:
   - {fileID: 1259312230494283175}
   - {fileID: 7150702882423709540}
@@ -102,6 +94,6 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  StatToChange: 1
-  Amount: 3
-  Turns: 3
+  statToChange: 1
+  amount: 3
+  turns: 3

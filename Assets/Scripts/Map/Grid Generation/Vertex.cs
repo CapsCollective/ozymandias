@@ -20,6 +20,11 @@ public class Vertex
     {
         position = newPosition;
     }
+    
+    public Vector3 GetPosition()
+    {
+        return position;
+    }
 
     public static implicit operator Vector3(Vertex vertex)
     {
@@ -28,7 +33,9 @@ public class Vertex
 
     public static bool operator ==(Vertex first, Vertex second)
     {
-        return first.GetHashCode() == second.GetHashCode() && (Vector3)first == second;
+        if ((object) first == null)
+            return (object) second == null;
+        return second != null && (first.GetHashCode() == second.GetHashCode() && (Vector3)first == second);
     }
 
     public static bool operator !=(Vertex first, Vertex second)

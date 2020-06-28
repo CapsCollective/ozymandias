@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: Spending -10% until the mine is recovered
-  StatToChange: 3
-  Amount: -10
-  Turns: -1
+  statToChange: 3
+  amount: -10
+  turns: -1
 --- !u!114 &-2612054349667142835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   m_Name: New Quest(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  Quest: {fileID: 11400000, guid: 5ce15702a390b8f4e898214c488f155d, type: 2}
+  quest: {fileID: 11400000, guid: 5ce15702a390b8f4e898214c488f155d, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,12 +49,6 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 45eb79c94e7878d49af89bbc99942e62, type: 3}
   type: 2
   headliner: 1
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
   outcomes:
   - {fileID: -8004775218300514849}
   - {fileID: -2612054349667142835}

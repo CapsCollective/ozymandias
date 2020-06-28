@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
 using static GameManager;
 using UnityEngine.SceneManagement;
@@ -20,7 +22,7 @@ public class Quest : ScriptableObject
     public Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
     private int turnsLeft;
-    private List<Adventurer> assigned;
+    public List<Adventurer> assigned;
     
     public void StartQuest()
     {
@@ -35,19 +37,11 @@ public class Quest : ScriptableObject
 
     private void OnNewTurn()
     {
-        if (turnsLeft == 1)
+        if (turnsLeft <= 1)
         {
-            // Adds to queue turn before so it appears next turn
             if (completeEvent) Manager.eventQueue.AddEvent(completeEvent, true);
             else Debug.LogError("Quest was completed with no event.");
-        }
-        if(turnsLeft == 0)
-        {
-            // TODO: Replace this with a way to only trigger on event showing up
-            foreach (var adventurer in assigned) adventurer.assignedQuest = null;
-            assigned = new List<Adventurer>();
             GameManager.OnNewTurn -= OnNewTurn;
-            Debug.Log($"Quest Complete: {title}");
         }
         Debug.Log($"Quest in progress: {title}. {turnsLeft} turns remaining.");
         turnsLeft--;
@@ -60,5 +54,17 @@ public class Quest : ScriptableObject
         assigned = new List<Adventurer>();
         GameManager.OnNewTurn -= OnNewTurn;
         SceneManager.activeSceneChanged -= HandleSceneChange;
+    }
+
+    [Button("Add Complete Event")]
+    public void AddCompleteOutcome()
+    {
+        if (completeEvent.outcomes.Any(x => x.GetType() == typeof(QuestCompleted))) return;
+        QuestCompleted outcome = CreateInstance<QuestCompleted>();
+        outcome.name = "Quest Complete";
+        outcome.quest = this;
+        completeEvent.outcomes.Add(outcome);
+        AssetDatabase.AddObjectToAsset(outcome, completeEvent);
+        AssetDatabase.SaveAssets();
     }
 }

@@ -1,21 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7313867477300710355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Give them gold!
-  m_EditorClassIdentifier: 
-  description: Give them gold!
-  outcomes:
-  - {fileID: 5545346726731176053}
-  - {fileID: 8378561573087509010}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,16 +18,25 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: e7d5437ef76a2734c949ee2be7a59f9f, type: 3}
   type: 2
   headliner: 0
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
   outcomes: []
   choices:
   - {fileID: -7313867477300710355}
   - {fileID: 4640629024430833221}
+--- !u!114 &-7313867477300710355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Give them gold!
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5545346726731176053}
+  - {fileID: 8378561573087509010}
 --- !u!114 &4640629024430833221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
   m_Name: Give them blood!
   m_EditorClassIdentifier: 
-  description: Give them blood!
   outcomes:
   - {fileID: 5528356659286630414}
   - {fileID: 5287400093947506050}
@@ -116,6 +108,6 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  StatToChange: 3
-  Amount: -10
-  Turns: 3
+  statToChange: 3
+  amount: -10
+  turns: 3

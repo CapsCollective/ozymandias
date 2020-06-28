@@ -70,13 +70,15 @@ public class QuestMapController : MonoBehaviour
         return true;
     }
     
-    public void RemoveQuest(Quest q)
+    public bool RemoveQuest(Quest q)
     {
         QuestDisplayManager flyer = usedFlyers.Find(x => x.flyerQuest == q);
+        if (!flyer) return false;
         flyer.gameObject.SetActive(false);
         usedFlyers.Remove(flyer);
         counter.UpdateCounter(usedFlyers.Count);
         availableFlyers.Add(flyer);
+        return true;
     }
 
     private void OnDestroy()
