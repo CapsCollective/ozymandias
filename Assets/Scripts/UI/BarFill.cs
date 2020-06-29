@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BarFill : MonoBehaviour
@@ -14,7 +12,7 @@ public class BarFill : MonoBehaviour
     public Gradient gradient;
     public float previousWidth, targetWidth;
 
-    public static bool DelayBars = false; // This is fuckin rough, but how else?
+    public static bool DelayBars = false;
     
     private void Awake()
     {
@@ -35,7 +33,6 @@ public class BarFill : MonoBehaviour
         if (DelayBars) yield return new WaitForSeconds(1.2f);
         for (float t = 0; t < 0.3f; t += Time.deltaTime)
         {
-            Debug.Log(name + t);
             previousWidth = mask.sizeDelta.x; // Don't double trigger a change
             mask.sizeDelta = new Vector2(Mathf.Lerp(previousWidth, targetWidth, t/0.3f), 0);
             if (changeFill) fill.color = gradient.Evaluate(mask.sizeDelta.x/barWidth);

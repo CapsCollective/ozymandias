@@ -32,15 +32,9 @@ public class Trail : MonoBehaviour
             waypoints[0].position.y + difference.y * 2 / 3,
             0);
         
-        Debug.Log("0: " + waypoints[0].position);
-        Debug.Log("1: " + waypoints[1].position);
-        Debug.Log("2: " + waypoints[2].position);
-        
         // Change particle color based on target
         var particlesMain = particles.main;
         particlesMain.startColor = waypoints[2].Find("Mask").Find("Fill").GetComponent<Image>().color;
-        
-        //StartCoroutine(Scale());
     }
 
     void Update()
@@ -65,19 +59,6 @@ public class Trail : MonoBehaviour
         Destroy(gameObject);
     }
     
-    //scale the object the particles are flying to
-    /*IEnumerator Scale()
-    {
-        yield return new WaitForSeconds(0.7f);
-        iTween.ScaleAdd(waypoints[2], new Vector3(0.1f, 0.1f, 0.1f), 0.1f);
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleAdd(waypoints[2], new Vector3(-0.1f, -0.1f, -0.1f), 0.1f);
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleAdd(waypoints[2], new Vector3(0.1f, 0.1f, 0.1f), 0.1f);
-        yield return new WaitForSeconds(0.05f);
-        iTween.ScaleAdd(waypoints[2], new Vector3(-0.1f, -0.1f, -0.1f), 0.1f);
-    }*/
-
     public GameObject FindStatBar(Metric metric)
     {
         switch (metric)
