@@ -12,7 +12,7 @@ public class PlaceTerrain : MonoBehaviour
     public GameObject terrainBuilding;
     
     public int rotation = 0;
-    
+
     private void Awake()
     {
         lm = LayerMask.GetMask("Surface", "Terrain");
@@ -27,10 +27,12 @@ public class PlaceTerrain : MonoBehaviour
 
     public void Place()
     {
+        lm = LayerMask.GetMask("Surface", "Terrain");
         if (GetSurfaceHit())
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
             {
+                Debug.Log(map);
                 map.CreateBuilding(terrainBuilding, hit.point, rotation, animate: false);
                 Destroy(gameObject);
             }
