@@ -32,14 +32,6 @@ public class Event : ScriptableObject
     public EventType type;
     public bool headliner; // If the event should be the main one, should be true for all events with choices
 
-    public int
-        minChaos,
-        minThreat,
-        minWealth,
-        maxChaos,
-        maxThreat,
-        maxWealth;
-    
     [Tooltip("These are the outcomes that automatically run on an event")]
     public List<Outcome> outcomes = new List<Outcome>();
     

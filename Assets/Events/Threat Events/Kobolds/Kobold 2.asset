@@ -13,6 +13,20 @@ MonoBehaviour:
   m_Name: END - Kobold Mine
   m_EditorClassIdentifier: 
   customDescription: The celebration is a night to be remembered.
+--- !u!114 &-6102201542766846278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: Quest Complete
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 5ce15702a390b8f4e898214c488f155d, type: 2}
 --- !u!114 &-4075183997258997688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,9 +40,9 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: We regain the wealth of the mine (+10% Spending)
-  StatToChange: 3
-  Amount: 10
-  Turns: -1
+  statToChange: 3
+  amount: 10
+  turns: -1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,16 +62,11 @@ MonoBehaviour:
   image: {fileID: 0}
   type: 5
   headliner: 1
-  minChaos: 0
-  minThreat: 0
-  minWealth: 0
-  maxChaos: 0
-  maxThreat: 0
-  maxWealth: 0
   outcomes:
   - {fileID: -4075183997258997688}
   - {fileID: -6338871188165876096}
   - {fileID: 3935371763068613285}
+  - {fileID: -6102201542766846278}
   choices: []
   oneTime: 0
 --- !u!114 &3935371763068613285
@@ -73,6 +82,6 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  StatToChange: 1
-  Amount: 5
-  Turns: 4
+  statToChange: 1
+  amount: 5
+  turns: 4

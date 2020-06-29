@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static GameManager;
 using static AchievementManager;
 using static BuildingManager;
@@ -9,18 +10,18 @@ using static BuildingManager;
 [CreateAssetMenu(fileName = "Building Unlock", menuName = "Outcomes/Building Unlock")]
 public class BuildingUnlock : Outcome
 {
-    public GameObject Building;
+    public GameObject building;
 
     [Button]
     public override bool Execute()
     {
-        if (!Building)
+        if (!building)
             return false;
 
-        if (!BuildManager.AllBuildings.Contains(Building))
+        if (!BuildManager.AllBuildings.Contains(building))
         {
-            BuildManager.AllBuildings.Add(Building);
-            Debug.Log($"Building Unlocked: {Building}");
+            BuildManager.AllBuildings.Add(building);
+            Debug.Log($"Building Unlocked: {building}");
             Achievements.Unlock("A Helping Hand");
             if (BuildManager.AllBuildings.Count >= 14) //9 plus the 5 unlocked
                 Achievements.Unlock("Modern Influences");
@@ -32,5 +33,5 @@ public class BuildingUnlock : Outcome
         return false;
     }
 
-    public override string Description => "<color=#007000ff>Building Type Unlocked: " + Building.name + "!</color>";
+    public override string Description => "<color=#007000ff>Building Type Unlocked: " + building.name + "!</color>";
 }

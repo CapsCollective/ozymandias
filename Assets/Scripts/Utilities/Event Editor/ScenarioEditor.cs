@@ -76,7 +76,7 @@ public class ScenarioEditor : EditorWindow
 
         eventsList.Clear();
 
-        var rootVisualElement = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(@"Assets/Scripts/Entities/Events/Editor/ScenarioUI.uxml");
+        var rootVisualElement = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(@"Assets/Scripts/Utilities/Event Editor/ScenarioUI.uxml");
         rootVisualElement.CloneTree(root);
 
         Button btnNewChoice = root.Query<Button>("btnNewChoice");
@@ -282,10 +282,7 @@ public class ScenarioEditor : EditorWindow
 
     private void NewChoice()
     {
-        Choice newChoice = new Choice()
-        {
-            description = "New Choice"
-        };
+        Choice newChoice = CreateInstance<Choice>();
         newChoice.name = "New Choice";
         AssetDatabase.AddObjectToAsset(newChoice, scenario);
         scenario.choices.Add(newChoice);
@@ -328,9 +325,8 @@ public class ScenarioEditor : EditorWindow
     private void LoadChoice(Choice c)
     {
         TextField tfChoiceDescription = root.Query<TextField>("tfChoiceDescription");
-        tfChoiceDescription.SetValueWithoutNotify(c.description);
+        tfChoiceDescription.SetValueWithoutNotify(c.name);
         tfChoiceDescription.RegisterValueChangedCallback((s) => {
-            scenario.choices[choiceListView.selectedIndex].description = s.newValue;
             scenario.choices[choiceListView.selectedIndex].name = s.newValue;
             choiceListView.Refresh();
         });

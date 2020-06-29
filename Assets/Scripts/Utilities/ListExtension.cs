@@ -16,4 +16,12 @@ public static class ListExtension
     {
 
     }
+    
+    public static T PopRandom<T>(this List<T> list)
+    {
+        int i = Random.Range(0, list.Count);
+        T value = list[i];
+        list.RemoveAt(i);
+        return value;
+    }
 }
