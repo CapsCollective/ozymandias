@@ -40,7 +40,7 @@ public class ClickTrail : MonoBehaviour
         directions[1] = placeholder.transform;
 
         //pass directions to trail object and begin coroutine to vary target shape
-        trail.GetComponent<Trail>().waypointArray = directions;
+        //trail.GetComponent<Trail>().waypointArray = directions;
         StartCoroutine(Scale(placeholder));
     }
 

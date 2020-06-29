@@ -316,7 +316,6 @@ public class GameManager : MonoBehaviour
         {
             {"building_type", building.name },
         });
-        Debug.Log(analyticEvent);
         UpdateUi();
     }
 
