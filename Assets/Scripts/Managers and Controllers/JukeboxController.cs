@@ -43,32 +43,36 @@ namespace Managers_and_Controllers
 
         public void PlayClick()
         {
-            sfxPlayer.volume = .8f;
-            sfxPlayer.clip = clickClip;
-            sfxPlayer.Play();
+            PlaySfx(clickClip, .8f, Random.Range(0.8f, 1.2f));
         }
         
         public void PlayBuild()
         {
-            sfxPlayer.volume = .4f;
-            sfxPlayer.clip = buildClip;
-            sfxPlayer.Play();
+            PlaySfx(buildClip, .4f);
         }
         
         public void PlayDestroy()
         {
-            sfxPlayer.volume = .1f;
-            sfxPlayer.clip = destroyClip;
-            sfxPlayer.Play();
+            PlaySfx(destroyClip, .1f);
         }
         
         public void PlayStamp()
         {
-            sfxPlayer.volume = .4f;
-            sfxPlayer.clip = stampClip;
+            PlaySfx(stampClip, .4f, Random.Range(0.8f, 1.2f));
+        }
+        
         public void PlayScrunch()
         {
+            var rand = Random.Range(0.3f, 2.0f);
+            PlaySfx(scrunchClip, .05f, Random.Range(0.3f, 2.0f));
+            print(rand);
         }
+
+        private void PlaySfx(AudioClip clip, float volume, float pitch = 1.0f)
+        {
+            sfxPlayer.pitch = pitch;
+            sfxPlayer.volume = volume;
+            sfxPlayer.clip = clip;
             sfxPlayer.Play();
         }
 
@@ -107,9 +111,7 @@ namespace Managers_and_Controllers
             StartCoroutine(StartFade(natureAmbiencePlayer, .5f, currentAmbiencePlayer.volume));
             StartCoroutine(StartFade(nightAmbiencePlayer, .5f, 0f));
             if (Random.Range(0, 5) != 2) return;
-            sfxPlayer.volume = .1f;
-            sfxPlayer.clip = morningClip;
-            sfxPlayer.Play();
+            PlaySfx(morningClip, .1f);
         }
 
         private void CheckAmbiencePlayer()
