@@ -4,11 +4,15 @@ using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using static GameManager;
+using Random = UnityEngine.Random;
 
 namespace Managers_and_Controllers
 {
     public class AdventurerSpawner : MonoBehaviour
     {
+        // Instance field
+        public static AdventurerSpawner Instance { get; private set; }
+        
         #pragma warning disable 0649
         [SerializeField] private GameObject adventurerModel;
         [SerializeField] private Map map;
@@ -20,6 +24,10 @@ namespace Managers_and_Controllers
         private List<Vertex> boundaryVerts;
         private readonly Dictionary<GameObject, List<Vector3>> activeAdventurers = 
             new Dictionary<GameObject, List<Vector3>>();
+        
+        private void Awake() {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -79,11 +87,10 @@ namespace Managers_and_Controllers
             activeAdventurers.Add(CreateAdventurer(start), path);
             yield return null;
         }
-
-        [Button("Send on Quest")]
-        private void TestQuest()
+        
+        public void SendAdventurersOnQuest(int number)
         {
-            StartCoroutine(SpawnQuestingAdventurers(5));
+            StartCoroutine(SpawnQuestingAdventurers(number));
         }
 
         private IEnumerator SpawnQuestingAdventurers(int num)
@@ -93,12 +100,29 @@ namespace Managers_and_Controllers
             while (start == null)
                 start = GetRandomBuildingVertex();
 
-            var path = mapLayout.AStar(mapLayout.VertexGraph,start, end)
+            var gridPath = mapLayout.AStar(mapLayout.VertexGraph,start, end);
+
+            var wildPath = new List<Vertex>();
+            Vertex finalRoadPoint = null;
+            for (var i = gridPath.Count - 1; i >= 0; i--)
+            {
+                if (!mapLayout.RoadGraph.Contains(gridPath[i]))
+                {
+                    wildPath.Add(gridPath[i]);
+                }
+                else
+                {
+                    finalRoadPoint = gridPath[i];
+                    break;
+                }
+            }
+            var roadPath = mapLayout.AStar(mapLayout.RoadGraph,start, finalRoadPoint);
+            var finalPath = roadPath.Concat(wildPath)
                 .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
 
             for (var i = 0; i < num; i++)
             {
-                activeAdventurers.Add(CreateAdventurer(start), path);
+                activeAdventurers.Add(CreateAdventurer(start), new List<Vector3>(finalPath));
                 yield return new WaitForSeconds(partyScatter);
             }
             yield return null;
