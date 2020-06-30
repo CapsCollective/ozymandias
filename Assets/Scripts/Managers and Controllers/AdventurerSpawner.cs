@@ -4,6 +4,7 @@ using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using static GameManager;
+using Random = UnityEngine.Random;
 
 namespace Managers_and_Controllers
 {
@@ -93,12 +94,29 @@ namespace Managers_and_Controllers
             while (start == null)
                 start = GetRandomBuildingVertex();
 
-            var path = mapLayout.AStar(mapLayout.VertexGraph,start, end)
+            var gridPath = mapLayout.AStar(mapLayout.VertexGraph,start, end);
+
+            var wildPath = new List<Vertex>();
+            Vertex finalRoadPoint = null;
+            for (var i = gridPath.Count - 1; i >= 0; i--)
+            {
+                if (!mapLayout.RoadGraph.Contains(gridPath[i]))
+                {
+                    wildPath.Add(gridPath[i]);
+                }
+                else
+                {
+                    finalRoadPoint = gridPath[i];
+                    break;
+                }
+            }
+            var roadPath = mapLayout.AStar(mapLayout.RoadGraph,start, finalRoadPoint);
+            var finalPath = roadPath.Concat(wildPath)
                 .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
 
             for (var i = 0; i < num; i++)
             {
-                activeAdventurers.Add(CreateAdventurer(start), path);
+                activeAdventurers.Add(CreateAdventurer(start), new List<Vector3>(finalPath));
                 yield return new WaitForSeconds(partyScatter);
             }
             yield return null;
