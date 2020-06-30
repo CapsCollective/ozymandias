@@ -34,9 +34,15 @@ namespace Managers_and_Controllers
 
         private void OnNewTurn()
         {
+            OnOpened();
             if (PlayerPrefs.GetInt("tutorial_video_events", 0) > 0) return;
             PlayerPrefs.SetInt("tutorial_video_events", 1);
             TutorialPlayerController.Instance.PlayClip(1);
+        }
+        
+        public void OnOpened()
+        {
+            JukeboxController.Instance.PlayScrunch();
         }
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)

@@ -30,6 +30,7 @@ public class QuestMapController : MonoBehaviour
     
     public void OnOpened()
     {
+        JukeboxController.Instance.PlayScrunch();
         if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
         PlayerPrefs.SetInt("tutorial_video_quests", 1);
         TutorialPlayerController.Instance.PlayClip(2);
