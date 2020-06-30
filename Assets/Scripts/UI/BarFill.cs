@@ -30,10 +30,10 @@ public class BarFill : MonoBehaviour
 
     IEnumerator Scale()
     {
+        previousWidth = mask.sizeDelta.x;
         if (DelayBars) yield return new WaitForSeconds(1.2f);
         for (float t = 0; t < 0.3f; t += Time.deltaTime)
         {
-            previousWidth = mask.sizeDelta.x; // Don't double trigger a change
             mask.sizeDelta = new Vector2(Mathf.Lerp(previousWidth, targetWidth, t/0.3f), 0);
             if (changeFill) fill.color = gradient.Evaluate(mask.sizeDelta.x/barWidth);
             yield return null;
