@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using DG.Tweening;
 using Managers_and_Controllers;
 using UnityEngine;
@@ -16,7 +17,8 @@ public class PlacementManager : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float tweenTime;
     [SerializeField] private Ease tweenEase;
-    
+    [SerializeField] private GameObject particle;
+
     private List<GameObject> remainingBuildings = new List<GameObject>();
     private Map map;
     private RaycastHit hit;
@@ -73,25 +75,31 @@ public class PlacementManager : MonoBehaviour
     {
         if (Selected == Deselected) return;
         Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-        Physics.Raycast(ray, out hit, 200f,layerMask);
-        
+        Physics.Raycast(ray, out hit, 200f, layerMask);
+
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
+
         int i = Selected;
-        if (map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation))
-        {
-            NewCardTween(i);
-            cards[i].toggle.isOn = false;
-            Selected = Deselected;
-        }
+        if (!map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation)) return;
+        
+        Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<BuildingStats>().primaryStat);
+        
+        NewCardTween(i);
+        cards[i].toggle.isOn = false;
+        Selected = Deselected;
+
+        BarFill.DelayBars = true;
         Manager.UpdateUi();
+        BarFill.DelayBars = false;
     }
     
     private void RightClick()
     {
         if (Selected == Deselected) return;
         rotation++;
+        rotation %= 4;
     }
-
+    
     public void NewCards()
     {
         GetComponent<ToggleGroup>().SetAllTogglesOff();
