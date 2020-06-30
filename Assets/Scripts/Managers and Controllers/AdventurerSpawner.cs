@@ -10,6 +10,9 @@ namespace Managers_and_Controllers
 {
     public class AdventurerSpawner : MonoBehaviour
     {
+        // Instance field
+        public static AdventurerSpawner Instance { get; private set; }
+        
         #pragma warning disable 0649
         [SerializeField] private GameObject adventurerModel;
         [SerializeField] private Map map;
@@ -21,6 +24,10 @@ namespace Managers_and_Controllers
         private List<Vertex> boundaryVerts;
         private readonly Dictionary<GameObject, List<Vector3>> activeAdventurers = 
             new Dictionary<GameObject, List<Vector3>>();
+        
+        private void Awake() {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -80,11 +87,10 @@ namespace Managers_and_Controllers
             activeAdventurers.Add(CreateAdventurer(start), path);
             yield return null;
         }
-
-        [Button("Send on Quest")]
-        private void TestQuest()
+        
+        public void SendAdventurersOnQuest(int number)
         {
-            StartCoroutine(SpawnQuestingAdventurers(5));
+            StartCoroutine(SpawnQuestingAdventurers(number));
         }
 
         private IEnumerator SpawnQuestingAdventurers(int num)
