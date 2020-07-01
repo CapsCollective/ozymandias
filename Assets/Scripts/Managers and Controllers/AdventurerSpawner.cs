@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 using static GameManager;
 using Random = UnityEngine.Random;
@@ -19,6 +18,7 @@ namespace Managers_and_Controllers
         [SerializeField] private float adventurerSpeed = .3f;
         [SerializeField] private float wanderingUpdateFrequency = 3f;
         [SerializeField] private float partyScatter = .5f;
+        [SerializeField] private float fadeDuration = 1f;
         
         private MapLayout mapLayout;
         private List<Vertex> boundaryVerts;
@@ -69,7 +69,7 @@ namespace Managers_and_Controllers
             foreach (var adventurer in adventurersToRemove)
             {
                 activeAdventurers.Remove(adventurer);
-                Destroy(adventurer);
+                StartCoroutine(FadeAdventurer(adventurer, 1f, 0f, true));
             }
             adventurersToRemove.Clear();
         }
@@ -140,10 +140,29 @@ namespace Managers_and_Controllers
 
         private GameObject CreateAdventurer(Vertex vertex)
         {
-            var newAdventurer = Instantiate(adventurerModel, 
+            var newAdventurer = Instantiate(adventurerModel,
                 map.transform.TransformPoint(vertex), Quaternion.identity);
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
+            StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));
             return newAdventurer;
+        }
+
+        private IEnumerator FadeAdventurer(GameObject adventurer, float from, float to, bool destroy = false)
+        {
+            var adventurerManager = adventurer.GetComponent<EnvironmentalAdventurerManager>();
+            var current = from;
+            adventurerManager.SetAlphaTo(from);
+            var time = 0f;
+            while (time < 1f)
+            {
+                current = Mathf.Lerp(current, to, time);
+                adventurerManager.SetAlphaTo(current);
+                time += Time.deltaTime / fadeDuration;
+                yield return null;
+            }
+            adventurerManager.SetAlphaTo(to);
+            if (destroy)
+                Destroy(adventurer);
         }
     }
 }
