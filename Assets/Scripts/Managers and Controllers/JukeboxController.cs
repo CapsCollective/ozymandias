@@ -63,9 +63,7 @@ namespace Managers_and_Controllers
         
         public void PlayScrunch()
         {
-            var rand = Random.Range(0.3f, 2.0f);
             PlaySfx(scrunchClip, .05f, Random.Range(0.3f, 2.0f));
-            print(rand);
         }
 
         private void PlaySfx(AudioClip clip, float volume, float pitch = 1.0f)
