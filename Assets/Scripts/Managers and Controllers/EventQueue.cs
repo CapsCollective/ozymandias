@@ -86,9 +86,7 @@ public class EventQueue : MonoBehaviour
         if (Manager.turnCounter >= 5)
         {
             // Fill up to 3 quests if unfilled
-            int test = Random.Range(0, 4);
-            Debug.Log(test);
-            if(test > QuestMapController.QuestMap.ActiveQuests) eventPool.Add(PickRandom(EventType.Radiant));
+            if(Random.Range(0, 4) > QuestMapController.QuestMap.ActiveQuests) eventPool.Add(PickRandom(EventType.Radiant));
             
             // 30% flat chance to spawn chaos
             if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos));
