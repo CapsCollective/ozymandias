@@ -56,6 +56,7 @@ public class Quest : ScriptableObject
         SceneManager.activeSceneChanged -= HandleSceneChange;
     }
 
+#if UNITY_EDITOR
     [Button("Add Complete Event")]
     public void AddCompleteOutcome()
     {
@@ -67,4 +68,5 @@ public class Quest : ScriptableObject
         AssetDatabase.AddObjectToAsset(outcome, completeEvent);
         AssetDatabase.SaveAssets();
     }
+#endif
 }
