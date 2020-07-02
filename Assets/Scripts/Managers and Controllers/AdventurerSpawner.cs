@@ -38,8 +38,7 @@ namespace Managers_and_Controllers
 
         private void CheckWandering()
         {
-            if (activeAdventurers.Count < Manager.buildings.Count - 1 && 
-                activeAdventurers.Count < Manager.AvailableAdventurers)
+            if (activeAdventurers.Count < Manager.buildings.Count - 1)
             {
                 StartCoroutine(SpawnWanderingAdventurer());
             }
