@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
     //public int Training => training = 0; // TODO: work out the specifics of this
 
     [ReadOnly] [SerializeField] private int effectiveness;
-    public int Effectiveness => effectiveness = Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3 + modifiers[Metric.Effectiveness], 0, 100);
+    public int Effectiveness => effectiveness = Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3  + LowThreatMod + modifiers[Metric.Effectiveness], 0, 100);
     
     [HorizontalLine]
     
@@ -140,10 +140,10 @@ public class GameManager : MonoBehaviour
 
     public int OvercrowdingMod => Mathf.Min(0, (Accommodation - AvailableAdventurers) * 5); //lose 5% satisfaction per adventurer over capacity
     
-    public int LowThreatMod => Mathf.Min(0, (ThreatLevel - 20) * 2); //lose up to 40% satisfaction from low threat
+    public int LowThreatMod => Mathf.Min(0, (ThreatLevel - 20) * 2); //lose up to 40% effectiveness from low threat
     
     [ReadOnly] [SerializeField] private int satisfaction;
-    public int Satisfaction => satisfaction = Mathf.Clamp(1 + Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + LowThreatMod + modifiers[Metric.Satisfaction], 0, 100);
+    public int Satisfaction => satisfaction = Mathf.Clamp(1 + Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 0, 100);
 
     [HorizontalLine]
     

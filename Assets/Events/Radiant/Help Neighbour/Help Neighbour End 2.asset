@@ -24,23 +24,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Help Neighbour End 1
+  m_Name: Help Neighbour End 2
   m_EditorClassIdentifier: 
-  headline: Mimics No More!
-  article: Our adventurers return from a distress call to a nearby town. Unfortunetly,
-    the town was already completely taken over by mimics. "We got there and everything
-    was fine until we realised everyone was speaking in unison." At least the adventurers
-    burnt down the town before any of them could escape, although the trip home was
-    full of shifty eyes.
+  headline: '"Please, Take This Gold!"'
+  article: Our adventurers return from the nearby town with pouches full of gold.
+    Somehow, a magical portal had opened and was flooding the town with gold pieces,
+    which sounded nice at first until the weight started causing the town to sink
+    into the ground. Luckily our adventurers closed the portal and helped relieve
+    the town of it's gold problem.
   image: {fileID: 21300000, guid: 4f09b82c7c5485042b9ab938fe367276, type: 3}
   type: 5
   headliner: 0
   outcomes:
-  - {fileID: 6694704150361903224}
+  - {fileID: 3691223836768759472}
   - {fileID: -6942792038010589725}
   choices: []
   oneTime: 0
---- !u!114 &6694704150361903224
+--- !u!114 &3691223836768759472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,6 +53,6 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 5
-  amount: -5
-  turns: 3
+  statToChange: 3
+  amount: 150
+  turns: 1
