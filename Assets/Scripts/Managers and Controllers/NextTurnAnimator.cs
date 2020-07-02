@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Managers_and_Controllers;
 using UnityEngine;
+using DG.Tweening;
 using static GameManager;
 
 public class NextTurnAnimator : MonoBehaviour
@@ -15,6 +16,8 @@ public class NextTurnAnimator : MonoBehaviour
     private float x = 0f;
 
     private Color ambCol;
+    [SerializeField] private Gradient ambientGradient;   
+    [SerializeField] private Gradient sunColorGradient;
 
     void Awake()
     {
@@ -25,8 +28,19 @@ public class NextTurnAnimator : MonoBehaviour
 
     public void OnNextTurn()
     {
-        ambCol = RenderSettings.ambientLight;
-        StartCoroutine(AnimateSun());
+        //ambCol = RenderSettings.ambientLight;
+        //StartCoroutine(AnimateSun());
+        float timer = 0;
+        float xRotation = sun.transform.eulerAngles.x;
+        sun.transform.DORotate(sun.transform.eulerAngles + new Vector3(360,0,0), sunSetTime, RotateMode.FastBeyond360).OnUpdate(() =>
+        {
+            timer += Time.deltaTime / sunSetTime;
+            sun.color = sunColorGradient.Evaluate(timer);
+            RenderSettings.ambientLight = ambientGradient.Evaluate(timer);
+        }).OnComplete(() =>
+        {
+            Manager.NewTurn();
+        });
     }
 
     public IEnumerator AnimateSun()
