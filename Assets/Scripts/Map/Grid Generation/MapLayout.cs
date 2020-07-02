@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "New Map Layout", menuName = "Map Layout", order = 50)]
 public class MapLayout : ScriptableObject
@@ -20,6 +21,11 @@ public class MapLayout : ScriptableObject
     public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
     public Dictionary<BuildingStructure, List<Cell>> BuildingMap = new Dictionary<BuildingStructure, List<Cell>>();
     public Graph<Vertex> RoadGraph = new Graph<Vertex>();
+
+    public void ClearGraph()
+    {
+        RoadGraph = new Graph<Vertex>();
+    }
 
     // BUILDING PLACEMENT
     public void Occupy(BuildingStructure building, Cell[] cells)

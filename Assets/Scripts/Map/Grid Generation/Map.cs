@@ -31,6 +31,7 @@ public class Map : MonoBehaviour
     {
         cam = Camera.main;
         Generate();
+        mapLayout.ClearGraph();
     }
 
     private void AddRoad(Mesh road)
