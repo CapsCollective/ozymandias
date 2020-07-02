@@ -6,7 +6,8 @@ using TMPro;
 public class BuildingHelper : MonoBehaviour
 {
     public TextMeshProUGUI title, description;
-    private void Start()
+
+    public void UpdateTooltip()
     {
         BuildingStats buildingStats = transform.parent.GetComponent<BuildingSelect>().buildingPrefab.GetComponent<BuildingStats>();
         title.text = "~ " + buildingStats.name + " ~";

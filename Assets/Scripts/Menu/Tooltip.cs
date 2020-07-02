@@ -25,6 +25,7 @@ public class Tooltip : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     //public UIType uiType;
     private GameObject tooltipInstance;
     private CanvasGroup tooltipCanvasGroup;
+    private BuildingHelper buildingHelper;
     private bool mouseOver;
     private float mouseTimer = 0f;
 
@@ -34,6 +35,7 @@ public class Tooltip : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
         tooltipInstance = Instantiate(tooltipPrefab, transform, false);
         tooltipInstance.transform.localPosition = offset;
         tooltipCanvasGroup = tooltipInstance.GetComponent<CanvasGroup>();
+        buildingHelper = tooltipInstance.GetComponent<BuildingHelper>();
         tooltipCanvasGroup.alpha = 0;
         tooltipCanvasGroup.interactable = false;
     }
@@ -50,6 +52,7 @@ public class Tooltip : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         mouseOver = true;
+        buildingHelper?.UpdateTooltip();
     }
 
     public void OnPointerExit(PointerEventData eventData)
