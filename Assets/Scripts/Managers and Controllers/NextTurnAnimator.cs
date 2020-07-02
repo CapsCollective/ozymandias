@@ -30,6 +30,7 @@ public class NextTurnAnimator : MonoBehaviour
     {
         //ambCol = RenderSettings.ambientLight;
         //StartCoroutine(AnimateSun());
+        glowflyPS.Play();
         float timer = 0;
         float xRotation = sun.transform.eulerAngles.x;
         sun.transform.DORotate(sun.transform.eulerAngles + new Vector3(360,0,0), sunSetTime, RotateMode.FastBeyond360).OnUpdate(() =>
