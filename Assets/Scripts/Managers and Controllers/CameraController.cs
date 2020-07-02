@@ -129,6 +129,7 @@ namespace Managers_and_Controllers
 
             var endPos = centerButton.transform.position;
             dummyCursor.transform.position = currentPos;
+            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
 
             while (Vector2.Distance(currentPos, endPos) > 10f)
@@ -142,6 +143,7 @@ namespace Managers_and_Controllers
             Center();
             dummyCursor.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             crRunning = false;
         }
 
