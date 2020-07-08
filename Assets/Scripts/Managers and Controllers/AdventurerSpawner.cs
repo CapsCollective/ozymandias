@@ -152,7 +152,7 @@ namespace Managers_and_Controllers
             var current = from;
             adventurerManager.SetAlphaTo(from);
             var time = 0f;
-            while (time < 1f)
+            while (time < fadeDuration)
             {
                 current = Mathf.Lerp(current, to, time);
                 adventurerManager.SetAlphaTo(current);

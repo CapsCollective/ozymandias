@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 namespace Managers_and_Controllers
@@ -30,15 +31,19 @@ namespace Managers_and_Controllers
         [SerializeField] private AudioClip stampClip;
         [SerializeField] private AudioClip scrunchClip;
         [SerializeField] private AudioClip[] tracks;
+        [SerializeField] AudioMixer mixer;
 
         private List<AudioClip> playlist = new List<AudioClip>();
         private AudioSource landAmbiencePlayer;
         private AudioSource currentAmbiencePlayer;
+        private Camera currentCamera;
+        private float timeWaited;
 
         public LayerMask waterDetectLM;
 
         private void Awake() {
             Instance = this;
+            currentCamera = Camera.main;
         }
 
         public void PlayClick()
@@ -86,11 +91,15 @@ namespace Managers_and_Controllers
 
         private void Update()
         {
-            if (sfxOnly) return;
+            timeWaited += Time.deltaTime;
+            if (!(timeWaited >= 0.1f) || sfxOnly) return;
             CheckAmbiencePlayer();
+            UpdateTownAmbienceVolume();
             var ambiancePosition = gameCamera.transform.position;
             ambiancePosition.y = 0f;
             currentAmbiencePlayer.transform.position = ambiancePosition;
+            townAmbiencePlayer.transform.position = ambiancePosition;
+            timeWaited = 0;
         }
 
         private void StartNightAmbience()
@@ -179,7 +188,22 @@ namespace Managers_and_Controllers
             yield return new WaitForSeconds(clipLength);
             callback();
         }
-        
+
+        private void UpdateTownAmbienceVolume()
+        {
+            var closestDistance = -1f;
+            foreach (var building in GameManager.Manager.buildings)
+            {
+                var distance = Vector3.Distance(currentCamera.transform.position, 
+                    building.gameObject.transform.position);
+                if (distance < closestDistance || closestDistance == -1)
+                {
+                    closestDistance = distance;
+                }
+            }
+            mixer.SetFloat("TownFaderVolume", -closestDistance + 5f);
+        }
+
         [Button("Skip Section")]
         [UsedImplicitly]
         private void SkipSection()
