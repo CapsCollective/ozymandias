@@ -4,9 +4,9 @@ using UnityEngine;
 using TMPro;
 using static GameManager;
 
-public class ThreatHelper : MonoBehaviour
+public class ThreatHelper : MonoBehaviour, TooltipHelper
 {
-    void Start()
+    public void UpdateTooltip()
     {
         transform.Find("Text").GetComponent<TextMeshProUGUI>().text =
             "The threat bar represents the dangers lurking outside your town, which will end your game if it reaches the top. " +

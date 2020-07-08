@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class BuildingHelper : MonoBehaviour
+public class BuildingHelper : MonoBehaviour, TooltipHelper
 {
     public TextMeshProUGUI title, description;
 
