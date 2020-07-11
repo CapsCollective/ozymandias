@@ -5,9 +5,15 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
+using System;
+using System.Runtime.InteropServices;
 
 public class MenuManager : MonoBehaviour
 {
+    private float MaxMusic => Mathf.Pow(10.0f, -9.83f / 20.0f); 
+    private float MaxSFX => Mathf.Pow(10.0f, 9.76f / 20.0f);
+    private float MaxAmbience => Mathf.Pow(10.0f, -10.47f / 20.0f);
+
     //We need each object so that we can update their appearance to reflect player prefs
     //loading
     public GameObject loadingScreen;
@@ -25,7 +31,8 @@ public class MenuManager : MonoBehaviour
 
     //fullscreen
     public Toggle fullscreenToggle;
-    
+    public Toggle shadowToggle;
+
     private void Start()
     {
         //generate a list of available resolutions
@@ -45,6 +52,10 @@ public class MenuManager : MonoBehaviour
         SetFullScreen(isFullscreen);
         fullscreenToggle.isOn = isFullscreen;
 
+        bool getShadowToggle = Convert.ToBoolean(PlayerPrefs.GetInt("Shadows", 1));
+        ToggleShadows(getShadowToggle);
+        shadowToggle.isOn = getShadowToggle;
+
         //resolution
         int res = PlayerPrefs.GetInt("Resolution", resolutions.Length - 1); //Default to max res
         SetResolution(res);
@@ -52,15 +63,18 @@ public class MenuManager : MonoBehaviour
 
         resolutionDropdown.RefreshShownValue();
         //sound
-        float val = PlayerPrefs.GetFloat("Music", musicSlider.maxValue);
+        musicSlider.maxValue = MaxMusic;
+        float val = PlayerPrefs.GetFloat("Music", MaxMusic);
         SetMusicVolume(val);
         musicSlider.value = val;
 
-        val = PlayerPrefs.GetFloat("Ambience", ambienceSlider.maxValue);
+        ambienceSlider.maxValue = MaxAmbience;
+        val = PlayerPrefs.GetFloat("Ambience", MaxAmbience);
         SetAmbienceVolume(val);
         ambienceSlider.value = val;
 
-        val = PlayerPrefs.GetFloat("SFX", sfxSlider.maxValue);
+        sfxSlider.maxValue = MaxSFX;
+        val = PlayerPrefs.GetFloat("SFX", MaxSFX);
         SetSFXVolume(val);
         sfxSlider.value = val;
         //////////////////////////////////////////////
@@ -108,20 +122,27 @@ public class MenuManager : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat("musicVolume", volume);
+        audioMixer.SetFloat("musicVolume", 20 * Mathf.Log10(volume));
         PlayerPrefs.SetFloat("Music", volume);
     }
 
     public void SetAmbienceVolume(float volume)
     {
-        audioMixer.SetFloat("ambienceVolume", volume);
+        audioMixer.SetFloat("ambienceVolume", 20 * Mathf.Log10(volume));
         PlayerPrefs.SetFloat("Ambience", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-        audioMixer.SetFloat("SFXVolume", volume);
+        audioMixer.SetFloat("SFXVolume", 20 * Mathf.Log10(volume));
         PlayerPrefs.SetFloat("SFX", volume);
+    }
+
+    public void ToggleShadows(bool toggle)
+    {
+        int distance = toggle ? 50 : 0;
+        QualitySettings.shadowDistance = distance;
+        PlayerPrefs.SetInt("Shadows", Convert.ToInt32(toggle));
     }
 
 }
