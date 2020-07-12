@@ -6,14 +6,9 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
 using System;
-using System.Runtime.InteropServices;
 
 public class MenuManager : MonoBehaviour
 {
-    private float MaxMusic => Mathf.Pow(10.0f, -9.83f / 20.0f); 
-    private float MaxSFX => Mathf.Pow(10.0f, 9.76f / 20.0f);
-    private float MaxAmbience => Mathf.Pow(10.0f, -10.47f / 20.0f);
-
     //We need each object so that we can update their appearance to reflect player prefs
     //loading
     public GameObject loadingScreen;
@@ -63,18 +58,18 @@ public class MenuManager : MonoBehaviour
 
         resolutionDropdown.RefreshShownValue();
         //sound
-        musicSlider.maxValue = MaxMusic;
-        float val = PlayerPrefs.GetFloat("Music", MaxMusic);
+        musicSlider.maxValue = 1f;
+        var val = PlayerPrefs.GetFloat("Music", 1f);
         SetMusicVolume(val);
         musicSlider.value = val;
 
-        ambienceSlider.maxValue = MaxAmbience;
-        val = PlayerPrefs.GetFloat("Ambience", MaxAmbience);
+        ambienceSlider.maxValue = 1f;
+        val = PlayerPrefs.GetFloat("Ambience", 1f);
         SetAmbienceVolume(val);
         ambienceSlider.value = val;
 
-        sfxSlider.maxValue = MaxSFX;
-        val = PlayerPrefs.GetFloat("SFX", MaxSFX);
+        sfxSlider.maxValue = 1f;
+        val = PlayerPrefs.GetFloat("SFX", 1f);
         SetSFXVolume(val);
         sfxSlider.value = val;
         //////////////////////////////////////////////
@@ -122,19 +117,19 @@ public class MenuManager : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat("musicVolume", 20 * Mathf.Log10(volume));
+        audioMixer.SetFloat("musicSettingVolume", 20 * Mathf.Log10(volume));
         PlayerPrefs.SetFloat("Music", volume);
     }
 
     public void SetAmbienceVolume(float volume)
     {
-        audioMixer.SetFloat("ambienceVolume", 20 * Mathf.Log10(volume));
+        audioMixer.SetFloat("ambianceSettingVolume", 20 * Mathf.Log10(volume));
         PlayerPrefs.SetFloat("Ambience", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-        audioMixer.SetFloat("SFXVolume", 20 * Mathf.Log10(volume));
+        audioMixer.SetFloat("sfxVolumeSetting", 20 * Mathf.Log10(volume));
         PlayerPrefs.SetFloat("SFX", volume);
     }
 

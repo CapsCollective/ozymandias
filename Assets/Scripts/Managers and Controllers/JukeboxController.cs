@@ -201,7 +201,7 @@ namespace Managers_and_Controllers
                     closestDistance = distance;
                 }
             }
-            mixer.SetFloat("TownFaderVolume", -closestDistance + 5f);
+            mixer.SetFloat("townVolume", -closestDistance + 5f);
         }
 
         [Button("Skip Section")]
