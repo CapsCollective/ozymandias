@@ -31,6 +31,8 @@ namespace Managers_and_Controllers
         
         // Serialized fields
         [SerializeField] private bool sfxOnly;
+        [SerializeField] private float ambienceSpacing = 20f;
+        [SerializeField] private float trackCutoff = 2f;
         
         [SerializeField] private GameObject ambiencePlayers;
         
@@ -53,6 +55,7 @@ namespace Managers_and_Controllers
         private List<AudioClip> playlist = new List<AudioClip>();
         private float closestBuildingDistance;
         private bool isAboveLand = true;
+        private readonly List<IEnumerator> ambienceCoroutines = new List<IEnumerator>();
         private Camera currentCamera;
         private float timeWaited;
 
@@ -93,6 +96,15 @@ namespace Managers_and_Controllers
             if (isAboveLand == Physics.Raycast(currentCamera.transform.position,
                 Vector3.down, out _, 30f, waterDetectLm)) return;
             isAboveLand = !isAboveLand;
+            foreach (var routine in ambienceCoroutines)
+                StopCoroutine(routine);
+            ambienceCoroutines.Clear();
+            
+            ambienceCoroutines.Add(FadeTo(getNatureAmbience(isAboveLand), FullVolume, 3f));
+            ambienceCoroutines.Add(FadeTo(getNatureAmbience(!isAboveLand), 
+                isAboveLand ? LowestVolume : 0.01f, 5f));
+            foreach (var routine in ambienceCoroutines)
+                StartCoroutine(routine);
         }
 
         private void StartNightAmbience()
