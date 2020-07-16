@@ -93,13 +93,17 @@ namespace Managers_and_Controllers
         
         private void CheckAmbiencePlayer()
         {
+            // Check if camera is above land or water
             if (isAboveLand == Physics.Raycast(currentCamera.transform.position,
                 Vector3.down, out _, 30f, waterDetectLm)) return;
             isAboveLand = !isAboveLand;
+            
+            // Stop all running ambience-related coroutines
             foreach (var routine in ambienceCoroutines)
                 StopCoroutine(routine);
             ambienceCoroutines.Clear();
             
+            // Fade between nature and water mixer groups and save the running coroutines
             ambienceCoroutines.Add(FadeTo(getNatureAmbience(isAboveLand), FullVolume, 3f));
             ambienceCoroutines.Add(FadeTo(getNatureAmbience(!isAboveLand), 
                 isAboveLand ? LowestVolume : 0.01f, 5f));
@@ -122,18 +126,14 @@ namespace Managers_and_Controllers
             StartCoroutine(FadeTo(DayAmbienceVolume, FullVolume, 3f));
         }
 
-        private AudioClip GetUnplayedTrack()
+        private void OnAmbianceEnded()
         {
+            // If the playlist is empty, reshuffle it
             if (playlist.Count <= 0)
                 playlist = new List<AudioClip>(tracks);
             playlist.Shuffle();
-            return playlist.PopRandom();
-        }
-
-        private void OnAmbianceEnded()
-        {
-            var track = GetUnplayedTrack();
-            musicPlayer.clip = track;
+            // Set the new clip to a random selection and play it
+            musicPlayer.clip = playlist.PopRandom();
             musicPlayer.Play();
             // Fade from ambience to music mixer groups
             StartCoroutine(FadeTo(AmbienceVolume, 0.2f, 5f));
@@ -152,6 +152,7 @@ namespace Managers_and_Controllers
 
         private void UpdateTownAmbienceVolume()
         {
+            // Lerp toward the desired volume based on the distance to closest building in the world
             mixer.GetFloat(TownVolume, out var currentVolume);
             mixer.SetFloat(TownVolume, 
                 Mathf.Lerp(currentVolume, -closestBuildingDistance + 5f, Time.deltaTime));
@@ -159,6 +160,7 @@ namespace Managers_and_Controllers
         
         private float GetClosestBuildingDistance()
         {
+            // Find distance of closest building to the camera
             var closestDistance = -1f;
             foreach (var building in GameManager.Manager.buildings)
             {
@@ -174,6 +176,7 @@ namespace Managers_and_Controllers
         
         private void PlaySfx(AudioClip clip, float volume, float pitch = 1.0f)
         {
+            // Play one-shot clip that can be layered over itself
             sfxPlayer.pitch = pitch;
             sfxPlayer.PlayOneShot(clip, volume);
         }
@@ -192,12 +195,26 @@ namespace Managers_and_Controllers
             }
         }
 
-        private static IEnumerator Wait(float clipLength, Action callback)
+        private static IEnumerator DelayCall(float duration, Action callback)
         {
-            yield return new WaitForSeconds(clipLength);
+            // Defer callback action by duration
+            yield return new WaitForSeconds(duration);
             callback();
         }
-
+        
+        [Button("Skip Section")]
+        [UsedImplicitly]
+        private void SkipSection()
+        {
+            // Skip between music and ambience sections
+            StopAllCoroutines();
+            if (musicPlayer.isPlaying)
+                OnTrackEnded();
+            else
+                OnAmbianceEnded();
+        }
+        
+        // Public SFX play functions
         public void PlayClick()
         {
             PlaySfx(clickClip, .8f, Random.Range(0.8f, 1.2f));
@@ -226,17 +243,6 @@ namespace Managers_and_Controllers
         public void PlayMorning()
         {
             PlaySfx(morningClip, .1f);
-        }
-
-        [Button("Skip Section")]
-        [UsedImplicitly]
-        private void SkipSection()
-        {
-            StopAllCoroutines();
-            if (musicPlayer.volume >= 1f)
-                OnTrackEnded();
-            else
-                OnAmbianceEnded();
         }
     }
 }
