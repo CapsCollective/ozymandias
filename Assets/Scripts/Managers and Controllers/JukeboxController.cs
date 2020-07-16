@@ -93,22 +93,21 @@ namespace Managers_and_Controllers
             if (isAboveLand == Physics.Raycast(currentCamera.transform.position,
                 Vector3.down, out _, 30f, waterDetectLm)) return;
             isAboveLand = !isAboveLand;
-            // Fade between mixer groups
-            StartCoroutine(CrossFade(getNatureAmbience(!isAboveLand), LowestVolume,
-                getNatureAmbience(isAboveLand), FullVolume, 5f));
         }
 
         private void StartNightAmbience()
         {
-            StartCoroutine(CrossFade(NightAmbienceVolume, FullVolume,
-                DayAmbienceVolume, LowestVolume, .5f));
-            StartCoroutine(Wait(2f, EndNightAmbience));
+            // Fade from day to night ambience mixer groups
+            StartCoroutine(FadeTo(NightAmbienceVolume, FullVolume, .5f));
+            StartCoroutine(FadeTo(DayAmbienceVolume, LowestVolume, 1f));
+            StartCoroutine(DelayCall(2f, EndNightAmbience));
         }
         
         private void EndNightAmbience()
         {
-            StartCoroutine(CrossFade(DayAmbienceVolume, FullVolume,
-                NightAmbienceVolume, LowestVolume, .5f));
+            // Fade from night to day ambience mixer groups
+            StartCoroutine(FadeTo(NightAmbienceVolume, LowestVolume, .5f));
+            StartCoroutine(FadeTo(DayAmbienceVolume, FullVolume, 3f));
         }
 
         private AudioClip GetUnplayedTrack()
@@ -124,17 +123,19 @@ namespace Managers_and_Controllers
             var track = GetUnplayedTrack();
             musicPlayer.clip = track;
             musicPlayer.Play();
-            StartCoroutine(CrossFade(AmbienceVolume, 0.2f,
-                MusicVolume, FullVolume, 5f));
-            StartCoroutine(Wait(track.length - 5f, OnTrackEnded));
+            // Fade from ambience to music mixer groups
+            StartCoroutine(FadeTo(AmbienceVolume, 0.2f, 5f));
+            StartCoroutine(FadeTo(MusicVolume, FullVolume, 5f));
+            StartCoroutine(DelayCall(musicPlayer.clip.length - trackCutoff, OnTrackEnded));
         }
         
         private void OnTrackEnded()
         {
-            StartCoroutine(CrossFade(MusicVolume, LowestVolume,
-                AmbienceVolume, FullVolume, 5f));
-            StartCoroutine(Wait(5f, () => {musicPlayer.Stop();}));
-            StartCoroutine(Wait(20f, OnAmbianceEnded));
+            // Fade from music to ambience mixer groups and stop music
+            StartCoroutine(FadeTo(MusicVolume, LowestVolume, trackCutoff));
+            StartCoroutine(FadeTo(AmbienceVolume, FullVolume, 5f));
+            StartCoroutine(DelayCall(trackCutoff, () => {musicPlayer.Stop();}));
+            StartCoroutine(DelayCall(ambienceSpacing, OnAmbianceEnded));
         }
 
         private void UpdateTownAmbienceVolume()
@@ -165,19 +166,16 @@ namespace Managers_and_Controllers
             sfxPlayer.PlayOneShot(clip, volume);
         }
         
-        private IEnumerator CrossFade(string mixerName1, float targetVolume1, string mixerName2, float targetVolume2, 
-            float fadeTime)
+        private IEnumerator FadeTo(string mixerName, float targetVolume, float fadeTime)
         {
+            // Lerp to target volume for mixer group
             var currentTime = 0.0f;
-            targetVolume1 = 20 * Mathf.Log10(targetVolume1);
-            targetVolume2 = 20 * Mathf.Log10(targetVolume2);
+            targetVolume = 20 * Mathf.Log10(targetVolume);
             while (currentTime <= fadeTime)
             {
-                mixer.GetFloat(mixerName1, out var currentVolume1);
-                mixer.GetFloat(mixerName2, out var currentVolume2);
                 currentTime += Time.deltaTime;
-                mixer.SetFloat(mixerName1, Mathf.Lerp(currentVolume1, targetVolume1, currentTime / fadeTime));
-                mixer.SetFloat(mixerName2, Mathf.Lerp(currentVolume2, targetVolume2, currentTime / fadeTime));
+                mixer.GetFloat(mixerName, out var currentVolume1);
+                mixer.SetFloat(mixerName, Mathf.Lerp(currentVolume1, targetVolume, currentTime/fadeTime));
                 yield return null;
             }
         }
