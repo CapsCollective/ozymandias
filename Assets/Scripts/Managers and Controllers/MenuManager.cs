@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
 using System;
+using Managers_and_Controllers;
 
 public class MenuManager : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class MenuManager : MonoBehaviour
     //fullscreen
     public Toggle fullscreenToggle;
     public Toggle shadowToggle;
+    
+    
+    public bool isMainMenuScene;
+    public AudioSource MenuMusic;
 
     private void Start()
     {
@@ -73,11 +78,20 @@ public class MenuManager : MonoBehaviour
         SetSFXVolume(val);
         sfxSlider.value = val;
         //////////////////////////////////////////////
+
+        if (!isMainMenuScene) return;
+        // Fade in music
+        StartCoroutine(JukeboxController.Instance.FadeTo(
+            JukeboxController.MusicVolume, JukeboxController.FullVolume, 3f));
+        StartCoroutine(JukeboxController.DelayCall(1f, ()=>MenuMusic.Play()));
     }
 
     public void NewGame()
     {
         StartCoroutine(LoadAsyncOperation());
+        StartCoroutine(JukeboxController.Instance.FadeTo(
+            JukeboxController.MusicVolume, JukeboxController.LowestVolume, 3f));
+        StartCoroutine(JukeboxController.DelayCall(3f, ()=>MenuMusic.Stop()));
     }
 
     IEnumerator LoadAsyncOperation()

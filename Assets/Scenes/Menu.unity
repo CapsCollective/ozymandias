@@ -42491,6 +42491,8 @@ MonoBehaviour:
   sfxSlider: {fileID: 1295507725}
   fullscreenToggle: {fileID: 1366814453}
   shadowToggle: {fileID: 1553982535}
+  isMainMenuScene: 1
+  MenuMusic: {fileID: 2069027435}
 --- !u!114 &1703437334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51949,7 +51951,7 @@ GameObject:
   - component: {fileID: 2069027436}
   - component: {fileID: 2069027435}
   m_Layer: 0
-  m_Name: OST
+  m_Name: Menu Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51967,7 +51969,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -646204135393016676, guid: 6a36d648ffba74fbdbe9ec7f4e8d843a,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 5d80d569a75e14e969b83af61494b1a0, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
