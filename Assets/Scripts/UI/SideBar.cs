@@ -32,15 +32,15 @@ public class SideBar : UiUpdater
     {
         spending.text = "Spending: x" + (Manager.Spending / 100f).ToString("0.00");
         
-        int mod = Manager.modifiers[Metric.Spending];
+        int mod = Manager.modifiersTotal[Metric.Spending];
         spendingModifier.gameObject.SetActive(mod != 0);
         spendingModifier.text = (mod > 0 ? "<color=green>+" : "<color=red>") + mod + "%</color> from event modifiers"; 
         
-        mod = Manager.modifiers[Metric.Effectiveness];
+        mod = Manager.modifiersTotal[Metric.Effectiveness];
         effectivenessModifier.gameObject.SetActive(mod != 0);
         effectivenessModifier.text = (mod > 0 ? "<color=green>+" : "<color=red>") + mod + "%</color> from event modifiers";
         
-        mod = Manager.modifiers[Metric.Satisfaction];
+        mod = Manager.modifiersTotal[Metric.Satisfaction];
         satisfactionModifier.gameObject.SetActive(mod != 0);
         satisfactionModifier.text = (mod > 0 ? "<color=green>+" : "<color=red>") + mod + "%</color> from event modifiers";
 

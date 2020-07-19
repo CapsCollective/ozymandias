@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 public enum Metric
 {
-    Accomodation,
+    Accommodation,
     Satisfaction,
     Effectiveness,
     Spending,
@@ -92,7 +92,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Dictionary<Metric, int> modifiers = new Dictionary<Metric, int>();
+    public class Modifier
+    {
+        public int Amount;
+        public int TurnsLeft;
+        public string Reason;
+    }
+    
+    public Dictionary<Metric, List<Modifier>> modifiers = new Dictionary<Metric, List<Modifier>>();
+    public Dictionary<Metric, int> modifiersTotal = new Dictionary<Metric, int>();
     
     [ReadOnly] public List<Adventurer> adventurers = new List<Adventurer>();
 
@@ -125,7 +133,7 @@ public class GameManager : MonoBehaviour
     //public int Training => training = 0; // TODO: work out the specifics of this
 
     [ReadOnly] [SerializeField] private int effectiveness;
-    public int Effectiveness => effectiveness = Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3  + LowThreatMod + modifiers[Metric.Effectiveness], 0, 100);
+    public int Effectiveness => effectiveness = Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3  + LowThreatMod + modifiersTotal[Metric.Effectiveness], 0, 100);
     
     [HorizontalLine]
     
@@ -143,12 +151,12 @@ public class GameManager : MonoBehaviour
     public int LowThreatMod => Mathf.Min(0, (ThreatLevel - 20) * 2); //lose up to 40% effectiveness from low threat
     
     [ReadOnly] [SerializeField] private int satisfaction;
-    public int Satisfaction => satisfaction = Mathf.Clamp(1 + Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiers[Metric.Satisfaction], 0, 100);
+    public int Satisfaction => satisfaction = Mathf.Clamp(1 + Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + modifiersTotal[Metric.Satisfaction], 0, 100);
 
     [HorizontalLine]
     
     [ReadOnly] [SerializeField] private int spending;
-    public int Spending => spending = 100 + buildings.Where(x => x.operational).Sum(x => x.spending) + modifiers[Metric.Spending];
+    public int Spending => spending = 100 + buildings.Where(x => x.operational).Sum(x => x.spending) + modifiersTotal[Metric.Spending];
     
     [ReadOnly] [SerializeField] private int chaos;
     public int Chaos => chaos = AvailableAdventurers * (100 - Satisfaction);
@@ -162,10 +170,10 @@ public class GameManager : MonoBehaviour
     [ReadOnly] [SerializeField] private int defense;
     public int Defense => defense = 
         AvailableAdventurers * Effectiveness / 30 + 
-        buildings.Where(x => x.operational).Sum(x => x.defense) + modifiers[Metric.Defense];
+        buildings.Where(x => x.operational).Sum(x => x.defense) + modifiersTotal[Metric.Defense];
     
     [ReadOnly] [SerializeField] private int threat;
-    public int Threat => threat = 12 + (3 * turnCounter) + modifiers[Metric.Threat];
+    public int Threat => threat = 12 + (3 * turnCounter) + modifiersTotal[Metric.Threat];
 
     public int ChangePerTurn => Threat - Defense; // How much the top bar shifts each turn
     
@@ -240,11 +248,17 @@ public class GameManager : MonoBehaviour
         adventurers = new List<Adventurer>();
         buildings = new List<BuildingStats>();
         // Set all mods to 0 at start
-        modifiers.Add(Metric.Defense, 0);
-        modifiers.Add(Metric.Threat, 0);
-        modifiers.Add(Metric.Spending, 0);
-        modifiers.Add(Metric.Effectiveness, 0);
-        modifiers.Add(Metric.Satisfaction, 0);
+        modifiersTotal.Add(Metric.Defense, 0);
+        modifiersTotal.Add(Metric.Threat, 0);
+        modifiersTotal.Add(Metric.Spending, 0);
+        modifiersTotal.Add(Metric.Effectiveness, 0);
+        modifiersTotal.Add(Metric.Satisfaction, 0);
+        
+        modifiers.Add(Metric.Defense, new List<Modifier>());
+        modifiers.Add(Metric.Threat, new List<Modifier>());
+        modifiers.Add(Metric.Spending, new List<Modifier>());
+        modifiers.Add(Metric.Effectiveness, new List<Modifier>());
+        modifiers.Add(Metric.Satisfaction, new List<Modifier>());
 
         // Start game with 5 Adventurers
         for (int i = 0; i < 5; i++) AddAdventurer();
@@ -282,14 +296,22 @@ public class GameManager : MonoBehaviour
         wealth += wealthPerTurn;
         turnCounter++;
 
-        modifiers[Metric.Defense] = 0;
-        modifiers[Metric.Threat] = 0;
-        modifiers[Metric.Spending] = 0;
-        modifiers[Metric.Effectiveness] = 0;
-        modifiers[Metric.Satisfaction] = 0;
-        
         if (ThreatLevel >= 100)
             foreach (var e in supportWithdrawnEvents) eventQueue.AddEvent(e, true);
+        
+        foreach (var stat in modifiers)
+        {
+            for (int i = stat.Value.Count-1; i >= 0; i--)
+            {
+                Debug.Log($"{modifiers[stat.Key][i]}");
+                if (modifiers[stat.Key][i].TurnsLeft != -1 && --modifiers[stat.Key][i].TurnsLeft == 0)
+                {
+                    modifiersTotal[stat.Key] -= modifiers[stat.Key][i].Amount;
+                    modifiers[stat.Key].RemoveAt(i);
+                }
+            }
+        }
+
         eventQueue.ProcessEvents();
         
         OnNewTurn?.Invoke();
@@ -300,6 +322,7 @@ public class GameManager : MonoBehaviour
                 { "turn_number", turnCounter }
             });
         }
+
         EnterMenu();
         UpdateUi();
     }
@@ -352,7 +375,7 @@ public class GameManager : MonoBehaviour
     {
         switch (metric)
         {
-            case Metric.Accomodation: return Accommodation;
+            case Metric.Accommodation: return Accommodation;
             case Metric.Satisfaction: return Satisfaction;
             case Metric.Effectiveness: return Effectiveness;
             case Metric.Spending: return Spending;
@@ -383,6 +406,11 @@ public class GameManager : MonoBehaviour
         inMenu = false;
     }
 
+    public void SaveGame()
+    {
+        
+    }
+    
     [HorizontalLine()] 
     
     public Map map;

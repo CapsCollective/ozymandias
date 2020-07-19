@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Schema;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 using static GameManager;
 
 [CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
@@ -14,32 +8,20 @@ public class StatChange : Outcome
     public Metric statToChange;
     public int amount;
     public int turns;
-
-    private int turnsLeft;
-    //[SerializeField] private int turns;
-
+    public string reason;
+    
     public override bool Execute(bool fromChoice)
     {
-        turnsLeft = turns;
-        OnNewTurn += ProcessStatChange;
-        if (fromChoice) ProcessStatChange();
+        Manager.modifiers[statToChange].Add(new Modifier
+        {
+            Amount = amount,
+            TurnsLeft = turns,
+            Reason = reason
+        });
+        Manager.modifiersTotal[statToChange] += amount;
         return true;
     }
     
-    public void ProcessStatChange()
-    {
-        if (turnsLeft == 0)
-        {
-            OnNewTurn -= ProcessStatChange;
-            return;
-        }
-
-        Manager.modifiers[statToChange] += amount;
-
-        if (turnsLeft == -1) return;
-        turnsLeft--;
-    }
-
     public override string Description
     {
         get
@@ -53,7 +35,7 @@ public class StatChange : Outcome
             if (amount > 0) desc += "<color="+color+">" + statToChange + " has increased by " + amount;
             else desc += "<color="+color+">" + statToChange + " has decreased by " + Mathf.Abs(amount);
             
-            if (turnsLeft != -1) desc += " for " + turns + " turns.";
+            if (turns != -1) desc += " for " + turns + " turns.";
             return desc + "</color>";
         }
     }
