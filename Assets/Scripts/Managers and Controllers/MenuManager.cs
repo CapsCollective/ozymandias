@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 using TMPro;
 using System;
 using Managers_and_Controllers;
+using Random = UnityEngine.Random;
 
 public class MenuManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class MenuManager : MonoBehaviour
     //loading
     public GameObject loadingScreen;
     public Slider progressBar;
+    public TextMeshProUGUI tipText;
+    public string[] loadingTips;
 
     //resolution selection
     public TMP_Dropdown resolutionDropdown;
@@ -31,7 +34,7 @@ public class MenuManager : MonoBehaviour
     
     
     public bool isMainMenuScene;
-    public AudioSource MenuMusic;
+    public AudioSource menuMusic;
 
     private void Start()
     {
@@ -83,19 +86,20 @@ public class MenuManager : MonoBehaviour
         // Fade in music
         StartCoroutine(JukeboxController.Instance.FadeTo(
             JukeboxController.MusicVolume, JukeboxController.FullVolume, 3f));
-        StartCoroutine(JukeboxController.DelayCall(1f, ()=>MenuMusic.Play()));
+        StartCoroutine(JukeboxController.DelayCall(1f, ()=>menuMusic.Play()));
     }
 
     public void NewGame()
     {
         StartCoroutine(LoadAsyncOperation());
         StartCoroutine(JukeboxController.Instance.FadeTo(
-            JukeboxController.MusicVolume, JukeboxController.LowestVolume, 3f));
-        StartCoroutine(JukeboxController.DelayCall(3f, ()=>MenuMusic.Stop()));
+            JukeboxController.MusicVolume, JukeboxController.LowestVolume, 1f));
+        StartCoroutine(JukeboxController.DelayCall(2f, ()=>menuMusic.Stop()));
     }
 
     IEnumerator LoadAsyncOperation()
     {
+        tipText.text = loadingTips[Random.Range(0, loadingTips.Length)];
         loadingScreen.SetActive(true);
         AsyncOperation gameLevel = SceneManager.LoadSceneAsync("Main");
         while (!gameLevel.isDone)
