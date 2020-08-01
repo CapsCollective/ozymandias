@@ -265,8 +265,10 @@ public class GameManager : MonoBehaviour
 
         threatLevel = 40;
         wealth = 50;
-        BuildGuildHall();
-        
+
+        //Build Guild Hall in the center of the map
+        map.CreateBuilding(guildHall, map.transform.position, animate: false);
+
         eventQueue.AddEvent(openingEvent, true);
         
         // Run the tutorial video
@@ -427,12 +429,6 @@ public class GameManager : MonoBehaviour
     public Event[] supportWithdrawnEvents;
 
     
-    private void BuildGuildHall()
-    {
-        //Build Guild Hall in the center of the map
-        map.CreateBuilding(guildHall, map.transform.position, animate: true);
-    }
-
     private void OnDestroy()
     {
         instance = null;
