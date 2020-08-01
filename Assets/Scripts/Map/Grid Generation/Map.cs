@@ -177,7 +177,7 @@ public class Map : MonoBehaviour
     }
 
     // Tries to create and place a building from a world position and rotation, returns if successful
-    public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0, bool animate = true)
+    public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0, bool animate = true, bool placeRoads = true)
     {
         GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
         BuildingStats stats = buildingInstance.GetComponent<BuildingStats>();
@@ -204,9 +204,9 @@ public class Map : MonoBehaviour
 
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
-            if (animate)
+            if (placeRoads)
             {
-                List<Vertex> vertices = mapLayout.GetVertices(cells);
+                var vertices = mapLayout.GetVertices(cells);
 
                 mapLayout.CreateRoad(vertices);
                 roadMF.sharedMesh = mapLayout.GenerateRoadMesh();
