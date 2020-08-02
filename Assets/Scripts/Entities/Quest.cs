@@ -21,7 +21,7 @@ public class Quest : ScriptableObject
     public Event completeEvent; // Keep empty if randomly chosen
     public Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
-    private int turnsLeft;
+    public int turnsLeft;
     public List<Adventurer> assigned;
     
     public void StartQuest()
