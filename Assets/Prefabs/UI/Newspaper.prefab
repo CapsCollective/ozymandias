@@ -119,7 +119,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 0}
         m_MethodName: QuestToMenu
         m_Mode: 1
         m_Arguments:
@@ -249,6 +249,43 @@ RectTransform:
   - {fileID: 968725340812150339}
   - {fileID: 515477006171299579}
   m_Father: {fileID: 669717857189077747}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &451009372484456278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1962210661811309504}
+  m_Layer: 5
+  m_Name: Newspaper Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1962210661811309504
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451009372484456278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6461070358733105841}
+  - {fileID: 7197153341307257181}
+  m_Father: {fileID: 7197153339500725283}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3409,8 +3446,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7197153339500725283}
-  m_RootOrder: 1
+  m_Father: {fileID: 1962210661811309504}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4569,6 +4606,7 @@ GameObject:
   - component: {fileID: 7197153339500725284}
   - component: {fileID: 7197153339500725282}
   - component: {fileID: 3083854812062646462}
+  - component: {fileID: 8949714391894555473}
   m_Layer: 5
   m_Name: Newspaper
   m_TagString: Untagged
@@ -4588,8 +4626,7 @@ RectTransform:
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4938146918263808081}
-  - {fileID: 6461070358733105841}
-  - {fileID: 7197153341307257181}
+  - {fileID: 1962210661811309504}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4648,6 +4685,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ebda6479cd2157468e08499a57a8265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8949714391894555473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7197153339500725280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1e5cd2e5df4aed85ee954994fa63c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleText: {fileID: 7197153339656531460}
+  articleList:
+  - {fileID: 7197153341332060567}
+  - {fileID: 7197153340730603057}
+  - {fileID: 7197153341340427690}
+  - {fileID: 7197153340655716075}
+  articleImage: {fileID: 7197153341412703772}
+  choiceList:
+  - {fileID: 7197153340011426120}
+  - {fileID: 7197153339882088653}
+  - {fileID: 7197153340426802877}
+  - {fileID: 7197153340165936976}
+  continueButton: {fileID: 9099778652482282381}
+  gameOverButton: {fileID: 641233091}
+  turnCounter: {fileID: 1832903951}
+  continueButtonContent: {fileID: 1330539936996201690}
+  disableButtonContent: {fileID: 53469556635495555}
+  newspaperContainer: {fileID: 451009372484456278}
 --- !u!1 &7197153339544811217
 GameObject:
   m_ObjectHideFlags: 0
@@ -5157,7 +5224,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 0}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5320,7 +5387,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 0}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5483,7 +5550,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 0}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5802,7 +5869,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 0}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5855,7 +5922,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7197153341307257181}
   - component: {fileID: 7197153340564165516}
-  - component: {fileID: 7197153340564165514}
   m_Layer: 5
   m_Name: NewspaperBody
   m_TagString: Untagged
@@ -5888,8 +5954,8 @@ RectTransform:
   - {fileID: 7197153340655716072}
   - {fileID: 669717857189077747}
   - {fileID: 641233090}
-  m_Father: {fileID: 7197153339500725283}
-  m_RootOrder: 2
+  m_Father: {fileID: 1962210661811309504}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5904,35 +5970,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7197153340564165515}
   m_CullTransparentMesh: 0
---- !u!114 &7197153340564165514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7197153340564165515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f1e5cd2e5df4aed85ee954994fa63c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  titleText: {fileID: 7197153339656531460}
-  articleList:
-  - {fileID: 7197153341332060567}
-  - {fileID: 7197153340730603057}
-  - {fileID: 7197153341340427690}
-  - {fileID: 7197153340655716075}
-  articleImage: {fileID: 7197153341412703772}
-  choiceList:
-  - {fileID: 7197153340011426120}
-  - {fileID: 7197153339882088653}
-  - {fileID: 7197153340426802877}
-  - {fileID: 7197153340165936976}
-  continueButton: {fileID: 9099778652482282381}
-  gameOverButton: {fileID: 641233091}
-  turnCounter: {fileID: 1832903951}
-  continueButtonContent: {fileID: 1330539936996201690}
-  disableButtonContent: {fileID: 53469556635495555}
 --- !u!1 &7197153340655716073
 GameObject:
   m_ObjectHideFlags: 0

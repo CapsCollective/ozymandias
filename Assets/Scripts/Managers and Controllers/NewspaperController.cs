@@ -21,6 +21,7 @@ namespace Managers_and_Controllers
         [SerializeField] private TextMeshProUGUI turnCounter;
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
+        [SerializeField] private GameObject newspaperContainer;
         private Event choiceEvent;
         private string newspaperTitle;
 
