@@ -860,9 +860,9 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &286736544 stripped
+--- !u!114 &285268514 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7197153340564165514, guid: 2337cb4a4576445fc85f8172b67f9d1e,
+  m_CorrespondingSourceObject: {fileID: 8949714391894555473, guid: 2337cb4a4576445fc85f8172b67f9d1e,
     type: 3}
   m_PrefabInstance: {fileID: 842521020}
   m_PrefabAsset: {fileID: 0}
@@ -23360,6 +23360,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8949714391894555473, guid: 2337cb4a4576445fc85f8172b67f9d1e,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 2124307541}
     - target: {fileID: 9099778652482282381, guid: 2337cb4a4576445fc85f8172b67f9d1e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -26304,7 +26309,7 @@ MonoBehaviour:
   inMenu: 0
   map: {fileID: 254812625}
   eventQueue: {fileID: 1870573931}
-  newspaperController: {fileID: 286736544}
+  newspaperController: {fileID: 285268514}
   menuManager: {fileID: 1870573934}
   placementManager: {fileID: 1894982300}
   adventurersContainer: {fileID: 581453738}
@@ -26627,6 +26632,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 0}
   progressBar: {fileID: 0}
+  tipText: {fileID: 0}
+  loadingTips: []
   resolutionDropdown: {fileID: 1390675609}
   audioMixer: {fileID: 24100000, guid: 6a36d648ffba74fbdbe9ec7f4e8d843a, type: 2}
   musicSlider: {fileID: 786198247}
@@ -26634,6 +26641,8 @@ MonoBehaviour:
   sfxSlider: {fileID: 1917572883}
   fullscreenToggle: {fileID: 1300810382}
   shadowToggle: {fileID: 1045424951}
+  isMainMenuScene: 0
+  menuMusic: {fileID: 0}
 --- !u!114 &1870573935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28206,7 +28215,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 286736544}
+      objectReference: {fileID: 0}
     - target: {fileID: 2341104301219159028, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
