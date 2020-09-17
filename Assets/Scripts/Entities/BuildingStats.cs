@@ -17,6 +17,9 @@ public class BuildingStats : MonoBehaviour
     public BuildingType type;
 
     public Metric primaryStat;
+
+    private Vector3 placementPosition;
+    private int rotation;
     
     public enum ScaleSpeed
     {
@@ -70,10 +73,17 @@ public class BuildingStats : MonoBehaviour
 
     public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, Manager.BuildingCount(type)));
 
-    public void Build()
+    public void Build(Vector3 placementPosition, int rotation)
     {
         operational = true;
         name = name.Replace("(Clone)", "");
-        if(!terrain) Manager.Build(this);
+        this.placementPosition = placementPosition;
+        this.rotation = rotation;
+        Manager.Build(this);
+    }
+
+    public string Serialize()
+    {
+        return $"{name},{placementPosition.x:n2},{placementPosition.z:n2},{rotation % 4}";
     }
 }

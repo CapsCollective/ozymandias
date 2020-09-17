@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System;
@@ -11,7 +10,6 @@ using static GameManager;
 public class EventQueue : MonoBehaviour
 {
     private const int MinQueueEvents = 3; // The minimum events in the queue to store
-    private const int MinPoolEvents = 2; // The minumum events in the pool to 
     
     [ReorderableList]
     public LinkedList<Event> headliners = new LinkedList<Event>();
@@ -24,7 +22,7 @@ public class EventQueue : MonoBehaviour
     
     public static Action<List<Event>, List<string>> OnEventsProcessed;
     
-    public List<Event> allEvents;
+    [HideInInspector] public List<Event> allEvents;
 
     private int nextBuildingUnlock = 10;
 
@@ -69,7 +67,6 @@ public class EventQueue : MonoBehaviour
         
         for (int j = 0; j < 3; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
         
-        
         if (Manager.TotalAdventurers >= nextBuildingUnlock) {
             eventPool.Add(PickRandom(EventType.Blueprint)); // Spawn every 10 adventurers
             nextBuildingUnlock += 10;
@@ -86,7 +83,7 @@ public class EventQueue : MonoBehaviour
         if (Manager.turnCounter >= 5)
         {
             // Fill up to 3 quests if unfilled
-            if(Random.Range(0, 4) > QuestMapController.QuestMap.ActiveQuests) eventPool.Add(PickRandom(EventType.Radiant));
+            if(Random.Range(0, 4) > QuestMapController.QuestMap.QuestCount) eventPool.Add(PickRandom(EventType.Radiant));
             
             // 30% flat chance to spawn chaos
             if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos));

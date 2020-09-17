@@ -26,8 +26,10 @@ public class QuestMapController : MonoBehaviour
         }
     }
 
-    public int ActiveQuests => usedFlyers.Count;
-    
+    public int QuestCount => usedFlyers.Count;
+
+    public List<Quest> Quests => usedFlyers.Select(x => x.flyerQuest).ToList();
+
     public void OnOpened()
     {
         JukeboxController.Instance.PlayScrunch();
@@ -58,7 +60,7 @@ public class QuestMapController : MonoBehaviour
         displayingFlyerComponent = flyer.GetComponent<HighlightOnHover>();
         displayingFlyerComponent.DisplaySelected();
     }
-    
+
     public bool AddQuest(Quest q)
     {
         if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.flyerQuest == q)) return false;
@@ -70,7 +72,7 @@ public class QuestMapController : MonoBehaviour
         counter.UpdateCounter(usedFlyers.Count, true);
         return true;
     }
-    
+
     public bool RemoveQuest(Quest q)
     {
         QuestDisplayManager flyer = usedFlyers.Find(x => x.flyerQuest == q);

@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using static GameManager;
 
 public class Map : MonoBehaviour
@@ -177,13 +177,10 @@ public class Map : MonoBehaviour
     }
 
     // Tries to create and place a building from a world position and rotation, returns if successful
-    public bool CreateBuilding(GameObject buildingPrefab, Vector3 worldPosition, int rotation = 0, bool animate = true)
+    public bool CreateBuilding(GameObject buildingInstance, Vector3 worldPosition, int rotation = 0, bool animate = false)
     {
-        GameObject buildingInstance = Instantiate(buildingPrefab, GameObject.Find("Buildings").transform);
         BuildingStats stats = buildingInstance.GetComponent<BuildingStats>();
         BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
-        PlaceTerrain placeTerrain = buildingInstance.GetComponent<PlaceTerrain>();
-        if (placeTerrain) placeTerrain.rotation = rotation;
 
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building, rotation);
@@ -204,7 +201,7 @@ public class Map : MonoBehaviour
 
         if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
         {
-            if (animate)
+            if (!stats.terrain) // Create roads if not terrain
             {
                 List<Vertex> vertices = mapLayout.GetVertices(cells);
 
@@ -214,7 +211,7 @@ public class Map : MonoBehaviour
 
             mapLayout.Align(cells, rotation);
             Occupy(building, cells, animate);
-            stats.Build();
+            stats.Build(worldPosition, rotation);
             return true;
         }
 

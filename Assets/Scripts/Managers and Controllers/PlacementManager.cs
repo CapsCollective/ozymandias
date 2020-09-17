@@ -80,7 +80,8 @@ public class PlacementManager : MonoBehaviour
         if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
 
         int i = Selected;
-        if (!map.CreateBuilding(cards[i].buildingPrefab, hit.point, rotation)) return;
+        GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, GameObject.Find("Buildings").transform);
+        if (!map.CreateBuilding(buildingInstance, hit.point, rotation, true)) return;
         
         Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<BuildingStats>().primaryStat);
         
