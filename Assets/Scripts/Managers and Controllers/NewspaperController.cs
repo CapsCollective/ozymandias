@@ -43,6 +43,8 @@ namespace Managers_and_Controllers
         public void OnOpened()
         {
             JukeboxController.Instance.PlayScrunch();
+            if (Random.Range(0, 5) != 2) return;
+            JukeboxController.Instance.PlayMorning();
         }
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
