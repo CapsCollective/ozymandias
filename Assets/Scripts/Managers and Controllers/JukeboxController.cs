@@ -11,12 +11,12 @@ namespace Managers_and_Controllers
 {
     public class JukeboxController : MonoBehaviour
     {
-        private const float FullVolume = 1.0f;
-        private const float LowestVolume = 0.0001f;
+        public const float FullVolume = 1.0f;
+        public const float LowestVolume = 0.0001f;
 
+        public const string MusicVolume = "musicVolume";
         private const string AmbienceVolume = "ambienceVolume";
-        private const string MusicVolume = "musicVolume";
-        
+
         private const string DayAmbienceVolume = "dayAmbienceVolume";
         private const string NightAmbienceVolume = "nightAmbienceVolume";
         
@@ -30,6 +30,7 @@ namespace Managers_and_Controllers
         public static JukeboxController Instance { get; private set; }
         
         // Serialized fields
+        #pragma warning disable 0649
         [SerializeField] private bool sfxOnly;
         [SerializeField] private float ambienceSpacing = 20f;
         [SerializeField] private float trackCutoff = 2f;
@@ -181,7 +182,7 @@ namespace Managers_and_Controllers
             sfxPlayer.PlayOneShot(clip, volume);
         }
         
-        private IEnumerator FadeTo(string mixerName, float targetVolume, float fadeTime)
+        public IEnumerator FadeTo(string mixerName, float targetVolume, float fadeTime)
         {
             // Lerp to target volume for mixer group
             var currentTime = 0.0f;
@@ -195,7 +196,7 @@ namespace Managers_and_Controllers
             }
         }
 
-        private static IEnumerator DelayCall(float duration, Action callback)
+        public static IEnumerator DelayCall(float duration, Action callback)
         {
             // Defer callback action by duration
             yield return new WaitForSeconds(duration);

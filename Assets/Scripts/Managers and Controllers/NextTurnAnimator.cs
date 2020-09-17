@@ -15,6 +15,7 @@ public class NextTurnAnimator : MonoBehaviour
     private float t = 0f;
     private float x = 0f;
 
+    #pragma warning disable 0649
     private Color ambCol;
     [SerializeField] private Gradient ambientGradient;   
     [SerializeField] private Gradient sunColorGradient;

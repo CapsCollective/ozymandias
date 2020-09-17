@@ -4,6 +4,7 @@ namespace Managers_and_Controllers
 {
     public class EnvironmentalAdventurerManager : MonoBehaviour
     {
+        #pragma warning disable 0649
         [SerializeField] private Renderer[] renderers;
         private MaterialPropertyBlock[] propertyBlocks;
         private static readonly int Color = Shader.PropertyToID("_Color");

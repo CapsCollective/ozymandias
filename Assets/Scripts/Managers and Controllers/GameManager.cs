@@ -523,7 +523,7 @@ public class GameManager : MonoBehaviour
     public Event openingEvent;
     public Event[] guildHallDestroyedEvents;
     public Event[] supportWithdrawnEvents;
-
+    
     private void OnDestroy()
     {
         instance = null;
