@@ -157,14 +157,20 @@ public class GameManager : MonoBehaviour
 
             foreach (string quest in quests)
             {
-                string[] details = quest.Split(',');
-                //TODO
+                Quest.QuestDetails details = Quest.Deserialize(quest);
+                Quest q = await Addressables.LoadAssetAsync<Quest>(details.name).Task;
+                QuestMap.AddQuest(q);
+                q.cost = details.cost;
+                q.turnsLeft = details.turnsLeft;
+                if (details.assigned.Count == 0) continue;
+                q.assigned = details.assigned.Select(name => Manager.adventurers.Find(a => a.name == name)).ToList();
+                q.assigned.ForEach(a => a.assignedQuest = q);
+                q.ResumeQuest();
             }
             //TODO: Modifiers, Queued Events, One time events
         }
     }
-
-    [Button("Save Test")]
+    
     public void Save()
     {
         string saveJson = new SaveFile().Save();
@@ -173,10 +179,10 @@ public class GameManager : MonoBehaviour
     }
 
     private bool loading = false;
-    [Button("Load Test")]
     public async void Load()
     {
         loading = true;
+        //TODO: Do we want to save this to a file instead of playerprefs?
         string saveJson = PlayerPrefs.GetString("save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
         await JsonUtility.FromJson<SaveFile>(saveJson).Load();
         Debug.Log(saveJson);
@@ -373,7 +379,6 @@ public class GameManager : MonoBehaviour
     public void NextTurn()
     {
         OnNextTurn?.Invoke();
-        //NewTurn();
     }
 
     public void NewTurn()
@@ -391,26 +396,24 @@ public class GameManager : MonoBehaviour
         {
             for (int i = stat.Value.Count-1; i >= 0; i--)
             {
-                Debug.Log($"{modifiers[stat.Key][i]}");
-                if (modifiers[stat.Key][i].TurnsLeft != -1 && --modifiers[stat.Key][i].TurnsLeft == 0)
-                {
-                    modifiersTotal[stat.Key] -= modifiers[stat.Key][i].Amount;
-                    modifiers[stat.Key].RemoveAt(i);
-                }
+                if (--modifiers[stat.Key][i].TurnsLeft < 0) continue;
+                modifiersTotal[stat.Key] -= modifiers[stat.Key][i].Amount;
+                modifiers[stat.Key].RemoveAt(i);
             }
         }
 
         eventQueue.ProcessEvents();
         
         OnNewTurn?.Invoke();
-        if (turnCounter % 5 == 0)
-        {
-            var ev = Analytics.CustomEvent("Turn Counter", new Dictionary<string, object>
-            {
-                { "turn_number", turnCounter }
-            });
-        }
+        //if (turnCounter % 5 == 0)
+        //{
+        //    var ev = Analytics.CustomEvent("Turn Counter", new Dictionary<string, object>
+        //    {
+        //        { "turn_number", turnCounter }
+        //    });
+        //}
 
+        Save();
         EnterMenu();
         UpdateUi();
     }

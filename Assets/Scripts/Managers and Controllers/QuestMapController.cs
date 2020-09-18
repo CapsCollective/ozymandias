@@ -68,6 +68,7 @@ public class QuestMapController : MonoBehaviour
         flyer.gameObject.SetActive(true);
         q.cost = (int)(GameManager.Manager.WealthPerTurn * q.costScale);
         flyer.SetQuest(q);
+        if (q.assigned.Count > 0) flyer.RandomRotateStamps(); // Mark active quests when being added (for loading)
         usedFlyers.Add(flyer);
         counter.UpdateCounter(usedFlyers.Count, true);
         return true;

@@ -35,7 +35,7 @@ namespace Managers_and_Controllers
             SetDisplaying(true);
         }
         
-        private void RandomRotateStamps()
+        public void RandomRotateStamps()
         {
             var stampRotation = Random.Range(3f, 6f);
             stampRotation = (Random.value < 0.5) ? stampRotation : -stampRotation;

@@ -35,9 +35,9 @@ public class Quest : ScriptableObject
         Manager.UpdateUi();
     }
 
-    public void ResumeQuest(int turnsLeft, List<Adventurer> assigned)
+    public void ResumeQuest()
     {
-
+        GameManager.OnNewTurn += OnNewTurn;
     }
 
     private void OnNewTurn()
@@ -54,7 +54,7 @@ public class Quest : ScriptableObject
 
     public string Serialize()
     {
-        return JsonUtility.ToJson(new QuestSerialized
+        return JsonUtility.ToJson(new QuestDetails
         {
             name = name,
             turnsLeft = turnsLeft,
@@ -63,8 +63,13 @@ public class Quest : ScriptableObject
         });
     }
 
+    public static QuestDetails Deserialize(string q)
+    {
+        return JsonUtility.FromJson<QuestDetails>(q);
+    }
+
     [Serializable]
-    public struct QuestSerialized
+    public struct QuestDetails
     {
         public string name;
         public int turnsLeft;
