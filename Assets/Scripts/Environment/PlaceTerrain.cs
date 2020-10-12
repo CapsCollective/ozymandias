@@ -20,7 +20,7 @@ public class PlaceTerrain : MonoBehaviour
 
     void Update()
     {
-        if (!map) map = FindObjectOfType<Map>();
+        if (!map) map = Map.CurrentMap;
         Place();
         enabled = false;
     }
@@ -33,7 +33,7 @@ public class PlaceTerrain : MonoBehaviour
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Surface"))
             {
                
-                map.CreateBuilding(terrainBuilding, hit.point, rotation, animate: false);
+                map.CreateBuilding(terrainBuilding, hit.point, rotation, animate: false, placeRoads: false);
                 Destroy(gameObject);
             }
         }
