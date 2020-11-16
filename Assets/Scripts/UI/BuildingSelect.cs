@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +18,17 @@ public class BuildingSelect : UiUpdater
     public TextMeshProUGUI cost;
     public Toggle toggle;
     public CanvasGroup canvasGroup;
-    
+    [SerializeField] private Ease tweenEase;
+
+    private Vector3 _initialPosition;
+    private RectTransform _rectTransform;
+
+    private void Start()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+        _initialPosition = _rectTransform.localPosition;
+    }
+
     public override void UpdateUi()
     {
         BuildingStats building = buildingPrefab.GetComponent<BuildingStats>();
@@ -39,7 +51,22 @@ public class BuildingSelect : UiUpdater
 
     public void ToggleSelect()
     {
-        if (toggle.isOn) PlacementManager.Selected = position;
-        else PlacementManager.Selected = Deselected;
+        PlacementManager.Selected = toggle.isOn ? position : Deselected;
+        SelectTween(toggle.isOn);
+    }
+
+    private void SelectTween(bool selected)
+    {
+        if (selected)
+        {
+            _rectTransform.DOLocalMove(_initialPosition + _rectTransform.transform.up * 60, 0.5f)
+                .SetEase(tweenEase);
+            _rectTransform.DOScale(new Vector3(1.1f, 1.1f), 0.5f).SetEase(tweenEase);
+        }
+        else
+        {
+            _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase);
+            _rectTransform.DOScale(Vector3.one, 0.5f).SetEase(tweenEase);
+        }
     }
 }
