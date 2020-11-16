@@ -12,6 +12,7 @@ public class BuildingSelect : UiUpdater
     public GameObject buildingPrefab;
     public TextMeshProUGUI title;
     public Image icon;
+    public Image iconTexture;
     public TextMeshProUGUI cost;
     public Toggle toggle;
     public CanvasGroup canvasGroup;
@@ -21,9 +22,10 @@ public class BuildingSelect : UiUpdater
         BuildingStats building = buildingPrefab.GetComponent<BuildingStats>();
         Color colour = building.IconColour;
         title.text = building.name;
+        title.color = colour;
         cost.text = building.ScaledCost.ToString();
         icon.sprite = building.icon;
-        icon.color = colour;
+        iconTexture.color = colour;
         bool active = building.ScaledCost <= Manager.Wealth;
         if (toggle.isOn && !active)
         {
