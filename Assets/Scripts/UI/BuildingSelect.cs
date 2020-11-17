@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -21,9 +19,15 @@ public class BuildingSelect : UiUpdater, IPointerEnterHandler, IPointerExitHandl
     public CanvasGroup canvasGroup;
     [SerializeField] private Ease tweenEase;
     [SerializeField] private BuildingSelect[] siblingCards;
+    [SerializeField] private Image CardBack;
+    [SerializeField] private Texture2D UnselectedBacking;
+    [SerializeField] private Texture2D SelectedBacking;
 
     private Vector3 _initialPosition;
     private RectTransform _rectTransform;
+    
+    private Sprite UnselectedBackingSprite;
+    private Sprite SelectedBackingSprite;
     
     private bool _selected = false;
 
@@ -31,6 +35,13 @@ public class BuildingSelect : UiUpdater, IPointerEnterHandler, IPointerExitHandl
     {
         _rectTransform = GetComponent<RectTransform>();
         _initialPosition = _rectTransform.localPosition;
+        
+        UnselectedBackingSprite = Sprite.Create(
+            UnselectedBacking, new Rect(0, 0, UnselectedBacking.width, UnselectedBacking.height), 
+            new Vector2(0.5f, 0.5f));
+        SelectedBackingSprite = Sprite.Create(
+            SelectedBacking, new Rect(0, 0, SelectedBacking.width, SelectedBacking.height), 
+            new Vector2(0.5f, 0.5f));
     }
 
     public override void UpdateUi()
@@ -48,9 +59,14 @@ public class BuildingSelect : UiUpdater, IPointerEnterHandler, IPointerExitHandl
             toggle.isOn = false;
             PlacementManager.Selected = Deselected;
         }
-        bool interactable = building.ScaledCost <= Manager.Wealth;
+        bool interactable = IsInteractable(building);
         toggle.interactable = interactable;
-        canvasGroup.alpha = interactable ? 1 : 0.4f;
+        CardBack.color = interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f, 1.0f);
+    }
+    
+    private bool IsInteractable(BuildingStats building)
+    {
+        return building.ScaledCost <= Manager.Wealth;
     }
 
     public void ToggleSelect()
@@ -74,14 +90,17 @@ public class BuildingSelect : UiUpdater, IPointerEnterHandler, IPointerExitHandl
 
     public void OnClicked()
     {
+        if (!IsInteractable(buildingPrefab.GetComponent<BuildingStats>())) return;
         _selected = !_selected;
         OnPointerEnter(null);
         Array.ForEach(siblingCards, card => card.Deselect());
+        CardBack.sprite = _selected ? SelectedBackingSprite : UnselectedBackingSprite;
     }
     
     private void Deselect()
     {
         _selected = false;
         OnPointerExit(null);
+        CardBack.sprite = UnselectedBackingSprite;
     }
 }
