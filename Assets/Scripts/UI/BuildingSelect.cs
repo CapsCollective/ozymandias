@@ -31,8 +31,6 @@ namespace UI
     
         private Sprite _unselectedBackingSprite;
         private Sprite _selectedBackingSprite;
-    
-        private bool _selected;
 
         private void Start()
         {
@@ -86,7 +84,7 @@ namespace UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (_selected) return;
+            if (toggle.isOn) return;
             _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase);
             _rectTransform.DOScale(Vector3.one, 0.5f).SetEase(tweenEase);
         }
@@ -94,15 +92,14 @@ namespace UI
         public void OnClicked()
         {
             if (!IsInteractable(buildingPrefab.GetComponent<BuildingStats>())) return;
-            _selected = !_selected;
             OnPointerEnter(null);
             Array.ForEach(siblingCards, card => card.Deselect());
-            cardBack.sprite = _selected ? _selectedBackingSprite : _unselectedBackingSprite;
+            cardBack.sprite = toggle.isOn ? _selectedBackingSprite : _unselectedBackingSprite;
         }
     
         private void Deselect()
         {
-            _selected = false;
+            toggle.isOn = false;
             OnPointerExit(null);
             cardBack.sprite = _unselectedBackingSprite;
         }
