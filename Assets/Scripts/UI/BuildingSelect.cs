@@ -15,6 +15,7 @@ namespace UI
         public int position;
         public GameObject buildingPrefab;
         public TextMeshProUGUI title;
+        public TextMeshProUGUI description;
         public Image icon;
         public Image iconTexture;
         public TextMeshProUGUI cost;
@@ -51,6 +52,7 @@ namespace UI
             Color colour = building.IconColour;
             title.text = building.name;
             title.color = colour;
+            description.text = building.description;
             cost.text = building.ScaledCost.ToString();
             icon.sprite = building.icon;
             iconTexture.color = colour;
@@ -60,19 +62,23 @@ namespace UI
                 toggle.isOn = false;
                 PlacementManager.Selected = Deselected;
             }
-            bool interactable = IsInteractable(building);
-            toggle.interactable = interactable;
-            cardBack.color = interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f, 1.0f);
-        }
-    
-        private bool IsInteractable(BuildingStats building)
-        {
-            return building.ScaledCost <= Manager.Wealth;
+            toggle.interactable = building.ScaledCost <= Manager.Wealth;;
+            cardBack.color = toggle.interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f, 1.0f);
+            cardBack.sprite = toggle.isOn ? _selectedBackingSprite : _unselectedBackingSprite;
         }
 
         public void ToggleSelect()
         {
-            PlacementManager.Selected = toggle.isOn ? position : Deselected;
+            if (PlacementManager.Selected == Deselected || PlacementManager.Selected != position)
+            {
+                PlacementManager.Selected = position;
+                OnPointerEnter(null);
+                Array.ForEach(siblingCards, card => card.Deselect());
+            }
+            else
+            {
+                PlacementManager.Selected = Deselected;
+            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -89,14 +95,6 @@ namespace UI
             _rectTransform.DOScale(Vector3.one, 0.5f).SetEase(tweenEase);
         }
 
-        public void OnClicked()
-        {
-            if (!IsInteractable(buildingPrefab.GetComponent<BuildingStats>())) return;
-            OnPointerEnter(null);
-            Array.ForEach(siblingCards, card => card.Deselect());
-            cardBack.sprite = toggle.isOn ? _selectedBackingSprite : _unselectedBackingSprite;
-        }
-    
         private void Deselect()
         {
             toggle.isOn = false;
