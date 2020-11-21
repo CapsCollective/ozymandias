@@ -28,31 +28,19 @@ namespace UI
         [SerializeField] private TextMeshProUGUI cost;
         
         [SerializeField] private Image cardBack;
-        [SerializeField] private Texture2D unselectedBacking;
-        [SerializeField] private Texture2D selectedBacking;
+        [SerializeField] private Image cardHighlight;
         [SerializeField] private Ease tweenEase;
         
 
         // Private fields
         private Vector3 _initialPosition;
         private RectTransform _rectTransform;
-        
-        private Sprite _unselectedBackingSprite;
-        private Sprite _selectedBackingSprite;
 
         private void Start()
         {
             // Get the card's rect-transform details
             _rectTransform = GetComponent<RectTransform>();
             _initialPosition = _rectTransform.localPosition;
-            
-            // Create sprites for the alternate card backings
-            _unselectedBackingSprite = Sprite.Create(
-                unselectedBacking, new Rect(0, 0, unselectedBacking.width, unselectedBacking.height), 
-                new Vector2(0.5f, 0.5f));
-            _selectedBackingSprite = Sprite.Create(
-                selectedBacking, new Rect(0, 0, selectedBacking.width, selectedBacking.height), 
-                new Vector2(0.5f, 0.5f));
         }
 
         public override void UpdateUi()
@@ -75,13 +63,11 @@ namespace UI
                 // Unselect the card if un-interactable
                 toggle.isOn = false;
                 PlacementManager.Selected = Deselected;
+                cardHighlight.color = new Color(1, 1, 1, 0);
             }
             
             // Darken the card if unselectable
-            cardBack.color = toggle.interactable ? Color.white * 1.1f : new Color(0.8f, 0.8f, 0.8f);
-            
-            // Highlight the card if selected
-            cardBack.sprite = toggle.isOn ? _selectedBackingSprite : _unselectedBackingSprite;
+            cardBack.color = toggle.interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f);
         }
 
         public void ToggleSelect()
@@ -104,11 +90,15 @@ namespace UI
                 PlacementManager.Selected = Deselected;
                 OnPointerExit(null);
             }
+            
+            // Highlight the card if selected
+            cardHighlight.DOFade(toggle.isOn ? 1 : 0, 0.5f);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             // Run pointer enter tween
+            if (!_rectTransform) return;
             _rectTransform.DOLocalMove(_initialPosition + _rectTransform.transform.up * 60, 0.5f)
                 .SetEase(tweenEase);
             _rectTransform.DOScale(new Vector3(1.1f, 1.1f), 0.5f).SetEase(tweenEase);
@@ -117,7 +107,7 @@ namespace UI
         public void OnPointerExit(PointerEventData eventData)
         {
             // Run pointer exit tween if not selected
-            if (toggle.isOn) return;
+            if (toggle.isOn || !_rectTransform) return;
             _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase);
             _rectTransform.DOScale(Vector3.one, 0.5f).SetEase(tweenEase);
         }
