@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static GameManager;
+using static BuildingManager;
 
 public class PlacementManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class PlacementManager : MonoBehaviour
     [SerializeField] private float tweenTime;
     [SerializeField] private Ease tweenEase;
     [SerializeField] private GameObject particle;
-
+    
     private List<GameObject> remainingBuildings = new List<GameObject>();
     private Map map;
     private RaycastHit hit;
@@ -37,7 +38,7 @@ public class PlacementManager : MonoBehaviour
 
         OnNextTurn += NewCards;
         
-        remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
+        remainingBuildings = BuildManager.AllBuildings;
         for (int i = 0; i < 3; i++) cards[i].buildingPrefab = remainingBuildings.PopRandom();
     }
 
@@ -119,7 +120,7 @@ public class PlacementManager : MonoBehaviour
 
     private void ChangeCard(int i)
     {
-        if (remainingBuildings.Count == 0) remainingBuildings = new List<GameObject>(BuildingManager.BuildManager.AllBuildings);
+        if (remainingBuildings.Count == 0) remainingBuildings = BuildManager.AllBuildings;
         bool valid = false;
 
         // Confirm no duplicate buildings

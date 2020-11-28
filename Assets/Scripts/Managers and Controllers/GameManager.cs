@@ -6,11 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Managers_and_Controllers;
 using NaughtyAttributes;
+using Newtonsoft.Json;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
 using static AchievementManager;
 using static QuestMapController;
+using static BuildingManager;
 using Random = UnityEngine.Random;
 
 public enum Metric
@@ -99,40 +101,40 @@ public class GameManager : MonoBehaviour
     [Serializable]
     public class Modifier
     {
-        public int Amount;
-        public int TurnsLeft;
-        public string Reason;
+        public int amount;
+        public int turnsLeft;
+        public string reason;
     }
     
     [Serializable]
     public class SaveFile
     {
-        [SerializeField]
-        private int wealth, turnCounter, threatLevel, clearCount;
-        [SerializeField]
-        private List<string> adventurers = new List<string>();
-        [SerializeField]
-        private List<string> buildings = new List<string>();
-        [SerializeField]
-        private List<string> quests = new List<string>();
+        [SerializeField] private int wealth, turnCounter, threatLevel, clearCount;
+        [SerializeField] private List<string> buildings, adventurers, quests, unlockedBuildings;
+        [SerializeField] private string modifiers;
+        
         public string Save()
         {
             wealth = Manager.wealth;
             turnCounter = Manager.turnCounter;
             threatLevel = Manager.threatLevel;
             clearCount = Clear.ClearCount;
-            foreach (var adventurer in Manager.adventurers)
-                adventurers.Add(adventurer.Serialize());
-
+            buildings = new List<string>();
+            
             foreach (var building in Manager.buildings)
                 buildings.Add(building.Serialize());
-
+            
             foreach (var terrain in Manager.terrain)
                 buildings.Add(terrain.Serialize());
-
-            foreach (var quest in QuestMap.Quests)
-                quests.Add(quest.Serialize());
-
+            
+            adventurers = Manager.adventurers.Select(a => a.Serialize()).ToList();
+            
+            quests = QuestMap.Quests.Select(q => q.Serialize()).ToList();
+            
+            unlockedBuildings = BuildManager.unlockedBuildings.Select(x => x.name).ToList();
+            
+            modifiers = JsonConvert.SerializeObject(Manager.modifiers);
+            
             return JsonUtility.ToJson(this);
         }
 
@@ -167,6 +169,16 @@ public class GameManager : MonoBehaviour
                 q.assigned.ForEach(a => a.assignedQuest = q);
                 q.ResumeQuest();
             }
+
+            JsonConvert.PopulateObject(modifiers, Manager.modifiers);
+            foreach (var metricPair in Manager.modifiers)
+                Manager.modifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
+
+            unlockedBuildings.ForEach(async b => 
+                BuildManager.unlockedBuildings.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task));
+            
+            //TODO: Reshuffle buildings
+            
             //TODO: Modifiers, Queued Events, One time events
         }
     }
@@ -396,8 +408,10 @@ public class GameManager : MonoBehaviour
         {
             for (int i = stat.Value.Count-1; i >= 0; i--)
             {
-                if (--modifiers[stat.Key][i].TurnsLeft < 0) continue;
-                modifiersTotal[stat.Key] -= modifiers[stat.Key][i].Amount;
+                // -1 means infinite modifier
+                if (modifiers[stat.Key][i].turnsLeft == -1 || --modifiers[stat.Key][i].turnsLeft > 0) continue;
+                Debug.Log("Removing Stat: " + stat.Key);
+                modifiersTotal[stat.Key] -= modifiers[stat.Key][i].amount;
                 modifiers[stat.Key].RemoveAt(i);
             }
         }

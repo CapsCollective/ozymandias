@@ -1,9 +1,5 @@
 ﻿using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using static GameManager;
 using static AchievementManager;
 using static BuildingManager;
 
@@ -18,12 +14,12 @@ public class BuildingUnlock : Outcome
         if (!building)
             return false;
 
-        if (!BuildManager.AllBuildings.Contains(building))
+        if (!BuildManager.unlockedBuildings.Contains(building))
         {
-            BuildManager.AllBuildings.Add(building);
+            BuildManager.unlockedBuildings.Add(building);
             Debug.Log($"Building Unlocked: {building}");
             Achievements.Unlock("A Helping Hand");
-            if (BuildManager.AllBuildings.Count >= 14) //9 plus the 5 unlocked
+            if (BuildManager.unlockedBuildings.Count >= 5)
                 Achievements.Unlock("Modern Influences");
             return true;
         }

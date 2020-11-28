@@ -79,6 +79,7 @@ namespace Managers_and_Controllers
             for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             Manager.UpdateUi();
+            Manager.Save(); // Need to save again after a choice to lock in its outcomes
         }
     
         private static string[] NewspaperTitles = {
