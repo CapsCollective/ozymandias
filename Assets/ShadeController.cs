@@ -19,6 +19,11 @@ public class ShadeController : MonoBehaviour
         _image = GetComponent<Image>();
         gameObject.SetActive(false);
     }
+    
+    public void SetDisplayUI(bool active)
+    {
+        SetDisplay(active);
+    }
 
     public void SetDisplay(bool active, float transitionSpeed = DefaultTransitionSpeed)
     {
