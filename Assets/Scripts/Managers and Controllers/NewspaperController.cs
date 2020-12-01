@@ -36,7 +36,6 @@ namespace Managers_and_Controllers
             titleText.text = "{ " + newspaperTitle + " }";
             EventQueue.OnEventsProcessed += UpdateDisplay;
             GameManager.OnNewTurn += OnNewTurn;
-            GameManager.OnNewTurn += AnimateOpen;
             continueButton.onClick.AddListener(AnimateClose);
             AnimateClose();
         }
@@ -51,6 +50,7 @@ namespace Managers_and_Controllers
         
         public void OnOpened()
         {
+            AnimateOpen();
             JukeboxController.Instance.PlayScrunch();
             if (Random.Range(0, 5) != 2) return;
             JukeboxController.Instance.PlayMorning();
@@ -121,7 +121,7 @@ namespace Managers_and_Controllers
         
         private void AnimateOpen()
         {
-            // TODO Fade in shade
+            ShadeController.Instance.SetDisplay(true);
             newspaperContainer.transform
                 .DOLocalMove(Vector3.zero, animateInDuration)
                 .OnStart(() => { canvas.enabled = true; });
@@ -130,7 +130,7 @@ namespace Managers_and_Controllers
         
         private void AnimateClose()
         {
-            // TODO Fade out shade
+            ShadeController.Instance.SetDisplay(false);
             newspaperContainer.transform.DOLocalMove(new Vector3(1000, 500, 0), animateOutDuration);
             newspaperContainer.transform
                 .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
