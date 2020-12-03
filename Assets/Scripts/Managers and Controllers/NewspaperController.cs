@@ -30,7 +30,7 @@ namespace Managers_and_Controllers
         private Event choiceEvent;
         private string newspaperTitle;
 
-        private void Awake()
+        private void Start()
         {
             newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + newspaperTitle + " }";

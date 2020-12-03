@@ -32,11 +32,6 @@ public class QuestMapController : MonoBehaviour
             return instance;
         }
     }
-    
-    private void Awake()
-    {
-        AnimateClose();
-    }
 
     public int ActiveQuests => usedFlyers.Count;
     
@@ -72,6 +67,7 @@ public class QuestMapController : MonoBehaviour
 
     private void Start()
     {
+        AnimateClose();
         foreach (var flyer in availableFlyers)
         {
             flyer.GetComponent<HighlightOnHover>().callbackMethod = OnFlyerClick;
