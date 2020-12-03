@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
     [Serializable]
     public class SaveFile
     {
-        [SerializeField] private int wealth, turnCounter, threatLevel, clearCount;
+        [SerializeField] private int wealth, turnCounter, threatLevel, clearCount, nextBuildingUnlock;
         [SerializeField] private List<string> buildings, adventurers, quests, unlockedBuildings, headlinerEvents, otherEvents, usedEvents;
         [SerializeField] private string modifiers;
         
@@ -139,6 +139,8 @@ public class GameManager : MonoBehaviour
             turnCounter = Manager.turnCounter;
             threatLevel = Manager.ThreatLevel;
             clearCount = Clear.ClearCount;
+            nextBuildingUnlock = Manager.Events.nextBuildingUnlock;
+            
             buildings = new List<string>();
             
             foreach (var building in Manager.buildings)
@@ -152,8 +154,11 @@ public class GameManager : MonoBehaviour
             quests = Manager.Quests.All.Select(q => q.Serialize()).ToList();
             
             unlockedBuildings = Manager.BuildingCards.unlockedBuildings.Select(x => x.name).ToList();
+
+            headlinerEvents = Manager.Events.headliners.Select(e => e.name).ToList();
+            Debug.Log(headlinerEvents);
             
-            //headlinerEvents = EventQueue.
+            otherEvents = Manager.Events.others.Select(e => e.name).ToList();
             
             modifiers = JsonConvert.SerializeObject(Manager.modifiers);
             
@@ -166,6 +171,8 @@ public class GameManager : MonoBehaviour
             Manager.turnCounter = turnCounter;
             Manager.ThreatLevel = threatLevel;
             Clear.ClearCount = clearCount;
+            Manager.Events.nextBuildingUnlock = nextBuildingUnlock;
+            
             if (turnCounter == 0)
                 Manager.StartGame();
             foreach (string adventurer in adventurers)
@@ -190,6 +197,18 @@ public class GameManager : MonoBehaviour
                 q.assigned = details.assigned.Select(name => Manager.adventurers.Find(a => a.name == name)).ToList();
                 q.assigned.ForEach(a => a.assignedQuest = q);
                 q.ResumeQuest();
+            }
+
+            foreach (string name in headlinerEvents)
+            {
+                Event e = await Addressables.LoadAssetAsync<Event>(name).Task;
+                Manager.Events.headliners.AddLast(e);
+            }
+
+            foreach (string name in otherEvents)
+            {
+                Event e = await Addressables.LoadAssetAsync<Event>(name).Task;
+                Manager.Events.others.AddLast(e);
             }
 
             JsonConvert.PopulateObject(modifiers, Manager.modifiers);
@@ -370,11 +389,11 @@ public class GameManager : MonoBehaviour
         Events.AddEvent(openingEvent, true);
         
         // Run the tutorial video
-        if (PlayerPrefs.GetInt("tutorial_video_basics", 0) == 0)
+        /*if (PlayerPrefs.GetInt("tutorial_video_basics", 0) == 0)
         {
             PlayerPrefs.SetInt("tutorial_video_basics", 1);
             TutorialPlayerController.Instance.PlayClip(0);
-        }
+        }*/
 
         Analytics.EnableCustomEvent("New Turn", true);
         Analytics.enabled = true;
