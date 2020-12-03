@@ -11,7 +11,6 @@ namespace Environment
     {
         #pragma warning disable 0649
         [SerializeField] private GameObject adventurerModel;
-        [SerializeField] private Map map;
         [SerializeField] private float adventurerSpeed = .3f;
         [SerializeField] private float wanderingUpdateFrequency = 3f;
         [SerializeField] private float partyScatter = .5f;
@@ -24,7 +23,7 @@ namespace Environment
 
         private void Start()
         {
-            mapLayout = map.mapLayout;
+            mapLayout = Manager.Map.mapLayout;
             InvokeRepeating(nameof(CheckWandering), 1f, wanderingUpdateFrequency);
             boundaryVerts = mapLayout.VertexGraph.GetData().Where(v => v.Boundary).ToList();
         }
@@ -75,7 +74,7 @@ namespace Environment
             if (start == null || end == null) yield return null;
 
             var path = mapLayout.AStar(mapLayout.RoadGraph,start, end)
-                .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
+                .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
             activeAdventurers.Add(CreateAdventurer(start), path);
             yield return null;
         }
@@ -110,7 +109,7 @@ namespace Environment
             }
             var roadPath = mapLayout.AStar(mapLayout.RoadGraph,start, finalRoadPoint);
             var finalPath = roadPath.Concat(wildPath)
-                .Select(vertex => map.transform.TransformPoint(vertex)).ToList();
+                .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
 
             for (var i = 0; i < num; i++)
             {
@@ -133,7 +132,7 @@ namespace Environment
         private GameObject CreateAdventurer(Vertex vertex)
         {
             var newAdventurer = Instantiate(adventurerModel,
-                map.transform.TransformPoint(vertex), Quaternion.identity);
+                Manager.Map.transform.TransformPoint(vertex), Quaternion.identity);
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
             StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));
             return newAdventurer;

@@ -23,14 +23,14 @@ namespace Controllers
     
         private List<GameObject> remainingBuildings = new List<GameObject>();
         private RaycastHit hit;
-        private UnityEngine.Camera cam;
+        private Camera cam;
         private int rotation;
         private Cell[] highlighted = new Cell[0];
         private int previousSelected = Selected;
     
-        private void Awake()
+        private void Start()
         {
-            cam = UnityEngine.Camera.main;
+            cam = Camera.main;
         
             ClickManager.OnLeftClick += LeftClick;
             ClickManager.OnRightClick += RightClick;
@@ -109,11 +109,11 @@ namespace Controllers
 
         public void NewCardTween(int i)
         {
-            RectTransform transform = cards[i].GetComponent<RectTransform>();
-            transform.DOAnchorPosY(-100, tweenTime).SetEase(tweenEase).OnComplete(() =>
+            RectTransform t = cards[i].GetComponent<RectTransform>();
+            t.DOAnchorPosY(-100, tweenTime).SetEase(tweenEase).OnComplete(() =>
             {
                 ChangeCard(i);
-                transform.DOAnchorPosY(0, 0.5f).SetEase(tweenEase);
+                t.DOAnchorPosY(0, 0.5f).SetEase(tweenEase);
             });
         }
 

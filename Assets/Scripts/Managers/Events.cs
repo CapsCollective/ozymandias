@@ -27,7 +27,7 @@ namespace Managers
     
         [HideInInspector] public List<Event> allEvents;
 
-        private int nextBuildingUnlock = 10;
+        public int nextBuildingUnlock = 10;
 
         [Tooltip("Events in this array are ignored by the Add All button")]
         public Event[] filterEvents;

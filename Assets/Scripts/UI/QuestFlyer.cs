@@ -1,4 +1,5 @@
 ﻿using System;
+using Controllers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 using static GameManager;
 using Random = UnityEngine.Random;
 
-namespace Controllers
+namespace UI
 {
     public class QuestFlyer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {

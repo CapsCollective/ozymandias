@@ -1,25 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
-
-public class TurnEventController : MonoBehaviour
+namespace Controllers
 {
-
-    public UnityEvent OnNewTurnPressed;
-    public UnityEvent OnNewTurn;
-
-    // Start is called before the first frame update
-    void Start()
+    public class TurnEventController : MonoBehaviour
     {
-        GameManager.OnNextTurn += InvokeNewTurn;
-        GameManager.OnNewTurn += InvokeEventsProcessed;
-    }
 
-    private void InvokeNewTurn() => OnNewTurnPressed.Invoke();
+        public UnityEvent OnNewTurnPressed;
+        public UnityEvent OnNewTurn;
 
-    private void InvokeEventsProcessed() => OnNewTurn.Invoke();
+        // Start is called before the first frame update
+        void Start()
+        {
+            GameManager.OnNextTurn += InvokeNewTurn;
+            GameManager.OnNewTurn += InvokeEventsProcessed;
+        }
+
+        private void InvokeNewTurn() => OnNewTurnPressed.Invoke();
+
+        private void InvokeEventsProcessed() => OnNewTurn.Invoke();
     
-    //TODO: Move Game manager turn stuff here
+        //TODO: Move Game manager turn stuff here
+    }
 }

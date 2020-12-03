@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Controllers
+namespace UI
 {
     public class NewspaperEvent : MonoBehaviour
     {

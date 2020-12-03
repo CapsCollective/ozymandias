@@ -57,12 +57,12 @@ namespace Controllers
         private float closestBuildingDistance;
         private bool isAboveLand = true;
         private readonly List<IEnumerator> ambienceCoroutines = new List<IEnumerator>();
-        private UnityEngine.Camera currentCamera;
+        private Camera currentCamera;
         private float timeWaited;
 
         private void Awake() {
             Instance = this;
-            currentCamera = UnityEngine.Camera.main;
+            currentCamera = Camera.main;
         }
 
         private void Start()

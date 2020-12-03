@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Managers;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameManager;
