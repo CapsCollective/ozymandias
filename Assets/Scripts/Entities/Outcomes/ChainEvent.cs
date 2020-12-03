@@ -8,7 +8,7 @@ public class ChainEvent : Outcome
     public bool toFront;
     public override bool Execute()
     {
-        Manager.eventQueue.AddEvent(next, toFront);
+        Manager.Events.AddEvent(next, toFront);
         return true;
     }
 }

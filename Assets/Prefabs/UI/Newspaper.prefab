@@ -119,8 +119,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
-        m_MethodName: QuestToMenu
+      - m_Target: {fileID: 5489909741230785704}
+        m_MethodName: QuitToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -683,6 +683,17 @@ MonoBehaviour:
       - m_Target: {fileID: 7197153339500725284}
         m_MethodName: set_enabled
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: ExitMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1448,7 +1459,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 8.5625
   m_canvasRenderer: {fileID: 4940586562366994291}
   m_TextComponent: {fileID: 2155299430355804350}
   m_materialReferenceIndex: 1
@@ -4568,7 +4579,7 @@ GameObject:
   - component: {fileID: 7197153339500725283}
   - component: {fileID: 7197153339500725284}
   - component: {fileID: 7197153339500725282}
-  - component: {fileID: 3083854812062646462}
+  - component: {fileID: 5489909741230785704}
   m_Layer: 5
   m_Name: Newspaper
   m_TagString: Untagged
@@ -4636,7 +4647,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3083854812062646462
+--- !u!114 &5489909741230785704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4645,9 +4656,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7197153339500725280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ebda6479cd2157468e08499a57a8265, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f1e5cd2e5df4aed85ee954994fa63c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleText: {fileID: 7197153339656531460}
+  articleList:
+  - {fileID: 7197153341332060567}
+  - {fileID: 7197153340730603057}
+  - {fileID: 7197153341340427690}
+  - {fileID: 7197153340655716075}
+  articleImage: {fileID: 7197153341412703772}
+  choiceList:
+  - {fileID: 7197153340011426120}
+  - {fileID: 7197153339882088653}
+  - {fileID: 7197153340426802877}
+  - {fileID: 7197153340165936976}
+  continueButton: {fileID: 9099778652482282381}
+  gameOverButton: {fileID: 641233091}
+  turnCounter: {fileID: 1832903951}
+  continueButtonContent: {fileID: 1330539936996201690}
+  disableButtonContent: {fileID: 53469556635495555}
 --- !u!1 &7197153339544811217
 GameObject:
   m_ObjectHideFlags: 0
@@ -5157,7 +5185,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 5489909741230785704}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5320,7 +5348,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 5489909741230785704}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5483,7 +5511,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 5489909741230785704}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5802,7 +5830,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7197153340564165514}
+      - m_Target: {fileID: 5489909741230785704}
         m_MethodName: OnChoiceSelected
         m_Mode: 3
         m_Arguments:
@@ -5855,7 +5883,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7197153341307257181}
   - component: {fileID: 7197153340564165516}
-  - component: {fileID: 7197153340564165514}
   m_Layer: 5
   m_Name: NewspaperBody
   m_TagString: Untagged
@@ -5904,35 +5931,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7197153340564165515}
   m_CullTransparentMesh: 0
---- !u!114 &7197153340564165514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7197153340564165515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f1e5cd2e5df4aed85ee954994fa63c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  titleText: {fileID: 7197153339656531460}
-  articleList:
-  - {fileID: 7197153341332060567}
-  - {fileID: 7197153340730603057}
-  - {fileID: 7197153341340427690}
-  - {fileID: 7197153340655716075}
-  articleImage: {fileID: 7197153341412703772}
-  choiceList:
-  - {fileID: 7197153340011426120}
-  - {fileID: 7197153339882088653}
-  - {fileID: 7197153340426802877}
-  - {fileID: 7197153340165936976}
-  continueButton: {fileID: 9099778652482282381}
-  gameOverButton: {fileID: 641233091}
-  turnCounter: {fileID: 1832903951}
-  continueButtonContent: {fileID: 1330539936996201690}
-  disableButtonContent: {fileID: 53469556635495555}
 --- !u!1 &7197153340655716073
 GameObject:
   m_ObjectHideFlags: 0
@@ -7658,7 +7656,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 8.5625
   m_canvasRenderer: {fileID: 5163187266849701948}
   m_TextComponent: {fileID: 7299838898951334729}
   m_materialReferenceIndex: 1
@@ -7889,7 +7887,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 8.5625
   m_canvasRenderer: {fileID: 4696892734054802128}
   m_TextComponent: {fileID: 4444514588734514818}
   m_materialReferenceIndex: 1

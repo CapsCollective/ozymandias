@@ -111,7 +111,6 @@ GameObject:
   - component: {fileID: 4826372568487654229}
   - component: {fileID: 240691718}
   - component: {fileID: 1115064009}
-  - component: {fileID: 1115064013}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -166,7 +165,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -217,6 +216,13 @@ MonoBehaviour:
   startRot: {x: 40, y: -15, z: 0}
   centerButton: {fileID: 0}
   centerButtonText: {fileID: 0}
+  dummyCursor: {fileID: 0}
+  canvas: {fileID: 0}
+  profile: {fileID: 11400000, guid: 08abc5f6c7c957f459d6ed1b8eeda8cc, type: 2}
+  volume: {fileID: 1851331017}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 67108865
   dragSpeed: 3
   scrollSpeed: 3
   rotateSpeed: 3
@@ -285,20 +291,3 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!114 &1115064013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4826372568487654225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83178742df15f944286091d591050d6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 08abc5f6c7c957f459d6ed1b8eeda8cc, type: 2}
-  volume: {fileID: 1851331017}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 67108865

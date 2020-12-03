@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class UiUpdater : MonoBehaviour
+namespace UI
 {
-
-    private void Awake()
+    public abstract class UiUpdater : MonoBehaviour
     {
-        GameManager.OnUpdateUI += UpdateUi;
-    }
 
-    private void OnDestroy()
-    {
-        GameManager.OnUpdateUI -= UpdateUi;
-    }
+        private void Awake()
+        {
+            GameManager.OnUpdateUI += UpdateUi;
+        }
 
-    public abstract void UpdateUi();
+        private void OnDestroy()
+        {
+            GameManager.OnUpdateUI -= UpdateUi;
+        }
+
+        public abstract void UpdateUi();
+    }
 }

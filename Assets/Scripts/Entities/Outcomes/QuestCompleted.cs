@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using static QuestMapController;
+using static GameManager;
 
 public class QuestCompleted : Outcome
 {
@@ -10,7 +10,7 @@ public class QuestCompleted : Outcome
         foreach (var adventurer in quest.assigned) adventurer.assignedQuest = null;
         quest.assigned = new List<Adventurer>();
         
-        return QuestMap.RemoveQuest(quest);
+        return Manager.Quests.Remove(quest);
     }
 
     public override string Description => "<color=#007000ff>Quest completed: " + quest.title + ".\n" + 

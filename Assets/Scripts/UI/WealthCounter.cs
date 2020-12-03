@@ -1,37 +1,38 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using static GameManager;
 
-public class WealthCounter : UiUpdater
+namespace UI
 {
-    public TextMeshProUGUI wealth;
-
-    private int wpt;
-    private int previousWealth = 0;
-    private int targetWealth = 0;
-
-    // Update is called once per frame
-    public override void UpdateUi()
+    public class WealthCounter : UiUpdater
     {
-        wpt = Manager.WealthPerTurn;
-        wealth.text = targetWealth + " (+" + wpt + ")";
-        if (targetWealth == Manager.Wealth) return; // Don't double update
-        previousWealth = targetWealth;
-        targetWealth = Manager.Wealth;
-        StartCoroutine(Scale());
-    }
+        public TextMeshProUGUI wealth;
 
-    IEnumerator Scale()
-    {
-        for (float t = 0; t < 0.3f; t += Time.deltaTime)
+        private int wpt;
+        private int previousWealth = 0;
+        private int targetWealth = 0;
+
+        // Update is called once per frame
+        public override void UpdateUi()
         {
-            int w = (int)Mathf.Lerp(previousWealth, targetWealth, t / 0.3f);
-            wealth.text = w + " (+" + wpt + ")";
-            yield return null;
+            wpt = Manager.WealthPerTurn;
+            wealth.text = targetWealth + " (+" + wpt + ")";
+            if (targetWealth == Manager.Wealth) return; // Don't double update
+            previousWealth = targetWealth;
+            targetWealth = Manager.Wealth;
+            StartCoroutine(Scale());
         }
-        wealth.text = Manager.Wealth + " (+" + Manager.WealthPerTurn + ")";
+
+        IEnumerator Scale()
+        {
+            for (float t = 0; t < 0.3f; t += Time.deltaTime)
+            {
+                int w = (int)Mathf.Lerp(previousWealth, targetWealth, t / 0.3f);
+                wealth.text = w + " (+" + wpt + ")";
+                yield return null;
+            }
+            wealth.text = Manager.Wealth + " (+" + Manager.WealthPerTurn + ")";
+        }
     }
 }

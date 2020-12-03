@@ -44,7 +44,7 @@ public class Quest : ScriptableObject
     {
         if (turnsLeft <= 1)
         {
-            if (completeEvent) Manager.eventQueue.AddEvent(completeEvent, true);
+            if (completeEvent) Manager.Events.AddEvent(completeEvent, true);
             else Debug.LogError("Quest was completed with no event.");
             GameManager.OnNewTurn -= OnNewTurn;
         }

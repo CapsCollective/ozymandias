@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Screenshotter : MonoBehaviour
+namespace Utilities
 {
-    // Update is called once per frame
-    void Update()
+    public class Screenshotter : MonoBehaviour
     {
-        if (Input.GetKey(KeyCode.S))
+        // Update is called once per frame
+        void Update()
         {
-            Debug.Log("Screenshot");
-            StartCoroutine("Screenshot");
+            if (Input.GetKey(KeyCode.S))
+            {
+                Debug.Log("Screenshot");
+                StartCoroutine("Screenshot");
+            }
         }
-    }
 
-    IEnumerator Screenshot()
-    {
-        GetComponent<CanvasGroup>().alpha = 0;
-        ScreenCapture.CaptureScreenshot($"Ozymandias_{DateTime.Now.ToString(@"dd-MM-yyyy-hh-mm-ss")}.png");
-        yield return null;
-        GetComponent<CanvasGroup>().alpha = 1;
+        IEnumerator Screenshot()
+        {
+            GetComponent<CanvasGroup>().alpha = 0;
+            ScreenCapture.CaptureScreenshot($"Ozymandias_{DateTime.Now.ToString(@"dd-MM-yyyy-hh-mm-ss")}.png");
+            yield return null;
+            GetComponent<CanvasGroup>().alpha = 1;
+        }
     }
 }

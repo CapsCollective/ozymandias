@@ -5,8 +5,6 @@ using static GameManager;
 
 public class Map : MonoBehaviour
 {
-    public static Map CurrentMap;
-
     public MapLayout mapLayout;
     public MeshFilter roadMF;
 
@@ -34,7 +32,6 @@ public class Map : MonoBehaviour
         cam = Camera.main;
         Generate();
         mapLayout.ClearGraph();
-        CurrentMap = this;
     }
 
     private void AddRoad(Mesh road)
