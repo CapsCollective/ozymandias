@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
+using Camera = UnityEngine.Camera;
 
 [RequireComponent(typeof(Animator))]
 public class MapAnimator : MonoBehaviour
@@ -26,10 +28,10 @@ public class MapAnimator : MonoBehaviour
     {
         UpdateEffectOrigin();
 
-        if ((PlacementManager.Selected != PlacementManager.Deselected || clear.toggle.isOn) && !flooded)
+        if ((BuildingPlacement.Selected != BuildingPlacement.Deselected || clear.toggle.isOn) && !flooded)
             Flood();
         
-        if ((PlacementManager.Selected == PlacementManager.Deselected && !clear.toggle.isOn) && flooded)
+        if ((BuildingPlacement.Selected == BuildingPlacement.Deselected && !clear.toggle.isOn) && flooded)
             Drain();
 
     }

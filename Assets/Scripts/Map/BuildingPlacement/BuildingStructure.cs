@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Controllers;
 using Managers_and_Controllers;
 using UnityEngine;
 
@@ -89,11 +90,11 @@ public class BuildingStructure : MonoBehaviour
 
     public void PlayBuildSound()
     {
-        JukeboxController.Instance.PlayBuild();
+        Jukebox.Instance.PlayBuild();
     }
     
     public void PlayDestroySound()
     {
-        JukeboxController.Instance.PlayDestroy();
+        Jukebox.Instance.PlayDestroy();
     }
 }

@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using NaughtyAttributes;
-using UnityEngine.Serialization;
-using static QuestMapController;
+using static GameManager;
 
 [CreateAssetMenu(fileName = "New Quest Outcome", menuName = "Outcomes/New Quest")]
 public class NewQuest : Outcome
@@ -14,7 +10,7 @@ public class NewQuest : Outcome
     [Button]
     public override bool Execute()
     {
-        return QuestMap.AddQuest(quest);
+        return Manager.Quests.Add(quest);
     }
     
     public override string Description

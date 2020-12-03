@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3308454136949207827}
   - component: {fileID: 8703429468604558240}
   - component: {fileID: 3326376377040969848}
-  - component: {fileID: 2996761806577639229}
   m_Layer: 23
   m_Name: Fir 2
   m_TagString: Untagged
@@ -49,6 +48,9 @@ MonoBehaviour:
   - prefab: {fileID: 3123894925311317362, guid: 02fcc2cd02869af44ab057a5d55def92,
       type: 3}
     directions: 
+  indestructable: 0
+  buildTrigger: Build
+  clearTrigger: Clear
 --- !u!114 &3326376377040969848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,30 +69,14 @@ MonoBehaviour:
   operational: 0
   terrain: 1
   type: 0
+  primaryStat: 0
   baseCost: 0
   accommodation: 0
+  equipment: 0
   weaponry: 0
   magic: 0
-  equipment: 0
   food: 0
   entertainment: 0
   luxury: 0
   spending: 0
   defense: 0
---- !u!114 &2996761806577639229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7018205546198717094}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 748b7c8bf9b55e34ebd5aa1b7db774de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map: {fileID: 0}
-  distance: 1.5
-  terrainBuilding: {fileID: 7018205546198717094}
-  numberRadius: 1
-  isAesthetic: 0

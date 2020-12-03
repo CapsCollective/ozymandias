@@ -1,17 +1,18 @@
 ﻿using Boo.Lang;
 using System;
 using System.Linq;
+using Managers;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(EventQueue))]
+[CustomEditor(typeof(Events))]
 public class EventQueueEditor : Editor
 {
-    private EventQueue e; 
+    private Events e; 
 
     private void OnEnable()
     {
-        e = (EventQueue)target;
+        e = (Events)target;
     }
 
     public override void OnInspectorGUI()

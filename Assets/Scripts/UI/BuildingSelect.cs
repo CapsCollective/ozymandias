@@ -1,4 +1,5 @@
 ﻿using System;
+using Controllers;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace UI
         public GameObject buildingPrefab;
         
         // Serialised fields
+        #pragma warning disable 0649
         [SerializeField] private int position;
         [SerializeField] private BuildingSelect[] siblingCards;
         
@@ -62,7 +64,7 @@ namespace UI
             {
                 // Unselect the card if un-interactable
                 toggle.isOn = false;
-                PlacementManager.Selected = Deselected;
+                BuildingPlacement.Selected = Deselected;
                 cardHighlight.color = new Color(1, 1, 1, 0);
             }
             
@@ -81,13 +83,13 @@ namespace UI
                 });
                 
                 // Set card selection
-                PlacementManager.Selected = position;
+                BuildingPlacement.Selected = position;
                 OnPointerEnter(null);
             }
             else
             {
                 // Deselect the building
-                PlacementManager.Selected = Deselected;
+                BuildingPlacement.Selected = Deselected;
                 OnPointerExit(null);
             }
             

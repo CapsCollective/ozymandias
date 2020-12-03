@@ -14,8 +14,8 @@ public class Quest : ScriptableObject
     public int turns = 5;
     public int adventurers = 2;
     [Range(0.5f, 3f)] public float costScale = 1.5f; // How many turns worth of gold to send, sets cost when created.
-    [ReadOnly] public int cost = 0; 
-    
+    [ReadOnly] public int cost = 0;
+
     public string title;
     [TextArea] public string description;
     public Event completeEvent; // Keep empty if randomly chosen
@@ -23,7 +23,7 @@ public class Quest : ScriptableObject
 
     public int turnsLeft;
     public List<Adventurer> assigned;
-    
+
     public void StartQuest()
     {
         if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
@@ -35,16 +35,46 @@ public class Quest : ScriptableObject
         Manager.UpdateUi();
     }
 
+    public void ResumeQuest()
+    {
+        GameManager.OnNewTurn += OnNewTurn;
+    }
+
     private void OnNewTurn()
     {
         if (turnsLeft <= 1)
         {
-            if (completeEvent) Manager.eventQueue.AddEvent(completeEvent, true);
+            if (completeEvent) Manager.Events.AddEvent(completeEvent, true);
             else Debug.LogError("Quest was completed with no event.");
             GameManager.OnNewTurn -= OnNewTurn;
         }
         Debug.Log($"Quest in progress: {title}. {turnsLeft} turns remaining.");
         turnsLeft--;
+    }
+
+    public string Serialize()
+    {
+        return JsonUtility.ToJson(new QuestDetails
+        {
+            name = name,
+            turnsLeft = turnsLeft,
+            cost = cost,
+            assigned = assigned.Select(a => a.name).ToList()
+        });
+    }
+
+    public static QuestDetails Deserialize(string q)
+    {
+        return JsonUtility.FromJson<QuestDetails>(q);
+    }
+
+    [Serializable]
+    public struct QuestDetails
+    {
+        public string name;
+        public int turnsLeft;
+        public int cost;
+        public List<string> assigned;
     }
 
     // Need this so if a quest is in progress and the game ends

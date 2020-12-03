@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using static GameManager;
 
-public class AdventurerRow : MonoBehaviour
+namespace UI
 {
-    public TextMeshProUGUI nameText, classText, daysText, locationText;
-
-    public void Display(Adventurer adventurer)
+    public class AdventurerRow : MonoBehaviour
     {
-        nameText.text = adventurer.name;
-        classText.text = adventurer.category.ToString();
-        daysText.text = (Manager.turnCounter - adventurer.turnJoined) + " Days";
-        locationText.text = adventurer.assignedQuest ? adventurer.assignedQuest.title : "In Town";
+        public TextMeshProUGUI nameText, classText, daysText, locationText;
+
+        public void Display(Adventurer adventurer)
+        {
+            nameText.text = adventurer.name;
+            classText.text = adventurer.category.ToString();
+            daysText.text = (Manager.turnCounter - adventurer.turnJoined) + " Days";
+            locationText.text = adventurer.assignedQuest ? adventurer.assignedQuest.title : "In Town";
+        }
     }
 }

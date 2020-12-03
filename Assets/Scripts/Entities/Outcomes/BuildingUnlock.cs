@@ -1,11 +1,6 @@
 ﻿using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static GameManager;
-using static AchievementManager;
-using static BuildingManager;
 
 [CreateAssetMenu(fileName = "Building Unlock", menuName = "Outcomes/Building Unlock")]
 public class BuildingUnlock : Outcome
@@ -18,19 +13,7 @@ public class BuildingUnlock : Outcome
         if (!building)
             return false;
 
-        if (!BuildManager.AllBuildings.Contains(building))
-        {
-            BuildManager.AllBuildings.Add(building);
-            Debug.Log($"Building Unlocked: {building}");
-            Achievements.Unlock("A Helping Hand");
-            if (BuildManager.AllBuildings.Count >= 14) //9 plus the 5 unlocked
-                Achievements.Unlock("Modern Influences");
-            return true;
-        }
-
-        Debug.LogError("Building already unlocked");
-        // Add some spending instead?
-        return false;
+        return Manager.BuildingCards.Unlock(building);
     }
 
     public override string Description => "<color=#007000ff>Building Type Unlocked: " + building.name + "!</color>";

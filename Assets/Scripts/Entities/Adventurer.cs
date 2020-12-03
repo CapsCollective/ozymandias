@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using static GameManager;
@@ -90,4 +90,10 @@ public class Adventurer : MonoBehaviour
             default: return AdventurerCategory.Brawler;
         }
     }
+
+    public string Serialize()
+    {
+        return $"{name},{(int)category},{isSpecial},{turnJoined}";
+    }
+    
 }

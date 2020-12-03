@@ -53,7 +53,7 @@ public class Event : ScriptableObject
     [Button()] // Debug to test specific events
     public void AddToQueue()
     {
-        Manager.eventQueue.AddEvent(this, true);
+        Manager.Events.AddEvent(this, true);
     }
     
 }

@@ -14,9 +14,9 @@ public class StatChange : Outcome
     {
         Manager.modifiers[statToChange].Add(new Modifier
         {
-            Amount = amount,
-            TurnsLeft = turns,
-            Reason = reason
+            amount = amount,
+            turnsLeft = turns,
+            reason = reason
         });
         Manager.modifiersTotal[statToChange] += amount;
         return true;

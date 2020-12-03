@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Controllers;
 
-namespace Managers_and_Controllers
+namespace Utilities
 {
     public class ClickOnButtonDown : MonoBehaviour
     {
@@ -11,13 +12,13 @@ namespace Managers_and_Controllers
             if (target != null)
             {
                 target.onClick.AddListener(() => {
-                    JukeboxController.Instance.PlayClick();
+                    Jukebox.Instance.PlayClick();
                 });
             }
             else
             {
                 GetComponent<Toggle>().onValueChanged.AddListener((v) => {
-                    JukeboxController.Instance.PlayClick();
+                    Jukebox.Instance.PlayClick();
                 });
             }
         }

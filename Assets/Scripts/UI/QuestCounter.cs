@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestCounter : MonoBehaviour
+namespace UI
 {
-    public TextMeshProUGUI text;
-    public Image image;
-    public Color readColor, unreadColor;
-
-    private void Start()
+    public class QuestCounter : MonoBehaviour
     {
-        UpdateCounter(0);
-    }
+        public TextMeshProUGUI text;
+        public Image image;
+        public Color readColor, unreadColor;
 
-    public void UpdateCounter(int count, bool markUnread = false)
-    {
-        gameObject.SetActive(count != 0);
-        text.text = count.ToString();
-        if (markUnread) image.color = unreadColor;
-    }
+        private void Start()
+        {
+            UpdateCounter(0);
+        }
 
-    public void Read()
-    {
-        image.color = readColor;
+        public void UpdateCounter(int count, bool markUnread = false)
+        {
+            gameObject.SetActive(count != 0);
+            text.text = count.ToString();
+            if (markUnread) image.color = unreadColor;
+        }
+
+        public void Read()
+        {
+            image.color = readColor;
+        }
     }
 }
