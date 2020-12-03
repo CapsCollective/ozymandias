@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,15 +22,22 @@ namespace Managers_and_Controllers
         [SerializeField] private TextMeshProUGUI turnCounter;
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
+        [SerializeField] private GameObject newspaperContainer;
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private float animateInDuration = .5f;
+        [SerializeField] private float animateOutDuration = .75f;
+        
         private Event choiceEvent;
         private string newspaperTitle;
 
-        private void Awake()
+        private void Start()
         {
             newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + newspaperTitle + " }";
             EventQueue.OnEventsProcessed += UpdateDisplay;
             GameManager.OnNewTurn += OnNewTurn;
+            continueButton.onClick.AddListener(AnimateClose);
+            AnimateClose();
         }
 
         private void OnNewTurn()
@@ -42,6 +50,7 @@ namespace Managers_and_Controllers
         
         public void OnOpened()
         {
+            AnimateOpen();
             JukeboxController.Instance.PlayScrunch();
             if (Random.Range(0, 5) != 2) return;
             JukeboxController.Instance.PlayMorning();
@@ -108,6 +117,24 @@ namespace Managers_and_Controllers
             continueButton.enabled = state;
             continueButtonContent.SetActive(state);
             disableButtonContent.SetActive(!state);
+        }
+        
+        private void AnimateOpen()
+        {
+            ShadeController.Instance.SetDisplay(true);
+            newspaperContainer.transform
+                .DOLocalMove(Vector3.zero, animateInDuration)
+                .OnStart(() => { canvas.enabled = true; });
+            newspaperContainer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
+        }
+        
+        private void AnimateClose()
+        {
+            ShadeController.Instance.SetDisplay(false);
+            newspaperContainer.transform.DOLocalMove(new Vector3(1000, 500, 0), animateOutDuration);
+            newspaperContainer.transform
+                .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
+                .OnComplete(() => { canvas.enabled = false; });
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Managers_and_Controllers;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,7 +13,13 @@ public class QuestMapController : MonoBehaviour
     [SerializeField] private List<QuestDisplayManager> availableFlyers = new List<QuestDisplayManager>();
     [SerializeField] private List<QuestDisplayManager> usedFlyers = new List<QuestDisplayManager>();
     [SerializeField] private QuestCounter counter;
-    //private Dictionary<string, GameObject> flyerMappings = new Dictionary<string, GameObject>();
+    
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private GameObject mapContainer;
+    
+    [SerializeField] private float animateInDuration = .5f;
+    [SerializeField] private float animateOutDuration = .75f;
+
     private HighlightOnHover displayingFlyerComponent;
 
     private static QuestMapController instance;
@@ -30,14 +37,37 @@ public class QuestMapController : MonoBehaviour
     
     public void OnOpened()
     {
+        ShadeController.Instance.SetDisplay(true);
         JukeboxController.Instance.PlayScrunch();
+        AnimateOpen();
         if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
         PlayerPrefs.SetInt("tutorial_video_quests", 1);
         TutorialPlayerController.Instance.PlayClip(2);
     }
+    
+    public void OnClose()
+    {
+        AnimateClose();
+    }
+
+    private void AnimateOpen()
+    {
+        mapContainer.transform
+            .DOLocalMove(Vector3.zero, animateInDuration)
+            .OnStart(() => { canvas.enabled = true; });
+        mapContainer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
+    }
+    
+    private void AnimateClose()
+    {
+        ShadeController.Instance.SetDisplay(false);
+        mapContainer.transform.DOLocalMove(new Vector3(-100, -500, 0), animateOutDuration)
+            .OnComplete(() => { canvas.enabled = false; });
+    }
 
     private void Start()
     {
+        AnimateClose();
         foreach (var flyer in availableFlyers)
         {
             flyer.GetComponent<HighlightOnHover>().callbackMethod = OnFlyerClick;
