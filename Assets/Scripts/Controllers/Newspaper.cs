@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Managers;
 using TMPro;
 using UI;
@@ -23,26 +24,27 @@ namespace Controllers
         [SerializeField] private TextMeshProUGUI turnCounter;
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
+        [SerializeField] private float animateInDuration = .5f;
+        [SerializeField] private float animateOutDuration = .75f;
         private Event _choiceEvent;
         private string _newspaperTitle;
         private Canvas _canvas;
 
-        private void Awake()
+        private void Start()
         {
             _canvas = GetComponent<Canvas>();
             _newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + _newspaperTitle + " }";
             Events.OnEventsProcessed += UpdateDisplay;
             GameManager.OnNewTurn += OnNewTurn;
+            continueButton.onClick.AddListener(Close);
+            Close();
         }
 
         private void OnNewTurn()
         {
-            _canvas.enabled = true;
-            
-            Jukebox.Instance.PlayScrunch();
-            if (Random.Range(0, 5) != 2) return; // 1/5 chance to play sound
-            Jukebox.Instance.PlayMorning();
+            Open();
+            if (Random.Range(0, 5) == 2) Jukebox.Instance.PlayMorning(); // 1/5 chance to play sound
             
             if (PlayerPrefs.GetInt("tutorial_video_events", 0) > 0) return;
             PlayerPrefs.SetInt("tutorial_video_events", 1);
@@ -111,6 +113,26 @@ namespace Controllers
             continueButton.enabled = state;
             continueButtonContent.SetActive(state);
             disableButtonContent.SetActive(!state);
+        }
+        
+        public void Open()
+        {
+            _canvas.enabled = true;
+            Manager.EnterMenu();
+            Jukebox.Instance.PlayScrunch();
+            transform
+                .DOLocalMove(Vector3.zero, animateInDuration)
+                .OnStart(() => { _canvas.enabled = true; });
+            transform.DOLocalRotate(Vector3.zero, animateInDuration);
+        }
+        
+        public void Close()
+        {
+            Manager.ExitMenu();
+            transform.DOLocalMove(new Vector3(1000, 500, 0), animateOutDuration);
+            transform
+                .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
+                .OnComplete(() => { _canvas.enabled = false; });
         }
     }
 }

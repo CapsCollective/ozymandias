@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Controllers;
+using DG.Tweening;
 using Managers_and_Controllers;
 using UI;
 using UnityEngine;
 using Utilities;
+using static GameManager;
 
 namespace Managers
 {
@@ -14,7 +16,11 @@ namespace Managers
         [SerializeField] private List<QuestFlyer> availableFlyers = new List<QuestFlyer>();
         [SerializeField] private List<QuestFlyer> usedFlyers = new List<QuestFlyer>();
         [SerializeField] private QuestCounter counter;
+        [SerializeField] private float animateInDuration = .5f;
+        [SerializeField] private float animateOutDuration = .75f;
+
         private QuestFlyer _selectedQuest;
+        private Canvas _canvas;
 
         public int Count => usedFlyers.Count;
 
@@ -22,6 +28,8 @@ namespace Managers
 
         private void Start()
         {
+            _canvas = GetComponent<Canvas>();
+
             foreach (var flyer in availableFlyers)
             {
                 flyer.GetComponent<QuestFlyer>().callbackMethod = OnFlyerClick;
@@ -43,14 +51,30 @@ namespace Managers
             _selectedQuest.DisplaySelected();
         }
         
-        public void OnOpened()
+        public void Open()
         {
+            Manager.EnterMenu();
             Jukebox.Instance.PlayScrunch();
+            counter.Read();
+            
+            transform
+                .DOLocalMove(Vector3.zero, animateInDuration)
+                .OnStart(() => { _canvas.enabled = true; });
+            transform.DOLocalRotate(Vector3.zero, animateInDuration);
+            
             if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
             PlayerPrefs.SetInt("tutorial_video_quests", 1);
             TutorialPlayerController.Instance.PlayClip(2);
         }
-
+        
+        public void Close()
+        {
+            Manager.ExitMenu();
+            
+            transform.DOLocalMove(new Vector3(-100, -500, 0), animateOutDuration)
+            .OnComplete(() => { _canvas.enabled = false; });
+        }
+        
         public bool Add(Quest q)
         {
             if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.flyerQuest == q)) return false;

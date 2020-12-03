@@ -2,6 +2,7 @@
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameManager;
 
 namespace Managers
 {
@@ -16,8 +17,12 @@ namespace Managers
         private Dictionary<string, Achievement> achievements = new Dictionary<string, Achievement>();
         private Dictionary<string, bool> unlocked = new Dictionary<string, bool>();
 
-        void Start()
+        private Canvas _canvas;
+
+        private void Awake()
         {
+            _canvas = GetComponent<Canvas>();
+            
             //unlocked = JsonUtility.FromJson<Dictionary<string, bool>>(PlayerPrefs.GetString("Achievements", "{'Village People': 'true'}"));
             foreach (Achievement achievement in FindObjectsOfType<Achievement>())
             {
@@ -37,6 +42,7 @@ namespace Managers
             PlayerPrefs.SetInt(achievementTitle, 1);
             notification.SetActive(true);
         }
+        
         public void SetCitySize(int count)
         {
             if (count < 15)
@@ -91,6 +97,19 @@ namespace Managers
         }*/
         }
 
+        public void Open()
+        {
+            _canvas.enabled = true;
+            Manager.EnterMenu();
+            notification.SetActive(false);
+        }
+
+        public void Close()
+        {
+            _canvas.enabled = false;
+            Manager.ExitMenu();
+        }
+        
         private void OnDestroy()
         {
             foreach (var achievement in unlocked)

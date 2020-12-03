@@ -512,12 +512,14 @@ public class GameManager : MonoBehaviour
     public void EnterMenu()
     {
         inMenu = true;
+        Shade.Instance.SetDisplay(true);
         BuildingPlacement.GetComponent<ToggleGroup>().SetAllTogglesOff();
     }
     
     public void ExitMenu()
     {
         inMenu = false;
+        Shade.Instance.SetDisplay(false);
     }
     
     public GameObject adventurersContainer, buildingsContainer, graveyard;

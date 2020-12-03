@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -64,7 +63,7 @@ namespace Managers_and_Controllers
 
         public void OnClose()
         {
-            player.Stop();
+            //player.Stop();
         }
     }
 }

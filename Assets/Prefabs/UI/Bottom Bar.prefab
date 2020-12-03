@@ -209,18 +209,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: EnterMenu
+        m_MethodName: Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1204,18 +1193,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: OnOpened
+        m_MethodName: Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1223,29 +1201,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: EnterMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 3359492890272666187}
-        m_MethodName: Read
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &2027286261735469289
 GameObject:
@@ -4095,7 +4051,6 @@ MonoBehaviour:
   grey: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   canvasGroup: {fileID: 6840793164016956187}
   cost: {fileID: 4874357702098851604}
-  placementManager: {fileID: 4020114589471263462}
 --- !u!1 &6322604861989488908
 GameObject:
   m_ObjectHideFlags: 0
@@ -4974,29 +4929,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 8769086593735523467}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: EnterMenu
+        m_MethodName: Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5004,7 +4937,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &27791265652964993
 MonoBehaviour:
@@ -5947,6 +5880,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
+--- !u!224 &1132994366865547079 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6942772673954424133, guid: e0cfdd53e09f042388fafc21800681d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 8061613387305302530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3460629849450965627 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
@@ -5959,12 +5898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6846cb443199e4d4e98ac2a19fdce873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &1132994366865547079 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6942772673954424133, guid: e0cfdd53e09f042388fafc21800681d7,
-    type: 3}
-  m_PrefabInstance: {fileID: 8061613387305302530}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8561094347670639989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6154,12 +6087,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
---- !u!224 &1627685150250037296 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6942772673954424133, guid: e0cfdd53e09f042388fafc21800681d7,
-    type: 3}
-  m_PrefabInstance: {fileID: 8561094347670639989}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2965945645933626636 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
@@ -6172,3 +6099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6846cb443199e4d4e98ac2a19fdce873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1627685150250037296 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6942772673954424133, guid: e0cfdd53e09f042388fafc21800681d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 8561094347670639989}
+  m_PrefabAsset: {fileID: 0}
