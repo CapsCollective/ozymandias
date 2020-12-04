@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Utilities;
 using Random = UnityEngine.Random;
-using EventType = Event.EventType;
 using static GameManager;
 
 namespace Managers
@@ -14,65 +15,67 @@ namespace Managers
     {
         private const int MinQueueEvents = 3; // The minimum events in the queue to store
     
-        [ReorderableList]
-        public LinkedList<Event> headliners = new LinkedList<Event>();
-        public LinkedList<Event> others = new LinkedList<Event>();
+        private readonly LinkedList<Event> _headliners = new LinkedList<Event>();
+        private readonly LinkedList<Event> _others = new LinkedList<Event>();
 
-        public Dictionary<EventType, LinkedList<Event>> eventPools = new Dictionary<EventType, LinkedList<Event>>(); //Events to randomly add to the queue
+        private readonly Dictionary<EventType, List<Event>> 
+            _availablePools = new Dictionary<EventType, List<Event>>(), //Events to randomly add to the queue
+            _usedPools = new Dictionary<EventType, List<Event>>(), //Events already run but will be readded on a shuffle
+            _discardedPools = new Dictionary<EventType, List<Event>>(); //Events that shouldn't be run again
     
-        [ReadOnly] public List<Event> current = new List<Event>(4);
-        [ReadOnly] public List<string> outcomeDescriptions = new List<string>(4);
-    
-        public static Action<List<Event>, List<string>> OnEventsProcessed;
-    
-        [HideInInspector] public List<Event> allEvents;
+        [ReadOnly] private readonly List<Event> _current = new List<Event>(4);
+        [ReadOnly] private readonly List<string> _outcomeDescriptions = new List<string>(4);
+        
+        private int _nextBuildingUnlock = 10;
+        
+        [SerializeField] private AssetLabelReference label;
 
-        public int nextBuildingUnlock = 10;
-
-        [Tooltip("Events in this array are ignored by the Add All button")]
-        public Event[] filterEvents;
-    
-        public void Awake()
+        private void Awake()
         {
             Random.InitState((int)DateTime.Now.Ticks);
 
-            foreach (EventType type in Enum.GetValues(typeof(EventType))) eventPools.Add(type, Shuffle(type));
+            foreach (EventType type in Enum.GetValues(typeof(EventType)))
+            {
+                _availablePools.Add(type, new List<Event>());
+                _usedPools.Add(type, new List<Event>());
+                _discardedPools.Add(type, new List<Event>());
+            }
         }
-
-        public void ProcessEvents()
+      
+        public void Process()
         {
-            current.Clear();
-            outcomeDescriptions.Clear();
+            _current.Clear();
+            _outcomeDescriptions.Clear();
         
-            if (headliners.Count > 0)
+            if (_headliners.Count > 0)
             {
-                current.Add(headliners.First.Value);
-                headliners.RemoveFirst();
+                _current.Add(_headliners.First.Value);
+                _headliners.RemoveFirst();
             }
 
-            while (current.Count < 3)
+            while (_current.Count < 3)
             {
-                if (others.Count < MinQueueEvents) { AddRandomSelection(); continue; }
-                current.Add(others.First.Value);
-                others.RemoveFirst();
+                if (_others.Count < MinQueueEvents) { AddRandomSelection(); continue; }
+                _current.Add(_others.First.Value);
+                _others.RemoveFirst();
             }
         
-            current.Add(PickRandom(EventType.Advert));
+            _current.Add(PickRandom(EventType.Advert));
 
-            foreach (Event e in current) outcomeDescriptions.Add(e.Execute());
+            foreach (Event e in _current) _outcomeDescriptions.Add(e.Execute());
         
-            OnEventsProcessed?.Invoke(current, outcomeDescriptions);
+            Manager.Newspaper.UpdateDisplay(_current, _outcomeDescriptions);
         }
 
-        public void AddRandomSelection()
+        private void AddRandomSelection()
         {
             List<Event> eventPool = new List<Event>();
         
             for (int j = 0; j < 3; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
         
-            if (Manager.TotalAdventurers >= nextBuildingUnlock) {
+            if (Manager.TotalAdventurers >= _nextBuildingUnlock) {
                 eventPool.Add(PickRandom(EventType.Blueprint)); // Spawn every 10 adventurers
-                nextBuildingUnlock += 10;
+                _nextBuildingUnlock += 10;
             }
 
             // Keeps adventurer count roughly at a fair level
@@ -103,59 +106,88 @@ namespace Managers
                 if (Manager.Satisfaction - Random.Range(10,30) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
             }
 
-            while (eventPool.Count > 0) AddEvent(eventPool.PopRandom()); // Add events in random order
+            while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
         }
 
-        public Event PickRandom(EventType type)
+        private Event PickRandom(EventType type)
         {
-            while (true) // Repeats until valid event is found
-            {
-                if (eventPools[type].Count == 0) eventPools[type] = Shuffle(type);
             
-                Event e = eventPools[type].First.Value;
-                eventPools[type].RemoveFirst();
-                if (ValidEvent(e))
-                {
-                    if (e.oneTime) allEvents.Remove(e);
-                    return e;
-                }
-            }
-        }
-
-        public void AddEvent(Event e, bool toFront = false)
-        {
-            if (e.headliner || e.choices.Count > 0)
+            //while (true) // Repeats until valid event is found
+            //{
+            if (_availablePools[type].Count == 0)
             {
-                if (toFront) headliners.AddFirst(e);
-                else headliners.AddLast(e);
+                _availablePools[type] = new List<Event>(_usedPools[type]);
+                _usedPools[type].Clear();
             }
-            else
-            {
-                if (toFront) others.AddFirst(e);
-                else others.AddLast(e);
-            }
+            Event e = _availablePools[type].PopRandom();
+            //if (!ValidEvent(e)) continue;
+            
+            if (e.oneTime) _discardedPools[type].Add(e);
+            else _usedPools[type].Add(e);
+            
+            return e;
+            //}
         }
-
-        public LinkedList<Event> Shuffle(EventType type) // Returns a shuffled list of all events of a certain type
-        {
-            List<Event> events = allEvents.Where(x => x.type == type).ToList();
-            LinkedList<Event> shuffled = new LinkedList<Event>();
-            while (events.Count != 0)
-            {
-                shuffled.AddLast(events.PopRandom());
-            }
-            return shuffled;
-        }
-
-        public bool ValidEvent(Event e)
+        
+        private bool ValidEvent(Event e)
         {
             //TODO: Implement
             return true;
         }
-
-        private void OnDestroy()
+        
+        public void Add(Event e, bool toFront = false)
         {
-            OnEventsProcessed = null;
+            if (e.headliner || e.choices.Count > 0)
+            {
+                if (toFront) _headliners.AddFirst(e);
+                else _headliners.AddLast(e);
+            }
+            else
+            {
+                if (toFront) _others.AddFirst(e);
+                else _others.AddLast(e);
+            }
+        }
+
+        public EventQueueDetails Save()
+        {
+            return new EventQueueDetails
+            {
+                nextBuildingUnlock = _nextBuildingUnlock,
+                headliners = _headliners.Select(e => e.name).ToList(),
+                others = _others.Select(e => e.name).ToList(),
+                used = _usedPools
+                    .Select(pair => new KeyValuePair<EventType, List<string>>(pair.Key, pair.Value.Select(e => e.name).ToList()))
+                    .ToDictionary(t => t.Key, t => t.Value),
+                discarded = _discardedPools
+                    .Select(pair => new KeyValuePair<EventType, List<string>>(pair.Key, pair.Value.Select(e=> e.name).ToList()))
+                    .ToDictionary(t => t.Key, t=> t.Value)
+            };
+        }
+        
+        public async Task Load(EventQueueDetails details)
+        {
+            _nextBuildingUnlock = details.nextBuildingUnlock;
+            
+            List<Event> allEvents = (await Addressables.LoadAssetsAsync<Event>(label, null).Task).ToList();
+            foreach (Event e in allEvents)
+            {
+                if(details.used.ContainsKey(e.type) && details.used[e.type].Contains(e.name)) _usedPools[e.type].Add(e);
+                else if(details.discarded.ContainsKey(e.type) && details.discarded[e.type].Contains(e.name)) _discardedPools[e.type].Add(e);
+                else _availablePools[e.type].Add(e);
+            }
+            
+            foreach (string eventName in details.headliners)
+            {
+                Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
+                Manager.Events._headliners.AddLast(e);
+            }
+
+            foreach (string eventName in details.others)
+            {
+                Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
+                Manager.Events._others.AddLast(e);
+            }
         }
     }
 }

@@ -89,11 +89,11 @@ public class ScenarioEditor : EditorWindow
         btnSelectAsset.clickable.clicked += () => Selection.activeObject = scenario;
 
         enumEventType = root.Query<EnumField>("enumEventType");
-        enumEventType.Init(Event.EventType.AdventurersJoin);
+        enumEventType.Init(EventType.AdventurersJoin);
         enumEventType.RegisterValueChangedCallback((e) =>
         {
             if(scenario != null)
-                scenario.type = (Event.EventType)e.newValue;
+                scenario.type = (EventType)e.newValue;
         });
 
         librarySearchField = root.Query<ToolbarSearchField>("searchLibrary");

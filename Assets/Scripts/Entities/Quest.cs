@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Managers;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
@@ -34,17 +35,12 @@ public class Quest : ScriptableObject
         GameManager.OnNewTurn += OnNewTurn;
         Manager.UpdateUi();
     }
-
-    public void ResumeQuest()
-    {
-        GameManager.OnNewTurn += OnNewTurn;
-    }
-
+    
     private void OnNewTurn()
     {
         if (turnsLeft <= 1)
         {
-            if (completeEvent) Manager.Events.AddEvent(completeEvent, true);
+            if (completeEvent) Manager.Events.Add(completeEvent, true);
             else Debug.LogError("Quest was completed with no event.");
             GameManager.OnNewTurn -= OnNewTurn;
         }
@@ -52,29 +48,25 @@ public class Quest : ScriptableObject
         turnsLeft--;
     }
 
-    public string Serialize()
+    public QuestDetails Save()
     {
-        return JsonUtility.ToJson(new QuestDetails
+        return new QuestDetails
         {
             name = name,
             turnsLeft = turnsLeft,
             cost = cost,
             assigned = assigned.Select(a => a.name).ToList()
-        });
+        };
     }
 
-    public static QuestDetails Deserialize(string q)
+    public void Load(QuestDetails details)
     {
-        return JsonUtility.FromJson<QuestDetails>(q);
-    }
-
-    [Serializable]
-    public struct QuestDetails
-    {
-        public string name;
-        public int turnsLeft;
-        public int cost;
-        public List<string> assigned;
+        cost = details.cost;
+        turnsLeft = details.turnsLeft;
+        if (details.assigned.Count == 0) return;
+        assigned = details.assigned.Select(adventurerName => Manager.adventurers.Find(a => a.name == adventurerName)).ToList();
+        assigned.ForEach(a => a.assignedQuest = this);
+        GameManager.OnNewTurn += OnNewTurn; //Resume Quest
     }
 
     // Need this so if a quest is in progress and the game ends

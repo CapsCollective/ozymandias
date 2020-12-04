@@ -3,81 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Linq;
-using System.Threading.Tasks;
 using Controllers;
 using Managers;
-using Managers_and_Controllers;
 using NaughtyAttributes;
-using Newtonsoft.Json;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
-public enum Metric
-{
-    Accommodation,
-    Satisfaction,
-    Effectiveness,
-    Spending,
-    Defense,
-    Threat, // Mod changes per turn, not total
-    Chaos,
-    // Effectiveness Subcategories
-    Weaponry,
-    Magic,
-    Equipment,
-    Training,
-    // Satisfaction Subcategories
-    Food,
-    Entertainment,
-    Luxuries,
-}
-
-public enum BuildingType
-{
-    Terrain,
-    Ruins,
-    GuildHall,
-    //Equipment
-    GeneralStore, //Better name?
-    Tailor,
-    Apothecary,
-    //Weaponry
-    Blacksmith,
-    Leatherworks,
-    Armoury, //Doubles as Defense
-    //Magic
-    Alchemists,
-    Enchanters,
-    Jewellers, //Doubles as Luxury
-    //Training: Class specific expensive buildings (quest unlocks?)
-    Arena, //Doubles as Entertainment
-    HuntingLodge, //Doubles as Food
-    PerformanceHall, //Doubles as Entertainment
-    Monastery, //Doubles as Accommodation
-    Library, //Doubles as Magic
-    //Food
-    Farm,
-    Bakery,
-    Brewery,
-    //Entertainment
-    Tavern,
-    Plaza,
-    Bathhouse,
-    //Luxury
-    Herbalist,
-    Cartographers,
-    //Accommodation
-    Inn,
-    House,
-    Barracks, // Doubles as housing
-    //Defense
-    GuardOutpost,
-    //Misc
-    Graveyard,
-    Lake
-}
 
 public class GameManager : MonoBehaviour
 {
@@ -116,6 +47,8 @@ public class GameManager : MonoBehaviour
 
         BuildingPlacement = FindObjectOfType<BuildingPlacement>();
         Newspaper = FindObjectOfType<Newspaper>();
+
+        Load();
     }
 
     [Serializable]
@@ -126,120 +59,18 @@ public class GameManager : MonoBehaviour
         public string reason;
     }
     
-    [Serializable]
-    public class SaveFile
-    {
-        [SerializeField] private int wealth, turnCounter, threatLevel, clearCount, nextBuildingUnlock;
-        [SerializeField] private List<string> buildings, adventurers, quests, unlockedBuildings, headlinerEvents, otherEvents, usedEvents;
-        [SerializeField] private string modifiers;
-        
-        public string Save()
-        {
-            wealth = Manager.Wealth;
-            turnCounter = Manager.turnCounter;
-            threatLevel = Manager.ThreatLevel;
-            clearCount = Clear.ClearCount;
-            nextBuildingUnlock = Manager.Events.nextBuildingUnlock;
-            
-            buildings = new List<string>();
-            
-            foreach (var building in Manager.buildings)
-                buildings.Add(building.Serialize());
-            
-            foreach (var terrain in Manager.terrain)
-                buildings.Add(terrain.Serialize());
-            
-            adventurers = Manager.adventurers.Select(a => a.Serialize()).ToList();
-            
-            quests = Manager.Quests.All.Select(q => q.Serialize()).ToList();
-            
-            unlockedBuildings = Manager.BuildingCards.unlockedBuildings.Select(x => x.name).ToList();
-
-            headlinerEvents = Manager.Events.headliners.Select(e => e.name).ToList();
-            Debug.Log(headlinerEvents);
-            
-            otherEvents = Manager.Events.others.Select(e => e.name).ToList();
-            
-            modifiers = JsonConvert.SerializeObject(Manager.modifiers);
-            
-            return JsonUtility.ToJson(this);
-        }
-
-        public async Task Load()
-        {
-            Manager.Wealth = wealth;
-            Manager.turnCounter = turnCounter;
-            Manager.ThreatLevel = threatLevel;
-            Clear.ClearCount = clearCount;
-            Manager.Events.nextBuildingUnlock = nextBuildingUnlock;
-            
-            if (turnCounter == 0)
-                Manager.StartGame();
-            foreach (string adventurer in adventurers)
-                Manager.AddAdventurer(adventurer);
-
-            foreach (string building in buildings)
-            {
-                string[] details = building.Split(',');
-                Vector3 worldPosition = new Vector3(float.Parse(details[1]), 0, float.Parse(details[2]));
-                GameObject buildingInstance = await Addressables.InstantiateAsync(details[0], GameObject.Find("Buildings").transform).Task;
-                Manager.Map.CreateBuilding(buildingInstance, worldPosition, int.Parse(details[3]));
-            }
-
-            foreach (string quest in quests)
-            {
-                Quest.QuestDetails details = Quest.Deserialize(quest);
-                Quest q = await Addressables.LoadAssetAsync<Quest>(details.name).Task;
-                Manager.Quests.Add(q);
-                q.cost = details.cost;
-                q.turnsLeft = details.turnsLeft;
-                if (details.assigned.Count == 0) continue;
-                q.assigned = details.assigned.Select(name => Manager.adventurers.Find(a => a.name == name)).ToList();
-                q.assigned.ForEach(a => a.assignedQuest = q);
-                q.ResumeQuest();
-            }
-
-            foreach (string name in headlinerEvents)
-            {
-                Event e = await Addressables.LoadAssetAsync<Event>(name).Task;
-                Manager.Events.headliners.AddLast(e);
-            }
-
-            foreach (string name in otherEvents)
-            {
-                Event e = await Addressables.LoadAssetAsync<Event>(name).Task;
-                Manager.Events.others.AddLast(e);
-            }
-
-            JsonConvert.PopulateObject(modifiers, Manager.modifiers);
-            foreach (var metricPair in Manager.modifiers)
-                Manager.modifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
-
-            await Manager.BuildingCards.LoadUnlocks(unlockedBuildings);
-            Manager.Events.nextBuildingUnlock = 10 * (unlockedBuildings.Count + 1);
-
-            //TODO: Reshuffle buildings
-
-            //TODO: Queued Events, Used events
-        }
-    }
-    
+    [Button("Save")]
     public void Save()
     {
-        string saveJson = new SaveFile().Save();
-        PlayerPrefs.SetString("save", saveJson);
-        Debug.Log(saveJson);
+        new SaveFile().Save();
     }
 
-    private bool loading = false;
-    public async void Load()
+    private bool _loading;
+    private async void Load()
     {
-        loading = true;
-        //TODO: Do we want to save this to a file instead of playerprefs?
-        string saveJson = PlayerPrefs.GetString("save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
-        await JsonUtility.FromJson<SaveFile>(saveJson).Load();
-        Debug.Log(saveJson);
-        loading = false;
+        _loading = true;
+        await new SaveFile().Load();
+        _loading = false;
         UpdateUi();
     }
 
@@ -285,7 +116,7 @@ public class GameManager : MonoBehaviour
     
     public int WealthPerTurn => Spending * AvailableAdventurers / 10; //10 gold per adventurer times spending
     
-    public int Wealth { get; private set; }
+    public int Wealth { get;  set; }
 
     public int Defense => 
         AvailableAdventurers * Effectiveness / 30 +
@@ -296,11 +127,11 @@ public class GameManager : MonoBehaviour
 
     public int ChangePerTurn => Threat - Defense; // How much the top bar shifts each turn
     
-    public int ThreatLevel { get; private set; } // Percentage of how far along the threat is.
+    public int ThreatLevel { get; set; } // Percentage of how far along the threat is.
 
     public bool Spend(int amount)
     {
-        if (loading) return true; //Don't spend money when loading
+        if (_loading) return true; //Don't spend money when loading
         if (Wealth < amount) return false;
         Wealth -= amount;
         return true;
@@ -386,7 +217,7 @@ public class GameManager : MonoBehaviour
         ThreatLevel = 40;
         Wealth = 50;
         
-        Events.AddEvent(openingEvent, true);
+        Events.Add(openingEvent, true);
         
         // Run the tutorial video
         /*if (PlayerPrefs.GetInt("tutorial_video_basics", 0) == 0)
@@ -415,7 +246,7 @@ public class GameManager : MonoBehaviour
         turnCounter++;
 
         if (ThreatLevel >= 100)
-            foreach (var e in supportWithdrawnEvents) Events.AddEvent(e, true);
+            foreach (var e in supportWithdrawnEvents) Events.Add(e, true);
         
         foreach (var stat in modifiers)
         {
@@ -429,7 +260,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Events.ProcessEvents();
+        Events.Process();
         
         OnNewTurn?.Invoke();
         //if (turnCounter % 5 == 0)
@@ -451,14 +282,14 @@ public class GameManager : MonoBehaviour
         if (building.terrain) terrain.Add(building);
         else buildings.Add(building);
 
-        if(!loading && ++placedThisTurn >= 5) Achievements.Unlock("I'm Saving Up!");
+        if(!_loading && ++placedThisTurn >= 5) Achievements.Unlock("I'm Saving Up!");
         if (buildings.Count >= 30 && Clear.ClearCount == 0) Achievements.Unlock("One With Nature");
         
         //var analyticEvent = Analytics.CustomEvent("Building Built", new Dictionary<string, object>
         //{
         //    {"building_type", building.name},
         //});
-        if(!loading) UpdateUi();
+        if(!_loading) UpdateUi();
     }
 
     public void Demolish(BuildingStats building)
@@ -467,7 +298,7 @@ public class GameManager : MonoBehaviour
         {
             //TODO: Add an 'are you sure?' dialogue
             Achievements.Unlock("Now Why Would You Do That?");
-            foreach (var e in guildHallDestroyedEvents) Events.AddEvent(e, true);
+            foreach (var e in guildHallDestroyedEvents) Events.Add(e, true);
             NextTurn();
         }
         
@@ -484,24 +315,6 @@ public class GameManager : MonoBehaviour
         if (AvailableAdventurers >= 20 && Satisfaction == 100) Achievements.Unlock("A Jolly Good Show");
         
         OnUpdateUI?.Invoke();
-    }
-
-    private void Start()
-    {
-        // Set all mods to 0 at start
-        modifiersTotal.Add(Metric.Defense, 0);
-        modifiersTotal.Add(Metric.Threat, 0);
-        modifiersTotal.Add(Metric.Spending, 0);
-        modifiersTotal.Add(Metric.Effectiveness, 0);
-        modifiersTotal.Add(Metric.Satisfaction, 0);
-
-        modifiers.Add(Metric.Defense, new List<Modifier>());
-        modifiers.Add(Metric.Threat, new List<Modifier>());
-        modifiers.Add(Metric.Spending, new List<Modifier>());
-        modifiers.Add(Metric.Effectiveness, new List<Modifier>());
-        modifiers.Add(Metric.Satisfaction, new List<Modifier>());
-
-        Load();
     }
 
     public int GetMetric(Metric metric)

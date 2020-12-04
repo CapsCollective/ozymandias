@@ -23,14 +23,16 @@ namespace Managers
                 Manager.Achievements.Unlock("Modern Influences");
             return true;
         }
+
+        public List<string> Save()
+        {
+            return unlockedBuildings.Select(x => x.name).ToList();
+        }
         
-        public async Task LoadUnlocks(List<string> buildings)
+        public async Task Load(List<string> buildings)
         {
             foreach (var b in buildings)
-            {
                 unlockedBuildings.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
-            }
         }
-
     }
 }

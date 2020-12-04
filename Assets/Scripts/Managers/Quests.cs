@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Controllers;
 using DG.Tweening;
-using Managers_and_Controllers;
 using UI;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Utilities;
 using static GameManager;
 
@@ -62,9 +63,9 @@ namespace Managers
                 .OnStart(() => { _canvas.enabled = true; });
             transform.DOLocalRotate(Vector3.zero, animateInDuration);
             
-            if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
+            /*if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
             PlayerPrefs.SetInt("tutorial_video_quests", 1);
-            TutorialPlayerController.Instance.PlayClip(2);
+            TutorialPlayerController.Instance.PlayClip(2);*/
         }
         
         public void Close()
@@ -98,5 +99,21 @@ namespace Managers
             availableFlyers.Add(flyer);
             return true;
         }
+
+        public List<QuestDetails> Save()
+        {
+            return All.Select(q => q.Save()).ToList();
+        }
+        
+        public async Task Load(List<QuestDetails> quests)
+        {
+            foreach (QuestDetails details in quests)
+            {
+                Quest q = await Addressables.LoadAssetAsync<Quest>(details.name).Task;
+                q.Load(details);
+                Add(q);
+            }
+        }
+        
     }
 }

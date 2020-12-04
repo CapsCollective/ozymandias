@@ -1,30 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using NaughtyAttributes;
-using UnityEditor;
 using UnityEngine;
 using static GameManager;
 
 [CreateAssetMenu(fileName = "Event")][System.Serializable]
 public class Event : ScriptableObject
 {
-    public enum EventType
-    {
-        Flavour,
-        AdventurersJoin,
-        Threat,
-        Chaos,
-        Endgame,
-        Chain,
-        Special,
-        Advert,
-        GameOver,
-        AdventurersLeave,
-        Blueprint,
-        Radiant
-    }
-
     public string headline;
     [TextArea(3,8)] public string article;
     public Sprite image;
@@ -53,7 +34,7 @@ public class Event : ScriptableObject
     [Button()] // Debug to test specific events
     public void AddToQueue()
     {
-        Manager.Events.AddEvent(this, true);
+        Manager.Events.Add(this, true);
     }
     
 }

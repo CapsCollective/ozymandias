@@ -35,7 +35,6 @@ namespace Controllers
             _canvas = GetComponent<Canvas>();
             _newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + _newspaperTitle + " }";
-            Events.OnEventsProcessed += UpdateDisplay;
             GameManager.OnNewTurn += OnNewTurn;
             continueButton.onClick.AddListener(Close);
             Close();
@@ -51,7 +50,7 @@ namespace Controllers
             //TutorialPlayerController.Instance.PlayClip(1);
         }
 
-        private void UpdateDisplay(List<Event> events, List<string> descriptions)
+        public void UpdateDisplay(List<Event> events, List<string> descriptions)
         {
             turnCounter.text = _newspaperTitle + ", Turn " + Manager.turnCounter;
         

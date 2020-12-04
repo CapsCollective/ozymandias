@@ -12,6 +12,8 @@ public class StatChange : Outcome
     
     public override bool Execute(bool fromChoice)
     {
+        if (!Manager.modifiers.ContainsKey(statToChange)) return false;
+        
         Manager.modifiers[statToChange].Add(new Modifier
         {
             amount = amount,
