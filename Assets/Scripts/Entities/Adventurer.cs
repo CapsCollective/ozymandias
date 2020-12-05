@@ -3,15 +3,6 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
-public enum AdventurerCategory
-{
-        Brawler,
-        Outrider,
-        Performer,
-        Diviner,
-        Conduit
-}
-
 [Serializable]
 public class Adventurer : MonoBehaviour
 {

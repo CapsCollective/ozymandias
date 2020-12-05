@@ -158,5 +158,10 @@ namespace Managers
             PlayerPrefs.SetInt("Shadows", Convert.ToInt32(toggle));
         }
 
+        public void ClearSave()
+        {
+            PlayerPrefs.DeleteKey("Save");
+        }
+
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Debug Outcome", menuName = "Outcomes/Debug")]
 public class DebugOutcome : Outcome

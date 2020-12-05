@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 0649
+using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,15 +9,13 @@ namespace Managers
 {
     public class Achievements : MonoBehaviour
     {
-        public Color lockedColor, unlockedColor;
-        public Slider progressBar;
-        public Image villageBadge, cityBadge, kingdomBadge;
-        
-        public GameObject notification;
+        [SerializeField] private Color lockedColor, unlockedColor;
+        [SerializeField] private Slider progressBar;
+        [SerializeField] private Image villageBadge, cityBadge, kingdomBadge;
+        [SerializeField] private GameObject notification;
     
-        private Dictionary<string, Achievement> achievements = new Dictionary<string, Achievement>();
-        private Dictionary<string, bool> unlocked = new Dictionary<string, bool>();
-
+        private readonly Dictionary<string, Achievement> _achievements = new Dictionary<string, Achievement>();
+        private readonly Dictionary<string, bool> _unlocked = new Dictionary<string, bool>();
         private Canvas _canvas;
 
         private void Awake()
@@ -26,9 +25,9 @@ namespace Managers
             //unlocked = JsonUtility.FromJson<Dictionary<string, bool>>(PlayerPrefs.GetString("Achievements", "{'Village People': 'true'}"));
             foreach (Achievement achievement in FindObjectsOfType<Achievement>())
             {
-                achievements.Add(achievement.title, achievement);
-                unlocked.Add(achievement.title, PlayerPrefs.GetInt(achievement.title, 0) == 1);
-                achievement.Unlocked = unlocked[achievement.title];
+                _achievements.Add(achievement.title, achievement);
+                _unlocked.Add(achievement.title, PlayerPrefs.GetInt(achievement.title, 0) == 1);
+                achievement.Unlocked = _unlocked[achievement.title];
             }
         }
 
@@ -36,9 +35,9 @@ namespace Managers
         {
             //TODO: Put an analytics here
             //TODO: Unlock Sound Effect
-            if (!achievements.ContainsKey(achievementTitle) || unlocked[achievementTitle]) return;
-            achievements[achievementTitle].Unlocked = true;
-            unlocked[achievementTitle] = true;
+            if (!_achievements.ContainsKey(achievementTitle) || _unlocked[achievementTitle]) return;
+            _achievements[achievementTitle].Unlocked = true;
+            _unlocked[achievementTitle] = true;
             PlayerPrefs.SetInt(achievementTitle, 1);
             notification.SetActive(true);
         }
@@ -112,7 +111,7 @@ namespace Managers
         
         private void OnDestroy()
         {
-            foreach (var achievement in unlocked)
+            foreach (var achievement in _unlocked)
             {
                 PlayerPrefs.SetInt(achievement.Key, achievement.Value ? 1 : 0);
             }

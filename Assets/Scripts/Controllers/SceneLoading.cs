@@ -1,26 +1,28 @@
 ﻿#pragma warning disable 0649
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneLoading : MonoBehaviour
+namespace Controllers
 {
-    [SerializeField] private Image progressBar;
-
-    private void Start()
+    public class SceneLoading : MonoBehaviour
     {
-        StartCoroutine(LoadAsyncOperation());
-    }
+        [SerializeField] private Image progressBar;
 
-    private IEnumerator LoadAsyncOperation()
-    {
-        AsyncOperation gameLevel = SceneManager.LoadSceneAsync("Main");
-        while (!gameLevel.isDone)
+        private void Start()
         {
-            progressBar.fillAmount = gameLevel.progress;
-            yield return new WaitForEndOfFrame();
+            StartCoroutine(LoadAsyncOperation());
+        }
+
+        private IEnumerator LoadAsyncOperation()
+        {
+            AsyncOperation gameLevel = SceneManager.LoadSceneAsync("Main");
+            while (!gameLevel.isDone)
+            {
+                progressBar.fillAmount = gameLevel.progress;
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }

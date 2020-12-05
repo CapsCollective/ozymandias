@@ -78,3 +78,12 @@ public enum EventType
     Blueprint,
     Radiant
 }
+
+public enum AdventurerCategory
+{
+    Brawler,
+    Outrider,
+    Performer,
+    Diviner,
+    Conduit
+}

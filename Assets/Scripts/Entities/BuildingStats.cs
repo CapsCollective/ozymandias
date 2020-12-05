@@ -14,8 +14,8 @@ public class BuildingStats : MonoBehaviour
 
     public Metric primaryStat;
 
-    private Vector3 placementPosition;
-    private int rotation;
+    private Vector3 _placementPosition;
+    private int _rotation;
     
     public enum ScaleSpeed
     {
@@ -73,13 +73,13 @@ public class BuildingStats : MonoBehaviour
     {
         operational = true;
         name = name.Replace("(Clone)", "");
-        this.placementPosition = placementPosition;
-        this.rotation = rotation;
+        this._placementPosition = placementPosition;
+        this._rotation = rotation;
         Manager.Build(this);
     }
 
     public string Serialize()
     {
-        return $"{name},{placementPosition.x:n2},{placementPosition.z:n2},{rotation % 4}";
+        return $"{name},{_placementPosition.x:n2},{_placementPosition.z:n2},{_rotation % 4}";
     }
 }

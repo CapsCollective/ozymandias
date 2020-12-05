@@ -337,6 +337,7 @@ namespace Managers
 
         public void GameOver()
         {
+            Settings.ClearSave();
             Newspaper.GameOver();
         }
 

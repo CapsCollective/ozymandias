@@ -63,13 +63,12 @@ namespace Managers
             
             modifiers = Manager.Modifiers;
 
-            PlayerPrefs.SetString("save", JsonConvert.SerializeObject(this));
-            Debug.Log(PlayerPrefs.GetString("save"));
+            PlayerPrefs.SetString("Save", JsonConvert.SerializeObject(this));
         }
 
         public async Task Load()
         {
-            string saveJson = PlayerPrefs.GetString("save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
+            string saveJson = PlayerPrefs.GetString("Save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
             Debug.Log(saveJson);
             JsonConvert.PopulateObject(saveJson, this);
             

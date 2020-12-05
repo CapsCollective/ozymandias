@@ -21,7 +21,7 @@ public class MapAnimator : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        _cam = Camera.current;
+        _cam = Camera.main;
     }
 
     private void LateUpdate()
