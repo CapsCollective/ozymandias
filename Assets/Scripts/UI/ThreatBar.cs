@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 using UnityEngine.UI;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -8,13 +9,12 @@ namespace UI
     {
         private const int BarWidth = 510;
     
-        public RectTransform threatArea;
-        public RectTransform nextTurnThreatArea;
-        public RectTransform nextTurnDefenseArea;
-        public Image nextTurnThreatFill;
-        public Image nextTurnDefenseFill;
+        [SerializeField] private RectTransform threatArea, nextTurnThreatArea, nextTurnDefenseArea;
+        [SerializeField] private Image nextTurnThreatFill, nextTurnDefenseFill;
 
-        public override void UpdateUi()
+        private float _t;
+
+        protected override void UpdateUi()
         {
             int nextTurn = Manager.ThreatLevel + Manager.ChangePerTurn;
             threatArea.sizeDelta = new Vector2(BarWidth * Manager.ThreatLevel / 100f, threatArea.sizeDelta.y);
@@ -22,15 +22,14 @@ namespace UI
             nextTurnDefenseArea.sizeDelta = new Vector2(BarWidth * (1 - nextTurn / 100f), nextTurnDefenseArea.sizeDelta.y);
         }
 
-        private float t = 0;
         public void Update()
         {
-            t += Time.deltaTime * 3;
+            _t += Time.deltaTime * 3;
             Color color = nextTurnThreatFill.color;
-            color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(t)+1)/2);
+            color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(_t)+1)/2);
             nextTurnThreatFill.color = color;
             color = nextTurnDefenseFill.color;
-            color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(t)+1)/2);
+            color.a = Mathf.Lerp(0.1f, 0.4f, (Mathf.Sin(_t)+1)/2);
             nextTurnDefenseFill.color = color;
         }
     }

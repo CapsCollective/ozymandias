@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 [CreateAssetMenu(fileName = "Building Damaged Outcome", menuName = "Outcomes/Building Damaged")]
 
@@ -13,7 +13,7 @@ public class BuildingDamaged : Outcome
     
     public override bool Execute()
     {
-        foreach (BuildingStats building in Manager.buildings)
+        foreach (BuildingStats building in Manager.Buildings)
         {
             if(building.type == type)
             {

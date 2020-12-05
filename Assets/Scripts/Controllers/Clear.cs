@@ -1,121 +1,122 @@
-﻿using Controllers;
-using Managers_and_Controllers;
+﻿#pragma warning disable 0649
 using TMPro;
 using UI;
 using UnityEngine;
-using UnityEngine.UI;
-using static GameManager;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Utilities;
+using static Managers.GameManager;
 using static Controllers.CursorSelect;
 
-public class Clear : UiUpdater
+namespace Controllers
 {
-    public const float CostScale = 1.025f;
-    
-    private Cell[] highlighted = new Cell[1];
-    private EventSystem eventSystem;  
-
-    private BuildingStructure selectedBuilding;
-    public static int ClearCount = 0;
-    
-    public int baseCost = 30;
-
-    public Image icon;
-    public Sprite deselected;
-    public Sprite selected;
-    
-    public Toggle toggle;
-    
-    public Image costBadge;
-    public Color gold, grey;
-    public CanvasGroup canvasGroup;
-    
-    public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, ClearCount));
-
-    public TextMeshProUGUI cost;
-    public override void UpdateUi()
+    public class Clear : UiUpdater
     {
-        cost.text = ScaledCost.ToString();
-        bool active = Manager.Wealth >= ScaledCost;
-        if (!active)
+        private const float CostScale = 1.025f;
+        public static int ClearCount;
+
+        private Cell[] _highlighted = new Cell[1];
+        private EventSystem _eventSystem;
+        private BuildingStructure _selectedBuilding;
+    
+        [SerializeField] private int baseCost = 30;
+
+        [SerializeField] private Image icon;
+        [SerializeField] private Sprite deselected;
+        [SerializeField] private Sprite selected;
+        
+        [SerializeField] private Image costBadge;
+        [SerializeField] private Color gold, grey;
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private TextMeshProUGUI cost;
+
+        public Toggle toggle;
+        
+        private int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, ClearCount));
+
+        protected override void UpdateUi()
         {
-            toggle.isOn = false;
-            ExitClearMode();
+            cost.text = ScaledCost.ToString();
+            bool active = Manager.Wealth >= ScaledCost;
+            if (!active)
+            {
+                toggle.isOn = false;
+                ExitClearMode();
+            }
+            toggle.interactable = active;
+            costBadge.color = active ? gold : grey;
+            canvasGroup.alpha = active ? 1 : 0.4f;
         }
-        toggle.interactable = active;
-        costBadge.color = active ? gold : grey;
-        canvasGroup.alpha = active ? 1 : 0.4f;
-    }
     
-    private void Start()
-    {
-        eventSystem = EventSystem.current;
+        private void Start()
+        {
+            _eventSystem = EventSystem.current;
 
-        ClickManager.OnLeftClick += LeftClick;
-    }
+            Click.OnLeftClick += LeftClick;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        selectedBuilding = null;
-        if (!toggle.isOn) return;
+        // Update is called once per frame
+        void Update()
+        {
+            _selectedBuilding = null;
+            if (!toggle.isOn) return;
         
-        Manager.Map.Highlight(highlighted, Map.HighlightState.Inactive);
-        highlighted = new Cell[1];
+            Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
+            _highlighted = new Cell[1];
         
-        if (eventSystem.IsPointerOverGameObject()) return;
+            if (_eventSystem.IsPointerOverGameObject()) return;
         
-        Cell closest = Manager.Map.GetCellFromMouse();
+            Cell closest = Manager.Map.GetCellFromMouse();
 
-        selectedBuilding = closest.occupant;
-        if (selectedBuilding) highlighted = Manager.Map.GetCells(selectedBuilding);
-        else highlighted[0] = closest;
+            _selectedBuilding = closest.occupant;
+            if (_selectedBuilding) _highlighted = Manager.Map.GetCells(_selectedBuilding);
+            else _highlighted[0] = closest;
         
-        Map.HighlightState state = selectedBuilding && !selectedBuilding.indestructable ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
-        Manager.Map.Highlight(highlighted, state);
-    }
-    
-    public void LeftClick()
-    {
-        if (toggle.isOn && selectedBuilding) ClearBuilding();
-    }
-    
-    public void ToggleClearMode()
-    {
-        if (!toggle.isOn) ExitClearMode();
-        else EnterClearMode();
-    }
+            Map.HighlightState state = _selectedBuilding && !_selectedBuilding.indestructible ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+            Manager.Map.Highlight(_highlighted, state);
+        }
 
-    public void EnterClearMode()
-    {
-        icon.sprite = selected;
-        CursorSelect.Cursor.Select(CursorType.Destroy);
-    }
+        private void LeftClick()
+        {
+            if (toggle.isOn && _selectedBuilding) ClearBuilding();
+        }
+    
+        public void ToggleClearMode()
+        {
+            if (!toggle.isOn) ExitClearMode();
+            else EnterClearMode();
+        }
 
-    public void ExitClearMode()
-    {
-        Manager.Map.Highlight(highlighted, Map.HighlightState.Inactive);
-        highlighted = new Cell[1];
-        icon.sprite = deselected;
-        if (CursorSelect.Cursor.currentCursor == CursorType.Destroy)
-            CursorSelect.Cursor.Select(CursorType.Pointer);
-    }
+        private void EnterClearMode()
+        {
+            icon.sprite = selected;
+            CursorSelect.Cursor.Select(CursorType.Destroy);
+        }
+
+        private void ExitClearMode()
+        {
+            Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
+            _highlighted = new Cell[1];
+            icon.sprite = deselected;
+            if (CursorSelect.Cursor.currentCursor == CursorType.Destroy)
+                CursorSelect.Cursor.Select(CursorType.Pointer);
+        }
+
+        private void ClearBuilding()
+        {
+            if (_selectedBuilding.indestructible) return;
+            BuildingStats building = _selectedBuilding.GetComponent<BuildingStats>();
+            BuildingStructure buildingStructure = _selectedBuilding.GetComponent<BuildingStructure>();
+            if (!Manager.Spend(ScaledCost)) return;
+            if (building.terrain) ClearCount++;
+            buildingStructure.Clear();
+            Manager.Demolish(building);
+        }
     
-    public void ClearBuilding()
-    {
-        if (selectedBuilding.indestructable) return;
-        BuildingStats building = selectedBuilding.GetComponent<BuildingStats>();
-        BuildingStructure buildingStructure = selectedBuilding.GetComponent<BuildingStructure>();
-        if (!Manager.Spend(ScaledCost)) return;
-        if (building.terrain) ClearCount++;
-        buildingStructure.Clear();
-        Manager.Demolish(building);
-    }
+        private void OnDestroy()
+        {
+            ClearCount = 0;
+        }
     
-    private void OnDestroy()
-    {
-        ClearCount = 0;
     }
-    
 }

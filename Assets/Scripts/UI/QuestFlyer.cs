@@ -1,37 +1,37 @@
-﻿using System;
+﻿#pragma warning disable 0649
+using System;
 using Controllers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace UI
 {
     public class QuestFlyer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        #pragma warning disable 0649
-        [SerializeField] private TextMeshProUGUI titleText;
-        [SerializeField] private TextMeshProUGUI descriptionText;
-        [SerializeField] private TextMeshProUGUI statsText;
+        public Action<GameObject> CallbackMethod;
+
+        [SerializeField] private TextMeshProUGUI titleText, descriptionText, statsText;
         [SerializeField] private Button sendButton;
-        [SerializeField] private GameObject displayContent;
-        [SerializeField] private GameObject simpleContent;
+        [SerializeField] private GameObject displayContent, simpleContent;
         [SerializeField] private GameObject[] stamps;
 
-        public Quest flyerQuest;
-
-        public Action<GameObject> callbackMethod;
-        private Vector3 startScale;
-        private Vector3 startPos;
-        private bool displaying;
+        public Quest quest;
         public bool mouseOver;
+
+        private Vector3 _startScale;
+        private Vector3 _startPos;
+        private bool _displaying;
+        private Transform _t;
         
         private void Start()
         {
-            startScale = transform.localScale;
-            startPos = transform.localPosition;
+            _t = transform;
+            _startScale = _t.localScale;
+            _startPos = _t.localPosition;
             
             sendButton.onClick.AddListener(OnButtonClick);
             SetDisplaying(false);
@@ -40,45 +40,45 @@ namespace UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             mouseOver = true;
-            if (displaying) return;
-            transform.localScale = startScale * 1.1f;
+            if (_displaying) return;
+            transform.localScale = _startScale * 1.1f;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             mouseOver = false;
-            if (displaying) return;
+            if (_displaying) return;
             ResetDisplay();
         }
     
         public void ResetDisplay()
         {
-            displaying = false;
+            _displaying = false;
             SetDisplaying(false);
-            transform.localScale = startScale;
-            transform.localPosition = startPos;
+            var transform1 = transform;
+            transform1.localScale = _startScale;
+            transform1.localPosition = _startPos;
         }
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            callbackMethod(gameObject);
+            CallbackMethod(gameObject);
         }
 
         public void DisplaySelected()
         {
-            displaying = true;
+            _displaying = true;
             SetDisplaying(true);
-            Transform t = transform;
-            t.localScale = startScale * 4;
-            t.localPosition = Vector3.zero;
-            t.SetSiblingIndex(10);
+            _t.localScale = _startScale * 4;
+            _t.localPosition = Vector3.zero;
+            _t.SetSiblingIndex(10);
         }
 
         private void OnButtonClick()
         {
-            flyerQuest.StartQuest();
+            quest.StartQuest();
         
-            FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(flyerQuest.adventurers);
+            FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(quest.adventurers);
             mouseOver = false;
             RandomRotateStamps();
             Jukebox.Instance.PlayStamp();
@@ -87,10 +87,10 @@ namespace UI
     
         public void RandomRotateStamps()
         {
-            var stampRotation = Random.Range(3f, 6f);
+            float stampRotation = Random.Range(3f, 6f);
             stampRotation = (Random.value < 0.5) ? stampRotation : -stampRotation;
             sendButton.gameObject.SetActive(false);
-            foreach (var stamp in stamps)
+            foreach (GameObject stamp in stamps)
             {
                 stamp.SetActive(true);
                 stamp.transform.localEulerAngles = new Vector3(0, 0, stampRotation);
@@ -99,56 +99,54 @@ namespace UI
 
         public void SetQuest(Quest q)
         {
-            flyerQuest = q;
+            quest = q;
             titleText.text = q.title;
             descriptionText.text = q.description;
             sendButton.gameObject.SetActive(true);
-            foreach (var stamp in stamps)
+            foreach (GameObject stamp in stamps)
             {
                 stamp.SetActive(false);
             }
         }
 
-        public void SetDisplaying(bool displaying)
+        private void SetDisplaying(bool displaying)
         {
             displayContent.SetActive(displaying);
             simpleContent.SetActive(!displaying);
-            if (displaying && flyerQuest)
+            if (!displaying || !quest) return;
+            if (stamps[0].activeSelf)
             {
-                if (stamps[0].activeSelf)
+                string turnText = "\nReturn in: " + quest.turnsLeft;
+
+                switch (quest.turnsLeft)
                 {
-                    var turnText = "\nReturn in: " + flyerQuest.turnsLeft;
-
-                    switch (flyerQuest.turnsLeft)
-                    {
-                        case 0:
-                            turnText = "\nReturning today";
-                            break;
-                        case 1:
-                            turnText += " turn";
-                            break;
-                        default:
-                            turnText += " turns";
-                            break;
-                    }
-
-                    statsText.text = "Adventurers: " + flyerQuest.adventurers + turnText;
+                    case 0:
+                        turnText = "\nReturning today";
+                        break;
+                    case 1:
+                        turnText += " turn";
+                        break;
+                    default:
+                        turnText += " turns";
+                        break;
                 }
-                else
-                {
-                    var enoughAdventurers = Manager.RemovableAdventurers > flyerQuest.adventurers;
-                    var enoughMoney = Manager.Wealth >= flyerQuest.cost;
-                    statsText.text =
-                        (enoughAdventurers ? "" : "<color=#820000ff>") + 
-                        "Adventurers: " + flyerQuest.adventurers +
-                        (enoughAdventurers ? "" : "</color>") +
-                        (enoughMoney ? "" : "<color=#820000ff>") +
-                        "\nCost: " + flyerQuest.cost +
-                        (enoughMoney ? "" : "</color>") +
-                        "\nDuration: " + flyerQuest.turns + " turns";
 
-                    sendButton.interactable = enoughAdventurers && enoughMoney;
-                }
+                statsText.text = "Adventurers: " + quest.adventurers + turnText;
+            }
+            else
+            {
+                bool enoughAdventurers = Manager.RemovableAdventurers > quest.adventurers;
+                bool enoughMoney = Manager.Wealth >= quest.cost;
+                statsText.text =
+                    (enoughAdventurers ? "" : "<color=#820000ff>") + 
+                    "Adventurers: " + quest.adventurers +
+                    (enoughAdventurers ? "" : "</color>") +
+                    (enoughMoney ? "" : "<color=#820000ff>") +
+                    "\nCost: " + quest.cost +
+                    (enoughMoney ? "" : "</color>") +
+                    "\nDuration: " + quest.turns + " turns";
+
+                sendButton.interactable = enoughAdventurers && enoughMoney;
             }
         }
     }

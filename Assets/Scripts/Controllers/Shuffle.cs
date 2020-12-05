@@ -3,7 +3,7 @@ using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Controllers
 {
@@ -23,8 +23,8 @@ namespace Controllers
         public Color gold, grey;
         public CanvasGroup canvasGroup;
         public TextMeshProUGUI cost;
-    
-        public override void UpdateUi()
+
+        protected override void UpdateUi()
         {
             cost.text = ScaledCost.ToString();
             bool active = Manager.Wealth >= ScaledCost;

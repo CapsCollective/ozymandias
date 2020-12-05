@@ -1,25 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class RandomiseTreeSize : MonoBehaviour
+namespace Environment
 {
-    [Range(0, 0.5f)] public float scaleRange;
-    [SerializeField] private float newScale;
-    public Material leavesMat;
-    // Start is called before the first frame update
-    private void Awake()
+    public class RandomiseTreeSize : MonoBehaviour
     {
-    }
-    void Start()
-    {
-        newScale = Random.Range(-scaleRange, scaleRange);
-        transform.localScale = transform.localScale * (1f+ newScale);
-    }
+        [Range(0, 0.5f)] public float scaleRange;
+        [SerializeField] private float newScale;
+        public Material leavesMat;
+        // Start is called before the first frame update
+        private void Awake()
+        {
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        private void Start()
+        {
+            newScale = Random.Range(-scaleRange, scaleRange);
+            transform.localScale *= (1f+ newScale);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
         
+        }
     }
 }

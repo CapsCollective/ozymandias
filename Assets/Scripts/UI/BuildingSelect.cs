@@ -1,11 +1,12 @@
-﻿using System;
+﻿#pragma warning disable 0649
+using System;
 using Controllers;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -19,7 +20,6 @@ namespace UI
         public GameObject buildingPrefab;
         
         // Serialised fields
-        #pragma warning disable 0649
         [SerializeField] private int position;
         [SerializeField] private BuildingSelect[] siblingCards;
         
@@ -45,7 +45,7 @@ namespace UI
             _initialPosition = _rectTransform.localPosition;
         }
 
-        public override void UpdateUi()
+        protected override void UpdateUi()
         {
             var building = buildingPrefab.GetComponent<BuildingStats>();
             var colour = building.IconColour;

@@ -1,18 +1,19 @@
-﻿using System.Linq;
+﻿#pragma warning disable 0649
+using System.Linq;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
     public class AdventurerList : MonoBehaviour
     {
-        public GameObject rowPrefab;
+        [SerializeField] private GameObject rowPrefab;
 
         public void Display()
         {
             foreach (Transform child in transform) Destroy(child.gameObject);
 
-            foreach (Adventurer adventurer in Manager.adventurers.OrderByDescending(x => x.assignedQuest ? x.assignedQuest.title : "").ThenByDescending(x => x.turnJoined))
+            foreach (Adventurer adventurer in Manager.Adventurers.OrderByDescending(x => x.assignedQuest ? x.assignedQuest.title : "").ThenByDescending(x => x.turnJoined))
             {
                 GameObject row = Instantiate(rowPrefab, transform);
                 row.GetComponent<AdventurerRow>().Display(adventurer);

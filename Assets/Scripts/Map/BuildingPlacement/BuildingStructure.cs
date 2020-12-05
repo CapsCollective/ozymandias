@@ -1,33 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Controllers;
-using Managers_and_Controllers;
 using UnityEngine;
 
 public class BuildingStructure : MonoBehaviour
 {
     // Member Variables
     public List<SectionInfo> sections;
-    public bool indestructable;
-    public bool fitToCell = false;
+    public bool indestructible;
+    public bool fitToCell;
 
     public string buildTrigger = "Build";
     public string clearTrigger = "Clear";
 
     private Animator _animator;
-    private Animator Animator { get { return _animator ? _animator : _animator = GetComponent<Animator>(); } }
+    private Animator Animator => _animator ? _animator : _animator = GetComponent<Animator>();
 
     private ParticleSystem _particleSystem;
-    private ParticleSystem ParticleSystem { get { return _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>(); } }
+    private ParticleSystem ParticleSystem => _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>();
 
     // Enums
     public enum Direction { Left, Forward, Right, Back }
-
-    public void Start()
-    {
-
-    }
 
     // Class Functions
     public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
@@ -45,13 +38,15 @@ public class BuildingStructure : MonoBehaviour
             for (int i = 0; i < sections.Count; i++)
             {
                 Section s = Instantiate(sections[i].prefab, transform).GetComponent<Section>();
-                Vector3 v = new Vector3();
-                v.x = vertices[i].Average(x => x.x);
-                v.z = vertices[i].Average(x => x.z);
-                s.transform.position = v;
+                Vector3 v = new Vector3(
+                    vertices[i].Average(x => x.x), 0,
+                    vertices[i].Average(x => x.z)
+                );
 
-                s.transform.eulerAngles = new Vector3(0, Random.value * 360, 0);
-                s.transform.localScale = s.transform.localScale * Random.Range(0.8f, 1.2f);
+                Transform t = s.transform;
+                t.position = v;
+                t.eulerAngles = new Vector3(0, Random.value * 360, 0);
+                t.localScale *= Random.Range(0.8f, 1.2f);
             }
         }
 

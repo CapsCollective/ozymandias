@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 
 public class FogColorChange : MonoBehaviour

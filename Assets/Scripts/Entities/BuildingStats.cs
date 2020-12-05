@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 public class BuildingStats : MonoBehaviour
 {

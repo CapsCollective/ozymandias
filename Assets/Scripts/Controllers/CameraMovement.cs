@@ -1,104 +1,103 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Controllers
 {
     public class CameraMovement : MonoBehaviour
     {
-        private Rigidbody rb;
-        private Camera cam;
-        private Vector3 dragOrigin, cameraOrigin, rotateAxis;
-        private float rotateOrigin;
-        private bool dragging, rotating;
+        private Rigidbody _rb;
+        private Camera _cam;
+        private DepthOfField _depthOfField;
 
-        public Vector3 startPos, startRot;
-        public Button centerButton;
-        public TextMeshProUGUI centerButtonText;
-        public GameObject dummyCursor;
-        public Canvas canvas;
-        private bool crRunning;
-        
-        #pragma warning disable 0649
+        private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
+        private float _rotateOrigin;
+        private bool _dragging, _rotating;
+        private bool _crRunning;
+
+        [SerializeField] private Vector3 startPos, startRot;
+        [SerializeField] private Button centerButton;
+        [SerializeField] private TextMeshProUGUI centerButtonText;
+        [SerializeField] private GameObject dummyCursor;
+        [SerializeField] private Canvas canvas;
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
-        private DepthOfField depthOfField;
         
         [Range(1,10)]
-        public int
+        [SerializeField] private int
             dragSpeed = 3,
             scrollSpeed = 3,
             rotateSpeed = 3;
     
-        public int
+        [SerializeField] private int
             minHeight = 5,
             maxHeight = 25,
             minAngle = 25,
             maxAngle = 60;
 
-        public bool invertScroll;
-    
-        void Awake()
+        [SerializeField] private bool invertScroll;
+
+        private void Awake()
         {
-            cam = GetComponent<UnityEngine.Camera>();
-            rb = GetComponent<Rigidbody>();
-            profile.TryGetSettings(out depthOfField);
+            _cam = GetComponent<Camera>();
+            _rb = GetComponent<Rigidbody>();
+            profile.TryGetSettings(out _depthOfField);
         }
 
-        void Update()
+        private void Update()
         {
             if (Manager.inMenu) return;
             
             volume.weight = Mathf.InverseLerp(maxHeight,minHeight, transform.position.y);
-            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100f, layerMask))
+            Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, layerMask))
             {
-                depthOfField.focusDistance.value = hit.distance;
+                _depthOfField.focusDistance.value = hit.distance;
             }
             
-            if (!rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (!_rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
-                dragOrigin = Input.mousePosition;
-                cameraOrigin = transform.position;
-                dragging = true;
+                _dragOrigin = Input.mousePosition;
+                _cameraOrigin = transform.position;
+                _dragging = true;
             }
-            else if (!dragging && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
+            else if (!_dragging && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
             {
-                rotateAxis = hit.point;
-                rotating = true;
+                _rotateAxis = hit.point;
+                _rotating = true;
             }
         
-            if (!Input.GetMouseButton(0)) dragging = false;
-            if (!Input.GetMouseButton(1)) rotating = false;
+            if (!Input.GetMouseButton(0)) _dragging = false;
+            if (!Input.GetMouseButton(1)) _rotating = false;
 
-            if (dragging)
+            if (_dragging)
             {
-                Vector3 dir = cam.ScreenToViewportPoint(dragOrigin - Input.mousePosition);
+                Vector3 dir = _cam.ScreenToViewportPoint(_dragOrigin - Input.mousePosition);
                 Transform t = transform;
                 Vector3 pos = t.position;
-                t.position = cameraOrigin + 
+                t.position = _cameraOrigin + 
                              Quaternion.Euler(0, t.eulerAngles.y, 0) * 
                              new Vector3(dir.x * dragSpeed * pos.y, 0, dir.y * dragSpeed * pos.y);
             }
-            else if(rotating)
+            else if(_rotating)
             {
-                transform.RotateAround(rotateAxis, Vector3.up, Input.GetAxis("Mouse X") * rotateSpeed);
+                transform.RotateAround(_rotateAxis, Vector3.up, Input.GetAxis("Mouse X") * rotateSpeed);
             }
             else
             {
                 if (transform.position.y > maxHeight)
                 {
-                    rb.AddForce(new Vector3(0, -1,0));
+                    _rb.AddForce(new Vector3(0, -1,0));
                 }
                 else if (transform.position.y < minHeight)
                 {
-                    rb.AddForce(new Vector3(0, 1, 0));
+                    _rb.AddForce(new Vector3(0, 1, 0));
                 }
                 else
                 {
@@ -106,8 +105,8 @@ namespace Controllers
                     // Map the angle by the height
                     Transform t = transform;
                     t.eulerAngles = new Vector3(Remap(t.position.y, minHeight, maxHeight - 5, minAngle, maxAngle), t.eulerAngles.y, 0);
-                    if (rb.velocity.y < 10 && rb.velocity.y > -10)
-                        rb.AddForce(new Vector3(0, dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0));
+                    if (_rb.velocity.y < 10 && _rb.velocity.y > -10)
+                        _rb.AddForce(new Vector3(0, dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0));
                 }
             }
         
@@ -117,7 +116,7 @@ namespace Controllers
             if (dist < 80) centerButtonText.text = "Return to Town";
             else if (dist < 120) centerButtonText.text = "Please, Return to Town";
             else if (dist < 160) centerButtonText.text = "There's nothing here";
-            else if (!crRunning)
+            else if (!_crRunning)
             {
                 centerButtonText.text = "Fine, I'll do it myself";
                 StartCoroutine(ManualCenter());
@@ -133,7 +132,7 @@ namespace Controllers
 
         private IEnumerator ManualCenter()
         {
-            crRunning = true;
+            _crRunning = true;
             yield return new WaitForSeconds(1);
             dummyCursor.SetActive(true);
 
@@ -158,10 +157,10 @@ namespace Controllers
             dummyCursor.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            crRunning = false;
+            _crRunning = false;
         }
 
-        public static float Remap (float value, float min1, float max1, float min2, float max2) {
+        private static float Remap (float value, float min1, float max1, float min2, float max2) {
             return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
         }
     }

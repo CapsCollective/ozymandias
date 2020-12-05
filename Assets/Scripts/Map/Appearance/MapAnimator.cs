@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Controllers;
+﻿using Controllers;
 using UnityEngine;
 using Camera = UnityEngine.Camera;
 
@@ -13,15 +11,17 @@ public class MapAnimator : MonoBehaviour
     public string drainTrigger = "Drain";
     public string effectOrigin = "_Origin";
 
-    public bool flooded = false;
+    public bool flooded;
 
     private Animator _animator;
     private MeshRenderer _meshRenderer;
-
+    private Camera _cam;
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _meshRenderer = GetComponent<MeshRenderer>();
+        _cam = Camera.current;
     }
 
     private void LateUpdate()
@@ -36,13 +36,13 @@ public class MapAnimator : MonoBehaviour
 
     }
 
-    public void Drain()
+    private void Drain()
     {
         flooded = false;
         _animator.SetTrigger(drainTrigger);
     }
 
-    public void Flood()
+    private void Flood()
     {
         flooded = true;
         _animator.SetTrigger(floodTrigger);
@@ -50,7 +50,7 @@ public class MapAnimator : MonoBehaviour
 
     private void UpdateEffectOrigin()
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+        Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
         Physics.Raycast(ray, out RaycastHit hit);
 
         _meshRenderer.material.SetVector(effectOrigin, hit.point);

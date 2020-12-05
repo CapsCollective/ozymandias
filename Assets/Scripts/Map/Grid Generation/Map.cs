@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static GameManager;
+using UnityEngine.Serialization;
+using static Managers.GameManager;
 
 public class Map : MonoBehaviour
 {
-    public MapLayout mapLayout;
+    [FormerlySerializedAs("mapLayout")] public MapLayout layout;
     public MeshFilter roadMF;
 
     [Header("Debug Settings")]
@@ -31,7 +32,7 @@ public class Map : MonoBehaviour
     {
         cam = Camera.main;
         Generate();
-        mapLayout.ClearGraph();
+        layout.ClearGraph();
     }
 
     private void AddRoad(Mesh road)
@@ -112,7 +113,7 @@ public class Map : MonoBehaviour
         {
             if (cell == null)
                 continue;
-            foreach (int vertexIndex in mapLayout.TriangleMap[cell])
+            foreach (int vertexIndex in layout.TriangleMap[cell])
                 uv[vertexIndex].x = (int)state / 2f;
         }
 
@@ -131,7 +132,7 @@ public class Map : MonoBehaviour
     // Gets the closest cell by world position
     public Cell GetCell(Vector3 worldPosition)
     {
-        return mapLayout.GetClosest(transform.InverseTransformPoint(worldPosition));
+        return layout.GetClosest(transform.InverseTransformPoint(worldPosition));
     }
 
     // Gets all cells within radius of a world position
@@ -144,20 +145,20 @@ public class Map : MonoBehaviour
     // Gets all cells a building would take up given its root and rotation
     public Cell[] GetCells(Cell root, BuildingStructure building, int rotation = 0)
     {
-        return mapLayout.GetCells(root, building, rotation);
+        return layout.GetCells(root, building, rotation);
     }
 
     // Gets all cells of a currently placed building
     public Cell[] GetCells(BuildingStructure building)
     {
-        return mapLayout.GetCells(building);
+        return layout.GetCells(building);
     }
 
     public void Generate()
     {
-        mapLayout.GenerateMap(mapLayout.seed);
+        layout.GenerateMap(layout.seed);
         gridMF = GetComponent<MeshFilter>();
-        gridMF.sharedMesh = mapLayout.GenerateCellMesh();
+        gridMF.sharedMesh = layout.GenerateCellMesh();
         roadMF.sharedMesh = new Mesh();
     }
 
@@ -171,9 +172,9 @@ public class Map : MonoBehaviour
             vertices[i] = CellUnitToWorld(cells[i]);
         }
 
-        mapLayout.Occupy(building, cells);
+        layout.Occupy(building, cells);
 
-        building.Fit(vertices, mapLayout.heightFactor, animate);
+        building.Fit(vertices, layout.heightFactor, animate);
     }
 
     // Tries to create and place a building from a world position and rotation, returns if successful
@@ -203,13 +204,13 @@ public class Map : MonoBehaviour
         {
             if (!stats.terrain) // Create roads if not terrain
             {
-                List<Vertex> vertices = mapLayout.GetVertices(cells);
+                List<Vertex> vertices = layout.GetVertices(cells);
 
-                mapLayout.CreateRoad(vertices);
-                roadMF.sharedMesh = mapLayout.GenerateRoadMesh();
+                layout.CreateRoad(vertices);
+                roadMF.sharedMesh = layout.GenerateRoadMesh();
             }
 
-            mapLayout.Align(cells, rotation);
+            layout.Align(cells, rotation);
             Occupy(building, cells, animate);
             stats.Build(worldPosition, rotation);
             return true;
@@ -247,7 +248,7 @@ public class Map : MonoBehaviour
 
     public void Clear(Cell root)
     {
-        mapLayout.Clear(root);
+        layout.Clear(root);
     }
 
     public Vector3[] CellUnitToWorld(Cell cell)
@@ -262,15 +263,15 @@ public class Map : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (mapLayout && debug)
+        if (layout && debug)
         {
             Gizmos.matrix = transform.localToWorldMatrix;
 
             Gizmos.color = Color.white;
-            foreach (Vertex root in mapLayout.RoadGraph.GetData())
+            foreach (Vertex root in layout.RoadGraph.GetData())
             {
                 Gizmos.DrawSphere(root, .003f);
-                foreach (Vertex neighbour in mapLayout.RoadGraph.GetAdjacent(root))
+                foreach (Vertex neighbour in layout.RoadGraph.GetAdjacent(root))
                 {
                     Gizmos.DrawLine(root, neighbour);
                 }

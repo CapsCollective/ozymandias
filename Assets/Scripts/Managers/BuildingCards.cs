@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Managers
 {

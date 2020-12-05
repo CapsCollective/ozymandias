@@ -1,3 +1,4 @@
+#pragma warning disable 0649
 using UnityEngine;
 
 namespace Controllers
@@ -6,14 +7,12 @@ namespace Controllers
     {
         public static CursorSelect Cursor { get; private set; }
     
-        #pragma warning disable 0649
         [SerializeField] private Texture2D pointerCursor;
         [SerializeField] private Texture2D buildCursor;
         [SerializeField] private Texture2D destroyCursor;
     
-        private Texture2D[] cursors;
-        private readonly Vector2[] hotspots = new []
-        {
+        private Texture2D[] _cursors;
+        private readonly Vector2[] _hotspots = {
             new Vector2(10, 15), // Pointer
             new Vector2(10, 15), // Build
             new Vector2(10, 15), // Destroy
@@ -27,13 +26,13 @@ namespace Controllers
     
         private void Awake() {
             Cursor = this;
-            cursors = new []{pointerCursor, buildCursor, destroyCursor};
+            _cursors = new []{pointerCursor, buildCursor, destroyCursor};
         }
 
         public void Select(CursorType cursorType)
         {
             currentCursor = cursorType;
-            UnityEngine.Cursor.SetCursor(cursors[(int) cursorType], hotspots[(int) cursorType], CursorMode.Auto);
+            UnityEngine.Cursor.SetCursor(_cursors[(int) cursorType], _hotspots[(int) cursorType], CursorMode.Auto);
         }
     }
 }

@@ -7,19 +7,17 @@ namespace Utilities
     public class Screenshotter : MonoBehaviour
     {
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
-            if (Input.GetKey(KeyCode.S))
-            {
-                Debug.Log("Screenshot");
-                StartCoroutine("Screenshot");
-            }
+            if (!Input.GetKey(KeyCode.S)) return;
+            Debug.Log("Screenshot");
+            StartCoroutine(Screenshot());
         }
 
-        IEnumerator Screenshot()
+        private IEnumerator Screenshot()
         {
             GetComponent<CanvasGroup>().alpha = 0;
-            ScreenCapture.CaptureScreenshot($"Ozymandias_{DateTime.Now.ToString(@"dd-MM-yyyy-hh-mm-ss")}.png");
+            ScreenCapture.CaptureScreenshot($"Ozymandias_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
             yield return null;
             GetComponent<CanvasGroup>().alpha = 1;
         }

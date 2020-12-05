@@ -1,16 +1,16 @@
-﻿using System;
+﻿#pragma warning disable 0649
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-namespace Managers_and_Controllers
+namespace Controllers
 {
     public class TutorialPlayerController : MonoBehaviour
     {
         // Instance field
         public static TutorialPlayerController Instance { get; private set; }
         
-        #pragma warning disable 0649
         [SerializeField] private VideoPlayer player;
         [SerializeField] private GameObject playerControls;
         [SerializeField] private Text timeDisplayText;

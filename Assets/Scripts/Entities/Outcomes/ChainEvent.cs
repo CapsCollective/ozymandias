@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 [CreateAssetMenu(fileName = "Chain Event Outcome", menuName = "Outcomes/Chain Event")]
 public class ChainEvent : Outcome

@@ -1,14 +1,12 @@
-﻿using TMPro;
+﻿#pragma warning disable 0649
+using TMPro;
 using UnityEngine;
 
 namespace UI
 {
     public class NewspaperEvent : MonoBehaviour
     {
-        #pragma warning disable 0649
-        [SerializeField] private TextMeshProUGUI titleText;
-        [SerializeField] private TextMeshProUGUI descriptionText;
-        [SerializeField] private TextMeshProUGUI outcomeText;
+        [SerializeField] private TextMeshProUGUI titleText, descriptionText, outcomeText;
 
         public void SetEvent(Event e, string outcome, bool upper = false)
         {

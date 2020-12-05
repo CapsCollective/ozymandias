@@ -1,40 +1,40 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace UI
 {
     public class ShowOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public float minPos;
-        public float maxPos;
-        private RectTransform rect;
-        private float target;
-        public bool moving;
+        [SerializeField] private float minPos, maxPos;
+        private RectTransform _rect;
+        private float _target;
+        private bool _moving;
     
         //TODO: Replace this with dot tween
-        void Awake()
+        private void Awake()
         {
-            rect = GetComponent<RectTransform>();
+            _rect = GetComponent<RectTransform>();
         }
     
         public void OnPointerEnter(PointerEventData eventData)
         {
-            moving = true;
-            target = maxPos;
+            _moving = true;
+            _target = maxPos;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            moving = true;
-            target = minPos;
+            _moving = true;
+            _target = minPos;
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
-            if (!moving) return;
-            rect.anchoredPosition = new Vector2(Mathf.Lerp(rect.anchoredPosition.x, target, 0.05f), rect.anchoredPosition.y);
-            if (Mathf.Abs(rect.anchoredPosition.x - target) < 0.1f) moving = false;
+            if (!_moving) return;
+            _rect.anchoredPosition = new Vector2(Mathf.Lerp(_rect.anchoredPosition.x, _target, 0.05f), _rect.anchoredPosition.y);
+            if (Mathf.Abs(_rect.anchoredPosition.x - _target) < 0.1f) _moving = false;
         }
     }
 }

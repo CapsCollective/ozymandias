@@ -2,7 +2,7 @@
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Managers
 {

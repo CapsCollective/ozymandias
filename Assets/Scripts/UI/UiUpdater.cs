@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
+using static Managers.GameManager;
 
 namespace UI
 {
     public abstract class UiUpdater : MonoBehaviour
     {
-
         private void Awake()
         {
-            GameManager.OnUpdateUI += UpdateUi;
+            OnUpdateUI += UpdateUi;
         }
 
         private void OnDestroy()
         {
-            GameManager.OnUpdateUI -= UpdateUi;
+            OnUpdateUI -= UpdateUi;
         }
 
-        public abstract void UpdateUi();
+        protected abstract void UpdateUi();
     }
 }

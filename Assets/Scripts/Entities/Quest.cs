@@ -5,7 +5,7 @@ using Managers;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -64,7 +64,7 @@ public class Quest : ScriptableObject
         cost = details.cost;
         turnsLeft = details.turnsLeft;
         if (details.assigned.Count == 0) return;
-        assigned = details.assigned.Select(adventurerName => Manager.adventurers.Find(a => a.name == adventurerName)).ToList();
+        assigned = details.assigned.Select(adventurerName => Manager.Adventurers.Find(a => a.name == adventurerName)).ToList();
         assigned.ForEach(a => a.assignedQuest = this);
         GameManager.OnNewTurn += OnNewTurn; //Resume Quest
     }

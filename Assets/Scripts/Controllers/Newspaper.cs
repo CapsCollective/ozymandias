@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 0649
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
@@ -6,7 +7,7 @@ using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -14,7 +15,6 @@ namespace Controllers
     public class Newspaper : MonoBehaviour
     {
         // Serialised Fields
-        #pragma warning disable 0649
         [SerializeField] private Text titleText;
         [SerializeField] private NewspaperEvent[] articleList;
         [SerializeField] private Image articleImage;
@@ -52,7 +52,7 @@ namespace Controllers
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
         {
-            turnCounter.text = _newspaperTitle + ", Turn " + Manager.turnCounter;
+            turnCounter.text = _newspaperTitle + ", Turn " + Manager.TurnCounter;
         
             _choiceEvent = events[0];
             if (_choiceEvent.choices.Count > 0) SetContinueButtonEnabled(false);
@@ -69,7 +69,7 @@ namespace Controllers
             for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i, i < _choiceEvent.choices.Count);
         }
 
-        public void SetChoiceActive(int choice, bool active)
+        private void SetChoiceActive(int choice, bool active)
         {
             choiceList[choice].gameObject.SetActive(active);
             if (active) choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text = _choiceEvent.choices[choice].name;
@@ -79,18 +79,18 @@ namespace Controllers
         {
             articleList[0].AddChoiceOutcome (_choiceEvent.MakeChoice(choice));
             SetContinueButtonEnabled(true);
-            for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
+            for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             Manager.UpdateUi();
-            Manager.Save(); // Need to save again after a choice to lock in its outcomes
+            Save(); // Need to save again after a choice to lock in its outcomes
         }
     
-        private static string[] NewspaperTitles = {
+        private static readonly string[] NewspaperTitles = {
             "The Wizarding Post", "The Adventurer's Economist", "The Daily Guild", "Dimensional Press",
             "The Conduit Chronicle", "The Questing Times"
         };
 
-        private string GetNewspaperTitle()
+        private static string GetNewspaperTitle()
         {
             Random.InitState((int)DateTime.Now.Ticks);
             return NewspaperTitles[Random.Range(0, NewspaperTitles.Length)];

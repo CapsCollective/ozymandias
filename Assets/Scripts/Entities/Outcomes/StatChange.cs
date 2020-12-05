@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 [CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
 public class StatChange : Outcome
@@ -12,15 +12,15 @@ public class StatChange : Outcome
     
     public override bool Execute(bool fromChoice)
     {
-        if (!Manager.modifiers.ContainsKey(statToChange)) return false;
+        if (!Manager.Modifiers.ContainsKey(statToChange)) return false;
         
-        Manager.modifiers[statToChange].Add(new Modifier
+        Manager.Modifiers[statToChange].Add(new Modifier
         {
             amount = amount,
             turnsLeft = turns,
             reason = reason
         });
-        Manager.modifiersTotal[statToChange] += amount;
+        Manager.ModifiersTotal[statToChange] += amount;
         return true;
     }
     

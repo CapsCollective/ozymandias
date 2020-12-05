@@ -1,26 +1,27 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
     public class WealthCounter : UiUpdater
     {
-        public TextMeshProUGUI wealth;
+        [SerializeField] private TextMeshProUGUI wealth;
 
-        private int wpt;
-        private int previousWealth = 0;
-        private int targetWealth = 0;
+        private int _wpt;
+        private int _previousWealth = 0;
+        private int _targetWealth = 0;
 
         // Update is called once per frame
-        public override void UpdateUi()
+        protected override void UpdateUi()
         {
-            wpt = Manager.WealthPerTurn;
-            wealth.text = targetWealth + " (+" + wpt + ")";
-            if (targetWealth == Manager.Wealth) return; // Don't double update
-            previousWealth = targetWealth;
-            targetWealth = Manager.Wealth;
+            _wpt = Manager.WealthPerTurn;
+            wealth.text = _targetWealth + " (+" + _wpt + ")";
+            if (_targetWealth == Manager.Wealth) return; // Don't double update
+            _previousWealth = _targetWealth;
+            _targetWealth = Manager.Wealth;
             StartCoroutine(Scale());
         }
 
@@ -28,8 +29,8 @@ namespace UI
         {
             for (float t = 0; t < 0.3f; t += Time.deltaTime)
             {
-                int w = (int)Mathf.Lerp(previousWealth, targetWealth, t / 0.3f);
-                wealth.text = w + " (+" + wpt + ")";
+                int w = (int)Mathf.Lerp(_previousWealth, _targetWealth, t / 0.3f);
+                wealth.text = w + " (+" + _wpt + ")";
                 yield return null;
             }
             wealth.text = Manager.Wealth + " (+" + Manager.WealthPerTurn + ")";

@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿#pragma warning disable 0649
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,19 +8,16 @@ namespace UI
 {
     public class Achievement : MonoBehaviour
     {
-        public Color lockedColor;
-        public Color unlockedColor;
-        public TextMeshProUGUI titleText;
-        public TextMeshProUGUI descriptionText;
-        public Image iconImage;
-        public Image unlockBadge;
+        [SerializeField] private Color lockedColor, unlockedColor;
+        [SerializeField] private TextMeshProUGUI titleText, descriptionText;
+        [SerializeField] private Image iconImage, unlockBadge;
     
-        [HorizontalLine()]
-        public string title;
-        public Sprite icon;
-        public string lockedDescription; // Only for secret achievements
-        public string unlockedDescription;
+        [HorizontalLine]
+        [SerializeField] private Sprite icon;
+        [SerializeField] private string lockedDescription, unlockedDescription; // Only for secret achievements
 
+        public string title;
+        
         private bool _unlocked;
         public bool Unlocked
         {

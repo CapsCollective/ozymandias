@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 0649
+using System.Collections.Generic;
 using DG.Tweening;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utilities;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Controllers
 {
@@ -14,40 +15,38 @@ namespace Controllers
         public const int Deselected = -1;
         public static int Selected = Deselected;
     
-        #pragma warning disable 0649
         [SerializeField] private BuildingSelect[] cards;
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float tweenTime;
         [SerializeField] private Ease tweenEase;
         [SerializeField] private GameObject particle;
     
-        private List<GameObject> remainingBuildings = new List<GameObject>();
-        private RaycastHit hit;
-        private Camera cam;
-        private int rotation;
-        private Cell[] highlighted = new Cell[0];
-        private int previousSelected = Selected;
+        private List<GameObject> _remainingBuildings = new List<GameObject>();
+        private Camera _cam;
+        private int _rotation;
+        private Cell[] _highlighted = new Cell[0];
+        private int _previousSelected = Selected;
     
         private void Start()
         {
-            cam = Camera.main;
+            _cam = Camera.main;
         
-            ClickManager.OnLeftClick += LeftClick;
-            ClickManager.OnRightClick += RightClick;
+            Click.OnLeftClick += LeftClick;
+            Click.OnRightClick += RightClick;
 
             OnNextTurn += NewCards;
         
-            remainingBuildings = Manager.BuildingCards.All;
-            for (int i = 0; i < 3; i++) cards[i].buildingPrefab = remainingBuildings.PopRandom();
+            _remainingBuildings = Manager.BuildingCards.All;
+            for (int i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
         }
 
-        void Update()
+        private void Update()
         {
             // Clear previous highlights
-            Manager.Map.Highlight(highlighted, Map.HighlightState.Inactive);
-            highlighted = new Cell[0];
+            Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
+            _highlighted = new Cell[0];
 
-            if (previousSelected != Selected)
+            if (_previousSelected != Selected)
             {
                 if (CursorSelect.Cursor.currentCursor != CursorSelect.CursorType.Destroy)
                 {
@@ -55,7 +54,7 @@ namespace Controllers
                         ? CursorSelect.CursorType.Build
                         : CursorSelect.CursorType.Pointer;
                     CursorSelect.Cursor.Select(cursor);
-                    previousSelected = Selected;
+                    _previousSelected = Selected;
                 }
             }
 
@@ -65,23 +64,23 @@ namespace Controllers
 
             BuildingStructure building = cards[Selected].buildingPrefab.GetComponent<BuildingStructure>();
 
-            highlighted = Manager.Map.GetCells(closest, building, rotation);
+            _highlighted = Manager.Map.GetCells(closest, building, _rotation);
 
-            Map.HighlightState state = Manager.Map.IsValid(highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
-            Manager.Map.Highlight(highlighted, state);
+            Map.HighlightState state = Manager.Map.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+            Manager.Map.Highlight(_highlighted, state);
         }
 
         private void LeftClick()
         {
             if (Selected == Deselected) return;
-            Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
-            Physics.Raycast(ray, out hit, 200f, layerMask);
+            Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
+            Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
 
             if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
 
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, GameObject.Find("Buildings").transform);
-            if (!Manager.Map.CreateBuilding(buildingInstance, hit.point, rotation, true)) return;
+            if (!Manager.Map.CreateBuilding(buildingInstance, hit.point, _rotation, true)) return;
         
             Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<BuildingStats>().primaryStat);
         
@@ -97,8 +96,8 @@ namespace Controllers
         private void RightClick()
         {
             if (Selected == Deselected) return;
-            rotation++;
-            rotation %= 4;
+            _rotation++;
+            _rotation %= 4;
         }
     
         public void NewCards()
@@ -107,7 +106,7 @@ namespace Controllers
             for (int i = 0; i < 3; i++) NewCardTween(i);
         }
 
-        public void NewCardTween(int i)
+        private void NewCardTween(int i)
         {
             RectTransform t = cards[i].GetComponent<RectTransform>();
             t.DOAnchorPosY(-100, tweenTime).SetEase(tweenEase).OnComplete(() =>
@@ -119,14 +118,14 @@ namespace Controllers
 
         private void ChangeCard(int i)
         {
-            if (remainingBuildings.Count == 0) remainingBuildings = Manager.BuildingCards.All;
+            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
             bool valid = false;
 
             // Confirm no duplicate buildings
             while (!valid)
             {
                 valid = true;
-                cards[i].buildingPrefab = remainingBuildings.PopRandom();
+                cards[i].buildingPrefab = _remainingBuildings.PopRandom();
                 for (int j = 0; j < 3; j++)
                 {
                     if (i == j) continue;

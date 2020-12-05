@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using static GameManager;
+using static Managers.GameManager;
 
 public enum AdventurerCategory
 {
@@ -70,7 +70,7 @@ public class Adventurer : MonoBehaviour
         Random.InitState(GetInstanceID());
         name = NewName();
         category = NewCategory();
-        turnJoined = Manager.turnCounter;
+        turnJoined = Manager.TurnCounter;
     }
 
     public static string NewName()

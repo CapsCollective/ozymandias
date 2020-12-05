@@ -1,6 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace UI.Tooltips
 {

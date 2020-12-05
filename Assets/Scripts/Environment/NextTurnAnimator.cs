@@ -1,25 +1,26 @@
-﻿using DG.Tweening;
+﻿#pragma warning disable 0649
+using DG.Tweening;
+using Managers;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Environment
 {
     public class NextTurnAnimator : MonoBehaviour
     {
-        public Light sun;
-        public float sunSetTime = 2f;
-        public ParticleSystem glowflyPS;
+        [SerializeField] private Light sun;
+        [SerializeField] private float sunSetTime = 2f;
+        [SerializeField] private ParticleSystem glowflyPS;
 
-        #pragma warning disable 0649
         [SerializeField] private Gradient ambientGradient;   
         [SerializeField] private Gradient sunColorGradient;
 
-        void Awake()
+        private void Awake()
         {
             GameManager.OnNextTurn += OnNextTurn;
         }
 
-        public void OnNextTurn()
+        private void OnNextTurn()
         {
             glowflyPS.Play();
             float timer = 0;

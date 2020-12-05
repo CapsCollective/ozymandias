@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿#pragma warning disable 0649
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +7,9 @@ namespace UI
 {
     public class QuestCounter : MonoBehaviour
     {
-        public TextMeshProUGUI text;
-        public Image image;
-        public Color readColor, unreadColor;
+        [SerializeField] private TextMeshProUGUI text;
+        [SerializeField] private Image image;
+        [SerializeField] private Color readColor, unreadColor;
 
         private void Start()
         {

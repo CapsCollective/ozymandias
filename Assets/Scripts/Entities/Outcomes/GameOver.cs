@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 [CreateAssetMenu(fileName = "Game Over Outcome", menuName = "Outcomes/Game Over")]
 public class GameOver : Outcome

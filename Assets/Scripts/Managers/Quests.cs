@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 0649
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
@@ -7,13 +8,12 @@ using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utilities;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Managers
 {
     public class Quests : MonoBehaviour
     {
-        #pragma warning disable 0649
         [SerializeField] private List<QuestFlyer> availableFlyers = new List<QuestFlyer>();
         [SerializeField] private List<QuestFlyer> usedFlyers = new List<QuestFlyer>();
         [SerializeField] private QuestCounter counter;
@@ -24,16 +24,14 @@ namespace Managers
         private Canvas _canvas;
 
         public int Count => usedFlyers.Count;
-
-        public List<Quest> All => usedFlyers.Select(x => x.flyerQuest).ToList();
-
+        
         private void Start()
         {
             _canvas = GetComponent<Canvas>();
 
-            foreach (var flyer in availableFlyers)
+            foreach (QuestFlyer flyer in availableFlyers)
             {
-                flyer.GetComponent<QuestFlyer>().callbackMethod = OnFlyerClick;
+                flyer.GetComponent<QuestFlyer>().CallbackMethod = OnFlyerClick;
             }
         }
         
@@ -78,7 +76,7 @@ namespace Managers
         
         public bool Add(Quest q)
         {
-            if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.flyerQuest == q)) return false;
+            if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.quest == q)) return false;
             QuestFlyer flyer = availableFlyers.PopRandom();
             flyer.gameObject.SetActive(true);
             q.cost = (int)(GameManager.Manager.WealthPerTurn * q.costScale);
@@ -91,7 +89,7 @@ namespace Managers
 
         public bool Remove(Quest q)
         {
-            QuestFlyer flyer = usedFlyers.Find(x => x.flyerQuest == q);
+            QuestFlyer flyer = usedFlyers.Find(x => x.quest == q);
             if (!flyer) return false;
             flyer.gameObject.SetActive(false);
             usedFlyers.Remove(flyer);
@@ -102,7 +100,7 @@ namespace Managers
 
         public List<QuestDetails> Save()
         {
-            return All.Select(q => q.Save()).ToList();
+            return usedFlyers.Select(x => x.quest.Save()).ToList();
         }
         
         public async Task Load(List<QuestDetails> quests)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,60 +7,61 @@ namespace UI
 {
     public class Trail : MonoBehaviour
     {
-        public Transform[] waypoints = new Transform[3];
-        private float percentsPerSecond = 0.7f; 
-        private float currentPathPercent = 0.0f;
-        private GameObject target;
+        [SerializeField] private ParticleSystem particles;
+
+        private readonly Transform[] _waypoints = new Transform[3];
+        private float _percentsPerSecond = 0.7f; 
+        private float _currentPathPercent;
+        private GameObject _target;
     
-        public ParticleSystem particles;
     
         public void SetTarget(Metric metric)
         {
             // Set start
-            waypoints[0].position = Input.mousePosition;
+            _waypoints[0].position = Input.mousePosition;
             // Set end
-            target = FindStatBar(metric);
-            if (!target) {
+            _target = FindStatBar(metric);
+            if (!_target) {
                 Destroy(gameObject);
                 return;
             }
-            waypoints[2] = target.transform;
+            _waypoints[2] = _target.transform;
 
             // Set midpoint for curve. Bend vertical and then horizontal
-            Vector3 difference = waypoints[2].position - waypoints[0].position;
-            waypoints[1].position = new Vector3(
-                waypoints[0].position.x + difference.x * 1 / 3, 
-                waypoints[0].position.y + difference.y * 2 / 3,
+            Vector3 difference = _waypoints[2].position - _waypoints[0].position;
+            _waypoints[1].position = new Vector3(
+                _waypoints[0].position.x + difference.x * 1 / 3, 
+                _waypoints[0].position.y + difference.y * 2 / 3,
                 0);
         
             // Change particle color based on target
-            var particlesMain = particles.main;
-            particlesMain.startColor = waypoints[2].Find("Mask").Find("Fill").GetComponent<Image>().color;
+            ParticleSystem.MainModule particlesMain = particles.main;
+            particlesMain.startColor = _waypoints[2].Find("Mask").Find("Fill").GetComponent<Image>().color;
         }
 
-        void Update()
+        private void Update()
         {
-            if (currentPathPercent < 1)
+            if (_currentPathPercent < 1)
             {
-                currentPathPercent += percentsPerSecond * Time.deltaTime;
-                if (currentPathPercent > 1) currentPathPercent = 1;
-                iTween.PutOnPath(particles.gameObject, waypoints, currentPathPercent);
-                percentsPerSecond += 0.035f;
+                _currentPathPercent += _percentsPerSecond * Time.deltaTime;
+                if (_currentPathPercent > 1) _currentPathPercent = 1;
+                iTween.PutOnPath(particles.gameObject, _waypoints, _currentPathPercent);
+                _percentsPerSecond += 0.035f;
             }
             else
             {
-                particles.transform.position = waypoints[2].position;
+                particles.transform.position = _waypoints[2].position;
                 StartCoroutine(Decay());
             }
         }
 
-        IEnumerator Decay()
+        private IEnumerator Decay()
         {
             yield return new WaitForSeconds(2f);
             Destroy(gameObject);
         }
-    
-        public GameObject FindStatBar(Metric metric)
+
+        private static GameObject FindStatBar(Metric metric)
         {
             switch (metric)
             {

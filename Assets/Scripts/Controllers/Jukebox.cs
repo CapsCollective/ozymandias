@@ -1,7 +1,9 @@
-﻿using System;
+﻿#pragma warning disable 0649
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Managers;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -30,7 +32,6 @@ namespace Controllers
         public static Jukebox Instance { get; private set; }
         
         // Serialized fields
-        #pragma warning disable 0649
         [SerializeField] private bool sfxOnly;
         [SerializeField] private float ambienceSpacing = 20f;
         [SerializeField] private float trackCutoff = 2f;
@@ -52,17 +53,17 @@ namespace Controllers
         [SerializeField] private LayerMask waterDetectLm;
 
         // Private fields
-        private readonly Func<bool, string> getNatureAmbience = (b) => b ? NatureAmbienceVolume : WaterAmbienceVolume;
-        private List<AudioClip> playlist = new List<AudioClip>();
-        private float closestBuildingDistance;
-        private bool isAboveLand = true;
-        private readonly List<IEnumerator> ambienceCoroutines = new List<IEnumerator>();
-        private Camera currentCamera;
-        private float timeWaited;
+        private readonly Func<bool, string> _getNatureAmbience = (b) => b ? NatureAmbienceVolume : WaterAmbienceVolume;
+        private List<AudioClip> _playlist = new List<AudioClip>();
+        private float _closestBuildingDistance;
+        private bool _isAboveLand = true;
+        private readonly List<IEnumerator> _ambienceCoroutines = new List<IEnumerator>();
+        private Camera _cam;
+        private float _timeWaited;
 
         private void Awake() {
             Instance = this;
-            currentCamera = Camera.main;
+            _cam = Camera.main;
         }
 
         private void Start()
@@ -77,38 +78,38 @@ namespace Controllers
             if (sfxOnly) return;
             
             // Update the positions and volumes of various ambiences
-            var ambiancePosition = currentCamera.transform.position;
+            var ambiancePosition = _cam.transform.position;
             ambiancePosition.y = 0f;
             ambiencePlayers.transform.position = ambiancePosition;
             UpdateTownAmbienceVolume();
             
             // Offset the updates performed
-            timeWaited += Time.deltaTime;
-            if (timeWaited < 0.1f) return;
-            timeWaited = 0;
+            _timeWaited += Time.deltaTime;
+            if (_timeWaited < 0.1f) return;
+            _timeWaited = 0;
             
             // Update world values
-            closestBuildingDistance = GetClosestBuildingDistance();
+            _closestBuildingDistance = GetClosestBuildingDistance();
             CheckAmbiencePlayer();
         }
         
         private void CheckAmbiencePlayer()
         {
             // Check if camera is above land or water
-            if (isAboveLand == Physics.Raycast(currentCamera.transform.position,
+            if (_isAboveLand == Physics.Raycast(_cam.transform.position,
                 Vector3.down, out _, 30f, waterDetectLm)) return;
-            isAboveLand = !isAboveLand;
+            _isAboveLand = !_isAboveLand;
             
             // Stop all running ambience-related coroutines
-            foreach (var routine in ambienceCoroutines)
+            foreach (var routine in _ambienceCoroutines)
                 StopCoroutine(routine);
-            ambienceCoroutines.Clear();
+            _ambienceCoroutines.Clear();
             
             // Fade between nature and water mixer groups and save the running coroutines
-            ambienceCoroutines.Add(FadeTo(getNatureAmbience(isAboveLand), FullVolume, 3f));
-            ambienceCoroutines.Add(FadeTo(getNatureAmbience(!isAboveLand), 
-                isAboveLand ? LowestVolume : 0.01f, 5f));
-            foreach (var routine in ambienceCoroutines)
+            _ambienceCoroutines.Add(FadeTo(_getNatureAmbience(_isAboveLand), FullVolume, 3f));
+            _ambienceCoroutines.Add(FadeTo(_getNatureAmbience(!_isAboveLand), 
+                _isAboveLand ? LowestVolume : 0.01f, 5f));
+            foreach (var routine in _ambienceCoroutines)
                 StartCoroutine(routine);
         }
 
@@ -130,11 +131,11 @@ namespace Controllers
         private void OnAmbianceEnded()
         {
             // If the playlist is empty, reshuffle it
-            if (playlist.Count <= 0)
-                playlist = new List<AudioClip>(tracks);
-            playlist.Shuffle();
+            if (_playlist.Count <= 0)
+                _playlist = new List<AudioClip>(tracks);
+            _playlist.Shuffle(); // TODO: Shuffle method isn't implemented
             // Set the new clip to a random selection and play it
-            musicPlayer.clip = playlist.PopRandom();
+            musicPlayer.clip = _playlist.PopRandom();
             musicPlayer.Play();
             // Fade from ambience to music mixer groups
             StartCoroutine(FadeTo(AmbienceVolume, 0.2f, 5f));
@@ -156,16 +157,16 @@ namespace Controllers
             // Lerp toward the desired volume based on the distance to closest building in the world
             mixer.GetFloat(TownVolume, out var currentVolume);
             mixer.SetFloat(TownVolume, 
-                Mathf.Lerp(currentVolume, -closestBuildingDistance + 5f, Time.deltaTime));
+                Mathf.Lerp(currentVolume, -_closestBuildingDistance + 5f, Time.deltaTime));
         }
         
         private float GetClosestBuildingDistance()
         {
             // Find distance of closest building to the camera
             var closestDistance = -1f;
-            foreach (var building in GameManager.Manager.buildings)
+            foreach (var building in GameManager.Manager.Buildings)
             {
-                var distance = Vector3.Distance(currentCamera.transform.position, 
+                var distance = Vector3.Distance(_cam.transform.position, 
                     building.gameObject.transform.position);
                 if (distance < closestDistance || closestDistance < 0)
                 {

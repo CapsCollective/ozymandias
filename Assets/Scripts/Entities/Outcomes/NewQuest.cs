@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using NaughtyAttributes;
-using static GameManager;
+using static Managers.GameManager;
 
 [CreateAssetMenu(fileName = "New Quest Outcome", menuName = "Outcomes/New Quest")]
 public class NewQuest : Outcome

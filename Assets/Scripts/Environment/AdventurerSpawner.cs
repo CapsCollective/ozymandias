@@ -1,36 +1,36 @@
+#pragma warning disable 0649
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace Environment
 {
     public class AdventurerSpawner : MonoBehaviour
     {
-        #pragma warning disable 0649
         [SerializeField] private GameObject adventurerModel;
         [SerializeField] private float adventurerSpeed = .3f;
         [SerializeField] private float wanderingUpdateFrequency = 3f;
         [SerializeField] private float partyScatter = .5f;
         [SerializeField] private float fadeDuration = 1f;
         
-        private MapLayout mapLayout;
-        private List<Vertex> boundaryVerts;
-        private readonly Dictionary<GameObject, List<Vector3>> activeAdventurers = 
+        private MapLayout _mapLayout;
+        private List<Vertex> _boundaryVerts;
+        private readonly Dictionary<GameObject, List<Vector3>> _activeAdventurers = 
             new Dictionary<GameObject, List<Vector3>>();
 
         private void Start()
         {
-            mapLayout = Manager.Map.mapLayout;
+            _mapLayout = Manager.Map.layout;
             InvokeRepeating(nameof(CheckWandering), 1f, wanderingUpdateFrequency);
-            boundaryVerts = mapLayout.VertexGraph.GetData().Where(v => v.Boundary).ToList();
+            _boundaryVerts = _mapLayout.VertexGraph.GetData().Where(v => v.Boundary).ToList();
         }
 
         private void CheckWandering()
         {
-            if (activeAdventurers.Count < Manager.buildings.Count - 1)
+            if (_activeAdventurers.Count < Manager.Buildings.Count - 1)
             {
                 StartCoroutine(SpawnWanderingAdventurer());
             }
@@ -39,7 +39,7 @@ namespace Environment
         private void Update()
         {
             var adventurersToRemove = new List<GameObject>();
-            foreach (var adventurerPath in activeAdventurers)
+            foreach (var adventurerPath in _activeAdventurers)
             {
                 var adventurer = adventurerPath.Key;
                 if (adventurerPath.Value.Count > 0)
@@ -59,7 +59,7 @@ namespace Environment
 
             foreach (var adventurer in adventurersToRemove)
             {
-                activeAdventurers.Remove(adventurer);
+                _activeAdventurers.Remove(adventurer);
                 StartCoroutine(FadeAdventurer(adventurer, 1f, 0f, true));
             }
             adventurersToRemove.Clear();
@@ -73,9 +73,9 @@ namespace Environment
             // Safety check for null vertex issue - should be fixed, but safety first
             if (start == null || end == null) yield return null;
 
-            var path = mapLayout.AStar(mapLayout.RoadGraph,start, end)
+            var path = _mapLayout.AStar(_mapLayout.RoadGraph,start, end)
                 .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
-            activeAdventurers.Add(CreateAdventurer(start), path);
+            _activeAdventurers.Add(CreateAdventurer(start), path);
             yield return null;
         }
         
@@ -87,17 +87,17 @@ namespace Environment
         private IEnumerator SpawnQuestingAdventurers(int num)
         {
             Vertex start = null;
-            var end = boundaryVerts[Random.Range(0, boundaryVerts.Count)];
+            var end = _boundaryVerts[Random.Range(0, _boundaryVerts.Count)];
             while (start == null)
                 start = GetRandomBuildingVertex();
 
-            var gridPath = mapLayout.AStar(mapLayout.VertexGraph,start, end);
+            var gridPath = _mapLayout.AStar(_mapLayout.VertexGraph,start, end);
 
             var wildPath = new List<Vertex>();
             Vertex finalRoadPoint = null;
             for (var i = gridPath.Count - 1; i >= 0; i--)
             {
-                if (!mapLayout.RoadGraph.Contains(gridPath[i]))
+                if (!_mapLayout.RoadGraph.Contains(gridPath[i]))
                 {
                     wildPath.Add(gridPath[i]);
                 }
@@ -107,13 +107,13 @@ namespace Environment
                     break;
                 }
             }
-            var roadPath = mapLayout.AStar(mapLayout.RoadGraph,start, finalRoadPoint);
+            var roadPath = _mapLayout.AStar(_mapLayout.RoadGraph,start, finalRoadPoint);
             var finalPath = roadPath.Concat(wildPath)
                 .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
 
             for (var i = 0; i < num; i++)
             {
-                activeAdventurers.Add(CreateAdventurer(start), new List<Vector3>(finalPath));
+                _activeAdventurers.Add(CreateAdventurer(start), new List<Vector3>(finalPath));
                 yield return new WaitForSeconds(partyScatter);
             }
             yield return null;
@@ -121,11 +121,11 @@ namespace Environment
 
         private Vertex GetRandomBuildingVertex()
         {
-            var buildings = mapLayout.BuildingMap.Keys.ToList();
+            var buildings = _mapLayout.BuildingMap.Keys.ToList();
             buildings = buildings.Where(bs => bs.gameObject.CompareTag("Building")).ToList();
             var building = buildings[Random.Range(0, buildings.Count)];
-            var unfilteredVerts = mapLayout.BuildingMap[building].SelectMany(c => c.Vertices).ToList();
-            var filteredVerts = unfilteredVerts.Where(v => mapLayout.RoadGraph.GetData().Contains(v)).ToList();
+            var unfilteredVerts = _mapLayout.BuildingMap[building].SelectMany(c => c.Vertices).ToList();
+            var filteredVerts = unfilteredVerts.Where(v => _mapLayout.RoadGraph.GetData().Contains(v)).ToList();
             return filteredVerts[Random.Range(0, filteredVerts.Count)];
         }
 

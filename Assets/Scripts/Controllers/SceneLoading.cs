@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,14 +7,14 @@ using UnityEngine.UI;
 
 public class SceneLoading : MonoBehaviour
 {
-    #pragma warning disable 0649
     [SerializeField] private Image progressBar;
-    void Start()
+
+    private void Start()
     {
         StartCoroutine(LoadAsyncOperation());
     }
 
-    IEnumerator LoadAsyncOperation()
+    private IEnumerator LoadAsyncOperation()
     {
         AsyncOperation gameLevel = SceneManager.LoadSceneAsync("Main");
         while (!gameLevel.isDone)

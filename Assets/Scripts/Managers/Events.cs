@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 0649
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,29 +8,29 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utilities;
 using Random = UnityEngine.Random;
-using static GameManager;
+using static Managers.GameManager;
 
 namespace Managers
 {
     public class Events : MonoBehaviour
     {
         private const int MinQueueEvents = 3; // The minimum events in the queue to store
-    
+        
+        [SerializeField] private AssetLabelReference label;
+        
+        private int _nextBuildingUnlock = 10;
+
         private readonly LinkedList<Event> _headliners = new LinkedList<Event>();
         private readonly LinkedList<Event> _others = new LinkedList<Event>();
 
         private readonly Dictionary<EventType, List<Event>> 
             _availablePools = new Dictionary<EventType, List<Event>>(), //Events to randomly add to the queue
-            _usedPools = new Dictionary<EventType, List<Event>>(), //Events already run but will be readded on a shuffle
+            _usedPools = new Dictionary<EventType, List<Event>>(), //Events already run but will be re-added on a shuffle
             _discardedPools = new Dictionary<EventType, List<Event>>(); //Events that shouldn't be run again
     
         [ReadOnly] private readonly List<Event> _current = new List<Event>(4);
         [ReadOnly] private readonly List<string> _outcomeDescriptions = new List<string>(4);
         
-        private int _nextBuildingUnlock = 10;
-        
-        [SerializeField] private AssetLabelReference label;
-
         private void Awake()
         {
             Random.InitState((int)DateTime.Now.Ticks);
@@ -79,14 +80,14 @@ namespace Managers
             }
 
             // Keeps adventurer count roughly at a fair level
-            if (Manager.TotalAdventurers < 7 + Manager.turnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (Manager.TotalAdventurers < 7 + Manager.TurnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             // Catchup if falling behind
-            if (Manager.TotalAdventurers < 4 + Manager.turnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
-            if (Manager.TotalAdventurers < Manager.turnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (Manager.TotalAdventurers < 4 + Manager.TurnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (Manager.TotalAdventurers < Manager.TurnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             // More if high satisfaction
             if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         
-            if (Manager.turnCounter >= 5)
+            if (Manager.TurnCounter >= 5)
             {
                 // Fill up to 3 quests if unfilled
                 if(Random.Range(0, 4) > Manager.Quests.Count) eventPool.Add(PickRandom(EventType.Radiant));
@@ -129,11 +130,11 @@ namespace Managers
             //}
         }
         
-        private bool ValidEvent(Event e)
+        /*private bool ValidEvent(Event e)
         {
             //TODO: Implement
             return true;
-        }
+        }*/
         
         public void Add(Event e, bool toFront = false)
         {

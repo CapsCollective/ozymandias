@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,12 +7,12 @@ namespace UI
 {
     public class BarFill : MonoBehaviour
     {
-        public int barWidth;
-        public RectTransform mask;
-        public Image fill;
-        public bool changeFill;
-        public Gradient gradient;
-        public float previousWidth, targetWidth;
+        [SerializeField] private int barWidth;
+        [SerializeField] private RectTransform mask;
+        [SerializeField] private Image fill;
+        [SerializeField] private bool changeFill;
+        [SerializeField] private Gradient gradient;
+        [SerializeField] private float previousWidth, targetWidth;
 
         public static bool DelayBars = false;
     
@@ -29,7 +30,7 @@ namespace UI
             StartCoroutine(Scale());
         }
 
-        IEnumerator Scale()
+        private IEnumerator Scale()
         {
             previousWidth = mask.sizeDelta.x;
             if (DelayBars) yield return new WaitForSeconds(1.2f);

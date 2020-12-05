@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using static GameManager;
+using static Managers.GameManager;
 
 public class QuestCompleted : Outcome
 {

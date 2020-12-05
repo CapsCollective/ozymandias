@@ -1,6 +1,6 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
-using static GameManager;
+using static Managers.GameManager;
 
 [CreateAssetMenu(fileName = "Building Unlock", menuName = "Outcomes/Building Unlock")]
 public class BuildingUnlock : Outcome
