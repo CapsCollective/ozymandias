@@ -18,6 +18,7 @@ namespace UI
         // Public fields
         public Toggle toggle;
         public GameObject buildingPrefab;
+        public bool isReplacing;
         
         // Serialised fields
         [SerializeField] private int position;
@@ -67,13 +68,18 @@ namespace UI
                 BuildingPlacement.Selected = Deselected;
                 cardHighlight.color = new Color(1, 1, 1, 0);
             }
-            
+
             // Darken the card if unselectable
             cardBack.color = toggle.interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f);
         }
 
         public void ToggleSelect()
         {
+            // Highlight the card if selected
+            cardHighlight.DOFade(toggle.isOn ? 1 : 0, 0.5f);
+            
+            if (isReplacing) { return; }
+
             if (toggle.isOn)
             {
                 // Deselect all other cards
@@ -92,9 +98,6 @@ namespace UI
                 BuildingPlacement.Selected = Deselected;
                 OnPointerExit(null);
             }
-            
-            // Highlight the card if selected
-            cardHighlight.DOFade(toggle.isOn ? 1 : 0, 0.5f);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
