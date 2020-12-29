@@ -27,7 +27,6 @@ namespace UI
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image icon;
-        [SerializeField] private Image iconTexture;
         [SerializeField] private TextMeshProUGUI cost;
         
         [SerializeField] private Image cardBack;
@@ -49,15 +48,12 @@ namespace UI
         protected override void UpdateUi()
         {
             var building = buildingPrefab.GetComponent<BuildingStats>();
-            var colour = building.IconColour;
-            
+
             // Set card details
             title.text = building.name;
-            title.color = colour;
             description.text = building.description;
             cost.text = building.ScaledCost.ToString();
             icon.sprite = building.icon;
-            iconTexture.color = colour;
             
             // Set toggle interactable
             toggle.interactable = building.ScaledCost <= Manager.Wealth;
