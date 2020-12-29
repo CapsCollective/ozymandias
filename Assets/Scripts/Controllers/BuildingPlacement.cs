@@ -109,9 +109,11 @@ namespace Controllers
         private void NewCardTween(int i)
         {
             RectTransform t = cards[i].GetComponent<RectTransform>();
+            cards[i].isReplacing = true;
             t.DOAnchorPosY(-100, tweenTime).SetEase(tweenEase).OnComplete(() =>
             {
                 ChangeCard(i);
+                cards[i].isReplacing = false;
                 t.DOAnchorPosY(0, 0.5f).SetEase(tweenEase);
             });
         }
