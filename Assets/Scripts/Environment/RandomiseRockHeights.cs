@@ -14,7 +14,7 @@ namespace Environment
             depth = -Random.Range(0, depthRange);
             transform.Translate(new Vector3(0, depth, 0),Space.World);
             scale = Random.Range(-scaleRange, scaleRange);
-            transform.localScale = transform.localScale * (1f + scale);
+            transform.localScale *= 1f + scale;
         }
 
         // Start is called before the first frame update

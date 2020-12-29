@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 using UnityEngine.Serialization;
 using static Managers.GameManager;

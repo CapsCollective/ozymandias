@@ -1,8 +1,11 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 
+namespace Entities
+{
     [CreateAssetMenu(fileName = "Adventurer")][System.Serializable]
-    public class AdventurerDetails : ScriptableObject
+    public class PremadeAdventurer : ScriptableObject
     {
         public AdventurerCategory category;
         public bool isSpecial;
     }
+}

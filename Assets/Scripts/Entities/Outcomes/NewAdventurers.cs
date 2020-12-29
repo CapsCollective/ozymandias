@@ -4,38 +4,40 @@ using UnityEngine;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
-[CreateAssetMenu(fileName = "New Adventurers Outcome", menuName = "Outcomes/New Adventurers")]
-public class NewAdventurers : Outcome
+namespace Entities.Outcomes
 {
-    public List<AdventurerDetails> adventurers;
-
-    public override bool Execute()
+    [CreateAssetMenu(fileName = "New Adventurers Outcome", menuName = "Outcomes/New Adventurers")]
+    public class NewAdventurers : Outcome
     {
-        for (int i = 0; i < adventurers.Count; i++)
+        public List<PremadeAdventurer> adventurers;
+
+        public override bool Execute()
         {
-            if (adventurers[i] != null) Manager.AddAdventurer(adventurers[i]);
-            else Manager.AddAdventurer();
+            foreach (PremadeAdventurer t in adventurers)
+            {
+                if (t != null) Manager.Adventurers.Add(t);
+                else Manager.Adventurers.Add();
+            }
+
+            return true;
         }
 
-        return true;
-    }
-
-    private static string[] Descriptors = {
-        "taken up residence.", "joined the fight!", "found a new home.", "started questing."
-    };
+        private static string[] Descriptors = {
+            "taken up residence.", "joined the fight!", "found a new home.", "started questing."
+        };
     
-    public override string Description
-    {
-        get
+        public override string Description
         {
-            if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
-            Random.InitState((int)DateTime.Now.Ticks);
-            return "<color=#007000ff>" +
-                    adventurers.Count + " adventurer" +
-                    (adventurers.Count > 1 ? "s have " : " has ") +
-                    Descriptors[Random.Range(0, Descriptors.Length)]+
-                    "</color>";
+            get
+            {
+                if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
+                return "<color=#007000ff>" +
+                       adventurers.Count + " adventurer" +
+                       (adventurers.Count > 1 ? "s have " : " has ") +
+                       Descriptors[Random.Range(0, Descriptors.Length)]+
+                       "</color>";
+            }
         }
-    }
     
+    }
 }

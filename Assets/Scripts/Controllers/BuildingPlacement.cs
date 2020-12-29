@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 0649
 using System.Collections.Generic;
 using DG.Tweening;
+using Entities;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;

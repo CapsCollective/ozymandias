@@ -1,34 +1,37 @@
 ﻿using UnityEngine;
 using static Managers.GameManager;
 
-[CreateAssetMenu(fileName = "Building Damaged Outcome", menuName = "Outcomes/Building Damaged")]
-
-public class BuildingDamaged : Outcome
+namespace Entities.Outcomes
 {
-    public BuildingType type;
+    [CreateAssetMenu(fileName = "Building Damaged Outcome", menuName = "Outcomes/Building Damaged")]
 
-    public string buildingName;
-    
-    public override bool Execute()
+    public class BuildingDamaged : Outcome
     {
-        foreach (BuildingStats building in Manager.Buildings)
+        public BuildingType type;
+
+        public string buildingName;
+    
+        public override bool Execute()
         {
-            if(building.type == type)
+            foreach (BuildingStats building in Manager.Buildings)
             {
-                buildingName = building.name;
-                Manager.Demolish(building);
-                return true;
+                if(building.type == type)
+                {
+                    buildingName = building.name;
+                    Manager.Demolish(building);
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-    }
     
-    public override string Description
-    {
-        get
+        public override string Description
         {
-            if (customDescription != "") return "<color=#820000ff>" + customDescription + "</color>";
-            return "<color=#820000ff>A " + buildingName + " has been destroyed</color>";
+            get
+            {
+                if (customDescription != "") return "<color=#820000ff>" + customDescription + "</color>";
+                return "<color=#820000ff>A " + buildingName + " has been destroyed</color>";
+            }
         }
     }
 }

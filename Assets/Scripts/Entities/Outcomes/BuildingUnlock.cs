@@ -2,19 +2,22 @@
 using UnityEngine;
 using static Managers.GameManager;
 
-[CreateAssetMenu(fileName = "Building Unlock", menuName = "Outcomes/Building Unlock")]
-public class BuildingUnlock : Outcome
+namespace Entities.Outcomes
 {
-    public GameObject building;
-
-    [Button]
-    public override bool Execute()
+    [CreateAssetMenu(fileName = "Building Unlock", menuName = "Outcomes/Building Unlock")]
+    public class BuildingUnlock : Outcome
     {
-        if (!building)
-            return false;
+        public GameObject building;
 
-        return Manager.BuildingCards.Unlock(building);
+        [Button]
+        public override bool Execute()
+        {
+            if (!building)
+                return false;
+
+            return Manager.BuildingCards.Unlock(building);
+        }
+
+        public override string Description => "<color=#007000ff>Building Type Unlocked: " + building.name + "!</color>";
     }
-
-    public override string Description => "<color=#007000ff>Building Type Unlocked: " + building.name + "!</color>";
 }

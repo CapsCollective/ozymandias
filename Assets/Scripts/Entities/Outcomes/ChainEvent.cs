@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using static Managers.GameManager;
 
-[CreateAssetMenu(fileName = "Chain Event Outcome", menuName = "Outcomes/Chain Event")]
-public class ChainEvent : Outcome
+namespace Entities.Outcomes
 {
-    public Event next;
-    public bool toFront;
-    public override bool Execute()
+    [CreateAssetMenu(fileName = "Chain Event Outcome", menuName = "Outcomes/Chain Event")]
+    public class ChainEvent : Outcome
     {
-        Manager.Events.Add(next, toFront);
-        return true;
+        public Event next;
+        public bool toFront;
+        public override bool Execute()
+        {
+            Manager.EventQueue.Add(next, toFront);
+            return true;
+        }
     }
 }

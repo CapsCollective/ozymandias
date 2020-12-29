@@ -31,7 +31,7 @@ namespace Managers
         
         public async Task Load(List<string> buildings)
         {
-            foreach (var b in buildings)
+            foreach (string b in buildings)
                 unlockedBuildings.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
         }
     }

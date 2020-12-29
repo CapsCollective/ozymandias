@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
 using DG.Tweening;
+using Entities;
 using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

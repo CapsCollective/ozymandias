@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Controllers;
+using Entities;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
+using Event = Entities.Event;
 using Random = UnityEngine.Random;
 
 namespace Managers
@@ -27,10 +29,11 @@ namespace Managers
         }
     
         // All Managers/ Universal Controllers
+        public Adventurers Adventurers { get; private set; }
         public Achievements Achievements { get; private set; }
         public BuildingCards BuildingCards { get; private set; }
         public Quests Quests { get; private set; }
-        public Events Events { get; private set; }
+        public EventQueue EventQueue { get; private set; }
         public Settings Settings { get; private set; }
         public Map Map { get; private set; }
         public Newspaper Newspaper { get; private set; }
@@ -38,10 +41,12 @@ namespace Managers
     
         private void Awake()
         {
+            Random.InitState((int)DateTime.Now.Ticks);
+            Adventurers = FindObjectOfType<Adventurers>();
             Achievements = FindObjectOfType<Achievements>();
             BuildingCards = FindObjectOfType<BuildingCards>();
             Quests = FindObjectOfType<Quests>();
-            Events = FindObjectOfType<Events>();
+            EventQueue = FindObjectOfType<EventQueue>();
             Settings = FindObjectOfType<Settings>();
             Map = FindObjectOfType<Map>();
 
@@ -62,35 +67,30 @@ namespace Managers
         public Dictionary<Metric, List<Modifier>> Modifiers = new Dictionary<Metric, List<Modifier>>();
         public readonly Dictionary<Metric, int> ModifiersTotal = new Dictionary<Metric, int>();
     
-        public readonly List<Adventurer> Adventurers = new List<Adventurer>();
         public readonly List<BuildingStats> Buildings = new List<BuildingStats>();
         public readonly List<BuildingStats> Terrain = new List<BuildingStats>();
     
-        public int TotalAdventurers => Adventurers.Count;
-    
-        public int AvailableAdventurers => Adventurers.Count(x => !x.assignedQuest);
-    
-        public int RemovableAdventurers => Adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
+       
     
         public int Accommodation => Buildings.Where(x => x.operational).Sum(x => x.accommodation);
     
-        public int Weaponry => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.weaponry) / AvailableAdventurers, 0, 100);
+        public int Weaponry => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.weaponry) / Adventurers.Available, 0, 100);
     
-        public int Magic => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.magic) / AvailableAdventurers, 0, 100);
+        public int Magic => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.magic) / Adventurers.Available, 0, 100);
     
-        public int Equipment =>  Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.equipment) / AvailableAdventurers,0, 100);
+        public int Equipment =>  Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.equipment) / Adventurers.Available,0, 100);
 
         //public int Training => training = 0; // TODO: work out the specifics of this
 
         public int Effectiveness => Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3  + LowThreatMod + ModifiersTotal[Metric.Effectiveness], 0, 100);
     
-        public int Food => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.food) / AvailableAdventurers, 0, 100);
+        public int Food => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.food) / Adventurers.Available, 0, 100);
 
-        public int Entertainment => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.entertainment) / AvailableAdventurers, 0, 100);
+        public int Entertainment => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.entertainment) / Adventurers.Available, 0, 100);
     
-        public int Luxury => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.luxury) / AvailableAdventurers, 0, 100);
+        public int Luxury => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.luxury) / Adventurers.Available, 0, 100);
 
-        public int OvercrowdingMod => Mathf.Min(0, (Accommodation - AvailableAdventurers) * 5); //lose 5% satisfaction per adventurer over capacity
+        public int OvercrowdingMod => Mathf.Min(0, (Accommodation - Adventurers.Available) * 5); //lose 5% satisfaction per adventurer over capacity
     
         public int LowThreatMod => Mathf.Min(0, (ThreatLevel - 20) * 2); //lose up to 40% effectiveness from low threat
     
@@ -98,12 +98,12 @@ namespace Managers
     
         public int Spending => 100 + Buildings.Where(x => x.operational).Sum(x => x.spending) + ModifiersTotal[Metric.Spending];
     
-        public int WealthPerTurn => Spending * AvailableAdventurers / 10; //10 gold per adventurer times spending
+        public int WealthPerTurn => Spending * Adventurers.Available / 10; //10 gold per adventurer times spending
     
         public int Wealth { get;  set; }
 
         public int Defense => 
-            AvailableAdventurers * Effectiveness / 30 +
+            Adventurers.Available * Effectiveness / 30 +
             Buildings.Where(x => x.operational).Sum(x => x.defense) +
             ModifiersTotal[Metric.Defense];
     
@@ -123,87 +123,22 @@ namespace Managers
             return true;
         }
 
-        public Adventurer AssignAdventurer(Quest q)
-        {
-            List<Adventurer> removable = Adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
-            if (removable.Count == 0) return null;
-
-            int randomIndex = Random.Range(0, removable.Count);
-            removable[randomIndex].assignedQuest = q;
-            return removable[randomIndex];
-        }
-    
-        public void AddAdventurer()
-        {
-            Adventurers.Add(Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform).GetComponent<Adventurer>());
-            Achievements.SetCitySize(TotalAdventurers);
-        }
-    
-        public void AddAdventurer(AdventurerDetails adventurerDetails)
-        {
-            Adventurer adventurer = Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform)
-                .GetComponent<Adventurer>();
-            adventurer.name = adventurerDetails.name;
-            adventurer.category = adventurerDetails.category;
-            adventurer.isSpecial = adventurerDetails.isSpecial;
-            Adventurers.Add(adventurer);
-            Achievements.SetCitySize(TotalAdventurers);
-        }
-
-        public void AddAdventurer(string s)
-        {
-            string[] details = s.Split(',');
-            Adventurer adventurer = Instantiate(adventurerPrefab, GameObject.Find("Adventurers").transform)
-                .GetComponent<Adventurer>();
-            adventurer.name = details[0];
-            adventurer.category = (AdventurerCategory)int.Parse(details[1]);
-            adventurer.isSpecial = bool.Parse(details[2]);
-            adventurer.turnJoined = int.Parse(details[3]);
-            Adventurers.Add(adventurer);
-            Achievements.SetCitySize(TotalAdventurers);
-        }
-
-        public bool RemoveAdventurer(bool kill) //Removes a random adventurer, ensuring they aren't special
-        {
-            List<Adventurer> removable = Adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
-            if (removable.Count == 0) return false;
-            int randomIndex = Random.Range(0, removable.Count);
-            Adventurer toRemove = removable[randomIndex];
-        
-            Adventurers.Remove(toRemove);
-            if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
-            else Destroy(toRemove);
-            Achievements.SetCitySize(TotalAdventurers);
-            return true;
-        }
-
-        public bool RemoveAdventurer(string adventurerName, bool kill) // Deletes an adventurer by name
-        {
-            Adventurer toRemove = GameObject.Find(adventurerName)?.GetComponent<Adventurer>();
-            if (toRemove is null) return false;
-            Adventurers.Remove(toRemove);
-            if (kill) toRemove.transform.parent = graveyard.transform;
-            else Destroy(toRemove);
-            Achievements.SetCitySize(AvailableAdventurers);
-            return true;
-        }
-    
         [Button("StartGame")]
         public void StartGame()
         {
-            // Clear out all adventurers and buildings
+            /*// Clear out all adventurers and buildings
             foreach (Transform child in adventurersContainer.transform) Destroy(child.gameObject);
             foreach (Transform child in buildingsContainer.transform) Destroy(child.gameObject);
             Adventurers.Clear();
-            Buildings.Clear();
+            Buildings.Clear();*/
 
             // Start game with 5 Adventurers
-            for (int i = 0; i < 5; i++) AddAdventurer();
+            for (int i = 0; i < 5; i++) Manager.Adventurers.Add();
 
             ThreatLevel = 40;
             Wealth = 50;
         
-            Events.Add(openingEvent, true);
+            EventQueue.Add(openingEvent, true);
         
             // Run the tutorial video
             /*if (PlayerPrefs.GetInt("tutorial_video_basics", 0) == 0)
@@ -231,7 +166,7 @@ namespace Managers
             TurnCounter++;
 
             if (ThreatLevel >= 100)
-                foreach (Event e in supportWithdrawnEvents) Events.Add(e, true);
+                foreach (Event e in supportWithdrawnEvents) EventQueue.Add(e, true);
         
             foreach (var stat in Modifiers)
             {
@@ -245,7 +180,7 @@ namespace Managers
                 }
             }
 
-            Events.Process();
+            EventQueue.Process();
         
             OnNewTurn?.Invoke();
             //if (turnCounter % 5 == 0)
@@ -283,7 +218,7 @@ namespace Managers
             {
                 //TODO: Add an 'are you sure?' dialogue
                 Achievements.Unlock("Now Why Would You Do That?");
-                foreach (Event e in guildHallDestroyedEvents) Events.Add(e, true);
+                foreach (Event e in guildHallDestroyedEvents) EventQueue.Add(e, true);
                 NextTurn();
             }
         
@@ -296,8 +231,8 @@ namespace Managers
     
         public void UpdateUi()
         {
-            if (AvailableAdventurers >= 20 && Effectiveness == 100) Achievements.Unlock("Top of Their Game");
-            if (AvailableAdventurers >= 20 && Satisfaction == 100) Achievements.Unlock("A Jolly Good Show");
+            /*if (AvailableAdventurers >= 20 && Effectiveness == 100) Achievements.Unlock("Top of Their Game");
+            if (AvailableAdventurers >= 20 && Satisfaction == 100) Achievements.Unlock("A Jolly Good Show");*/
         
             OnUpdateUI?.Invoke();
         }
@@ -357,8 +292,7 @@ namespace Managers
             Shade.Instance.SetDisplay(false);
         }
     
-        public GameObject adventurersContainer, buildingsContainer, graveyard;
-        public GameObject adventurerPrefab;
+        public GameObject buildingsContainer;
         public Event openingEvent;
         public Event[] guildHallDestroyedEvents;
         public Event[] supportWithdrawnEvents;

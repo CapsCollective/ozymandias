@@ -1,44 +1,47 @@
 ﻿using UnityEngine;
 using static Managers.GameManager;
 
-[CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
-public class StatChange : Outcome
+namespace Entities.Outcomes
 {
+    [CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
+    public class StatChange : Outcome
+    {
 
-    public Metric statToChange;
-    public int amount;
-    public int turns;
-    public string reason;
+        public Metric statToChange;
+        public int amount;
+        public int turns;
+        public string reason;
     
-    public override bool Execute(bool fromChoice)
-    {
-        if (!Manager.Modifiers.ContainsKey(statToChange)) return false;
+        public override bool Execute(bool fromChoice)
+        {
+            if (!Manager.Modifiers.ContainsKey(statToChange)) return false;
         
-        Manager.Modifiers[statToChange].Add(new Modifier
-        {
-            amount = amount,
-            turnsLeft = turns,
-            reason = reason
-        });
-        Manager.ModifiersTotal[statToChange] += amount;
-        return true;
-    }
+            Manager.Modifiers[statToChange].Add(new Modifier
+            {
+                amount = amount,
+                turnsLeft = turns,
+                reason = reason
+            });
+            Manager.ModifiersTotal[statToChange] += amount;
+            return true;
+        }
     
-    public override string Description
-    {
-        get
+        public override string Description
         {
-            string color;
-            if (statToChange == Metric.Threat && amount > 0 || statToChange != Metric.Threat && amount < 0) color = "#820000ff";
-            else color = "#007000ff";
+            get
+            {
+                string color;
+                if (statToChange == Metric.Threat && amount > 0 || statToChange != Metric.Threat && amount < 0) color = "#820000ff";
+                else color = "#007000ff";
                 
-            if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
-            string desc = "";
-            if (amount > 0) desc += "<color="+color+">" + statToChange + " has increased by " + amount;
-            else desc += "<color="+color+">" + statToChange + " has decreased by " + Mathf.Abs(amount);
+                if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
+                string desc = "";
+                if (amount > 0) desc += "<color="+color+">" + statToChange + " has increased by " + amount;
+                else desc += "<color="+color+">" + statToChange + " has decreased by " + Mathf.Abs(amount);
             
-            if (turns != -1) desc += " for " + turns + " turns.";
-            return desc + "</color>";
+                if (turns != -1) desc += " for " + turns + " turns.";
+                return desc + "</color>";
+            }
         }
     }
 }

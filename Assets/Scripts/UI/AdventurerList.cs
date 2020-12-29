@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 0649
 using System.Linq;
+using Entities;
 using UnityEngine;
 using static Managers.GameManager;
 
@@ -13,7 +14,7 @@ namespace UI
         {
             foreach (Transform child in transform) Destroy(child.gameObject);
 
-            foreach (Adventurer adventurer in Manager.Adventurers.OrderByDescending(x => x.assignedQuest ? x.assignedQuest.title : "").ThenByDescending(x => x.turnJoined))
+            foreach (Adventurer adventurer in Manager.Adventurers.List)
             {
                 GameObject row = Instantiate(rowPrefab, transform);
                 row.GetComponent<AdventurerRow>().Display(adventurer);

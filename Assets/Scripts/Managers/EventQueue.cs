@@ -9,10 +9,11 @@ using UnityEngine.AddressableAssets;
 using Utilities;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
+using Event = Entities.Event;
 
 namespace Managers
 {
-    public class Events : MonoBehaviour
+    public class EventQueue : MonoBehaviour
     {
         private const int MinQueueEvents = 3; // The minimum events in the queue to store
         
@@ -33,8 +34,6 @@ namespace Managers
         
         private void Awake()
         {
-            Random.InitState((int)DateTime.Now.Ticks);
-
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
             {
                 _availablePools.Add(type, new List<Event>());
@@ -74,16 +73,16 @@ namespace Managers
         
             for (int j = 0; j < 3; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
         
-            if (Manager.TotalAdventurers >= _nextBuildingUnlock) {
+            if (Manager.Adventurers.Count >= _nextBuildingUnlock) {
                 eventPool.Add(PickRandom(EventType.Blueprint)); // Spawn every 10 adventurers
                 _nextBuildingUnlock += 10;
             }
 
             // Keeps adventurer count roughly at a fair level
-            if (Manager.TotalAdventurers < 7 + Manager.TurnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (Manager.Adventurers.Count < 7 + Manager.TurnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             // Catchup if falling behind
-            if (Manager.TotalAdventurers < 4 + Manager.TurnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
-            if (Manager.TotalAdventurers < Manager.TurnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (Manager.Adventurers.Count < 4 + Manager.TurnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (Manager.Adventurers.Count < Manager.TurnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             // More if high satisfaction
             if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         
@@ -181,13 +180,13 @@ namespace Managers
             foreach (string eventName in details.headliners)
             {
                 Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
-                Manager.Events._headliners.AddLast(e);
+                Manager.EventQueue._headliners.AddLast(e);
             }
 
             foreach (string eventName in details.others)
             {
                 Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
-                Manager.Events._others.AddLast(e);
+                Manager.EventQueue._others.AddLast(e);
             }
         }
     }

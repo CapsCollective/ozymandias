@@ -2,6 +2,7 @@
 using System;
 using Controllers;
 using DG.Tweening;
+using Entities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

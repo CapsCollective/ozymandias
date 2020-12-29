@@ -1,8 +1,11 @@
 ﻿
-public class FlavourText : Outcome
+namespace Entities.Outcomes
 {
-    public override bool Execute()
+    public class FlavourText : Outcome
     {
-        return true;
+        public override bool Execute()
+        {
+            return true;
+        }
     }
 }

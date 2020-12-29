@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
+using Entities;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -30,10 +31,20 @@ namespace Managers
     }
     
     [Serializable]
+    public class AdventurerDetails
+    {
+        public string name;
+        public AdventurerCategory category;
+        public bool isSpecial;
+        public int turnJoined;
+    }
+    
+    [Serializable]
     public class SaveFile
     {
         public int wealth, turnCounter, threatLevel, clearCount;
-        public List<string> buildings, adventurers, unlockedBuildings;
+        public List<string> buildings, unlockedBuildings;
+        public List<AdventurerDetails> adventurers; 
         public Dictionary<Metric, List<Modifier>> modifiers;
         public List<QuestDetails> quests;
         public EventQueueDetails eventQueue;
@@ -52,12 +63,12 @@ namespace Managers
             
             foreach (BuildingStats terrain in Manager.Terrain)
                 buildings.Add(terrain.Serialize());
-            
-            adventurers = Manager.Adventurers.Select(a => a.Serialize()).ToList();
+
+            adventurers = Manager.Adventurers.Save();
 
             quests = Manager.Quests.Save();
 
-            eventQueue = Manager.Events.Save();
+            eventQueue = Manager.EventQueue.Save();
             
             unlockedBuildings = Manager.BuildingCards.Save();
             
@@ -79,9 +90,8 @@ namespace Managers
             if (turnCounter == 0)
                 Manager.StartGame();
             
-            foreach (string adventurer in adventurers)
-                Manager.AddAdventurer(adventurer);
-
+            Manager.Adventurers.Load(adventurers);
+            
             foreach (string building in buildings)
             {
                 string[] details = building.Split(',');
@@ -108,7 +118,7 @@ namespace Managers
             
             await Manager.BuildingCards.Load(unlockedBuildings);
 
-            await Manager.Events.Load(eventQueue);
+            await Manager.EventQueue.Load(eventQueue);
             
             //TODO: Reshuffle buildings
         }

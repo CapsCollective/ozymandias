@@ -11,8 +11,8 @@ namespace UI
 
         protected override void UpdateUi()
         {
-            bool overCapacity = Manager.AvailableAdventurers - Manager.Accommodation > 0;
-            adventurerText.text = "Adventurers: " + (overCapacity ? "<color=red>" : "") + Manager.AvailableAdventurers + (overCapacity ? "</color>" : "") + " / " + Manager.Accommodation;
+            bool overCapacity = Manager.Adventurers.Available - Manager.Accommodation > 0;
+            adventurerText.text = "Adventurers: " + (overCapacity ? "<color=red>" : "") + Manager.Adventurers.Available + (overCapacity ? "</color>" : "") + " / " + Manager.Accommodation;
         }
     }
 }

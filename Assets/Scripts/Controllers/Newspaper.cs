@@ -8,6 +8,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using static Managers.GameManager;
+using Event = Entities.Event;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -92,7 +93,6 @@ namespace Controllers
 
         private static string GetNewspaperTitle()
         {
-            Random.InitState((int)DateTime.Now.Ticks);
             return NewspaperTitles[Random.Range(0, NewspaperTitles.Length)];
         }
 
