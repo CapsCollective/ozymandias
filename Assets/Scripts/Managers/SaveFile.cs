@@ -47,10 +47,10 @@ namespace Managers
 
             buildings = new List<string>();
             
-            foreach (var building in Manager.Buildings)
+            foreach (BuildingStats building in Manager.Buildings)
                 buildings.Add(building.Serialize());
             
-            foreach (var terrain in Manager.terrain)
+            foreach (BuildingStats terrain in Manager.Terrain)
                 buildings.Add(terrain.Serialize());
             
             adventurers = Manager.Adventurers.Select(a => a.Serialize()).ToList();
@@ -69,7 +69,6 @@ namespace Managers
         public async Task Load()
         {
             string saveJson = PlayerPrefs.GetString("Save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
-            Debug.Log(saveJson);
             JsonConvert.PopulateObject(saveJson, this);
             
             Manager.Wealth = wealth;
@@ -95,7 +94,7 @@ namespace Managers
             
             Metric[] modsMetrics = {Metric.Defense, Metric.Threat, Metric.Spending, Metric.Effectiveness, Metric.Satisfaction};
 
-            foreach (var metric in modsMetrics)
+            foreach (Metric metric in modsMetrics)
             {
                 Manager.ModifiersTotal.Add(metric, 0);
                 if (Manager.Modifiers.ContainsKey(metric)) continue;

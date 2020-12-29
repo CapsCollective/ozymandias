@@ -26,7 +26,7 @@ namespace Managers
             }
         }
     
-        // SECTION: Managers
+        // All Managers/ Universal Controllers
         public Achievements Achievements { get; private set; }
         public BuildingCards BuildingCards { get; private set; }
         public Quests Quests { get; private set; }
@@ -58,28 +58,13 @@ namespace Managers
             public int turnsLeft;
             public string reason;
         }
-    
-        [Button("Save")]
-        public static void Save()
-        {
-            new SaveFile().Save();
-        }
-
-        private bool _loading;
-        private async void Load()
-        {
-            _loading = true;
-            await new SaveFile().Load();
-            _loading = false;
-            UpdateUi();
-        }
 
         public Dictionary<Metric, List<Modifier>> Modifiers = new Dictionary<Metric, List<Modifier>>();
         public readonly Dictionary<Metric, int> ModifiersTotal = new Dictionary<Metric, int>();
     
-        [ReadOnly] public readonly List<Adventurer> Adventurers = new List<Adventurer>();
-        [ReadOnly] public readonly List<BuildingStats> Buildings = new List<BuildingStats>();
-        [HideInInspector] public List<BuildingStats> terrain = new List<BuildingStats>(); // Hidden in inspector because it's big
+        public readonly List<Adventurer> Adventurers = new List<Adventurer>();
+        public readonly List<BuildingStats> Buildings = new List<BuildingStats>();
+        public readonly List<BuildingStats> Terrain = new List<BuildingStats>();
     
         public int TotalAdventurers => Adventurers.Count;
     
@@ -246,7 +231,7 @@ namespace Managers
             TurnCounter++;
 
             if (ThreatLevel >= 100)
-                foreach (var e in supportWithdrawnEvents) Events.Add(e, true);
+                foreach (Event e in supportWithdrawnEvents) Events.Add(e, true);
         
             foreach (var stat in Modifiers)
             {
@@ -279,7 +264,7 @@ namespace Managers
         private int _placedThisTurn;
         public void Build(BuildingStats building)
         {
-            if (building.terrain) terrain.Add(building);
+            if (building.terrain) Terrain.Add(building);
             else Buildings.Add(building);
 
             if(!_loading && ++_placedThisTurn >= 5) Achievements.Unlock("I'm Saving Up!");
@@ -298,12 +283,12 @@ namespace Managers
             {
                 //TODO: Add an 'are you sure?' dialogue
                 Achievements.Unlock("Now Why Would You Do That?");
-                foreach (var e in guildHallDestroyedEvents) Events.Add(e, true);
+                foreach (Event e in guildHallDestroyedEvents) Events.Add(e, true);
                 NextTurn();
             }
         
             Map.Clear(building.GetComponent<BuildingStructure>());
-            if (building.terrain) terrain.Remove(building);
+            if (building.terrain) Terrain.Remove(building);
             else Buildings.Remove(building);
             //Destroy(building.gameObject);
             UpdateUi();
@@ -334,9 +319,26 @@ namespace Managers
         {
             return Buildings.Count(x => x.type == type);
         }
+        
+        public void Save()
+        {
+            if(_gameOver) return;
+            new SaveFile().Save();
+        }
 
+        private bool _loading;
+        private async void Load()
+        {
+            _loading = true;
+            await new SaveFile().Load();
+            _loading = false;
+            UpdateUi();
+        }
+
+        private bool _gameOver;
         public void GameOver()
         {
+            _gameOver = true;
             Settings.ClearSave();
             Newspaper.GameOver();
         }

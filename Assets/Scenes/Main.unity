@@ -217,6 +217,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 2079180551}
+    - target: {fileID: 1115064009, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_ShowToolkit
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4826372568487654225, guid: a8b3db9615e6d554aa03443f13361c3e,
         type: 3}
       propertyPath: m_Name
@@ -733,7 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bfcee404886e7439b69e585d519107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapLayout: {fileID: 11400000, guid: 46bb7081b8c71b947b453565cdd9a8d0, type: 2}
+  layout: {fileID: 11400000, guid: 46bb7081b8c71b947b453565cdd9a8d0, type: 2}
   roadMF: {fileID: 1036222608}
   debug: 1
   layerMask:
@@ -5972,7 +5976,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minPos: 15
   maxPos: -35
-  moving: 0
 --- !u!222 &520178478
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24601,7 +24604,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minPos: 15
   maxPos: -35
-  moving: 0
 --- !u!222 &1178030617
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25550,10 +25552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01359bac60e63244e84ff3921a232823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adventurers: []
-  buildings: []
-  terrain: []
-  turnCounter: 0
   inMenu: 0
   adventurersContainer: {fileID: 581453738}
   buildingsContainer: {fileID: 1006936788}

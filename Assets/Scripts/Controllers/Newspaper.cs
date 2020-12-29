@@ -82,7 +82,7 @@ namespace Controllers
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             Manager.UpdateUi();
-            Save(); // Need to save again after a choice to lock in its outcomes
+            Manager.Save(); // Need to save again after a choice to lock in its outcomes
         }
     
         private static readonly string[] NewspaperTitles = {
