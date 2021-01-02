@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using System;
+﻿using System;
 using Controllers;
 using DG.Tweening;
 using TMPro;
