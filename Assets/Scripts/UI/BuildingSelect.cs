@@ -175,8 +175,10 @@ namespace UI
                     }
                     
                     // Set the chevron values
-                    chevronIcons[i].color = value > 0 ? 
-                        new Color(0.37f, 0.73f, 0.19f) : new Color(0.82f, 0.17f, 0.14f);
+                    chevronIcons[i].color = 
+                        value > 0 ? new Color(0.37f, 0.73f, 0.19f) : new Color(0.82f, 0.17f, 0.14f);
+                    chevronIcons[i].transform.localRotation = 
+                        Quaternion.Euler(value > 0 ? new Vector3(0, 0, 180) : Vector3.zero);
                     chevronIcons[i].sprite = chevronSprite;
                 }
                 else chevronIcons[i].gameObject.SetActive(false);
