@@ -20,6 +20,8 @@ namespace UI
         Arcanist = 4,
         Money = 5,
         Housing = 6,
+        Food = 7,
+        Defence = 8,
     }
     
     public class BuildingSelect : UiUpdater, IPointerEnterHandler, IPointerExitHandler
@@ -55,6 +57,8 @@ namespace UI
         [SerializeField] private Sprite arcanistIcon;
         [SerializeField] private Sprite moneyIcon;
         [SerializeField] private Sprite housingIcon;
+        [SerializeField] private Sprite foodIcon;
+        [SerializeField] private Sprite defenceIcon;
         [SerializeField] private Sprite chevron1;
         [SerializeField] private Sprite chevron2;
         [SerializeField] private Sprite chevron3;
@@ -95,9 +99,9 @@ namespace UI
             cardBack.color = toggle.interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f);
             
             // TODO link this up to game logic
-            var effects = new Dictionary<int, int>();
-            effects.Add(0, 2);
-            effects.Add(4, -1);
+            var effects = new Dictionary<BadgeType, int>();
+            effects.Add(BadgeType.Brawler, 2);
+            effects.Add(BadgeType.Arcanist, -1);
             
             // Set the class badges to the card
             for (var i = 0; i < classBadges.Length; i++)
@@ -117,7 +121,7 @@ namespace UI
                 // Get the relevant class colour and icon for effect
                 Color classColor;
                 Sprite classSprite;
-                switch ((BadgeType) effect)
+                switch (effect)
                 {
                     case BadgeType.Brawler:
                         classColor = new Color(0.92f, 0.48f, 0.48f, 1.0f);
@@ -146,6 +150,14 @@ namespace UI
                     case BadgeType.Housing:
                         classColor = new Color(0.98f, 0.67f, 0.45f, 1.0f);
                         classSprite = housingIcon;
+                        break;
+                    case BadgeType.Food:
+                        classColor = Color.gray;
+                        classSprite = foodIcon;
+                        break;
+                    case BadgeType.Defence:
+                        classColor = Color.gray;
+                        classSprite = defenceIcon;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
