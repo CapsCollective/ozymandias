@@ -43,6 +43,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI cost;
+        [SerializeField] private Image costIconTexture;
         
         [SerializeField] private Image cardBack;
         [SerializeField] private Image cardHighlight;
@@ -95,10 +96,23 @@ namespace UI
                 BuildingPlacement.Selected = Deselected;
                 cardHighlight.color = new Color(1, 1, 1, 0);
             }
-
-            // Darken the card if unselectable
-            cardBack.color = toggle.interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f);
             
+            if (toggle.interactable)
+            {
+                // Brighten the card if selectable
+                cardBack.color = Color.white;
+                cost.color = new Color(0.93f, 0.63f, 0.03f);
+                costIconTexture.color = new Color(1f, 0.71f, 0.16f);
+            }
+            else
+            {
+                // Darken the card if unselectable
+                var grey = new Color(0.8f, 0.8f, 0.8f);
+                cardBack.color = grey;
+                cost.color = grey;
+                costIconTexture.color = grey;
+            }
+
             // TODO link this up to game logic
             Dictionary<BadgeType, int> effects = new Dictionary<BadgeType, int>
             {
