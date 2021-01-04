@@ -33,6 +33,7 @@ namespace UI
         [SerializeField] private Image cardBack;
         [SerializeField] private Image cardHighlight;
         [SerializeField] private Ease tweenEase;
+        [SerializeField] private int popupMultiplier = 60;
 
         [Serializable]
         private struct EffectBadge
@@ -167,7 +168,7 @@ namespace UI
         {
             // Run pointer enter tween
             if (!_rectTransform) return;
-            _rectTransform.DOLocalMove(_initialPosition + _rectTransform.transform.up * 60, 0.5f)
+            _rectTransform.DOLocalMove(_initialPosition + _rectTransform.transform.up * popupMultiplier, 0.5f)
                 .SetEase(tweenEase);
             _rectTransform.DOScale(new Vector3(1.1f, 1.1f), 0.5f).SetEase(tweenEase);
         }

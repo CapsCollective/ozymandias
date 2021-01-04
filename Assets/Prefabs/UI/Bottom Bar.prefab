@@ -513,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2736580178061869614
 RectTransform:
   m_ObjectHideFlags: 0
@@ -531,9 +531,9 @@ RectTransform:
   m_Father: {fileID: 5475721258133621091}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 520, y: -35}
   m_SizeDelta: {x: 80, y: 61}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3645496088433528483
@@ -3390,7 +3390,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 15
+  m_Spacing: 40
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -3878,7 +3878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3361494155982150998
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3896,9 +3896,9 @@ RectTransform:
   m_Father: {fileID: 5475721258133621091}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 160, y: -35}
   m_SizeDelta: {x: 80, y: 61}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2810056648470446084
@@ -5398,6 +5398,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
+      propertyPath: popupMultiplier
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
       propertyPath: siblingCards.Array.data[0]
       value: 
       objectReference: {fileID: 2965945645933626636}
@@ -5612,6 +5617,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: popupMultiplier
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
