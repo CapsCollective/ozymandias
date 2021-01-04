@@ -45,14 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: "Sometimes tanned hide is all you need to defend against a ball of
+    fire. The fancy types can't stand the stink though.\r"
   icon: {fileID: 21300000, guid: 966cec692d085474db39ce2daf165592, type: 3}
   type: 13
   stats:
-    list: []
+    list:
+    - Key: 0
+      Value: 2
+    - Key: 1
+      Value: 3
+    - Key: 2
+      Value: -1
     keyCollision: 0
-  baseCost: 0
-  scaleSpeed: 0
+  baseCost: 50
+  scaleSpeed: 4
   sections:
   - prefab: {fileID: 975589971532305496, guid: ab5bc033f6ba2b347a527d3496c8e63e, type: 3}
     directions: 

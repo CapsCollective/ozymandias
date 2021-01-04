@@ -13,7 +13,7 @@ namespace Entities
     public class Building : MonoBehaviour
     {
         public enum Direction { Left, Forward, Right, Back }
-        private enum ScaleSpeed { Slow = 1, Medium = 2, Fast = 3, VeryFast = 4 }
+        private enum ScaleSpeed { Slow = 4, Medium = 3, Fast = 2, VeryFast = 1 } // Calculated placement rate
 
         [TextArea(3,5)]
         public string description;
@@ -27,7 +27,8 @@ namespace Entities
         private Vector3 _placementPosition;
         private int _rotation;
         
-        public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(1.1f, Manager.Buildings.GetCount(type) * (int)scaleSpeed));
+        public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(1.1f, 
+            Manager.Buildings.GetCount(type) * 4 / (float)scaleSpeed));
         
         [HorizontalLine]
         public List<SectionInfo> sections;
