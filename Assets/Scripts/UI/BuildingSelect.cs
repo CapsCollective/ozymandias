@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using System;
+﻿using System;
 using Controllers;
 using DG.Tweening;
 using Entities;
@@ -49,8 +48,8 @@ namespace UI
 
         protected override void UpdateUi()
         {
-            var building = buildingPrefab.GetComponent<BuildingStats>();
-            var colour = building.IconColour;
+            var building = buildingPrefab.GetComponent<Building>();
+            var colour = Color.black;//building.IconColour;
             
             // Set card details
             title.text = building.name;

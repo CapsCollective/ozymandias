@@ -1,6 +1,6 @@
-﻿#pragma warning disable 0649
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+using Utilities;
 using static Managers.GameManager;
 
 namespace UI
@@ -11,8 +11,10 @@ namespace UI
 
         protected override void UpdateUi()
         {
-            bool overCapacity = Manager.Adventurers.Available - Manager.Accommodation > 0;
-            adventurerText.text = "Adventurers: " + (overCapacity ? "<color=red>" : "") + Manager.Adventurers.Available + (overCapacity ? "</color>" : "") + " / " + Manager.Accommodation;
+            bool overCapacity = Manager.Adventurers.Available - Manager.GetStat(Stat.Housing) > 0;
+            adventurerText.text = "Adventurers: " + (overCapacity ? "<color=red>" : "") + 
+                Manager.Adventurers.Available + (overCapacity ? "</color>" : "") + " / " + 
+                Manager.GetStat(Stat.Housing);
         }
     }
 }

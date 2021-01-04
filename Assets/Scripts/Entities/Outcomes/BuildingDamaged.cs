@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
+using UnityEngine.Playables;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Entities.Outcomes
@@ -13,16 +16,8 @@ namespace Entities.Outcomes
     
         public override bool Execute()
         {
-            foreach (BuildingStats building in Manager.Buildings)
-            {
-                if(building.type == type)
-                {
-                    buildingName = building.name;
-                    Manager.Demolish(building);
-                    return true;
-                }
-            }
-            return false;
+            buildingName = Manager.Buildings.Remove(type);
+            return !(buildingName is null);
         }
     
         public override string Description

@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

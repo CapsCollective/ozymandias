@@ -1,8 +1,8 @@
-﻿#pragma warning disable 0649
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Entities;
 using UnityEngine;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Managers
@@ -10,15 +10,12 @@ namespace Managers
     public class Adventurers : MonoBehaviour
     {
         [SerializeField] private GameObject prefab;
-        [SerializeField] private Transform container;
         [SerializeField] private Transform graveyard;
-
         
         private readonly List<Adventurer> _adventurers = new List<Adventurer>();
         
         public int Count => _adventurers.Count;
         public int Available => _adventurers.Count(x => !x.assignedQuest);
-    
         public int Removable => _adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
 
         public IEnumerable<Adventurer> List => _adventurers
@@ -46,7 +43,7 @@ namespace Managers
     
         private Adventurer New()
         {
-            Adventurer adventurer = Instantiate(prefab, container).GetComponent<Adventurer>();
+            Adventurer adventurer = Instantiate(prefab, transform).GetComponent<Adventurer>();
             _adventurers.Add(adventurer);
             Manager.Achievements.SetCitySize(Count);
             return adventurer;
@@ -71,18 +68,6 @@ namespace Managers
         public void Add(AdventurerDetails adventurer)
         {
             New().Load(adventurer);
-        }
-
-        public void Add(string s)
-        {
-            string[] details = s.Split(',');
-            Adventurer adventurer = Instantiate(prefab, container).GetComponent<Adventurer>();
-            adventurer.name = details[0];
-            adventurer.category = (AdventurerCategory)int.Parse(details[1]);
-            adventurer.isSpecial = bool.Parse(details[2]);
-            adventurer.turnJoined = int.Parse(details[3]);
-            _adventurers.Add(adventurer);
-            Manager.Achievements.SetCitySize(Count);
         }
 
         public bool Remove(bool kill) //Removes a random adventurer, ensuring they aren't special

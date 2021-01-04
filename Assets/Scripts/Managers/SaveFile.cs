@@ -4,11 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
-using Entities;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using Utilities;
 using static Managers.GameManager;
+using EventType = Utilities.EventType;
+
 // ReSharper disable InconsistentNaming
 
 namespace Managers
@@ -42,10 +43,12 @@ namespace Managers
     [Serializable]
     public class SaveFile
     {
+        public static bool loading;
+        
         public int wealth, turnCounter, threatLevel, clearCount;
         public List<string> buildings, unlockedBuildings;
         public List<AdventurerDetails> adventurers; 
-        public Dictionary<Metric, List<Modifier>> modifiers;
+        public Dictionary<Stat, List<Modifier>> modifiers;
         public List<QuestDetails> quests;
         public EventQueueDetails eventQueue;
 
@@ -53,16 +56,10 @@ namespace Managers
         {
             wealth = Manager.Wealth;
             turnCounter = Manager.TurnCounter;
-            threatLevel = Manager.ThreatLevel;
+            threatLevel = Manager.Stability;
             clearCount = Clear.ClearCount;
 
-            buildings = new List<string>();
-            
-            foreach (BuildingStats building in Manager.Buildings)
-                buildings.Add(building.Serialize());
-            
-            foreach (BuildingStats terrain in Manager.Terrain)
-                buildings.Add(terrain.Serialize());
+            buildings = Manager.Buildings.Save();
 
             adventurers = Manager.Adventurers.Save();
 
@@ -79,12 +76,13 @@ namespace Managers
 
         public async Task Load()
         {
+            loading = true;
             string saveJson = PlayerPrefs.GetString("Save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
             JsonConvert.PopulateObject(saveJson, this);
             
             Manager.Wealth = wealth;
             Manager.TurnCounter = turnCounter;
-            Manager.ThreatLevel = threatLevel;
+            Manager.Stability = threatLevel;
             Clear.ClearCount = clearCount;
             
             if (turnCounter == 0)
@@ -92,19 +90,9 @@ namespace Managers
             
             Manager.Adventurers.Load(adventurers);
             
-            foreach (string building in buildings)
-            {
-                string[] details = building.Split(',');
-                Vector3 worldPosition = new Vector3(float.Parse(details[1]), 0, float.Parse(details[2]));
-                GameObject buildingInstance = await Addressables.InstantiateAsync(details[0], GameObject.Find("Buildings").transform).Task;
-                Manager.Map.CreateBuilding(buildingInstance, worldPosition, int.Parse(details[3]));
-            }
-            
             Manager.Modifiers = modifiers;
-            
-            Metric[] modsMetrics = {Metric.Defense, Metric.Threat, Metric.Spending, Metric.Effectiveness, Metric.Satisfaction};
 
-            foreach (Metric metric in modsMetrics)
+            foreach (Stat metric in Enum.GetValues(typeof(Stat)))
             {
                 Manager.ModifiersTotal.Add(metric, 0);
                 if (Manager.Modifiers.ContainsKey(metric)) continue;
@@ -114,6 +102,8 @@ namespace Managers
             foreach (var metricPair in Manager.Modifiers)
                 Manager.ModifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
 
+            await Manager.Buildings.Load(buildings);
+
             await Manager.Quests.Load(quests);
             
             await Manager.BuildingCards.Load(unlockedBuildings);
@@ -121,6 +111,8 @@ namespace Managers
             await Manager.EventQueue.Load(eventQueue);
             
             //TODO: Reshuffle buildings
+            
+            loading = false;
         }
     }
     

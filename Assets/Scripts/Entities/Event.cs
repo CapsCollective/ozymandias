@@ -3,6 +3,7 @@ using Entities.Outcomes;
 using NaughtyAttributes;
 using UnityEngine;
 using static Managers.GameManager;
+using EventType = Utilities.EventType;
 
 namespace Entities
 {

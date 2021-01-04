@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +9,7 @@ using Utilities;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
 using Event = Entities.Event;
+using EventType = Utilities.EventType;
 
 namespace Managers
 {
@@ -79,12 +79,12 @@ namespace Managers
             }
 
             // Keeps adventurer count roughly at a fair level
-            if (Manager.Adventurers.Count < 7 + Manager.TurnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            /*if (Manager.Adventurers.Count < 7 + Manager.TurnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             // Catchup if falling behind
-            if (Manager.Adventurers.Count < 4 + Manager.TurnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (Manager.Adventurers.Count < 4 + Manager.TurnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));*/
             if (Manager.Adventurers.Count < Manager.TurnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             // More if high satisfaction
-            if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            //if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
         
             if (Manager.TurnCounter >= 5)
             {
@@ -94,16 +94,16 @@ namespace Managers
                 // 30% flat chance to spawn chaos
                 if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos));
                 //Variable rate for < 50
-                if (Manager.ThreatLevel - Random.Range(0,50) < 0) eventPool.Add(PickRandom(EventType.Chaos));
+                if (Manager.Stability - Random.Range(0,50) < 0) eventPool.Add(PickRandom(EventType.Chaos));
             
                 // Start spawning threat events at 50, and gets more likely the higher it gets
-                if (Random.Range(50,100) - Manager.ThreatLevel < 0) eventPool.Add(PickRandom(EventType.Threat));
+                if (Random.Range(50,100) - Manager.Stability < 0) eventPool.Add(PickRandom(EventType.Threat));
             
                 // Fixed 10% spawn rate for challenge
                 if (Random.Range(0,100) < 10) eventPool.Add(PickRandom(EventType.AdventurersLeave));
                 // Variable rate for < 50 and 30, should cause a mass exodus
-                if (Manager.Satisfaction - Random.Range(10,50) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-                if (Manager.Satisfaction - Random.Range(10,30) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+                /*if (Manager.Satisfaction - Random.Range(10,50) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+                if (Manager.Satisfaction - Random.Range(10,30) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));*/
             }
 
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order

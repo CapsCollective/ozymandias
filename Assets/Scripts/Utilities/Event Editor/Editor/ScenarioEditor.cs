@@ -12,6 +12,7 @@ using Entities.Outcomes;
 using UnityEngine.Analytics;
 using UnityEditor.VersionControl;
 using Event = Entities.Event;
+using EventType = Utilities.EventType;
 
 public class ScenarioEditor : EditorWindow
 {

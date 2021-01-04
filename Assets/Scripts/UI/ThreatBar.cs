@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using static Managers.GameManager;
 
@@ -16,8 +15,8 @@ namespace UI
 
         protected override void UpdateUi()
         {
-            int nextTurn = Manager.ThreatLevel + Manager.ChangePerTurn;
-            threatArea.sizeDelta = new Vector2(BarWidth * Manager.ThreatLevel / 100f, threatArea.sizeDelta.y);
+            int nextTurn = Manager.Stability + Manager.ChangePerTurn;
+            threatArea.sizeDelta = new Vector2(BarWidth * Manager.Stability / 100f, threatArea.sizeDelta.y);
             nextTurnThreatArea.sizeDelta = new Vector2(BarWidth * nextTurn / 100f, nextTurnThreatArea.sizeDelta.y);
             nextTurnDefenseArea.sizeDelta = new Vector2(BarWidth * (1 - nextTurn / 100f), nextTurnDefenseArea.sizeDelta.y);
         }

@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using Entities;
+﻿using Entities;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -18,7 +17,7 @@ namespace Controllers
 
         private Cell[] _highlighted = new Cell[1];
         private EventSystem _eventSystem;
-        private BuildingStructure _selectedBuilding;
+        private Building _selectedBuilding;
     
         [SerializeField] private int baseCost = 30;
 
@@ -106,12 +105,12 @@ namespace Controllers
         private void ClearBuilding()
         {
             if (_selectedBuilding.indestructible) return;
-            BuildingStats building = _selectedBuilding.GetComponent<BuildingStats>();
-            BuildingStructure buildingStructure = _selectedBuilding.GetComponent<BuildingStructure>();
+            //BuildingStats building = _selectedBuilding.GetComponent<BuildingStats>();
+            Building building = _selectedBuilding.GetComponent<Building>();
             if (!Manager.Spend(ScaledCost)) return;
-            if (building.terrain) ClearCount++;
-            buildingStructure.Clear();
-            Manager.Demolish(building);
+            if (building.type == BuildingType.Terrain) ClearCount++;
+            building.Clear();
+            Manager.Buildings.Remove(building);
         }
     
         private void OnDestroy()

@@ -1,6 +1,7 @@
 using System;
 using Managers;
 using UnityEngine;
+using Utilities;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
@@ -66,15 +67,15 @@ namespace Entities
 
         public static AdventurerCategory NewCategory()
         {
-            switch (Random.Range(0, 5))
+            return Random.Range(0, 5) switch
             {
-                case 0: return AdventurerCategory.Brawler;
-                case 1: return AdventurerCategory.Outrider;
-                case 2: return AdventurerCategory.Performer;
-                case 3: return AdventurerCategory.Diviner;
-                case 4: return AdventurerCategory.Conduit;
-                default: return AdventurerCategory.Brawler;
-            }
+                0 => AdventurerCategory.Brawler,
+                1 => AdventurerCategory.Outrider,
+                2 => AdventurerCategory.Performer,
+                3 => AdventurerCategory.Diviner,
+                4 => AdventurerCategory.Conduit,
+                _ => AdventurerCategory.Brawler
+            };
         }
 
         public void Init()

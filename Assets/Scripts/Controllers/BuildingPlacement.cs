@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using Entities;
 using UI;
@@ -21,6 +20,7 @@ namespace Controllers
         [SerializeField] private float tweenTime;
         [SerializeField] private Ease tweenEase;
         [SerializeField] private GameObject particle;
+        [SerializeField] private Transform container;
     
         private List<GameObject> _remainingBuildings = new List<GameObject>();
         private Camera _cam;
@@ -63,11 +63,11 @@ namespace Controllers
 
             Cell closest = Manager.Map.GetCellFromMouse();
 
-            BuildingStructure building = cards[Selected].buildingPrefab.GetComponent<BuildingStructure>();
+            Building building = cards[Selected].buildingPrefab.GetComponent<Building>();
 
             _highlighted = Manager.Map.GetCells(closest, building, _rotation);
 
-            Map.HighlightState state = Manager.Map.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+            Map.HighlightState state = Map.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
             Manager.Map.Highlight(_highlighted, state);
         }
 
@@ -80,10 +80,10 @@ namespace Controllers
             if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
 
             int i = Selected;
-            GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, GameObject.Find("Buildings").transform);
+            GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
             if (!Manager.Map.CreateBuilding(buildingInstance, hit.point, _rotation, true)) return;
         
-            Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<BuildingStats>().primaryStat);
+            //Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<Building>().primaryStat);
         
             NewCardTween(i);
             cards[i].toggle.isOn = false;

@@ -10,7 +10,7 @@ namespace Managers
     public class BuildingCards : MonoBehaviour
     {
         public List<GameObject> starterBuildings;
-        public List<GameObject> unlockedBuildings;
+        [HideInInspector] public List<GameObject> unlockedBuildings;
 
         public List<GameObject> All => starterBuildings.Concat(unlockedBuildings).ToList();
 

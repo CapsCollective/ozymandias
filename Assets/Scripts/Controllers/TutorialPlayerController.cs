@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -17,20 +16,20 @@ namespace Controllers
         [SerializeField] private GameObject selectControls;
         [SerializeField] private VideoClip[] tutorialVideos;
 
-        private int currentClip;
-        private TimeSpan totalClipLength;
-        private Canvas canvas;
+        private int _currentClip;
+        private TimeSpan _totalClipLength;
+        private Canvas _canvas;
 
         private void Awake() {
             Instance = this;
-            canvas = GetComponent<Canvas>();
+            _canvas = GetComponent<Canvas>();
         }
 
         private void Update()
         {
             playerControls.SetActive(!player.isPlaying);
             timeDisplayText.text = TimeSpan.FromSeconds(player.time).ToString(@"m\:ss") 
-                                   + "/" + totalClipLength.ToString(@"m\:ss");
+                                   + "/" + _totalClipLength.ToString(@"m\:ss");
         }
 
         public void OpenTutorial(int clipIndex)
@@ -38,26 +37,26 @@ namespace Controllers
             Instance.PlayClip(clipIndex, true);
         }
 
-        public void PlayClip(int clipIndex, bool showVideoSelect = false)
+        private void PlayClip(int clipIndex, bool showVideoSelect = false)
         {
             selectControls.SetActive(showVideoSelect);
-            canvas.enabled = true;
-            currentClip = clipIndex;
+            _canvas.enabled = true;
+            _currentClip = clipIndex;
             playerControls.SetActive(false);
-            StartClip(currentClip);
+            StartClip(_currentClip);
         }
 
         private void StartClip(int clipIndex)
         {
             player.Stop();
             player.clip = tutorialVideos[clipIndex];
-            totalClipLength = TimeSpan.FromSeconds(player.clip.length);
+            _totalClipLength = TimeSpan.FromSeconds(player.clip.length);
             player.Play();
         }
 
         public void Replay()
         {
-            StartClip(currentClip);
+            StartClip(_currentClip);
             playerControls.SetActive(false);
         }
 

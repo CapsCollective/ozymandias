@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Entities.Outcomes
@@ -7,7 +8,7 @@ namespace Entities.Outcomes
     public class StatChange : Outcome
     {
 
-        public Metric statToChange;
+        public Stat statToChange;
         public int amount;
         public int turns;
         public string reason;
@@ -31,7 +32,7 @@ namespace Entities.Outcomes
             get
             {
                 string color;
-                if (statToChange == Metric.Threat && amount > 0 || statToChange != Metric.Threat && amount < 0) color = "#820000ff";
+                if (statToChange == Stat.Threat && amount > 0 || statToChange != Stat.Threat && amount < 0) color = "#820000ff";
                 else color = "#007000ff";
                 
                 if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";

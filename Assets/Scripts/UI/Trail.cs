@@ -1,7 +1,7 @@
-﻿#pragma warning disable 0649
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
@@ -15,12 +15,12 @@ namespace UI
         private GameObject _target;
     
     
-        public void SetTarget(Metric metric)
+        public void SetTarget(Stat stat)
         {
             // Set start
             waypoints[0].position = Input.mousePosition;
             // Set end
-            _target = FindStatBar(metric);
+            _target = FindStatBar(stat);
             if (!_target) {
                 Destroy(gameObject);
                 return;
@@ -61,16 +61,16 @@ namespace UI
             Destroy(gameObject);
         }
 
-        private static GameObject FindStatBar(Metric metric)
+        private static GameObject FindStatBar(Stat stat)
         {
-            switch (metric)
+            switch (stat)
             {
-                case Metric.Food: return GameObject.Find("Food Bar");
-                case Metric.Luxuries: return GameObject.Find("Luxury Bar");
+                case Stat.Food: return GameObject.Find("Food Bar");
+                /*case Metric.Luxuries: return GameObject.Find("Luxury Bar");
                 case Metric.Entertainment: return GameObject.Find("Entertainment Bar");
                 case Metric.Equipment: return GameObject.Find("Equipment Bar");
                 case Metric.Magic: return GameObject.Find("Magic Bar");
-                case Metric.Weaponry: return GameObject.Find("Weaponry Bar");
+                case Metric.Weaponry: return GameObject.Find("Weaponry Bar");*/
                 //case Metric.Defense: return GameObject.Find("Threat Bar");
                 default: return null;
             }

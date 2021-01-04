@@ -1,6 +1,4 @@
-﻿#pragma warning disable 0649
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using TMPro;

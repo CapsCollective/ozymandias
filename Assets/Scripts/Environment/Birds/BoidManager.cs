@@ -2,73 +2,71 @@
 using UnityEngine.Rendering;
 
 public class BoidManager : MonoBehaviour {
-
-    const int threadGroupSize = 1024;
+    private const int ThreadGroupSize = 1024;
     public BoidSettings settings;
     public ComputeShader compute;
     public Transform target;
-    Boid[] boids;
     
-    private bool usesComputeShader;
+    private Boid[] _boids;
+    private bool _usesComputeShader;
 
-    void Start ()
+    private void Start ()
     {
         // Set boid manager to not use compute shaders for macOS and Linux
-        usesComputeShader = (Application.platform == RuntimePlatform.WindowsEditor || 
+        _usesComputeShader = (Application.platform == RuntimePlatform.WindowsEditor || 
                             Application.platform == RuntimePlatform.WindowsPlayer);
         
-        boids = FindObjectsOfType<Boid> ();
-        foreach (Boid b in boids) {
+        _boids = FindObjectsOfType<Boid> ();
+        foreach (Boid b in _boids) {
             b.Initialize (settings, target);
         }
     }
 
-    void Update () {
-        if (boids != null) {
+    private void Update ()
+    {
+        if (_boids == null) return;
+        int numBoids = _boids.Length;
+        var boidData = new BoidData[numBoids];
 
-            int numBoids = boids.Length;
-            var boidData = new BoidData[numBoids];
+        for (int i = 0; i < _boids.Length; i++) {
+            boidData[i].position = _boids[i].position;
+            boidData[i].direction = _boids[i].forward;
+        }
 
-            for (int i = 0; i < boids.Length; i++) {
-                boidData[i].position = boids[i].position;
-                boidData[i].direction = boids[i].forward;
-            }
+        if (_usesComputeShader)
+        {
+            var boidBuffer = new ComputeBuffer(numBoids, BoidData.Size);
+            boidBuffer.SetData(boidData);
 
-            if (usesComputeShader)
-            {
-                var boidBuffer = new ComputeBuffer(numBoids, BoidData.Size);
-                boidBuffer.SetData(boidData);
+            compute.SetBuffer(0, "boids", boidBuffer);
+            compute.SetInt("numBoids", _boids.Length);
+            compute.SetFloat("viewRadius", settings.perceptionRadius);
+            compute.SetFloat("avoidRadius", settings.avoidanceRadius);
 
-                compute.SetBuffer(0, "boids", boidBuffer);
-                compute.SetInt("numBoids", boids.Length);
-                compute.SetFloat("viewRadius", settings.perceptionRadius);
-                compute.SetFloat("avoidRadius", settings.avoidanceRadius);
+            int threadGroups = Mathf.CeilToInt(numBoids / (float) ThreadGroupSize);
+            compute.Dispatch(0, threadGroups, 1, 1);
 
-                int threadGroups = Mathf.CeilToInt(numBoids / (float) threadGroupSize);
-                compute.Dispatch(0, threadGroups, 1, 1);
-
-                AsyncGPUReadback.Request(boidBuffer);
-                UpdateBoids(boidData);
+            AsyncGPUReadback.Request(boidBuffer);
+            UpdateBoids(boidData);
                 
-                boidBuffer.Release();
-            }
-            else
-            {
-                boidData = GetData(boidData);
-                UpdateBoids(boidData);
-            }
+            boidBuffer.Release();
+        }
+        else
+        {
+            boidData = GetData(boidData);
+            UpdateBoids(boidData);
         }
     }
 
     private void UpdateBoids(BoidData[] boidData)
     {
-        for (int i = 0; i < boids.Length; i++) {
-            boids[i].avgFlockHeading = boidData[i].flockHeading;
-            boids[i].centreOfFlockmates = boidData[i].flockCentre;
-            boids[i].avgAvoidanceHeading = boidData[i].avoidanceHeading;
-            boids[i].numPerceivedFlockmates = boidData[i].numFlockmates;
+        for (int i = 0; i < _boids.Length; i++) {
+            _boids[i].avgFlockHeading = boidData[i].flockHeading;
+            _boids[i].centreOfFlockmates = boidData[i].flockCentre;
+            _boids[i].avgAvoidanceHeading = boidData[i].avoidanceHeading;
+            _boids[i].numPerceivedFlockmates = boidData[i].numFlockmates;
 
-            boids[i].UpdateBoid();
+            _boids[i].UpdateBoid();
         }
     }
 
