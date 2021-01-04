@@ -19,7 +19,7 @@ namespace UI
 
         public Toggle toggle;
         public GameObject buildingPrefab;
-        public bool isReplacing;
+        [HideInInspector] public bool isReplacing;
         
         [SerializeField] private int position;
         [SerializeField] private BuildingCard[] siblingCards;
