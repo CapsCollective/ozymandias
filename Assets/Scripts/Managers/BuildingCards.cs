@@ -10,7 +10,7 @@ namespace Managers
     public class BuildingCards : MonoBehaviour
     {
         public List<GameObject> starterBuildings;
-        public List<GameObject> unlockedBuildings;
+        [HideInInspector] public List<GameObject> unlockedBuildings;
 
         public List<GameObject> All => starterBuildings.Concat(unlockedBuildings).ToList();
 
@@ -31,7 +31,7 @@ namespace Managers
         
         public async Task Load(List<string> buildings)
         {
-            foreach (var b in buildings)
+            foreach (string b in buildings)
                 unlockedBuildings.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
         }
     }

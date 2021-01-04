@@ -1,6 +1,6 @@
-﻿#pragma warning disable 0649
-using System;
+﻿using System;
 using Controllers;
+using Entities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -135,7 +135,7 @@ namespace UI
             }
             else
             {
-                bool enoughAdventurers = Manager.RemovableAdventurers > quest.adventurers;
+                bool enoughAdventurers = Manager.Adventurers.Removable > quest.adventurers;
                 bool enoughMoney = Manager.Wealth >= quest.cost;
                 statsText.text =
                     (enoughAdventurers ? "" : "<color=#820000ff>") + 

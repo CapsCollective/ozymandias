@@ -1,23 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spawner : MonoBehaviour {
+    private enum GizmoType { Never, SelectedOnly, Always }
 
-    public enum GizmoType { Never, SelectedOnly, Always }
+    [SerializeField] private Boid prefab;
+    [SerializeField] private float spawnRadius = 10;
+    [SerializeField] private int spawnCount = 10;
+    [SerializeField] private Color colour;
+    [SerializeField] private GizmoType showSpawnRegion;
 
-    public Boid prefab;
-    public float spawnRadius = 10;
-    public int spawnCount = 10;
-    public Color colour;
-    public GizmoType showSpawnRegion;
-
-    void Awake () {
+    private void Awake () {
         for (int i = 0; i < spawnCount; i++) {
-            Vector3 pos = transform.position + Random.insideUnitSphere * spawnRadius;
-            Boid boid = Instantiate (prefab);
-            boid.transform.position = pos;
-            boid.transform.forward = Random.insideUnitSphere;
+            Transform t = transform;
+            Vector3 pos = t.position + Random.insideUnitSphere * spawnRadius;
+            Boid boid = Instantiate (prefab, t);
+            Transform boidT = boid.transform;
+            boidT.position = pos;
+            boidT.forward = Random.insideUnitSphere;
 
             boid.SetColour (colour);
         }
@@ -29,14 +28,13 @@ public class Spawner : MonoBehaviour {
         }
     }
 
-    void OnDrawGizmosSelected () {
+    private void OnDrawGizmosSelected () {
         if (showSpawnRegion == GizmoType.SelectedOnly) {
             DrawGizmos ();
         }
     }
 
-    void DrawGizmos () {
-
+    private void DrawGizmos () {
         Gizmos.color = new Color (colour.r, colour.g, colour.b, 0.3f);
         Gizmos.DrawSphere (transform.position, spawnRadius);
     }

@@ -65,7 +65,7 @@ public class FogColorChange : MonoBehaviour
 
     private bool Setup()
     {
-        oldRatio = Manager.ThreatLevel / 100f;
+        oldRatio = Manager.Stability / 100f;
         origEm = mr.material.GetColor("_EmissionColor");
         origCol = mr.material.GetColor("_Color");
         origBlend = mr.material.GetFloat("_DistortionBlend");
@@ -97,7 +97,7 @@ public class FogColorChange : MonoBehaviour
     {
         if (isSetup)
         {
-            newRatio = (Manager.ThreatLevel / 100f)-0.25f;
+            newRatio = (Manager.Stability / 100f)-0.25f;
             StartCoroutine(ShiftingFog());
         }
         

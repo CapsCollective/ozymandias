@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using static Managers.GameManager;
 
-public class QuestCompleted : Outcome
+namespace Entities.Outcomes
 {
-    public Quest quest;
-    
-    public override bool Execute()
+    public class QuestCompleted : Outcome
     {
-        foreach (var adventurer in quest.assigned) adventurer.assignedQuest = null;
-        quest.assigned = new List<Adventurer>();
+        public Quest quest;
+    
+        public override bool Execute()
+        {
+            foreach (var adventurer in quest.assigned) adventurer.assignedQuest = null;
+            quest.assigned = new List<Adventurer>();
         
-        return Manager.Quests.Remove(quest);
-    }
+            return Manager.Quests.Remove(quest);
+        }
 
-    public override string Description => "<color=#007000ff>Quest completed: " + quest.title + ".\n" + 
-    quest.adventurers + " Adventurer" + (quest.adventurers > 1 ? "s have" : " has") + " returned.</color>";
+        public override string Description => "<color=#007000ff>Quest completed: " + quest.title + ".\n" + 
+                                              quest.adventurers + " Adventurer" + (quest.adventurers > 1 ? "s have" : " has") + " returned.</color>";
+    }
 }

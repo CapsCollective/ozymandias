@@ -1,6 +1,4 @@
-﻿#pragma warning disable 0649
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using TMPro;
@@ -8,6 +6,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using static Managers.GameManager;
+using Event = Entities.Event;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -82,7 +81,7 @@ namespace Controllers
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             Manager.UpdateUi();
-            Save(); // Need to save again after a choice to lock in its outcomes
+            Manager.Save(); // Need to save again after a choice to lock in its outcomes
         }
     
         private static readonly string[] NewspaperTitles = {
@@ -92,7 +91,6 @@ namespace Controllers
 
         private static string GetNewspaperTitle()
         {
-            Random.InitState((int)DateTime.Now.Ticks);
             return NewspaperTitles[Random.Range(0, NewspaperTitles.Length)];
         }
 

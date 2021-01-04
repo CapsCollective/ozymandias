@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 
 public class Cell
 {
-    public BuildingStructure occupant;
+    public Building occupant;
 
     public List<Vertex> Vertices { get; private set; }
     public Vector3 Centre { get { return (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4; } }
@@ -45,7 +46,7 @@ public class Cell
         occupant = null;
     }
 
-    public void Occupy(BuildingStructure newOccupant)
+    public void Occupy(Building newOccupant)
     {
         occupant = newOccupant;
     }

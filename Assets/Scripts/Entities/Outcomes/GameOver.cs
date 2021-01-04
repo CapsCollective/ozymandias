@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using static Managers.GameManager;
 
-[CreateAssetMenu(fileName = "Game Over Outcome", menuName = "Outcomes/Game Over")]
-public class GameOver : Outcome
+namespace Entities.Outcomes
 {
-    public override bool Execute()
+    [CreateAssetMenu(fileName = "Game Over Outcome", menuName = "Outcomes/Game Over")]
+    public class GameOver : Outcome
     {
-        Manager.GameOver();
-        return true;
+        public override bool Execute()
+        {
+            Manager.GameOver();
+            return true;
+        }
     }
 }

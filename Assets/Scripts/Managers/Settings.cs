@@ -22,7 +22,7 @@ namespace Managers
 
         //resolution selection
         public TMP_Dropdown resolutionDropdown;
-        Resolution[] resolutions;
+        private Resolution[] _resolutions;
 
         //audio
         public AudioMixer audioMixer;
@@ -41,12 +41,12 @@ namespace Managers
         private void Start()
         {
             //generate a list of available resolutions
-            resolutions = Screen.resolutions;
+            _resolutions = Screen.resolutions;
             resolutionDropdown.ClearOptions();
             List<string> options = new List<string>();
-            for (int i = 0; i < resolutions.Length; i++)
+            for (int i = 0; i < _resolutions.Length; i++)
             {
-                string optionText = resolutions[i].width + " x " + resolutions[i].height + " " + resolutions[i].refreshRate + "Hz";
+                string optionText = _resolutions[i].width + " x " + _resolutions[i].height + " " + _resolutions[i].refreshRate + "Hz";
                 options.Add(optionText);
             }
             resolutionDropdown.AddOptions(options);
@@ -61,7 +61,7 @@ namespace Managers
             shadowToggle.isOn = getShadowToggle;
 
             //resolution
-            int res = PlayerPrefs.GetInt("Resolution", resolutions.Length - 1); //Default to max res
+            int res = PlayerPrefs.GetInt("Resolution", _resolutions.Length - 1); //Default to max res
             SetResolution(res);
             resolutionDropdown.value = res;
 
@@ -128,7 +128,7 @@ namespace Managers
 
         public void SetResolution(int resolutionIndex)
         {
-            Resolution resolution = resolutions[resolutionIndex];
+            Resolution resolution = _resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             PlayerPrefs.SetInt("Resolution", resolutionIndex);
         }
@@ -162,6 +162,5 @@ namespace Managers
         {
             PlayerPrefs.DeleteKey("Save");
         }
-
     }
 }

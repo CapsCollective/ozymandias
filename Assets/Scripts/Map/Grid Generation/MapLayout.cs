@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +20,7 @@ public class MapLayout : ScriptableObject
     public Graph<Triangle> TriangleGraph { get; private set; } = new Graph<Triangle>();
     public Graph<Cell> CellGraph { get; private set; } = new Graph<Cell>();
     public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
-    public Dictionary<BuildingStructure, List<Cell>> BuildingMap = new Dictionary<BuildingStructure, List<Cell>>();
+    public Dictionary<Building, List<Cell>> BuildingMap = new Dictionary<Building, List<Cell>>();
     public Graph<Vertex> RoadGraph = new Graph<Vertex>();
 
     public void ClearGraph()
@@ -28,7 +29,7 @@ public class MapLayout : ScriptableObject
     }
 
     // BUILDING PLACEMENT
-    public void Occupy(BuildingStructure building, Cell[] cells)
+    public void Occupy(Building building, Cell[] cells)
     {
         if (!BuildingMap.ContainsKey(building))
             BuildingMap.Add(building, new List<Cell>());
@@ -44,7 +45,7 @@ public class MapLayout : ScriptableObject
 
     public void Clear(Cell root)
     {
-        BuildingStructure building = root.occupant;
+        Building building = root.occupant;
 
         if (building)
         {
@@ -220,7 +221,7 @@ public class MapLayout : ScriptableObject
         }
     }
 
-    public Cell Step(Cell root, BuildingStructure.Direction direction)
+    public Cell Step(Cell root, Building.Direction direction)
     {
         Cell next = null;
 
@@ -239,18 +240,18 @@ public class MapLayout : ScriptableObject
         return next;
     }
 
-    public Cell Step(Cell root, BuildingStructure.Direction[] directions, int offset = 0)
+    public Cell Step(Cell root, Building.Direction[] directions, int offset = 0)
     {
         Cell current = root;
 
-        foreach (BuildingStructure.Direction direction in directions)
+        foreach (Building.Direction direction in directions)
         {
             int pivotIndex = ((int)direction + offset) % 4;
             int whatItShouldBe = (pivotIndex + 3) % 4;
 
             Vertex pivot = current.Vertices[pivotIndex];
 
-            BuildingStructure.Direction offsetDirection = (BuildingStructure.Direction)pivotIndex;
+            Building.Direction offsetDirection = (Building.Direction)pivotIndex;
 
             current = Step(current, offsetDirection);
             if (current == null) break;
@@ -309,11 +310,11 @@ public class MapLayout : ScriptableObject
         other.RotateCell(rotations);
     }
 
-    public Cell[] GetCells(Cell root, BuildingStructure building, int rotation = 0)
+    public Cell[] GetCells(Cell root, Building building, int rotation = 0)
     {
         List<Cell> cells = new List<Cell>();
 
-        foreach (BuildingStructure.SectionInfo sectionInfo in building.sections)
+        foreach (Building.SectionInfo sectionInfo in building.sections)
         {
             Cell newCell = Step(root, sectionInfo.directions.ToArray(), rotation);
             cells.Add(newCell);
@@ -350,7 +351,7 @@ public class MapLayout : ScriptableObject
         return closest;
     }
 
-    public Cell[] GetCells(BuildingStructure building) //Gets all cells a building occupies
+    public Cell[] GetCells(Building building) //Gets all cells a building occupies
     {
         return BuildingMap[building].ToArray();
     }

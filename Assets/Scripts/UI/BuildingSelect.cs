@@ -1,7 +1,9 @@
-﻿#pragma warning disable 0649
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Controllers;
 using DG.Tweening;
+using Entities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +12,19 @@ using static Managers.GameManager;
 
 namespace UI
 {
+    internal enum BadgeType
+    {
+        Brawler = 0,
+        Outrider = 1,
+        Performer = 2,
+        Diviner = 3,
+        Arcanist = 4,
+        Money = 5,
+        Housing = 6,
+        Food = 7,
+        Defence = 8,
+    }
+    
     public class BuildingSelect : UiUpdater, IPointerEnterHandler, IPointerExitHandler
     {
         // Constants
@@ -27,12 +42,27 @@ namespace UI
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image icon;
-        [SerializeField] private Image iconTexture;
         [SerializeField] private TextMeshProUGUI cost;
         
         [SerializeField] private Image cardBack;
         [SerializeField] private Image cardHighlight;
         [SerializeField] private Ease tweenEase;
+        
+        [SerializeField] private Image[] classBadges;
+        [SerializeField] private Image[] classBadgeIcons;
+        [SerializeField] private Image[] chevronIcons;
+        [SerializeField] private Sprite brawlerIcon;
+        [SerializeField] private Sprite outriderIcon;
+        [SerializeField] private Sprite performerIcon;
+        [SerializeField] private Sprite divinerIcon;
+        [SerializeField] private Sprite arcanistIcon;
+        [SerializeField] private Sprite moneyIcon;
+        [SerializeField] private Sprite housingIcon;
+        [SerializeField] private Sprite foodIcon;
+        [SerializeField] private Sprite defenceIcon;
+        [SerializeField] private Sprite chevron1;
+        [SerializeField] private Sprite chevron2;
+        [SerializeField] private Sprite chevron3;
         
 
         // Private fields
@@ -48,16 +78,13 @@ namespace UI
 
         protected override void UpdateUi()
         {
-            var building = buildingPrefab.GetComponent<BuildingStats>();
-            var colour = building.IconColour;
-            
+            Building building = buildingPrefab.GetComponent<Building>();
+
             // Set card details
             title.text = building.name;
-            title.color = colour;
             description.text = building.description;
             cost.text = building.ScaledCost.ToString();
             icon.sprite = building.icon;
-            iconTexture.color = colour;
             
             // Set toggle interactable
             toggle.interactable = building.ScaledCost <= Manager.Wealth;
@@ -71,6 +98,113 @@ namespace UI
 
             // Darken the card if unselectable
             cardBack.color = toggle.interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f);
+            
+            // TODO link this up to game logic
+            Dictionary<BadgeType, int> effects = new Dictionary<BadgeType, int>
+            {
+                {BadgeType.Brawler, 2}, 
+                {BadgeType.Arcanist, -1}
+            };
+
+            // Set the class badges to the card
+            for (var i = 0; i < classBadges.Length; i++)
+            {
+                if (effects.Count == 0)
+                {
+                    // Hide the badge and chevron if there are no more effects to display
+                    classBadges[i].gameObject.SetActive(false);
+                    chevronIcons[i].gameObject.SetActive(false);
+                    continue;
+                }
+
+                // Get the next effect from the list and get a reference to the image
+                classBadges[i].gameObject.SetActive(true);
+                var effect = effects.Keys.First();
+
+                // Get the relevant class colour and icon for effect
+                Color classColor;
+                Sprite classSprite;
+                switch (effect)
+                {
+                    case BadgeType.Brawler:
+                        classColor = new Color(0.92f, 0.48f, 0.48f, 1.0f);
+                        classSprite = brawlerIcon;
+                        break;
+                    case BadgeType.Outrider:
+                        classColor = new Color(0.50f, 0.88f, 0.48f, 1.0f);
+                        classSprite = outriderIcon;
+                        break;
+                    case BadgeType.Performer:
+                        classColor = new Color(0.0f, 0.95f, 1.0f, 1.0f);
+                        classSprite = performerIcon;
+                        break;
+                    case BadgeType.Diviner:
+                        classColor = new Color(1.0f, 0.70f, 0.27f, 1.0f);
+                        classSprite = divinerIcon;
+                        break;
+                    case BadgeType.Arcanist:
+                        classColor = new Color(0.84f, 0.40f, 1.0f, 1.0f);
+                        classSprite = arcanistIcon;
+                        break;
+                    case BadgeType.Money:
+                        classColor = new Color(1.0f, 0.86f, 0.0f, 1.0f);
+                        classSprite = moneyIcon;
+                        break;
+                    case BadgeType.Housing:
+                        classColor = new Color(0.98f, 0.67f, 0.45f, 1.0f);
+                        classSprite = housingIcon;
+                        break;
+                    case BadgeType.Food:
+                        classColor = Color.gray;
+                        classSprite = foodIcon;
+                        break;
+                    case BadgeType.Defence:
+                        classColor = Color.gray;
+                        classSprite = defenceIcon;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
+                // Set chevron for the effect
+                var value = effects[effect];
+                if (value != 0)
+                {
+                    chevronIcons[i].gameObject.SetActive(true);
+                    
+                    // Get the relevant chevron icon for effect
+                    Sprite chevronSprite;
+                    switch (Mathf.Abs(value))
+                    {
+                        case 1:
+                            chevronSprite = chevron1;
+                            break;
+                        case 2:
+                            chevronSprite = chevron2;
+                            break;
+                        case 3:
+                            chevronSprite = chevron3;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    
+                    // Set the chevron values
+                    chevronIcons[i].color = 
+                        value > 0 ? new Color(0.37f, 0.73f, 0.19f) : new Color(0.82f, 0.17f, 0.14f);
+                    chevronIcons[i].transform.localRotation = 
+                        Quaternion.Euler(value > 0 ? new Vector3(0, 0, 180) : Vector3.zero);
+                    chevronIcons[i].sprite = chevronSprite;
+                }
+                else chevronIcons[i].gameObject.SetActive(false);
+
+                // Set the badge values
+                classBadges[i].color = classColor;
+                classBadgeIcons[i].sprite = classSprite;
+
+                // Remove the effect from the list
+                effects.Remove(effect);
+            }
         }
 
         public void ToggleSelect()
