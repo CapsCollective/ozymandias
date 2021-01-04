@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Utilities
@@ -24,6 +25,11 @@ namespace Utilities
             T value = list[i];
             list.RemoveAt(i);
             return value;
+        }
+        
+        public static T SelectRandom<T>(this List<T> list)
+        {
+            return list[Random.Range(0, list.Count)];
         }
     }
 }

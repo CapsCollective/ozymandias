@@ -37,6 +37,11 @@ namespace Managers
             // Find distance of closest building to the camera
             return _buildings.Select(building => Vector3.Distance(from, building.transform.position)).Min();
         }
+
+        public Building SelectRandom()
+        {
+            return _buildings.SelectRandom();
+        }
         
         public void Add(Building building)
         {
