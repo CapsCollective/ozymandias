@@ -1,5 +1,4 @@
-﻿#pragma warning disable 0649
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -9,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Utilities;
 using Random = UnityEngine.Random;
+using static Managers.GameManager;
 
 namespace Controllers
 {
@@ -89,7 +89,7 @@ namespace Controllers
             _timeWaited = 0;
             
             // Update world values
-            _closestBuildingDistance = GetClosestBuildingDistance();
+            _closestBuildingDistance = Manager.Buildings.GetClosestBuildingDistance(_cam.transform.position);
             CheckAmbiencePlayer();
         }
         
@@ -160,21 +160,6 @@ namespace Controllers
                 Mathf.Lerp(currentVolume, -_closestBuildingDistance + 5f, Time.deltaTime));
         }
         
-        private float GetClosestBuildingDistance()
-        {
-            // Find distance of closest building to the camera
-            var closestDistance = -1f;
-            foreach (var building in GameManager.Manager.Buildings)
-            {
-                var distance = Vector3.Distance(_cam.transform.position, 
-                    building.gameObject.transform.position);
-                if (distance < closestDistance || closestDistance < 0)
-                {
-                    closestDistance = distance;
-                }
-            }
-            return closestDistance;
-        }
         
         private void PlaySfx(AudioClip clip, float volume, float pitch = 1.0f)
         {

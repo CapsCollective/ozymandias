@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Debug Outcome", menuName = "Outcomes/Debug")]
-public class DebugOutcome : Outcome
+namespace Entities.Outcomes
 {
-    [TextArea] public string debugText;
-
-    public override bool Execute()
+    [CreateAssetMenu(fileName = "Debug Outcome", menuName = "Outcomes/Debug")]
+    public class DebugOutcome : Outcome
     {
-        Debug.Log(debugText);
-        return true;
+        [TextArea] public string debugText;
+
+        public override bool Execute()
+        {
+            Debug.Log(debugText);
+            return true;
+        }
     }
 }

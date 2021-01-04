@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Utilities;
 using static Managers.GameManager;
 
 public class Map : MonoBehaviour
@@ -142,13 +145,13 @@ public class Map : MonoBehaviour
     }
 
     // Gets all cells a building would take up given its root and rotation
-    public Cell[] GetCells(Cell root, BuildingStructure building, int rotation = 0)
+    public Cell[] GetCells(Cell root, Building building, int rotation = 0)
     {
         return layout.GetCells(root, building, rotation);
     }
 
     // Gets all cells of a currently placed building
-    public Cell[] GetCells(BuildingStructure building)
+    public Cell[] GetCells(Building building)
     {
         return layout.GetCells(building);
     }
@@ -162,7 +165,7 @@ public class Map : MonoBehaviour
     }
 
     // Occupies and fits a building onto the map
-    private void Occupy(BuildingStructure building, Cell[] cells, bool animate = false)
+    private void Occupy(Building building, Cell[] cells, bool animate = false)
     {
         Vector3[][] vertices = new Vector3[cells.Length][];
 
@@ -179,8 +182,7 @@ public class Map : MonoBehaviour
     // Tries to create and place a building from a world position and rotation, returns if successful
     public bool CreateBuilding(GameObject buildingInstance, Vector3 worldPosition, int rotation = 0, bool animate = false)
     {
-        BuildingStats stats = buildingInstance.GetComponent<BuildingStats>();
-        BuildingStructure building = buildingInstance.GetComponent<BuildingStructure>();
+        Building building = buildingInstance.GetComponent<Building>();
 
         Cell root = GetCell(worldPosition);
         Cell[] cells = GetCells(root, building, rotation);
@@ -189,19 +191,17 @@ public class Map : MonoBehaviour
         int cellCount = 0;
         foreach (Cell cell in cells)
         {
-            if (cell != null)
-            {
-                centre += cell.Centre;
-                cellCount++;
-            }
+            if (cell == null) continue;
+            centre += cell.Centre;
+            cellCount++;
         }
         centre /= cellCount;
 
         buildingInstance.transform.position = transform.TransformPoint(centre);
 
-        if (IsValid(cells) && Manager.Spend(stats.ScaledCost))
+        if (IsValid(cells) && Manager.Spend(building.ScaledCost))
         {
-            if (!stats.terrain) // Create roads if not terrain
+            if (building.type != BuildingType.Terrain) // Create roads if not terrain
             {
                 List<Vertex> vertices = layout.GetVertices(cells);
 
@@ -211,15 +211,14 @@ public class Map : MonoBehaviour
 
             layout.Align(cells, rotation);
             Occupy(building, cells, animate);
-            stats.Build(worldPosition, rotation);
+            building.Build(worldPosition, rotation);
             return true;
         }
-
         Destroy(buildingInstance);
         return false;
     }
 
-    public bool IsValid(Cell[] cells)
+    public static bool IsValid(Cell[] cells)
     {
         bool valid = true;
 
@@ -229,12 +228,12 @@ public class Map : MonoBehaviour
         return valid;
     }
 
-    public bool IsValid(Cell cell)
+    private static bool IsValid(Cell cell)
     {
         return cell != null && !cell.Occupied;
     }
 
-    public void Clear(BuildingStructure building)
+    public void Clear(Building building)
     {
         Clear(GetCells(building)[0]); // Destroys the building from its root
     }

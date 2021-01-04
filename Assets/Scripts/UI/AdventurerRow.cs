@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0649
+﻿using Entities;
 using TMPro;
 using UnityEngine;
 using static Managers.GameManager;

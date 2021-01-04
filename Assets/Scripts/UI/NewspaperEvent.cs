@@ -1,6 +1,6 @@
-﻿#pragma warning disable 0649
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+using Event = Entities.Event;
 
 namespace UI
 {

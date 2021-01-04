@@ -1,8 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Entities.Outcomes;
 using UnityEngine;
 
-public class Choice : ScriptableObject
+namespace Entities
 {
-    public List<Outcome> outcomes = new List<Outcome>();
+    public class Choice : ScriptableObject
+    {
+        public List<Outcome> outcomes = new List<Outcome>();
+    }
 }

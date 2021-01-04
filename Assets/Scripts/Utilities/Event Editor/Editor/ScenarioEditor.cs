@@ -7,8 +7,12 @@ using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using UnityEditor.IMGUI.Controls;
 using System.Linq;
+using Entities;
+using Entities.Outcomes;
 using UnityEngine.Analytics;
 using UnityEditor.VersionControl;
+using Event = Entities.Event;
+using EventType = Utilities.EventType;
 
 public class ScenarioEditor : EditorWindow
 {

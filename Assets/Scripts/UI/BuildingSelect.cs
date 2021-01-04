@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Controllers;
 using DG.Tweening;
+using Entities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -77,7 +78,7 @@ namespace UI
 
         protected override void UpdateUi()
         {
-            var building = buildingPrefab.GetComponent<BuildingStats>();
+            Building building = buildingPrefab.GetComponent<Building>();
 
             // Set card details
             title.text = building.name;
@@ -99,10 +100,12 @@ namespace UI
             cardBack.color = toggle.interactable ? Color.white : new Color(0.8f, 0.8f, 0.8f);
             
             // TODO link this up to game logic
-            var effects = new Dictionary<BadgeType, int>();
-            effects.Add(BadgeType.Brawler, 2);
-            effects.Add(BadgeType.Arcanist, -1);
-            
+            Dictionary<BadgeType, int> effects = new Dictionary<BadgeType, int>
+            {
+                {BadgeType.Brawler, 2}, 
+                {BadgeType.Arcanist, -1}
+            };
+
             // Set the class badges to the card
             for (var i = 0; i < classBadges.Length; i++)
             {
