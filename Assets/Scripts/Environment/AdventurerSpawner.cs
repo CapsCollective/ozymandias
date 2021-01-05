@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Entities;
 using UnityEngine;
+using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
@@ -121,12 +122,10 @@ namespace Environment
 
         private Vertex GetRandomBuildingVertex()
         {
-            List<Building> buildings = _mapLayout.BuildingMap.Keys.ToList();
-            buildings = buildings.Where(bs => bs.gameObject.CompareTag("Building")).ToList();
-            Building building = buildings[Random.Range(0, buildings.Count)];
-            List<Vertex> unfilteredVerts = _mapLayout.BuildingMap[building].SelectMany(c => c.Vertices).ToList();
-            List<Vertex> filteredVerts = unfilteredVerts.Where(v => _mapLayout.RoadGraph.GetData().Contains(v)).ToList();
-            return filteredVerts[Random.Range(0, filteredVerts.Count)];
+            return _mapLayout.BuildingMap[Manager.Buildings.SelectRandom()]
+                .SelectMany(c => c.Vertices)
+                .Where(v => _mapLayout.RoadGraph.GetData().Contains(v))
+                .ToList().SelectRandom();
         }
 
         private GameObject CreateAdventurer(Vertex vertex)
@@ -134,6 +133,7 @@ namespace Environment
             GameObject newAdventurer = Instantiate(adventurerModel,
                 Manager.Map.transform.TransformPoint(vertex), 
                 Quaternion.identity);
+            newAdventurer.transform.parent = transform;
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
             StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));
             return newAdventurer;
