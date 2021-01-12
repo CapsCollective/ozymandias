@@ -28,10 +28,12 @@ public class MapAnimator : MonoBehaviour
     {
         UpdateEffectOrigin();
 
-        if ((BuildingPlacement.Selected != BuildingPlacement.Deselected || clear.toggle.isOn) && !flooded)
+        var isClearing = clear && clear.toggle.isOn;
+
+        if ((BuildingPlacement.Selected != BuildingPlacement.Deselected || isClearing) && !flooded)
             Flood();
         
-        if ((BuildingPlacement.Selected == BuildingPlacement.Deselected && !clear.toggle.isOn) && flooded)
+        if ((BuildingPlacement.Selected == BuildingPlacement.Deselected && !isClearing) && flooded)
             Drain();
 
     }
