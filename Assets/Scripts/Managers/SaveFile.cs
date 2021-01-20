@@ -32,12 +32,20 @@ namespace Managers
     }
     
     [Serializable]
-    public class AdventurerDetails
+    public struct AdventurerDetails
     {
         public string name;
         public AdventurerCategory category;
         public bool isSpecial;
         public int turnJoined;
+    }
+    
+    [Serializable]
+    public struct BuildingDetails
+    {
+        public string name;
+        public float x, y;
+        public int rotation;
     }
     
     [Serializable]

@@ -104,5 +104,10 @@ namespace Managers
         {
             foreach (AdventurerDetails adventurer in adventurers) Add(adventurer);
         }
+
+        public int GetCount(AdventurerCategory category)
+        {
+            return _adventurers.Count(a => a.category == category);
+        }
     }
 }
