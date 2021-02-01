@@ -73,7 +73,7 @@ namespace Entities
                 1 => AdventurerCategory.Outrider,
                 2 => AdventurerCategory.Performer,
                 3 => AdventurerCategory.Diviner,
-                4 => AdventurerCategory.Conduit,
+                4 => AdventurerCategory.Arcanist,
                 _ => AdventurerCategory.Brawler
             };
         }
