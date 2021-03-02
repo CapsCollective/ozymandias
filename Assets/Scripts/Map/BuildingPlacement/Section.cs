@@ -10,7 +10,6 @@ public class Section : MonoBehaviour
     // Member variables
     public int clockwiseRotations;
     public Transform cornerParent;
-    public Color roofColor;
 
     public bool debug;
 
@@ -72,8 +71,6 @@ public class Section : MonoBehaviour
         MeshFilter.mesh.RecalculateNormals();
         MeshFilter.mesh.RecalculateBounds();
         MeshFilter.mesh.RecalculateTangents();
-
-        SetRoofColor();
     }
 
     public SectionData GetSectionData()
@@ -99,32 +96,10 @@ public class Section : MonoBehaviour
         return JsonUtility.FromJson<SectionData>(File.ReadAllText(FilePath));
     }
 
-    public void SetRoofColor()
+    public void SetRoofColor(Color color)
     {
-        //var mesh = GetComponent<MeshFilter>().mesh;
-
-        //if (!mesh.isReadable)
-        //    return;
-
-        //var vertices = mesh.vertices;
-        //var colors = new Color[mesh.colors.Length];
-
-        //for (int i = 0; i < colors.Length; i++)
-        //{
-        //    if(mesh.colors[i] != Color.white)
-        //    {
-        //        colors[i] = roofColor;
-        //    }
-        //    else
-        //    {
-        //        colors[i] = Color.white;
-        //    }
-        //}
-
-        //mesh.colors = colors;
-
         MaterialPropertyBlock props = new MaterialPropertyBlock();
-        props.SetColor("_RoofColor", roofColor);
+        props.SetColor("_RoofColor", color);
 
         var renderer = GetComponent<MeshRenderer>();
         renderer.SetPropertyBlock(props);

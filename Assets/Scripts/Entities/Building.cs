@@ -21,6 +21,7 @@ namespace Entities
         public BuildingType type;
         public GenericDictionary<Stat, int> stats;
         public int baseCost;
+        public Color roofColor;
         [SerializeField] private ScaleSpeed scaleSpeed;
         //[HideInInspector] public bool operational;
         
@@ -50,7 +51,9 @@ namespace Entities
                 for (int i = 0; i < sections.Count; i++)
                 {
                     Section section = Instantiate(sections[i].prefab, transform).GetComponent<Section>();
+                    section.clockwiseRotations = sections[i].clockwiseRotations;
                     section.Fit(vertices[i], heightFactor);
+                    section.SetRoofColor(roofColor);
                 }
             }
             else
@@ -84,6 +87,7 @@ namespace Entities
         {
             public GameObject prefab;
             public List<Direction> directions;
+            public int clockwiseRotations;
         }
 
         public void Build(Vector3 placementPosition, int rotation)

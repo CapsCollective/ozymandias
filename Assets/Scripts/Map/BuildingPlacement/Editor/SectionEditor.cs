@@ -15,10 +15,5 @@ public class SectionEditor : Editor
         {
             t.Save();
         }
-
-        if (GUILayout.Button("Set Roof Color"))
-        {
-            t.SetRoofColor();
-        }
     }
 }
