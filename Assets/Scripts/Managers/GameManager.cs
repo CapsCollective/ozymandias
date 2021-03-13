@@ -107,6 +107,13 @@ namespace Managers
             return GetStat((Stat)category) - Adventurers.GetCount(category);
         }
         
+        public int GetSatisfaction(Stat stat)
+        {
+            if ((int) stat < 5) // If the stat is for an adventuring category
+                return GetSatisfaction((AdventurerCategory)stat);
+            return GetStat(stat) - Adventurers.Count;
+        }
+        
         public int WealthPerTurn => (100 + GetStat(Stat.Spending)) * Adventurers.Available / 10; //10 gold per adventurer times spending
     
         public int Wealth { get;  set; }
