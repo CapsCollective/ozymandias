@@ -27,7 +27,7 @@ namespace UI
         {
             if (!_mouseOver) return;
             
-            if (_mouseTimer >= 0)
+            if (_mouseTimer >= 0 && !Manager.Tooltip.IsVisible())
                 _mouseTimer -= Time.deltaTime;
             else
             {

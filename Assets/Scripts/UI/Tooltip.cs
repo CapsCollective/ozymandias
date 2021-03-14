@@ -147,5 +147,10 @@ namespace UI
         {
             _cg.DOFade(opacity, FadeDuration);
         }
+
+        public bool IsVisible()
+        {
+            return _cg.alpha > 0;
+        }
     }
 }

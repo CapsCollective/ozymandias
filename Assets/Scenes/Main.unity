@@ -394,11 +394,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipPrefab: {fileID: 8821676634747878105, guid: d0cc6777f1714d943b4d0ccb2f48ac9d,
-    type: 3}
   offset: {x: 150, y: 0, z: 0}
   delay: 0.2
-  fadeDuration: 0.3
+  type: 0
 --- !u!114 &110808252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3116,6 +3114,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2146216884663671505, guid: b8a73475648bdee45a618b5f18dbdd4a,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5933494975854923506, guid: b8a73475648bdee45a618b5f18dbdd4a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3129,7 +3132,7 @@ PrefabInstance:
     - target: {fileID: 5933494975854923506, guid: b8a73475648bdee45a618b5f18dbdd4a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5933494975854923506, guid: b8a73475648bdee45a618b5f18dbdd4a,
         type: 3}
@@ -5877,6 +5880,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1870573929}
+    - target: {fileID: 995037586464274134, guid: 43bfb7bfb3fd64ee694c4f4a51d57b91,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.6220703
+      objectReference: {fileID: 0}
     - target: {fileID: 995037587342979464, guid: 43bfb7bfb3fd64ee694c4f4a51d57b91,
         type: 3}
       propertyPath: m_Name
