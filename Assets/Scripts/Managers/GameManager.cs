@@ -4,6 +4,7 @@ using System.Linq;
 using Controllers;
 using Entities;
 using NaughtyAttributes;
+using UI;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
@@ -40,7 +41,8 @@ namespace Managers
         public Map Map { get; private set; }
         public Newspaper Newspaper { get; private set; }
         public BuildingPlacement BuildingPlacement { get; private set; }
-    
+        public Tooltip Tooltip { get; private set; }
+
         private void Awake()
         {
             Random.InitState((int)DateTime.Now.Ticks);
@@ -55,7 +57,8 @@ namespace Managers
 
             BuildingPlacement = FindObjectOfType<BuildingPlacement>();
             Newspaper = FindObjectOfType<Newspaper>();
-
+            Tooltip = FindObjectOfType<Tooltip>();
+            
             Load();
         }
 
@@ -105,6 +108,13 @@ namespace Managers
         public int GetSatisfaction(AdventurerCategory category)
         {
             return GetStat((Stat)category) - Adventurers.GetCount(category);
+        }
+        
+        public int GetSatisfaction(Stat stat)
+        {
+            if ((int) stat < 5) // If the stat is for an adventuring category
+                return GetSatisfaction((AdventurerCategory)stat);
+            return GetStat(stat) - Adventurers.Count;
         }
         
         public int WealthPerTurn => (100 + GetStat(Stat.Spending)) * Adventurers.Available / 10; //10 gold per adventurer times spending
