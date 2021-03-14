@@ -4,6 +4,7 @@ using System.Linq;
 using Controllers;
 using Entities;
 using NaughtyAttributes;
+using UI;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
@@ -40,7 +41,8 @@ namespace Managers
         public Map Map { get; private set; }
         public Newspaper Newspaper { get; private set; }
         public BuildingPlacement BuildingPlacement { get; private set; }
-    
+        public Tooltip Tooltip { get; private set; }
+
         private void Awake()
         {
             Random.InitState((int)DateTime.Now.Ticks);
@@ -55,7 +57,8 @@ namespace Managers
 
             BuildingPlacement = FindObjectOfType<BuildingPlacement>();
             Newspaper = FindObjectOfType<Newspaper>();
-
+            Tooltip = FindObjectOfType<Tooltip>();
+            
             Load();
         }
 
