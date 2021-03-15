@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.18028475, g: 0.22571509, b: 0.30692318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028507, g: 0.22571546, b: 0.30692363, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -789,7 +789,7 @@ GameObject:
   - component: {fileID: 254812626}
   - component: {fileID: 254812631}
   - component: {fileID: 254812632}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -886,7 +886,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254812624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5b298d18f12bec741a45634ab66fefa8, type: 2}
   m_CullingMode: 0
@@ -3321,7 +3321,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.025
+    m_Bias: 0.065
     m_NormalBias: 0
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -3429,6 +3429,75 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 08eb48382df974a4da67eb35aba6f7ce, type: 2}
   - {fileID: 11400000, guid: 08eb48382df974a4da67eb35aba6f7ce, type: 2}
   placedThisTurn: 0
+--- !u!1001 &1021926540
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982430811513653470, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_Name
+      value: Grass Renderer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3472e3297a383e94ca044f6f040c7ca1, type: 3}
 --- !u!1 &1036222605
 GameObject:
   m_ObjectHideFlags: 0
@@ -3440,7 +3509,7 @@ GameObject:
   - component: {fileID: 1036222606}
   - component: {fileID: 1036222608}
   - component: {fileID: 1036222607}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Roads
   m_TagString: Untagged
   m_Icon: {fileID: 0}
