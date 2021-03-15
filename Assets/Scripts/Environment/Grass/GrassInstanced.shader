@@ -13,14 +13,16 @@ Shader "Instanced/InstancedSurfaceShader" {
         _MaskTex("Mask Texture", 2D) = "white" {}
     }
         SubShader{
-            Tags{ "RenderType" = "GrassBillboard"  "Queue" = "Transparent" "IgnoreProjector" = "True" }
+            Tags{ "RenderType" = "Opaque"  "Queue" = "Geometry" "IgnoreProjector" = "True" }
             LOD 200
+            Cull Off
 
             CGPROGRAM
             // Physically based Standard lighting model
-            #pragma surface surf Standard vertex:vert  fullforwardshadows
-            #pragma multi_compile_instancing
+            #pragma surface surf Standard vertex:vert
+            #pragma multi_compile_instancing GPU_FRUSTUM_ON__
             #pragma instancing_options procedural:setup
+
 
             #include "UnityCG.cginc"
 
@@ -32,7 +34,7 @@ Shader "Instanced/InstancedSurfaceShader" {
             };
 
         #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
-            StructuredBuffer<float4> matrixBuffer;
+            StructuredBuffer<float4x4> _MatrixBuffer;
         #endif
 
             void rotate2D(inout float2 v, float r)
@@ -45,16 +47,16 @@ Shader "Instanced/InstancedSurfaceShader" {
             void setup()
             {
             #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
-                float4 data = matrixBuffer[unity_InstanceID];
+                float4x4 data = _MatrixBuffer[unity_InstanceID];
 
-                //unity_ObjectToWorld = data;
-                unity_ObjectToWorld._11_21_31_41 = float4(data.w, 0, 0, 0);
-                unity_ObjectToWorld._12_22_32_42 = float4(0, data.w, 0, 0);
-                unity_ObjectToWorld._13_23_33_43 = float4(0, 0, data.w, 0);
-                unity_ObjectToWorld._14_24_34_44 = float4(data.xyz, 1);
-                unity_WorldToObject = unity_ObjectToWorld;
-                unity_WorldToObject._14_24_34 *= -1;
-                unity_WorldToObject._11_22_33 = 1.0f / unity_WorldToObject._11_22_33;
+                unity_ObjectToWorld = data;
+                //unity_ObjectToWorld._11 = data[1][1];
+                //unity_ObjectToWorld._12_22_32_42 = float4(0, data.w, 0, 0);
+                //unity_ObjectToWorld._13_23_33_43 = float4(0, 0, data.w, 0);
+                //unity_ObjectToWorld._14_24_34_44 = float4(data.xyz, 1);
+                //unity_WorldToObject = unity_ObjectToWorld;
+                //unity_WorldToObject._14_24_34 *= -1;
+                //unity_WorldToObject._11_22_33 = 1.0f / unity_WorldToObject._11_22_33;
             #endif
             }
 
@@ -128,17 +130,21 @@ Shader "Instanced/InstancedSurfaceShader" {
 
             void vert(inout appdata_full v, out Input o) {
                 UNITY_INITIALIZE_OUTPUT(Input, o);
-                Billboard(v);
-                //float2 vertexWorldSpace = mul(unity_ObjectToWorld, v.vertex).xz;
-                //v.vertex.xz += GetMask(v.texcoord) * (snoise(vertexWorldSpace * _Time.x * _WindSpeed) * _WindStrength);
 
-                //float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
-                //float2 RTToWorld = worldPos.xz - _RTPosition.xz;
-                //RTToWorld /= (_RTSize * 2.0);
-                //RTToWorld += 0.5;
-                ////float2 uv_MaskTex = (worldPos.xz + _MaskTex_TexelSize) * _MaskTex_ST.xy + _MaskTex_ST.zw;
-                //float mask = tex2Dlod(_MaskTex, float4(RTToWorld, 0, 0));
-                //v.vertex.y -= mask * 10;
+                //float4 pos = mul(matrixBuffer[vid], v.vertex);
+                //v.vertex = pos;
+
+                //Billboard(v);
+                float2 vertexWorldSpace = mul(unity_ObjectToWorld, v.vertex).xz;
+                v.vertex.xz += GetMask(v.texcoord) * (snoise(vertexWorldSpace * _Time.x * _WindSpeed) * _WindStrength);
+
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
+                float2 RTToWorld = worldPos.xz - _RTPosition.xz;
+                RTToWorld /= (_RTSize * 2.0);
+                RTToWorld += 0.5;
+                //float2 uv_MaskTex = (worldPos.xz + _MaskTex_TexelSize) * _MaskTex_ST.xy + _MaskTex_ST.zw;
+                float3 mask = tex2Dlod(_MaskTex, float4(RTToWorld, 0, 0));
+                v.vertex.y -= (mask.r + mask.g) * 10;
             }
 
             void surf(Input IN, inout SurfaceOutputStandard o) {

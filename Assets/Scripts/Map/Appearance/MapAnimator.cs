@@ -1,6 +1,7 @@
 ﻿using Controllers;
 using UnityEngine;
 using Camera = UnityEngine.Camera;
+using DG.Tweening;
 
 [RequireComponent(typeof(Animator))]
 public class MapAnimator : MonoBehaviour
@@ -16,12 +17,17 @@ public class MapAnimator : MonoBehaviour
     private Animator _animator;
     private MeshRenderer _meshRenderer;
     private Camera _cam;
-    
+    private float radius = 0;
+    private Color effectColor;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _meshRenderer = GetComponent<MeshRenderer>();
         _cam = Camera.main;
+
+        _meshRenderer.material.SetFloat("_Radius", 0);
+        _meshRenderer.material.SetColor("_Effect", new Color(0, 0.3f, 0, 0));
     }
 
     private void LateUpdate()
@@ -41,13 +47,18 @@ public class MapAnimator : MonoBehaviour
     private void Drain()
     {
         flooded = false;
-        _animator.SetTrigger(drainTrigger);
+        //_animator.SetTrigger(drainTrigger);
+        DOTween.To(() => radius, x => radius = x, 0, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat("_Radius", radius));
+        DOTween.To(() => effectColor, x => effectColor = x, new Color(0, 0.3f, 0, 0f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor("_Effect", effectColor));
+
     }
 
     private void Flood()
     {
         flooded = true;
-        _animator.SetTrigger(floodTrigger);
+        //_animator.SetTrigger(floodTrigger);
+        DOTween.To(() => radius, x => radius = x, 70, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat("_Radius", radius));
+        DOTween.To(() => effectColor, x => effectColor = x, new Color(0, 0.3f, 0, 0.5f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor("_Effect", effectColor));
     }
 
     private void UpdateEffectOrigin()
