@@ -8,6 +8,7 @@ namespace UI
     public class WealthCounter : UiUpdater
     {
         [SerializeField] private TextMeshProUGUI wealth;
+        [SerializeField] private TextMeshProUGUI nextTurn;
 
         private int _wpt;
         private int _previousWealth = 0;
@@ -17,7 +18,8 @@ namespace UI
         protected override void UpdateUi()
         {
             _wpt = Manager.WealthPerTurn;
-            wealth.text = _targetWealth + " (+" + _wpt + ")";
+            wealth.text = _targetWealth.ToString();
+            nextTurn.text = "+" + _wpt;
             if (_targetWealth == Manager.Wealth) return; // Don't double update
             _previousWealth = _targetWealth;
             _targetWealth = Manager.Wealth;
@@ -29,10 +31,11 @@ namespace UI
             for (float t = 0; t < 0.3f; t += Time.deltaTime)
             {
                 int w = (int)Mathf.Lerp(_previousWealth, _targetWealth, t / 0.3f);
-                wealth.text = w + " (+" + _wpt + ")";
+                wealth.text = w.ToString();
                 yield return null;
             }
-            wealth.text = Manager.Wealth + " (+" + Manager.WealthPerTurn + ")";
+            wealth.text = Manager.Wealth.ToString();
+            nextTurn.text = "+" + Manager.WealthPerTurn;
         }
     }
 }
