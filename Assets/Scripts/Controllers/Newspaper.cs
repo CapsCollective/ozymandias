@@ -126,7 +126,7 @@ namespace Controllers
         public void Close()
         {
             Manager.ExitMenu();
-            transform.DOLocalMove(new Vector3(1000, 500, 0), animateOutDuration);
+            transform.DOLocalMove(new Vector3(2000, 800, 0), animateOutDuration);
             transform
                 .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
                 .OnComplete(() => { _canvas.enabled = false; });

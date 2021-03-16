@@ -68,6 +68,6 @@
         Outrider,
         Performer,
         Diviner,
-        Conduit
+        Arcanist
     }
 }

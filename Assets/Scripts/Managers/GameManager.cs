@@ -4,6 +4,7 @@ using System.Linq;
 using Controllers;
 using Entities;
 using NaughtyAttributes;
+using UI;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
@@ -40,7 +41,8 @@ namespace Managers
         public Map Map { get; private set; }
         public Newspaper Newspaper { get; private set; }
         public BuildingPlacement BuildingPlacement { get; private set; }
-    
+        public Tooltip Tooltip { get; private set; }
+
         private void Awake()
         {
             Random.InitState((int)DateTime.Now.Ticks);
@@ -55,7 +57,8 @@ namespace Managers
 
             BuildingPlacement = FindObjectOfType<BuildingPlacement>();
             Newspaper = FindObjectOfType<Newspaper>();
-
+            Tooltip = FindObjectOfType<Tooltip>();
+            
             Load();
         }
 
@@ -101,6 +104,18 @@ namespace Managers
         {
             return Buildings.GetStat(stat) + ModifiersTotal[stat];
         }
+
+        public int GetSatisfaction(AdventurerCategory category)
+        {
+            return GetStat((Stat)category) - Adventurers.GetCount(category);
+        }
+        
+        public int GetSatisfaction(Stat stat)
+        {
+            if ((int) stat < 5) // If the stat is for an adventuring category
+                return GetSatisfaction((AdventurerCategory)stat);
+            return GetStat(stat) - Adventurers.Count;
+        }
         
         public int WealthPerTurn => (100 + GetStat(Stat.Spending)) * Adventurers.Available / 10; //10 gold per adventurer times spending
     
@@ -110,7 +125,7 @@ namespace Managers
 
         public int Threat => 12 + (3 * TurnCounter) + ModifiersTotal[Stat.Threat];
 
-        public int ChangePerTurn => Threat - Defense; // How much the top bar shifts each turn
+        public int ChangePerTurn => Defense - Threat; // How much the top bar shifts each turn
     
         public int Stability { get; set; } // Percentage of how far along the threat is.
 
@@ -134,9 +149,9 @@ namespace Managers
             Buildings.Clear();*/
 
             // Start game with 5 Adventurers
-            for (int i = 0; i < 5; i++) Manager.Adventurers.Add();
+            for (int i = 0; i < 10; i++) Manager.Adventurers.Add();
 
-            Stability = 40;
+            Stability = 100;
             Wealth = 50;
         
             EventQueue.Add(openingEvent, true);
@@ -162,11 +177,11 @@ namespace Managers
         {
             Buildings.placedThisTurn = 0;
             Stability += ChangePerTurn;
-            if (Stability < 0) Stability = 0;
+            if (Stability > 100) Stability = 100;
             Wealth += WealthPerTurn;
             TurnCounter++;
 
-            if (Stability >= 100)
+            if (Stability <= 0)
                 foreach (Event e in supportWithdrawnEvents) EventQueue.Add(e, true);
         
             foreach (var stat in Modifiers)
@@ -230,7 +245,7 @@ namespace Managers
         {
             inMenu = true;
             Shade.Instance.SetDisplay(true);
-            BuildingPlacement.GetComponent<ToggleGroup>().SetAllTogglesOff();
+            BuildingPlacement.GetComponent<ToggleGroup>().SetAllTogglesOff(); //TODO this dont work no more, need to deselect all builiding cards manually
         }
     
         public void ExitMenu()

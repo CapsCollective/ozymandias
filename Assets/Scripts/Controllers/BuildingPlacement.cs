@@ -15,7 +15,7 @@ namespace Controllers
         public const int Deselected = -1;
         public static int Selected = Deselected;
     
-        [SerializeField] private BuildingSelect[] cards;
+        [SerializeField] private BuildingCard[] cards;
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float tweenTime;
         [SerializeField] private Ease tweenEase;

@@ -70,7 +70,7 @@ namespace Managers
         {
             Manager.ExitMenu();
             
-            transform.DOLocalMove(new Vector3(-100, -500, 0), animateOutDuration)
+            transform.DOLocalMove(new Vector3(-300, -1200, 0), animateOutDuration)
             .OnComplete(() => { _canvas.enabled = false; });
         }
         

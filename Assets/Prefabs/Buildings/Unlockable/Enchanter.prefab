@@ -45,14 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: "You know what's better than a sword? A sword that shoots lightning.
+    And that's just the start of what can be done with enchanting!\r"
   icon: {fileID: 21300000, guid: 24d57027834f2e04684607565e75426c, type: 3}
   type: 15
   stats:
-    list: []
+    list:
+    - Key: 0
+      Value: 1
+    - Key: 1
+      Value: 1
+    - Key: 4
+      Value: 2
     keyCollision: 0
-  baseCost: 0
-  scaleSpeed: 0
+  baseCost: 50
+  scaleSpeed: 3
   sections:
   - prefab: {fileID: 5715288843127339804, guid: 38e74ece6f570f845ba6fb9b5d8c6b16,
       type: 3}
