@@ -10,7 +10,8 @@ public class Section : MonoBehaviour
     // Member variables
     public int clockwiseRotations;
     public Transform cornerParent;
-
+    public bool randomRotations;
+    public Vector2 randomScale = Vector2.one;
     public bool debug;
 
     private MeshFilter _meshFilter;
@@ -36,6 +37,13 @@ public class Section : MonoBehaviour
                 Gizmos.DrawSphere(cornerParent.GetChild(i).position, .1f);
             }
         }
+    }
+
+    private void Start()
+    {
+        if (randomRotations)
+            transform.rotation = Random.rotation;
+        transform.localScale = Vector3.one * Random.Range(randomScale.x, randomScale.y);
     }
 
     // Class Functions

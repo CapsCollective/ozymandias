@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 6623412535553237891}
   - component: {fileID: 1905689419317301908}
   m_Layer: 0
-  m_Name: Rock C (3)
+  m_Name: Rock Module
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 4888587676969015135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
-  m_LocalScale: {x: 1, y: 5.66, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 9184545508396254834}
   m_Father: {fileID: 0}
@@ -177,6 +177,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -201,6 +202,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1905689419317301908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f195e4bee49d7e4badbbfe07f2f6414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clockwiseRotations: 0
   cornerParent: {fileID: 9184545508396254834}
+  randomRotations: 1
+  randomScale: {x: 3, y: 5}
+  debug: 0
 --- !u!1 &5207426052007112389
 GameObject:
   m_ObjectHideFlags: 0
