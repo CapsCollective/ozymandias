@@ -92,6 +92,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -116,6 +117,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &9154215088064387004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +132,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clockwiseRotations: 3
   cornerParent: {fileID: 9154215087920486612}
+  randomRotations: 0
+  randomScale: {x: 1, y: 1}
+  debug: 0
+  _meshCompute: {fileID: 7200000, guid: c7e07a0edc71d4746b822120e70ae422, type: 3}
 --- !u!1 &9154215088244875943
 GameObject:
   m_ObjectHideFlags: 0

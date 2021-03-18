@@ -19,9 +19,19 @@ namespace Managers
 
         private readonly List<Building> _buildings = new List<Building>();
         private readonly List<Building> _terrain = new List<Building>();
+        public readonly Dictionary<string, Section.SectionData> _buildingCache = new Dictionary<string, Section.SectionData>();
 
         public int Count => _buildings.Count;
-        
+
+        private void Start()
+        {
+            Object[] ye = Resources.LoadAll("SectionData/", typeof(TextAsset));
+            foreach(TextAsset o in ye)
+            {
+                _buildingCache.Add(o.name, JsonUtility.FromJson<Section.SectionData>(o.text));
+            }
+        }
+
         public int GetStat(Stat stat)
         {
             return _buildings.Sum(b => b.stats.ContainsKey(stat) ? b.stats[stat] : 0);

@@ -31,5 +31,15 @@ namespace Utilities
         {
             return list[Random.Range(0, list.Count)];
         }
+
+        public static List<Vector2> Vector3ToVector2(List<Vector3> v3)
+        {
+            List<Vector2> newList = new List<Vector2>(v3.Count);
+            for (int i = 0; i < v3.Count; i++)
+            {
+                newList[i] = new Vector2(v3[i].x, v3[i].z);
+            }
+            return newList;
+        }
     }
 }

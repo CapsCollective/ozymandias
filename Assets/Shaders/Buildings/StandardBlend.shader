@@ -49,14 +49,10 @@
         half _Metallic;
         fixed4 _Color;
 
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
-
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
-            if (c.r >= 1) {
+            if (c.r + c.g + c.b >= 3) {
                 c.rgb *= UNITY_ACCESS_INSTANCED_PROP(Props, _RoofColor);
             };
             o.Albedo = c.rgb;

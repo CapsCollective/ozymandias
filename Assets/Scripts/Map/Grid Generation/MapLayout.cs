@@ -106,7 +106,7 @@ public class MapLayout : ScriptableObject
         }
 
         Dictionary<Vertex, List<Vertex>> toInclude = new Dictionary<Vertex, List<Vertex>>();
-        
+
         Graph<Vertex> dupGraph = new Graph<Vertex>(VertexGraph);
         for (int i = dupGraph.Count - 1; i >= 0; i--)
             if (!included.Contains(dupGraph.GetData()[i]))
@@ -116,7 +116,7 @@ public class MapLayout : ScriptableObject
         {
             toInclude.Add(
                 path[i],
-                AStar(dupGraph, path[i], path[(i + 1) % path.Count], 2000)
+                AStar(VertexGraph, path[i], path[(i + 1) % path.Count], 2000)
                 );
         }
 
