@@ -25,6 +25,11 @@ namespace Environment
         private void Start()
         {
             _mapLayout = Manager.Map.layout;
+            _mapLayout.OnRoadReady += SpawnAdventurers;
+        }
+
+        private void SpawnAdventurers()
+        {
             InvokeRepeating(nameof(CheckWandering), 1f, wanderingUpdateFrequency);
             _boundaryVerts = _mapLayout.VertexGraph.GetData().Where(v => v.Boundary).ToList();
         }
@@ -155,6 +160,11 @@ namespace Environment
             adventurerManager.SetAlphaTo(to);
             if (destroy)
                 Destroy(adventurer);
+        }
+
+        void OnDestroy()
+        {
+            _mapLayout.OnRoadReady -= SpawnAdventurers;
         }
     }
 }
