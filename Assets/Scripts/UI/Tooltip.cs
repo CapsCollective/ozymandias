@@ -137,9 +137,9 @@ namespace UI
 
         public void UpdateTooltip(TooltipType type)
         {
-            var config = Configs[type];
+            TooltipConfig config = Configs[type];
             title.text = config.title;
-            details.enabled = false;
+            details.gameObject.SetActive(false);
             description.text = config.description;
         }
 
