@@ -28,6 +28,11 @@ assignees: ''
     - [ ] Linux
 <!-- Note your OS version/distribution here if applicable -->
 - OS Version: ...
-- Other notes: ...
 
+**Additional details**
 <!-- Add any other information or context about the problem here -->
+...
+
+**TODO**
+<!-- Complete these once you have created the bug report -->
+- [ ] Add the bug to the "Bug Triage Board"
