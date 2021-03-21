@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Tree
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 244aa3dff3bce224c83c9ccc2a1d4c7a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -47,6 +51,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normal_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -55,23 +63,61 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonRamp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _dabs_texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DistanceScale: 20
     - _DstBlend: 0
+    - _FarLineWidth1: 0.05
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NearLineWidth1: 0.02
     - _OcclusionStrength: 1
+    - _Outline1: 0
     - _Parallax: 0.02
+    - _RimOffset: 0.6
+    - _RimPower: 0
+    - _ShadowOffsetFloat: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecLerpAmount: 0
+    - _SpecularGloss: 0.2
     - _SpecularHighlights: 1
+    - _SpecularIntensity: 0.2
     - _SrcBlend: 1
     - _UVSec: 0
+    - _WindSpeed: 0.025
+    - _WindStrength: 0.1
     - _ZWrite: 1
+    - __dirty: 1
+    - _dabs_rotate: 15
+    - _dabs_tiling: 35
+    - _max: 1.12
+    - _min: 1.1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
+    - _RimTint: {r: 0.0036044938, g: 0.5902472, b: 0.764151, a: 0}
+    - _Spec_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Tint: {r: 0.62264144, g: 0.62264144, b: 0.62264144, a: 0}
+  m_BuildTextureStacks: []
