@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,6 +19,9 @@ namespace Controllers
         private float _rotateOrigin;
         private bool _dragging, _rotating;
         private bool _crRunning;
+
+        public static Action OnCameraMove;
+        public static Action OnCameraRotate;
 
         [SerializeField] private Vector3 startPos, startRot;
         [SerializeField] private Button centerButton;
@@ -77,6 +81,7 @@ namespace Controllers
 
             if (_dragging)
             {
+                OnCameraMove?.Invoke();
                 Vector3 dir = _cam.ScreenToViewportPoint(_dragOrigin - Input.mousePosition);
                 Transform t = transform;
                 Vector3 pos = t.position;
@@ -105,7 +110,12 @@ namespace Controllers
                     Transform t = transform;
                     t.eulerAngles = new Vector3(Remap(t.position.y, minHeight, maxHeight - 5, minAngle, maxAngle), t.eulerAngles.y, 0);
                     if (_rb.velocity.y < 10 && _rb.velocity.y > -10)
-                        _rb.AddForce(new Vector3(0, dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0));
+                    {
+                        Vector3 force = new Vector3(0,
+                            dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0);
+                        if (force != Vector3.zero) _rb.AddForce(force);
+                    }
+                    OnCameraRotate?.Invoke();
                 }
             }
         

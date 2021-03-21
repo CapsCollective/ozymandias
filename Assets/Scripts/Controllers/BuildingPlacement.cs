@@ -21,17 +21,17 @@ namespace Controllers
         [SerializeField] private Ease tweenEase;
         [SerializeField] private GameObject particle;
         [SerializeField] private Transform container;
-    
+
         private List<GameObject> _remainingBuildings = new List<GameObject>();
         private Camera _cam;
         private int _rotation;
         private Cell[] _highlighted = new Cell[0];
         private int _previousSelected = Selected;
-    
+
         private void Start()
         {
             _cam = Camera.main;
-        
+
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
 
@@ -73,38 +73,23 @@ namespace Controllers
 
         private void LeftClick()
         {
-            if (Selected == Deselected)
-            {
-                Building building = Manager.Map.GetCellFromMouse().occupant;
-                if (building)
-                {
-                    if (building.type != BuildingType.Terrain)
-                    {
-                        _highlighted = Manager.Map.GetCells(building);
-                        Manager.Map.Highlight(_highlighted, Map.HighlightState.Valid);
-                        Debug.Log(building);
-                    }
-                }
-            }
-            else
-            {
-                Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
-                Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
+            if (Selected == Deselected) return;
+            
+            Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
+            Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
 
-                if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
+            if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
 
-                int i = Selected;
-                GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
-                if (!Manager.Map.CreateBuilding(buildingInstance, hit.point, _rotation, true)) return;
-        
-                //Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<Building>().primaryStat);
-        
-                NewCardTween(i);
-                cards[i].toggle.isOn = false;
-                Selected = Deselected;
-            }
-
-
+            int i = Selected;
+            GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
+            if (!Manager.Map.CreateBuilding(buildingInstance, hit.point, _rotation, true)) return;
+    
+            //Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<Building>().primaryStat);
+    
+            NewCardTween(i);
+            cards[i].toggle.isOn = false;
+            Selected = Deselected;
+            
             BarFill.DelayBars = true;
             Manager.UpdateUi();
             BarFill.DelayBars = false;
