@@ -7,6 +7,8 @@ using NaughtyAttributes;
 [RequireComponent(typeof(MeshFilter))]
 public class Section : MonoBehaviour
 {
+    const float NOISE_SCALE = 5f;
+
     public struct PlaneData
     {
         Vector3[] meshVertices;
@@ -51,7 +53,8 @@ public class Section : MonoBehaviour
         _meshCompute = (ComputeShader)Resources.Load("SectionCompute");
         if (randomRotations)
             transform.rotation = Random.rotation;
-        transform.localScale = Vector3.one * Random.Range(randomScale.x, randomScale.y);
+        float noise = Mathf.PerlinNoise(transform.position.x * NOISE_SCALE, transform.position.z * NOISE_SCALE);
+        transform.localScale = Vector3.one * Mathf.Lerp(randomScale.x, randomScale.y, noise);
     }
 
     // Class Functions
@@ -127,7 +130,7 @@ public class Section : MonoBehaviour
     public void Save()
     {
         SectionData sectionData = new SectionData(MeshFilter, cornerParent);
-        File.WriteAllText(FilePath, JsonUtility.ToJson(sectionData));
+        File.WriteAllText(FilePath + ".json", JsonUtility.ToJson(sectionData));
 
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh();
