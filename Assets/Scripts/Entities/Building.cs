@@ -7,6 +7,7 @@ using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 namespace Entities
 {
@@ -34,6 +35,7 @@ namespace Entities
         public List<SectionInfo> sections;
         public bool indestructible;
         [SerializeField] private bool fitToCell;
+        public bool grassMask;
 
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
@@ -70,8 +72,21 @@ namespace Entities
                     t.localScale *= Random.Range(0.8f, 1.2f);
                 }
             }
-
-            if (animate) Animator.SetTrigger(BuildTrigger);
+            if (animate)
+            {
+                transform.localScale = Vector3.zero;
+                transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
+                ParticleSystem.Play();
+            }
+            if (grassMask)
+            {
+                gameObject.layer = LayerMask.NameToLayer("Mask");
+                foreach (Transform t in transform)
+                {
+                    t.gameObject.layer = LayerMask.NameToLayer("Mask");
+                }
+            }
+            //if (animate) Animator.SetTrigger(BuildTrigger);
         }
         
         public void Clear()
