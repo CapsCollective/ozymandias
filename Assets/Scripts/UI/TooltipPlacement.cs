@@ -11,7 +11,7 @@ namespace UI
 {
     public class TooltipPlacement : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
-        [SerializeField] private Vector3 position;
+        [SerializeField] private Vector3 offset;
         [SerializeField] private float delay = 0.2f;
         [SerializeField] private TooltipType type;
         
@@ -39,7 +39,8 @@ namespace UI
         {
             _mouseOver = true;
             var t = Manager.Tooltip.transform;
-            t.localPosition = position;
+            t.SetParent(gameObject.transform.parent);
+            t.localPosition = offset;
             Manager.Tooltip.UpdateTooltip(type);
         }
 
