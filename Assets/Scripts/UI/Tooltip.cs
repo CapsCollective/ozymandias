@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -145,19 +144,25 @@ namespace UI
             {
                 case null: break;
                 case Stat.Housing:
-                    details.text = Manager.GetStat(Stat.Housing) + " housing for " + Manager.Adventurers.Count + " total adventurers";
+                    details.text = Manager.GetStat(Stat.Housing) + " housing for " + Manager.Adventurers.Available + " total adventurers";
                     break;
                 case Stat.Food:
-                    details.text = Manager.GetStat(Stat.Food) + " food for " + Manager.Adventurers.Count + " total adventurers";
+                    details.text = Manager.GetStat(Stat.Food) + " food for " + Manager.Adventurers.Available + " total adventurers";
                     break;
                 case Stat.Threat:
-                    details.text = Manager.Defense + " defense against " + Manager.Threat + " threat";
+                    details.text = $"{Manager.Defense} defense against {Manager.Threat} threat";
                     break;
                case Stat.Spending:
                     break;
                 default: // Stat for a class
-                    details.text = $"{Manager.GetStat(config.Stat.Value)} {config.Stat.ToString()} satisfaction for " +
-                                   $"{Manager.Adventurers.GetCount((AdventurerCategory)config.Stat.Value)} {config.Stat.ToString()}s.";
+                    AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
+                    string className = config.Stat.ToString();
+                    int turnUntilSpawn = Manager.TurnsToSpawn(category) - Manager.SpawnCounters[category];
+                    string spawnTurnText = turnUntilSpawn > 1 ? ("in " + turnUntilSpawn + " turns.") : "next turn.";
+                    details.text =
+                        $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
+                        $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
+                        $"New {className} will arrive {spawnTurnText} (+1 every {Manager.TurnsToSpawn(category)} turns)";
                     break;
             }
         }

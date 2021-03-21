@@ -72,34 +72,13 @@ namespace Managers
 
         public Dictionary<Stat, List<Modifier>> Modifiers = new Dictionary<Stat, List<Modifier>>();
         public readonly Dictionary<Stat, int> ModifiersTotal = new Dictionary<Stat, int>();
-    
         
-        /*public int Accommodation => Buildings.Where(x => x.operational).Sum(x => x.accommodation);
-    
-        public int Weaponry => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.weaponry) / Adventurers.Available, 0, 100);
-    
-        public int Magic => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.magic) / Adventurers.Available, 0, 100);
-    
-        public int Equipment =>  Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.equipment) / Adventurers.Available,0, 100);
-
-        //public int Training => training = 0; // TODO: work out the specifics of this
-
-        public int Effectiveness => Mathf.Clamp(1 + Equipment/3 + Weaponry/3 + Magic/3  + LowThreatMod + ModifiersTotal[Metric.Effectiveness], 0, 100);
-    
-        public int Food => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.food) / Adventurers.Available, 0, 100);
-
-        public int Entertainment => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.entertainment) / Adventurers.Available, 0, 100);
-    
-        public int Luxury => Mathf.Clamp(100 * Buildings.Where(x => x.operational).Sum(x => x.luxury) / Adventurers.Available, 0, 100);
-
-        public int OvercrowdingMod => Mathf.Min(0, (Accommodation - Adventurers.Available) * 5); //lose 5% satisfaction per adventurer over capacity
-    
-        public int LowThreatMod => Mathf.Min(0, (ThreatLevel - 20) * 2); //lose up to 40% effectiveness from low threat
-    
-        public int Satisfaction => Mathf.Clamp(1 + Food/3 + Entertainment/3 + Luxury/3 + OvercrowdingMod + ModifiersTotal[Metric.Satisfaction], 0, 100);
-    
-        public int Spending => 100 + Buildings.Where(x => x.operational).Sum(x => x.spending) + ModifiersTotal[Metric.Spending];*/
-
+        public readonly Dictionary<AdventurerCategory, int> SpawnCounters = new Dictionary<AdventurerCategory, int>
+        {
+            { AdventurerCategory.Brawler, 0 }, { AdventurerCategory.Outrider, 0 }, { AdventurerCategory.Performer, 0 },
+            { AdventurerCategory.Diviner, 0 }, { AdventurerCategory.Arcanist, 0 }
+        };
+        
         public int GetStat(Stat stat)
         {
             return Buildings.GetStat(stat) + ModifiersTotal[stat];
@@ -115,6 +94,11 @@ namespace Managers
             if ((int) stat < 5) // If the stat is for an adventuring category
                 return GetSatisfaction((AdventurerCategory)stat);
             return GetStat(stat) - Adventurers.Count;
+        }
+
+        public int TurnsToSpawn(AdventurerCategory category)
+        {
+            return Mathf.Clamp((5 - GetSatisfaction(category))/2 + 2, 2, 8);
         }
         
         public int WealthPerTurn => (100 + GetStat(Stat.Spending)) * Adventurers.Available / 10; //10 gold per adventurer times spending
@@ -181,6 +165,16 @@ namespace Managers
             Wealth += WealthPerTurn;
             TurnCounter++;
 
+            // Spawn adventurers based on satisfaction
+            foreach (AdventurerCategory category in Enum.GetValues(typeof(AdventurerCategory)))
+            {
+                SpawnCounters[category]++;
+                int turnsToSpawn = TurnsToSpawn(category);
+                if (SpawnCounters[category] < turnsToSpawn) continue;
+                Adventurers.Add(category);
+                SpawnCounters[category] -= turnsToSpawn;
+            }
+            
             if (Stability <= 0)
                 foreach (Event e in supportWithdrawnEvents) EventQueue.Add(e, true);
         

@@ -78,10 +78,10 @@ namespace Entities
             };
         }
 
-        public void Init()
+        public void Init(AdventurerCategory? aCategory = null)
         {
             name = NewName();
-            category = NewCategory();
+            category = aCategory ?? NewCategory();
             turnJoined = Manager.TurnCounter;
         }
     
