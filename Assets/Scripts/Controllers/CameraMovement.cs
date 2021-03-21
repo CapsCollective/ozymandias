@@ -21,7 +21,6 @@ namespace Controllers
         private bool _crRunning;
 
         public static Action OnCameraMove;
-        public static Action OnCameraRotate;
 
         [SerializeField] private Vector3 startPos, startRot;
         [SerializeField] private Button centerButton;
@@ -97,11 +96,11 @@ namespace Controllers
             {
                 if (transform.position.y > maxHeight)
                 {
-                    _rb.AddForce(new Vector3(0, -1,0));
+                    _rb.AddForce(new Vector3(0, -2.0f,0));
                 }
                 else if (transform.position.y < minHeight)
                 {
-                    _rb.AddForce(new Vector3(0, 1, 0));
+                    _rb.AddForce(new Vector3(0, 2.0f, 0));
                 }
                 else
                 {
@@ -115,7 +114,6 @@ namespace Controllers
                             dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0);
                         if (force != Vector3.zero) _rb.AddForce(force);
                     }
-                    OnCameraRotate?.Invoke();
                 }
             }
         
