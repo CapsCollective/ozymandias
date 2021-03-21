@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Utilities;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -22,10 +25,10 @@ namespace UI
         NextTurn
     }
 
-    struct TooltipConfig
+    internal struct TooltipConfig
     {
-        public string title, details, description;
-        public bool isClass;
+        public string Title, Description;
+        public Stat? Stat;
     }
 
     public class Tooltip : MonoBehaviour
@@ -39,94 +42,90 @@ namespace UI
 
         private readonly Dictionary<TooltipType, TooltipConfig> Configs = new Dictionary<TooltipType, TooltipConfig>
         {
-            {TooltipType.Brawler, new TooltipConfig{
-                title = "Brawlers",
-                description = "Brawlers are a staple of adventuring parties, and the only ones who prefer to beat " +
+            {TooltipType.Brawler, new TooltipConfig {
+                Title = "Brawlers",
+                Description = "Brawlers are a staple of adventuring parties, and the only ones who prefer to beat " +
                               "their way out of a situation than talk or trick. They can be rowdy when left " +
                               "unattended, but give them plenty to fight, and maybe an audience to show off too and " +
                               "they’ll be a great help.",
-                isClass = false
+                Stat = Stat.Brawler
             }},
-            {TooltipType.Outrider, new TooltipConfig{
-                title = "Outriders",
-                description = "As shady as they are charming, an outrider thrives of exploring the unknown, spending " +
+            {TooltipType.Outrider, new TooltipConfig {
+                Title = "Outriders",
+                Description = "As shady as they are charming, an outrider thrives of exploring the unknown, spending " +
                               "their days scouting the forests, or lurking in the streets. Be warned, when left " +
                               "unchecked, thing's might start to go missing.",
-                isClass = false
+                Stat = Stat.Outrider
             }},
-            {TooltipType.Performer, new TooltipConfig{
-                title = "Performers",
-                description = "An odd and extravagant sort, performers aren’t the type to adventurer on their own, " +
+            {TooltipType.Performer, new TooltipConfig {
+                Title = "Performers",
+                Description = "An odd and extravagant sort, performers aren’t the type to adventurer on their own, " +
                               "often traveling with others, and spinning magic into their tales. However, they can " +
                               "be as critical as they are kind, so we don’t want to give them a reason to spread " +
                               "bad news about us.",
-                isClass = false
+                Stat = Stat.Performer
             }},
-            {TooltipType.Diviner, new TooltipConfig{
-                title = "Diviners",
-                description = "By the will of the gods themselves, Diviners channel holy magic to protect and heal " +
+            {TooltipType.Diviner, new TooltipConfig {
+                Title = "Diviners",
+                Description = "By the will of the gods themselves, Diviners channel holy magic to protect and heal " +
                               "others. They aren't all peace and love’ types however, as they can uphold their gods " +
                               "with zealous force when confronted. A religious war is the last thing you want when " +
                               "creating a settlement.",
-                isClass = false
+                Stat = Stat.Diviner
             }},
-            {TooltipType.Arcanist, new TooltipConfig{
-                title = "Arcanists",
-                description = "Arcanists pluck from the very fabric of the Ethereal plane to distort reality in " +
+            {TooltipType.Arcanist, new TooltipConfig {
+                Title = "Arcanists",
+                Description = "Arcanists pluck from the very fabric of the Ethereal plane to distort reality in " +
                               "weird, wonderful, and most importantly profitable ways. They tend to be eccentric " +
                               "scholars who enjoy isolation as much as they enjoy pursuing arcane knowledge. It is " +
                               "recommended their magic is controlled and isolated due to *REDACTED* and " +
                               "*SUPER REDACTED*.",
-                isClass = false
+                Stat = Stat.Arcanist
             }},
-            {TooltipType.Housing, new TooltipConfig{
-                title = "Housing",
-                description = "Adventures need a place to stay and stash their loot in between adventurers. Plus if " +
+            {TooltipType.Housing, new TooltipConfig {
+                Title = "Housing",
+                Description = "Adventures need a place to stay and stash their loot in between adventurers. Plus if " +
                               "we have extra vacancies we might attract some passers by.",
-                isClass = false
+                Stat = Stat.Housing
             }},
-            {TooltipType.Food, new TooltipConfig{
-                title = "Food",
-                description = "he only thing adventurers love more than loot is food, so keep supply in plenty and " +
+            {TooltipType.Food, new TooltipConfig {
+                Title = "Food",
+                Description = "he only thing adventurers love more than loot is food, so keep supply in plenty and " +
                               "you won't have any problems (more than the usual).",
-                isClass = false
+                Stat = Stat.Food
             }},
-            {TooltipType.Wealth, new TooltipConfig{
-                title = "Wealth",
-                description = "Wealth is the currency you spend on performing in game actions, like building, " +
+            {TooltipType.Wealth, new TooltipConfig {
+                Title = "Wealth",
+                Description = "Wealth is the currency you spend on performing in game actions, like building, " +
                               "clearing, and questing. Wealth gained per turn is based on your number of adventurers " +
                               "multiplied by your towns spending.",
-                isClass = false
+                Stat = Stat.Spending
             }},
-            {TooltipType.Stability, new TooltipConfig{
-                title = "Town Stability",
-                description = "The towns stability rises and falls by the constant struggle of the growing threat of " +
+            {TooltipType.Stability, new TooltipConfig {
+                Title = "Town Stability",
+                Description = "The towns stability rises and falls by the constant struggle of the growing threat of " +
                               "the outside world, and the defense of the town. Build defensive buildings, complete " +
                               "quests, and most importantly attract more adventurers to keep this from running out, " +
                               "or else.",
-                isClass = false
+                Stat = Stat.Threat
             }},
-            {TooltipType.Newspaper, new TooltipConfig{
-                title = "Newspaper",
-                description = "Re-read the morning news.",
-                isClass = false
+            {TooltipType.Newspaper, new TooltipConfig {
+                Title = "Newspaper",
+                Description = "Re-read the morning news.",
             }},
-            {TooltipType.Progress, new TooltipConfig{
-                title = "Progress Report",
-                description = "Check out your cities growth, and have a look at your achievements.",
-                isClass = false
+            {TooltipType.Progress, new TooltipConfig {
+                Title = "Progress Report",
+                Description = "Check out your cities growth, and have a look at your achievements.",
             }},
-            {TooltipType.Quests, new TooltipConfig{
-                title = "Quest Map",
-                description = "Send out adventurers on quests for a variety of benefits. Be aware that they won't be " +
+            {TooltipType.Quests, new TooltipConfig {
+                Title = "Quest Map",
+                Description = "Send out adventurers on quests for a variety of benefits. Be aware that they won't be " +
                               "around to Defend while questing.",
-                isClass = false
             }},
-            {TooltipType.NextTurn, new TooltipConfig{
-                title = "Next Turn",
-                description = "Jump forward to the next day, collect your income, get new a new set of building, and " +
+            {TooltipType.NextTurn, new TooltipConfig {
+                Title = "Next Turn",
+                Description = "Jump forward to the next day, collect your income, get new a new set of building, and " +
                               "see what awaits.",
-                isClass = false
             }}
         };
         
@@ -137,10 +136,30 @@ namespace UI
 
         public void UpdateTooltip(TooltipType type)
         {
-            var config = Configs[type];
-            title.text = config.title;
-            details.enabled = false;
-            description.text = config.description;
+            TooltipConfig config = Configs[type];
+            title.text = config.Title;
+            description.text = config.Description;
+            details.gameObject.SetActive(config.Stat != null);
+            
+            switch (config.Stat)
+            {
+                case null: break;
+                case Stat.Housing:
+                    details.text = Manager.GetStat(Stat.Housing) + " housing for " + Manager.Adventurers.Count + " total adventurers";
+                    break;
+                case Stat.Food:
+                    details.text = Manager.GetStat(Stat.Food) + " food for " + Manager.Adventurers.Count + " total adventurers";
+                    break;
+                case Stat.Threat:
+                    details.text = Manager.Defense + " defense against " + Manager.Threat + " threat";
+                    break;
+               case Stat.Spending:
+                    break;
+                default: // Stat for a class
+                    details.text = $"{Manager.GetStat(config.Stat.Value)} {config.Stat.ToString()} satisfaction for " +
+                                   $"{Manager.Adventurers.GetCount((AdventurerCategory)config.Stat.Value)} {config.Stat.ToString()}s.";
+                    break;
+            }
         }
 
         public void Fade(float opacity)

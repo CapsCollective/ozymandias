@@ -39,7 +39,7 @@ namespace UI
         {
             _mouseOver = true;
             var t = Manager.Tooltip.transform;
-            t.SetParent(transform, false);
+            t.SetParent(gameObject.transform.parent);
             t.localPosition = offset;
             Manager.Tooltip.UpdateTooltip(type);
         }
