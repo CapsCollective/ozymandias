@@ -9,9 +9,12 @@ using static Managers.GameManager;
 public class BuildingClearer : MonoBehaviour
 {
     public Vector2 buttonOffset;
+
+    [SerializeField] int _pixelsPerUnit;
     
     private Button _clearButton;
     private Cell _selected;
+    private Vector3 _selectedSize = Vector3.zero;
     private Camera _mainCamera;
 
     void Start()
@@ -31,11 +34,15 @@ public class BuildingClearer : MonoBehaviour
     private void Update()
     {
         if (_selected == null || !_clearButton.gameObject.activeSelf) return;
-
-        MeshRenderer renderer = _selected.occupant.GetComponentInChildren<MeshRenderer>();
+        
         Vector3 buildingPosition = _selected.occupant.transform.position;
-        _clearButton.transform.position = Vector3.Lerp(_clearButton.transform.position,
-            _mainCamera.WorldToScreenPoint(buildingPosition) + new Vector3(buttonOffset.x, buttonOffset.y, 0.0f), 0.5f);
+
+        _clearButton.transform.position = Vector3.Lerp(
+            _clearButton.transform.position,
+            _mainCamera.WorldToScreenPoint(buildingPosition) + 
+            (new Vector3(_selectedSize.x, _selectedSize.y, 0.0f) *
+             _pixelsPerUnit), 
+            0.5f);
     }
 
     void Clear()
@@ -50,12 +57,20 @@ public class BuildingClearer : MonoBehaviour
         if (BuildingPlacement.Selected != -1 || _selected != null) return;
         
         _selected = Manager.Map.GetCellFromMouse();
-
+        
         if (!_selected.occupant) return;
+        
+        Vector3 size = _selected.occupant.GetComponentInChildren<MeshRenderer>().bounds.size;
+
         Vector3 buildingPosition = _selected.occupant.transform.position;
+
         _clearButton.transform.position =
-            _mainCamera.WorldToScreenPoint(buildingPosition) + new Vector3(buttonOffset.x, buttonOffset.y, 0.0f);
+            _mainCamera.WorldToScreenPoint(buildingPosition) + 
+            new Vector3(size.x, size.y, 0.0f) * _pixelsPerUnit;
+        
         _clearButton.gameObject.SetActive(true);
+
+        _selectedSize = size;
     }
 
     public void ClearBuilding()
@@ -72,8 +87,4 @@ public class BuildingClearer : MonoBehaviour
     {
         Clear();
     }
-}
-
-internal class SerlializeFieldAttribute : Attribute
-{
 }
