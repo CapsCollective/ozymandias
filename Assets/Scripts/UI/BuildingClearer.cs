@@ -40,8 +40,7 @@ public class BuildingClearer : MonoBehaviour
         _clearButton.transform.position = Vector3.Lerp(
             _clearButton.transform.position,
             _mainCamera.WorldToScreenPoint(buildingPosition) + 
-            (new Vector3(_selectedSize.x, _selectedSize.y, 0.0f) *
-             _pixelsPerUnit), 
+            (Vector3.up * _pixelsPerUnit), 
             0.5f);
     }
 
@@ -64,9 +63,7 @@ public class BuildingClearer : MonoBehaviour
 
         Vector3 buildingPosition = _selected.occupant.transform.position;
 
-        _clearButton.transform.position =
-            _mainCamera.WorldToScreenPoint(buildingPosition) + 
-            new Vector3(size.x, size.y, 0.0f) * _pixelsPerUnit;
+        _clearButton.transform.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * _pixelsPerUnit);
         
         _clearButton.gameObject.SetActive(true);
 
