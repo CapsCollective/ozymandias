@@ -40,11 +40,11 @@ public class DrawGrassInstanced : MonoBehaviour
     public GrassGraphicsSetting GrassQuality = GrassGraphicsSetting.Ultra;
 
     private ComputeBuffer matrixBuffer;
-    private ComputeBuffer argsBuffer;
 
-    //[SerializeField] [HideInInspector]
-    //private List<Vector4> positions = new List<Vector4>();
+    // Serialized so that positions get saved.
+    // Hidden because the information isn't valuable to see and it slows down the editor
     [SerializeField] [HideInInspector] private List<Matrix4x4> matrices = new List<Matrix4x4>();
+    private int dupMatrixCount;
     private Bounds bounds;
     public ComputeShader computeShader;
 
@@ -74,40 +74,18 @@ public class DrawGrassInstanced : MonoBehaviour
     {
         if(matrixBuffer != null)
             matrixBuffer.Release();
-        //uint[] args = new uint[4] { 0, 0, 0, 0 };
 
-        //args[0] = (uint)6;
-        //args[1] = (uint)positions.Count / (uint)GrassQuality;
-        //args[2] = (uint)mesh.GetIndexStart(0);
-        //args[3] = (uint)mesh.GetBaseVertex(0);
-
-        //argsBuffer = new ComputeBuffer(4, sizeof(uint), ComputeBufferType.IndirectArguments);
-        //argsBuffer.SetData(args);
-
-        //positionsBuffer = new ComputeBuffer(positions.Count, 4 * 4);
-
-        //mat.SetMatrix("_LocalToWorld", transform.localToWorldMatrix);
-        //mat.SetMatrix("_WorldToLocal", transform.worldToLocalMatrix);
-        //mat.SetVectorArray("matrixBuffer", positions.ToArray());
-
-        //Vector4[] properties = new Vector4[positions.Count];
-        //for (int i = 0; i < positions.Count; i += (int)GrassQuality)
-        //{
-        //    Vector4 props = new Vector4();
-        //    //Vector3 position = new Vector3(Random.Range(-range, range), Random.Range(-range, range), Random.Range(-range, range));
-        //    //Quaternion rotation = Quaternion.identity;
-        //    //Vector3 scale = Vector3.one;
-
-        //    props = new Vector4(positions[i].x, positions[i].y + (meshScale * 0.5f), positions[i].z, 1);
-        //    //props.mat = Matrix4x4.TRS(positions[i] + new Vector3(0,meshScale*0.5f,0), rotation, scale);
-        //    //props.color = Color.white;
-
-        //    properties[i / (int)GrassQuality] = props;
-        //}
         if (GrassCount > 0)
         {
-            matrixBuffer = new ComputeBuffer(GrassCount, 4 * 4 * 4);
-            matrixBuffer.SetData(matrices);
+            List<Matrix4x4> dupMatrix = new List<Matrix4x4>();
+            for (int i = 0; i < matrices.Count; i += (int)GrassQuality)
+            {
+                dupMatrix.Add(matrices[i]);
+            }
+            dupMatrixCount = dupMatrix.Count;
+
+            matrixBuffer = new ComputeBuffer(dupMatrixCount, 4 * 4 * 4);
+            matrixBuffer.SetData(dupMatrix);
             mat.SetBuffer("_MatrixBuffer", matrixBuffer);
         }
     }
@@ -125,8 +103,8 @@ public class DrawGrassInstanced : MonoBehaviour
     void Update()
     {
         if(GrassCount > 0)
-            Graphics.DrawMeshInstancedProcedural(mesh, 0, mat, bounds, GrassCount, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);
-        //Graphics.DrawMeshInstancedIndirect(mesh, 0, mat, bounds, argsBuffer, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);
+            Graphics.DrawMeshInstancedProcedural(mesh, 0, mat, bounds, dupMatrixCount, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);
+        
         if (Input.GetKeyDown(KeyCode.F3))
         {
             this.enabled = false;
@@ -141,15 +119,6 @@ public class DrawGrassInstanced : MonoBehaviour
             matrixBuffer.Release();
         }
         matrixBuffer = null;
-
-        if (argsBuffer != null)
-        {
-            argsBuffer.Release();
-        }
-        argsBuffer = null;
-
-        //positionsBuffer.Release();
-        //positionsBuffer = null;
 
 #if UNITY_EDITOR
         SceneView.duringSceneGui -= SceneView_duringSceneGui;

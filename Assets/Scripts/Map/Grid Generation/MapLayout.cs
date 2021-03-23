@@ -123,7 +123,7 @@ public class MapLayout : ScriptableObject
         {
             toInclude.Add(
                 path[i],
-                AStar(VertexGraph, path[i], path[(i + 1) % path.Count], 2000)
+                AStar(dupGraph, path[i], path[(i + 1) % path.Count], 2000)
                 );
         }
 
@@ -1162,9 +1162,12 @@ public class MapLayout : ScriptableObject
         }
 
         // Create a perimeter path around the included vertices
-        List<Vertex> perimeter = new List<Vertex>();
-        //Task task = new Task(CoroutineRunner._Instance.ConvexHullAsync(vertices, VertexGraph, (e) => perimeter = e));
-        yield return CoroutineRunner._Instance.StartCoroutineAsync(CoroutineRunner._Instance.ConvexHullAsync(vertices, VertexGraph, (e) => perimeter = e));//ConvexHull(vertices);
+        List<Vertex> perimeter = ConvexHull(vertices);//new List<Vertex>();
+        //Task task;
+        //CoroutineRunner._Instance.StartCoroutineAsync(CoroutineRunner._Instance.ConvexHullAsync(vertices, VertexGraph, (e) => perimeter = e), out task);//ConvexHull(vertices);
+        //yield return CoroutineRunner._Instance.StartCoroutine(task.Wait());
+        //Debug.Log(perimeter.Count);
+
 
         // Create a road linking the perimeter to the existing road graph
         if (RoadGraph.Count > 0 && perimeter.Count > 0)
@@ -1194,7 +1197,9 @@ public class MapLayout : ScriptableObject
 
         // Add the perimeter to RoadGraph
         AddRoad(perimeter);
+        Debug.Log("Generating Road Mesh");
         mesh.sharedMesh = GenerateRoadMesh();
+        Debug.Log("Finished Generating Road Mesh");
         OnRoadReady?.Invoke();
         yield return new WaitForEndOfFrame();
     }

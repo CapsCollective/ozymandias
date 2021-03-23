@@ -20,6 +20,7 @@ public class Section : MonoBehaviour
     public Transform cornerParent;
     public bool randomRotations;
     public Vector2 randomScale = Vector2.one;
+    public bool hasGrass = true;
     public bool debug;
 
     private MeshFilter _meshFilter;
@@ -27,7 +28,7 @@ public class Section : MonoBehaviour
 
     // Properties
     private string FileName { get { return MeshFilter.sharedMesh.name; } }
-    private string Directory { get { return Application.streamingAssetsPath + "/Section Data/"; } }
+    private string Directory { get { return Application.dataPath + "/Resources" + "/SectionData/"; } }
     public string FilePath { get { return Directory + FileName; } }
 
     private MeshFilter MeshFilter
@@ -55,6 +56,10 @@ public class Section : MonoBehaviour
             transform.rotation = Random.rotation;
         float noise = Mathf.PerlinNoise(transform.position.x * NOISE_SCALE, transform.position.z * NOISE_SCALE);
         transform.localScale = Vector3.one * Mathf.Lerp(randomScale.x, randomScale.y, noise);
+
+        MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+        materialPropertyBlock.SetInt("_HasGrass", hasGrass ? 1 : 0);
+        GetComponent<Renderer>().SetPropertyBlock(materialPropertyBlock);
     }
 
     // Class Functions
@@ -89,7 +94,10 @@ public class Section : MonoBehaviour
             _meshCompute.SetFloat("heightFactor", heightFactor);
             _meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
 
-            _meshCompute.Dispatch(0, planePositions.Length / 512, 8, 1);
+            if(planePositions.Length / 512 > 0)
+                _meshCompute.Dispatch(0, planePositions.Length / 512, 8, 1);
+            else
+                _meshCompute.Dispatch(0, 1, 8, 1);
 
             vertexBuffer.GetData(planePositions);
 

@@ -34,7 +34,6 @@
         sampler2D _EmissionTex;
         UNITY_INSTANCING_BUFFER_START(Props)
         UNITY_DEFINE_INSTANCED_PROP(fixed3, _RoofColor)
-        //float4 _RoofColor;
         UNITY_INSTANCING_BUFFER_END(Props)
 
 
@@ -52,9 +51,8 @@
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
-            if (c.r + c.g + c.b >= 3) {
-                c.rgb *= UNITY_ACCESS_INSTANCED_PROP(Props, _RoofColor);
-            };
+            half i = step(fixed3(1,1,1), c.rgb);
+            c.rgb = lerp(c, UNITY_ACCESS_INSTANCED_PROP(Props, _RoofColor), i);
             o.Albedo = c.rgb;
             o.Metallic = _Metallic;
             o.Smoothness = tex2D(_SmoothnessTex, IN.uv_MainTex);
@@ -80,16 +78,16 @@
         half _Metallic;
         fixed4 _Color;
 
+        UNITY_INSTANCING_BUFFER_START(Props)
+        UNITY_DEFINE_INSTANCED_PROP(int, _HasGrass)
+        UNITY_INSTANCING_BUFFER_END(Props)
+
 		sampler2D _BlendTex;
 		float4 _Ground;
 		float _Height;
 		float _Exponent;
 		float _Scale;
 		float _Stretch;
-
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
 
 		void vert(inout appdata_full v, out Input o)
 		{
@@ -102,14 +100,15 @@
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-			float blendSamp = tex2D(_BlendTex, float2(IN.worldPosition.x, IN.worldPosition.z) / _Scale).r;
 
-			half blendStrength = pow(saturate(_Height - IN.worldPosition.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(IN.blendDot));
-			fixed4 c = _Ground;
+
+			float blendSamp = tex2D(_BlendTex, float2(IN.worldPosition.x, IN.worldPosition.z) / _Scale).r;
+			half blendStrength = lerp(0, pow(saturate(_Height - IN.worldPosition.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(IN.blendDot)), _HasGrass);
+
+            fixed4 c = _Ground;
 
 			if (blendStrength < 0.5)
 				discard;
-
 
             o.Albedo = c.rgb;
             o.Metallic = _Metallic;

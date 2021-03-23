@@ -48,7 +48,6 @@ namespace Controllers
             //Random debug code
             if (Input.GetKeyDown(KeyCode.F10))
             {
-                Debug.Log("Is this working?");
                 SetFirstCard(0, testBuilding);
             }
 #endif
