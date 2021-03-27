@@ -38,9 +38,9 @@ The project is being developed out of our shared passion for putting out cool ex
 
 **Have an idea to optimise or fix our code?** We're happy to take a look at any PRs you submit!
 
-## License
+## Licence
 
-The game is released under a modified MIT licensing agreement (thank you to [DwarfCorp](https://github.com/Blecki/dwarfcorp)). That means all source code is free to use, modify and distribute. However, we have explicitly disallowed modification and redistribution of the following game content (which remains proprietary):
+The game is released under a [modified MIT licensing agreement](LICENCE) (thank you to [DwarfCorp](https://github.com/Blecki/dwarfcorp)). That means all source code is free to use, modify and distribute. However, we have explicitly disallowed modification and redistribution of the following game content (which remains proprietary):
 
 - Images & Textures
 - 3D Models
