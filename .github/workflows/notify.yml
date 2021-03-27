@@ -1,0 +1,17 @@
+name: notify
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Discord Commits
+        uses: Sniddl/discord-commits@v1.3
+        with:
+          webhook: https://discord.com/api/webhooks/825207956291321916/WtveX0iFQV9R5yPoaaUgTNBfbrXTbmrl8LOzwve8F5Jh1zgiz8XjSGnwAyBLla9czrtq
