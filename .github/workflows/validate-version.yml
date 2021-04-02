@@ -37,4 +37,4 @@ jobs:
         run: |
           NEW_VERSION=`echo ${{ steps.branch.outputs.VERSION }}`
           OLD_VERSION=`echo ${{ steps.master.outputs.VERSION }}`
-          ./semver2.sh $NEW_VERSION $OLD_VERSION | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else echo "AntiquatedVersionError: upstream version ("$NEW_VERSION") is <= master branch version ("$OLD_VERSION"). Please update VERSION.txt to newer semantic version before merging." && exit 1; fi; }
+          ./semver2.sh $NEW_VERSION $OLD_VERSION | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else echo "AntiquatedVersionError: upstream version ("$NEW_VERSION") is <= master branch version ("$OLD_VERSION"). Please update VERSION.txt to newer semantic version before merging." 1>&2 && exit 1; fi; }
