@@ -46,7 +46,7 @@ jobs:
           VERSION: None
       
       - name: Cat tag
-        run: cat "$VERSION"
+        run: echo "$VERSION"
       
       - name: Tag latest version
         uses: negz/create-tag@v1
