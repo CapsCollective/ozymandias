@@ -12,7 +12,9 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Assign new version string
-        run: NEW_VERSION=`cat Assets/Resources/VERSION.txt`
+        run: |
+          NEW_VERSION=`cat Assets/Resources/VERSION.txt`
+          echo $NEW_VERSION
       
       - name: Checkout master branch
         uses: actions/checkout@v2
@@ -20,7 +22,9 @@ jobs:
           ref: master
       
       - name: Assign old version string
-        run: OLD_VERSION=`cat Assets/Resources/VERSION.txt`
+        run: |
+          OLD_VERSION=`cat Assets/Resources/VERSION.txt`
+          echo $OLD_VERSION
 
       - name: Download semver script
         run: |
