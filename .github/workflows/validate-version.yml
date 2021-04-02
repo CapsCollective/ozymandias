@@ -14,7 +14,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Download semver script
-        run: curl https://raw.githubusercontent.com/Ariel-Rodriguez/sh-semversion-2/main/semver2.sh -o semver2.sh
+        run: |
+          curl https://raw.githubusercontent.com/Ariel-Rodriguez/sh-semversion-2/main/semver2.sh -o semver2.sh
+          chmod 755 ./semver2.sh
       
       - name: Compare semvers
         run: ./semver2.sh v1.0.0 v1.0.1 # Should return -1
