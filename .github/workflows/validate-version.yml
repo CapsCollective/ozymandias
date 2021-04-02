@@ -12,15 +12,18 @@ jobs:
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v2
+        
+      - run: ls
       
       - name: Checkout master branch
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: master
+      
+      - run: ls
 
       - name: Download semver script
         run: |
-          ls
           curl https://raw.githubusercontent.com/Ariel-Rodriguez/sh-semversion-2/main/semver2.sh -o semver2.sh
           chmod 755 ./semver2.sh
       
