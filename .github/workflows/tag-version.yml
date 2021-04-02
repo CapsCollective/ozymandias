@@ -1,12 +1,16 @@
 name: Tag Version
 
 on:
+  pull_request:
+    branches: [ master ]
   push:
     branches: [ master ]
 
 jobs:
   tag-release:
     runs-on: ubuntu-latest
+    env:
+      VERSION: v0.0.0
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v2
@@ -16,8 +20,8 @@ jobs:
           VERSION=`cat Assets/Resources/VERSION.txt`
           echo "$VERSION"
 
-#       - name: Tag latest version
-#         uses: negz/create-tag@v1
-#         with:
-#           version: ${{ env.VERSION }}
-#           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tag latest version
+        uses: negz/create-tag@v1
+        with:
+          version: ${{ env.VERSION }}
+          token: ${{ secrets.PUBLIC_REPO_TOKEN }}
