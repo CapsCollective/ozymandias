@@ -15,10 +15,10 @@ jobs:
         run: |
           NEW_VERSION=`cat Assets/Resources/VERSION.txt`
           echo '::set-output name=VERSION::'$NEW_VERSION
-        id: version-setter
+        id: branch
 
       - name: Tag latest version
         uses: negz/create-tag@v1
         with:
-          version: ${{ steps.version-setter.outputs.VERSION }}
+          version: ${{ steps.branch.outputs.VERSION }}
           token: ${{ secrets.PUBLIC_REPO_TOKEN }}
