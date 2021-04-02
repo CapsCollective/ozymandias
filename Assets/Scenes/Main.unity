@@ -998,7 +998,7 @@ MonoBehaviour:
   debug: 1
   layerMask:
     serializedVersion: 2
-    m_Bits: 83886081
+    m_Bits: 83886080
 --- !u!23 &254812626
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4804,6 +4804,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2079180552}
     m_Modifications:
+    - target: {fileID: 734777213246632154, guid: 4b04f7f7f6ce10b4e8177ed369e6015b,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 734777213375018907, guid: 4b04f7f7f6ce10b4e8177ed369e6015b,
         type: 3}
       propertyPath: m_Name
@@ -5712,6 +5717,11 @@ PrefabInstance:
     - target: {fileID: 5724768921140098872, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6349892184114248629, guid: b7cc3173f3ccc3b4299b8e2d3dcd3f0e,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
