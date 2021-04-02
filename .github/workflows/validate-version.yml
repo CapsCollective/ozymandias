@@ -19,13 +19,10 @@ jobs:
           chmod 755 ./semver2.sh
       
       - name: Compare semvers
-        run: ./semver2.sh v1.0.1 v1.0.0 | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else exit 1; fi; }
-        
-      - name: Compare semvers
-        run: ./semver2.sh v3.2.3 v3.2.3 | { read -r var; if [ "$var" -gt 0 ]; then echo 0; else echo 1; fi; }
-      
-      - name: Compare semvers
-        run: ./semver2.sh v1.0.1 v1.1.0 | { read -r var; if [ "$var" -gt 0 ]; then echo 0; else echo 1; fi; }
+        run: |
+          NEW_VERSION=`cat ozymandias/Assets/Resources/VERSION.txt`
+          echo "$NEW_VERSION"
+          ./semver2.sh "$NEW_VERSION" v1.0.0 | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else exit 1; fi; }
 
 #   tag-release:
 #     runs-on: ubuntu-latest
