@@ -92,11 +92,20 @@ namespace UI
                 destructionCost = Mathf.FloorToInt(_selected.occupant.baseCost * BuildingRefundModifier);
             }
 
-            _selectedDestroyCost = destructionCost;
+            float opacity = Manager.Wealth >= destructionCost ? 255f : 166f;
+
+            _clearButton.interactable = Manager.Wealth >= destructionCost;
+
+            _costText.text = destructionCost.ToString();
+
+            // Change opacity of the text.
+            Color oldColor = _costText.color;
+            _costText.color = new Color(oldColor.r, oldColor.g, oldColor.b, opacity);
+            _nameText.color = new Color(oldColor.r, oldColor.g, oldColor.b, opacity);
 
             _nameText.text = name;
 
-            _costText.text = destructionCost.ToString();
+            _selectedDestroyCost = destructionCost;
         }
     
         public void ClearBuilding()
