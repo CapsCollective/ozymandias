@@ -101,13 +101,15 @@ namespace UI
     
         public void ClearBuilding()
         {
-            // TODO: Work out what the exact mechanics are for removing things (how much does it cost?)
             Building occupant = _selected.occupant;
             
             if (_selected.occupant.indestructible || !Manager.Spend(_selectedDestroyCost)) return;
-            
-            _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selected.occupant).Length;
-            
+
+            if (_selected.occupant.type == BuildingType.Terrain)
+            {
+                _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selected.occupant).Length;
+            }
+
             occupant.Clear();
             Manager.Buildings.Remove(occupant);
             Clear();
