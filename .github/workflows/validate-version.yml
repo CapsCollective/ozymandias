@@ -41,15 +41,12 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Assign version string
-        run: VERSION=`cat Assets/Resources/VERSION.txt`
-        env:
-          VERSION: None
+        run: |
+          VERSION=`cat Assets/Resources/VERSION.txt`
+          echo "$VERSION"
       
-      - name: Cat tag
-        run: echo "$VERSION"
-      
-      - name: Tag latest version
-        uses: negz/create-tag@v1
-        with:
-          version: ${{ env.VERSION }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Tag latest version
+#         uses: negz/create-tag@v1
+#         with:
+#           version: ${{ env.VERSION }}
+#           token: ${{ secrets.GITHUB_TOKEN }}
