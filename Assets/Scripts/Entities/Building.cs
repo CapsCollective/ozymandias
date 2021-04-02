@@ -8,6 +8,7 @@ using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 using DG.Tweening;
+using UnityEditor;
 
 namespace Entities
 {
@@ -37,6 +38,12 @@ namespace Entities
         [SerializeField] private bool fitToCell;
         public bool grassMask;
 
+        public bool HasNeverBeenSelected
+        {
+            get { return _hasNeverBeenSelected; }
+            set { _hasNeverBeenSelected = value; }
+        } 
+
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
 
@@ -45,6 +52,7 @@ namespace Entities
 
         private ParticleSystem _particleSystem;
         private ParticleSystem ParticleSystem => _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>();
+        private bool _hasNeverBeenSelected;
         
         public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
         {
