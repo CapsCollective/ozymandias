@@ -1,0 +1,29 @@
+name: Validate Version
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  check-bumped:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Download semver script
+        run: curl https://raw.githubusercontent.com/Ariel-Rodriguez/sh-semversion-2/main/semver2.sh -o semver2.sh
+      
+      - name: Compare semvers
+        run: ./semver2.sh v1.0.0 v1.0.1 # Should return -1
+      
+      - name: Compare semvers
+        run: ./semver2.sh v1.1.0 v1.0.1 # Should return 1
+      
+      - name: Compare semvers
+        run: ./semver2.sh v3.2.3 v13.2.3 # Should return 0
+
+#   tag-release:
+#     runs-on: ubuntu-latest
