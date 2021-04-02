@@ -16,7 +16,7 @@ jobs:
       - name: Assign version string
         run: |
           NEW_VERSION=`cat Assets/Resources/VERSION.txt`
-          echo '::set-output name=VERSION::$NEW_VERSION'
+          echo '::set-output name=VERSION::'$NEW_VERSION
         id: version-setter
 
       - name: Tag latest version
