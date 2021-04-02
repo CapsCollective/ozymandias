@@ -13,14 +13,16 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v2
       
-      - run: ls
+      - name: searhcy
+        run: ls
       
       - name: Checkout master branch
       - uses: actions/checkout@v2
         with:
           ref: master
       
-      - run: ls
+      - name: searhcy
+        run: ls
 
       - name: Download semver script
         run: |
