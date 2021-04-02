@@ -13,14 +13,20 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v2
         
-      - run: ls
+      - name: Check and assign
+        run: |
+          cat Assets/Resources/VERSION.txt
+          NEW_VERSION=`cat Assets/Resources/VERSION.txt`
       
       - name: Checkout master branch
         uses: actions/checkout@v2
         with:
           ref: master
       
-      - run: ls
+      - name: Check and assign
+        run: |
+          cat Assets/Resources/VERSION.txt
+          OLD_VERSION=`cat Assets/Resources/VERSION.txt`
 
       - name: Download semver script
         run: |
@@ -30,7 +36,7 @@ jobs:
       - name: Compare semvers
         run: |
           NEW_VERSION=`cat Assets/Resources/VERSION.txt`
-          ./semver2.sh "$NEW_VERSION" v1.0.0 | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else exit 1; fi; }
+          ./semver2.sh "$NEW_VERSION" "$OLD_VERSION" | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else exit 1; fi; }
 
 #   tag-release:
 #     runs-on: ubuntu-latest
