@@ -37,16 +37,19 @@ jobs:
   tag-release:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+      
       - name: Assign version string
         run: VERSION=`cat Assets/Resources/VERSION.txt`
         env:
           VERSION: None
       
-      - name: Set tag
-        run: ${{ env.VERSION }}
+      - name: Cat tag
+        run: cat "$VERSION"
       
-#       - name: some
-#         uses: negz/create-tag@v1
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           version: ${{ env.VERSION }}
+      - name: Tag latest version
+        uses: negz/create-tag@v1
+        with:
+          version: ${{ env.VERSION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
