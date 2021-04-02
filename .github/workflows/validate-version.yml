@@ -13,20 +13,16 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v2
         
-      - name: Check and assign
-        run: |
-          cat Assets/Resources/VERSION.txt
-          NEW_VERSION=`cat Assets/Resources/VERSION.txt`
+      - name: Assign new version string
+        run: NEW_VERSION=`cat Assets/Resources/VERSION.txt`
       
       - name: Checkout master branch
         uses: actions/checkout@v2
         with:
           ref: master
       
-      - name: Check and assign
-        run: |
-          cat Assets/Resources/VERSION.txt
-          OLD_VERSION=`cat Assets/Resources/VERSION.txt`
+      - name: Assign old version string
+        run: OLD_VERSION=`cat Assets/Resources/VERSION.txt`
 
       - name: Download semver script
         run: |
@@ -38,5 +34,19 @@ jobs:
           NEW_VERSION=`cat Assets/Resources/VERSION.txt`
           ./semver2.sh "$NEW_VERSION" "$OLD_VERSION" | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else exit 1; fi; }
 
-#   tag-release:
-#     runs-on: ubuntu-latest
+  tag-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign version string
+        run: VERSION=`cat Assets/Resources/VERSION.txt`
+        env:
+          VERSION: None
+      
+      - name: Set tag
+        run: ${{ env.VERSION }}
+      
+#       - name: some
+#         uses: negz/create-tag@v1
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           version: ${{ env.VERSION }}
