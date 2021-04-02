@@ -20,7 +20,7 @@ jobs:
       
       - name: Compare semvers
         run: |
-          NEW_VERSION=`cat ozymandias/Assets/Resources/VERSION.txt`
+          NEW_VERSION=`cat Assets/Resources/VERSION.txt`
           echo "$NEW_VERSION"
           ./semver2.sh "$NEW_VERSION" v1.0.0 | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else exit 1; fi; }
 
