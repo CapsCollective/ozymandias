@@ -28,7 +28,7 @@ namespace Entities
         private Vector3 _placementPosition;
         private int _rotation;
         
-        public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(1.1f, 
+        public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(1.25f, 
             Manager.Buildings.GetCount(type) * 4 / (float)scaleSpeed));
         
         [HorizontalLine]

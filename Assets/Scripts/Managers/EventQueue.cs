@@ -19,7 +19,7 @@ namespace Managers
         
         [SerializeField] private AssetLabelReference label;
         
-        private int _nextBuildingUnlock = 10;
+        private int _nextBuildingUnlock = 20;
 
         private readonly LinkedList<Event> _headliners = new LinkedList<Event>();
         private readonly LinkedList<Event> _others = new LinkedList<Event>();
@@ -71,39 +71,30 @@ namespace Managers
         {
             List<Event> eventPool = new List<Event>();
         
-            for (int j = 0; j < 3; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
+            for (int j = 0; j < 4; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
         
             if (Manager.Adventurers.Count >= _nextBuildingUnlock) {
                 eventPool.Add(PickRandom(EventType.Blueprint)); // Spawn every 10 adventurers
                 _nextBuildingUnlock += 10;
             }
 
-            // Keeps adventurer count roughly at a fair level
-            /*if (Manager.Adventurers.Count < 7 + Manager.TurnCounter && Manager.Satisfaction > 70) eventPool.Add(PickRandom(EventType.AdventurersJoin));
-            // Catchup if falling behind
-            if (Manager.Adventurers.Count < 4 + Manager.TurnCounter && Manager.Satisfaction > 50) eventPool.Add(PickRandom(EventType.AdventurersJoin));*/
-            if (Manager.Adventurers.Count < Manager.TurnCounter) eventPool.Add(PickRandom(EventType.AdventurersJoin));
-            // More if high satisfaction
-            //if (Manager.Satisfaction > 80) eventPool.Add(PickRandom(EventType.AdventurersJoin));
-        
+            int randomSpawnChance = Manager.RandomSpawnChance;
+            if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+            else for (int i = 0; i < randomSpawnChance; i++) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            
             if (Manager.TurnCounter >= 5)
             {
                 // Fill up to 3 quests if unfilled
                 if(Random.Range(0, 4) > Manager.Quests.Count) eventPool.Add(PickRandom(EventType.Radiant));
             
                 // 30% flat chance to spawn chaos
-                if (Random.Range(0,100) < 30) eventPool.Add(PickRandom(EventType.Chaos));
-                //Variable rate for < 50
-                if (Manager.Stability - Random.Range(0,50) < 0) eventPool.Add(PickRandom(EventType.Chaos));
+                if (Random.Range(0,10) < 3) eventPool.Add(PickRandom(EventType.Chaos));
+                
+                //Variable rate for > 50, to stir things up if things are going too good
+                if (Random.Range(50,100) < Manager.Stability) eventPool.Add(PickRandom(EventType.Chaos));
             
                 // Start spawning threat events at 50, and gets more likely the higher it gets
-                if (Random.Range(50,100) - Manager.Stability < 0) eventPool.Add(PickRandom(EventType.Threat));
-            
-                // Fixed 10% spawn rate for challenge
-                if (Random.Range(0,100) < 10) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-                // Variable rate for < 50 and 30, should cause a mass exodus
-                /*if (Manager.Satisfaction - Random.Range(10,50) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-                if (Manager.Satisfaction - Random.Range(10,30) < 0) eventPool.Add(PickRandom(EventType.AdventurersLeave));*/
+                if (Random.Range(0,50) > Manager.Stability) eventPool.Add(PickRandom(EventType.Threat));
             }
 
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order

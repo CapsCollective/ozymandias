@@ -81,7 +81,9 @@ namespace Managers
         
         public int GetStat(Stat stat)
         {
-            return Buildings.GetStat(stat) + ModifiersTotal[stat];
+            int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
+            int foodMod = (int) stat < 5 ? FoodModifier : 0;
+            return mod * (Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod);
         }
 
         public int GetSatisfaction(AdventurerCategory category)
@@ -101,13 +103,17 @@ namespace Managers
             return Mathf.Clamp((5 - GetSatisfaction(category))/2 + 2, 2, 8);
         }
         
-        public int WealthPerTurn => (100 + GetStat(Stat.Spending)) * Adventurers.Available / 10; //10 gold per adventurer times spending
+        public int RandomSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
+        
+        public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
+
+        public int WealthPerTurn => (100 + GetStat(Stat.Spending)) * Adventurers.Available / 20; //5 gold per adventurer times spending
     
         public int Wealth { get;  set; }
 
         public int Defense => Adventurers.Available + GetStat(Stat.Defense);
 
-        public int Threat => 12 + (3 * TurnCounter) + ModifiersTotal[Stat.Threat];
+        public int Threat => 9 + (3 * TurnCounter) + ModifiersTotal[Stat.Threat];
 
         public int ChangePerTurn => Defense - Threat; // How much the top bar shifts each turn
     
@@ -136,7 +142,7 @@ namespace Managers
             for (int i = 0; i < 10; i++) Manager.Adventurers.Add();
 
             Stability = 100;
-            Wealth = 50;
+            Wealth = 100;
         
             EventQueue.Add(openingEvent, true);
         

@@ -144,21 +144,28 @@ namespace UI
             {
                 case null: break;
                 case Stat.Housing:
-                    details.text = Manager.GetStat(Stat.Housing) + " housing for " + Manager.Adventurers.Available + " total adventurers";
+                    int spawnRate = Manager.RandomSpawnChance;
+                    string descriptive = housingDescriptor(spawnRate);
+                    string spawnText = spawnRate == -1
+                        ? "Adventurers will start to flee"
+                        : housingSpawnName(spawnRate) + " adventurer spawn chance"; 
+                    details.text = $"{Manager.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{descriptive} ({spawnText})";
                     break;
                 case Stat.Food:
-                    details.text = Manager.GetStat(Stat.Food) + " food for " + Manager.Adventurers.Available + " total adventurers";
+                    details.text = $"{Manager.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{foodDescriptor(Manager.FoodModifier)}";
                     break;
                 case Stat.Threat:
                     details.text = $"{Manager.Defense} defense against {Manager.Threat} threat";
                     break;
-               case Stat.Spending:
-                    break;
+                case Stat.Spending:
+                    break; 
                 default: // Stat for a class
                     AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
                     string className = config.Stat.ToString();
                     int turnUntilSpawn = Manager.TurnsToSpawn(category) - Manager.SpawnCounters[category];
-                    string spawnTurnText = turnUntilSpawn > 1 ? ("in " + turnUntilSpawn + " turns.") : "next turn.";
+                    string spawnTurnText = turnUntilSpawn > 1 ? ("in " + turnUntilSpawn + " turns") : "next turn";
                     details.text =
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
@@ -167,6 +174,45 @@ namespace UI
             }
         }
 
+        private string housingDescriptor(int spawnRate)
+        {
+            return spawnRate switch
+            {
+                3 => "They're practically giving houses away",
+                2 => "There is room to spare",
+                1 => "It's a bit cramped",
+                0 => "There are adventurers on the street",
+                -1 => "Adventurers are looking to get out of here",
+                _ => ""
+            };
+        }
+        
+        private string foodDescriptor(int foodMod)
+        {
+            return foodMod switch
+            {
+                2 => "There are daily feasts (+2 to all adventurers)",
+                1 => "The adventurers are well fed (+1 to all adventurers)",
+                0 => "The town is getting by (No modifiers)",
+                -1 => "Rations have taken effect (-1 to all adventurers)",
+                -2 => "People are starving (-2 to all adventurers)",
+                _ => ""
+            };
+        }
+
+        private string housingSpawnName(int spawnRate)
+        {
+            return spawnRate switch
+            {
+                3 => "High",
+                2 => "Medium",
+                1 => "Low",
+                0 => "No",
+                _ => ""
+            };
+        }
+        
+        
         public void Fade(float opacity)
         {
             _cg.DOFade(opacity, FadeDuration);
