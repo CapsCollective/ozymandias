@@ -1,87 +1,122 @@
 using System;
+using System.Linq;
 using Controllers;
 using UnityEngine;
 using Utilities;
 using UnityEngine.UI;
 using Entities;
+using TMPro;
 using static Managers.GameManager;
 
-public class BuildingClearer : MonoBehaviour
+namespace UI
 {
-    public Vector2 buttonOffset;
+    public class BuildingClearer : MonoBehaviour
+    { 
+        [SerializeField] int pixelsPerUnit;
+        
+        private Button _clearButton;
+        private Cell _selected;
+        private int _selectedDestroyCost = 0;
+        private Camera _mainCamera;
+        private int _numberOfTerrainTilesDeleted = 0;
+        private TextMeshProUGUI _nameText, _costText;
 
-    [SerializeField] int _pixelsPerUnit;
+        private const float ScaleSteps = 1.025f;
+        // Modifier for building refunds. Currently set to provide players with a 75% refund. 
+        private const float BuildingRefundModifier = 0.25f;
     
-    private Button _clearButton;
-    private Cell _selected;
-    private Vector3 _selectedSize = Vector3.zero;
-    private Camera _mainCamera;
+        void Start()
+        {
+            _clearButton = GetComponentInChildren<Button>();
 
-    void Start()
-    {
-        _clearButton = GetComponentInChildren<Button>(); 
-        
-        Click.OnLeftClick += LeftClick;
-        Click.OnRightClick += RightClick;
+            TextMeshProUGUI[] textFields = transform.GetChild(0).GetComponentsInChildren<TextMeshProUGUI>();
 
-        CameraMovement.OnCameraMove += Clear;
+            _nameText = textFields[0];
+            _costText = textFields[1];
 
-        _mainCamera = Camera.main;
-        
-        Clear();
-    }
+            Click.OnLeftClick += LeftClick;
+            Click.OnRightClick += RightClick;
+    
+            CameraMovement.OnCameraMove += Clear;
+    
+            _mainCamera = Camera.main;
+            
+            Clear();
+        }
+    
+        private void Update()
+        {
+            if (_selected == null || !_clearButton.gameObject.activeSelf) return;
+            
+            Vector3 buildingPosition = _selected.occupant.transform.position;
+    
+            _clearButton.transform.position = Vector3.Lerp(
+                _clearButton.transform.position,
+                _mainCamera.WorldToScreenPoint(buildingPosition) + 
+                (Vector3.up * pixelsPerUnit), 
+                0.5f);
+        }
+    
+        void Clear()
+        {
+            _clearButton.gameObject.SetActive(false);
+            _selected = null;
+        }
+    
+        void LeftClick()
+        {
+            // If nothing is selected
+            if (BuildingPlacement.Selected != -1 || _selected != null) return;
+            
+            _selected = Manager.Map.GetCellFromMouse();
+            
+            if (!_selected.occupant) return;
 
-    private void Update()
-    {
-        if (_selected == null || !_clearButton.gameObject.activeSelf) return;
-        
-        Vector3 buildingPosition = _selected.occupant.transform.position;
+            Vector3 buildingPosition = _selected.occupant.transform.position;
+    
+            _clearButton.transform.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * pixelsPerUnit);
+            
+            _clearButton.gameObject.SetActive(true);
 
-        _clearButton.transform.position = Vector3.Lerp(
-            _clearButton.transform.position,
-            _mainCamera.WorldToScreenPoint(buildingPosition) + 
-            (Vector3.up * _pixelsPerUnit), 
-            0.5f);
-    }
+            int destructionCost = 0;
+            string name = _selected.occupant.name;
 
-    void Clear()
-    {
-        _clearButton.gameObject.SetActive(false);
-        _selected = null;
-    }
+            if (_selected.occupant.type == BuildingType.Terrain)
+            {
+                var range = Enumerable.Range(1, _numberOfTerrainTilesDeleted);
+                destructionCost = (int) range.Select(i => 1.0f / Math.Pow(ScaleSteps, i)).Sum();
+                name = "Terrain";
+            }
+            else
+            {
+                destructionCost = Mathf.FloorToInt(_selected.occupant.baseCost * BuildingRefundModifier);
+            }
 
-    void LeftClick()
-    {
-        // If nothing is selected
-        if (BuildingPlacement.Selected != -1 || _selected != null) return;
-        
-        _selected = Manager.Map.GetCellFromMouse();
-        
-        if (!_selected.occupant) return;
-        
-        Vector3 size = _selected.occupant.GetComponentInChildren<MeshRenderer>().bounds.size;
+            _selectedDestroyCost = destructionCost;
 
-        Vector3 buildingPosition = _selected.occupant.transform.position;
+            _nameText.text = name;
 
-        _clearButton.transform.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * _pixelsPerUnit);
-        
-        _clearButton.gameObject.SetActive(true);
-
-        _selectedSize = size;
-    }
-
-    public void ClearBuilding()
-    {
-        // TODO: Work out what the exact mechanics are for removing things (how much does it cost?)
-        Building occupant = _selected.occupant;
-        if (_selected.occupant.indestructible) return;
-        occupant.Clear();
-        Manager.Buildings.Remove(occupant);
-        Clear();
-    }
-
-    void RightClick()
-    {
-        Clear();
+            _costText.text = destructionCost.ToString();
+        }
+    
+        public void ClearBuilding()
+        {
+            // TODO: Work out what the exact mechanics are for removing things (how much does it cost?)
+            Building occupant = _selected.occupant;
+            
+            if (_selected.occupant.indestructible || !Manager.Spend(_selectedDestroyCost)) return;
+            
+            _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selected.occupant).Length;
+            
+            occupant.Clear();
+            Manager.Buildings.Remove(occupant);
+            Clear();
+        }
+    
+        void RightClick()
+        {
+            Clear();
+        }
     }
 }
+
