@@ -15,7 +15,7 @@ jobs:
       
       - name: Assign version string
         run: |
-          NEW_VERSION=`cat ${{ jobs.tag-release.env.VERSION_FILE }}`
+          NEW_VERSION=`cat ${{ env.VERSION_FILE }}`
           echo '::set-output name=VERSION::'$NEW_VERSION
         id: branch
 
