@@ -7,13 +7,15 @@ on:
 jobs:
   check-bumped:
     runs-on: ubuntu-latest
+    env:
+      VERSION_FILE: Assets/Resources/VERSION.txt
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v2
         
       - name: Assign new version string
         run: |
-          NEW_VERSION=`cat Assets/Resources/VERSION.txt`
+          NEW_VERSION=`cat ${{ jobs.check-bumped.env.VERSION_FILE }}`
           echo '::set-output name=VERSION::'$NEW_VERSION
         id: branch
       
@@ -24,7 +26,7 @@ jobs:
       
       - name: Assign old version string
         run: |
-          OLD_VERSION=`cat Assets/Resources/VERSION.txt`
+          OLD_VERSION=`cat ${{ jobs.check-bumped.env.VERSION_FILE }}`
           echo '::set-output name=VERSION::'$OLD_VERSION
         id: master
 

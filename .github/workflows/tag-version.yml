@@ -7,13 +7,15 @@ on:
 jobs:
   tag-release:
     runs-on: ubuntu-latest
+    env:
+      VERSION_FILE: Assets/Resources/VERSION.txt
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v2
       
       - name: Assign version string
         run: |
-          NEW_VERSION=`cat Assets/Resources/VERSION.txt`
+          NEW_VERSION=`cat ${{ jobs.tag-release.env.VERSION_FILE }}`
           echo '::set-output name=VERSION::'$NEW_VERSION
         id: branch
 
