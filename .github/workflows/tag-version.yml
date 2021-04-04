@@ -1,0 +1,26 @@
+name: Tag Version
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+    env:
+      VERSION_FILE: Assets/Resources/VERSION.txt
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+      
+      - name: Assign version string
+        run: |
+          NEW_VERSION=`cat ${{ env.VERSION_FILE }}`
+          echo '::set-output name=VERSION::'$NEW_VERSION
+        id: branch
+
+      - name: Tag latest version
+        uses: negz/create-tag@v1
+        with:
+          version: ${{ steps.branch.outputs.VERSION }}
+          token: ${{ secrets.PUBLIC_REPO_TOKEN }}
