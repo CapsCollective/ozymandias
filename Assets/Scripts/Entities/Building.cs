@@ -38,11 +38,7 @@ namespace Entities
         [SerializeField] private bool fitToCell;
         public bool grassMask;
 
-        public bool HasNeverBeenSelected
-        {
-            get { return _hasNeverBeenSelected; }
-            set { _hasNeverBeenSelected = value; }
-        } 
+        public bool HasNeverBeenSelected { get; set; }
 
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
@@ -52,8 +48,7 @@ namespace Entities
 
         private ParticleSystem _particleSystem;
         private ParticleSystem ParticleSystem => _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>();
-        private bool _hasNeverBeenSelected;
-        
+
         public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
         {
             if (fitToCell)

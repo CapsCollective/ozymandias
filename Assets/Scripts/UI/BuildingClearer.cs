@@ -79,7 +79,7 @@ namespace UI
 
             if (!_selected.occupant) return;
 
-            // TODO: Clean this up.
+            // Make sure the building has not just been spawned (such as when it's just been built)
             if (_selected.occupant.HasNeverBeenSelected)
             {
                 _selected.occupant.HasNeverBeenSelected = false;

@@ -12,9 +12,9 @@ namespace Controllers
     
         private Texture2D[] _cursors;
         private readonly Vector2[] _hotspots = {
-            new Vector2(10, 15), // Pointer
-            new Vector2(10, 15), // Build
-            new Vector2(10, 15), // Destroy
+            new Vector2(5, 15), // Pointer
+            new Vector2(5, 15), // Build
+            new Vector2(5, 15), // Destroy
         };
         public CursorType currentCursor = CursorType.Pointer;
 
