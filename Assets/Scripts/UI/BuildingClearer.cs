@@ -14,8 +14,9 @@ namespace UI
     public class BuildingClearer : MonoBehaviour
     { 
         [SerializeField] int pixelsPerUnit;
+        [SerializeField] private Image buttonImage;
         
-        private Button _clearButton;
+        private Transform _clearButton;
         private Cell _selected;
         private int _selectedDestroyCost;
         private Camera _mainCamera;
@@ -29,7 +30,7 @@ namespace UI
 
         private void Start()
         {
-            _clearButton = GetComponentInChildren<Button>();
+            _clearButton = transform.GetChild(0);
 
             TextMeshProUGUI[] textFields = transform.GetChild(0).GetComponentsInChildren<TextMeshProUGUI>();
 
@@ -51,8 +52,8 @@ namespace UI
             if (_selected == null || !_clearButton.gameObject.activeSelf) return;
 
             // Lerp the button to stay above the building.
-            _clearButton.transform.position = Vector3.Lerp(
-                _clearButton.transform.position,
+            _clearButton.position = Vector3.Lerp(
+                _clearButton.position,
                 _mainCamera.WorldToScreenPoint(_selectedPosition) + 
                 (Vector3.up * pixelsPerUnit), 
                 0.5f);
@@ -88,7 +89,7 @@ namespace UI
 
             // Find building position and reposition clearButton to overlay on top of it.  
             Vector3 buildingPosition = _selected.occupant.transform.position;
-            _clearButton.transform.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * pixelsPerUnit);
+            _clearButton.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * pixelsPerUnit);
             _clearButton.gameObject.SetActive(true);
 
             int destructionCost;
@@ -108,13 +109,16 @@ namespace UI
             }
 
             // Disable the button if the player can't afford to clear the tile (visually changes opacity)
-            _clearButton.interactable = Manager.Wealth >= destructionCost;
             float opacity = Manager.Wealth >= destructionCost ? 255f : 166f;
-            
+
             // Change opacity of the text.
             Color oldColor = _costText.color;
             _costText.color = _nameText.color = new Color(oldColor.r, oldColor.g, oldColor.b, opacity);
 
+            // Change opacity of button
+            Color oldButtonColor = buttonImage.color;
+            buttonImage.color = new Color(oldButtonColor.r, oldButtonColor.g, oldButtonColor.b, opacity / 255f);
+                
             // Update UI
             _costText.text = destructionCost.ToString();
             _nameText.text = selectedName;
