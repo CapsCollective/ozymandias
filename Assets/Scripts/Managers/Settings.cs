@@ -17,7 +17,7 @@ namespace Managers
         //loading
         public GameObject loadingScreen;
         public Slider progressBar;
-        public TextMeshProUGUI tipText;
+        public TextMeshProUGUI tipText, versionText;
         public string[] loadingTips;
 
         //resolution selection
@@ -40,6 +40,10 @@ namespace Managers
 
         private void Start()
         {
+            // Set the version text value from file
+            var versionFile = Resources.Load<TextAsset>("VERSION");
+            if (versionFile) versionText.text = versionFile.text;
+            
             //generate a list of available resolutions
             _resolutions = Screen.resolutions;
             resolutionDropdown.ClearOptions();

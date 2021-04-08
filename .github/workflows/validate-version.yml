@@ -1,0 +1,42 @@
+name: Validate Version
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  check-bumped:
+    runs-on: ubuntu-latest
+    env:
+      VERSION_FILE: Assets/Resources/VERSION.txt
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+        
+      - name: Assign new version string
+        run: |
+          NEW_VERSION=`cat ${{ env.VERSION_FILE }}`
+          echo '::set-output name=VERSION::'$NEW_VERSION
+        id: branch
+      
+      - name: Checkout master branch
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      
+      - name: Assign old version string
+        run: |
+          OLD_VERSION=`cat ${{ env.VERSION_FILE }}`
+          echo '::set-output name=VERSION::'$OLD_VERSION
+        id: master
+
+      - name: Download semver script
+        run: |
+          curl https://raw.githubusercontent.com/Ariel-Rodriguez/sh-semversion-2/main/semver2.sh -o semver2.sh
+          chmod 755 ./semver2.sh
+      
+      - name: Compare semvers
+        run: |
+          NEW_VERSION=`echo ${{ steps.branch.outputs.VERSION }}`
+          OLD_VERSION=`echo ${{ steps.master.outputs.VERSION }}`
+          ./semver2.sh $NEW_VERSION $OLD_VERSION | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else echo "AntiquatedVersionError: upstream version ("$NEW_VERSION") is <= master branch version ("$OLD_VERSION"). Please update VERSION.txt to newer semantic version before merging." && exit 1; fi; }
