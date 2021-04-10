@@ -145,21 +145,22 @@ namespace UI
                 case null: break;
                 case Stat.Housing:
                     int spawnRate = Manager.RandomSpawnChance;
-                    string descriptive = housingDescriptor(spawnRate);
+                    string descriptive = HousingDescriptor(spawnRate);
                     string spawnText = spawnRate == -1
                         ? "Adventurers will start to flee"
-                        : housingSpawnName(spawnRate) + " adventurer spawn chance"; 
+                        : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
                     details.text = $"{Manager.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
                                    $"{descriptive} ({spawnText})";
                     break;
                 case Stat.Food:
                     details.text = $"{Manager.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
-                                   $"{foodDescriptor(Manager.FoodModifier)}";
+                                   $"{FoodDescriptor(Manager.FoodModifier)}";
                     break;
                 case Stat.Threat:
                     details.text = $"{Manager.Defense} defense against {Manager.Threat} threat";
                     break;
                 case Stat.Spending:
+                    details.text = "";
                     break; 
                 default: // Stat for a class
                     AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
@@ -174,7 +175,7 @@ namespace UI
             }
         }
 
-        private string housingDescriptor(int spawnRate)
+        private string HousingDescriptor(int spawnRate)
         {
             return spawnRate switch
             {
@@ -187,7 +188,7 @@ namespace UI
             };
         }
         
-        private string foodDescriptor(int foodMod)
+        private string FoodDescriptor(int foodMod)
         {
             return foodMod switch
             {
@@ -200,7 +201,7 @@ namespace UI
             };
         }
 
-        private string housingSpawnName(int spawnRate)
+        private string HousingSpawnName(int spawnRate)
         {
             return spawnRate switch
             {
