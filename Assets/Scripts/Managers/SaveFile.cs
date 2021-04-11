@@ -87,7 +87,7 @@ namespace Managers
             loading = true;
             string saveJson = PlayerPrefs.GetString("Save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
             JsonConvert.PopulateObject(saveJson, this);
-            
+
             Manager.Wealth = wealth;
             Manager.TurnCounter = turnCounter;
             Manager.Stability = threatLevel;
