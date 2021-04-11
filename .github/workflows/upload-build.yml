@@ -1,8 +1,8 @@
 name: Upload Build
 
 on:
-  push:
-    branches: [ release ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   macos:
@@ -13,25 +13,47 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v2
 
-      - name: Run Unity build
-        run: |
-          echo "test"
+      - name: Setup cache for the Unity build
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: ozymandias-unity-macos
+          restore-keys: |
+            ozymandias-unity-macos
 
-      - name: Copy over GitHub artefacts
+      - name: Setup cache for the steamcmd build
+      - uses: actions/cache@v2
+        with:
+          path: steampipe/ContentBuilder/content/macos_content
+          key: ozymandias-steampipe-macos
+          restore-keys: |
+            ozymandias-steampipe-macos
+
+      - name: Get current version string
         run: |
-          echo "test"
+          VERSION=`cat ${{ env.VERSION_FILE }}`
+          echo '::set-output name=VERSION::'$VERSION
+        id: version
+
+      - name: Run Unity build
+        uses: game-ci/unity-builder@v2.0-alpha-6
+        with:
+          targetPlatform: StandaloneOSX
+          buildName: Ozymandias
+          version: ${{ steps.version.outputs.VERSION }}
+
+      - uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: build
         
       - name: Move build files to steampipe content folder
         run: |
-          mkdir steampipe/ContentBuilder/content/macos_content
+          mv build/* steampipe/ContentBuilder/content/macos_content
 
       - name: Run steamcmd login, update, build and upload
         run: |
           chmod +x steampipe/ContentBuilder/builder_osx/steamcmd
-          steampipe/ContentBuilder/builder_osx/steamcmd.sh +login ${{ secrets.STEAMWORKS_USERNAME }} ${{ secrets.STEAMWORKS_PASSWORD }} +run_app_build ../scripts/app_build_1524530.vdf +quit
-
-      - name: Save GitHub artefacts
-        run: |
-          echo "test"
+      #     steampipe/ContentBuilder/builder_osx/steamcmd.sh +login ${{ secrets.STEAMWORKS_USERNAME }} ${{ secrets.STEAMWORKS_PASSWORD }} +run_app_build ../scripts/app_build_1524530.vdf +quit
   # windows:
   # linux:
