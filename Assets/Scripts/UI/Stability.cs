@@ -8,20 +8,12 @@ namespace UI
     public class Stability : UiUpdater
     {
         [SerializeField] private Image bar;
+        private const float MaxWidth = 623f;
+        private const float Height = 36;
         
         protected override void UpdateUi()
         {
-            if (Manager.Stability > 0)
-            {
-                bar.transform.DOScaleX(Manager.Stability/100f, 0.5f);
-            }
-            else
-            {
-                bar.transform.DOScaleX(0, 0.5f).OnComplete(() =>
-                {
-                    bar.color = Color.clear;
-                });
-            }
+            bar.rectTransform.DOSizeDelta(new Vector2(Mathf.Max(0,MaxWidth * Manager.Stability/100f), Height), 0.5f);
         }
     }
 }
