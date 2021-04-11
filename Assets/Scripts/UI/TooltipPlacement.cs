@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using Managers;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using static Managers.GameManager;
 

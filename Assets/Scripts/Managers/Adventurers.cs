@@ -17,7 +17,6 @@ namespace Managers
         public int Count => _adventurers.Count;
         public int Available => _adventurers.Count(x => !x.assignedQuest);
         public int Removable => _adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
-
         public IEnumerable<Adventurer> List => _adventurers
             .OrderByDescending(x => x.assignedQuest ? x.assignedQuest.title : "")
             .ThenByDescending(x => x.turnJoined);
@@ -49,9 +48,9 @@ namespace Managers
             return adventurer;
         }
 
-        public void Add()
+        public void Add(AdventurerCategory? category = null)
         {
-            New().Init();
+            New().Init(category);
         }
     
         public void Add(PremadeAdventurer adventurer)
