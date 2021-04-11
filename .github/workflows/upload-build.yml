@@ -1,0 +1,37 @@
+name: Upload Build
+
+on:
+  push:
+    branches: [ release ]
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    env:
+      VERSION_FILE: Assets/Resources/VERSION.txt
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+
+      - name: Run Unity build
+        run: |
+          echo "test"
+
+      - name: Copy over GitHub artefacts
+        run: |
+          echo "test"
+        
+      - name: Move build files to steampipe content folder
+        run: |
+          mkdir steampipe/ContentBuilder/content/macos_content
+
+      - name: Run steamcmd login, update, build and upload
+        run: |
+          chmod +x steampipe/ContentBuilder/builder_osx/steamcmd
+          steampipe/ContentBuilder/builder_osx/steamcmd.sh +login ${{ secrets.STEAMWORKS_USERNAME }} ${{ secrets.STEAMWORKS_PASSWORD }} +run_app_build ../scripts/app_build_1524530.vdf +quit
+
+      - name: Save GitHub artefacts
+        run: |
+          echo "test"
+  # windows:
+  # linux:
