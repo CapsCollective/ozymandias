@@ -1,0 +1,39 @@
+"AppBuild"
+{
+	"AppID" "1524530"
+	"Desc" "All platforms build"
+	"Preview" "0"
+	"SetLive" "alpha"
+	"ContentRoot" "../content"
+	"BuildOutput" "../output"
+	"Depots"
+	{
+		"1524535" // macOS Depot
+		{
+			"FileMapping"
+			{
+				"LocalPath" "./macos_content/*" // all files from content folder
+				"DepotPath" "." // mapped into the root of the depot
+				"recursive" "1" // include all subfolders
+			}
+		}
+		//"1524536" // Linux Depot
+		//{
+		//	"FileMapping"
+		//	{
+		//		"LocalPath" "./linux_content/*" // all files from content folder
+		//		"DepotPath" "." // mapped into the root of the depot
+		//		"recursive" "1" // include all subfolders
+		//	}
+		//}
+		//"1524537" // Windows Depot
+		//{
+		//	"FileMapping"
+		//	{
+		//		"LocalPath" "./linux_content/*" // all files from content folder
+		//		"DepotPath" "." // mapped into the root of the depot
+		//		"recursive" "1" // include all subfolders
+		//	}
+		//}
+	}
+}
