@@ -40,7 +40,7 @@ namespace Managers
             {
                 return _buildings.Select(building => Vector3.Distance(from, building.transform.position)).Min();
             }
-            catch (Exception e)
+            catch
             {
                 return float.MaxValue;
             }

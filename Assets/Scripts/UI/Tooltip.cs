@@ -160,7 +160,8 @@ namespace UI
                     details.text = $"{Manager.Defense} defense against {Manager.Threat} threat";
                     break;
                 case Stat.Spending:
-                    details.text = "";
+                    details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers " +
+                                   $"(5 wealth per adventurer) times {(100 + Manager.GetStat(Stat.Spending))/100f} from spending modifier.";
                     break; 
                 default: // Stat for a class
                     AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
