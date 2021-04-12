@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using Managers;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using static Managers.GameManager;
 
@@ -39,7 +34,7 @@ namespace UI
         {
             _mouseOver = true;
             var t = Manager.Tooltip.transform;
-            t.SetParent(transform, false);
+            t.SetParent(gameObject.transform.parent);
             t.localPosition = offset;
             Manager.Tooltip.UpdateTooltip(type);
         }

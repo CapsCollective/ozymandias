@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
@@ -45,7 +46,14 @@ namespace Managers
         public float GetClosestBuildingDistance(Vector3 from)
         {
             // Find distance of closest building to the camera
-            return _buildings.Select(building => Vector3.Distance(from, building.transform.position)).Min();
+            try
+            {
+                return _buildings.Select(building => Vector3.Distance(from, building.transform.position)).Min();
+            }
+            catch
+            {
+                return float.MaxValue;
+            }
         }
 
         public Building SelectRandom()
