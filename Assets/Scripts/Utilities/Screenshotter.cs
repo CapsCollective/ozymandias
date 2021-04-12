@@ -6,22 +6,30 @@ namespace Utilities
 {
     public class Screenshotter : MonoBehaviour
     {
-        // Update is called once per frame
+        // Private fields
+        private CanvasGroup _canvasGroup;
+
+        private void Start()
+        {
+            _canvasGroup = GetComponent<CanvasGroup>();
+        }
+        
         private void Update()
         {
             if (!Input.GetKeyDown(KeyCode.F6)) return;
             Debug.Log("Screenshot");
-            DebugGUIController.DebugLog("Screenshot!", 5);
+            DebugGUIController.DebugLog("Screenshot taken", 5);
             StartCoroutine(Screenshot());
         }
 
         private IEnumerator Screenshot()
         {
-            GetComponent<CanvasGroup>().alpha = 0;
+            // Hide the UI if shift is held
+            if (Input.GetKey(KeyCode.LeftShift)) _canvasGroup.alpha = 0;
             yield return new WaitForEndOfFrame();
             ScreenCapture.CaptureScreenshot($"Ozymandias_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
             yield return new WaitForEndOfFrame();
-            GetComponent<CanvasGroup>().alpha = 1;
+            _canvasGroup.alpha = 1;
         }
     }
 }
