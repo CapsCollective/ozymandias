@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.18028475, g: 0.22571509, b: 0.30692318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028507, g: 0.22571546, b: 0.30692363, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3047,18 +3047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1045424952 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5770630415086324709, guid: 85178680a2e169f46a9b8b14190a6fbd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1045424949}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1146750496 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3795023321179944370, guid: 0ad996abc9cf649b98856d980179cb6a,
@@ -3470,6 +3458,7 @@ GameObject:
   - component: {fileID: 1870573933}
   - component: {fileID: 1870573935}
   - component: {fileID: 1870573936}
+  - component: {fileID: 1870573937}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3609,6 +3598,36 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
+  skyColorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  skyMaterial: {fileID: 0}
 --- !u!114 &1870573934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3624,7 +3643,7 @@ MonoBehaviour:
   loadingScreen: {fileID: 0}
   progressBar: {fileID: 0}
   tipText: {fileID: 0}
-  versionText: {fileID: 1045424952}
+  versionText: {fileID: 0}
   loadingTips: []
   resolutionDropdown: {fileID: 1390675609}
   audioMixer: {fileID: 24100000, guid: 6a36d648ffba74fbdbe9ec7f4e8d843a, type: 2}
@@ -3675,6 +3694,18 @@ MonoBehaviour:
   buildCursor: {fileID: 2800000, guid: d3399ff14bc714eb4a79e22809689bd2, type: 3}
   destroyCursor: {fileID: 2800000, guid: 0fcfc3eae0df1450088ea7f599c764b7, type: 3}
   currentCursor: 0
+--- !u!114 &1870573937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870573928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7efc1c5ff404c4390b1b3fac62dbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1917572883 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8350138275590763461, guid: 85178680a2e169f46a9b8b14190a6fbd,

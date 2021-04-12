@@ -26,8 +26,8 @@ namespace Managers
 
         private void Start()
         {
-            Object[] ye = Resources.LoadAll("SectionData/", typeof(TextAsset));
-            foreach(TextAsset o in ye)
+            object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
+            foreach(TextAsset o in buildingsText)
             {
                 _buildingCache.Add(o.name, JsonUtility.FromJson<Section.SectionData>(o.text));
             }
