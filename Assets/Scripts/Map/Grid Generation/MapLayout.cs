@@ -1162,10 +1162,10 @@ public class MapLayout : ScriptableObject
         }
 
         // Create a perimeter path around the included vertices
-        List<Vertex> perimeter = ConvexHull(vertices);//new List<Vertex>();
-        //Task task;
-        //CoroutineRunner._Instance.StartCoroutineAsync(CoroutineRunner._Instance.ConvexHullAsync(vertices, VertexGraph, (e) => perimeter = e), out task);//ConvexHull(vertices);
-        //yield return CoroutineRunner._Instance.StartCoroutine(task.Wait());
+        List<Vertex> perimeter = new List<Vertex>();
+        Task task;
+        CoroutineRunner._Instance.StartCoroutineAsync(CoroutineRunner._Instance.ConvexHullAsync(vertices, VertexGraph, (e) => perimeter = e), out task);//ConvexHull(vertices);
+        yield return CoroutineRunner._Instance.StartCoroutine(task.Wait());
         //Debug.Log(perimeter.Count);
 
 
@@ -1197,9 +1197,7 @@ public class MapLayout : ScriptableObject
 
         // Add the perimeter to RoadGraph
         AddRoad(perimeter);
-        Debug.Log("Generating Road Mesh");
         mesh.sharedMesh = GenerateRoadMesh();
-        Debug.Log("Finished Generating Road Mesh");
         OnRoadReady?.Invoke();
         yield return new WaitForEndOfFrame();
     }

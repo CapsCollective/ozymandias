@@ -32,9 +32,11 @@
         sampler2D _MainTex;
         sampler2D _SmoothnessTex;
         sampler2D _EmissionTex;
-        UNITY_INSTANCING_BUFFER_START(Props)
-        UNITY_DEFINE_INSTANCED_PROP(fixed3, _RoofColor)
-        UNITY_INSTANCING_BUFFER_END(Props)
+        fixed3 _RoofColor;
+
+        //UNITY_INSTANCING_BUFFER_START(Props)
+        //UNITY_DEFINE_INSTANCED_PROP(fixed3, _RoofColor)
+        //UNITY_INSTANCING_BUFFER_END(Props)
 
 
         struct Input
@@ -50,10 +52,11 @@
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
-            half i = step(fixed3(1,1,1), c.rgb);
-            c.rgb = lerp(c, UNITY_ACCESS_INSTANCED_PROP(Props, _RoofColor), i);
-            o.Albedo = c.rgb;
+            fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
+            //if (c.r + c.g + c.b == 3) {
+            //    c.rgb = _RoofColor;
+            //}
+            o.Albedo = lerp(c.rgb, _RoofColor, step(float3(1, 1, 1), c.rgb)).rgb;//c.rgb;
             o.Metallic = _Metallic;
             o.Smoothness = tex2D(_SmoothnessTex, IN.uv_MainTex);
             o.Emission = tex2D(_EmissionTex, IN.uv_MainTex) * _EmissionIntensity;

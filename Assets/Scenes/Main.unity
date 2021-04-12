@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.323486, g: 0.6752948, b: 0.97363126, a: 1}
+  m_IndirectSpecularColor: {r: 0.60840935, g: 0.823732, b: 0.8370461, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1321,32 +1321,37 @@ PrefabInstance:
     - target: {fileID: 800053112672030533, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: -0.100000024
       objectReference: {fileID: 0}
     - target: {fileID: 800053112672030533, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 800053112672030533, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 800053112672030533, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.00034510822
       objectReference: {fileID: 0}
     - target: {fileID: 800053112672030533, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 2.0570053e-11
       objectReference: {fileID: 0}
     - target: {fileID: 800053112672030533, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 800053112672030533, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc, type: 3}
@@ -1368,9 +1373,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef89dabc9da4e04ba04db7dabbc4c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 200
-  noiseWidth: 4096
-  noiseHeight: 4096
+  scale: 50
+  noiseWidth: 512
+  noiseHeight: 512
 --- !u!1 &553142797 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3795023322734049695, guid: 0ad996abc9cf649b98856d980179cb6a,
@@ -3461,7 +3466,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.065
+    m_Bias: 0.2
     m_NormalBias: 0
     m_NearPlane: 0.2
     m_CullingMatrixOverride:

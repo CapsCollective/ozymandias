@@ -32,7 +32,7 @@ namespace Environment
                 sun.color = sunColorGradient.Evaluate(timer);
                 RenderSettings.ambientLight = ambientGradient.Evaluate(timer);
                 RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
-                RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
+                //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
                 skyMaterial.SetColor("_Tint", skyColorGradient.Evaluate(timer));
             }).OnComplete(Manager.NewTurn);
         }

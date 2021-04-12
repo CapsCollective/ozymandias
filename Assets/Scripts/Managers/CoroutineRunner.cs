@@ -16,7 +16,6 @@ public class CoroutineRunner : MonoBehaviour
 
     public IEnumerator ConvexHullAsync(List<Vertex> included, Graph<Vertex> VertexGraph, Action<List<Vertex>> returnThing)
     {
-        Debug.Log("ConvexHullAsync is running!");
         List<Vertex> path = new List<Vertex>();
 
         // Ensure that the first is on the path
@@ -74,7 +73,6 @@ public class CoroutineRunner : MonoBehaviour
         }
 
         returnThing?.Invoke(path);
-        Debug.Log("Finished convex hull");
         yield return new WaitForEndOfFrame();
     }
 

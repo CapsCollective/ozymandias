@@ -120,6 +120,9 @@ public class Section : MonoBehaviour
             sectionBuffer.Release();
             vertexBuffer.Release();
             cornerBuffer.Release();
+            var mc = gameObject.AddComponent<MeshCollider>();
+            mc.sharedMesh = MeshFilter.sharedMesh;
+            mc.convex = true;
         }
         else
         {
@@ -153,11 +156,12 @@ public class Section : MonoBehaviour
 
     public void SetRoofColor(Color color)
     {
-        MaterialPropertyBlock props = new MaterialPropertyBlock();
-        props.SetColor("_RoofColor", color);
+        //MaterialPropertyBlock props = new MaterialPropertyBlock();
+        //props.SetColor("_RoofColor", color);
 
         var renderer = GetComponent<MeshRenderer>();
-        renderer.SetPropertyBlock(props);
+        //renderer.SetPropertyBlock(props);
+        renderer.material.SetColor("_RoofColor", color);
     }
 
     [System.Serializable]
