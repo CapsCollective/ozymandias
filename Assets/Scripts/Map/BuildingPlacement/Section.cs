@@ -41,7 +41,9 @@ public class Section : MonoBehaviour
     private void Start()
     {
         _meshCompute = (ComputeShader)Resources.Load("SectionCompute");
-        _usesShader = _meshCompute != null;
+        _usesShader = _meshCompute != null && 
+                      (Application.platform == RuntimePlatform.WindowsPlayer || 
+                       Application.platform == RuntimePlatform.WindowsEditor);
         if (randomRotations)
             transform.rotation = Random.rotation;
         var pos = transform.position;
