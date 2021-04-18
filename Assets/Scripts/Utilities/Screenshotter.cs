@@ -27,7 +27,7 @@ namespace Utilities
             // Hide the UI if shift is held
             if (Input.GetKey(KeyCode.LeftShift)) _canvasGroup.alpha = 0;
             yield return new WaitForEndOfFrame();
-            ScreenCapture.CaptureScreenshot($"Ozymandias_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
+            ScreenCapture.CaptureScreenshot($"FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
             yield return new WaitForEndOfFrame();
             _canvasGroup.alpha = 1;
         }
