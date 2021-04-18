@@ -86,9 +86,13 @@ namespace UI
             _selected = getBuildingOnClick();
 
             if (!_selected) return;
-
+            
             // Make sure the building has not just been spawned (such as when it's just been built)
-            checkIfBuildingHasNeverBeenSelected();
+            if (_selected.HasNeverBeenSelected)
+            {
+                _selected.HasNeverBeenSelected = false;
+                return;
+            }
 
             // Find building position and reposition clearButton to overlay on top of it.  
             repositionClearButton();
@@ -185,12 +189,6 @@ namespace UI
             return hit.collider.GetComponentInParent<Building>();
         }
 
-        private void checkIfBuildingHasNeverBeenSelected()
-        {
-            if (!_selected.HasNeverBeenSelected) return;
-            _selected.HasNeverBeenSelected = false;
-        }
-    
         public void ClearBuilding()
         {
             Building occupant = _selected;
