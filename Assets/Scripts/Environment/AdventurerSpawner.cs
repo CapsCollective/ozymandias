@@ -25,6 +25,11 @@ namespace Environment
         private void Start()
         {
             _mapLayout = Manager.Map.layout;
+            _mapLayout.OnRoadReady += SpawnAdventurers;
+        }
+
+        private void SpawnAdventurers()
+        {
             InvokeRepeating(nameof(CheckWandering), 1f, wanderingUpdateFrequency);
             _boundaryVerts = _mapLayout.VertexGraph.GetData().Where(v => v.Boundary).ToList();
         }
@@ -141,10 +146,10 @@ namespace Environment
 
         private IEnumerator FadeAdventurer(GameObject adventurer, float from, float to, bool destroy = false)
         {
-            Adventurer adventurerManager = adventurer.GetComponent<Adventurer>();
-            float current = from;
+            var adventurerManager = adventurer.GetComponent<Adventurer>();
+            var current = from;
             adventurerManager.SetAlphaTo(from);
-            float time = 0f;
+            var time = 0f;
             while (time < fadeDuration)
             {
                 current = Mathf.Lerp(current, to, time);
@@ -155,6 +160,11 @@ namespace Environment
             adventurerManager.SetAlphaTo(to);
             if (destroy)
                 Destroy(adventurer);
+        }
+
+        void OnDestroy()
+        {
+            _mapLayout.OnRoadReady -= SpawnAdventurers;
         }
     }
 }

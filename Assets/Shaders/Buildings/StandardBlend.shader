@@ -9,10 +9,14 @@
 		_Scale ("Blend Scale", Float) = 1
 		_Stretch ("Blend Stretch", Float) = 1
 
-        _Color ("Color", Color) = (1,1,1,1)
+        _Color("Color", Color) = (1,1,1,1)
+        _RoofColor ("Roof Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
+        _SmoothnessTex("Smoothness (R)", 2D) = "black" {}
         _Metallic ("Metallic", Range(0,1)) = 0.0
+        _EmissionTex("Emission (RGB)", 2D) = "black" {}
+        _EmissionIntensity("Intensity (R)", Float) = 0.0
     }
     SubShader
     {
@@ -26,26 +30,36 @@
         #pragma target 3.0
 
         sampler2D _MainTex;
+        sampler2D _SmoothnessTex;
+        sampler2D _EmissionTex;
+        fixed3 _RoofColor;
+
+        //UNITY_INSTANCING_BUFFER_START(Props)
+        //UNITY_DEFINE_INSTANCED_PROP(fixed3, _RoofColor)
+        //UNITY_INSTANCING_BUFFER_END(Props)
+
 
         struct Input
         {
             float2 uv_MainTex;
+            float4 color : COLOR;
         };
 
+        half _EmissionIntensity;
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
 
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
-
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = c.rgb;
+            fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
+            //if (c.r + c.g + c.b == 3) {
+            //    c.rgb = _RoofColor;
+            //}
+            o.Albedo = lerp(c.rgb, _RoofColor, step(float3(1, 1, 1), c.rgb)).rgb;//c.rgb;
             o.Metallic = _Metallic;
-            o.Smoothness = _Glossiness;
+            o.Smoothness = tex2D(_SmoothnessTex, IN.uv_MainTex);
+            o.Emission = tex2D(_EmissionTex, IN.uv_MainTex) * _EmissionIntensity;
             o.Alpha = c.a;
         }
         ENDCG
@@ -67,16 +81,16 @@
         half _Metallic;
         fixed4 _Color;
 
+        UNITY_INSTANCING_BUFFER_START(Props)
+        UNITY_DEFINE_INSTANCED_PROP(int, _HasGrass)
+        UNITY_INSTANCING_BUFFER_END(Props)
+
 		sampler2D _BlendTex;
 		float4 _Ground;
 		float _Height;
 		float _Exponent;
 		float _Scale;
 		float _Stretch;
-
-        UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
-        UNITY_INSTANCING_BUFFER_END(Props)
 
 		void vert(inout appdata_full v, out Input o)
 		{
@@ -89,10 +103,12 @@
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-			float blendSamp = tex2D(_BlendTex, float2(IN.worldPosition.x, IN.worldPosition.z) / _Scale).r;
 
-			half blendStrength = pow(saturate(_Height - IN.worldPosition.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(IN.blendDot));
-			fixed4 c = _Ground;
+
+			float blendSamp = tex2D(_BlendTex, float2(IN.worldPosition.x, IN.worldPosition.z) / _Scale).r;
+			half blendStrength = lerp(0, pow(saturate(_Height - IN.worldPosition.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(IN.blendDot)), _HasGrass);
+
+            fixed4 c = _Ground;
 
 			if (blendStrength < 0.5)
 				discard;

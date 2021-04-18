@@ -21,6 +21,7 @@ namespace Controllers
         [SerializeField] private Ease tweenEase;
         [SerializeField] private GameObject particle;
         [SerializeField] private Transform container;
+        [SerializeField] private GameObject testBuilding;
     
         private List<GameObject> _remainingBuildings = new List<GameObject>();
         private Camera _cam;
@@ -43,6 +44,13 @@ namespace Controllers
 
         private void Update()
         {
+#if UNITY_EDITOR
+            //Random debug code
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                SetFirstCard(0, testBuilding);
+            }
+#endif
             // Clear previous highlights
             Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
             _highlighted = new Cell[0];
@@ -69,6 +77,7 @@ namespace Controllers
 
             Map.HighlightState state = Map.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
             Manager.Map.Highlight(_highlighted, state);
+
         }
 
         private void LeftClick()
@@ -129,6 +138,26 @@ namespace Controllers
             {
                 valid = true;
                 cards[i].buildingPrefab = _remainingBuildings.PopRandom();
+                for (int j = 0; j < 3; j++)
+                {
+                    if (i == j) continue;
+                    if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
+                }
+            }
+
+            Manager.UpdateUi();
+        }
+
+        private void SetFirstCard(int i, GameObject newBuilding)
+        {
+            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
+            bool valid = false;
+
+            // Confirm no duplicate buildings
+            while (!valid)
+            {
+                valid = true;
+                cards[i].buildingPrefab = testBuilding;
                 for (int j = 0; j < 3; j++)
                 {
                     if (i == j) continue;

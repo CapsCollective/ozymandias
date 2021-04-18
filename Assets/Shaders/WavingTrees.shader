@@ -8,6 +8,8 @@ Shader "Custom/WavingTrees"
         _Metallic ("Metallic", Range(0,1)) = 0.0
         _WindStrength("Wind Strength", Range(0,1)) = 0.0
         _WindSpeed("Wind Speed", Range(0,1)) = 0.0
+        _MaskSub("Mask Subtract", Float) = 0.0
+        _MaskPower("Mask Power", Float) = 0.0
     }
     SubShader
     {
@@ -70,11 +72,17 @@ Shader "Custom/WavingTrees"
 
         half _WindStrength;
         half _WindSpeed;
+        half _MaskSub;
+        half _MaskPower;
+
+        float GetMask(float2 uv) {
+            return saturate(pow(uv.y - -_MaskSub, _MaskPower));
+        }
 
         void vert(inout appdata_full v, out Input o) {
             UNITY_INITIALIZE_OUTPUT(Input, o);
-            float2 vertexWorldSpace = mul(unity_ObjectToWorld, v.vertex).xz;
-            v.vertex.xz += snoise(vertexWorldSpace * (_Time.x * _WindSpeed)) * _WindStrength;
+            float3 vertexWorldSpace = mul(unity_ObjectToWorld, v.vertex).xyz;
+            v.vertex.xz += GetMask(vertexWorldSpace.xy) * (snoise(vertexWorldSpace.xz * (_Time.x * _WindSpeed)) * _WindStrength);
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)

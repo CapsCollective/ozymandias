@@ -13,12 +13,12 @@ namespace Utilities
         {
             _canvasGroup = GetComponent<CanvasGroup>();
         }
-
+        
         private void Update()
         {
-            // Screenshot on ctrl+s
-            if (!(Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftControl))) return;
-            Debug.Log("Screenshot taken");
+            if (!Input.GetKeyDown(KeyCode.F6)) return;
+            Debug.Log("Screenshot");
+            DebugGUIController.DebugLog("Screenshot taken", 5);
             StartCoroutine(Screenshot());
         }
 
@@ -26,8 +26,9 @@ namespace Utilities
         {
             // Hide the UI if shift is held
             if (Input.GetKey(KeyCode.LeftShift)) _canvasGroup.alpha = 0;
+            yield return new WaitForEndOfFrame();
             ScreenCapture.CaptureScreenshot($"Ozymandias_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
-            yield return null;
+            yield return new WaitForEndOfFrame();
             _canvasGroup.alpha = 1;
         }
     }
