@@ -370,6 +370,12 @@ public class DrawGrassInstanced : MonoBehaviour
     }
 #endif
 
+    private void OnDestroy()
+    {
+        if(matrixBuffer != null)
+            matrixBuffer.Release();
+    }
+
     private void OnDrawGizmosSelected()
     {
         if(showBounds)
