@@ -38,12 +38,13 @@ public class Section : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         _meshCompute = (ComputeShader)Resources.Load("SectionCompute");
         _usesShader = _meshCompute != null && 
                       (Application.platform == RuntimePlatform.WindowsPlayer || 
                        Application.platform == RuntimePlatform.WindowsEditor);
+        
         if (randomRotations)
             transform.rotation = Random.rotation;
         var pos = transform.position;
@@ -72,7 +73,7 @@ public class Section : MonoBehaviour
 
         // Calculate new vertex positions
         var planePositions = new Vector3[MeshFilter.mesh.vertexCount];
-        
+
         if (_usesShader)
         {
             var sectionBuffer = new ComputeBuffer(sectionData.VertexCoordinates.Length, sizeof(float) * 3);
@@ -94,7 +95,7 @@ public class Section : MonoBehaviour
                 _meshCompute.Dispatch(0, 1, 8, 1);
             
             vertexBuffer.GetData(planePositions);
-            
+
             sectionBuffer.Release();
             vertexBuffer.Release();
             cornerBuffer.Release();
