@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -171,9 +172,26 @@ namespace UI
                     details.text =
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
+                        $"{getFormattedModifierString(config.Stat.Value)}\n" +
                         $"New {className} will arrive {spawnTurnText} (+1 every {Manager.TurnsToSpawn(category)} turns)";
                     break;
             }
+        }
+
+        private string getFormattedModifierString(Stat stat)
+        {
+            string formattedModifierString = "";
+
+            foreach (var modifier in Manager.Modifiers[stat])
+            {
+                char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
+                string hex = sign == '+' ? "#1bfc30" : "#FF0000";
+                formattedModifierString += 
+                    $"* <color={hex}>{sign}{Math.Abs(modifier.amount)}</color> " +
+                    $"from <REASON> ({modifier.turnsLeft} turns remaining)\n";
+            }
+            
+            return formattedModifierString;
         }
 
         private string HousingDescriptor(int spawnRate)
