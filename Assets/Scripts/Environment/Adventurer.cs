@@ -17,11 +17,11 @@ namespace Environment
         {
             if (gameObject == null) return;
 
-            for (int i = 0; i < renderers.Length; i++)
+            for (var i = 0; i < renderers.Length; i++)
             {
-                renderers[i].GetPropertyBlock(_propertyBlocks[i]); // TODO MissingReferenceException: The object of type 'MeshRenderer' has been destroyed but you are still trying to access it.
-                Color currentColour = _propertyBlocks[i].GetColor(Color);
-                Color newColour = currentColour;
+                renderers[i].GetPropertyBlock(_propertyBlocks[i]);
+                var currentColour = _propertyBlocks[i].GetColor(Color);
+                var newColour = currentColour;
                 newColour.a = alpha;
                 _propertyBlocks[i].SetColor(Color, newColour);
                 renderers[i].SetPropertyBlock(_propertyBlocks[i]);

@@ -146,10 +146,10 @@ namespace Environment
 
         private IEnumerator FadeAdventurer(GameObject adventurer, float from, float to, bool destroy = false)
         {
-            Adventurer adventurerManager = adventurer.GetComponent<Adventurer>();
-            float current = from;
+            var adventurerManager = adventurer.GetComponent<Adventurer>();
+            var current = from;
             adventurerManager.SetAlphaTo(from);
-            float time = 0f;
+            var time = 0f;
             while (time < fadeDuration)
             {
                 current = Mathf.Lerp(current, to, time);
