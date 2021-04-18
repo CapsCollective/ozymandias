@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -150,30 +151,79 @@ namespace UI
                         ? "Adventurers will start to flee"
                         : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
                     details.text = $"{Manager.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{getFormattedModifierString(Stat.Housing)}" +
                                    $"{descriptive} ({spawnText})";
                     break;
                 case Stat.Food:
                     details.text = $"{Manager.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{getFormattedModifierString(Stat.Food)}" +
                                    $"{FoodDescriptor(Manager.FoodModifier)}";
                     break;
                 case Stat.Threat:
+                    // TODO: Add a list of threat modifiers.
                     details.text = $"{Manager.Defense} defense against {Manager.Threat} threat";
                     break;
                 case Stat.Spending:
-                    details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers " +
-                                   $"(5 wealth per adventurer) times {(100 + Manager.GetStat(Stat.Spending))/100f} from spending modifier.";
+                    details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +
+                                   $"(5 wealth per adventurer) times {(100 + Manager.GetStat(Stat.Spending))/100f} from spending modifier.\n" +
+                                   $"{getFormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class
                     AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
                     string className = config.Stat.ToString();
                     int turnUntilSpawn = Manager.TurnsToSpawn(category) - Manager.SpawnCounters[category];
                     string spawnTurnText = turnUntilSpawn > 1 ? ("in " + turnUntilSpawn + " turns") : "next turn";
+
                     details.text =
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
+                        $"{getFormattedFoodModifierString()}" +
+                        $"{getFormattedModifierString(config.Stat.Value)}" +
                         $"New {className} will arrive {spawnTurnText} (+1 every {Manager.TurnsToSpawn(category)} turns)";
                     break;
             }
+        }
+
+        // Formatted string for food modifiers (specifically for adventurer)
+        private string getFormattedFoodModifierString()
+        {
+            int mod = Manager.FoodModifier;
+            if (mod == 0) return "";
+            bool isFoodInSurplus = Math.Sign(mod) == 1;
+            string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
+            char foodSign = isFoodInSurplus ? '+' : '-';
+            string textColor = isFoodInSurplus ? getPositiveHexColor() : getNegativeHexColor();
+
+            return $"  ● <color={textColor}>{foodSign}{Math.Abs(mod)}</color>" +
+                   $" from food {foodDescriptor}\n";
+        }
+
+        // Formatted string for listing all stat modifiers. 
+        private string getFormattedModifierString(Stat stat)
+        {
+            string formattedModifierString = "";
+
+            foreach (var modifier in Manager.Modifiers[stat])
+            {
+                char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
+                string textColor = sign == '+' ? getPositiveHexColor() : getNegativeHexColor();
+                string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
+                formattedModifierString += 
+                    $"  ● <color={textColor}>{sign}{Math.Abs(modifier.amount)}</color> " +
+                    $"from {modifier.reason} ({modifier.turnsLeft} {turnText} remaining)\n";
+            }
+            
+            return formattedModifierString;
+        }
+
+        private string getPositiveHexColor()
+        {
+            return "#1bfc30";
+        }
+        
+        private string getNegativeHexColor()
+        {
+            return "#FF0000";
         }
 
         private string HousingDescriptor(int spawnRate)

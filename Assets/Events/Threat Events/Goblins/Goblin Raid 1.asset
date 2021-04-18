@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Goblin Raid 1
   m_EditorClassIdentifier: 
   headline: Goblins!
-  article: Some Goblins were spotted nearby the town. Residents have said they have
-    been stealing supplies from the town. They hope the mayor does something about
-    them.
+  article: Some Goblins were spotted nearby the town. Residents have been kept up
+    all night by horrid sounds of some ritual they seem to be performing.
   image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
   type: 2
   headliner: 0
@@ -51,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
   m_Name: Remove Adventurers(Clone)
   m_EditorClassIdentifier: 
-  customDescription: The scouts were ambushed, and one was struck down while escaping
+  customDescription: The scouts were ambushed, and one was struck down while escaping (-1 adventurer)
   adventurerNames:
   - 
   kill: 1
@@ -87,6 +86,7 @@ MonoBehaviour:
   statToChange: 3
   amount: -5
   turns: 3
+  reason: 
 --- !u!114 &5427943375661240944
 MonoBehaviour:
   m_ObjectHideFlags: 0
