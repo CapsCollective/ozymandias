@@ -151,6 +151,7 @@ namespace UI
                         ? "Adventurers will start to flee"
                         : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
                     details.text = $"{Manager.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{getFormattedModifierString(Stat.Housing)}" +
                                    $"{descriptive} ({spawnText})";
                     break;
                 case Stat.Food:
@@ -159,11 +160,13 @@ namespace UI
                                    $"{FoodDescriptor(Manager.FoodModifier)}";
                     break;
                 case Stat.Threat:
+                    // TODO: Add a list of threat modifiers.
                     details.text = $"{Manager.Defense} defense against {Manager.Threat} threat";
                     break;
                 case Stat.Spending:
-                    details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers " +
-                                   $"(5 wealth per adventurer) times {(100 + Manager.GetStat(Stat.Spending))/100f} from spending modifier.";
+                    details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +
+                                   $"(5 wealth per adventurer) times {(100 + Manager.GetStat(Stat.Spending))/100f} from spending modifier.\n" +
+                                   $"{getFormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class
                     AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
@@ -175,23 +178,27 @@ namespace UI
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
                         $"{getFormattedFoodModifierString()}" +
-                        $"{getFormattedModifierString(config.Stat.Value)}\n" +
+                        $"{getFormattedModifierString(config.Stat.Value)}" +
                         $"New {className} will arrive {spawnTurnText} (+1 every {Manager.TurnsToSpawn(category)} turns)";
                     break;
             }
         }
 
+        // Formatted string for food modifiers (specifically for adventurer)
         private string getFormattedFoodModifierString()
         {
-            bool isFoodInSurplus = Math.Sign(Manager.FoodModifier) == 1;
+            int mod = Manager.FoodModifier;
+            if (mod == 0) return "";
+            bool isFoodInSurplus = Math.Sign(mod) == 1;
             string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
             char foodSign = isFoodInSurplus ? '+' : '-';
             string textColor = isFoodInSurplus ? getPositiveHexColor() : getNegativeHexColor();
 
-            return $"  ● <color={textColor}>{foodSign}{Math.Abs(Manager.FoodModifier)}</color>" +
+            return $"  ● <color={textColor}>{foodSign}{Math.Abs(mod)}</color>" +
                    $" from food {foodDescriptor}\n";
         }
 
+        // Formatted string for listing all stat modifiers. 
         private string getFormattedModifierString(Stat stat)
         {
             string formattedModifierString = "";
@@ -199,7 +206,7 @@ namespace UI
             foreach (var modifier in Manager.Modifiers[stat])
             {
                 char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
-                string textColor = sign == '+' ? "#1bfc30" : "#FF0000";
+                string textColor = sign == '+' ? getPositiveHexColor() : getNegativeHexColor();
                 string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
                 formattedModifierString += 
                     $"  ● <color={textColor}>{sign}{Math.Abs(modifier.amount)}</color> " +
