@@ -54,8 +54,8 @@ namespace UI
             
             Clear();
         }
-    
-        private void Update()
+        
+        private void FixedUpdate()
         {
             if (_selected == null || !_clearButton.gameObject.activeSelf) return;
 
@@ -64,7 +64,7 @@ namespace UI
                 _clearButton.position,
                 _mainCamera.WorldToScreenPoint(_selectedPosition) + 
                 (Vector3.up * yOffset), 
-                0.5f);
+                1.0f);
         }
     
         // Clears all selections
