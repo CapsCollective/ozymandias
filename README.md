@@ -1,10 +1,10 @@
-# Ozymandias
+# Fantasy Town Regional Manager
 
-[Ozymandias](https://caps-collective.itch.io/ozymandias) from [Caps Collective](https://caps-collective.itch.io) is a **roguelite, fantasy town builder and collectible card game** about the chaos of living in a world filled with monsters, and even more worryingly, adventurers.
+[Fantasy Town Regional Manager](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) from [Caps Collective](https://caps-collective.itch.io) is a **roguelite, fantasy town builder and collectible card game** about the chaos of living in a world filled with monsters, and even more worryingly, adventurers.
 
 #### _"Run a fantasy town for adventurers. Save it from monsters. Save it from itself. Watch it crumble to dust. Do it all again."_
 
-![repo_banner](https://user-images.githubusercontent.com/9414994/112737298-95300b00-8fad-11eb-8096-d8dce4bfd47e.png)
+![repo_banner](https://user-images.githubusercontent.com/9414994/115142205-d767dc00-a083-11eb-8ef7-46a679501c68.png)
 
 ## About
 
@@ -28,7 +28,7 @@ A **turn-based roguelite city builder**, where as your city grows, it attracts m
 
 We're developing this game as an open-source product primarily **for the benefit of other new game developers** who might want to see how we turned our student game into something releasable on Steam.
 
-**If you just want to go play the game, then please support us by purchasing it through [Steam](https://store.steampowered.com/app/1524530/Ozymandias/) or [itch.io](https://caps-collective.itch.io/ozymandias).**
+**If you just want to go play the game, then please support us by purchasing it through [Steam](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) or [itch.io](https://caps-collective.itch.io/ftrm).**
 
 The project is being developed out of our shared passion for putting out cool experiences and is solely being funded by our own blood, sweat, tears, the _continual ritual sacrifice of elves_ and whatever we can get from Steam and itch sales.
 
