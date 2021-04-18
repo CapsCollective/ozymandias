@@ -155,6 +155,7 @@ namespace UI
                     break;
                 case Stat.Food:
                     details.text = $"{Manager.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{getFormattedModifierString(Stat.Food)}" +
                                    $"{FoodDescriptor(Manager.FoodModifier)}";
                     break;
                 case Stat.Threat:
@@ -173,6 +174,7 @@ namespace UI
                     details.text =
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
+                        $"{getFormattedFoodModifierString()}" +
                         $"{getFormattedModifierString(config.Stat.Value)}\n" +
                         $"New {className} will arrive {spawnTurnText} (+1 every {Manager.TurnsToSpawn(category)} turns)";
                     break;
@@ -194,8 +196,6 @@ namespace UI
         {
             string formattedModifierString = "";
 
-            formattedModifierString += getFormattedFoodModifierString();
-            
             foreach (var modifier in Manager.Modifiers[stat])
             {
                 char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
