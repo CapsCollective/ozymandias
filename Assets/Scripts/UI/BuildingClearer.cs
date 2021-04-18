@@ -15,9 +15,10 @@ namespace UI
     { 
         [SerializeField] int pixelsPerUnit;
         [SerializeField] private Image buttonImage;
+        [SerializeField] private LayerMask _collisionMask;
         
         private Transform _clearButton;
-        private Cell _selected;
+        private Building _selected;
         private int _selectedDestroyCost;
         private Camera _mainCamera;
         private int _numberOfTerrainTilesDeleted;
@@ -75,28 +76,28 @@ namespace UI
             // Make sure that we don't bring up the button if we click on a UI element. 
             if (BuildingPlacement.Selected != -1 || _selected != null || EventSystem.current.IsPointerOverGameObject()) 
                 return;
-            
-            _selected = Manager.Map.GetCellFromMouse();
 
-            if (!_selected.occupant) return;
+            _selected = getBuildingOnClick();
+
+            if (!_selected) return;
 
             // Make sure the building has not just been spawned (such as when it's just been built)
-            if (_selected.occupant.HasNeverBeenSelected)
+            if (_selected.HasNeverBeenSelected)
             {
-                _selected.occupant.HasNeverBeenSelected = false;
+                _selected.HasNeverBeenSelected = false;
                 return;
             }
 
             // Find building position and reposition clearButton to overlay on top of it.  
-            Vector3 buildingPosition = _selected.occupant.transform.position;
+            Vector3 buildingPosition = _selected.transform.position;
             _clearButton.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * pixelsPerUnit);
             _clearButton.gameObject.SetActive(true);
 
             int destructionCost;
-            string selectedName = _selected.occupant.name;
+            string selectedName = _selected.name;
 
             // If the selected element is terrain, apply the cost increase algorithm to the destruction cost.
-            if (_selected.occupant.type == BuildingType.Terrain)
+            if (_selected.type == BuildingType.Terrain)
             {
                 var range = Enumerable.Range(1, _numberOfTerrainTilesDeleted);
                 destructionCost = (int) range.Select(i => 1.0f / Math.Pow(ScaleSteps, i)).Sum();
@@ -105,7 +106,7 @@ namespace UI
             else
             {
                 // Set the cost to 25% of the original building cost (player gets 75% back)
-                destructionCost = Mathf.FloorToInt(_selected.occupant.baseCost * BuildingRefundModifier);
+                destructionCost = Mathf.FloorToInt(_selected.baseCost * BuildingRefundModifier);
             }
 
             // Disable the button if the player can't afford to clear the tile (visually changes opacity)
@@ -124,18 +125,29 @@ namespace UI
             _nameText.text = selectedName;
 
             _selectedDestroyCost = destructionCost;
-            _selectedPosition = _selected.occupant.transform.position;
+            _selectedPosition = _selected.transform.position;
+        }
+
+        private Building getBuildingOnClick()
+        {
+            Ray ray = _mainCamera.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mainCamera.nearClipPlane));
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit, 200f, _collisionMask);
+
+            if (hit.collider == null) return null;
+
+            return hit.collider.GetComponentInParent<Building>();
         }
     
         public void ClearBuilding()
         {
-            Building occupant = _selected.occupant;
+            Building occupant = _selected;
             
-            if (_selected.occupant.indestructible || !Manager.Spend(_selectedDestroyCost)) return;
+            if (_selected.indestructible || !Manager.Spend(_selectedDestroyCost)) return;
 
-            if (_selected.occupant.type == BuildingType.Terrain)
+            if (_selected.type == BuildingType.Terrain)
             {
-                _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selected.occupant).Length;
+                _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selected).Length;
             }
 
             occupant.Clear();
