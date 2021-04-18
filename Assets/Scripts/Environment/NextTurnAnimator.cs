@@ -13,6 +13,8 @@ namespace Environment
 
         [SerializeField] private Gradient ambientGradient;   
         [SerializeField] private Gradient sunColorGradient;
+        [SerializeField] private Gradient skyColorGradient;
+        [SerializeField] private Material skyMaterial;
 
         private void Awake()
         {
@@ -29,6 +31,9 @@ namespace Environment
                 timer += Time.deltaTime / sunSetTime;
                 sun.color = sunColorGradient.Evaluate(timer);
                 RenderSettings.ambientLight = ambientGradient.Evaluate(timer);
+                RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
+                //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
+                skyMaterial.SetColor("_Tint", skyColorGradient.Evaluate(timer));
             }).OnComplete(Manager.NewTurn);
         }
     }

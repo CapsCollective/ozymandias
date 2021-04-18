@@ -196,7 +196,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886619268204791101}
-  m_Mesh: {fileID: -1778426362690847281, guid: 27a052cecfe98274f8aa9f5d9510200f, type: 3}
+  m_Mesh: {fileID: -1778426362690847281, guid: 77312e7620789764daf54942fa6d0dd0, type: 3}
 --- !u!23 &886619268204791091
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -212,10 +212,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dee0aa36d79a36049bcb914b888b781e, type: 2}
+  - {fileID: 2100000, guid: 48c4957b94fb24645b1104420b431e1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -236,6 +237,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &886619268204791090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,7 +252,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clockwiseRotations: 1
   cornerParent: {fileID: 886619267534285399}
+  randomRotations: 0
+  randomScale: {x: 1, y: 1}
+  hasGrass: 1
   debug: 0
+  _meshCompute: {fileID: 7200000, guid: c7e07a0edc71d4746b822120e70ae422, type: 3}
 --- !u!1 &886619268651670018
 GameObject:
   m_ObjectHideFlags: 0

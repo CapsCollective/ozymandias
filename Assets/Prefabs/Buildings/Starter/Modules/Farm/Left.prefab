@@ -161,7 +161,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781965436090392511}
-  m_Mesh: {fileID: -1133633877828103584, guid: d8e94da77eeb08e4f81ce726c18e4962, type: 3}
+  m_Mesh: {fileID: -1133633877828103584, guid: 18281fe17a8afa84ab0a757e7ab98f8c, type: 3}
 --- !u!23 &1781965436090392509
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -177,6 +177,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -201,6 +202,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1781965436090392508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +217,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clockwiseRotations: 2
   cornerParent: {fileID: 1781965436140045878}
+  randomRotations: 0
+  randomScale: {x: 1, y: 1}
+  hasGrass: 0
+  debug: 0
+  _meshCompute: {fileID: 7200000, guid: c7e07a0edc71d4746b822120e70ae422, type: 3}
 --- !u!1 &1781965436140045865
 GameObject:
   m_ObjectHideFlags: 0
