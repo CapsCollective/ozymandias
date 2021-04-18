@@ -2,7 +2,7 @@ name: Validate Version
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ develop ]
 
 jobs:
   check-bumped:
@@ -19,16 +19,16 @@ jobs:
           echo '::set-output name=VERSION::'$NEW_VERSION
         id: branch
       
-      - name: Checkout master branch
+      - name: Checkout develop branch
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: develop
       
       - name: Assign old version string
         run: |
           OLD_VERSION=`cat ${{ env.VERSION_FILE }}`
           echo '::set-output name=VERSION::'$OLD_VERSION
-        id: master
+        id: develop
 
       - name: Download semver script
         run: |
@@ -38,5 +38,5 @@ jobs:
       - name: Compare semvers
         run: |
           NEW_VERSION=`echo ${{ steps.branch.outputs.VERSION }}`
-          OLD_VERSION=`echo ${{ steps.master.outputs.VERSION }}`
-          ./semver2.sh $NEW_VERSION $OLD_VERSION | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else echo "AntiquatedVersionError: upstream version ("$NEW_VERSION") is <= master branch version ("$OLD_VERSION"). Please update VERSION.txt to newer semantic version before merging." && exit 1; fi; }
+          OLD_VERSION=`echo ${{ steps.develop.outputs.VERSION }}`
+          ./semver2.sh $NEW_VERSION $OLD_VERSION | { read -r var; if [ "$var" -gt 0 ]; then exit 0; else echo "AntiquatedVersionError: upstream version ("$NEW_VERSION") is <= develop branch version ("$OLD_VERSION"). Please update VERSION.txt to newer semantic version before merging." && exit 1; fi; }
