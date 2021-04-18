@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using CielaSpike;
+using System.Collections;
+using Random = UnityEngine.Random;
+
 
 [CreateAssetMenu(fileName = "New Map Layout", menuName = "Map Layout", order = 50)]
 public class MapLayout : ScriptableObject
@@ -22,6 +27,8 @@ public class MapLayout : ScriptableObject
     public Dictionary<Cell, List<int>> TriangleMap = new Dictionary<Cell, List<int>>();
     public Dictionary<Building, List<Cell>> BuildingMap = new Dictionary<Building, List<Cell>>();
     public Graph<Vertex> RoadGraph = new Graph<Vertex>();
+
+    public Action OnRoadReady;
 
     public void ClearGraph()
     {
@@ -106,7 +113,7 @@ public class MapLayout : ScriptableObject
         }
 
         Dictionary<Vertex, List<Vertex>> toInclude = new Dictionary<Vertex, List<Vertex>>();
-        
+
         Graph<Vertex> dupGraph = new Graph<Vertex>(VertexGraph);
         for (int i = dupGraph.Count - 1; i >= 0; i--)
             if (!included.Contains(dupGraph.GetData()[i]))
@@ -1138,7 +1145,7 @@ public class MapLayout : ScriptableObject
     }
 
     // ROAD GENERATION
-    public void CreateRoad(List<Vertex> vertices)
+    public IEnumerator CreateRoad(List<Vertex> vertices, MeshFilter mesh)
     {
         // Create a list of vertices included in the building
 
@@ -1155,7 +1162,12 @@ public class MapLayout : ScriptableObject
         }
 
         // Create a perimeter path around the included vertices
-        List<Vertex> perimeter = ConvexHull(vertices);
+        List<Vertex> perimeter = new List<Vertex>();
+        Task task;
+        CoroutineRunner._Instance.StartCoroutineAsync(CoroutineRunner._Instance.ConvexHullAsync(vertices, VertexGraph, (e) => perimeter = e), out task);//ConvexHull(vertices);
+        yield return CoroutineRunner._Instance.StartCoroutine(task.Wait());
+        //Debug.Log(perimeter.Count);
+
 
         // Create a road linking the perimeter to the existing road graph
         if (RoadGraph.Count > 0 && perimeter.Count > 0)
@@ -1185,7 +1197,58 @@ public class MapLayout : ScriptableObject
 
         // Add the perimeter to RoadGraph
         AddRoad(perimeter);
+        mesh.sharedMesh = GenerateRoadMesh();
+        OnRoadReady?.Invoke();
+        yield return new WaitForEndOfFrame();
     }
+    //public void CreateRoad(List<Vertex> vertices)
+    //{
+    //    // Create a list of vertices included in the building
+
+    //    // Remove existing intersecting roads
+    //    foreach (Vertex included in vertices)
+    //    {
+    //        if (!RoadGraph.Contains(included)) continue;
+    //        Vertex[] adjacent = RoadGraph.GetAdjacent(included).ToArray();
+    //        for (int i = adjacent.Length - 1; i >= 0; i--)
+    //        {
+    //            if (vertices.Contains(adjacent[i]))
+    //                RoadGraph.DestroyEdge(included, adjacent[i]);
+    //        }
+    //    }
+
+    //    // Create a perimeter path around the included vertices
+    //    List<Vertex> perimeter = CoroutineRunner._Instance.ConvexHull(vertices, VertexGraph);//ConvexHull(vertices);
+
+    //    // Create a road linking the perimeter to the existing road graph
+    //    if (RoadGraph.Count > 0 && perimeter.Count > 0)
+    //    {
+    //        Vertex roadStart = perimeter[0];
+    //        Vertex roadTarget = ClosestRoad(roadStart);
+    //        float minDistance = Vector3.Distance(roadStart, roadTarget);
+
+    //        foreach (Vertex vertex in perimeter)
+    //        {
+    //            Vertex closest = ClosestRoad(vertex);
+    //            float distance = Vector3.Distance(closest, vertex);
+
+    //            if (distance < minDistance)
+    //            {
+    //                minDistance = distance;
+    //                roadStart = vertex;
+    //                roadTarget = closest;
+    //            }
+    //        }
+
+    //        List<Vertex> road = AStar(VertexGraph, roadStart, roadTarget, 2000);
+
+    //        // Add the road to the RoadGraph
+    //        AddRoad(road);
+    //    }
+
+    //    // Add the perimeter to RoadGraph
+    //    AddRoad(perimeter);
+    //}
 
     private void AddRoad(List<Vertex> road)
     {

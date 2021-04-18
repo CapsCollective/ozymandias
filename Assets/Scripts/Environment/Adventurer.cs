@@ -15,11 +15,13 @@ namespace Environment
         
         public void SetAlphaTo(float alpha)
         {
-            for (int i = 0; i < renderers.Length; i++)
+            if (gameObject == null) return;
+
+            for (var i = 0; i < renderers.Length; i++)
             {
                 renderers[i].GetPropertyBlock(_propertyBlocks[i]);
-                Color currentColour = _propertyBlocks[i].GetColor(Color);
-                Color newColour = currentColour;
+                var currentColour = _propertyBlocks[i].GetColor(Color);
+                var newColour = currentColour;
                 newColour.a = alpha;
                 _propertyBlocks[i].SetColor(Color, newColour);
                 renderers[i].SetPropertyBlock(_propertyBlocks[i]);

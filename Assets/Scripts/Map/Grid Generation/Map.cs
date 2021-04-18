@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities;
 using static Managers.GameManager;
+using CielaSpike;
 
 public class Map : MonoBehaviour
 {
@@ -205,8 +206,8 @@ public class Map : MonoBehaviour
             {
                 List<Vertex> vertices = layout.GetVertices(cells);
 
-                layout.CreateRoad(vertices);
-                roadMF.sharedMesh = layout.GenerateRoadMesh();
+                StartCoroutine(layout.CreateRoad(vertices, roadMF));
+                //roadMF.sharedMesh = layout.GenerateRoadMesh();
             }
 
             layout.Align(cells, rotation);
