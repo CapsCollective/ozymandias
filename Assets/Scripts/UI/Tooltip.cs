@@ -169,6 +169,7 @@ namespace UI
                     string className = config.Stat.ToString();
                     int turnUntilSpawn = Manager.TurnsToSpawn(category) - Manager.SpawnCounters[category];
                     string spawnTurnText = turnUntilSpawn > 1 ? ("in " + turnUntilSpawn + " turns") : "next turn";
+
                     details.text =
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
@@ -178,9 +179,22 @@ namespace UI
             }
         }
 
+        private string getFormattedFoodModifierString()
+        {
+            bool isFoodInSurplus = Math.Sign(Manager.FoodModifier) == 1;
+            string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
+            char foodSign = isFoodInSurplus ? '+' : '-';
+            string textColor = isFoodInSurplus ? getPositiveHexColor() : getNegativeHexColor();
+
+            return $"  ● <color={textColor}>{foodSign}{Math.Abs(Manager.FoodModifier)}</color>" +
+                   $" from food {foodDescriptor}\n";
+        }
+
         private string getFormattedModifierString(Stat stat)
         {
             string formattedModifierString = "";
+
+            formattedModifierString += getFormattedFoodModifierString();
             
             foreach (var modifier in Manager.Modifiers[stat])
             {
@@ -193,6 +207,16 @@ namespace UI
             }
             
             return formattedModifierString;
+        }
+
+        private string getPositiveHexColor()
+        {
+            return "#1bfc30";
+        }
+        
+        private string getNegativeHexColor()
+        {
+            return "#FF0000";
         }
 
         private string HousingDescriptor(int spawnRate)
