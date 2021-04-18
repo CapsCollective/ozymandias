@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 1
-  amount: 10
+  statToChange: 7
+  amount: 50
   turns: 3
+  reason: the MacGuffin craze
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,7 +39,6 @@ MonoBehaviour:
   headliner: 0
   outcomes:
   - {fileID: 2695211771658235543}
-  - {fileID: 3685660594232775383}
   - {fileID: -1403522151152938766}
   choices: []
   oneTime: 0
@@ -56,19 +56,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 28fe78c3e01af2b41ba366c0895b164b, type: 2}
---- !u!114 &3685660594232775383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: Stat Change(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 3
-  amount: 20
-  turns: 3

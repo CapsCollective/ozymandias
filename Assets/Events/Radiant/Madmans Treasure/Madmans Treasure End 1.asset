@@ -29,14 +29,13 @@ MonoBehaviour:
   headline: The Power of Friendship
   article: After days following the madman Penterghast's map, our adventurers have
     returned, with a camaraderie never stronger. As it turns out, the TRUE treasure
-    was the friendship they made along the way. Also, all this gold and really cool
-    sword they found.
+    was the friendship they made along the way. Also, these really cool swords they
+    found.
   image: {fileID: 21300000, guid: 459132235c75a564f93bab0b03a006d8, type: 3}
   type: 5
   headliner: 1
   outcomes:
   - {fileID: 2017485384288608980}
-  - {fileID: 5905028790704016351}
   - {fileID: -3129793651064006079}
   choices: []
   oneTime: 0
@@ -52,23 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 3
-  amount: 10
-  turns: 2
---- !u!114 &5905028790704016351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: Stat Change(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 2
-  amount: 3
-  turns: 3
+  customDescription: The Brawlers love these new swords (+4 satisfaction)
+  statToChange: 0
+  amount: 4
+  turns: -1
+  reason: some cool swords we found
