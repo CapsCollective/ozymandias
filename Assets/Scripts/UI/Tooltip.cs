@@ -181,14 +181,15 @@ namespace UI
         private string getFormattedModifierString(Stat stat)
         {
             string formattedModifierString = "";
-
+            
             foreach (var modifier in Manager.Modifiers[stat])
             {
                 char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
-                string hex = sign == '+' ? "#1bfc30" : "#FF0000";
+                string textColor = sign == '+' ? "#1bfc30" : "#FF0000";
+                string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
                 formattedModifierString += 
-                    $"* <color={hex}>{sign}{Math.Abs(modifier.amount)}</color> " +
-                    $"from <REASON> ({modifier.turnsLeft} turns remaining)\n";
+                    $"  ● <color={textColor}>{sign}{Math.Abs(modifier.amount)}</color> " +
+                    $"from {modifier.reason} ({modifier.turnsLeft} {turnText} remaining)\n";
             }
             
             return formattedModifierString;
