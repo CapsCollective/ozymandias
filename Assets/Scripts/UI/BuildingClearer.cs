@@ -24,6 +24,7 @@ namespace UI
         private int _numberOfTerrainTilesDeleted;
         private TextMeshProUGUI _nameText, _costText;
         private Vector3 _selectedPosition;
+        private Vector3 velocity = Vector3.zero;
 
         private const float ScaleSteps = 1.025f;
         // Modifier for building refunds. Currently set to provide players with a 75% refund. 
@@ -58,13 +59,12 @@ namespace UI
         private void FixedUpdate()
         {
             if (_selected == null || !_clearButton.gameObject.activeSelf) return;
-
-            // Lerp the button to stay above the building.
-            _clearButton.position = Vector3.Lerp(
+            
+            // Smooth Damp the button to stay above the building.
+            _clearButton.position = Vector3.SmoothDamp(
                 _clearButton.position,
-                _mainCamera.WorldToScreenPoint(_selectedPosition) + 
-                (Vector3.up * yOffset), 
-                1.0f);
+                _mainCamera.WorldToScreenPoint(_selectedPosition) + (Vector3.up * yOffset), 
+                ref velocity, 0.035f);
         }
     
         // Clears all selections
