@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.18028507, g: 0.22571546, b: 0.30692363, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028475, g: 0.22571509, b: 0.30692318, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,6 +153,19 @@ PrefabInstance:
     - target: {fileID: 1115064009, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
       propertyPath: m_ShowToolkit
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115064009, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_ShowCustomSorter
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115064009, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_AfterStackBundles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115064009, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_AfterStackBundles.Array.data[0].assemblyQualifiedName
+      value: OutlinePostProcess, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
       objectReference: {fileID: 0}
     - target: {fileID: 4826372568487654225, guid: a8b3db9615e6d554aa03443f13361c3e,
         type: 3}
@@ -1332,6 +1345,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1173490033}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &828947085 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1357226852, guid: a8b3db9615e6d554aa03443f13361c3e,
+    type: 3}
+  m_PrefabInstance: {fileID: 74590737}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &842521020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3178,10 +3203,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3123113026224848744, guid: 805db8222007c4839ae433c1f7ef12f3,
+        type: 3}
+      propertyPath: v
+      value: 
+      objectReference: {fileID: 828947085}
+    - target: {fileID: 3123113026224848744, guid: 805db8222007c4839ae433c1f7ef12f3,
+        type: 3}
+      propertyPath: yOffset
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3123113026224848744, guid: 805db8222007c4839ae433c1f7ef12f3,
+        type: 3}
+      propertyPath: raycastInterval
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 5093535173480098638, guid: 805db8222007c4839ae433c1f7ef12f3,
         type: 3}
-      propertyPath: m_Color.a
-      value: 1
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9170321582008056599, guid: 805db8222007c4839ae433c1f7ef12f3,
         type: 3}
