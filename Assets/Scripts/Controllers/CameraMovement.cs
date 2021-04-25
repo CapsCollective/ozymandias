@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+
+﻿using System;
+using System.Collections;
+using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
@@ -15,11 +19,13 @@ namespace Controllers
         private float _rotateOrigin;
         private bool _dragging, _rotating;
 
+        public static Action OnCameraMove;
+
         [SerializeField] private Vector3 startPos, startRot;
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
-        
+
         [Range(1,10)]
         [SerializeField] private int
             dragSpeed = 3,
@@ -69,6 +75,7 @@ namespace Controllers
 
             if (_dragging)
             {
+                OnCameraMove?.Invoke();
                 var dir = _cam.ScreenToViewportPoint(_dragOrigin - Input.mousePosition);
                 var t = transform;
                 var pos = t.position;
@@ -84,11 +91,11 @@ namespace Controllers
             {
                 if (transform.position.y > maxHeight)
                 {
-                    _rb.AddForce(new Vector3(0, -1, 0));
+                    _rb.AddForce(new Vector3(0, -2.0f,0));
                 }
                 else if (transform.position.y < minHeight)
                 {
-                    _rb.AddForce(new Vector3(0, 1, 0));
+                    _rb.AddForce(new Vector3(0, 2.0f, 0));
                 }
                 else
                 {
@@ -102,11 +109,11 @@ namespace Controllers
                             minAngle,
                             maxAngle), t.eulerAngles.y, 0);
                     if (_rb.velocity.y < 10 && _rb.velocity.y > -10)
-                        _rb.AddForce(
-                            new Vector3(
-                                0,
-                                dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30,
-                                0));
+                    {
+                        Vector3 force = new Vector3(0,
+                            dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0);
+                        if (force != Vector3.zero) _rb.AddForce(force);
+                    }
                 }
             }
         }

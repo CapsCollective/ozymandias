@@ -8,6 +8,7 @@ using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 using DG.Tweening;
+using UnityEditor;
 
 namespace Entities
 {
@@ -37,16 +38,24 @@ namespace Entities
         public bool indestructible;
         [SerializeField] private bool fitToCell;
         public bool grassMask;
+        
+        public bool HasNeverBeenSelected { get; set; }
+        public bool selected;
+        public bool segmentsLoaded;
 
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
-
+        
         private Animator _animator;
         private Animator Animator => _animator ? _animator : _animator = GetComponent<Animator>();
 
         private ParticleSystem _particleSystem;
         private ParticleSystem ParticleSystem => _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>();
-        
+
+        [SerializeField] private Material mat;
+
+        private List<Renderer> _segments = new List<Renderer>();
+
         public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
         {
             if (fitToCell)
@@ -147,6 +156,26 @@ namespace Entities
             var psMain = ParticleSystem.main;
             psMain.stopAction = ParticleSystemStopAction.Destroy;
         }
-        
+
+        public void InitialiseBuildingSegments()
+        {
+            foreach (Transform t in transform)
+            {
+                if (t.GetComponent<ParticleSystem>()) continue;
+                _segments.Add(t.GetComponent<Renderer>());
+            }
+
+            segmentsLoaded = true;
+        }
+
+        private void Update()
+        {
+            if (!selected) return;
+            foreach (var r in _segments)
+            {
+                //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
+                CameraOutlineController.OutlineBuffer?.DrawRenderer(r, mat);
+            }
+        }
     }
 }
