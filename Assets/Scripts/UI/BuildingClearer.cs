@@ -65,8 +65,7 @@ namespace UI
             _mainCamera = Camera.main;
 
             v.profile.TryGetSettings(out outline);
-            Debug.Log(outline.color.value);
-            
+
             Clear();
         }
 
@@ -78,22 +77,26 @@ namespace UI
             {
                 Building b = getBuildingOnClick();
 
-                if (b)
+                if (!_selected && !SelectionIsDisabled())
                 {
-                    if (_hoveringBuilding && b != _hoveringBuilding) _hoveringBuilding.selected = false;
-                    _hoveringBuilding = b;
-                    _hoveringBuilding.selected = true;
-                    outline.color.value = Color.white;
-                }
-                else
-                {
-                    if (_hoveringBuilding)
+                    if (b)
                     {
-                        _hoveringBuilding.selected = false;
-                        _hoveringBuilding = null;
+                        if (_hoveringBuilding && b != _hoveringBuilding) _hoveringBuilding.selected = false;
+                        _hoveringBuilding = b;
+                        _hoveringBuilding.selected = true;
                         outline.color.value = Color.white;
                     }
+                    else
+                    {
+                        if (_hoveringBuilding)
+                        {
+                            _hoveringBuilding.selected = false;
+                            _hoveringBuilding = null;
+                            outline.color.value = Color.white;
+                        }
+                    }
                 }
+
                 _elapsed = 0f;
             }
 
