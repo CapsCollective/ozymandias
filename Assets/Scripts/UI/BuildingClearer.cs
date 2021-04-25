@@ -6,7 +6,9 @@ using Utilities;
 using UnityEngine.UI;
 using Entities;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
 
 namespace UI
@@ -15,8 +17,9 @@ namespace UI
     { 
         [SerializeField] int yOffset;
         [SerializeField] private Image buttonImage;
-        [SerializeField] private LayerMask _collisionMask;
-        
+        [SerializeField] private LayerMask collisionMask;
+        [SerializeField] private PostProcessVolume v;
+
         private Transform _clearButton;
         private Building _selected;
         private int _selectedDestroyCost;
@@ -24,17 +27,25 @@ namespace UI
         private int _numberOfTerrainTilesDeleted;
         private TextMeshProUGUI _nameText, _costText;
         private Vector3 _selectedPosition;
-        private Vector3 velocity = Vector3.zero;
+        private Vector3 _velocity = Vector3.zero;
+
+        private OutlinePostProcess outline;
 
         private const float ScaleSteps = 1.025f;
         // Modifier for building refunds. Currently set to provide players with a 75% refund. 
         private const float BuildingRefundModifier = 0.25f;
 
+        [Header("Hover Options")] 
+        [SerializeField] private float raycastInterval;
+
+        private float _elapsed = 0.0f;
+        private Building _hoveringBuilding = null;
+
         // Struct for storing button configurations
         private struct ClearButtonConfig
         {
-            public int destructionCost;
-            public string buildingName;
+            public int DestructionCost;
+            public string BuildingName;
         }
 
         private void Start()
@@ -52,11 +63,48 @@ namespace UI
             CameraMovement.OnCameraMove += Clear;
     
             _mainCamera = Camera.main;
+
+            v.profile.TryGetSettings(out outline);
+            Debug.Log(outline.color.value);
             
             Clear();
         }
-        
-        private void FixedUpdate()
+
+        private void Update()
+        {
+            _elapsed += Time.deltaTime;
+
+            if (_elapsed >= raycastInterval)
+            {
+                Building b = getBuildingOnClick();
+
+                if (b)
+                {
+                    if (_hoveringBuilding && b != _hoveringBuilding) _hoveringBuilding.selected = false;
+                    _hoveringBuilding = b;
+                    _hoveringBuilding.selected = true;
+                    outline.color.value = Color.white;
+                }
+                else
+                {
+                    if (_hoveringBuilding)
+                    {
+                        _hoveringBuilding.selected = false;
+                        _hoveringBuilding = null;
+                        outline.color.value = Color.white;
+                    }
+                }
+                _elapsed = 0f;
+            }
+
+            if (_selected)
+            {
+                _selected.selected = true;
+                outline.color.value = Color.red;
+            }
+        }
+
+            private void FixedUpdate()
         {
             if (_selected == null || !_clearButton.gameObject.activeSelf) return;
             
@@ -64,13 +112,14 @@ namespace UI
             _clearButton.position = Vector3.SmoothDamp(
                 _clearButton.position,
                 _mainCamera.WorldToScreenPoint(_selectedPosition) + (Vector3.up * yOffset), 
-                ref velocity, 0.035f);
+                ref _velocity, 0.035f);
         }
     
         // Clears all selections
         void Clear()
         {
             _clearButton.gameObject.SetActive(false);
+            if (_selected) _selected.selected = false;
             _selected = null;
             _selectedDestroyCost = 0;
         }
@@ -81,8 +130,9 @@ namespace UI
             Clear();
 
             // Make sure that we don't bring up the button if we click on a UI element. 
-            if (selectionIsDisabled()) return;
+            if (SelectionIsDisabled()) return;
 
+            //Debug.Log("selected");
             _selected = getBuildingOnClick();
 
             if (!_selected) return;
@@ -91,67 +141,67 @@ namespace UI
             if (_selected.HasNeverBeenSelected)
             {
                 _selected.HasNeverBeenSelected = false;
+                Clear();
                 return;
             }
 
             // Find building position and reposition clearButton to overlay on top of it.  
-            repositionClearButton();
+            RepositionClearButton();
 
             // Get UI config information
-            ClearButtonConfig config = getClearButtonConfiguration();
+            ClearButtonConfig config = GetClearButtonConfiguration();
 
             // Set button opacity (based on whether the player can afford to destroy a building)
-            setButtonOpacity(Manager.Wealth >= config.destructionCost ? 255f : 166f);
+            SetButtonOpacity(Manager.Wealth >= config.DestructionCost ? 255f : 166f);
 
             // Update UI
-            updateUI(config.destructionCost, config.buildingName);
+            UpdateUI(config.DestructionCost, config.BuildingName);
         }
 
-        private bool selectionIsDisabled()
+        private bool SelectionIsDisabled()
         {
-            return BuildingPlacement.Selected != -1 || _selected != null ||
-                   EventSystem.current.IsPointerOverGameObject();
+            return BuildingPlacement.Selected != -1 || EventSystem.current.IsPointerOverGameObject();
         }
 
-        private ClearButtonConfig getClearButtonConfiguration()
+        private ClearButtonConfig GetClearButtonConfiguration()
         {
             ClearButtonConfig config = new ClearButtonConfig();
             
-            config.destructionCost = calculateBuildingClearCost();
-            config.buildingName = _selected.name;
+            config.DestructionCost = CalculateBuildingClearCost();
+            config.BuildingName = _selected.name;
 
             // If the selected element is terrain, apply the cost increase algorithm to the destruction cost.
             if (_selected.type == BuildingType.Terrain)
             {
-                config.destructionCost = calculateTerrainClearCost();
-                config.buildingName = "Terrain";
+                config.DestructionCost = CalculateTerrainClearCost();
+                config.BuildingName = "Terrain";
             }
 
             return config;
         }
 
-        private void setButtonOpacity(float opacity)
+        private void SetButtonOpacity(float opacity)
         {
             // Change opacity of the text.
-            setButtonTextOpacity(opacity);
+            SetButtonTextOpacity(opacity);
 
             // Change opacity of button
-            setButtonColorOpacity(opacity);
+            SetButtonColorOpacity(opacity);
         }
 
-        private void setButtonTextOpacity(float opacity)
+        private void SetButtonTextOpacity(float opacity)
         {
             Color oldColor = _costText.color;
             _costText.color = _nameText.color = new Color(oldColor.r, oldColor.g, oldColor.b, opacity);
         }
 
-        private void setButtonColorOpacity(float opacity)
+        private void SetButtonColorOpacity(float opacity)
         {
             Color oldButtonColor = buttonImage.color;
             buttonImage.color = new Color(oldButtonColor.r, oldButtonColor.g, oldButtonColor.b, opacity / 255f);
         }
 
-        private void updateUI(int destructionCost, string selectedName)
+        private void UpdateUI(int destructionCost, string selectedName)
         {
             _costText.text = destructionCost.ToString();
             _nameText.text = selectedName;
@@ -160,18 +210,18 @@ namespace UI
             _selectedPosition = _selected.transform.position;
         }
 
-        private int calculateBuildingClearCost()
+        private int CalculateBuildingClearCost()
         {
             return Mathf.FloorToInt(_selected.baseCost * BuildingRefundModifier);
         }
         
-        private int calculateTerrainClearCost()
+        private int CalculateTerrainClearCost()
         {
             var range = Enumerable.Range(1, _numberOfTerrainTilesDeleted);
             return (int) range.Select(i => 1.0f / Math.Pow(ScaleSteps, i)).Sum();
         }
 
-        private void repositionClearButton()
+        private void RepositionClearButton()
         {
             Vector3 buildingPosition = _selected.transform.position;
             _clearButton.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * yOffset);
@@ -182,7 +232,7 @@ namespace UI
         {
             Ray ray = _mainCamera.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mainCamera.nearClipPlane));
             RaycastHit hit;
-            Physics.Raycast(ray, out hit, 200f, _collisionMask);
+            Physics.Raycast(ray, out hit, 200f, collisionMask);
 
             if (hit.collider == null) return null;
 

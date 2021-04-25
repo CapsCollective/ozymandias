@@ -30,7 +30,7 @@ namespace Controllers
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
-        
+
         [Range(1,10)]
         [SerializeField] private int
             dragSpeed = 3,

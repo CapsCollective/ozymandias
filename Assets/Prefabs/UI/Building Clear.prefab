@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 16129269}
   - component: {fileID: 16129271}
   - component: {fileID: 16129270}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CostText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 27157744}
   - component: {fileID: 27157746}
   - component: {fileID: 27157745}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 1490950851}
   - component: {fileID: 1490950850}
   - component: {fileID: 1490950849}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TransparentSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 6404611049770255614}
   - component: {fileID: 960116822910044697}
   - component: {fileID: 5093535173480098638}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6222583416693682068}
   - component: {fileID: 4184098287220071096}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ClearButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 1534349061329153197}
   - component: {fileID: 1617878533999879789}
   - component: {fileID: 3123113026224848744}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Building Clear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,6 +614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yOffset: 80
   buttonImage: {fileID: 5093535173480098638}
-  _collisionMask:
+  collisionMask:
     serializedVersion: 2
     m_Bits: 134217728
+  raycastInterval: 0.005
