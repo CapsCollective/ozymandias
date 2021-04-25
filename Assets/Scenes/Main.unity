@@ -141,11 +141,11 @@ PrefabInstance:
     - target: {fileID: 240691718, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
       propertyPath: centerButton
       value: 
-      objectReference: {fileID: 1319404359}
+      objectReference: {fileID: 0}
     - target: {fileID: 240691718, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
       propertyPath: centerButtonText
       value: 
-      objectReference: {fileID: 2091064013}
+      objectReference: {fileID: 0}
     - target: {fileID: 1115064009, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -3156,18 +3156,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3159865347116376354}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1319404359 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1699747007185624310, guid: aa2d27060f00744a9b4186878c22b096,
-    type: 3}
-  m_PrefabInstance: {fileID: 3159865347116376354}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1369428248 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3795023321368961674, guid: 0ad996abc9cf649b98856d980179cb6a,
@@ -3460,6 +3448,18 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+--- !u!114 &1809895846 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 240691718, guid: a8b3db9615e6d554aa03443f13361c3e,
+    type: 3}
+  m_PrefabInstance: {fileID: 74590737}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1870573928
 GameObject:
   m_ObjectHideFlags: 0
@@ -4117,18 +4117,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &2091064013 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7467487653607715667, guid: aa2d27060f00744a9b4186878c22b096,
-    type: 3}
-  m_PrefabInstance: {fileID: 3159865347116376354}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2096555166
 GameObject:
   m_ObjectHideFlags: 0
@@ -4682,6 +4670,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2079180552}
     m_Modifications:
+    - target: {fileID: 2793312598250858281, guid: aa2d27060f00744a9b4186878c22b096,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1809895846}
+    - target: {fileID: 2793312598250858281, guid: aa2d27060f00744a9b4186878c22b096,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Center
+      objectReference: {fileID: 0}
     - target: {fileID: 2841995453747510848, guid: aa2d27060f00744a9b4186878c22b096,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4792,6 +4790,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Town Button
       objectReference: {fileID: 0}
+    - target: {fileID: 8871852478601190433, guid: aa2d27060f00744a9b4186878c22b096,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 2079180551}
+    - target: {fileID: 8871852478601190433, guid: aa2d27060f00744a9b4186878c22b096,
+        type: 3}
+      propertyPath: dummyCursor
+      value: 
+      objectReference: {fileID: 873851656}
+    - target: {fileID: 8871852478601190433, guid: aa2d27060f00744a9b4186878c22b096,
+        type: 3}
+      propertyPath: cameraMovement
+      value: 
+      objectReference: {fileID: 1809895846}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa2d27060f00744a9b4186878c22b096, type: 3}
 --- !u!1001 &3795023322184086418
@@ -4899,7 +4912,7 @@ PrefabInstance:
     - target: {fileID: 3795023321368961674, guid: 0ad996abc9cf649b98856d980179cb6a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: -9.9999695
       objectReference: {fileID: 0}
     - target: {fileID: 3795023321368961674, guid: 0ad996abc9cf649b98856d980179cb6a,
         type: 3}
