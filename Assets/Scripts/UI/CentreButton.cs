@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Controllers;
 using TMPro;
@@ -12,12 +13,23 @@ namespace UI
         private const float OuterDistance = 160;
         
         private bool _isCentering;
+        private GameObject _dummyCursor;
         
         [SerializeField] private Button button;
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private CameraMovement cameraMovement;
         [SerializeField] private Canvas canvas;
-        [SerializeField] private GameObject dummyCursor;
+        
+        
+        [SerializeField] private GameObject dummyCursorNonScaling;
+        [SerializeField] private GameObject dummyCursorScaling;
+
+        private void Start()
+        {
+            var isMac = (Application.platform == RuntimePlatform.OSXPlayer || 
+                         Application.platform == RuntimePlatform.OSXEditor);
+            _dummyCursor = isMac ? dummyCursorNonScaling : dummyCursorScaling;
+        }
 
         private void Update()
         {
@@ -44,27 +56,27 @@ namespace UI
         {
             _isCentering = true;
             yield return new WaitForSeconds(1);
-            dummyCursor.SetActive(true);
+            _dummyCursor.SetActive(true);
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, 
                 Input.mousePosition, canvas.worldCamera, out var currentPos);
             currentPos = canvas.transform.TransformPoint(currentPos);
 
             var endPos = button.gameObject.transform.position;
-            dummyCursor.transform.position = currentPos;
+            _dummyCursor.transform.position = currentPos;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
 
             while (Vector2.Distance(currentPos, endPos) > 10f)
             {
                 currentPos = Vector3.Lerp(currentPos, endPos, Time.deltaTime * 1.5f + 0.01f);
-                dummyCursor.transform.position = currentPos;
+                _dummyCursor.transform.position = currentPos;
                 yield return null;
             }
         
             Jukebox.Instance.PlayClick();
             cameraMovement.Center();
-            dummyCursor.SetActive(false);
+            _dummyCursor.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             _isCentering = false;
