@@ -29,10 +29,12 @@
 
         #pragma target 3.0
 
+
         sampler2D _MainTex;
         sampler2D _SmoothnessTex;
         sampler2D _EmissionTex;
         fixed3 _RoofColor;
+        int _Selected;
 
         //UNITY_INSTANCING_BUFFER_START(Props)
         //UNITY_DEFINE_INSTANCED_PROP(fixed3, _RoofColor)
@@ -53,13 +55,17 @@
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
-            //if (c.r + c.g + c.b == 3) {
-            //    c.rgb = _RoofColor;
-            //}
             o.Albedo = lerp(c.rgb, _RoofColor, step(float3(1, 1, 1), c.rgb)).rgb;//c.rgb;
             o.Metallic = _Metallic;
             o.Smoothness = tex2D(_SmoothnessTex, IN.uv_MainTex);
-            o.Emission = tex2D(_EmissionTex, IN.uv_MainTex) * _EmissionIntensity;
+
+            fixed4 selection = fixed4(0, 0, 0, 0);
+
+            if (_Selected){
+                selection += lerp(fixed4(0.5, 0, 0, 0), fixed4(0.1,0,0,0), abs(sin(_Time.z)));
+            }
+
+            o.Emission = (tex2D(_EmissionTex, IN.uv_MainTex) * _EmissionIntensity) + selection;
             o.Alpha = c.a;
         }
         ENDCG

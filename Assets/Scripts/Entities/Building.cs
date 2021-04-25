@@ -38,6 +38,8 @@ namespace Entities
         [SerializeField] private bool fitToCell;
         public bool grassMask;
 
+        public bool selected;
+
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
 
@@ -46,6 +48,7 @@ namespace Entities
 
         private ParticleSystem _particleSystem;
         private ParticleSystem ParticleSystem => _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>();
+        [SerializeField] private Material mat;
         
         public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
         {
@@ -147,6 +150,29 @@ namespace Entities
             var psMain = ParticleSystem.main;
             psMain.stopAction = ParticleSystemStopAction.Destroy;
         }
-        
+
+        private void Update()
+        {
+            if (selected)
+            {
+                foreach (Transform t in transform)
+                {
+                    //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
+                    CameraOutlineController.OutlineBuffer?.DrawRenderer(t.GetComponent<Renderer>(), mat);
+                }
+            }
+        }
+
+        [Button]
+        public void SelectBuilding()
+        {
+            selected = !selected;
+            foreach (Transform t in transform)
+            {
+                t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
+                //CameraOutlineController.OutlineBuffer.DrawRenderer(t.GetComponent<Renderer>(), mat);
+            }
+        }
+
     }
 }
