@@ -170,13 +170,11 @@ namespace Entities
 
         private void Update()
         {
-            if (selected)
+            if (!selected) return;
+            foreach (var r in _segments)
             {
-                foreach (Renderer r in _segments)
-                {
-                    //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
-                    CameraOutlineController.OutlineBuffer?.DrawRenderer(r, mat);
-                }
+                //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
+                CameraOutlineController.OutlineBuffer?.DrawRenderer(r, mat);
             }
         }
     }

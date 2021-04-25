@@ -59,7 +59,7 @@ namespace UI
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
     
-            CameraMovement.OnCameraMove += Clear;
+            CameraMovement.OnCameraMove += ClearSelection;
     
             _mainCamera = Camera.main;
 
@@ -70,7 +70,7 @@ namespace UI
 
             postProcessVolume.profile.TryGetSettings(out _outline);
 
-            Clear();
+            ClearSelection();
         }
 
         private void Update()
@@ -88,8 +88,8 @@ namespace UI
                 _mainCamera.WorldToScreenPoint(_selectedPosition) + (Vector3.up * yOffset), 
                 ref _velocity, 0.035f);
         }
-            
-        void Clear()
+
+        private void ClearSelection()
         {
             _clearButton.gameObject.SetActive(false);
             if (_selected) _selected.selected = false;
@@ -100,7 +100,7 @@ namespace UI
         private void LeftClick()
         {
             // Clear all prior selections 
-            Clear();
+            ClearSelection();
 
             // Make sure that we don't bring up the button if we click on a UI element. 
             if (SelectionIsDisabled()) return;
@@ -114,7 +114,7 @@ namespace UI
             {
                 _selected.HasNeverBeenSelected = false;
                 _selected.InitialiseBuildingSegments();
-                Clear();
+                ClearSelection();
                 return;
             }
 
@@ -133,44 +133,38 @@ namespace UI
 
         private void SetHighlightForSelectedElement()
         {
-            if (_selected)
-            {
-                SetHighlightColor(Color.red);
-            }
+            if (_selected) SetHighlightColor(Color.red);
         }
 
         private void CheckForBuildingsAfterInterval()
         {
             _elapsed += Time.deltaTime;
 
-            if (_elapsed >= raycastInterval)
+            if (!(_elapsed >= raycastInterval)) return;
+            
+            Building buildingBeingHoveredOver = GetBuildingOnClick();
+
+            if (IsAbleToHighlight())
             {
-                Building buildingBeingHoveredOver = GetBuildingOnClick();
-
-                if (IsAbleToHighlight())
+                if (buildingBeingHoveredOver)
                 {
-                    if (buildingBeingHoveredOver)
-                    {
-                        if (!buildingBeingHoveredOver.segmentsLoaded) buildingBeingHoveredOver.InitialiseBuildingSegments();
-                        HighlightUnselected(buildingBeingHoveredOver);
-                    }
-                    else
-                    {
-                        UnHighlightBuilding();
-                    }
+                    if (!buildingBeingHoveredOver.segmentsLoaded) buildingBeingHoveredOver.InitialiseBuildingSegments();
+                    HighlightUnselected(buildingBeingHoveredOver);
                 }
-
-                _elapsed = 0f;
+                else
+                {
+                    UnHighlightBuilding();
+                }
             }
+
+            _elapsed = 0f;
         }
 
         private void UnHighlightBuilding()
         {
-            if (_hoveringBuilding)
-            {
-                _hoveringBuilding.selected = false;
-                _hoveringBuilding = null;
-            }
+            if (!_hoveringBuilding) return;
+            _hoveringBuilding.selected = false;
+            _hoveringBuilding = null;
         }
 
         private void HighlightUnselected(Building buildingBeingHoveredOver)
@@ -191,7 +185,7 @@ namespace UI
             return !_selected && !SelectionIsDisabled();
         }
 
-        private bool SelectionIsDisabled()
+        private static bool SelectionIsDisabled()
         {
             return BuildingPlacement.Selected != -1 || EventSystem.current.IsPointerOverGameObject();
         }
@@ -282,12 +276,12 @@ namespace UI
 
             occupant.Clear();
             Manager.Buildings.Remove(occupant);
-            Clear();
+            ClearSelection();
         }
-    
-        void RightClick()
+
+        private void RightClick()
         {
-            Clear();
+            ClearSelection();
         }
     }
 }
