@@ -28,6 +28,31 @@ MonoBehaviour:
   kernelSize:
     overrideState: 1
     value: 1
+--- !u!114 &-7338665164342852898
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fe6eacc6c262b47b54e7e76f0b024b, type: 3}
+  m_Name: OutlinePostProcess
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  color:
+    overrideState: 1
+    value: {r: 1, g: 0, b: 0, a: 1}
+  threshold:
+    overrideState: 1
+    value: 0.0001
+  scale:
+    overrideState: 1
+    value: 3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,6 +70,7 @@ MonoBehaviour:
   - {fileID: 7163872150524762076}
   - {fileID: 4020107971636230565}
   - {fileID: -8620667774695889759}
+  - {fileID: -7338665164342852898}
 --- !u!114 &649819111546567965
 MonoBehaviour:
   m_ObjectHideFlags: 3

@@ -57,20 +57,26 @@ MonoBehaviour:
       Value: 1
     keyCollision: 0
   baseCost: 50
+  roofColor: {r: 0, g: 0, b: 0, a: 0}
   scaleSpeed: 3
   sections:
   - prefab: {fileID: 8554071289724189025, guid: 248dd95cb54c8d1438488e8c408d1a69,
       type: 3}
     directions: 
+    clockwiseRotations: 0
   - prefab: {fileID: 4588909506361087842, guid: 6ed0c2a0df705af45abc456a169fa992,
       type: 3}
     directions: 00000000
+    clockwiseRotations: 0
   - prefab: {fileID: 2765765877965095151, guid: 072c7be727b48164c967f0db217aba05,
       type: 3}
     directions: 02000000
+    clockwiseRotations: 0
   indestructible: 0
   fitToCell: 1
   grassMask: 1
+  selected: 0
+  mat: {fileID: 2100000, guid: addc8467165822f4fb579288fdacee0a, type: 2}
 --- !u!95 &6328635351558129576
 Animator:
   serializedVersion: 3
