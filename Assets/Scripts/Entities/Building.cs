@@ -163,16 +163,16 @@ namespace Entities
             }
         }
 
-        [Button]
-        public void SelectBuilding()
-        {
-            selected = !selected;
-            foreach (Transform t in transform)
-            {
-                t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
-                //CameraOutlineController.OutlineBuffer.DrawRenderer(t.GetComponent<Renderer>(), mat);
-            }
-        }
+        //[Button]
+        //public void SelectBuilding()
+        //{
+        //    selected = !selected;
+        //    foreach (Transform t in transform)
+        //    {
+        //        t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
+        //        //CameraOutlineController.OutlineBuffer.DrawRenderer(t.GetComponent<Renderer>(), mat);
+        //    }
+        //}
 
     }
 }
