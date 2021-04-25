@@ -41,10 +41,11 @@ namespace Entities
         
         public bool HasNeverBeenSelected { get; set; }
         public bool selected;
+        public bool segmentsLoaded;
 
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
-
+        
         private Animator _animator;
         private Animator Animator => _animator ? _animator : _animator = GetComponent<Animator>();
 
@@ -52,7 +53,9 @@ namespace Entities
         private ParticleSystem ParticleSystem => _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>();
 
         [SerializeField] private Material mat;
-        
+
+        private List<Renderer> _segments = new List<Renderer>();
+
         public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
         {
             if (fitToCell)
@@ -154,28 +157,27 @@ namespace Entities
             psMain.stopAction = ParticleSystemStopAction.Destroy;
         }
 
+        public void InitialiseBuildingSegments()
+        {
+            foreach (Transform t in transform)
+            {
+                if (t.GetComponent<ParticleSystem>()) continue;
+                _segments.Add(t.GetComponent<Renderer>());
+            }
+
+            segmentsLoaded = true;
+        }
+
         private void Update()
         {
             if (selected)
             {
-                foreach (Transform t in transform)
+                foreach (Renderer r in _segments)
                 {
                     //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
-                    CameraOutlineController.OutlineBuffer?.DrawRenderer(t.GetComponent<Renderer>(), mat);
+                    CameraOutlineController.OutlineBuffer?.DrawRenderer(r, mat);
                 }
             }
         }
-
-        //[Button]
-        //public void SelectBuilding()
-        //{
-        //    selected = !selected;
-        //    foreach (Transform t in transform)
-        //    {
-        //        t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
-        //        //CameraOutlineController.OutlineBuffer.DrawRenderer(t.GetComponent<Renderer>(), mat);
-        //    }
-        //}
-
     }
 }

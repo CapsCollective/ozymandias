@@ -6,7 +6,6 @@ using Utilities;
 using UnityEngine.UI;
 using Entities;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
@@ -15,10 +14,11 @@ namespace UI
 {
     public class BuildingClearer : MonoBehaviour
     { 
+        [Header("Button Config")]
         [SerializeField] int yOffset;
         [SerializeField] private Image buttonImage;
         [SerializeField] private LayerMask collisionMask;
-        [SerializeField] private PostProcessVolume v;
+        [SerializeField] private PostProcessVolume postProcessVolume;
 
         private Transform _clearButton;
         private Building _selected;
@@ -29,19 +29,18 @@ namespace UI
         private Vector3 _selectedPosition;
         private Vector3 _velocity = Vector3.zero;
 
-        private OutlinePostProcess outline;
+        private OutlinePostProcess _outline;
 
         private const float ScaleSteps = 1.025f;
-        // Modifier for building refunds. Currently set to provide players with a 75% refund. 
+        
         private const float BuildingRefundModifier = 0.25f;
 
         [Header("Hover Options")] 
         [SerializeField] private float raycastInterval;
 
-        private float _elapsed = 0.0f;
-        private Building _hoveringBuilding = null;
-
-        // Struct for storing button configurations
+        private float _elapsed;
+        private Building _hoveringBuilding;
+        
         private struct ClearButtonConfig
         {
             public int DestructionCost;
@@ -64,61 +63,32 @@ namespace UI
     
             _mainCamera = Camera.main;
 
-            v.profile.TryGetSettings(out outline);
+            if (!postProcessVolume)
+            {
+                postProcessVolume = _mainCamera.GetComponentInChildren<PostProcessVolume>();
+            }
+
+            postProcessVolume.profile.TryGetSettings(out _outline);
 
             Clear();
         }
 
         private void Update()
         {
-            _elapsed += Time.deltaTime;
-
-            if (_elapsed >= raycastInterval)
-            {
-                Building b = getBuildingOnClick();
-
-                if (!_selected && !SelectionIsDisabled())
-                {
-                    if (b)
-                    {
-                        if (_hoveringBuilding && b != _hoveringBuilding) _hoveringBuilding.selected = false;
-                        _hoveringBuilding = b;
-                        _hoveringBuilding.selected = true;
-                        outline.color.value = Color.white;
-                    }
-                    else
-                    {
-                        if (_hoveringBuilding)
-                        {
-                            _hoveringBuilding.selected = false;
-                            _hoveringBuilding = null;
-                            outline.color.value = Color.white;
-                        }
-                    }
-                }
-
-                _elapsed = 0f;
-            }
-
-            if (_selected)
-            {
-                _selected.selected = true;
-                outline.color.value = Color.red;
-            }
+            CheckForBuildingsAfterInterval();
+            SetHighlightForSelectedElement();
         }
 
             private void FixedUpdate()
         {
             if (_selected == null || !_clearButton.gameObject.activeSelf) return;
             
-            // Smooth Damp the button to stay above the building.
             _clearButton.position = Vector3.SmoothDamp(
                 _clearButton.position,
                 _mainCamera.WorldToScreenPoint(_selectedPosition) + (Vector3.up * yOffset), 
                 ref _velocity, 0.035f);
         }
-    
-        // Clears all selections
+            
         void Clear()
         {
             _clearButton.gameObject.SetActive(false);
@@ -134,9 +104,8 @@ namespace UI
 
             // Make sure that we don't bring up the button if we click on a UI element. 
             if (SelectionIsDisabled()) return;
-
-            //Debug.Log("selected");
-            _selected = getBuildingOnClick();
+            
+            _selected = GetBuildingOnClick();
 
             if (!_selected) return;
             
@@ -144,6 +113,7 @@ namespace UI
             if (_selected.HasNeverBeenSelected)
             {
                 _selected.HasNeverBeenSelected = false;
+                _selected.InitialiseBuildingSegments();
                 Clear();
                 return;
             }
@@ -159,6 +129,66 @@ namespace UI
 
             // Update UI
             UpdateUI(config.DestructionCost, config.BuildingName);
+        }
+
+        private void SetHighlightForSelectedElement()
+        {
+            if (_selected)
+            {
+                SetHighlightColor(Color.red);
+            }
+        }
+
+        private void CheckForBuildingsAfterInterval()
+        {
+            _elapsed += Time.deltaTime;
+
+            if (_elapsed >= raycastInterval)
+            {
+                Building buildingBeingHoveredOver = GetBuildingOnClick();
+
+                if (IsAbleToHighlight())
+                {
+                    if (buildingBeingHoveredOver)
+                    {
+                        if (!buildingBeingHoveredOver.segmentsLoaded) buildingBeingHoveredOver.InitialiseBuildingSegments();
+                        HighlightUnselected(buildingBeingHoveredOver);
+                    }
+                    else
+                    {
+                        UnHighlightBuilding();
+                    }
+                }
+
+                _elapsed = 0f;
+            }
+        }
+
+        private void UnHighlightBuilding()
+        {
+            if (_hoveringBuilding)
+            {
+                _hoveringBuilding.selected = false;
+                _hoveringBuilding = null;
+            }
+        }
+
+        private void HighlightUnselected(Building buildingBeingHoveredOver)
+        {
+            if (_hoveringBuilding && buildingBeingHoveredOver != _hoveringBuilding) _hoveringBuilding.selected = false;
+            _hoveringBuilding = buildingBeingHoveredOver;
+            SetHighlightColor(Color.white);
+        }
+
+        private void SetHighlightColor(Color color)
+        {
+            _hoveringBuilding.selected = true;
+            _outline.color.value = color;
+        }
+
+        private bool IsAbleToHighlight()
+        {
+            return !_selected && !SelectionIsDisabled();
         }
 
         private bool SelectionIsDisabled()
@@ -185,10 +215,8 @@ namespace UI
 
         private void SetButtonOpacity(float opacity)
         {
-            // Change opacity of the text.
             SetButtonTextOpacity(opacity);
-
-            // Change opacity of button
+            
             SetButtonColorOpacity(opacity);
         }
 
@@ -231,11 +259,10 @@ namespace UI
             _clearButton.gameObject.SetActive(true);
         }
 
-        private Building getBuildingOnClick()
+        private Building GetBuildingOnClick()
         {
             Ray ray = _mainCamera.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mainCamera.nearClipPlane));
-            RaycastHit hit;
-            Physics.Raycast(ray, out hit, 200f, collisionMask);
+            Physics.Raycast(ray, out var hit, 200f, collisionMask);
 
             if (hit.collider == null) return null;
 
