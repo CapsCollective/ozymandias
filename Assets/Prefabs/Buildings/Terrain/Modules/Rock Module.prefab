@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5567425088552158610}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 717526632998806124}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: GameObject (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2989128979309289238}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: GameObject (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1798431781385704948}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,8 @@ GameObject:
   - component: {fileID: 637153728026042234}
   - component: {fileID: 6623412535553237891}
   - component: {fileID: 1905689419317301908}
-  m_Layer: 0
+  - component: {fileID: 2328902521687164614}
+  m_Layer: 28
   m_Name: Rock Module
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,8 +220,23 @@ MonoBehaviour:
   cornerParent: {fileID: 9184545508396254834}
   randomRotations: 1
   randomScale: {x: 1, y: 5}
+  hasGrass: 1
   debug: 0
   _meshCompute: {fileID: 0}
+--- !u!64 &2328902521687164614
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4888587676969015135}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4013275331872712965, guid: 1f915d4e45151d34ebd8163e6fec8ece, type: 3}
 --- !u!1 &5207426052007112389
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9184545508396254834}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: Corners
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 282976869815756776}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: GameObject (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -277,7 +277,7 @@ namespace UI
             }
 
             occupant.Clear();
-            Manager.Buildings.Remove(occupant);
+            //Manager.Buildings.Remove(occupant); Being done on the occupant instead
             ClearSelection();
         }
 
