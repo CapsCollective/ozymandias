@@ -104,6 +104,8 @@ namespace Entities
         public void Clear()
         {
             Animator.SetTrigger(ClearTrigger);
+            ChangeParticleSystemParent();
+            ParticleSystem.Play();
         }
 
         // Structs

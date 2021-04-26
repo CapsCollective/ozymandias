@@ -19,6 +19,8 @@ namespace UI
         [SerializeField] private Image buttonImage;
         [SerializeField] private LayerMask collisionMask;
         [SerializeField] private PostProcessVolume postProcessVolume;
+        [SerializeField] [ColorUsage(false, true)] Color hoverColor;
+        [SerializeField] [ColorUsage(false, true)] Color selectColor;
 
         private Transform _clearButton;
         private Building _selected;
@@ -133,7 +135,7 @@ namespace UI
 
         private void SetHighlightForSelectedElement()
         {
-            if (_selected) SetHighlightColor(Color.red);
+            if (_selected) SetHighlightColor(selectColor);
         }
 
         private void CheckForBuildingsAfterInterval()
@@ -171,7 +173,7 @@ namespace UI
         {
             if (_hoveringBuilding && buildingBeingHoveredOver != _hoveringBuilding) _hoveringBuilding.selected = false;
             _hoveringBuilding = buildingBeingHoveredOver;
-            SetHighlightColor(Color.white);
+            SetHighlightColor(hoverColor);
         }
 
         private void SetHighlightColor(Color color)

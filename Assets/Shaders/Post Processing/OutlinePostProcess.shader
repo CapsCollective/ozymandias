@@ -12,6 +12,7 @@ Shader "Hidden/Custom/Post Process Outline"
     float4 _Color;
     float _Threshold;
     float _Scale;
+    float _Opacity;
 
     float4 Frag(VaryingsDefault i) : SV_Target
     {
@@ -53,7 +54,7 @@ Shader "Hidden/Custom/Post Process Outline"
         float3 c = lerp(main, _Color, step(0.01, edge));
         float3 cAll = float3(c0.r * 0.1,0,0) * _Color;
 
-        return float4(c, 1);
+        return float4(c, edge);
     }
 
         ENDHLSL
