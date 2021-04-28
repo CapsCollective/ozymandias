@@ -490,7 +490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -612,12 +612,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 481ae313e9e2846598862bf1f863514c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yOffset: 80
+  yOffset: 100
   buttonImage: {fileID: 5093535173480098638}
   collisionMask:
     serializedVersion: 2
     m_Bits: 402653184
   postProcessVolume: {fileID: 0}
-  hoverColor: {r: 0, g: 0, b: 0, a: 0}
-  selectColor: {r: 0, g: 0, b: 0, a: 0}
-  raycastInterval: 0.005
+  hoverColor: {r: 1, g: 1, b: 1, a: 0}
+  selectColor: {r: 1, g: 0, b: 0, a: 0}
+  raycastInterval: 0.01
