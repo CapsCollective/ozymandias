@@ -22,6 +22,7 @@ namespace UI
         [SerializeField] [ColorUsage(false, true)] Color hoverColor;
         [SerializeField] [ColorUsage(false, true)] Color selectColor;
 
+        private bool _selectionActive = true;
         private Transform _clearButton;
         private Building _selected;
         private int _selectedDestroyCost;
@@ -146,17 +147,14 @@ namespace UI
             
             Building buildingBeingHoveredOver = GetBuildingOnClick();
 
-            if (IsAbleToHighlight())
+            if (IsAbleToHighlight() && buildingBeingHoveredOver)
             {
-                if (buildingBeingHoveredOver)
-                {
-                    if (!buildingBeingHoveredOver.segmentsLoaded) buildingBeingHoveredOver.InitialiseBuildingSegments();
-                    HighlightUnselected(buildingBeingHoveredOver);
-                }
-                else
-                {
-                    UnHighlightBuilding();
-                }
+                if (!buildingBeingHoveredOver.segmentsLoaded) buildingBeingHoveredOver.InitialiseBuildingSegments();
+                HighlightUnselected(buildingBeingHoveredOver);
+            }
+            else
+            {
+                UnHighlightBuilding();
             }
 
             _elapsed = 0f;
@@ -184,7 +182,7 @@ namespace UI
 
         private bool IsAbleToHighlight()
         {
-            return !_selected && !SelectionIsDisabled();
+            return _selectionActive && !_selected && !SelectionIsDisabled();
         }
 
         private static bool SelectionIsDisabled()
@@ -284,6 +282,11 @@ namespace UI
         private void RightClick()
         {
             ClearSelection();
+        }
+
+        public void SetSelectionActive(bool active)
+        {
+            _selectionActive = active;
         }
     }
 }

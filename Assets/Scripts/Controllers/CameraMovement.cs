@@ -2,7 +2,8 @@
 ﻿using System;
 using System.Collections;
 using TMPro;
-using UnityEngine;
+ using UI;
+ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
@@ -25,6 +26,7 @@ namespace Controllers
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
+        [SerializeField] private BuildingClearer buildingClearer;
 
         [Range(1,10)]
         [SerializeField] private int
@@ -72,6 +74,8 @@ namespace Controllers
 
             if (!Input.GetMouseButton(0)) _dragging = false;
             if (!Input.GetMouseButton(1)) _rotating = false;
+
+            buildingClearer.SetSelectionActive(!_rotating);
 
             if (_dragging)
             {
