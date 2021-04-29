@@ -75,7 +75,7 @@ namespace Controllers
             if (!Input.GetMouseButton(0)) _dragging = false;
             if (!Input.GetMouseButton(1)) _rotating = false;
 
-            buildingClearer.SetSelectionActive(!_rotating);
+            buildingClearer.SetHighlightActive(!(_rotating || _dragging));
 
             if (_dragging)
             {
