@@ -62,7 +62,7 @@ namespace UI
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
 
-            // CameraMovement.OnCameraMove += DeselectBuilding;
+            CameraMovement.OnCameraMove += DeselectBuilding;
     
             _mainCamera = Camera.main;
 
@@ -88,7 +88,7 @@ namespace UI
 
         private void FixedUpdate()
         {
-            if (_selectedBuilding || !_clearButton.gameObject.activeSelf) return;
+            if (!_clearButton.gameObject.activeSelf) return;
             
             _clearButton.position = Vector3.SmoothDamp(
                 _clearButton.position,

@@ -79,8 +79,10 @@ namespace Controllers
 
             if (_dragging)
             {
-                OnCameraMove?.Invoke();
-                var dir = _cam.ScreenToViewportPoint(_dragOrigin - Input.mousePosition);
+                var dragLength = _dragOrigin - Input.mousePosition;
+                if (dragLength.magnitude > 1.0f) OnCameraMove?.Invoke();
+                
+                var dir = _cam.ScreenToViewportPoint(dragLength);
                 var t = transform;
                 var pos = t.position;
                 t.position = _cameraOrigin +
