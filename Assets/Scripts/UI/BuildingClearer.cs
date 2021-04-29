@@ -15,13 +15,16 @@ namespace UI
     public class BuildingClearer : MonoBehaviour
     { 
         [Header("Button Config")]
-        [SerializeField] int yOffset;
+        [SerializeField] private int yOffset;
         [SerializeField] private Image buttonImage;
         [SerializeField] private LayerMask collisionMask;
         [SerializeField] private PostProcessVolume postProcessVolume;
+        [SerializeField] [ColorUsage(false, true)] private Color hoverColor;
+        [SerializeField] [ColorUsage(false, true)] private Color selectColor;
 
+        private bool _highlightActive = true;
         private Transform _clearButton;
-        private Building _selected;
+        private Building _selectedBuilding;
         private int _selectedDestroyCost;
         private Camera _mainCamera;
         private int _numberOfTerrainTilesDeleted;
@@ -37,9 +40,9 @@ namespace UI
 
         [Header("Hover Options")] 
         [SerializeField] private float raycastInterval;
-
-        private float _elapsed;
-        private Building _hoveringBuilding;
+        
+        private float _timeSinceRaycast;
+        private Building _hoveredBuilding;
         
         private struct ClearButtonConfig
         {
@@ -51,37 +54,41 @@ namespace UI
         {
             _clearButton = transform.GetChild(0);
 
-            TextMeshProUGUI[] textFields = transform.GetChild(0).GetComponentsInChildren<TextMeshProUGUI>();
+            var textFields = transform.GetChild(0).GetComponentsInChildren<TextMeshProUGUI>();
 
             _nameText = textFields[0];
             _costText = textFields[1];
 
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
-    
-            CameraMovement.OnCameraMove += ClearSelection;
+
+            CameraMovement.OnCameraMove += DeselectBuilding;
     
             _mainCamera = Camera.main;
 
-            if (!postProcessVolume)
+            if (!postProcessVolume && _mainCamera)
             {
                 postProcessVolume = _mainCamera.GetComponentInChildren<PostProcessVolume>();
             }
 
             postProcessVolume.profile.TryGetSettings(out _outline);
 
-            ClearSelection();
+            DeselectBuilding();
         }
 
         private void Update()
         {
-            CheckForBuildingsAfterInterval();
-            SetHighlightForSelectedElement();
+            // Time-slice the hovered building check
+            _timeSinceRaycast += Time.deltaTime;
+            if (!(_timeSinceRaycast >= raycastInterval)) return;
+            _timeSinceRaycast = 0f;
+            
+            CheckBuildingsHovered();
         }
 
-            private void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (_selected == null || !_clearButton.gameObject.activeSelf) return;
+            if (!_clearButton.gameObject.activeSelf) return;
             
             _clearButton.position = Vector3.SmoothDamp(
                 _clearButton.position,
@@ -89,116 +96,104 @@ namespace UI
                 ref _velocity, 0.035f);
         }
 
-        private void ClearSelection()
+        private void CheckBuildingsHovered()
         {
-            _clearButton.gameObject.SetActive(false);
-            if (_selected) _selected.selected = false;
-            _selected = null;
-            _selectedDestroyCost = 0;
+            if (!_highlightActive || _selectedBuilding || SelectionIsDisabled()) return;
+            
+            var hoveredBuilding = GetBuildingOnClick();
+
+            TryInitialiseBuilding(hoveredBuilding);
+
+            SetHoveredBuilding(hoveredBuilding);
         }
 
         private void LeftClick()
-        {
-            // Clear all prior selections 
-            ClearSelection();
-
+        { 
             // Make sure that we don't bring up the button if we click on a UI element. 
             if (SelectionIsDisabled()) return;
             
-            _selected = GetBuildingOnClick();
+            var selectedBuilding = GetBuildingOnClick();
 
-            if (!_selected) return;
-            
             // Make sure the building has not just been spawned (such as when it's just been built)
-            if (_selected.HasNeverBeenSelected)
-            {
-                _selected.HasNeverBeenSelected = false;
-                _selected.InitialiseBuildingSegments();
-                ClearSelection();
-                return;
-            }
+            TryInitialiseBuilding(selectedBuilding);
 
-            // Find building position and reposition clearButton to overlay on top of it.  
-            RepositionClearButton();
-
-            // Get UI config information
-            ClearButtonConfig config = GetClearButtonConfiguration();
-
-            // Set button opacity (based on whether the player can afford to destroy a building)
-            SetButtonOpacity(Manager.Wealth >= config.DestructionCost ? 255f : 166f);
-
-            // Update UI
-            UpdateUI(config.DestructionCost, config.BuildingName);
-        }
-
-        private void SetHighlightForSelectedElement()
-        {
-            if (_selected) SetHighlightColor(Color.red);
-        }
-
-        private void CheckForBuildingsAfterInterval()
-        {
-            _elapsed += Time.deltaTime;
-
-            if (!(_elapsed >= raycastInterval)) return;
+            // Assign only if it is not the currently selected building
+            if (selectedBuilding == _selectedBuilding) return;
             
-            Building buildingBeingHoveredOver = GetBuildingOnClick();
-
-            if (IsAbleToHighlight())
-            {
-                if (buildingBeingHoveredOver)
-                {
-                    if (!buildingBeingHoveredOver.segmentsLoaded) buildingBeingHoveredOver.InitialiseBuildingSegments();
-                    HighlightUnselected(buildingBeingHoveredOver);
-                }
-                else
-                {
-                    UnHighlightBuilding();
-                }
-            }
-
-            _elapsed = 0f;
+            // Select the building
+            SetSelectedBuilding(selectedBuilding);
+            if (selectedBuilding) SetHighlightColor(selectColor);
+            UpdateClearButton(selectedBuilding);
         }
 
-        private void UnHighlightBuilding()
+        private void RightClick()
         {
-            if (!_hoveringBuilding) return;
-            _hoveringBuilding.selected = false;
-            _hoveringBuilding = null;
+            DeselectBuilding();
+        }
+        
+        private void SetHoveredBuilding(Building building)
+        {
+            // Deselect the previously selected building
+            if (_hoveredBuilding) _hoveredBuilding.selected = false;
+
+            // Select the new building
+            _hoveredBuilding = building;
+            if (!_hoveredBuilding) return;
+            _hoveredBuilding.selected = building;
+            SetHighlightColor(hoverColor);
+        }
+        
+        private void SetSelectedBuilding(Building building)
+        {
+            // Deselect the previously selected building
+            if (_selectedBuilding) _selectedBuilding.selected = false;
+
+            // Select the new building
+            _selectedBuilding = building;
+            
+            if (!building) return;
+            building.selected = building;
+            building.HasNeverBeenSelected = false;
         }
 
-        private void HighlightUnselected(Building buildingBeingHoveredOver)
+        private void DeselectBuilding()
         {
-            if (_hoveringBuilding && buildingBeingHoveredOver != _hoveringBuilding) _hoveringBuilding.selected = false;
-            _hoveringBuilding = buildingBeingHoveredOver;
-            SetHighlightColor(Color.white);
+            SetSelectedBuilding(null);
+            UpdateClearButton(null);
+        }
+
+        private static void TryInitialiseBuilding(Building building)
+        {
+            // Initialise building segments if not done so already 
+            if (!building || building.segmentsLoaded) return;
+            building.InitialiseBuildingSegments();
         }
 
         private void SetHighlightColor(Color color)
         {
-            _hoveringBuilding.selected = true;
             _outline.color.value = color;
-        }
-
-        private bool IsAbleToHighlight()
-        {
-            return !_selected && !SelectionIsDisabled();
         }
 
         private static bool SelectionIsDisabled()
         {
             return BuildingPlacement.Selected != -1 || EventSystem.current.IsPointerOverGameObject();
         }
+        
+        public void SetHighlightActive(bool active)
+        {
+            _highlightActive = active;
+            if (!active) SetHoveredBuilding(null);
+        }
 
         private ClearButtonConfig GetClearButtonConfiguration()
         {
-            ClearButtonConfig config = new ClearButtonConfig();
+            var config = new ClearButtonConfig();
             
             config.DestructionCost = CalculateBuildingClearCost();
-            config.BuildingName = _selected.name;
+            config.BuildingName = _selectedBuilding.name;
 
             // If the selected element is terrain, apply the cost increase algorithm to the destruction cost.
-            if (_selected.type == BuildingType.Terrain)
+            if (_selectedBuilding.type == BuildingType.Terrain)
             {
                 config.DestructionCost = CalculateTerrainClearCost();
                 config.BuildingName = "Terrain";
@@ -207,37 +202,51 @@ namespace UI
             return config;
         }
 
+        private void UpdateClearButton(Building building)
+        {
+            if (building)
+            {
+                // Find building position and reposition clearButton to overlay on top of it.  
+                RepositionClearButton();
+
+                // Get UI config information
+                var config = GetClearButtonConfiguration();
+
+                // Set button opacity (based on whether the player can afford to destroy a building) and text
+                SetButtonOpacity(Manager.Wealth >= config.DestructionCost ? 255f : 166f);
+                SetButtonText(config.DestructionCost, config.BuildingName);
+            
+                // Store selected button position
+                _selectedDestroyCost = config.DestructionCost;
+                _selectedPosition = building.transform.position;   
+            }
+            else
+            {
+                _clearButton.gameObject.SetActive(false);
+                _selectedDestroyCost = 0;   
+            }
+        }
+
         private void SetButtonOpacity(float opacity)
         {
-            SetButtonTextOpacity(opacity);
-            
-            SetButtonColorOpacity(opacity);
-        }
-
-        private void SetButtonTextOpacity(float opacity)
-        {
-            Color oldColor = _costText.color;
+            // Set for button text
+            var oldColor = _costText.color;
             _costText.color = _nameText.color = new Color(oldColor.r, oldColor.g, oldColor.b, opacity);
-        }
 
-        private void SetButtonColorOpacity(float opacity)
-        {
-            Color oldButtonColor = buttonImage.color;
+            // Set for button colour
+            var oldButtonColor = buttonImage.color;
             buttonImage.color = new Color(oldButtonColor.r, oldButtonColor.g, oldButtonColor.b, opacity / 255f);
         }
 
-        private void UpdateUI(int destructionCost, string selectedName)
+        private void SetButtonText(int destructionCost, string selectedName)
         {
             _costText.text = destructionCost.ToString();
             _nameText.text = selectedName;
-            
-            _selectedDestroyCost = destructionCost;
-            _selectedPosition = _selected.transform.position;
         }
 
         private int CalculateBuildingClearCost()
         {
-            return Mathf.FloorToInt(_selected.baseCost * BuildingRefundModifier);
+            return Mathf.FloorToInt(_selectedBuilding.baseCost * BuildingRefundModifier);
         }
         
         private int CalculateTerrainClearCost()
@@ -248,14 +257,15 @@ namespace UI
 
         private void RepositionClearButton()
         {
-            Vector3 buildingPosition = _selected.transform.position;
+            var buildingPosition = _selectedBuilding.transform.position;
             _clearButton.position = _mainCamera.WorldToScreenPoint(buildingPosition) + (Vector3.up * yOffset);
             _clearButton.gameObject.SetActive(true);
         }
 
         private Building GetBuildingOnClick()
         {
-            Ray ray = _mainCamera.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mainCamera.nearClipPlane));
+            var ray = _mainCamera.ScreenPointToRay(
+                new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mainCamera.nearClipPlane));
             Physics.Raycast(ray, out var hit, 200f, collisionMask);
 
             if (hit.collider == null) return null;
@@ -265,23 +275,18 @@ namespace UI
 
         public void ClearBuilding()
         {
-            Building occupant = _selected;
+            var occupant = _selectedBuilding;
             
-            if (_selected.indestructible || !Manager.Spend(_selectedDestroyCost)) return;
+            if (_selectedBuilding.indestructible || !Manager.Spend(_selectedDestroyCost)) return;
 
-            if (_selected.type == BuildingType.Terrain)
+            if (_selectedBuilding.type == BuildingType.Terrain)
             {
-                _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selected).Length;
+                _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selectedBuilding).Length;
             }
 
             occupant.Clear();
-            Manager.Buildings.Remove(occupant);
-            ClearSelection();
-        }
-
-        private void RightClick()
-        {
-            ClearSelection();
+            //Manager.Buildings.Remove(occupant); Being done on the occupant instead
+            DeselectBuilding();
         }
     }
 }

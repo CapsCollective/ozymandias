@@ -2,7 +2,8 @@
 ﻿using System;
 using System.Collections;
 using TMPro;
-using UnityEngine;
+ using UI;
+ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
@@ -25,6 +26,7 @@ namespace Controllers
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
+        [SerializeField] private BuildingClearer buildingClearer;
 
         [Range(1,10)]
         [SerializeField] private int
@@ -73,10 +75,14 @@ namespace Controllers
             if (!Input.GetMouseButton(0)) _dragging = false;
             if (!Input.GetMouseButton(1)) _rotating = false;
 
+            buildingClearer.SetHighlightActive(!(_rotating || _dragging));
+
             if (_dragging)
             {
-                OnCameraMove?.Invoke();
-                var dir = _cam.ScreenToViewportPoint(_dragOrigin - Input.mousePosition);
+                var dragLength = _dragOrigin - Input.mousePosition;
+                if (dragLength.magnitude > 1.0f) OnCameraMove?.Invoke();
+                
+                var dir = _cam.ScreenToViewportPoint(dragLength);
                 var t = transform;
                 var pos = t.position;
                 t.position = _cameraOrigin +

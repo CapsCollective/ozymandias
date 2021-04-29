@@ -103,7 +103,10 @@ namespace Entities
         
         public void Clear()
         {
-            Animator.SetTrigger(ClearTrigger);
+            //Animator.SetTrigger(ClearTrigger);
+            ChangeParticleSystemParent();
+            ParticleSystem.Play();
+            transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Manager.Buildings.Remove(this));;
         }
 
         // Structs
