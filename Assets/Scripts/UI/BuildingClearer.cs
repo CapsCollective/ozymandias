@@ -243,7 +243,8 @@ namespace UI
 
         private void SetButtonText(int destructionCost, string selectedName)
         {
-            _costText.text = destructionCost.ToString();
+            var costText = destructionCost > 0 ? "Cost: " : "Refund: ";
+            _costText.text = costText + destructionCost;
             _nameText.text = selectedName;
         }
 
