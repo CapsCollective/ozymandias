@@ -61,7 +61,8 @@ namespace UI
 
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
-
+            
+            ClickOnButtonDown.OnUIClick += DeselectBuilding;
             CameraMovement.OnCameraMove += DeselectBuilding;
     
             _mainCamera = Camera.main;
