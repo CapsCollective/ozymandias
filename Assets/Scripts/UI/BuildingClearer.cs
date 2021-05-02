@@ -46,6 +46,7 @@ namespace UI
         
         private struct ClearButtonConfig
         {
+            public bool IsRefund;
             public int DestructionCost;
             public string BuildingName;
         }
@@ -191,13 +192,15 @@ namespace UI
         private ClearButtonConfig GetClearButtonConfiguration()
         {
             var config = new ClearButtonConfig();
-            
+
+            config.IsRefund = true;
             config.DestructionCost = CalculateBuildingClearCost();
             config.BuildingName = _selectedBuilding.name;
 
             // If the selected element is terrain, apply the cost increase algorithm to the destruction cost.
             if (_selectedBuilding.type == BuildingType.Terrain)
             {
+                config.IsRefund = false;
                 config.DestructionCost = CalculateTerrainClearCost();
                 config.BuildingName = "Terrain";
             }
@@ -217,7 +220,7 @@ namespace UI
 
                 // Set button opacity (based on whether the player can afford to destroy a building) and text
                 SetButtonOpacity(Manager.Wealth >= config.DestructionCost ? 255f : 166f);
-                SetButtonText(config.DestructionCost, config.BuildingName);
+                SetButtonText(config);
             
                 // Store selected button position
                 _selectedDestroyCost = config.DestructionCost;
@@ -241,11 +244,11 @@ namespace UI
             buttonImage.color = new Color(oldButtonColor.r, oldButtonColor.g, oldButtonColor.b, opacity / 255f);
         }
 
-        private void SetButtonText(int destructionCost, string selectedName)
+        private void SetButtonText(ClearButtonConfig config)
         {
-            var costText = destructionCost > 0 ? "Cost: " : "Refund: ";
-            _costText.text = costText + destructionCost;
-            _nameText.text = selectedName;
+            var costText = config.IsRefund ? "Refund: " : "Cost: ";
+            _costText.text = costText + config.DestructionCost;
+            _nameText.text = config.BuildingName;
         }
 
         private int CalculateBuildingClearCost()
