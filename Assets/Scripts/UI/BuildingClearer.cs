@@ -116,6 +116,8 @@ namespace UI
             var selectedBuilding = GetBuildingOnClick();
 
             // Make sure the building has not just been spawned (such as when it's just been built)
+            if (selectedBuilding && selectedBuilding.HasNeverBeenSelected) return;
+
             TryInitialiseBuilding(selectedBuilding);
 
             // Assign only if it is not the currently selected building
