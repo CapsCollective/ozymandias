@@ -105,8 +105,9 @@ namespace UI
             var hoveredBuilding = GetBuildingOnClick();
 
             TryInitialiseBuilding(hoveredBuilding);
-
+            
             SetHoveredBuilding(hoveredBuilding);
+            if (hoveredBuilding) SetHighlightColor(hoverColor);
         }
 
         private void LeftClick()
@@ -117,7 +118,11 @@ namespace UI
             var selectedBuilding = GetBuildingOnClick();
 
             // Make sure the building has not just been spawned (such as when it's just been built)
-            if (selectedBuilding && selectedBuilding.HasNeverBeenSelected) return;
+            if (selectedBuilding && selectedBuilding.HasNeverBeenSelected)
+            {
+                selectedBuilding.HasNeverBeenSelected = false;
+                return;
+            }
 
             TryInitialiseBuilding(selectedBuilding);
 
@@ -142,9 +147,9 @@ namespace UI
 
             // Select the new building
             _hoveredBuilding = building;
+            
             if (!_hoveredBuilding) return;
             _hoveredBuilding.selected = building;
-            SetHighlightColor(hoverColor);
         }
         
         private void SetSelectedBuilding(Building building)
@@ -157,7 +162,6 @@ namespace UI
             
             if (!building) return;
             building.selected = building;
-            building.HasNeverBeenSelected = false;
         }
 
         private void DeselectBuilding()
