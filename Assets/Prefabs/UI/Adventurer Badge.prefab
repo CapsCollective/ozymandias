@@ -220,6 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4754223377101864749}
   - component: {fileID: 5020440835114926465}
+  - component: {fileID: 6983716728732076297}
   m_Layer: 5
   m_Name: Adventurer Badge
   m_TagString: Untagged
@@ -264,6 +265,21 @@ MonoBehaviour:
   category: 0
   count: {fileID: 4754223376191466258}
   glow: {fileID: 4754223377150110146}
+--- !u!114 &6983716728732076297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754223377101864748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 220, y: -280, z: 0}
+  delay: 0.2
+  type: 2
 --- !u!1 &4754223377150110144
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4754223377150110145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -322,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6431373, g: 0, b: 0.030554626, a: 1}
+  m_Color: {r: 0.7075472, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -16,8 +16,8 @@ namespace UI
             int satisfaction = Manager.GetSatisfaction(stat);
             glow.color = Color.clear;
             
-            if(satisfaction >= 10) glow.color = Color.green;
-            if(satisfaction <= -10) glow.color = Color.red;
+            if(satisfaction >= 10) glow.color = new Color(0, 0.7f,0);
+            if(satisfaction <= -10) glow.color = new Color(0.8f, 0,0);
         }
     }
 }

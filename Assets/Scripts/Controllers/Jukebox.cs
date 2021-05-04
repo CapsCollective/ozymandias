@@ -133,7 +133,7 @@ namespace Controllers
             // If the playlist is empty, reshuffle it
             if (_playlist.Count <= 0)
                 _playlist = new List<AudioClip>(tracks);
-            _playlist.Shuffle(); // TODO: Shuffle method isn't implemented
+            _playlist.Shuffle();
             // Set the new clip to a random selection and play it
             musicPlayer.clip = _playlist.PopRandom();
             musicPlayer.Play();
