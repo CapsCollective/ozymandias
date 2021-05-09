@@ -158,6 +158,12 @@ namespace Managers
         [Button("Next Turn")]
         public void NextTurn()
         {
+            if (TurnCounter == 15)
+            {
+                signoffScreen.enabled = true;
+                EnterMenu();
+                return;
+            }
             OnNextTurn?.Invoke();
         }
 

@@ -65,20 +65,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Welcome <NAME HERE> to your new life of adventuring middle management!\r\n\r\nWe
-    thank you for volunteering to take part in our exciting new pilot program where
-    we follow a random series of maps to the most dangerous (and profitable) locations
-    this side of the endless woods in order to set up a base of operations for our
-    adventuring guilds. \r\n\r\nDid you know that adventures make up 95% of our worlds
-    economy? A single health potion is enough to feed a family of four for a month!
-    And they\u2019re very willing to spend that gold, provided you\u2019re keeping
-    them happy. That\u2019s why it\u2019s up to you to build up this small clearing
-    into a bustling hub. Just note that different adventures like different things,
-    so keep them all satisfied to avoid some of their more\u2026 chaotic tendencies.
-    \r\n\r\nOh also, watch out for the monsters, bandits, and cosmic horrors that
-    lurk just outside your cozy little town. They sure are relentless, and if you
-    don\u2019t have enough adventures and defences to keep them at bay we may have
-    to abandon this town for good. \r\n\r\nGood Luck!"
+  m_text: 'Hi! Thanks so much for participating in this demo.
+
+
+    Us at Caps Collective
+    are a small team who''ve been working on this project as a hobby for over a year
+    now, and it''s genuinely amazing to see the reception from everyone whose played
+    it. We want to make this game as good as possible, so we''d love any and all
+    feedback (including but not limited to ''what the hell did I just play?'').
+
+
+    If
+    you want to support us, the best way you can is to tell a friend, wishlist our
+    game, and follow us on Twitter at @caps_collective.
+
+
+    We hope you''ve enjoyed
+    what we''ve made so far and are all excited to see you down the road at release!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -213,10 +216,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'From: Guild Co. Board of Directors
+  m_text: 'From: Caps Collective
 
-    Subject: Welcome Aboard (Draft
-    2)'
+    Subject: Thanks for playing the demo!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -298,7 +300,7 @@ GameObject:
   - component: {fileID: 2121129181785702500}
   - component: {fileID: 2121129181785702498}
   m_Layer: 5
-  m_Name: Welcome Message
+  m_Name: Signoff Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -524,8 +526,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.934891, y: 0.493042}
-  m_SizeDelta: {x: -100.9459, y: -29.818497}
+  m_AnchoredPosition: {x: 3.3499985, y: 0.493042}
+  m_SizeDelta: {x: -6.700003, y: -29.818497}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5811658879223315905
 CanvasRenderer:
@@ -555,7 +557,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Next
+  m_text: Quit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -775,81 +777,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &7669006231670393453
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2318439293711820508}
-  - component: {fileID: 6892363702890438847}
-  - component: {fileID: 2843837298313844865}
-  m_Layer: 5
-  m_Name: Arrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2318439293711820508
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7669006231670393453}
-  m_LocalRotation: {x: -0, y: -0, z: 0.017452452, w: 0.9998477}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
-  m_Children: []
-  m_Father: {fileID: 8630585477810218675}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -45.426727, y: 1.740509}
-  m_SizeDelta: {x: 33.824005, y: 33.823997}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &6892363702890438847
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7669006231670393453}
-  m_CullTransparentMesh: 0
---- !u!114 &2843837298313844865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7669006231670393453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5c216721f7a6a448eba3591d5fc8167b, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8113027903889143215
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +810,6 @@ RectTransform:
   m_Children:
   - {fileID: 7436054266674327569}
   - {fileID: 1893385622082644922}
-  - {fileID: 2318439293711820508}
   m_Father: {fileID: 2121129181785702499}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
