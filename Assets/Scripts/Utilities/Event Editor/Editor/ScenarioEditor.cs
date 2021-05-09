@@ -212,8 +212,7 @@ public class ScenarioEditor : EditorWindow
         {
             (e as Label).style.backgroundColor = EditorGUIUtility.isProSkin ? darkColors[i % 2] : lightColors[i % 2];
             (e as Label).text = scenario.outcomes[i].name;
-            (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
-            (e as Label).style.alignSelf = Align.Stretch;
+
             (e.ElementAt(0) as Button).clicked += () =>
             {
                 AssetDatabase.RemoveObjectFromAsset(scenario.outcomes[i]);
@@ -327,8 +326,8 @@ public class ScenarioEditor : EditorWindow
         choiceListView.bindItem = bindItem;
         choiceListView.onItemsChosen += (e) =>
         {
-            LoadChoice((Choice)e);
-            selectedChoice = (Choice)e;
+            LoadChoice((Choice)e.First());
+            selectedChoice = (Choice)e.First();
             RefreshOutcomesList();
             AssetDatabase.SaveAssets();
         };
@@ -408,6 +407,8 @@ public class ScenarioEditor : EditorWindow
         txt.style.flexBasis = 0f;
         txt.style.flexDirection = FlexDirection.RowReverse;
         txt.style.alignSelf = Align.Center;
+        txt.style.unityTextAlign = TextAnchor.MiddleLeft;
+        txt.style.alignSelf = Align.Stretch;
 
         var deleteBtn = new Button();
         deleteBtn.style.flexGrow = 0.01f;
