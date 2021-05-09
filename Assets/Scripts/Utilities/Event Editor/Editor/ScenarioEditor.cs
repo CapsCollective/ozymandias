@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -212,7 +212,6 @@ public class ScenarioEditor : EditorWindow
         {
             (e as Label).style.backgroundColor = EditorGUIUtility.isProSkin ? darkColors[i % 2] : lightColors[i % 2];
             (e as Label).text = scenario.outcomes[i].name;
-
             (e.ElementAt(0) as Button).clicked += () =>
             {
                 AssetDatabase.RemoveObjectFromAsset(scenario.outcomes[i]);
