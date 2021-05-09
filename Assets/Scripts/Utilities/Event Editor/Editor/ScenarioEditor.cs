@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,10 +41,16 @@ public class ScenarioEditor : EditorWindow
     private IEnumerable<Event> searchList;
     private string searchString;
 
-    private Color[] colors =
+    private Color[] lightColors =
     {
         new Color(0.74f, 0.74f, 0.74f),
         new Color(0.79f, 0.79f, 0.79f),
+    };
+
+    private Color[] darkColors =
+{
+        new Color(0.14f, 0.14f, 0.14f),
+        new Color(0.19f, 0.19f, 0.19f),
     };
 
 
@@ -103,8 +109,7 @@ public class ScenarioEditor : EditorWindow
         librarySearchField = root.Query<ToolbarSearchField>("searchLibrary");
         librarySearchField.RegisterCallback<KeyDownEvent>(e =>
         {
-            if (e.keyCode == KeyCode.Return)
-                OnSearch(librarySearchField.value);
+            OnSearch(librarySearchField.value);
         });
 
         listViewLibrary = root.Query<ListView>("listViewLibrary");
@@ -181,21 +186,22 @@ public class ScenarioEditor : EditorWindow
             eventsList.Add(eevent);
         }
         Func<VisualElement> makeItem = () => new Label();
+        eventsList.Sort((x, y) => string.Compare(x.headline, y.headline));
+        searchList = eventsList;
         Action<VisualElement, int> bindItem = (e, i) =>
         {
-            (e as Label).style.backgroundColor = colors[i % 2];
+            (e as Label).style.backgroundColor = EditorGUIUtility.isProSkin ? darkColors[i % 2] : lightColors[i % 2];
             (e as Label).text = searchList.ToList()[i].headline;
             (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
         };
-        eventsList.Sort((x, y) => string.Compare(x.headline, y.headline));
-        searchList = eventsList;
+        listViewLibrary.selectionType = SelectionType.Single;
         listViewLibrary.itemsSource = searchList.ToList();
         listViewLibrary.makeItem = makeItem;
         listViewLibrary.bindItem = bindItem;
-        listViewLibrary.onItemChosen += (o) =>
+        listViewLibrary.onItemsChosen += (o) =>
         {
             AssetDatabase.SaveAssets();
-            scenario = o as Event;
+            scenario = (Event)o.First();
             RefreshScenario();
         };
     }
@@ -204,7 +210,7 @@ public class ScenarioEditor : EditorWindow
     {
         Action<VisualElement, int> bindItem = (e, i) =>
         {
-            e.style.backgroundColor = colors[i % 2];
+            (e as Label).style.backgroundColor = EditorGUIUtility.isProSkin ? darkColors[i % 2] : lightColors[i % 2];
             (e as Label).text = scenario.outcomes[i].name;
             (e.ElementAt(0) as Button).clicked += () =>
             {
@@ -219,9 +225,9 @@ public class ScenarioEditor : EditorWindow
         listEventOutcomes.itemHeight = 20;
         listEventOutcomes.makeItem = MakeListItem;
         listEventOutcomes.bindItem = bindItem;
-        listEventOutcomes.onItemChosen += (o) =>
+        listEventOutcomes.onItemsChosen += (o) =>
         {
-            selectedOutcome = new SerializedObject((Outcome)o);
+            selectedOutcome = new SerializedObject((Outcome)o.First());
             AssetDatabase.SaveAssets();
         };
     }
@@ -242,7 +248,7 @@ public class ScenarioEditor : EditorWindow
     {
         Action<VisualElement, int> bindItem = (e, i) =>
         {
-            e.style.backgroundColor = colors[i % 2];
+            (e as Label).style.backgroundColor = EditorGUIUtility.isProSkin ? darkColors[i % 2] : lightColors[i % 2];
             (e as Label).text = selectedChoice.outcomes[i].name;
             (e.ElementAt(0) as Button).clicked += () => 
             {
@@ -257,10 +263,10 @@ public class ScenarioEditor : EditorWindow
         listChoiceOutcomes.itemHeight = 20;
         listChoiceOutcomes.makeItem = MakeListItem;
         listChoiceOutcomes.bindItem = bindItem;
-        listChoiceOutcomes.onItemChosen += (o) =>
+        listChoiceOutcomes.onItemsChosen += (o) =>
         {
             AssetDatabase.SaveAssets();
-            selectedOutcome = new SerializedObject((Outcome)o);
+            selectedOutcome = new SerializedObject((Outcome)o.First());
         };
     }
 
@@ -299,7 +305,7 @@ public class ScenarioEditor : EditorWindow
         Func<VisualElement> makeItem = () => new Label();
         Action<VisualElement, int> bindItem = (e, i) =>
         {
-            e.style.backgroundColor = colors[i % 2];
+            (e as Label).style.backgroundColor = EditorGUIUtility.isProSkin ? darkColors[i % 2] : lightColors[i % 2];
             (e as Label).text = scenario.choices[i].name;
             (e as Label).style.unityTextAlign = TextAnchor.MiddleLeft;
             (e.ElementAt(0) as Button).clicked += () =>
@@ -317,10 +323,10 @@ public class ScenarioEditor : EditorWindow
         choiceListView.itemHeight = 20;
         choiceListView.makeItem = MakeListItem;
         choiceListView.bindItem = bindItem;
-        choiceListView.onItemChosen += (e) =>
+        choiceListView.onItemsChosen += (e) =>
         {
-            LoadChoice((Choice)e);
-            selectedChoice = (Choice)e;
+            LoadChoice((Choice)e.First());
+            selectedChoice = (Choice)e.First();
             RefreshOutcomesList();
             AssetDatabase.SaveAssets();
         };
@@ -370,7 +376,7 @@ public class ScenarioEditor : EditorWindow
         }
         else
         {
-            RefreshScenario();
+            //RefreshScenario();
         }
            
         RefreshScenarioList();
@@ -400,6 +406,8 @@ public class ScenarioEditor : EditorWindow
         txt.style.flexBasis = 0f;
         txt.style.flexDirection = FlexDirection.RowReverse;
         txt.style.alignSelf = Align.Center;
+        txt.style.unityTextAlign = TextAnchor.MiddleLeft;
+        txt.style.alignSelf = Align.Stretch;
 
         var deleteBtn = new Button();
         deleteBtn.style.flexGrow = 0.01f;
