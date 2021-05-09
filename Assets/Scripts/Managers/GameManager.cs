@@ -226,9 +226,15 @@ namespace Managers
             new SaveFile().Save();
         }
 
+        [SerializeField] private Canvas loadingScreen, welcomeScreen, signoffScreen;
+        
         private async void Load()
         {
+            loadingScreen.enabled = true;
             await new SaveFile().Load();
+            EnterMenu();
+            loadingScreen.enabled = false;
+            welcomeScreen.enabled = true;
             UpdateUi();
         }
 
