@@ -27,16 +27,16 @@ namespace UI
         private Building _selectedBuilding;
         private int _selectedDestroyCost;
         private Camera _mainCamera;
-        private int _numberOfTerrainTilesDeleted;
+        private int _terrainClearCount;
         private TextMeshProUGUI _nameText, _costText;
         private Vector3 _selectedPosition;
         private Vector3 _velocity = Vector3.zero;
 
         private OutlinePostProcess _outline;
 
-        private const float ScaleSteps = 1.025f;
-        
-        private const float BuildingRefundModifier = 0.75f;
+        private const int BaseCost = 5;
+        private const float CostScale = 1.025f;
+        private const float RefundPercentage = 0.75f;
 
         [Header("Hover Options")] 
         [SerializeField] private float raycastInterval;
@@ -224,7 +224,7 @@ namespace UI
                 var config = GetClearButtonConfiguration();
 
                 // Set button opacity (based on whether the player can afford to destroy a building) and text
-                SetButtonOpacity(Manager.Wealth >= config.DestructionCost ? 255f : 166f);
+                SetButtonOpacity(config.IsRefund || Manager.Wealth >= config.DestructionCost ? 255f : 166f);
                 SetButtonText(config);
             
                 // Store selected button position
@@ -258,13 +258,14 @@ namespace UI
 
         private int CalculateBuildingClearCost()
         {
-            return Mathf.FloorToInt(_selectedBuilding.baseCost * BuildingRefundModifier);
+            return Mathf.FloorToInt(_selectedBuilding.baseCost * RefundPercentage);
         }
         
         private int CalculateTerrainClearCost()
         {
-            var range = Enumerable.Range(1, _numberOfTerrainTilesDeleted);
-            return (int) range.Select(i => 1.0f / Math.Pow(ScaleSteps, i)).Sum();
+            return (int) (Enumerable
+                .Range(_terrainClearCount, 4) // TODO: Replace 4 with tile count
+                .Sum(i => Math.Pow(CostScale, i)) * BaseCost);
         }
 
         private void RepositionClearButton()
@@ -291,7 +292,7 @@ namespace UI
 
             if (_selectedBuilding.type == BuildingType.Terrain)
             {
-                _numberOfTerrainTilesDeleted += Manager.Map.GetCells(_selectedBuilding).Length;
+                _terrainClearCount += Manager.Map.GetCells(_selectedBuilding).Length;
             }
 
             occupant.Clear();
