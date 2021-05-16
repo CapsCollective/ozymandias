@@ -176,7 +176,8 @@ namespace Managers
             Wealth += WealthPerTurn;
             TurnCounter++;
             
-            if(manualEvents.ContainsKey(TurnCounter)) EventQueue.Add(manualEvents[TurnCounter], true);
+            if(Buildings.GetCount(BuildingType.GuildHall) > 0 && manualEvents.ContainsKey(TurnCounter)) // Check guild hall still exists
+                EventQueue.Add(manualEvents[TurnCounter], true);
 
             // Spawn adventurers based on satisfaction
             foreach (AdventurerCategory category in Enum.GetValues(typeof(AdventurerCategory)))
