@@ -167,6 +167,7 @@ namespace Managers
             OnNextTurn?.Invoke();
         }
 
+        [SerializeField] private GenericDictionary<int, Event> manualEvents;
         public void NewTurn()
         {
             Buildings.placedThisTurn = 0;
@@ -174,6 +175,8 @@ namespace Managers
             if (Stability > 100) Stability = 100;
             Wealth += WealthPerTurn;
             TurnCounter++;
+            
+            if(manualEvents.ContainsKey(TurnCounter)) EventQueue.Add(manualEvents[TurnCounter], true);
 
             // Spawn adventurers based on satisfaction
             foreach (AdventurerCategory category in Enum.GetValues(typeof(AdventurerCategory)))
