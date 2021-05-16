@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DG.Tweening;
 using Entities;
 using Managers;
 using UI;
@@ -17,8 +16,6 @@ namespace Controllers
     
         [SerializeField] private BuildingCard[] cards;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private float tweenTime;
-        [SerializeField] private Ease tweenEase;
         [SerializeField] private GameObject particle;
         [SerializeField] private Transform container;
         [SerializeField] private GameObject testBuilding;
@@ -27,6 +24,7 @@ namespace Controllers
         private int _rotation;
         private Cell[] _highlighted = new Cell[0];
         private int _previousSelected = Selected;
+        private ToggleGroup _toggleGroup;
 
         private void Start()
         {
@@ -47,7 +45,8 @@ namespace Controllers
             };
         
             _remainingBuildings = GameManager.Manager.BuildingCards.All;
-            for (int i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
+            for (var i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
+            _toggleGroup = GetComponent<ToggleGroup>();
         }
 
         private void Update()
@@ -105,8 +104,8 @@ namespace Controllers
             
             // TODO get particles working again
             //Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<Building>().primaryStat);
-    
-            NewCardTween(i);
+
+            cards[i].SwitchCard(ChangeCard);
             cards[i].toggle.isOn = false;
             Selected = Deselected;
             
@@ -124,34 +123,22 @@ namespace Controllers
     
         public void NewCards()
         {
-            GetComponent<ToggleGroup>().SetAllTogglesOff();
-            for (int i = 0; i < 3; i++) NewCardTween(i);
-        }
-
-        private void NewCardTween(int i)
-        {
-            RectTransform t = cards[i].GetComponent<RectTransform>();
-            cards[i].isReplacing = true;
-            t.DOAnchorPosY(-100, tweenTime).SetEase(tweenEase).OnComplete(() =>
-            {
-                ChangeCard(i);
-                cards[i].isReplacing = false;
-                t.DOAnchorPosY(0, 0.5f).SetEase(tweenEase);
-            });
+            _toggleGroup.SetAllTogglesOff();
+            for (var i = 0; i < 3; i++) cards[i].SwitchCard(ChangeCard);
         }
 
         private void ChangeCard(int i)
         {
             if (_remainingBuildings.Count == 0) _remainingBuildings = 
                 GameManager.Manager.BuildingCards.All;
-            bool valid = false;
+            var valid = false;
 
             // Confirm no duplicate buildings
             while (!valid)
             {
                 valid = true;
                 cards[i].buildingPrefab = _remainingBuildings.PopRandom();
-                for (int j = 0; j < 3; j++)
+                for (var j = 0; j < 3; j++)
                 {
                     if (i == j) continue;
                     if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
@@ -165,14 +152,14 @@ namespace Controllers
         {
             if (_remainingBuildings.Count == 0) _remainingBuildings = 
                 GameManager.Manager.BuildingCards.All;
-            bool valid = false;
+            var valid = false;
 
             // Confirm no duplicate buildings
             while (!valid)
             {
                 valid = true;
                 cards[i].buildingPrefab = testBuilding;
-                for (int j = 0; j < 3; j++)
+                for (var j = 0; j < 3; j++)
                 {
                     if (i == j) continue;
                     if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
