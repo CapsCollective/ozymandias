@@ -253,7 +253,7 @@ namespace UI
         {
             _nameText.text = config.BuildingName;
             if (config.BuildingName == "Guild Hall") _costText.text = "Cost: Don't";
-            else _costText.text = config.IsRefund ? "Refund: " : "Cost: " + config.DestructionCost;
+            else _costText.text = (config.IsRefund ? "Refund: " : "Cost: ") + config.DestructionCost;
         }
 
         private int CalculateBuildingClearCost()
