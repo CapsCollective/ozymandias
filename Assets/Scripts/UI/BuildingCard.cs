@@ -19,10 +19,7 @@ namespace UI
 
         public Toggle toggle;
         public GameObject buildingPrefab;
-        [HideInInspector] public bool isReplacing;
-        
         [SerializeField] private int position;
-        [SerializeField] private BuildingCard[] siblingCards;
         
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
@@ -34,11 +31,14 @@ namespace UI
         [SerializeField] private Image cardHighlight;
         [SerializeField] private Ease tweenEase;
         [SerializeField] private int popupMultiplier = 60;
-
+        [SerializeField] private int highlightMultiplier = 20;
+        
         [Serializable]
         private struct EffectBadge
         {
             public Image background, icon, chevron;
+            
+            
 
             public void SetActive(bool active)
             {
@@ -67,6 +67,8 @@ namespace UI
 
         private Vector3 _initialPosition;
         private RectTransform _rectTransform;
+        private bool _isReplacing;
+
 
         private void Start()
         {
@@ -77,7 +79,7 @@ namespace UI
 
         protected override void UpdateUi()
         {
-            Building building = buildingPrefab.GetComponent<Building>();
+            var building = buildingPrefab.GetComponent<Building>();
 
             // Set card details
             title.text = building.name;
@@ -105,16 +107,17 @@ namespace UI
             else
             {
                 // Darken the card if unselectable
-                Color grey = new Color(0.8f, 0.8f, 0.8f);
+                var grey = new Color(0.8f, 0.8f, 0.8f);
                 cardBack.color = grey;
                 cost.color = grey;
                 costIconTexture.color = grey;
             }
 
-            List<KeyValuePair<Stat,int>> effects = building.stats.OrderByDescending(x => x.Value).ToList();
+            var effects = building.stats
+                .OrderByDescending(x => x.Value).ToList();
 
             // Set the class badges to the card
-            for (int i = 0; i < badges.Count; i++)
+            for (var i = 0; i < badges.Count; i++)
             {
                 if (i >= effects.Count)
                 {
@@ -137,28 +140,16 @@ namespace UI
             }
         }
 
-        public void ToggleSelect()
+        public void ToggleSelect(bool isOn)
         {
             // Highlight the card if selected
-            cardHighlight.DOFade(toggle.isOn ? 1 : 0, 0.5f);
+            cardHighlight.DOFade(isOn ? 1 : 0, 0.5f);
             
-            if (isReplacing) { return; }
+            if (_isReplacing) { return; }
 
-            if (toggle.isOn)
-            {
-                // Deselect all other cards
-                Array.ForEach(siblingCards, card => {
-                    card.toggle.isOn = false;
-                    card.OnPointerExit(null);
-                });
-                
-                // Set card selection
-                BuildingPlacement.Selected = position;
-                OnPointerEnter(null);
-            }
+            if (isOn) BuildingPlacement.Selected = position;
             else
             {
-                // Deselect the building
                 BuildingPlacement.Selected = Deselected;
                 OnPointerExit(null);
             }
@@ -167,18 +158,39 @@ namespace UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             // Run pointer enter tween
-            if (!_rectTransform) return;
-            _rectTransform.DOLocalMove(_initialPosition + _rectTransform.transform.up * popupMultiplier, 0.5f)
-                .SetEase(tweenEase);
-            _rectTransform.DOScale(new Vector3(1.1f, 1.1f), 0.5f).SetEase(tweenEase);
+            ApplyTween(_initialPosition + _rectTransform.transform.up * popupMultiplier, 
+                new Vector3(1.1f, 1.1f), 0.5f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            // Run pointer exit tween if not selected
-            if (toggle.isOn || !_rectTransform) return;
-            _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase);
-            _rectTransform.DOScale(Vector3.one, 0.5f).SetEase(tweenEase);
+            // Run pointer exit tween
+            var move = _initialPosition;
+            if (toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
+            
+            ApplyTween(move, Vector3.one, 0.5f);
+        }
+
+        public void SwitchCard(Action<int> callback)
+        {
+            _isReplacing = true;
+            _rectTransform.DOLocalMove(
+                    _initialPosition - _rectTransform.transform.up * 100, 
+                    0.5f).SetEase(tweenEase)
+                .OnComplete(() => {
+                    callback(position);
+                    _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase)
+                        .OnComplete(() => {
+                            _isReplacing = false;
+                        });
+                });
+        }
+
+        private void ApplyTween(Vector3 localMove, Vector3 scale, float duration)
+        {
+            if (!_rectTransform) return;
+            _rectTransform.DOLocalMove(localMove, duration).SetEase(tweenEase);
+            _rectTransform.DOScale(scale, duration).SetEase(tweenEase);
         }
     }
 }
