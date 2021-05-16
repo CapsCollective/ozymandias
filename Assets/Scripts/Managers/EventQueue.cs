@@ -71,16 +71,10 @@ namespace Managers
         {
             List<Event> eventPool = new List<Event>();
         
-            for (int j = 0; j < 4; j++) eventPool.Add(PickRandom(EventType.Flavour)); //Baseline of 3 flavour events
-        
-            if (Manager.Adventurers.Count >= _nextBuildingUnlock) {
+            /*if (Manager.Adventurers.Count >= _nextBuildingUnlock) {
                 eventPool.Add(PickRandom(EventType.Blueprint)); // Spawn every 10 adventurers
                 _nextBuildingUnlock += 10;
             }
-
-            int randomSpawnChance = Manager.RandomSpawnChance;
-            if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-            else for (int i = 0; i < randomSpawnChance; i++) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             
             if (Manager.TurnCounter >= 5)
             {
@@ -95,8 +89,13 @@ namespace Managers
             
                 // Start spawning threat events at 50, and gets more likely the higher it gets
                 if (Random.Range(0,50) > Manager.Stability) eventPool.Add(PickRandom(EventType.Threat));
-            }
-
+            }*/
+            
+            int randomSpawnChance = Manager.RandomSpawnChance;
+            if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+            else if(Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            
+            while (eventPool.Count <= 3) eventPool.Add(PickRandom(EventType.Flavour)); //Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
         }
 
