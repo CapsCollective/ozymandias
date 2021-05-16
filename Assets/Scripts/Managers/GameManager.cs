@@ -81,7 +81,7 @@ namespace Managers
         {
             int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
-            return mod * (Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod);
+            return mod * Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod;
         }
 
         public int GetSatisfaction(AdventurerCategory category)

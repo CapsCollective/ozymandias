@@ -36,7 +36,7 @@ namespace UI
 
         private const float ScaleSteps = 1.025f;
         
-        private const float BuildingRefundModifier = 0.25f;
+        private const float BuildingRefundModifier = 0.75f;
 
         [Header("Hover Options")] 
         [SerializeField] private float raycastInterval;
@@ -197,16 +197,18 @@ namespace UI
         {
             var config = new ClearButtonConfig();
 
-            config.IsRefund = true;
-            config.DestructionCost = CalculateBuildingClearCost();
-            config.BuildingName = _selectedBuilding.name;
-
             // If the selected element is terrain, apply the cost increase algorithm to the destruction cost.
             if (_selectedBuilding.type == BuildingType.Terrain)
             {
                 config.IsRefund = false;
                 config.DestructionCost = CalculateTerrainClearCost();
                 config.BuildingName = "Terrain";
+            }
+            else
+            {
+                config.IsRefund = true;
+                config.DestructionCost = CalculateBuildingClearCost();
+                config.BuildingName = _selectedBuilding.name;
             }
 
             return config;
@@ -227,7 +229,7 @@ namespace UI
                 SetButtonText(config);
             
                 // Store selected button position
-                _selectedDestroyCost = config.DestructionCost;
+                _selectedDestroyCost = config.DestructionCost * (config.IsRefund ? -1 : 1);
                 _selectedPosition = building.transform.position;   
             }
             else
@@ -250,9 +252,9 @@ namespace UI
 
         private void SetButtonText(ClearButtonConfig config)
         {
-            var costText = config.IsRefund ? "Refund: " : "Cost: ";
-            _costText.text = costText + config.DestructionCost;
             _nameText.text = config.BuildingName;
+            if (config.BuildingName == "Guild Hall") _costText.text = "Cost: Don't";
+            else _costText.text = config.IsRefund ? "Refund: " : "Cost: " + config.DestructionCost;
         }
 
         private int CalculateBuildingClearCost()
@@ -279,9 +281,7 @@ namespace UI
                 new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mainCamera.nearClipPlane));
             Physics.Raycast(ray, out var hit, 200f, collisionMask);
 
-            if (hit.collider == null) return null;
-
-            return hit.collider.GetComponentInParent<Building>();
+            return hit.collider ? hit.collider.GetComponentInParent<Building>() : null;
         }
 
         public void ClearBuilding()
