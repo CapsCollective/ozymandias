@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using DG.Tweening;
 using Entities;
+using Managers;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utilities;
-using static Managers.GameManager;
 
 namespace Controllers
 {
@@ -17,8 +16,6 @@ namespace Controllers
     
         [SerializeField] private BuildingCard[] cards;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private float tweenTime;
-        [SerializeField] private Ease tweenEase;
         [SerializeField] private GameObject particle;
         [SerializeField] private Transform container;
         [SerializeField] private GameObject testBuilding;
@@ -27,6 +24,7 @@ namespace Controllers
         private int _rotation;
         private Cell[] _highlighted = new Cell[0];
         private int _previousSelected = Selected;
+        private ToggleGroup _toggleGroup;
 
         private void Start()
         {
@@ -35,10 +33,20 @@ namespace Controllers
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
 
-            OnNextTurn += NewCards;
+            var canvasGroup = GetComponent<CanvasGroup>();
+            GameManager.OnNextTurn += () =>
+            {
+                NewCards();
+                canvasGroup.interactable = false;
+            };
+            GameManager.OnNewTurn += () =>
+            {
+                canvasGroup.interactable = true;
+            };
         
-            _remainingBuildings = Manager.BuildingCards.All;
-            for (int i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
+            _remainingBuildings = GameManager.Manager.BuildingCards.All;
+            for (var i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
+            _toggleGroup = GetComponent<ToggleGroup>();
         }
 
         private void Update()
@@ -47,11 +55,11 @@ namespace Controllers
             //Random debug code
             if (Input.GetKeyDown(KeyCode.F10))
             {
-                SetFirstCard(0, testBuilding);
+                SetFirstCard(0);
             }
 #endif
             // Clear previous highlights
-            Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
+            GameManager.Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
             _highlighted = new Cell[0];
 
             if (_previousSelected != Selected)
@@ -68,14 +76,14 @@ namespace Controllers
 
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
 
-            Cell closest = Manager.Map.GetCellFromMouse();
+            Cell closest = GameManager.Manager.Map.GetCellFromMouse();
 
             Building building = cards[Selected].buildingPrefab.GetComponent<Building>();
 
-            _highlighted = Manager.Map.GetCells(closest, building, _rotation);
+            _highlighted = GameManager.Manager.Map.GetCells(closest, building, _rotation);
 
             Map.HighlightState state = Map.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
-            Manager.Map.Highlight(_highlighted, state);
+            GameManager.Manager.Map.Highlight(_highlighted, state);
 
         }
 
@@ -91,16 +99,18 @@ namespace Controllers
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
             buildingInstance.GetComponent<Building>().HasNeverBeenSelected = true;
-            if (!Manager.Map.CreateBuilding(buildingInstance, hit.point, _rotation, true)) return;
-    
+            if (!GameManager.Manager.Map.CreateBuilding(
+                buildingInstance, hit.point, _rotation, true)) return;
+            
+            // TODO get particles working again
             //Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<Building>().primaryStat);
-    
-            NewCardTween(i);
+
+            cards[i].SwitchCard(ChangeCard);
             cards[i].toggle.isOn = false;
             Selected = Deselected;
             
             BarFill.DelayBars = true;
-            Manager.UpdateUi();
+            GameManager.Manager.UpdateUi();
             BarFill.DelayBars = false;
         }
     
@@ -113,60 +123,50 @@ namespace Controllers
     
         public void NewCards()
         {
-            GetComponent<ToggleGroup>().SetAllTogglesOff();
-            for (int i = 0; i < 3; i++) NewCardTween(i);
-        }
-
-        private void NewCardTween(int i)
-        {
-            RectTransform t = cards[i].GetComponent<RectTransform>();
-            cards[i].isReplacing = true;
-            t.DOAnchorPosY(-100, tweenTime).SetEase(tweenEase).OnComplete(() =>
-            {
-                ChangeCard(i);
-                cards[i].isReplacing = false;
-                t.DOAnchorPosY(0, 0.5f).SetEase(tweenEase);
-            });
+            _toggleGroup.SetAllTogglesOff();
+            for (var i = 0; i < 3; i++) cards[i].SwitchCard(ChangeCard);
         }
 
         private void ChangeCard(int i)
         {
-            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
-            bool valid = false;
+            if (_remainingBuildings.Count == 0) _remainingBuildings = 
+                GameManager.Manager.BuildingCards.All;
+            var valid = false;
 
             // Confirm no duplicate buildings
             while (!valid)
             {
                 valid = true;
                 cards[i].buildingPrefab = _remainingBuildings.PopRandom();
-                for (int j = 0; j < 3; j++)
+                for (var j = 0; j < 3; j++)
                 {
                     if (i == j) continue;
                     if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
                 }
             }
 
-            Manager.UpdateUi();
+            GameManager.Manager.UpdateUi();
         }
 
-        private void SetFirstCard(int i, GameObject newBuilding)
+        private void SetFirstCard(int i)
         {
-            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
-            bool valid = false;
+            if (_remainingBuildings.Count == 0) _remainingBuildings = 
+                GameManager.Manager.BuildingCards.All;
+            var valid = false;
 
             // Confirm no duplicate buildings
             while (!valid)
             {
                 valid = true;
                 cards[i].buildingPrefab = testBuilding;
-                for (int j = 0; j < 3; j++)
+                for (var j = 0; j < 3; j++)
                 {
                     if (i == j) continue;
                     if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
                 }
             }
 
-            Manager.UpdateUi();
+            GameManager.Manager.UpdateUi();
         }
     }
 }
