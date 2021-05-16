@@ -29,10 +29,12 @@ namespace Managers
         {
             _canvas = GetComponent<Canvas>();
 
-            foreach (QuestFlyer flyer in availableFlyers)
+            foreach (var flyer in availableFlyers)
             {
                 flyer.GetComponent<QuestFlyer>().CallbackMethod = OnFlyerClick;
             }
+            
+            Close();
         }
         
         private void Update()
