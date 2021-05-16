@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using Entities;
+using Managers;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utilities;
-using static Managers.GameManager;
 
 namespace Controllers
 {
@@ -35,9 +35,18 @@ namespace Controllers
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
 
-            OnNextTurn += NewCards;
+            var canvasGroup = GetComponent<CanvasGroup>();
+            GameManager.OnNextTurn += () =>
+            {
+                NewCards();
+                canvasGroup.interactable = false;
+            };
+            GameManager.OnNewTurn += () =>
+            {
+                canvasGroup.interactable = true;
+            };
         
-            _remainingBuildings = Manager.BuildingCards.All;
+            _remainingBuildings = GameManager.Manager.BuildingCards.All;
             for (int i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
         }
 
@@ -47,11 +56,11 @@ namespace Controllers
             //Random debug code
             if (Input.GetKeyDown(KeyCode.F10))
             {
-                SetFirstCard(0, testBuilding);
+                SetFirstCard(0);
             }
 #endif
             // Clear previous highlights
-            Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
+            GameManager.Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
             _highlighted = new Cell[0];
 
             if (_previousSelected != Selected)
@@ -68,14 +77,14 @@ namespace Controllers
 
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
 
-            Cell closest = Manager.Map.GetCellFromMouse();
+            Cell closest = GameManager.Manager.Map.GetCellFromMouse();
 
             Building building = cards[Selected].buildingPrefab.GetComponent<Building>();
 
-            _highlighted = Manager.Map.GetCells(closest, building, _rotation);
+            _highlighted = GameManager.Manager.Map.GetCells(closest, building, _rotation);
 
             Map.HighlightState state = Map.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
-            Manager.Map.Highlight(_highlighted, state);
+            GameManager.Manager.Map.Highlight(_highlighted, state);
 
         }
 
@@ -91,8 +100,10 @@ namespace Controllers
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
             buildingInstance.GetComponent<Building>().HasNeverBeenSelected = true;
-            if (!Manager.Map.CreateBuilding(buildingInstance, hit.point, _rotation, true)) return;
-    
+            if (!GameManager.Manager.Map.CreateBuilding(
+                buildingInstance, hit.point, _rotation, true)) return;
+            
+            // TODO get particles working again
             //Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<Building>().primaryStat);
     
             NewCardTween(i);
@@ -100,7 +111,7 @@ namespace Controllers
             Selected = Deselected;
             
             BarFill.DelayBars = true;
-            Manager.UpdateUi();
+            GameManager.Manager.UpdateUi();
             BarFill.DelayBars = false;
         }
     
@@ -131,7 +142,8 @@ namespace Controllers
 
         private void ChangeCard(int i)
         {
-            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
+            if (_remainingBuildings.Count == 0) _remainingBuildings = 
+                GameManager.Manager.BuildingCards.All;
             bool valid = false;
 
             // Confirm no duplicate buildings
@@ -146,12 +158,13 @@ namespace Controllers
                 }
             }
 
-            Manager.UpdateUi();
+            GameManager.Manager.UpdateUi();
         }
 
-        private void SetFirstCard(int i, GameObject newBuilding)
+        private void SetFirstCard(int i)
         {
-            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
+            if (_remainingBuildings.Count == 0) _remainingBuildings = 
+                GameManager.Manager.BuildingCards.All;
             bool valid = false;
 
             // Confirm no duplicate buildings
@@ -166,7 +179,7 @@ namespace Controllers
                 }
             }
 
-            Manager.UpdateUi();
+            GameManager.Manager.UpdateUi();
         }
     }
 }
