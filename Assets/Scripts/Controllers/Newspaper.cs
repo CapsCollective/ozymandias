@@ -14,7 +14,7 @@ namespace Controllers
     public class Newspaper : MonoBehaviour
     {
         // Serialised Fields
-        [SerializeField] private Text titleText;
+        [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private NewspaperEvent[] articleList;
         [SerializeField] private Image articleImage;
         [SerializeField] private Button[] choiceList;
