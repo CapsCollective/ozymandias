@@ -71,7 +71,8 @@ namespace Controllers
         private void SetChoiceActive(int choice, bool active)
         {
             choiceList[choice].gameObject.SetActive(active);
-            if (active) choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text = _choiceEvent.choices[choice].name;
+            if (active) choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text = 
+                _choiceEvent.choices[choice].name;
         }
     
         public void OnChoiceSelected(int choice)

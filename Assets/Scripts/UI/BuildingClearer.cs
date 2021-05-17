@@ -61,10 +61,11 @@ namespace UI
             _costText = textFields[1];
 
             Click.OnLeftClick += LeftClick;
-            Click.OnRightClick += RightClick;
+            Click.OnRightClick += DeselectBuilding;
             
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
             CameraMovement.OnCameraMove += DeselectBuilding;
+            Shade.OnShadeOpened += () => SetHoveredBuilding(null);
     
             _mainCamera = Camera.main;
 
@@ -80,6 +81,9 @@ namespace UI
 
         private void Update()
         {
+            // Ignore updates when shade is open
+            if (Shade.Instance.gameObject.activeSelf) return;
+            
             // Time-slice the hovered building check
             _timeSinceRaycast += Time.deltaTime;
             if (!(_timeSinceRaycast >= raycastInterval)) return;
@@ -133,11 +137,6 @@ namespace UI
             SetSelectedBuilding(selectedBuilding);
             if (selectedBuilding) SetHighlightColor(selectColor);
             UpdateClearButton(selectedBuilding);
-        }
-
-        private void RightClick()
-        {
-            DeselectBuilding();
         }
         
         private void SetHoveredBuilding(Building building)

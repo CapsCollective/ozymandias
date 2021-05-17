@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +7,12 @@ namespace Controllers
 {
     public class Shade : MonoBehaviour
     {
-    
+        // Constants
         private const float DefaultTransitionSpeed = 0.5f;
-    
+        
+        // Public fields
+        public static Action OnShadeOpened;
+
         // Instance field
         public static Shade Instance { get; private set; }
     
@@ -24,6 +28,9 @@ namespace Controllers
 
         public void SetDisplay(bool active, float transitionSpeed = DefaultTransitionSpeed)
         {
+            // Invoke state change event
+            if (active) OnShadeOpened?.Invoke();
+            
             // Display the shade if inactive
             if (active) { gameObject.SetActive(true); }
 
