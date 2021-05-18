@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Camera))]
-[ExecuteInEditMode]
+[ExecuteAlways]
 public class CameraOutlineController : MonoBehaviour
 {
     public static CommandBuffer OutlineBuffer { get; private set; }

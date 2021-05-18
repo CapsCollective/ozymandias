@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 2
+  customDescription: They are adored by their fellow Brawlers (+5 satisfaction for
+    3 turns)
+  statToChange: 0
   amount: 5
   turns: 3
+  reason: the mirror transformation
 --- !u!114 &-7020631908405030232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,6 +31,38 @@ MonoBehaviour:
   m_Name: Flavour Text(Clone)
   m_EditorClassIdentifier: 
   customDescription: A humble woman named Emma steps forward, only to blink away
+--- !u!114 &-6779523165475095852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: The Arcanist studies the mirror, before seeing stacks of books
+    start to pour out of the mirror in front of them.
+--- !u!114 &-4662860471861863292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: These books will keep the arcanists busy for a few days (+5
+    satisfaction for 3 turns)
+  statToChange: 4
+  amount: 5
+  turns: 3
+  reason: the mirror world books
 --- !u!114 &-1641107258049006644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,7 +73,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send an adventurer
+  m_Name: Send a Brawler
   m_EditorClassIdentifier: 
   outcomes:
   - {fileID: 3759444680359796729}
@@ -60,6 +94,21 @@ MonoBehaviour:
   statToChange: 1
   amount: 10
   turns: 3
+  reason: 
+--- !u!114 &-1341908954529499481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: The merchant shrugs, walks right into the mirror, and both of
+    them blink away in a puff of smoke.
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,8 +131,9 @@ MonoBehaviour:
   outcomes: []
   choices:
   - {fileID: -1641107258049006644}
+  - {fileID: 2409770166484628299}
   - {fileID: 9041381602021631540}
-  - {fileID: 7687099033260704308}
+  - {fileID: 4644011402391099386}
   oneTime: 0
 --- !u!114 &2098342876096918418
 MonoBehaviour:
@@ -99,6 +149,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: The dog is already perfect as it is, only gaining the softest
     fur imaginable.
+--- !u!114 &2409770166484628299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send an Arcanist
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -6779523165475095852}
+  - {fileID: -4662860471861863292}
 --- !u!114 &3759444680359796729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: Flavour Text(Clone)
   m_EditorClassIdentifier: 
-  customDescription: The hero turns into a dashing knight.
+  customDescription: The scraggly Brawler looks in the mirror to see a dashing hero.
+    Before your eyes they transform!
 --- !u!114 &3865637143280479580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +193,7 @@ MonoBehaviour:
   customDescription: Where did she go?
   next: {fileID: 11400000, guid: 11d6f1ac4fc7f984db0c8155be962fae, type: 2}
   toFront: 0
---- !u!114 &7687099033260704308
+--- !u!114 &4644011402391099386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,11 +203,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send a dog
+  m_Name: Refuse the offer
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 2098342876096918418}
-  - {fileID: -1562788683646234115}
+  - {fileID: -1341908954529499481}
 --- !u!114 &9041381602021631540
 MonoBehaviour:
   m_ObjectHideFlags: 0

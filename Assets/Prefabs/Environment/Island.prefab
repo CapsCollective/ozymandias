@@ -4016,6 +4016,7 @@ GameObject:
   - component: {fileID: 543450652897497188}
   - component: {fileID: 3469287836680183745}
   - component: {fileID: 1711813855907621643}
+  - component: {fileID: 1353964720079669243}
   m_Layer: 0
   m_Name: Beach2
   m_TagString: Untagged
@@ -4086,6 +4087,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1353964720079669243
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148891945694}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7387706064836869012, guid: 627df25c5eb723e428acdc31574d3eca, type: 3}
 --- !u!1 &3189940683839315735
 GameObject:
   m_ObjectHideFlags: 0
@@ -4169,7 +4184,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5971534116166770478}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

@@ -81,7 +81,7 @@ namespace Managers
         {
             int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
-            return mod * (Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod);
+            return mod * Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod;
         }
 
         public int GetSatisfaction(AdventurerCategory category)
@@ -158,9 +158,16 @@ namespace Managers
         [Button("Next Turn")]
         public void NextTurn()
         {
+            if (TurnCounter == 15)
+            {
+                signoffScreen.enabled = true;
+                EnterMenu();
+                return;
+            }
             OnNextTurn?.Invoke();
         }
 
+        [SerializeField] private GenericDictionary<int, Event> manualEvents;
         public void NewTurn()
         {
             Buildings.placedThisTurn = 0;
@@ -168,6 +175,9 @@ namespace Managers
             if (Stability > 100) Stability = 100;
             Wealth += WealthPerTurn;
             TurnCounter++;
+            
+            if(Buildings.GetCount(BuildingType.GuildHall) > 0 && manualEvents.ContainsKey(TurnCounter)) // Check guild hall still exists
+                EventQueue.Add(manualEvents[TurnCounter], true);
 
             // Spawn adventurers based on satisfaction
             foreach (AdventurerCategory category in Enum.GetValues(typeof(AdventurerCategory)))
@@ -224,9 +234,15 @@ namespace Managers
             new SaveFile().Save();
         }
 
+        [SerializeField] private Canvas loadingScreen, welcomeScreen, signoffScreen;
+        
         private async void Load()
         {
+            loadingScreen.enabled = true;
             await new SaveFile().Load();
+            EnterMenu();
+            loadingScreen.enabled = false;
+            welcomeScreen.enabled = true;
             UpdateUi();
         }
 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: Flavour Text(Clone)
   m_EditorClassIdentifier: 
-  customDescription: Oh no, the mice are too strong! They'll never be able to defeat
-    them!
+  customDescription: Oh no, the mice are too strong and escaped! We'll have to hunt
+    them down...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,10 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
-  customDescription: The rats are perfect (+5 Effectiveness for 4 turns)
-  statToChange: 2
+  customDescription: The rats are perfect (+5 Defence for 4 turns)
+  statToChange: 8
   amount: 5
   turns: 4
+  reason: rat training
 --- !u!114 &2031666057529318842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,9 +68,10 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 3
-  amount: -3
+  statToChange: 7
+  amount: -5
   turns: 4
+  reason: the rat salesman
 --- !u!114 &3209768051148161497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,9 +116,10 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 2
-  amount: -3
-  turns: 4
+  statToChange: 9
+  amount: 1
+  turns: 3
+  reason: the mice infestation
 --- !u!114 &8576086216102355819
 MonoBehaviour:
   m_ObjectHideFlags: 0

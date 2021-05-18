@@ -112,6 +112,9 @@ namespace Controllers
             BarFill.DelayBars = true;
             GameManager.Manager.UpdateUi();
             BarFill.DelayBars = false;
+            
+            // TODO find a better spot for this?
+            Jukebox.Instance.PlayBuild();
         }
     
         private void RightClick()

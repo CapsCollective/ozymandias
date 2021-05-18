@@ -1,28 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Goblin Raid 1
-  m_EditorClassIdentifier: 
-  headline: Goblins!
-  article: Some Goblins were spotted nearby the town. Residents have been kept up
-    all night by horrid sounds of some ritual they seem to be performing.
-  image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
-  type: 2
-  headliner: 0
-  outcomes: []
-  choices:
-  - {fileID: -2278837932667058203}
-  - {fileID: -7494940983849263564}
-  oneTime: 1
 --- !u!114 &-7494940983849263564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,7 +27,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
   m_Name: Remove Adventurers(Clone)
   m_EditorClassIdentifier: 
-  customDescription: The scouts were ambushed, and one was struck down while escaping (-1 adventurer)
+  customDescription: The scouts were ambushed, and one was struck down while escaping
+    (-1 adventurer)
   adventurerNames:
   - 
   kill: 1
@@ -70,6 +48,29 @@ MonoBehaviour:
   - {fileID: -7336819564011800612}
   - {fileID: 5427943375661240944}
   - {fileID: 7807313350048339474}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Goblin Raid 1
+  m_EditorClassIdentifier: 
+  headline: Goblins!
+  article: Some Goblins were spotted nearby the town. Residents have been kept up
+    all night by horrid sounds of some ritual they seem to be performing.
+  image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
+  type: 2
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -2278837932667058203}
+  - {fileID: -7494940983849263564}
+  oneTime: 1
 --- !u!114 &4683237258390817899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,10 +84,10 @@ MonoBehaviour:
   m_Name: Stat Change(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 3
+  statToChange: 7
   amount: -5
   turns: 3
-  reason: 
+  reason: bribing the goblins
 --- !u!114 &5427943375661240944
 MonoBehaviour:
   m_ObjectHideFlags: 0
