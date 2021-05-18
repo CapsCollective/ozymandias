@@ -24,13 +24,6 @@ namespace Controllers
             Instance = this;
             _image = GetComponent<Image>();
             gameObject.SetActive(false);
-            
-            Managers.GameManager.OnNextTurn += () => {
-                gameObject.SetActive(true);
-            };
-            Managers.GameManager.OnNewTurn += () => {
-                gameObject.SetActive(false);
-            };
         }
 
         public void SetDisplay(bool active, float transitionSpeed = DefaultTransitionSpeed)
