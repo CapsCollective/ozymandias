@@ -214,7 +214,7 @@ namespace Controllers
         
         public void PlayDestroy()
         {
-            PlaySfx(destroyClip, .1f);
+            PlaySfx(destroyClip, .4f);
         }
         
         public void PlayStamp()
