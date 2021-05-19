@@ -105,7 +105,6 @@ namespace Controllers
         private void ClearBuilding()
         {
             if (_selectedBuilding.indestructible) return;
-            //BuildingStats building = _selectedBuilding.GetComponent<BuildingStats>();
             Building building = _selectedBuilding.GetComponent<Building>();
             if (!Manager.Spend(ScaledCost)) return;
             if (building.type == BuildingType.Terrain) ClearCount++;

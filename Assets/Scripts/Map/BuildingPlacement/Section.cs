@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class Section : MonoBehaviour
 {
-    private const float NoiseScale = 5f;
+    private const float NoiseScale = .5f;
 
     // Member variables
     public int clockwiseRotations;

@@ -174,6 +174,8 @@ namespace Entities
         private void Update()
         {
             if (!selected) return;
+            if (mat == null) return;
+
             foreach (var r in _segments)
             {
                 //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);

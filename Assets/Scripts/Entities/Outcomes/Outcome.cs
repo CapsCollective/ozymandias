@@ -5,6 +5,7 @@ namespace Entities.Outcomes
 {
     public class Outcome : ScriptableObject
     {
+        [TextArea]
         public string customDescription; //An override description for custom outcomes
         public virtual string Description => customDescription;
 
