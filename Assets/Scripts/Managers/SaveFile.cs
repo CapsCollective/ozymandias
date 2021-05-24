@@ -65,7 +65,7 @@ namespace Managers
             wealth = Manager.Wealth;
             turnCounter = Manager.TurnCounter;
             threatLevel = Manager.Stability;
-            clearCount = Clear.ClearCount;
+            clearCount = Clear.TerrainClearCount;
 
             buildings = Manager.Buildings.Save();
 
@@ -91,7 +91,7 @@ namespace Managers
             Manager.Wealth = wealth;
             Manager.TurnCounter = turnCounter;
             Manager.Stability = threatLevel;
-            Clear.ClearCount = clearCount;
+            Clear.TerrainClearCount = clearCount;
             
             if (turnCounter == 0)
                 Manager.StartGame();

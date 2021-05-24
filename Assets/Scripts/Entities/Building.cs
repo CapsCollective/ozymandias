@@ -8,6 +8,7 @@ using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 using DG.Tweening;
+using Managers;
 using UnityEditor;
 
 namespace Entities
@@ -38,10 +39,10 @@ namespace Entities
         public bool indestructible;
         [SerializeField] private bool fitToCell;
         public bool grassMask;
-        
-        public bool HasNeverBeenSelected { get; set; }
+
+        // Check to prevent immediate selection on build
+        public bool hasNeverBeenSelected = true;
         public bool selected;
-        public bool segmentsLoaded;
 
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
@@ -106,7 +107,8 @@ namespace Entities
             //Animator.SetTrigger(ClearTrigger);
             ChangeParticleSystemParent();
             ParticleSystem.Play();
-            transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Manager.Buildings.Remove(this));;
+            transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Manager.Buildings.Remove(this));
+            Jukebox.Instance.PlayDestroy();
         }
 
         // Structs
@@ -124,6 +126,14 @@ namespace Entities
             _placementPosition = placementPosition;
             _rotation = rotation;
             Manager.Buildings.Add(this);
+            
+            foreach (Transform t in transform)
+            {
+                if (t.GetComponent<ParticleSystem>()) continue;
+                _segments.Add(t.GetComponent<Renderer>());
+            }
+
+            if (SaveFile.loading) hasNeverBeenSelected = false;
         }
 
         public string Save()
@@ -159,27 +169,15 @@ namespace Entities
             var psMain = ParticleSystem.main;
             psMain.stopAction = ParticleSystemStopAction.Destroy;
         }
-
-        public void InitialiseBuildingSegments()
-        {
-            foreach (Transform t in transform)
-            {
-                if (t.GetComponent<ParticleSystem>()) continue;
-                _segments.Add(t.GetComponent<Renderer>());
-            }
-
-            segmentsLoaded = true;
-        }
-
+        
         private void Update()
         {
-            if (!selected) return;
-            if (mat == null) return;
+            if (!selected || mat is null) return;
 
-            foreach (var r in _segments)
+            foreach (Renderer r in _segments)
             {
                 //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
-                CameraOutlineController.OutlineBuffer?.DrawRenderer(r, mat);
+                BuildingOutline.OutlineBuffer?.DrawRenderer(r, mat);
             }
         }
     }

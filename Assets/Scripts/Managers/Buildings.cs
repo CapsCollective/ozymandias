@@ -67,7 +67,7 @@ namespace Managers
             else _buildings.Add(building);
 
             if(!SaveFile.loading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
-            if (_buildings.Count >= 30 && Clear.ClearCount == 0) Manager.Achievements.Unlock("One With Nature");
+            if (_buildings.Count >= 30 && Clear.TerrainClearCount == 0) Manager.Achievements.Unlock("One With Nature");
             
             if(!SaveFile.loading) Manager.UpdateUi();
         }

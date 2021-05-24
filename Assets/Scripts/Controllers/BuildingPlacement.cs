@@ -98,7 +98,6 @@ namespace Controllers
 
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
-            buildingInstance.GetComponent<Building>().HasNeverBeenSelected = true;
             if (!GameManager.Manager.Map.CreateBuilding(
                 buildingInstance, hit.point, _rotation, true)) return;
             
