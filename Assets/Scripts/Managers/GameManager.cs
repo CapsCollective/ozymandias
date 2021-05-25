@@ -160,8 +160,7 @@ namespace Managers
         {
             if (TurnCounter == 15)
             {
-                signoffScreen.enabled = true;
-                EnterMenu();
+                signoffScreen.GetComponent<Letter>().Open();
                 return;
             }
             OnNextTurn?.Invoke();
@@ -234,16 +233,19 @@ namespace Managers
             new SaveFile().Save();
         }
 
-        [SerializeField] private Canvas loadingScreen, welcomeScreen, signoffScreen;
+        [SerializeField] private Canvas loadingScreen, welcomeScreen1, welcomeScreen2, signoffScreen;
         
         private async void Load()
         {
             loadingScreen.enabled = true;
             await new SaveFile().Load();
-            EnterMenu();
             loadingScreen.enabled = false;
-            welcomeScreen.enabled = true;
+            welcomeScreen1.enabled = true;
+            welcomeScreen2.enabled = true;
+            signoffScreen.enabled = true;
             UpdateUi();
+            
+            welcomeScreen1.GetComponent<Letter>().Open();
         }
 
         private bool _gameOver;
@@ -259,7 +261,7 @@ namespace Managers
         {
             inMenu = true;
             Shade.Instance.SetDisplay(true);
-            BuildingPlacement.GetComponent<ToggleGroup>().SetAllTogglesOff(); //TODO this dont work no more, need to deselect all builiding cards manually
+            BuildingPlacement.GetComponent<ToggleGroup>().SetAllTogglesOff();
         }
     
         public void ExitMenu()
