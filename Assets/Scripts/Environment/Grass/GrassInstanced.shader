@@ -139,24 +139,28 @@ Shader "Instanced/InstancedSurfaceShader" {
                 v.vertex.xz += GetMask(v.texcoord) * (snoise(vertexWorldSpace * _Time.x * _WindSpeed) * _WindStrength);
 
                 float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
-                float2 RTToWorld = worldPos.xz - _RTPosition.xz;
-                RTToWorld /= (_RTSize * 2.0);
-                RTToWorld += 0.5;
-                //float2 uv_MaskTex = (worldPos.xz + _MaskTex_TexelSize) * _MaskTex_ST.xy + _MaskTex_ST.zw;
-                float3 mask = tex2Dlod(_MaskTex, float4(RTToWorld, 0, 0));
-                v.vertex.y -= (mask.r + mask.g) * 10;
+                o.pos = worldPos;
             }
 
             void surf(Input IN, inout SurfaceOutputStandard o) {
 
                 //float mask = saturate(pow(IN.uv_MainTex.y - -_MaskSub, _MaskPower));
 
+                float2 RTToWorld = IN.pos.xz - _RTPosition.xz;
+                RTToWorld /= (_RTSize * 2.0);
+                RTToWorld += 0.5;
+                //float2 uv_MaskTex = (worldPos.xz + _MaskTex_TexelSize) * _MaskTex_ST.xy + _MaskTex_ST.zw;
+                float3 mask = tex2Dlod(_MaskTex, float4(RTToWorld, 0, 0));
+                //v.vertex.y -= (mask.r + mask.g) * 10;
+
                 fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
                 float3 cMask = saturate(c.rgb + (_TipColor.rgb * GetMask(IN.uv_MainTex)));
                 o.Albedo = cMask;
                 o.Metallic = _Metallic;
                 o.Smoothness = _Glossiness;
-                clip(c.a - 0.5);
+
+                float s = saturate(mask.r + mask.g);
+                clip(c.a - (0.5 * lerp(1, 1000, s)));
             }
             ENDCG
         }
