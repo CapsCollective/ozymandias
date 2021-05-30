@@ -19,12 +19,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RTMask:
+        m_Texture: {fileID: 8600000, guid: 2edc3d2701a48c2418bd626f6f7cae4b, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture0:
         m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f09a1643aaba9f9469741ce867a2ceb3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample1:
@@ -36,11 +48,26 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Float0: 1.28
-    - _Float1: -0.58
+    - _Div: 0.1
+    - _EffectSize: 2.8
+    - _EffectStrength: 5
+    - _Float0: 0.5
+    - _Float1: -0.17
+    - _Glossiness: 0
+    - _Int0: 8.57
+    - _Metallic: 0
+    - _Pow: 10000
+    - _RTSize: 33
+    - _Radius: 1.4
     - __dirty: 0
+    - _yo: 0
     m_Colors:
-    - _Grass: {r: 0.40784308, g: 0.5098038, b: 0.101960726, a: 0}
-    - _Sand: {r: 0.8666667, g: 0.69803923, b: 0.43137246, a: 0}
-    - _Tiling: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DirtColor: {r: 0.3490566, g: 0.24189632, b: 0, a: 1}
+    - _Grass: {r: 0.4078426, g: 0.5098029, b: 0.10196025, a: 0}
+    - _GrassColor: {r: 0.40784314, g: 0.50980395, b: 0.101960786, a: 1}
+    - _RTPos: {r: 0.5, g: 0, b: 0.5, a: 0}
+    - _Sand: {r: 0.8666667, g: 0.69803923, b: 0.43137205, a: 0}
+    - _SandColor: {r: 0.8666667, g: 0.69803923, b: 0.43137255, a: 1}
+    - _Tiling: {r: 0.03, g: 0.03, b: 0, a: 0}
   m_BuildTextureStacks: []
