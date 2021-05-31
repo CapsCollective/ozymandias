@@ -132,5 +132,13 @@ namespace Controllers
                 .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
                 .OnComplete(() => { _canvas.enabled = false; });
         }
+        
+        public void CloseNoExit()
+        {
+            transform.DOLocalMove(new Vector3(2000, 800, 0), animateOutDuration);
+            transform
+                .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
+                .OnComplete(() => { _canvas.enabled = false; });
+        }
     }
 }
