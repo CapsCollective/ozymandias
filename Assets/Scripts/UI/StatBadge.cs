@@ -1,4 +1,4 @@
-using TMPro;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -10,14 +10,27 @@ namespace UI
     {
         [SerializeField] private Stat stat;
         [SerializeField] private Image glow;
+        private int _oldSatisfaction;
         
         protected override void UpdateUi()
         {
             int satisfaction = Manager.GetSatisfaction(stat);
             glow.color = Color.clear;
             
+            
+            if (satisfaction != _oldSatisfaction)
+            {
+                PunchBadge();
+                _oldSatisfaction = satisfaction;
+            }
+            
             if(satisfaction >= 10) glow.color = new Color(0, 0.7f,0);
             if(satisfaction <= -10) glow.color = new Color(0.8f, 0,0);
+        }
+        
+        private void PunchBadge()
+        {
+            GetComponent<RectTransform>().DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f);
         }
     }
 }
