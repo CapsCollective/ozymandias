@@ -13,7 +13,7 @@ namespace Utilities
     
         private float _time0, _time1;
 
-        private void LateUpdate()
+        private void Update()
         {
             if (Input.GetMouseButtonDown(0)) _time0 = Time.time;
             if (Input.GetMouseButtonUp(0) && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();
