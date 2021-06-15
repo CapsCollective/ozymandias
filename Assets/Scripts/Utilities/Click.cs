@@ -5,6 +5,8 @@ namespace Utilities
 {
     public class Click : MonoBehaviour
     {
+        public static bool PlacingBuilding = false;
+
         [Range(0.1f,0.5f)]
         public float clickSpeed = 0.2f;
 
@@ -20,6 +22,8 @@ namespace Utilities
         
             if (Input.GetMouseButtonDown(1)) _time1 = Time.time;
             if (Input.GetMouseButtonUp(1) && Time.time - _time1 < clickSpeed) OnRightClick?.Invoke();
+
+            if (Input.GetMouseButtonUp(0)) PlacingBuilding = false;
         }
 
         private void OnDestroy()
