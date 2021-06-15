@@ -82,7 +82,6 @@ namespace Managers
                 Manager.NextTurn();
             }
         
-            Manager.Map.Clear(building.GetComponent<Building>());
             if (building.type == BuildingType.Terrain) _terrain.Remove(building);
             else _buildings.Remove(building);
             Destroy(building.gameObject);
