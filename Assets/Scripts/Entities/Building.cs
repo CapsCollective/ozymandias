@@ -172,7 +172,7 @@ namespace Entities
         
         private void Update()
         {
-            if (!selected || mat is null) return;
+            if (!selected || mat == null) return;
 
             foreach (Renderer r in _segments)
             {
