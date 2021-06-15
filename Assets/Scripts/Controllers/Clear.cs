@@ -61,11 +61,11 @@ namespace Controllers
             set
             {
                 if (_selectedBuilding) _selectedBuilding.selected = false;
-                if (value && value.hasNeverBeenSelected)
-                {
-                    value.hasNeverBeenSelected = false;
-                    return;
-                }
+                //if (value && value.hasNeverBeenSelected)
+                //{
+                //    value.hasNeverBeenSelected = false;
+                //    return;
+                //}
                 _selectedBuilding = value;
                 bool isNull = _selectedBuilding is null;
                 _canvas.enabled = !isNull;
