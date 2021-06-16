@@ -27,7 +27,9 @@ namespace Managers
                 return _instance;
             }
         }
-    
+
+        public bool isLoading;
+
         // All Managers/ Universal Controllers
         public Adventurers Adventurers { get; private set; }
         public Buildings Buildings { get; private set; }
@@ -237,6 +239,8 @@ namespace Managers
         
         private async void Load()
         {
+            isLoading = true;
+            Shade.Instance.SetDisplay(true);
             loadingScreen.enabled = true;
             await new SaveFile().Load();
             loadingScreen.enabled = false;
@@ -246,6 +250,7 @@ namespace Managers
             UpdateUi();
             
             welcomeScreen1.GetComponent<Letter>().Open();
+            isLoading = false;
         }
 
         private bool _gameOver;
