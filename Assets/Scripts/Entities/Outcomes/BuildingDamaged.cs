@@ -17,7 +17,7 @@ namespace Entities.Outcomes
         public override bool Execute()
         {
             buildingName = Manager.Buildings.Remove(type);
-            return !(buildingName is null);
+            return buildingName != null;
         }
     
         public override string Description
