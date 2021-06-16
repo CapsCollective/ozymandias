@@ -240,7 +240,6 @@ namespace Managers
         private async void Load()
         {
             isLoading = true;
-            Shade.Instance.SetDisplay(true);
             loadingScreen.enabled = true;
             await new SaveFile().Load();
             loadingScreen.enabled = false;
