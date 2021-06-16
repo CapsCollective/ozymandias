@@ -43,11 +43,17 @@ namespace Controllers
         private Vector3 _velocity = Vector3.zero;
         private float _timeSinceRaycast;
         
+        // TODO extract properties into member methods
         private Building HoveredBuilding
         {
             get => _hoveredBuilding;
             set {
-                if (_hoveredBuilding) _hoveredBuilding.selected = false;
+                // Deselection should only happen when the un-hovered building
+                // is not the same as the selected building
+                if (_hoveredBuilding && !_selectedBuilding)
+                {
+                    _hoveredBuilding.selected = false;
+                }
                 _hoveredBuilding = value;
                 if (!_hoveredBuilding) return;
                 _hoveredBuilding.selected = true;
@@ -61,15 +67,10 @@ namespace Controllers
             set
             {
                 if (_selectedBuilding) _selectedBuilding.selected = false;
-                //if (value && value.hasNeverBeenSelected)
-                //{
-                //    value.hasNeverBeenSelected = false;
-                //    return;
-                //}
+
                 _selectedBuilding = value;
-                bool isNull = _selectedBuilding is null;
-                _canvas.enabled = !isNull;
-                if (isNull) return;
+                _canvas.enabled = _selectedBuilding;
+                if (!_selectedBuilding) return;
                 
                 _selectedBuilding.selected = true;
                 SetHighlightColor(selectColor);
@@ -128,7 +129,7 @@ namespace Controllers
         private void FixedUpdate()
         {
             // Keep track of clear button position above selected building
-            if (_selectedBuilding is null) return;
+            if (!_selectedBuilding) return;
             
             transform.position = Vector3.SmoothDamp(
                 transform.position,
@@ -227,8 +228,8 @@ namespace Controllers
         public void ClearBuilding()
         {
             if (
-                _selectedBuilding is null ||
-                _config is null ||
+                !_selectedBuilding  ||
+                _config == null ||
                 _selectedBuilding.indestructible || 
                 !Manager.Spend(_config.DestructionCost * (_config.IsRefund ? -1 : 1))
             ) return;

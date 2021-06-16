@@ -91,7 +91,7 @@ namespace Managers
         public string Remove(BuildingType type)
         {
             Building building = _buildings.Find(b => b.type == type);
-            if (building is null) return null;
+            if (building == null) return null;
             Remove(building);
             return building.name;
         }

@@ -41,7 +41,6 @@ namespace Entities
         public bool grassMask;
 
         // Check to prevent immediate selection on build
-        public bool hasNeverBeenSelected = true;
         public bool selected;
 
         private const string BuildTrigger = "Build";
@@ -132,8 +131,6 @@ namespace Entities
                 if (t.GetComponent<ParticleSystem>()) continue;
                 _segments.Add(t.GetComponent<Renderer>());
             }
-
-            if (SaveFile.loading) hasNeverBeenSelected = false;
         }
 
         public string Save()
