@@ -90,7 +90,7 @@ namespace Controllers
         private void LeftClick()
         {
             if (Selected == Deselected) return;
-            
+            Click.PlacingBuilding = true;
             Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
 
@@ -98,7 +98,6 @@ namespace Controllers
 
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
-            buildingInstance.GetComponent<Building>().HasNeverBeenSelected = true;
             if (!GameManager.Manager.Map.CreateBuilding(
                 buildingInstance, hit.point, _rotation, true)) return;
             

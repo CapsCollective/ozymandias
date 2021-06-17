@@ -18,6 +18,7 @@ namespace Controllers
     
         // Private fields
         private Image _image;
+        private bool active;
 
         private void Awake()
         {
@@ -28,6 +29,11 @@ namespace Controllers
 
         public void SetDisplay(bool active, float transitionSpeed = DefaultTransitionSpeed)
         {
+            // Check if we are entering a new active state
+            if (active == this.active) return;
+
+            // Set our active to the new active if it is different
+            this.active = active;
             // Invoke state change event
             if (active) OnShadeOpened?.Invoke();
             

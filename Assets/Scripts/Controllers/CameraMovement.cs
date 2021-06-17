@@ -1,9 +1,5 @@
-
-﻿using System;
-using System.Collections;
-using TMPro;
- using UI;
- using UnityEngine;
+using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
@@ -12,12 +8,13 @@ namespace Controllers
 {
     public class CameraMovement : MonoBehaviour
     {
+        public static bool Moving;
+        
         private Rigidbody _rb;
         private Camera _cam;
         private DepthOfField _depthOfField;
 
         private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
-        private float _rotateOrigin;
         private bool _dragging, _rotating;
 
         public static Action OnCameraMove;
@@ -26,7 +23,6 @@ namespace Controllers
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private BuildingClearer buildingClearer;
 
         [Range(1,10)]
         [SerializeField] private int
@@ -75,8 +71,8 @@ namespace Controllers
             if (!Input.GetMouseButton(0)) _dragging = false;
             if (!Input.GetMouseButton(1)) _rotating = false;
 
-            buildingClearer.SetHighlightActive(!(_rotating || _dragging));
-
+            Moving = _rotating || _dragging;
+            
             if (_dragging)
             {
                 var dragLength = _dragOrigin - Input.mousePosition;

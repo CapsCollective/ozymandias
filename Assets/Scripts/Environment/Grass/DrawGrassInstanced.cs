@@ -104,11 +104,6 @@ public class DrawGrassInstanced : MonoBehaviour
     {
         if(GrassCount > 0)
             Graphics.DrawMeshInstancedProcedural(mesh, 0, mat, bounds, dupMatrixCount, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);
-        
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            this.enabled = false;
-        }
     }
 
     private void OnDisable()

@@ -6,8 +6,6 @@ using DG.Tweening;
 [RequireComponent(typeof(Animator))]
 public class MapAnimator : MonoBehaviour
 {
-    public Clear clear;
-
     public string floodTrigger = "Flood";
     public string drainTrigger = "Drain";
     public string effectOrigin = "_Origin";
@@ -33,13 +31,11 @@ public class MapAnimator : MonoBehaviour
     private void LateUpdate()
     {
         UpdateEffectOrigin();
-
-        var isClearing = clear && clear.toggle.isOn;
-
-        if ((BuildingPlacement.Selected != BuildingPlacement.Deselected || isClearing) && !flooded)
+        
+        if (BuildingPlacement.Selected != BuildingPlacement.Deselected && !flooded)
             Flood();
         
-        if ((BuildingPlacement.Selected == BuildingPlacement.Deselected && !isClearing) && flooded)
+        if (BuildingPlacement.Selected == BuildingPlacement.Deselected && flooded)
             Drain();
 
     }

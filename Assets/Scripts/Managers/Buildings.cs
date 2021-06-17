@@ -67,7 +67,7 @@ namespace Managers
             else _buildings.Add(building);
 
             if(!SaveFile.loading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
-            if (_buildings.Count >= 30 && Clear.ClearCount == 0) Manager.Achievements.Unlock("One With Nature");
+            if (_buildings.Count >= 30 && Clear.TerrainClearCount == 0) Manager.Achievements.Unlock("One With Nature");
             
             if(!SaveFile.loading) Manager.UpdateUi();
         }
@@ -82,7 +82,6 @@ namespace Managers
                 Manager.NextTurn();
             }
         
-            Manager.Map.Clear(building.GetComponent<Building>());
             if (building.type == BuildingType.Terrain) _terrain.Remove(building);
             else _buildings.Remove(building);
             Destroy(building.gameObject);
@@ -92,7 +91,7 @@ namespace Managers
         public string Remove(BuildingType type)
         {
             Building building = _buildings.Find(b => b.type == type);
-            if (building is null) return null;
+            if (building == null) return null;
             Remove(building);
             return building.name;
         }
