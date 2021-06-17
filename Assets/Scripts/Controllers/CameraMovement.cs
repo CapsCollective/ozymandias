@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
+using Cinemachine;
 
 namespace Controllers
 {
@@ -13,6 +14,8 @@ namespace Controllers
         private Rigidbody _rb;
         private Camera _cam;
         private DepthOfField _depthOfField;
+        private CinemachineFreeLook freeLook;
+        private float acceleration;
 
         private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
         private bool _dragging, _rotating;
@@ -43,81 +46,86 @@ namespace Controllers
             _cam = GetComponent<Camera>();
             _rb = GetComponent<Rigidbody>();
             profile.TryGetSettings(out _depthOfField);
+            freeLook = GetComponent<CinemachineFreeLook>();
         }
 
         private void Update()
         {
             if (Manager.inMenu) return;
 
-            volume.weight = Mathf.InverseLerp(maxHeight, minHeight, transform.position.y);
+            if (freeLook.m_YAxis.Value < .175)
+                freeLook.m_YAxis.Value = Mathf.MoveTowards(freeLook.m_YAxis.Value, 0.175f, Time.deltaTime);
+
+            volume.weight = Mathf.InverseLerp(freeLook.m_Orbits[0].m_Height, freeLook.m_Orbits[2].m_Height, transform.position.y);
             var ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(ray, out var hit, 100f, layerMask))
             {
                 _depthOfField.focusDistance.value = hit.distance;
             }
 
-            if (!_rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                _dragOrigin = Input.mousePosition;
-                _cameraOrigin = transform.position;
-                _dragging = true;
-            }
-            else if (!_dragging && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                _rotateAxis = hit.point;
-                _rotating = true;
-            }
+            //if (!_rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            //{
+            //    _dragOrigin = Input.mousePosition;
+            //    _cameraOrigin = transform.position;
+            //    _dragging = true;
+            //}
+            //else if (!_dragging && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
+            //{
+            //    _rotateAxis = hit.point;
+            //    _rotating = true;
+            //}
 
-            if (!Input.GetMouseButton(0)) _dragging = false;
-            if (!Input.GetMouseButton(1)) _rotating = false;
+            //if (!Input.GetMouseButton(0)) _dragging = false;
+            //if (!Input.GetMouseButton(1)) _rotating = false;
 
-            Moving = _rotating || _dragging;
-            
-            if (_dragging)
-            {
-                var dragLength = _dragOrigin - Input.mousePosition;
-                if (dragLength.magnitude > 1.0f) OnCameraMove?.Invoke();
-                
-                var dir = _cam.ScreenToViewportPoint(dragLength);
-                var t = transform;
-                var pos = t.position;
-                t.position = _cameraOrigin +
-                             Quaternion.Euler(0, t.eulerAngles.y, 0) *
-                             new Vector3(dir.x * dragSpeed * pos.y, 0, dir.y * dragSpeed * pos.y);
-            }
-            else if (_rotating)
-            {
-                transform.RotateAround(_rotateAxis, Vector3.up, Input.GetAxis("Mouse X") * rotateSpeed);
-            }
-            else
-            {
-                if (transform.position.y > maxHeight)
-                {
-                    _rb.AddForce(new Vector3(0, -2.0f,0));
-                }
-                else if (transform.position.y < minHeight)
-                {
-                    _rb.AddForce(new Vector3(0, 2.0f, 0));
-                }
-                else
-                {
-                    var dir = invertScroll ? 1 : -1;
-                    // Map the angle by the height
-                    var t = transform;
-                    t.eulerAngles = new Vector3(
-                        Remap(t.position.y,
-                            minHeight,
-                            maxHeight - 5,
-                            minAngle,
-                            maxAngle), t.eulerAngles.y, 0);
-                    if (_rb.velocity.y < 10 && _rb.velocity.y > -10)
-                    {
-                        Vector3 force = new Vector3(0,
-                            dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0);
-                        if (force != Vector3.zero) _rb.AddForce(force);
-                    }
-                }
-            }
+            //Moving = _rotating || _dragging;
+
+            //if (_dragging)
+            //{
+            //    var dragLength = _dragOrigin - Input.mousePosition;
+            //    if (dragLength.magnitude > 1.0f) OnCameraMove?.Invoke();
+
+            //    var dir = _cam.ScreenToViewportPoint(dragLength);
+            //    var t = transform;
+            //    var pos = t.position;
+            //    t.position = _cameraOrigin +
+            //                 Quaternion.Euler(0, t.eulerAngles.y, 0) *
+            //                 new Vector3(dir.x * dragSpeed * pos.y, 0, dir.y * dragSpeed * pos.y);
+            //}
+            //else if (_rotating)
+            //{
+            //    transform.RotateAround(_rotateAxis, Vector3.up, Input.GetAxis("Mouse X") * rotateSpeed);
+            //}
+            //else
+            //{
+            //    if (transform.position.y > maxHeight)
+            //    {
+            //        _rb.AddForce(new Vector3(0, -2.0f,0));
+            //    }
+            //    else if (transform.position.y < minHeight)
+            //    {
+            //        _rb.AddForce(new Vector3(0, 2.0f, 0));
+            //    }
+            //    else
+            //    {
+            //        var dir = invertScroll ? 1 : -1;
+            //        // Map the angle by the height
+            //        var t = transform;
+            //        t.eulerAngles = new Vector3(
+            //            Remap(t.position.y,
+            //                minHeight,
+            //                maxHeight - 5,
+            //                minAngle,
+            //                maxAngle), t.eulerAngles.y, 0);
+            //        if (_rb.velocity.y < 10 && _rb.velocity.y > -10)
+            //        {
+            //            Vector3 force = new Vector3(0,
+            //                dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0);
+            //            if (force != Vector3.zero) _rb.AddForce(force);
+            //        }
+            //    }
+            //}
+
         }
 
         public void Center()
