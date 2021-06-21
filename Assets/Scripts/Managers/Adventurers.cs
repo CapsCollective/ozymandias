@@ -86,7 +86,7 @@ namespace Managers
         public bool Remove(string adventurerName, bool kill) // Deletes an adventurer by name
         {
             Adventurer toRemove = GameObject.Find(adventurerName)?.GetComponent<Adventurer>();
-            if (toRemove is null) return false;
+            if (toRemove == null) return false;
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform;
             else Destroy(toRemove);
