@@ -18,6 +18,7 @@ namespace Controllers
         private float acceleration;
 
         private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
+        private Vector2 lastDrag;
         private bool _dragging, _rotating;
 
         public static Action OnCameraMove;
@@ -53,8 +54,21 @@ namespace Controllers
         {
             if (Manager.inMenu) return;
 
-            if (freeLook.m_YAxis.Value < .175)
-                freeLook.m_YAxis.Value = Mathf.MoveTowards(freeLook.m_YAxis.Value, 0.175f, Time.deltaTime);
+            if (Input.GetMouseButton(1))
+            {
+                freeLook.m_XAxis.m_InputAxisValue = -Input.GetAxis("Mouse X");
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                freeLook.m_XAxis.m_InputAxisValue = 0;
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                Vector2 dragDir = (lastDrag - (Vector2)Input.mousePosition).normalized * 0.1f;
+                freeLook.Follow.position += transform.TransformDirection(dragDir);
+                lastDrag = Input.mousePosition;
+            }
 
             volume.weight = Mathf.InverseLerp(freeLook.m_Orbits[0].m_Height, freeLook.m_Orbits[2].m_Height, transform.position.y);
             var ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
