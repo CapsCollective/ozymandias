@@ -8,8 +8,9 @@ Shader "Custom/WavingTrees"
         _Metallic ("Metallic", Range(0,1)) = 0.0
         _WindStrength("Wind Strength", Range(0,1)) = 0.0
         _WindSpeed("Wind Speed", Range(0,1)) = 0.0
-        _MaskSub("Mask Subtract", Float) = 0.0
-        _MaskPower("Mask Power", Float) = 0.0
+        _NoiseTex("Noise Texture", 2D) = "white" {}
+        _AlphaDistance("Transparency Distance", Float) = 1.0
+        _AlphaFalloff("Transparency Falloff", Float) = 1.0
     }
     SubShader
     {
@@ -21,18 +22,23 @@ Shader "Custom/WavingTrees"
         #pragma surface surf Standard fullforwardshadows vertex:vert
 
         // Use shader model 3.0 target, to get nicer looking lighting
-        #pragma target 3.0
+        #pragma target 4.0
 
         sampler2D _MainTex;
+        sampler2D _NoiseTex;
 
         struct Input
         {
             float2 uv_MainTex;
+            float3 wPos;
+            float4 screenPos;
         };
 
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
+        half _AlphaDistance;
+        half _AlphaFalloff;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -41,7 +47,7 @@ Shader "Custom/WavingTrees"
             // put more per-instance properties here
         UNITY_INSTANCING_BUFFER_END(Props)
 
-            float3 mod2D289(float3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+        float3 mod2D289(float3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
         float2 mod2D289(float2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
         float3 permute(float3 x) { return mod2D289(((x * 34.0) + 1.0) * x); }
 
@@ -70,6 +76,17 @@ Shader "Custom/WavingTrees"
             return 130.0 * dot(m, g);
         }
 
+        inline float Dither4x4Bayer(int x, int y)
+        {
+            const float dither[16] = {
+                 1,  9,  3, 11,
+                13,  5, 15,  7,
+                 4, 12,  2, 10,
+                16,  8, 14,  6 };
+            int r = y * 4 + x;
+            return dither[r] / 16; // same # of instructions as pre-dividing due to compiler magic
+        }
+
         half _WindStrength;
         half _WindSpeed;
         half _MaskSub;
@@ -81,19 +98,30 @@ Shader "Custom/WavingTrees"
 
         void vert(inout appdata_full v, out Input o) {
             UNITY_INITIALIZE_OUTPUT(Input, o);
-            float3 vertexWorldSpace = mul(unity_ObjectToWorld, v.vertex).xyz;
+            float3 vertexWorldSpace = mul(unity_ObjectToWorld, v.vertex);
+            o.wPos = vertexWorldSpace;
             v.vertex.xz += GetMask(vertexWorldSpace.xy) * (snoise(vertexWorldSpace.xz * (_Time.x * _WindSpeed)) * _WindStrength);
+            o.screenPos = ComputeScreenPos(UnityObjectToClipPos(v.vertex));
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            fixed n = tex2D(_NoiseTex, IN.uv_MainTex).r;
+            float alpha = saturate(pow(distance(IN.wPos, _WorldSpaceCameraPos) / _AlphaDistance, _AlphaFalloff));
+
             o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
-            o.Alpha = c.a;
+
+            float4 normScreenPos = IN.screenPos / IN.screenPos.w;
+            float2 clipScreen = normScreenPos.xy * _ScreenParams.xy;
+            float dither = Dither4x4Bayer(fmod(clipScreen.x, 4), fmod(clipScreen.y, 4));
+            dither = step(dither, alpha);
+
+            clip(dither - 0.5);
         }
         ENDCG
     }
