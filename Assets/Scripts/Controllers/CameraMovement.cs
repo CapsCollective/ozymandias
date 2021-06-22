@@ -27,6 +27,7 @@ namespace Controllers
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
+        [SerializeField] private float DoFAdjustMultiplier = 5f;
 
         [Range(1,10)]
         [SerializeField] private int
@@ -63,18 +64,25 @@ namespace Controllers
                 freeLook.m_XAxis.m_InputAxisValue = 0;
             }
 
+            Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
+            Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
+            Debug.DrawRay(transform.position, crossFwd, Color.red);
+            Debug.DrawRay(transform.position, crossSide, Color.green);
+
             if (Input.GetMouseButton(0))
             {
                 Vector2 dragDir = (lastDrag - (Vector2)Input.mousePosition).normalized * 0.1f;
-                freeLook.Follow.position += transform.TransformDirection(dragDir);
+
+                freeLook.Follow.position += crossFwd * dragDir.y;
+                freeLook.Follow.position += crossSide * dragDir.x;
                 lastDrag = Input.mousePosition;
             }
 
-            volume.weight = Mathf.InverseLerp(freeLook.m_Orbits[0].m_Height, freeLook.m_Orbits[2].m_Height, transform.position.y);
+            volume.weight = Mathf.Lerp(1, 0, freeLook.m_YAxis.Value);//Mathf.InverseLerp(freeLook.m_Orbits[0].m_Height, freeLook.m_Orbits[2].m_Height, transform.position.y);
             var ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(ray, out var hit, 100f, layerMask))
             {
-                _depthOfField.focusDistance.value = hit.distance;
+                _depthOfField.focusDistance.value = Mathf.MoveTowards(_depthOfField.focusDistance.value, hit.distance, Time.deltaTime * DoFAdjustMultiplier);
             }
 
             //if (!_rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
