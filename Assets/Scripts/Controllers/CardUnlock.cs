@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Entities;
 using Managers;
@@ -17,7 +19,8 @@ namespace Controllers
 
         private Vector3 _originalPos;
         private Canvas _canvas;
-        private Building _building;
+        private Stack<Building> _buildings = new Stack<Building>();
+        private Building _displayBuilding;
 
         private void Start()
         {
@@ -26,19 +29,21 @@ namespace Controllers
             
             BuildingCards.OnUnlock += building =>
             {
-                _building = building;
-            };
-            
-            Newspaper.OnClosed += () =>
-            {
-                if (!_building) return;
-                
-                cardDisplay.UpdateDetails(_building);
-                _building = null;
-                Open();
+                _buildings.Push(building);
             };
 
+            Newspaper.OnClosed += OpenCard;
+
             Close();
+        }
+
+        private void OpenCard()
+        {
+            if (!_buildings.Any() || _displayBuilding) return;
+
+            _displayBuilding = _buildings.Pop();
+            cardDisplay.UpdateDetails(_displayBuilding);
+            Open();
         }
 
         private void Open()
@@ -46,7 +51,7 @@ namespace Controllers
             Manager.EnterMenu();
             _canvas.enabled = true;
             Jukebox.Instance.PlayScrunch();
-            
+
             var cardTransform = cardDisplay.transform;
             cardTransform.localPosition = new Vector3(1000, 200, 0);
             cardTransform.localRotation = new Quaternion( 0.0f, 0.0f, 20.0f, 0.0f);
@@ -68,8 +73,13 @@ namespace Controllers
                 .DOLocalRotate(new Vector3(0, 0, 20), animateOutDuration)
                 .OnComplete(() =>
                 {
-                    _canvas.enabled = false;
-                    Manager.ExitMenu();
+                    _displayBuilding = null;
+                    if (_buildings.Any()) OpenCard();
+                    else
+                    {
+                        _canvas.enabled = false;
+                        Manager.ExitMenu();
+                    }
                 });
         }
     }
