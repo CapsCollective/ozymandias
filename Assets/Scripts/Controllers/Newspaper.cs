@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using TMPro;
@@ -13,6 +14,9 @@ namespace Controllers
 {
     public class Newspaper : MonoBehaviour
     {
+        // Public fields
+        public static Action OnClosed;
+        
         // Serialised Fields
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private NewspaperEvent[] articleList;
@@ -130,7 +134,11 @@ namespace Controllers
             transform.DOLocalMove(new Vector3(2000, 800, 0), animateOutDuration);
             transform
                 .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
-                .OnComplete(() => { _canvas.enabled = false; });
+                .OnComplete(() =>
+                {
+                    OnClosed?.Invoke();
+                    _canvas.enabled = false;
+                });
         }
         
         public void CloseNoExit()
