@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
@@ -20,7 +19,7 @@ namespace Managers
 
         private readonly List<Building> _buildings = new List<Building>();
         private readonly List<Building> _terrain = new List<Building>();
-        public readonly Dictionary<string, Section.SectionData> _buildingCache = new Dictionary<string, Section.SectionData>();
+        public readonly Dictionary<string, BuildingSection.SectionData> BuildingCache = new Dictionary<string, BuildingSection.SectionData>();
 
         public int Count => _buildings.Count;
 
@@ -29,7 +28,7 @@ namespace Managers
             object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
             foreach(TextAsset o in buildingsText)
             {
-                _buildingCache.Add(o.name, JsonUtility.FromJson<Section.SectionData>(o.text));
+                BuildingCache.Add(o.name, JsonUtility.FromJson<BuildingSection.SectionData>(o.text));
             }
         }
 

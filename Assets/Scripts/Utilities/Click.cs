@@ -18,7 +18,7 @@ namespace Utilities
 
         private void Update()
         {
-            if (GameManager.Manager.isLoading)
+            if (GameManager.Manager.IsLoading)
                 return;
 
             if (Input.GetMouseButtonDown(0)) _time0 = Time.time;

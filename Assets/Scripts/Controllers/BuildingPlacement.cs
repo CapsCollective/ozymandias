@@ -76,7 +76,7 @@ namespace Controllers
 
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
 
-            Cell closest = GameManager.Manager.Map.GetCellFromMouse();
+            Cell closest = GameManager.Manager.Map.GetClosestCellToCursor();
 
             Building building = cards[Selected].buildingPrefab.GetComponent<Building>();
 

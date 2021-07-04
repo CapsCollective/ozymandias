@@ -8,8 +8,6 @@ using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 using DG.Tweening;
-using Managers;
-using UnityEditor;
 
 namespace Entities
 {
@@ -26,7 +24,6 @@ namespace Entities
         public int baseCost;
         public Color roofColor;
         [SerializeField] private ScaleSpeed scaleSpeed;
-        //[HideInInspector] public bool operational;
         
         private Vector3 _placementPosition;
         private int _rotation;
@@ -46,33 +43,30 @@ namespace Entities
         private const string BuildTrigger = "Build";
         private const string ClearTrigger = "Clear";
         
-        private Animator _animator;
-        private Animator Animator => _animator ? _animator : _animator = GetComponent<Animator>();
-
         private ParticleSystem _particleSystem;
         private ParticleSystem ParticleSystem => _particleSystem ? _particleSystem : _particleSystem = GetComponentInChildren<ParticleSystem>();
 
         [SerializeField] private Material mat;
 
-        private List<Renderer> _segments = new List<Renderer>();
+        private readonly List<Renderer> _segments = new List<Renderer>();
 
-        public void Fit(Vector3[][] vertices, float heightFactor, bool animate = false)
+        public void Fit(Vector3[][] vertices, bool animate = false)
         {
             if (fitToCell)
             {
                 for (int i = 0; i < sections.Count; i++)
                 {
-                    Section section = Instantiate(sections[i].prefab, transform).GetComponent<Section>();
-                    section.clockwiseRotations = sections[i].clockwiseRotations;
-                    section.Fit(vertices[i], heightFactor);
-                    section.SetRoofColor(roofColor);
+                    BuildingSection buildingSection = Instantiate(sections[i].prefab, transform).GetComponent<BuildingSection>();
+                    buildingSection.clockwiseRotations = sections[i].clockwiseRotations;
+                    buildingSection.Fit(vertices[i]);
+                    buildingSection.SetRoofColor(roofColor);
                 }
             }
             else
             {
                 for (int i = 0; i < sections.Count; i++)
                 {
-                    Section s = Instantiate(sections[i].prefab, transform).GetComponent<Section>();
+                    BuildingSection s = Instantiate(sections[i].prefab, transform).GetComponent<BuildingSection>();
                     Vector3 v = new Vector3(
                         vertices[i].Average(x => x.x), 0,
                         vertices[i].Average(x => x.z)

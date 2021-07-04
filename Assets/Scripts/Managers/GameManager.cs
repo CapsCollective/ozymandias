@@ -28,8 +28,8 @@ namespace Managers
             }
         }
 
-        public bool isLoading;
-
+        public bool IsLoading { get; private set; }
+        
         // All Managers/ Universal Controllers
         public Adventurers Adventurers { get; private set; }
         public Buildings Buildings { get; private set; }
@@ -239,7 +239,7 @@ namespace Managers
         
         private async void Load()
         {
-            isLoading = true;
+            IsLoading = true;
             loadingScreen.enabled = true;
             await new SaveFile().Load();
             loadingScreen.enabled = false;
@@ -249,7 +249,7 @@ namespace Managers
             UpdateUi();
             
             welcomeScreen1.GetComponent<Letter>().Open();
-            isLoading = false;
+            IsLoading = false;
         }
 
         private bool _gameOver;
