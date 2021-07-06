@@ -126,15 +126,16 @@ namespace Controllers
             HoveredBuilding = SelectHoveredBuilding();
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             // Keep track of clear button position above selected building
             if (!_selectedBuilding) return;
-            
-            transform.position = Vector3.SmoothDamp(
-                transform.position,
-                _cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset), 
-                ref _velocity, 0.035f);
+
+            transform.position = _cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset);
+                //Vector3.SmoothDamp(
+                //transform.position,
+                //_cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset), 
+                //ref _velocity, 0.035f);
         }
 
         // Returns the building the cursor is hovering over if exists

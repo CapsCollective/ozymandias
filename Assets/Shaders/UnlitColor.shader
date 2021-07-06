@@ -2,6 +2,7 @@ Shader "Custom/UnlitColor"
 {
     Properties
     {
+        _Color("color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
