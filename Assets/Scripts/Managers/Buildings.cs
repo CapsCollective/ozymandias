@@ -107,7 +107,7 @@ namespace Managers
             foreach (string building in buildings)
             {
                 string[] details = building.Split(',');
-                Vector3 worldPosition = new Vector3(float.Parse(details[1]), 0, float.Parse(details[2]));
+                Vector3 worldPosition = new Vector3(float.Parse(details[1], System.Globalization.CultureInfo.InvariantCulture), 0, float.Parse(details[2], System.Globalization.CultureInfo.InvariantCulture));
                 GameObject buildingInstance = await Addressables.InstantiateAsync(details[0], transform).Task;
                 Manager.Map.CreateBuilding(buildingInstance, worldPosition, int.Parse(details[3]));
             }

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using static Managers.GameManager;
@@ -9,6 +11,9 @@ namespace Managers
 {
     public class BuildingCards : MonoBehaviour
     {
+        // Public fields
+        public static Action<Building> OnUnlock;
+        
         public List<GameObject> starterBuildings;
         [HideInInspector] public List<GameObject> unlockedBuildings;
 
@@ -18,6 +23,7 @@ namespace Managers
         {
             if (unlockedBuildings.Contains(building)) return false;
             unlockedBuildings.Add(building);
+            OnUnlock?.Invoke(building.GetComponent<Building>());
             Manager.Achievements.Unlock("A Helping Hand");
             if (unlockedBuildings.Count >= 5)
                 Manager.Achievements.Unlock("Modern Influences");

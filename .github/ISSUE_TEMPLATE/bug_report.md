@@ -15,19 +15,10 @@ assignees: ''
 <!-- Provide steps to reproduce the bug -->
 ...
 
-**Expected behavior**
-<!-- Provide a brief description of what you expected to happen -->
-...
-
 **System details**
 - Release: vX.Y.Z
-- OS:
-    - [ ] Unity Editor
-    - [ ] Windows
-    - [ ] macOS
-    - [ ] Linux
-<!-- Note your OS version/distribution here if applicable -->
-- OS Version: ...
+<!-- Note your OS (and distribution) here, and whether the issue occurs in the editor or build only -->
+- OS Version (or editor): ...
 
 **Additional details**
 <!-- Add any other information or context about the problem here -->
