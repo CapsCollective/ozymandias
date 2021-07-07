@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 4323058296507135132}
   - component: {fileID: 340253856}
   - component: {fileID: 8532576421947153514}
+  - component: {fileID: 1336905341}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -424,6 +425,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragAcceleration: 0.05
+  scrollAccelerationSpeed: 0.1
+  bounceTime: 0.1
   startPos: {x: 2, y: 10.86, z: -12}
   startRot: {x: 40, y: -15, z: 0}
   profile: {fileID: 11400000, guid: 08abc5f6c7c957f459d6ed1b8eeda8cc, type: 2}
@@ -593,7 +596,7 @@ MonoBehaviour:
     m_MaxSpeed: 0.75
     m_AccelTime: 0.2
     m_DecelTime: 0.1
-    m_InputAxisName: Mouse ScrollWheel
+    m_InputAxisName: 
     m_InputAxisValue: 0
     m_InvertInput: 1
     m_MinValue: 0
@@ -653,6 +656,36 @@ MonoBehaviour:
   - {fileID: 46643436108606383}
   - {fileID: 4105162738892695482}
   - {fileID: 4388694482466129714}
+--- !u!114 &1336905341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826372568487654225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5542565069444483710
 GameObject:
   m_ObjectHideFlags: 0

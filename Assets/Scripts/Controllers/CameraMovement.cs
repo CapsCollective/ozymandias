@@ -2,8 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.InputSystem;
 using static Managers.GameManager;
 using Cinemachine;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.Users;
 
 namespace Controllers
 {
@@ -20,6 +23,9 @@ namespace Controllers
         private float scrollAcceleration;
         private float scrollAccelerationRef = 0;
         private Vector3 followVelRef = Vector3.zero;
+        private bool rightClick = false;
+        private bool leftClick = false;
+        private RaycastHit posHit;
 
         private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
         private Vector3 lastDrag;
@@ -27,6 +33,7 @@ namespace Controllers
 
         public static Action OnCameraMove;
 
+        [SerializeField] private float controllerSpeed = 5f;
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
         [SerializeField] private float bounceTime = 0.1f;
@@ -57,55 +64,98 @@ namespace Controllers
             _rb = GetComponent<Rigidbody>();
             profile.TryGetSettings(out _depthOfField);
             freeLook = GetComponent<CinemachineFreeLook>();
+            InputManager.Instance.OnControlChange += OnControlChange;
+            InputManager.Instance.OnRightClick.performed += RightClick;
+            InputManager.Instance.OnRightClick.canceled += RightClick; 
+            InputManager.Instance.OnLeftClick.performed += LeftClick;
+            InputManager.Instance.OnLeftClick.canceled += LeftClick;
+        }
+
+        private void OnControlChange(InputControlScheme controlScheme)
+        {
+            if(controlScheme == InputManager.Instance.PlayerInput.ControllerScheme)
+            {
+                rightClick = true;
+                //leftClick = true;
+            }
+            else
+            {
+                rightClick = false;
+                //leftClick = false;
+            }
+        }
+
+        private void RightClick(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                rightClick = true;
+            }
+            else if (context.canceled)
+            {
+                rightClick = false;
+                freeLook.m_XAxis.m_InputAxisValue = 0;
+            }
+        }
+
+        private void LeftClick(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                leftClick = true;
+                _dragging = true;
+                lastDrag = posHit.point;
+            }
+            else if (context.canceled)
+            {
+                leftClick = false;
+                _dragging = false;
+            }
         }
 
         private void Update()
         {
             if (Manager.inMenu) return;
 
-            if (Input.GetMouseButton(1))
+            if (rightClick)
             {
-                freeLook.m_XAxis.m_InputAxisValue = -Input.GetAxis("Mouse X");
-            }
-            else if (Input.GetMouseButtonUp(1))
-            {
-                freeLook.m_XAxis.m_InputAxisValue = 0;
+                freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.RotateCamera.ReadValue<float>();
             }
 
-            Ray posRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit posHit;
-
-            if (Physics.Raycast(posRay, out posHit, 1000f, LayerMask.GetMask("Ocean")))
+            if (InputManager.Instance.ControlScheme == InputManager.Instance.PlayerInput.MouseandKeyboardScheme)
             {
-                if (Input.GetMouseButtonDown(0))
+                Ray posRay = Camera.main.ScreenPointToRay(InputManager.Instance.MousePosition.ReadValue<Vector2>());
+
+                if (Physics.Raycast(posRay, out posHit, 1000f, LayerMask.GetMask("Ocean")))
                 {
-                    _dragging = true;
-                    lastDrag = posHit.point;
+                    if (leftClick)
+                    {
+                        dragDir = lastDrag - posHit.point;
+                        dragDir.y = 0;
+                    }
                 }
+                freeLook.Follow.position += dragDir;
 
-                if (Input.GetMouseButton(0))
+                if (!_dragging)
                 {
-                    dragDir = lastDrag - posHit.point;
-                    dragDir.y = 0;
+                    dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
                 }
-            }
-            freeLook.Follow.position += dragDir;
-
-            if (Input.GetMouseButtonUp(0))
+            } 
+            else if (InputManager.Instance.ControlScheme == InputManager.Instance.PlayerInput.ControllerScheme)
             {
-                _dragging = false;
+                Vector2 inputDir = InputManager.Instance.MoveCamera.ReadValue<Vector2>();
+                Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
+                Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
+                freeLook.Follow.position += ((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * Time.deltaTime * controllerSpeed;
             }
 
-            if (!_dragging)
-            {
-                dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
-            }
-
-            float scroll = -Input.mouseScrollDelta.y;
+            // Scrolling
+            float scroll = -InputManager.Instance.OnScroll.ReadValue<float>();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             freeLook.m_YAxis.Value += scrollAcceleration;
 
+            // Depth of Field stuff
             volume.weight = Mathf.Lerp(1, 0, freeLook.m_YAxis.Value);
             var DoFRay = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(DoFRay, out var hit, 100f, layerMask))
@@ -113,6 +163,7 @@ namespace Controllers
                 _depthOfField.focusDistance.value = Mathf.MoveTowards(_depthOfField.focusDistance.value, hit.distance, Time.deltaTime * DoFAdjustMultiplier);
             }
 
+            // Bounciness stuff
             bool atLimit = freeLook.m_YAxis.Value <= 0.01 | freeLook.m_YAxis.Value >= 0.98;
             if (atLimit && Mathf.Abs(scrollAcceleration) > 0)
                 freeLook.Follow.position += new Vector3(0, scrollAcceleration, 0);
