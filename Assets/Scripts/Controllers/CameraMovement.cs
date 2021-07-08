@@ -23,7 +23,6 @@ namespace Controllers
         private float scrollAcceleration;
         private float scrollAccelerationRef = 0;
         private Vector3 followVelRef = Vector3.zero;
-        private bool rightClick = false;
         private bool leftClick = false;
         private RaycastHit posHit;
 
@@ -64,36 +63,16 @@ namespace Controllers
             _rb = GetComponent<Rigidbody>();
             profile.TryGetSettings(out _depthOfField);
             freeLook = GetComponent<CinemachineFreeLook>();
-            InputManager.Instance.OnControlChange += OnControlChange;
             InputManager.Instance.OnRightClick.performed += RightClick;
             InputManager.Instance.OnRightClick.canceled += RightClick; 
             InputManager.Instance.OnLeftClick.performed += LeftClick;
             InputManager.Instance.OnLeftClick.canceled += LeftClick;
         }
 
-        private void OnControlChange(InputControlScheme controlScheme)
-        {
-            if(controlScheme == InputManager.Instance.PlayerInput.ControllerScheme)
-            {
-                rightClick = true;
-                //leftClick = true;
-            }
-            else
-            {
-                rightClick = false;
-                //leftClick = false;
-            }
-        }
-
         private void RightClick(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.canceled)
             {
-                rightClick = true;
-            }
-            else if (context.canceled)
-            {
-                rightClick = false;
                 freeLook.m_XAxis.m_InputAxisValue = 0;
             }
         }
@@ -102,8 +81,8 @@ namespace Controllers
         {
             if (context.performed)
             {
-                leftClick = true;
                 _dragging = true;
+                leftClick = true;
                 lastDrag = posHit.point;
             }
             else if (context.canceled)
@@ -117,14 +96,11 @@ namespace Controllers
         {
             if (Manager.inMenu) return;
 
-            if (rightClick)
-            {
-                freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.RotateCamera.ReadValue<float>();
-            }
+            freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.RotateCamera.ReadValue<float>();
 
-            if (!InputManager.UsingController())
+            if (!InputManager.UsingController)
             {
-                Ray posRay = Camera.main.ScreenPointToRay(InputManager.Instance.MousePosition.ReadValue<Vector2>());
+                Ray posRay = Camera.main.ScreenPointToRay(InputManager.MousePos);
 
                 if (Physics.Raycast(posRay, out posHit, 1000f, LayerMask.GetMask("Ocean")))
                 {
@@ -134,6 +110,7 @@ namespace Controllers
                         dragDir.y = 0;
                     }
                 }
+
                 freeLook.Follow.position += dragDir;
 
                 if (!_dragging)

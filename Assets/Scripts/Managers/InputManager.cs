@@ -8,6 +8,17 @@ using UnityEngine.InputSystem.Users;
 public class InputManager
 {
     public static InputManager Instance;
+    public static bool UsingController => Instance.ControlScheme == Instance.PlayerInput.ControllerScheme;
+    public static Vector2 MousePos 
+    {
+        get
+        {
+            if(!UsingController)
+                return Instance.MousePosition.ReadValue<Vector2>();
+            return Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+        }
+    }
+
     public Action<InputControlScheme> OnControlChange;
 
     public InputControlScheme ControlScheme;
@@ -18,6 +29,7 @@ public class InputManager
     public InputAction RotateCamera { get; private set; }
     public InputAction MousePosition { get; private set; }
     public InputAction MoveCamera { get; private set; }
+    public InputAction DeleteBuilding { get; private set; }
 
     public InputManager()
     {
@@ -40,6 +52,8 @@ public class InputManager
         MousePosition.Enable();
         MoveCamera = PlayerInput.Player.MoveCamera;
         MoveCamera.Enable();
+        DeleteBuilding = PlayerInput.Player.DeleteBuilding;
+        DeleteBuilding.Enable();
 
         PlayerInput.Enable();
         InputUser.onChange += InputUser_onChange;
@@ -54,11 +68,6 @@ public class InputManager
             ControlScheme = arg1.controlScheme.Value;
             OnControlChange?.Invoke(arg1.controlScheme.Value);
         }
-    }
-
-    public static bool UsingController()
-    {
-        return Instance.ControlScheme == Instance.PlayerInput.ControllerScheme;
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

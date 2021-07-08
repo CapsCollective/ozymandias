@@ -54,7 +54,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": ""Move Camera"",
                     ""type"": ""Value"",
                     ""id"": ""7c71ed57-0d72-4094-b95f-dbf4f29ae3ca"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -63,6 +63,22 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""0a44445c-aa72-442e-9ce7-78b7793f95b1"",
                     ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DeleteBuilding"",
+                    ""type"": ""Button"",
+                    ""id"": ""2940d26f-e08c-4a18-804f-8f913c5b61d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Screenshot"",
+                    ""type"": ""Button"",
+                    ""id"": ""2dd729ed-effd-4141-addd-a5abd2dcb05f"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -136,17 +152,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1972e444-fae5-4d05-b052-7b9bec81502d"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""1c0022d7-0321-4991-a467-463415c025c0"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
@@ -168,13 +173,68 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""1e8cf57d-6dca-4388-810a-9cb2b333aad2"",
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""526fb184-f2dc-4128-b327-f2b9522023df"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Camera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""7ce71aec-b1d1-46bc-acd3-e7d4e4cb48ad"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Rotate Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""cf6dbc72-e5f6-4092-ba04-1ed9645dd532"",
                     ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Rotate Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc970a85-536d-41f1-a2fd-a272b252fae9"",
+                    ""path"": ""<Keyboard>/delete"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""DeleteBuilding"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c32499e-11c4-47eb-8a32-e112a9763e3b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""DeleteBuilding"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c2fddbe-1afc-4232-9222-6328fdebe022"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Screenshot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -219,6 +279,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Player_MousePosition = m_Player.FindAction("Mouse Position", throwIfNotFound: true);
         m_Player_MoveCamera = m_Player.FindAction("Move Camera", throwIfNotFound: true);
         m_Player_RotateCamera = m_Player.FindAction("Rotate Camera", throwIfNotFound: true);
+        m_Player_DeleteBuilding = m_Player.FindAction("DeleteBuilding", throwIfNotFound: true);
+        m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -274,6 +336,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_MoveCamera;
     private readonly InputAction m_Player_RotateCamera;
+    private readonly InputAction m_Player_DeleteBuilding;
+    private readonly InputAction m_Player_Screenshot;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -284,6 +348,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @MoveCamera => m_Wrapper.m_Player_MoveCamera;
         public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
+        public InputAction @DeleteBuilding => m_Wrapper.m_Player_DeleteBuilding;
+        public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,6 +377,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @RotateCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateCamera;
+                @DeleteBuilding.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteBuilding;
+                @DeleteBuilding.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteBuilding;
+                @DeleteBuilding.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteBuilding;
+                @Screenshot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
+                @Screenshot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
+                @Screenshot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -333,6 +405,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @RotateCamera.started += instance.OnRotateCamera;
                 @RotateCamera.performed += instance.OnRotateCamera;
                 @RotateCamera.canceled += instance.OnRotateCamera;
+                @DeleteBuilding.started += instance.OnDeleteBuilding;
+                @DeleteBuilding.performed += instance.OnDeleteBuilding;
+                @DeleteBuilding.canceled += instance.OnDeleteBuilding;
+                @Screenshot.started += instance.OnScreenshot;
+                @Screenshot.performed += instance.OnScreenshot;
+                @Screenshot.canceled += instance.OnScreenshot;
             }
         }
     }
@@ -363,5 +441,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMoveCamera(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
+        void OnDeleteBuilding(InputAction.CallbackContext context);
+        void OnScreenshot(InputAction.CallbackContext context);
     }
 }

@@ -39,10 +39,10 @@ namespace Managers
         
         private void Update()
         {
-            if (!Input.GetMouseButtonDown(0) || !_selectedQuest) return;
-            if (_selectedQuest.mouseOver) return;
-            _selectedQuest.ResetDisplay();
-            _selectedQuest = null;
+            //if (!Input.GetMouseButtonDown(0) || !_selectedQuest) return;
+            //if (_selectedQuest.mouseOver) return;
+            //_selectedQuest.ResetDisplay();
+            //_selectedQuest = null;
         }
 
         private void OnFlyerClick(GameObject flyer)

@@ -41,7 +41,7 @@
                     "name": "Move Camera",
                     "type": "Value",
                     "id": "7c71ed57-0d72-4094-b95f-dbf4f29ae3ca",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
                 },
@@ -50,6 +50,22 @@
                     "type": "Value",
                     "id": "0a44445c-aa72-442e-9ce7-78b7793f95b1",
                     "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "DeleteBuilding",
+                    "type": "Button",
+                    "id": "2940d26f-e08c-4a18-804f-8f913c5b61d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Screenshot",
+                    "type": "Button",
+                    "id": "2dd729ed-effd-4141-addd-a5abd2dcb05f",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -123,17 +139,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1972e444-fae5-4d05-b052-7b9bec81502d",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse and Keyboard",
-                    "action": "Move Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1c0022d7-0321-4991-a467-463415c025c0",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
@@ -155,13 +160,68 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "1e8cf57d-6dca-4388-810a-9cb2b333aad2",
+                    "name": "Button With One Modifier",
+                    "id": "526fb184-f2dc-4128-b327-f2b9522023df",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Camera",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "7ce71aec-b1d1-46bc-acd3-e7d4e4cb48ad",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Rotate Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "button",
+                    "id": "cf6dbc72-e5f6-4092-ba04-1ed9645dd532",
                     "path": "<Mouse>/delta/x",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Mouse and Keyboard",
                     "action": "Rotate Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "cc970a85-536d-41f1-a2fd-a272b252fae9",
+                    "path": "<Keyboard>/delete",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "DeleteBuilding",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c32499e-11c4-47eb-8a32-e112a9763e3b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "DeleteBuilding",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c2fddbe-1afc-4232-9222-6328fdebe022",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Screenshot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

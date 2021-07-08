@@ -126,7 +126,7 @@ public class Map : MonoBehaviour
     // Gets the closest cell to the cursor
     public Cell GetCellFromMouse()
     {
-        Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.nearClipPlane));
+        Ray ray = cam.ScreenPointToRay(new Vector3(InputManager.MousePos.x, InputManager.MousePos.y, cam.nearClipPlane));
         RaycastHit hit;
         Physics.Raycast(ray, out hit, 200f, layerMask);
         return GetCell(hit.point);

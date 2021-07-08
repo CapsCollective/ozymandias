@@ -16,19 +16,46 @@ namespace Utilities
     
         private float _time0, _time1;
 
-        private void Update()
+        private void Awake()
+        {
+            InputManager.Instance.OnLeftClick.performed += I_OnLeftClick;
+            InputManager.Instance.OnLeftClick.canceled += I_OnLeftClick;
+            InputManager.Instance.OnRightClick.performed += I_OnRightClick;
+            InputManager.Instance.OnRightClick.canceled += I_OnRightClick;
+        }
+
+        private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             if (GameManager.Manager.isLoading)
                 return;
 
-            if (Input.GetMouseButtonDown(0)) _time0 = Time.time;
-            if (Input.GetMouseButtonUp(0) && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();
-        
-            if (Input.GetMouseButtonDown(1)) _time1 = Time.time;
-            if (Input.GetMouseButtonUp(1) && Time.time - _time1 < clickSpeed) OnRightClick?.Invoke();
-
-            if (Input.GetMouseButtonUp(0)) PlacingBuilding = false;
+            if (obj.performed) _time0 = Time.time;
+            if(obj.canceled && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();
+            if (obj.canceled) PlacingBuilding = false;
         }
+
+        private void I_OnRightClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (GameManager.Manager.isLoading)
+                return;
+
+            if (obj.performed) _time1 = Time.time;
+            if (obj.canceled && Time.time - _time1 < clickSpeed) OnRightClick?.Invoke();
+        }
+
+        //private void Update()
+        //{
+        //    if (GameManager.Manager.isLoading)
+        //        return;
+
+        //    //if (Input.GetMouseButtonDown(0)) _time0 = Time.time;
+        //    //if (Input.GetMouseButtonUp(0) && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();
+        
+        //    //if (Input.GetMouseButtonDown(1)) _time1 = Time.time;
+        //    //if (Input.GetMouseButtonUp(1) && Time.time - _time1 < clickSpeed) OnRightClick?.Invoke();
+
+        //    //if (Input.GetMouseButtonUp(0)) PlacingBuilding = false;
+        //}
 
         private void OnDestroy()
         {

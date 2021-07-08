@@ -59,7 +59,7 @@ public class MapAnimator : MonoBehaviour
 
     private void UpdateEffectOrigin()
     {
-        Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
+        Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePos.x, InputManager.MousePos.y, _cam.nearClipPlane));
         Physics.Raycast(ray, out RaycastHit hit);
 
         _meshRenderer.material.SetVector(effectOrigin, hit.point);

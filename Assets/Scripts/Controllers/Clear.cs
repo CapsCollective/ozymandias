@@ -103,6 +103,7 @@ namespace Controllers
             
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += DeselectBuilding;
+            InputManager.Instance.DeleteBuilding.performed += (e) => ClearBuilding();
 
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
             //CameraMovement.OnCameraMove += DeselectBuilding;
@@ -132,17 +133,13 @@ namespace Controllers
             if (!_selectedBuilding) return;
 
             transform.position = _cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset);
-                //Vector3.SmoothDamp(
-                //transform.position,
-                //_cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset), 
-                //ref _velocity, 0.035f);
         }
 
         // Returns the building the cursor is hovering over if exists
         private Building SelectHoveredBuilding()
         {
             Ray ray = _cam.ScreenPointToRay(
-                new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
+                new Vector3(InputManager.MousePos.x, InputManager.MousePos.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
 
             return hit.collider ? hit.collider.GetComponentInParent<Building>() : null;
