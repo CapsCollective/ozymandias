@@ -234,6 +234,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1336905341, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 51bdfe56de3a9e24c82b7b5df4f6d6df,
+        type: 3}
+    - target: {fileID: 1336905341, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336905341, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336905341, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336905341, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4826372568487654225, guid: a8b3db9615e6d554aa03443f13361c3e,
         type: 3}
       propertyPath: m_Name
@@ -304,11 +325,6 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 1122380876}
-    - target: {fileID: 8532576421947153514, guid: a8b3db9615e6d554aa03443f13361c3e,
-        type: 3}
-      propertyPath: m_YAxis.m_InputAxisName
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8b3db9615e6d554aa03443f13361c3e, type: 3}
 --- !u!20 &74590738 stripped
@@ -4492,42 +4508,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3159865347116376354}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1336905340 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4826372568487654225, guid: a8b3db9615e6d554aa03443f13361c3e,
-    type: 3}
-  m_PrefabInstance: {fileID: 74590737}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1336905341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336905340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
-  m_NotificationBehavior: 3
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: 
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1001 &1347627190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5707,7 +5687,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 74590737}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336905340}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}

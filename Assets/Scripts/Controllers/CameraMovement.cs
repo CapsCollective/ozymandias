@@ -122,7 +122,7 @@ namespace Controllers
                 freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.RotateCamera.ReadValue<float>();
             }
 
-            if (InputManager.Instance.ControlScheme == InputManager.Instance.PlayerInput.MouseandKeyboardScheme)
+            if (!InputManager.UsingController())
             {
                 Ray posRay = Camera.main.ScreenPointToRay(InputManager.Instance.MousePosition.ReadValue<Vector2>());
 
@@ -141,7 +141,7 @@ namespace Controllers
                     dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
                 }
             } 
-            else if (InputManager.Instance.ControlScheme == InputManager.Instance.PlayerInput.ControllerScheme)
+            else
             {
                 Vector2 inputDir = InputManager.Instance.MoveCamera.ReadValue<Vector2>();
                 Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);

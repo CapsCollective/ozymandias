@@ -56,6 +56,10 @@ public class InputManager
         }
     }
 
+    public static bool UsingController()
+    {
+        return Instance.ControlScheme == Instance.PlayerInput.ControllerScheme;
+    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void OnGameLoad()
