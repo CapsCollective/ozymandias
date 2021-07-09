@@ -21,7 +21,7 @@ namespace Controllers
         private float scrollAccelerationRef = 0;
         private Vector3 followVelRef = Vector3.zero;
 
-        private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
+        private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis, startPos, startRot;
         private Vector3 lastDrag;
         private bool _dragging, _rotating;
 
