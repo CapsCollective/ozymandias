@@ -19,6 +19,16 @@ public class UIEventController : MonoBehaviour
         eventSystem = GetComponent<EventSystem>();
         InputManager.Instance.SelectCards.performed += SelectCards;
         InputManager.Instance.UINavigate.canceled += Navigate;
+        InputManager.Instance.UICancel.performed += UICancel;
+    }
+
+    private void UICancel(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (isSelectingCard)
+        {
+            lastSelectedCard.GetComponent<BuildingCard>().DeselectCard();
+            lastSelectedCard.GetComponent<BuildingCard>().toggle.isOn = false;
+        }
     }
 
     public void Navigate(UnityEngine.InputSystem.InputAction.CallbackContext obj)

@@ -37,6 +37,7 @@ public class InputManager
     public InputAction SelectCards { get; private set; }
     public InputAction CancelBuild { get; private set; }
     public InputAction UINavigate { get; private set; }
+    public InputAction UICancel { get; private set; }
 
     public InputManager()
     {
@@ -65,6 +66,8 @@ public class InputManager
         SelectCards.Enable();
         UINavigate = PlayerInput.UI.Navigate;
         UINavigate.Enable();
+        UICancel = PlayerInput.UI.Cancel;
+        UICancel.Enable();
 
         PlayerInput.Enable();
         InputUser.onChange += InputUser_onChange;
