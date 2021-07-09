@@ -168,7 +168,7 @@ namespace Managers
             OnNextTurn?.Invoke();
         }
 
-        [SerializeField] private GenericDictionary<int, Event> manualEvents;
+        [SerializeField] private SerializedDictionary<int, Event> manualEvents;
         public void NewTurn()
         {
             Buildings.placedThisTurn = 0;

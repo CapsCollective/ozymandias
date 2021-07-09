@@ -50,7 +50,7 @@ namespace UI
 
         [SerializeField] private List<EffectBadge> badges;
         [SerializeField] private List<Sprite> chevronSizes;
-        [SerializeField] private GenericDictionary<Stat, Sprite> statIcons;
+        [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
 
         private readonly Dictionary<Stat, Color> _statColors = new Dictionary<Stat, Color>
         {

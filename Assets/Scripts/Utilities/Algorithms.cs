@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Entities;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Utilities
                 Runner = this;
         }
 
-        public static IEnumerator ConvexHullAsync(List<Vertex> included, Graph<Vertex> graph, Action<List<Vertex>> returnThing)
+        public static IEnumerator ConvexHullAsync(List<Vertex> included, Graph<Vertex> graph, Action<List<Vertex>> callback)
         {
             List<Vertex> path = new List<Vertex>();
 
@@ -55,8 +56,8 @@ namespace Utilities
 
             Graph<Vertex> dupGraph = new Graph<Vertex>(graph);
             for (int i = dupGraph.Count - 1; i >= 0; i--)
-                if (!included.Contains(dupGraph.Data[i]))
-                    dupGraph.RemoveAt(i);
+                if (!included.Select(vertex => vertex.Id).Contains(dupGraph.Data[i].Id))
+                    dupGraph.Remove(dupGraph.Data[i].Id);
 
             for (int i = 0; i < path.Count - 1; i++)
             {
@@ -74,45 +75,45 @@ namespace Utilities
                 );
             }
 
-            returnThing?.Invoke(path);
+            callback?.Invoke(path);
             yield return new WaitForEndOfFrame();
         }
 
         public static List<Vertex> AStar(Graph<Vertex> set, Vertex root, Vertex target, int iterationLimit = 2000)
         {
             List<Vertex> path = new List<Vertex>();
-
+            
             if (root == target)
                 return path;
 
             List<Vertex> open = new List<Vertex> { root };
-            Dictionary<Vertex, Costs> costs = new Dictionary<Vertex, Costs>();
+            Dictionary<int, Costs> costs = new Dictionary<int, Costs>();
             List<Vertex> closed = new List<Vertex>();
 
             for (int iteration = 0; iteration < iterationLimit; iteration++)
             {
                 Vertex current = open[0];
                 for (int i = 1; i < open.Count; i++)
-                    if (costs[open[i]].FCost < costs[current].FCost) current = open[i];
+                    if (costs[open[i].Id].FCost < costs[current.Id].FCost) current = open[i];
 
                 open.Remove(current);
                 closed.Add(current);
 
-                if (current.Equals(target))
+                if (current.Id == target.Id)
                 {
                     path.Add(root);
                     path.Add(target);
 
-                    Vertex parent = costs[current].Parent;
-                    while (parent != root)
+                    Vertex parent = costs[current.Id].Parent;
+                    while (parent.Id != root.Id)
                     {
                         path.Insert(1, parent);
-                        parent = costs[parent].Parent;
+                        parent = costs[parent.Id].Parent;
                     }
                     break;
                 }
 
-                foreach (Vertex neighbour in set.GetAdjacent(current))
+                foreach (Vertex neighbour in set.GetAdjacentData(current.Id))
                 {
                     float gCost = Vector3.Distance(neighbour, root);
                     float hCost = Vector3.Distance(neighbour, target);
@@ -121,13 +122,13 @@ namespace Utilities
                     if (
                         closed.Contains(neighbour) || 
                         open.Contains(neighbour) && (
-                            !costs.ContainsKey(neighbour) || !(costs[neighbour].FCost >= fCost)
+                            !costs.ContainsKey(neighbour.Id) || !(costs[neighbour.Id].FCost >= fCost)
                         )
                     ) continue;
 
-                    if (costs.ContainsKey(neighbour))
-                        costs.Remove(neighbour);
-                    costs.Add(neighbour, new Costs(current, fCost));
+                    if (costs.ContainsKey(neighbour.Id))
+                        costs.Remove(neighbour.Id);
+                    costs.Add(neighbour.Id, new Costs(current, fCost));
 
                     if (!open.Contains(neighbour))
                         open.Add(neighbour);

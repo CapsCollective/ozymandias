@@ -2,6 +2,7 @@
 using System.Linq;
 using Entities;
 using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -17,21 +18,21 @@ namespace Managers
             Invalid
         }
 
-        [SerializeField] private MapLayout layout;
+        public LayerMask layerMask;
         [SerializeField] private MeshFilter gridMesh, roadMesh;
-        [SerializeField] private LayerMask layerMask;
-
+        [SerializeField] private MapLayout layout;
+        
         private Camera _cam;
 
         private void Awake()
         {
             _cam = Camera.main;
-            Generate();
+            GenerateMesh();
         }
 
-        [Button] private void Generate()
+        public void GenerateMesh()
         {
-            gridMesh.sharedMesh = layout.Generate();
+            gridMesh.sharedMesh = layout.GenerateCellMesh();
             roadMesh.sharedMesh = new Mesh();
         }
 
@@ -41,7 +42,7 @@ namespace Managers
 
             foreach (Cell cell in cells)
             {
-                if (cell == null) continue;
+                if (cell == null || !cell.Active) continue;
                 foreach (int vertexIndex in layout.GetTriangles(cell))
                     uv[vertexIndex].x = (int) state / 2f;
             }
@@ -58,7 +59,7 @@ namespace Managers
         }
 
         // Gets the closest cell by world position
-        private Cell GetClosestCell(Vector3 worldPosition)
+        public Cell GetClosestCell(Vector3 worldPosition)
         {
             return layout.GetClosest(transform.InverseTransformPoint(worldPosition));
         }
@@ -71,21 +72,21 @@ namespace Managers
         }
 
         // Gets all cells a building would take up given its root and rotation
-        public Cell[] GetCells(Cell root, Building building, int rotation = 0)
+        public List<Cell> GetCells(Cell root, Building building, int rotation = 0)
         {
             return layout.GetCells(root, building, rotation);
         }
 
         // Gets all cells of a currently placed building
-        public Cell[] GetCells(Building building)
+        public List<Cell> GetCells(Building building)
         {
             return layout.GetCells(building);
         }
 
         // Occupies and fits a building onto the map
-        private void Occupy(Building building, Cell[] cells, bool animate = false)
+        private void Occupy(Building building, List<Cell> cells, bool animate = false)
         {
-            Vector3[][] vertices = new Vector3[cells.Length][];
+            Vector3[][] vertices = new Vector3[cells.Count][];
 
             for (int i = 0; i < vertices.Length; i++)
             {
@@ -103,7 +104,8 @@ namespace Managers
             Building building = buildingInstance.GetComponent<Building>();
 
             Cell root = GetClosestCell(worldPosition);
-            Cell[] cells = GetCells(root, building, rotation);
+            if (root == null || !root.Active) return false;
+            List<Cell> cells = GetCells(root, building, rotation);
 
             Vector3 centre = new Vector3();
             int cellCount = 0;

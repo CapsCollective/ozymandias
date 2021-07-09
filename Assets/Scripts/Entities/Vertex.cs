@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Entities
 {
+    [Serializable]
     public class Vertex
-    {
-        private Vector3 Position { get; set; }
-
-        public bool Split { get; }
-        public bool Boundary { get; }
+    { 
+        [field: SerializeField] public int Id { get; set; }
+        [field: SerializeField] public Vector3 Position { get; set; }
+        [field: SerializeField] public bool Split { get; private set; }
+        [field: SerializeField] public bool Boundary { get; private set; }
 
         public Vertex(Vector3 position, bool split, bool boundary)
         {
@@ -30,7 +32,7 @@ namespace Entities
         {
             if ((object) first == null)
                 return (object) second == null;
-            return second != null && (first.GetHashCode() == second.GetHashCode() && (Vector3)first == second);
+            return second != null && (first.Id == second.Id && (Vector3)first == second);
         }
 
         public static bool operator !=(Vertex first, Vertex second)
@@ -47,15 +49,25 @@ namespace Entities
         {
             return (Vector3)first - second;
         }
+        
+        protected bool Equals(Vertex other)
+        {
+            return Id == other.Id && Position.Equals(other.Position);
+        }
 
         public override bool Equals(object obj)
         {
-            return this == (Vertex)obj;
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((Vertex) obj);
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            unchecked
+            {
+                return (Id * 397) ^ Position.GetHashCode();
+            }
         }
     }
 }

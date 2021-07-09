@@ -20,7 +20,7 @@ namespace Entities
         public string description;
         public Sprite icon;
         public BuildingType type;
-        public GenericDictionary<Stat, int> stats;
+        public SerializedDictionary<Stat, int> stats;
         public int baseCost;
         public Color roofColor;
         [SerializeField] private ScaleSpeed scaleSpeed;

@@ -235,7 +235,7 @@ namespace Controllers
             ) return;
             
             if (_selectedBuilding.type == BuildingType.Terrain)
-                TerrainClearCount += Manager.Map.GetCells(_selectedBuilding).Length;
+                TerrainClearCount += Manager.Map.GetCells(_selectedBuilding).Count;
 
             _selectedBuilding.Clear();
             DeselectBuilding();

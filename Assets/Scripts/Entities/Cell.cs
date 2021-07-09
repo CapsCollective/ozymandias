@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Entities
 {
+    [Serializable]
     public class Cell
     {
-        public Building Occupant;
-
-        public List<Vertex> Vertices { get; }
+        [field: SerializeField] public int Id { get; set; }
+        [field: SerializeField] public bool Active { get; set; }
+        [field: SerializeField] public List<Vertex> Vertices { get; set; }
+        public Building Occupant { get; set; }
+        
         public Vector3 Centre => (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4;
         public bool Occupied => Occupant;
 
-        public Cell(Triangle triA, Triangle triB)
+        public Cell(Triangle triA, Triangle triB, bool active = true)
         {
+            Active = active;
             Vertices = new List<Vertex>(triA.Vertices);
 
             // STEP 1. Find the unshared vertex in triB
@@ -35,10 +40,19 @@ namespace Entities
             Vertices.Insert(splitStartIndex + 1 % 3, unsharedB);
         }
 
-        public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD)
+        public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD, bool active = true)
         {
+            Active = active;
             bool cw = Vector3.Cross(vertexB - vertexA, vertexC - vertexA).z > 0;
             Vertices =  cw ? new List<Vertex> { vertexD, vertexC, vertexB, vertexA } : new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
+        }
+        
+        public Cell(List<Vertex> vertices, bool active = true)
+        {
+            vertices = vertices.GetRange(0, 4); // Limit to 4 points
+            Active = active;
+            if(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]).z > 0) vertices.Reverse();
+            Vertices = vertices;
         }
 
         public void Clear()

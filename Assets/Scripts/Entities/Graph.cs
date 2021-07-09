@@ -1,211 +1,158 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using Utilities;
 
 namespace Entities
 {
+    // Store the id returned on Add within T and use for all querying
+    [Serializable]
     public class Graph<T>
     {
-        public List<T> Data { get; }
-        private Dictionary<T, List<T>> Map { get; }
+        [field: SerializeField] private SerializedDictionary<int, T> DataMap { get; set; }
+        [field: SerializeField] private SerializedDictionary<int, List<int>> AdjacencyMap { get; set; }
 
-        public int Count => Data.Count;
+        private int _nextId;
+        
+        public int Count => DataMap.Count;
+
+        public List<int> Ids => DataMap.Keys.ToList();
+        public List<T> Data => DataMap.Values.ToList();
 
         public Graph()
         {
-            Data = new List<T>();
-            Map = new Dictionary<T, List<T>>();
+            _nextId = 0;
+            DataMap = new SerializedDictionary<int, T>();
+            AdjacencyMap = new SerializedDictionary<int, List<int>>();
         }
 
         public Graph(Graph<T> oldGraph)
         {
-            Data = new List<T>(oldGraph.Data);
-            Map = new Dictionary<T, List<T>>();
+            DataMap = new SerializedDictionary<int, T>();
+            AdjacencyMap = new SerializedDictionary<int, List<int>>();
         
-            foreach (T key in oldGraph.Map.Keys)
+            foreach (KeyValuePair<int, T> data in oldGraph.DataMap)
             {
-                Map.Add(key, new List<T>(oldGraph.Map[key]));
+                DataMap.Add(data.Key, data.Value);
+                AdjacencyMap.Add(data.Key, new List<int>(oldGraph.AdjacencyMap[data.Key]));
+                if (_nextId <= data.Key) _nextId = data.Key + 1;
             }
         }
 
-        public Graph(Graph<T> oldGraph, List<T> toInclude)
+        public T GetData(int id)
         {
-            Data = new List<T>();
-            Data.AddRange(toInclude.Where(include => !Data.Contains(include)));
-            Map = new Dictionary<T, List<T>>();
+            return DataMap[id];
+        }
+        
+        public int Add(T toAdd, int ownId = -1)
+        {
+            bool useOwnId = ownId != -1;
+            int id = useOwnId ? ownId : _nextId++;
+            DataMap.Add(id, toAdd);
+            AdjacencyMap.Add(id, new List<int>());
+            return id;
+        }
 
-            foreach (T include in toInclude)
+        public void Remove(int id)
+        {
+            foreach (int id2 in AdjacencyMap[id])
             {
-                if (!oldGraph.Contains(include)) continue;
-                foreach (T neighbour in oldGraph.GetAdjacent(include).Where(Contains))
-                    CreateEdge(include, neighbour);
+                RemoveEdge(id2, id, false);
             }
+            DataMap.Remove(id);
+            AdjacencyMap.Remove(id);
         }
 
-        public bool Contains(T toCheck)
+        public void AddEdge(int idA, int idB, bool bidirectional = true)
         {
-            return Data.Contains(toCheck);
+            // Checks for validity (both points exist) and adds either in one or both directions
+            if (!AdjacencyMap.ContainsKey(idA)) Debug.LogError("ID not found: " + idA);
+            AdjacencyMap[idA].Add(idB);
+            if (bidirectional) AddEdge(idB, idA, false);
         }
 
-        public void RemoveEdges()
+        public void RemoveEdge(int idA, int idB, bool bidirectional = true)
         {
-            foreach (T key in Map.Keys)
-                Map[key].Clear();
+            if (!AdjacencyMap.ContainsKey(idA)) return;
+            AdjacencyMap[idA]?.Remove(idB);
+            if (bidirectional) RemoveEdge(idB, idA, false);
+        }
+        
+        public void RemoveAllEdges()
+        {
+            foreach (int key in AdjacencyMap.Keys)
+                AdjacencyMap[key].Clear();
         }
 
-        public List<List<T>> OneWayDFS(T root, T target, int limit)
+        public bool Contains(int id)
         {
-            List<List<T>> paths = new List<List<T>>();
+            return DataMap.ContainsKey(id);
+        }
 
-            Stack<T> stack = new Stack<T>();
+        public bool Contains(T data)
+        {
+            return DataMap.Values.Contains(data);
+        }
+        
+        public bool HasSharedNeighbours(int idA, int idB)
+        {
+            // Compares all neighbours of idA to idB
+            return (from n1 in AdjacencyMap[idA] from n2 in AdjacencyMap[idB] where n1.Equals(n2) select n1).Any();
+        }
 
-            OneWayVisit(root, root, target, ref paths, ref stack, limit);
+        public List<T> SharedNeighbours(int idA, int idB)
+        {
+            // Compares all neighbours of idA to idB and gets the data of matches
+            return (from n1 in AdjacencyMap[idA] from n2 in AdjacencyMap[idB] where n1 == n2 select DataMap[n1]).ToList();
+        }
+        
+        public bool IsAdjacent(int idA, int idB)
+        {
+            return AdjacencyMap.ContainsKey(idA) && AdjacencyMap[idA].Contains(idB);
+        }
 
+        public List<int> GetAdjacent(int id)
+        {
+            if (AdjacencyMap.ContainsKey(id)) return AdjacencyMap[id];
+            throw new Exception("Node queried is not contained in the adjacency map.");
+        }
+        
+        public List<T> GetAdjacentData(int id)
+        {
+            return GetAdjacent(id).Select(x => DataMap[x]).ToList();
+        }
+        
+        // Recursive depth first search
+        public List<List<int>> Search(int start, int end, int limit, bool direct)
+        {
+            List<List<int>> paths = new List<List<int>>();
+            Stack<int> stack = new Stack<int>();
+            Visit(start, start);
             return paths;
-        }
 
-        private void OneWayVisit(T current, T previous, T target, ref List<List<T>> paths, ref Stack<T> stack, int limit)
-        {
-            stack.Push(current);
+            void Visit(int current, int previous)
+            {
+                stack.Push(current);
 
-            if (current.Equals(target) && stack.Count > 1)
-            {
-                List<T> currentPath = new List<T>(stack);
-                paths.Add(currentPath);
-            }
-            else if (stack.Count < limit)
-            {
-                foreach (T neighbour in Map[current])
+                if (current == end && stack.Count > 1)
                 {
-                    if (!neighbour.Equals(previous)) OneWayVisit(neighbour, current, target, ref paths, ref stack, limit);
+                    List<int> currentPath = new List<int>(stack);
+                    paths.Add(currentPath);
                 }
-            }
-
-            stack.Pop();
-        }
-
-        public List<List<T>> IndirectDFS(T root, T dest, int limit)
-        {
-            List<List<T>> paths = new List<List<T>>();
-
-            Stack<T> stack = new Stack<T>();
-
-            IndirectVisit(root, root, dest, ref paths, ref stack, limit);
-
-            return paths;
-        }
-
-        private void IndirectVisit(T root, T current, T dest, ref List<List<T>> paths, ref Stack<T> stack, int limit)
-        {
-            stack.Push(current);
-
-            if (current.Equals(dest) && stack.Count > 1)
-            {
-                List<T> currentPath = new List<T>(stack);
-                paths.Add(currentPath);
-            }
-            else if (stack.Count < limit)
-            {
-                foreach (T neighbour in Map[current])
+                else if (stack.Count < limit)
                 {
-                    if (!(neighbour.Equals(dest) && current.Equals(root)) && !stack.Contains(neighbour))
-                        IndirectVisit(root, neighbour, dest, ref paths, ref stack, limit);
+                    // Visit all valid neighbours
+                    foreach (int neighbour in AdjacencyMap[current].Where(neighbour => 
+                        (!direct && !(neighbour.Equals(end) && current.Equals(start)) && !stack.Contains(neighbour)) || 
+                        (direct && !neighbour.Equals(previous))
+                    )) {
+                        Visit(neighbour, current);
+                    }
                 }
+
+                stack.Pop();
             }
-
-            stack.Pop();
-        }
-
-        public bool HasSharedNeighbours(T v1, T v2)
-        {
-            foreach (T n1 in Map[v1])
-            {
-                foreach (T n2 in Map[v2])
-                {
-                    if (n1.Equals(n2)) return true;
-                }
-            }
-            return false;
-        }
-
-        public List<T> SharedNeighbours(T v1, T v2)
-        {
-            List<T> shared = new List<T>();
-            foreach (T n1 in Map[v1])
-            foreach (T n2 in Map[v2])
-                if (n1.Equals(n2))
-                    shared.Add(n1);
-            return shared;
-        }
-
-        public void Add(T toAdd)
-        {
-            Data.Add(toAdd);
-            Map.Add(toAdd, new List<T>());
-        }
-
-        public void Remove(T toRemove)
-        {
-            for (int i = Map[toRemove].Count - 1; i >= 0; i--)
-            {
-                DestroyEdge(toRemove, Map[toRemove][i]);
-            }
-            Map.Remove(toRemove);
-
-            Data.Remove(toRemove);
-        }
-
-        public void RemoveAt(int index)
-        {
-            Remove(Data[index]);
-        }
-
-        public bool IsAdjacent(T root, T other)
-        {
-            return Map.ContainsKey(root) && Map[root].Contains(other);
-        }
-
-        public List<T> GetAdjacent(T root)
-        {
-            if (Map.ContainsKey(root))
-                return Map[root];
-            else
-                throw new System.Exception("Vertex queried is not contained in the adjacency map.");
-        }
-
-        public void CreateEdge(T vertexA, T vertexB)
-        {
-            CreateDirectedEdge(vertexA, vertexB);
-            CreateDirectedEdge(vertexB, vertexA);
-        }
-
-        public void CreateEdge(int indexA, int indexB)
-        {
-            CreateDirectedEdge(Data[indexA], Data[indexB]);
-            CreateDirectedEdge(Data[indexB], Data[indexA]);
-        }
-
-        public void DestroyEdge(T vertexA, T vertexB)
-        {
-            DestroyDirectedEdge(vertexA, vertexB);
-            DestroyDirectedEdge(vertexB, vertexA);
-        }
-
-        public void DestroyEdge(int indexA, int indexB)
-        {
-            DestroyDirectedEdge(Data[indexA], Data[indexB]);
-            DestroyDirectedEdge(Data[indexB], Data[indexA]);
-        }
-
-        private void CreateDirectedEdge(T from, T to)
-        {
-            if (Map.ContainsKey(from) && !Map[from].Contains(to))
-                Map[from].Add(to);
-        }
-
-        private void DestroyDirectedEdge(T from, T to)
-        {
-            if (Map.ContainsKey(from) && Map[from].Contains(to))
-                Map[from].Remove(to);
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Entities
 {
+    [Serializable]
     public class Triangle
     {
-        public List<Vertex> Vertices { get; }
+        [field: SerializeField] public List<Vertex> Vertices { get; private set; }
 
         public Triangle(Vertex vertexA, Vertex vertexB, Vertex vertexC)
         {
