@@ -32,24 +32,11 @@ namespace Controllers
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
         [SerializeField] private float bounceTime = 0.1f;
-        [SerializeField] private Vector3 startPos, startRot;
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float DoFAdjustMultiplier = 5f;
-        [SerializeField] private float sensitivity = 5f;
 
-        [Range(1,10)]
-        [SerializeField] private int
-            dragSpeed = 3,
-            scrollSpeed = 3,
-            rotateSpeed = 3;
-    
-        [SerializeField] private int
-            minHeight = 5,
-            maxHeight = 25,
-            minAngle = 25,
-            maxAngle = 60;
 
         [SerializeField] private bool invertScroll;
 
@@ -87,11 +74,11 @@ namespace Controllers
 
                 if (Input.GetMouseButton(0))
                 {
-                    dragDir = Vector3.ClampMagnitude(lastDrag - posHit.point, maxDragSpeed);
+                    dragDir = lastDrag - posHit.point;
                     dragDir.y = 0;
                 }
             }
-            freeLook.Follow.position += dragDir;
+            freeLook.Follow.position += dragDir * maxDragSpeed;
 
             if (Input.GetMouseButtonUp(0))
             {
