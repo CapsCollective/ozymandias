@@ -28,6 +28,8 @@ namespace Controllers
 
         private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
         private Vector3 lastDrag;
+        private Vector3 startPos;
+        private Quaternion startRot;
         private bool _dragging, _rotating;
 
         public static Action OnCameraMove;
@@ -36,24 +38,11 @@ namespace Controllers
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
         [SerializeField] private float bounceTime = 0.1f;
-        [SerializeField] private Vector3 startPos, startRot;
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float DoFAdjustMultiplier = 5f;
         [SerializeField] private float sensitivity = 5f;
-
-        [Range(1,10)]
-        [SerializeField] private int
-            dragSpeed = 3,
-            scrollSpeed = 3,
-            rotateSpeed = 3;
-    
-        [SerializeField] private int
-            minHeight = 5,
-            maxHeight = 25,
-            minAngle = 25,
-            maxAngle = 60;
 
         [SerializeField] private bool invertScroll;
 
@@ -67,6 +56,7 @@ namespace Controllers
             InputManager.Instance.OnRightClick.canceled += RightClick; 
             InputManager.Instance.OnLeftClick.performed += LeftClick;
             InputManager.Instance.OnLeftClick.canceled += LeftClick;
+            startPos = transform.position;
         }
 
         private void RightClick(InputAction.CallbackContext context)
@@ -156,7 +146,7 @@ namespace Controllers
         {
             var t = transform;
             t.position = startPos;
-            t.eulerAngles = startRot;
+            t.rotation = startRot;
         }
 
         private static float Remap (float value, float min1, float max1, float min2, float max2) {

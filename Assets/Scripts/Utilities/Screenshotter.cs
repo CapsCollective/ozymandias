@@ -21,7 +21,7 @@ namespace Utilities
         
         private void Update()
         {
-
+            //Debug.Log(eventSystem.currentSelectedGameObject?.name);
             //if (!Input.GetKeyDown(KeyCode.F6)) return;
             //Debug.Log("Screenshot");
             //DebugGUIController.DebugLog("Screenshot taken", 5);

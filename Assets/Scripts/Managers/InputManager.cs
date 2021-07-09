@@ -22,6 +22,8 @@ public class InputManager
     public Action<InputControlScheme> OnControlChange;
 
     public InputControlScheme ControlScheme;
+
+    // Player Input
     public PlayerInput PlayerInput { get; private set; }
     public InputAction OnLeftClick { get; private set; }
     public InputAction OnRightClick { get; private set; }
@@ -30,6 +32,11 @@ public class InputManager
     public InputAction MousePosition { get; private set; }
     public InputAction MoveCamera { get; private set; }
     public InputAction DeleteBuilding { get; private set; }
+
+    // UI Input
+    public InputAction SelectCards { get; private set; }
+    public InputAction CancelBuild { get; private set; }
+    public InputAction UINavigate { get; private set; }
 
     public InputManager()
     {
@@ -54,6 +61,10 @@ public class InputManager
         MoveCamera.Enable();
         DeleteBuilding = PlayerInput.Player.DeleteBuilding;
         DeleteBuilding.Enable();
+        SelectCards = PlayerInput.UI.SelectCards;
+        SelectCards.Enable();
+        UINavigate = PlayerInput.UI.Navigate;
+        UINavigate.Enable();
 
         PlayerInput.Enable();
         InputUser.onChange += InputUser_onChange;

@@ -65,22 +65,32 @@ namespace UI
             }
         }
 
+        public void SelectCard()
+        {
+            ApplyTween(_initialPosition + _rectTransform.transform.up * popupMultiplier,
+                new Vector3(1.1f, 1.1f), 0.5f);
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             // Run pointer enter tween
-            ApplyTween(_initialPosition + _rectTransform.transform.up * popupMultiplier, 
-                new Vector3(1.1f, 1.1f), 0.5f);
+            SelectCard();
+        }
+
+        public void DeselectCard()
+        {
+            if (!_rectTransform) return;
+
+            var move = _initialPosition;
+            if (toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
+
+            ApplyTween(move, Vector3.one, 0.5f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (!_rectTransform) return;
-            
             // Run pointer exit tween
-            var move = _initialPosition;
-            if (toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
-            
-            ApplyTween(move, Vector3.one, 0.5f);
+            DeselectCard();
         }
 
         public void SwitchCard(Action<int> callback)

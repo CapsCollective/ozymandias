@@ -1,5 +1,125 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2708441179105518410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2503823600525617326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e36c391246fe6642b98e695de2a911e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1129997943}
+    m_SelectOnRight: {fileID: 1551465553706663464}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  toggleTransition: 1
+  graphic: {fileID: 0}
+  m_Group: {fileID: 7747285992698156223}
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3460629849450965627}
+        m_TargetAssemblyTypeName: UI.BuildingCard, Assembly-CSharp
+        m_MethodName: ToggleSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
+--- !u!114 &1129997943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4292169133443729369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e36c391246fe6642b98e695de2a911e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  toggleTransition: 1
+  graphic: {fileID: 0}
+  m_Group: {fileID: 7747285992698156223}
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2965945645933626636}
+        m_TargetAssemblyTypeName: UI.BuildingCard, Assembly-CSharp
+        m_MethodName: ToggleSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &5475721258133621116
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +245,66 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1551465553706663464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7094327283105382609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e36c391246fe6642b98e695de2a911e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 1129997943}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  toggleTransition: 1
+  graphic: {fileID: 0}
+  m_Group: {fileID: 7747285992698156223}
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128403437980811780}
+        m_TargetAssemblyTypeName: UI.BuildingCard, Assembly-CSharp
+        m_MethodName: ToggleSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1001 &3399049997698191997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -367,11 +547,18 @@ PrefabInstance:
       propertyPath: m_textInfo.characterCount
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5223952580950037818, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
 --- !u!224 &5724768921140098872 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6942772673954424133, guid: e0cfdd53e09f042388fafc21800681d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3399049997698191997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7094327283105382609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5575391353066230444, guid: e0cfdd53e09f042388fafc21800681d7,
     type: 3}
   m_PrefabInstance: {fileID: 3399049997698191997}
   m_PrefabAsset: {fileID: 0}
@@ -381,7 +568,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3399049997698191997}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7094327283105382609}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6846cb443199e4d4e98ac2a19fdce873, type: 3}
@@ -619,11 +806,18 @@ PrefabInstance:
       propertyPath: m_textInfo.characterCount
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5223952580950037818, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
 --- !u!224 &1132994366865547079 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6942772673954424133, guid: e0cfdd53e09f042388fafc21800681d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 8061613387305302530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2503823600525617326 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5575391353066230444, guid: e0cfdd53e09f042388fafc21800681d7,
     type: 3}
   m_PrefabInstance: {fileID: 8061613387305302530}
   m_PrefabAsset: {fileID: 0}
@@ -633,7 +827,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 8061613387305302530}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2503823600525617326}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6846cb443199e4d4e98ac2a19fdce873, type: 3}
@@ -701,6 +895,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 1129997943}
     - target: {fileID: 6910274632750649465, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
       propertyPath: position
@@ -861,11 +1060,18 @@ PrefabInstance:
       propertyPath: m_textInfo.characterCount
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5223952580950037818, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e0cfdd53e09f042388fafc21800681d7, type: 3}
 --- !u!224 &1627685150250037296 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6942772673954424133, guid: e0cfdd53e09f042388fafc21800681d7,
+    type: 3}
+  m_PrefabInstance: {fileID: 8561094347670639989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4292169133443729369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5575391353066230444, guid: e0cfdd53e09f042388fafc21800681d7,
     type: 3}
   m_PrefabInstance: {fileID: 8561094347670639989}
   m_PrefabAsset: {fileID: 0}
@@ -875,7 +1081,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 8561094347670639989}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4292169133443729369}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6846cb443199e4d4e98ac2a19fdce873, type: 3}
