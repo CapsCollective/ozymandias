@@ -423,7 +423,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxScrollSpeed: 0.05
+  maxDragSpeed: 1
   dragAcceleration: 0.05
+  scrollAccelerationSpeed: 0.1
+  bounceTime: 0.1
   startPos: {x: 2, y: 10.86, z: -12}
   startRot: {x: 40, y: -15, z: 0}
   profile: {fileID: 11400000, guid: 08abc5f6c7c957f459d6ed1b8eeda8cc, type: 2}
@@ -593,7 +597,7 @@ MonoBehaviour:
     m_MaxSpeed: 0.75
     m_AccelTime: 0.2
     m_DecelTime: 0.1
-    m_InputAxisName: Mouse ScrollWheel
+    m_InputAxisName: 
     m_InputAxisValue: 0
     m_InvertInput: 1
     m_MinValue: 0

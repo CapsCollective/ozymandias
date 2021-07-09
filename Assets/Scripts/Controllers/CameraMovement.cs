@@ -27,6 +27,8 @@ namespace Controllers
 
         public static Action OnCameraMove;
 
+        [SerializeField] private float maxScrollSpeed = 0.1f;
+        [SerializeField] private float maxDragSpeed = 1f;
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
         [SerializeField] private float bounceTime = 0.1f;
@@ -85,7 +87,7 @@ namespace Controllers
 
                 if (Input.GetMouseButton(0))
                 {
-                    dragDir = lastDrag - posHit.point;
+                    dragDir = Vector3.ClampMagnitude(lastDrag - posHit.point, maxDragSpeed);
                     dragDir.y = 0;
                 }
             }
@@ -104,6 +106,7 @@ namespace Controllers
             float scroll = -Input.mouseScrollDelta.y;
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
+            scrollAcceleration = Mathf.Clamp(scrollAcceleration, -maxScrollSpeed, maxScrollSpeed);
             freeLook.m_YAxis.Value += scrollAcceleration;
 
             volume.weight = Mathf.Lerp(1, 0, freeLook.m_YAxis.Value);
