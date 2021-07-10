@@ -112,7 +112,7 @@ namespace Controllers
         private void Update()
         {
             // Don't hover new buildings while a building is selected, the camera is moving, or in the UI
-            if (_selectedBuilding || CameraMovement.Moving || IsSelectionDisabled())
+            if (_selectedBuilding || CameraMovement.IsMoving || IsSelectionDisabled())
             {
                 HoveredBuilding = null;
                 return;
