@@ -86,7 +86,7 @@ namespace Managers
             return mod * Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod;
         }
 
-        public int GetSatisfaction(AdventurerCategory category)
+        private int GetSatisfaction(AdventurerCategory category)
         {
             return GetStat((Stat)category) - Adventurers.GetCount(category);
         }
@@ -160,11 +160,6 @@ namespace Managers
         [Button("Next Turn")]
         public void NextTurn()
         {
-            if (TurnCounter == 15)
-            {
-                signoffScreen.GetComponent<Letter>().Open();
-                return;
-            }
             OnNextTurn?.Invoke();
         }
 
@@ -234,21 +229,12 @@ namespace Managers
             if(_gameOver) return;
             new SaveFile().Save();
         }
-
-        [SerializeField] private Canvas loadingScreen, welcomeScreen1, welcomeScreen2, signoffScreen;
         
         private async void Load()
         {
             isLoading = true;
-            loadingScreen.enabled = true;
             await new SaveFile().Load();
-            loadingScreen.enabled = false;
-            welcomeScreen1.enabled = true;
-            welcomeScreen2.enabled = true;
-            signoffScreen.enabled = true;
             UpdateUi();
-            
-            welcomeScreen1.GetComponent<Letter>().Open();
             isLoading = false;
         }
 
