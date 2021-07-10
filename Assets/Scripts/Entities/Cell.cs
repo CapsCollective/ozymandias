@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Entities
@@ -9,10 +10,12 @@ namespace Entities
     {
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public bool Active { get; set; }
+        [field: SerializeField] public bool Safe { get; set; } // Keep clear from terrain filling
         [field: SerializeField] public List<Vertex> Vertices { get; set; }
         public Building Occupant { get; set; }
         
         public Vector3 Centre => (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4;
+        public Vector3 WorldSpace => Quaternion.Euler(90f, 0f, 30f) * Centre;
         public bool Occupied => Occupant;
 
         public Cell(Triangle triA, Triangle triB, bool active = true)
@@ -40,31 +43,22 @@ namespace Entities
             Vertices.Insert(splitStartIndex + 1 % 3, unsharedB);
         }
 
-        public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD, bool active = true)
+        public Cell(Vertex vertexA, Vertex vertexB, Vertex vertexC, Vertex vertexD, bool active = true, bool safe = false)
         {
             Active = active;
+            Safe = safe;
             bool cw = Vector3.Cross(vertexB - vertexA, vertexC - vertexA).z > 0;
             Vertices =  cw ? new List<Vertex> { vertexD, vertexC, vertexB, vertexA } : new List<Vertex> { vertexA, vertexB, vertexC, vertexD };
         }
         
-        public Cell(List<Vertex> vertices, bool active = true)
+        public Cell(List<Vertex> vertices, bool active = true, bool safe = false)
         {
             vertices = vertices.GetRange(0, 4); // Limit to 4 points
             Active = active;
+            Safe = safe;
             if(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]).z > 0) vertices.Reverse();
             Vertices = vertices;
         }
-
-        public void Clear()
-        {
-            Occupant = null;
-        }
-
-        public void Occupy(Building newOccupant)
-        {
-            Occupant = newOccupant;
-        }
-
         public Cell[] Subdivide()
         {
             Cell[] newCells = new Cell[4];
@@ -109,7 +103,7 @@ namespace Entities
         public Vertex[] GetAdjacent(Vertex root)
         {
             int index = Vertices.IndexOf(root);
-            return new Vertex[] { Vertices[(index - 1 + Vertices.Count) % Vertices.Count], Vertices[(index + 1 + Vertices.Count) % Vertices.Count] };
+            return new [] { Vertices[(index - 1 + Vertices.Count) % Vertices.Count], Vertices[(index + 1 + Vertices.Count) % Vertices.Count] };
         }
 
         public void DrawCell()
@@ -128,6 +122,16 @@ namespace Entities
                 Vertices.Remove(front);
                 Vertices.Add(front);
             }
+        }
+        
+        public static bool IsValid(IEnumerable<Cell> cells)
+        {
+            return cells.All(IsValid);
+        }
+
+        public static bool IsValid(Cell cell)//, bool excludeSafe)
+        {
+            return cell != null && !cell.Occupied && cell.Active; //&& !(excludeSafe && cell.Safe);
         }
 
         public static bool operator ==(Cell cell, Cell other)

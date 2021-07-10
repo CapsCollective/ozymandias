@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Controllers;
 using Entities;
-using NaughtyAttributes;
-using UnityEditor;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -22,18 +22,27 @@ namespace Managers
         [SerializeField] private MeshFilter gridMesh, roadMesh;
         [SerializeField] private MapLayout layout;
         
+        private Dictionary<Building, List<Cell>> BuildingMap { get; set; }
+        
         private Camera _cam;
 
         private void Awake()
         {
             _cam = Camera.main;
+            BuildingMap = new Dictionary<Building, List<Cell>>();
             GenerateMesh();
         }
 
-        public void GenerateMesh()
+        public void GenerateMesh(bool debug = false)
         {
-            gridMesh.sharedMesh = layout.GenerateCellMesh();
+            gridMesh.sharedMesh = layout.GenerateCellMesh(debug);
             roadMesh.sharedMesh = new Mesh();
+        }
+
+        public void ClearMesh()
+        {
+            gridMesh.sharedMesh = null;
+            roadMesh.sharedMesh = null;
         }
 
         public void Highlight(IEnumerable<Cell> cells, HighlightState state)
@@ -43,7 +52,11 @@ namespace Managers
             foreach (Cell cell in cells)
             {
                 if (cell == null || !cell.Active) continue;
-                foreach (int vertexIndex in layout.GetTriangles(cell))
+                foreach (Vector3 vertex in cell.Vertices)
+                {
+                    
+                }
+                foreach (int vertexIndex in layout.GetUVs(cell))
                     uv[vertexIndex].x = (int) state / 2f;
             }
 
@@ -77,76 +90,68 @@ namespace Managers
             return layout.GetCells(root, building, rotation);
         }
 
-        // Gets all cells of a currently placed building
-        public List<Cell> GetCells(Building building)
-        {
-            return layout.GetCells(building);
-        }
-
-        // Occupies and fits a building onto the map
-        private void Occupy(Building building, List<Cell> cells, bool animate = false)
-        {
-            Vector3[][] vertices = new Vector3[cells.Count][];
-
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = CellUnitToWorld(cells[i]);
-            }
-
-            layout.Occupy(building, cells);
-
-            building.Fit(vertices, animate);
-        }
-
         // Tries to create and place a building from a world position and rotation, returns if successful
-        public bool CreateBuilding(GameObject buildingInstance, Vector3 worldPosition, int rotation = 0, bool animate = false)
+        public bool CreateBuilding(GameObject buildingInstance, int rootId, int rotation = 0, bool animate = false, int sectionCount = -1)
         {
             Building building = buildingInstance.GetComponent<Building>();
+            bool isTerrain = building.type == BuildingType.Terrain;
 
-            Cell root = GetClosestCell(worldPosition);
-            if (root == null || !root.Active) return false;
+            Cell root = layout.GetCell(rootId);
+            if (!Cell.IsValid(root)) return false;
+            
             List<Cell> cells = GetCells(root, building, rotation);
 
+            // Get the centre and count of all valid cells
             Vector3 centre = new Vector3();
             int cellCount = 0;
-            foreach (Cell cell in cells)
+            centre = cells
+                .TakeWhile(cell => Cell.IsValid(cell) && 
+                                   !cells.GetRange(0, cellCount).Contains(cell) && 
+                                   cellCount++ != sectionCount
+                ).Aggregate(centre, (current, cell) => current + cell.Centre);
+
+            // Checks validity if terrain or building
+            if (isTerrain)
             {
-                if (cell == null) continue;
-                centre += cell.Centre;
-                cellCount++;
+                if (cellCount == 0) return false;
+                cells = cells.GetRange(0, cellCount); // Limit cells
             }
-
+            else
+            {
+                // If all cells are valid
+                if (cellCount != cells.Count || !Manager.Spend(building.ScaledCost)) return false;
+                StartCoroutine(layout.CreateRoad(cells, roadMesh));
+            }
+            
             centre /= cellCount;
-
             buildingInstance.transform.position = transform.TransformPoint(centre);
 
-            if (IsValid(cells) && Manager.Spend(building.ScaledCost))
-            {
-                if (building.type != BuildingType.Terrain) // Create roads if not terrain
-                {
-                    List<Vertex> vertices = layout.GetVertices(cells);
+            // Align and retrieve vertices that fit the building sections in the right direction
+            layout.Align(cells, rotation);
+            Vector3[][] vertices = new Vector3[cells.Count][];
+            for (int i = 0; i < vertices.Length; i++) vertices[i] = CellUnitToWorld(cells[i]);
 
-                    StartCoroutine(layout.CreateRoad(vertices, roadMesh));
-                }
-
-                layout.Align(cells, rotation);
-                Occupy(building, cells, animate);
-                building.Build(worldPosition, rotation);
-                return true;
-            }
-
-            Destroy(buildingInstance);
-            return false;
+            // Register occupancy
+            foreach (Cell cell in cells) cell.Occupant = building;
+            if (!BuildingMap.ContainsKey(building)) BuildingMap.Add(building, cells);
+            else Debug.LogError("A Building is already here?");
+            
+            building.Build(rootId, rotation, cells.Count, vertices, animate);
+            Jukebox.Instance.PlayBuild();
+            return true;
         }
 
-        public static bool IsValid(IEnumerable<Cell> cells)
+        public void ClearBuilding(Building building)
         {
-            return cells.All(IsValid);
-        }
+            if (!building) return;
+            foreach (Cell cell in BuildingMap[building]) cell.Occupant = null;
 
-        private static bool IsValid(Cell cell)
+            BuildingMap.Remove(building);
+        }
+        
+        public void FillGrid(GameObject terrainPrefab, Transform container)
         {
-            return cell != null && !cell.Occupied;
+            layout.FillGrid(terrainPrefab, container);
         }
 
         private Vector3[] CellUnitToWorld(Cell cell)
@@ -160,9 +165,11 @@ namespace Managers
             return vertices;
         }
 
-        public List<Vector3> GetRandomRoadPath()
-        {
-            return layout.GetRandomRoadPath();
-        }
+       public List<Cell> RandomBuildingCells =>  BuildingMap[Manager.Buildings.SelectRandom()];
+
+       public List<Vector3> GetRandomRoadPath()
+       {
+           return layout.GetRandomRoadPath();
+       }
     }
 }

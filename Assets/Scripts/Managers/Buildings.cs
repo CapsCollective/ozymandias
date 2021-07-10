@@ -95,20 +95,19 @@ namespace Managers
             return building.name;
         }
         
-        public List<string> Save()
+        public List<BuildingDetails> Save()
         {
             return _buildings.Select(x => x.Save())
                 .Concat(_terrain.Select(x => x.Save())).ToList();
         }
 
-        public async Task Load(List<string> buildings)
+        public async Task Load(List<BuildingDetails> buildings)
         {
-            foreach (string building in buildings)
+            foreach (BuildingDetails building in buildings)
             {
-                string[] details = building.Split(',');
-                Vector3 worldPosition = new Vector3(float.Parse(details[1], System.Globalization.CultureInfo.InvariantCulture), 0, float.Parse(details[2], System.Globalization.CultureInfo.InvariantCulture));
-                GameObject buildingInstance = await Addressables.InstantiateAsync(details[0], transform).Task;
-                Manager.Map.CreateBuilding(buildingInstance, worldPosition, int.Parse(details[3]));
+                GameObject buildingInstance = await Addressables.InstantiateAsync(building.name, transform).Task;
+                if (!Manager.Map.CreateBuilding(buildingInstance, building.rootId, building.rotation))
+                    Destroy(buildingInstance);
             }
 
         }

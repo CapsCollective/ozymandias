@@ -26,47 +26,28 @@ namespace Entities
         [field: HideInInspector] [field: SerializeField] private Graph<Vertex> VertexGraph { get; set; }
         [field: SerializeField] private Graph<Cell> CellGraph { get; set; }
         private Graph<Vertex> RoadGraph { get; set; }
-        private Dictionary<Cell, List<int>> TriangleMap { get; set; }
-        
-        // TODO: Move this and the occupy script into map
-        private Dictionary<Building, List<Cell>> BuildingMap { get; set; }
-    
+        private Dictionary<Cell, List<int>> UVMap { get; set; }
+
         public static Action OnRoadReady;
 
-        // BUILDING PLACEMENT
-        public void Occupy(Building building, List<Cell> cells)
+        //Procedurally places buildings
+        public void FillGrid(GameObject terrainPrefab, Transform container)
         {
-            if (!BuildingMap.ContainsKey(building))
-                BuildingMap.Add(building, new List<Cell>());
-
-            foreach (Cell cell in cells)
+            GameObject terrain = Instantiate(terrainPrefab, container);
+            bool wasCreated = true;
+            
+            foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && !cell.Safe))
             {
-                if (!BuildingMap[building].Contains(cell))
-                    BuildingMap[building].Add(cell);
+                if (wasCreated) terrain = Instantiate(terrainPrefab, container);
 
-                cell.Occupy(building);
+                // Create building if valid
+                wasCreated = Manager.Map.CreateBuilding(terrain, cell.Id);
             }
-        }
-
-        public void Clear(Cell root)
-        {
-            Building building = root.Occupant;
-
-            if (!building) return;
-            foreach (Cell cell in BuildingMap[building])
-                cell.Clear();
-
-            BuildingMap.Remove(building);
-
-            building.Clear();
+            if (!wasCreated) Destroy(terrain);
         }
     
         // Querying
-        private Vertex RandomBuildingVertex => BuildingMap[Manager.Buildings.SelectRandom()]
-            .SelectMany(c => c.Vertices)
-            .Where(v => RoadGraph.Data.Contains(v))
-            .ToList().SelectRandom();
-
+        
         private Vertex RandomBoundaryVertex => VertexGraph.Data.Where(v => v.Boundary).ToList().SelectRandom();
     
         public List<Vertex> GetVertices(List<Cell> cells)
@@ -79,25 +60,9 @@ namespace Entities
             return vertices;
         }
     
-        public List<int> GetTriangles(Cell cell)
+        public List<int> GetUVs(Cell cell)
         {
-            return TriangleMap[cell];
-        }
-    
-        private Vertex ClosestRoad(Vertex target)
-        {
-            if (RoadGraph.Count == 0)
-                return null;
-
-            Vertex closest = RoadGraph.Data[0];
-
-            foreach (Vertex vertex in RoadGraph.Data)
-            {
-                if (Vector3.Distance(target, vertex) < Vector3.Distance(target, closest))
-                    closest = vertex;
-            }
-
-            return closest;
+            return UVMap[cell];
         }
 
         private Cell Step(Cell root, Building.Direction direction)
@@ -177,6 +142,11 @@ namespace Entities
             other.RotateCell(rotations);
         }
 
+        public Cell GetCell(int id)
+        {
+            return CellGraph.GetData(id);
+        }
+
         public List<Cell> GetCells(Cell root, Building building, int rotation = 0)
         {
             return building.sections.Select(sectionInfo => Step(root, sectionInfo.directions, rotation)).ToList();
@@ -198,13 +168,8 @@ namespace Entities
             return minDist < maxDist ? closest : null;
         }
 
-        public List<Cell> GetCells(Building building) //Gets all cells a building occupies
-        {
-            return BuildingMap[building];
-        }
-
         // Grid
-        [Button("Regenerate")] public void Generate()
+        [Button("Regenerate (Warning: Destructive)")] public void Generate()
         {
             Random.InitState(seed);
             CreateVertices();
@@ -435,11 +400,10 @@ namespace Entities
         }
 
         // Converts Cells into triangles and returns combined mesh
-        public Mesh GenerateCellMesh()
+        public Mesh GenerateCellMesh(bool debug)
         {
             RoadGraph = new Graph<Vertex>();
-            TriangleMap = new Dictionary<Cell, List<int>>();
-            BuildingMap = new Dictionary<Building, List<Cell>>();
+            UVMap = new Dictionary<Cell, List<int>>();
             
             List<Vector3> vertices = new List<Vector3>(CellGraph.Count * 4); // 4 per cells
             List<Vector2> uv = new List<Vector2>(CellGraph.Count * 4); // Match vertices
@@ -451,10 +415,10 @@ namespace Entities
                 for (int i = 0; i < 4; i++)
                 {
                     vertices.Add(cell.Vertices[i] + (cell.Centre - cell.Vertices[i]).normalized * lineWeight / 100f);
-                    uv.Add(Vector2.zero); // Get set by later methods to highlight cells
+                    uv.Add(debug && cell.Safe ? new Vector2(1f, 0f) : Vector2.zero); // Set to base or invalid if a 'safe' cell
                 }
+                UVMap.Add(cell, Enumerable.Range( vertices.Count - 4, 4).ToList());
 
-                
                 List<int> trianglesForCell = new List<int>{
                     vertices.Count - 4, vertices.Count - 3, vertices.Count - 2, // Triangle A
                     vertices.Count - 2, vertices.Count - 1, vertices.Count - 4 // Triangle B
@@ -462,7 +426,6 @@ namespace Entities
                 
                 // Add the two triangles to both the Mesh and the cell map for highlighting
                 triangles.AddRange(trianglesForCell);
-                TriangleMap.Add(cell, trianglesForCell);
             }
 
             return new Mesh {
@@ -473,9 +436,10 @@ namespace Entities
         }
         
         // Roads
-        //TODO: See if we can convert this whole thing (AStar included) to use ids instead of vertices
-        public IEnumerator CreateRoad(List<Vertex> vertices, MeshFilter mesh)
+        public IEnumerator CreateRoad(List<Cell> cells, MeshFilter mesh)
         {
+            // TODO: Finding the perimeter can be made easier by making a ring around the cells 
+            List<Vertex> vertices = GetVertices(cells);
             List<int> vertexIds = vertices.Select(v => v.Id).ToList();
             // Create a list of vertices included in the building
 
@@ -537,6 +501,22 @@ namespace Entities
                 if (i > 0 && !RoadGraph.IsAdjacent(road[i].Id, road[i - 1].Id))
                     RoadGraph.AddEdge(road[i].Id, road[i - 1].Id);
             }
+        }
+        
+        private Vertex ClosestRoad(Vertex target)
+        {
+            if (RoadGraph.Count == 0)
+                return null;
+
+            Vertex closest = RoadGraph.Data[0];
+
+            foreach (Vertex vertex in RoadGraph.Data)
+            {
+                if (Vector3.Distance(target, vertex) < Vector3.Distance(target, closest))
+                    closest = vertex;
+            }
+
+            return closest;
         }
         
         private Mesh GenerateRoadMesh()
@@ -647,11 +627,16 @@ namespace Entities
 
             return roadMesh;
         }
-
+        
         public List<Vector3> GetRandomRoadPath()
         {
             return Algorithms.AStar(RoadGraph,RandomBuildingVertex, RandomBuildingVertex)
                 .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();  
-        } 
+        }
+
+        private Vertex RandomBuildingVertex => Manager.Map.RandomBuildingCells
+            .SelectMany(c => c.Vertices)
+            .Where(v => RoadGraph.Data.Contains(v))
+            .ToList().SelectRandom();
     }
 }
