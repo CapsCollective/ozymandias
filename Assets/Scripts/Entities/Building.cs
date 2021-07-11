@@ -26,7 +26,7 @@ namespace Entities
         public Color roofColor;
         [SerializeField] private ScaleSpeed scaleSpeed;
 
-        private int _rootId; // Cell id of the building root
+        [SerializeField] private int _rootId; // Cell id of the building root
         private int _rotation;
         private int _sectionCount; // 
         private bool _isRuin;

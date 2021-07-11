@@ -145,7 +145,8 @@ namespace Managers
 
             Stability = 100;
             Wealth = 100;
-
+            
+            Buildings.SpawnGuildHall();
             Map.FillGrid(terrainPrefab, Manager.Buildings.transform);
             
             EventQueue.Add(openingEvent, true);
@@ -217,9 +218,6 @@ namespace Managers
 
         public void UpdateUi()
         {
-            /*if (AvailableAdventurers >= 20 && Effectiveness == 100) Achievements.Unlock("Top of Their Game");
-            if (AvailableAdventurers >= 20 && Satisfaction == 100) Achievements.Unlock("A Jolly Good Show");*/
-        
             OnUpdateUI?.Invoke();
         }
 

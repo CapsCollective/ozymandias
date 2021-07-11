@@ -13,8 +13,9 @@ namespace Managers
 {
     public class Buildings : MonoBehaviour
     {
+        [SerializeField] private GameObject guildHall;
         [SerializeField] private Event[] guildHallDestroyedEvents;
-
+        
         [HideInInspector] public int placedThisTurn;
 
         private readonly List<Building> _buildings = new List<Building>();
@@ -109,7 +110,16 @@ namespace Managers
                 if (!Manager.Map.CreateBuilding(buildingInstance, building.rootId, building.rotation))
                     Destroy(buildingInstance);
             }
+        }
 
+        public void SpawnGuildHall()
+        {
+            const int rootId = 429;
+            const int rotation = 0;
+
+            GameObject buildingInstance = Instantiate(guildHall, transform);
+            if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation))
+                Destroy(buildingInstance);
         }
     }
 }

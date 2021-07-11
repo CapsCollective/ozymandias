@@ -24,7 +24,7 @@ namespace Entities
         [SerializeField] [Range(0f, 1f)] private float relaxStrength;
 
         [field: HideInInspector] [field: SerializeField] private Graph<Vertex> VertexGraph { get; set; }
-        [field: SerializeField] private Graph<Cell> CellGraph { get; set; }
+        [field: HideInInspector] [field: SerializeField] private Graph<Cell> CellGraph { get; set; }
         private Graph<Vertex> RoadGraph { get; set; }
         private Dictionary<Cell, List<int>> UVMap { get; set; }
 
