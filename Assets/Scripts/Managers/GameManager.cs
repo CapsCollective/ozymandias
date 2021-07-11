@@ -4,7 +4,6 @@ using Controllers;
 using NaughtyAttributes;
 using UI;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.UI;
 using Utilities;
 using Event = Entities.Event;
@@ -14,6 +13,15 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+        [SerializeField] private Canvas loadingScreen, signoffScreen;
+        [SerializeField] private GameObject terrainPrefab;
+        public bool inMenu;
+        private bool _gameOver;
+
+
+        public Event openingEvent;
+        public Event[] supportWithdrawnEvents;
+
         public static Action OnNewTurn;
         public static Action OnNextTurn;
         public static Action OnUpdateUI;
@@ -28,8 +36,8 @@ namespace Managers
             }
         }
 
-        public bool isLoading;
-
+        public bool IsLoading { get; private set; }
+        
         // All Managers/ Universal Controllers
         public Adventurers Adventurers { get; private set; }
         public Buildings Buildings { get; private set; }
@@ -132,29 +140,16 @@ namespace Managers
         [Button("StartGame")]
         public void StartGame()
         {
-            /*// Clear out all adventurers and buildings
-            foreach (Transform child in adventurersContainer.transform) Destroy(child.gameObject);
-            foreach (Transform child in buildingsContainer.transform) Destroy(child.gameObject);
-            Adventurers.Clear();
-            Buildings.Clear();*/
-
-            // Start game with 5 Adventurers
+            // Start game with 10 Adventurers
             for (int i = 0; i < 10; i++) Manager.Adventurers.Add();
 
             Stability = 100;
             Wealth = 100;
-        
+            
+            Buildings.SpawnGuildHall();
+            Map.FillGrid(terrainPrefab, Manager.Buildings.transform);
+            
             EventQueue.Add(openingEvent, true);
-        
-            // Run the tutorial video
-            /*if (PlayerPrefs.GetInt("tutorial_video_basics", 0) == 0)
-        {
-            PlayerPrefs.SetInt("tutorial_video_basics", 1);
-            TutorialPlayerController.Instance.PlayClip(0);
-        }*/
-
-            Analytics.EnableCustomEvent("New Turn", true);
-            Analytics.enabled = true;
         }
 
         [Button("Next Turn")]
@@ -168,7 +163,7 @@ namespace Managers
             OnNextTurn?.Invoke();
         }
 
-        [SerializeField] private GenericDictionary<int, Event> manualEvents;
+        [SerializeField] private SerializedDictionary<int, Event> manualEvents;
         public void NewTurn()
         {
             Buildings.placedThisTurn = 0;
@@ -223,9 +218,6 @@ namespace Managers
 
         public void UpdateUi()
         {
-            /*if (AvailableAdventurers >= 20 && Effectiveness == 100) Achievements.Unlock("Top of Their Game");
-            if (AvailableAdventurers >= 20 && Satisfaction == 100) Achievements.Unlock("A Jolly Good Show");*/
-        
             OnUpdateUI?.Invoke();
         }
 
@@ -234,25 +226,19 @@ namespace Managers
             if(_gameOver) return;
             new SaveFile().Save();
         }
-
-        [SerializeField] private Canvas loadingScreen, welcomeScreen1, welcomeScreen2, signoffScreen;
         
         private async void Load()
         {
-            isLoading = true;
+            IsLoading = true;
             loadingScreen.enabled = true;
             await new SaveFile().Load();
             loadingScreen.enabled = false;
-            welcomeScreen1.enabled = true;
-            welcomeScreen2.enabled = true;
             signoffScreen.enabled = true;
             UpdateUi();
             
-            welcomeScreen1.GetComponent<Letter>().Open();
-            isLoading = false;
+            IsLoading = false;
         }
 
-        private bool _gameOver;
         public void GameOver()
         {
             _gameOver = true;
@@ -260,7 +246,6 @@ namespace Managers
             Newspaper.GameOver();
         }
 
-        public bool inMenu;
         public void EnterMenu()
         {
             inMenu = true;
@@ -273,10 +258,7 @@ namespace Managers
             inMenu = false;
             Shade.Instance.SetDisplay(false);
         }
-    
-        public Event openingEvent;
-        public Event[] supportWithdrawnEvents;
-    
+        
         private void OnDestroy()
         {
             _instance = null;

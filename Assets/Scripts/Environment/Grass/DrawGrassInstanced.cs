@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +26,7 @@ public class DrawGrassInstanced : MonoBehaviour
     public int Population;
     [SerializeField] private float boundsRange;
     [SerializeField] private bool showBounds;
+    [SerializeField] private LayerMask layerMask;
     
     [Header("Mesh Settings")]
     private Mesh mesh;
@@ -48,7 +48,7 @@ public class DrawGrassInstanced : MonoBehaviour
     private Bounds bounds;
     public ComputeShader computeShader;
 
-    public int GrassCount { get { return matrices.Count; } }
+    public int GrassCount => matrices.Count;
     public GrassPaintMode CurrentPaintMode { get; set; }
 
     private struct MeshProperties
@@ -249,7 +249,7 @@ public class DrawGrassInstanced : MonoBehaviour
         Ray rayGizmo = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         RaycastHit hitGizmo;
 
-        if (Physics.Raycast(rayGizmo, out hitGizmo, 200f))
+        if (Physics.Raycast(rayGizmo, out hitGizmo, 200f, layerMask))
         {
             Handles.color = new Color(0, 1, 1, 0.25f);
             Handles.DrawSolidDisc(hitGizmo.point, hitGizmo.normal, brushSize);
@@ -285,7 +285,7 @@ public class DrawGrassInstanced : MonoBehaviour
             RaycastHit hit;
             if (CurrentPaintMode == GrassPaintMode.Paint)
             {
-                if (Physics.Raycast(ray, out hit, 1000))
+                if (Physics.Raycast(ray, out hit, 1000, layerMask))
                 {
                     if (Vector3.Distance(lastPos, hit.point) > brushSize)
                     {
@@ -316,7 +316,7 @@ public class DrawGrassInstanced : MonoBehaviour
             }
             else if (CurrentPaintMode == GrassPaintMode.Remove)
             {
-                if (Physics.Raycast(ray, out hit, 1000))
+                if (Physics.Raycast(ray, out hit, 1000, layerMask))
                 {
                     if (Vector3.Distance(lastPos, hit.point) > brushSize)
                     {
