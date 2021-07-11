@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1263116729105003458}
   - component: {fileID: 1263116729105003456}
-  - component: {fileID: -1055934317847095422}
   m_Layer: 0
   m_Name: Guild Hall
   m_TagString: Building
@@ -45,78 +44,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: If you're reading this... Uh Oh.
-  icon: {fileID: 0}
+  description: The central hub of every adventuring settlement. Place it down to
+    get your town started!
+  icon: {fileID: 21300000, guid: d7fbb6f1c33fca8438196919716c5f63, type: 3}
   type: 2
   stats:
     list:
-    - Key: 0
-      Value: 2
-    - Key: 1
-      Value: 2
-    - Key: 2
-      Value: 2
-    - Key: 3
-      Value: 2
-    - Key: 4
-      Value: 2
     - Key: 5
-      Value: 2
+      Value: 3
     - Key: 6
       Value: 2
     keyCollision: 0
   baseCost: 0
   roofColor: {r: 0, g: 0, b: 0, a: 0}
   scaleSpeed: 4
+  _rootId: 0
   sections:
-  - prefab: {fileID: 4430338829548512258, guid: f5fd97c996e5e5f4ebffd867cfb0b0f1,
+  - prefab: {fileID: 2442090315632762313, guid: 80998b140892d6a44a32e4dbf6f2f7d4,
       type: 3}
     directions: 
-    clockwiseRotations: 1
-  - prefab: {fileID: 8716396363306372237, guid: 1dc4446b4b03982438099a0d44492f92,
-      type: 3}
-    directions: 00000000
-    clockwiseRotations: 0
-  - prefab: {fileID: 5850422358800233842, guid: 38657a287d6de024381e7c64e752e014,
-      type: 3}
-    directions: 0000000000000000
     clockwiseRotations: 2
   - prefab: {fileID: 9154215088064386976, guid: 8450d50933641034a9db10f4fd4bf47f,
       type: 3}
-    directions: 000000000000000001000000
-    clockwiseRotations: 3
-  - prefab: {fileID: 2442090315632762313, guid: 80998b140892d6a44a32e4dbf6f2f7d4,
-      type: 3}
-    directions: 00000000000000000100000002000000
-    clockwiseRotations: 0
+    directions: 00000000
+    clockwiseRotations: 2
   - prefab: {fileID: 3970598131823282281, guid: 6ac9d36253fcaa245ac16d5bb5c14c4a,
       type: 3}
-    directions: 0000000000000000010000000200000002000000
+    directions: 02000000
+    clockwiseRotations: 1
+  - prefab: {fileID: 8716396363306372237, guid: 1dc4446b4b03982438099a0d44492f92,
+      type: 3}
+    directions: 01000000
+    clockwiseRotations: 0
+  - prefab: {fileID: 5850422358800233842, guid: 38657a287d6de024381e7c64e752e014,
+      type: 3}
+    directions: 0100000000000000
+    clockwiseRotations: 3
+  - prefab: {fileID: 4430338829548512258, guid: f5fd97c996e5e5f4ebffd867cfb0b0f1,
+      type: 3}
+    directions: 0100000002000000
     clockwiseRotations: 0
   indestructible: 0
   fitToCell: 1
   grassMask: 1
+  tree: {fileID: 0}
+  rock: {fileID: 0}
   selected: 0
   mat: {fileID: 2100000, guid: addc8467165822f4fb579288fdacee0a, type: 2}
---- !u!95 &-1055934317847095422
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263116729105003461}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &715950391720861106
 PrefabInstance:
   m_ObjectHideFlags: 0

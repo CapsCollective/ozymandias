@@ -78,7 +78,8 @@ namespace UI
         {
             quest.StartQuest();
         
-            FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(quest.adventurers);
+            // TODO: Reenable functionality once new quest setup is done
+            //FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(quest.adventurers);
             mouseOver = false;
             RandomRotateStamps();
             Jukebox.Instance.PlayStamp();

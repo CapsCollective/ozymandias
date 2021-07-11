@@ -48,7 +48,7 @@ namespace UI
     
         [SerializeField] private List<EffectBadge> badges;
         [SerializeField] private List<Sprite> chevronSizes;
-        [SerializeField] private GenericDictionary<Stat, Sprite> statIcons;
+        [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
         
         private Image _cardBack;
         

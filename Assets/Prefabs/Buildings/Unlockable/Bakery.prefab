@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 454044182329843997}
   - component: {fileID: 454044182329843996}
-  - component: {fileID: 2892862839890433032}
   m_Layer: 0
   m_Name: Bakery
   m_TagString: Building
@@ -57,6 +56,7 @@ MonoBehaviour:
   baseCost: 30
   roofColor: {r: 0, g: 0, b: 0, a: 0}
   scaleSpeed: 2
+  _rootId: 0
   sections:
   - prefab: {fileID: 2095048616072259078, guid: d88abb6c92cc7f54595c0fd3796b2d6d,
       type: 3}
@@ -65,27 +65,10 @@ MonoBehaviour:
   indestructible: 0
   fitToCell: 1
   grassMask: 1
+  tree: {fileID: 0}
+  rock: {fileID: 0}
   selected: 0
   mat: {fileID: 2100000, guid: addc8467165822f4fb579288fdacee0a, type: 2}
---- !u!95 &2892862839890433032
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454044182329843987}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 83437b080e7971543af86216856db9b4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &4342967211815002086
 PrefabInstance:
   m_ObjectHideFlags: 0
