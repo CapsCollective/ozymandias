@@ -31,6 +31,7 @@ namespace Controllers
         private Vector3 _startPos, _startRot;
         private Vector3 _lastDrag;
         private bool _dragging, _rotating;
+        private Rect _screenBounds;
 
         private int _oceanMask;
 
@@ -40,6 +41,11 @@ namespace Controllers
 
         private void Awake()
         {
+            _screenBounds = new Rect(Screen.width / 99f,
+                Screen.height / 99f,
+                Screen.width - ((Screen.width / 99f) * 2),
+                Screen.height - ((Screen.height / 99f) * 2));
+
             _cam = GetComponent<Camera>();
             profile.TryGetSettings(out _depthOfField);
             _freeLook = GetComponent<CinemachineFreeLook>();
@@ -79,7 +85,7 @@ namespace Controllers
                  IsMoving = _dragging = true;
                 _lastDrag = posHit.point;
             }
-            
+
             if (isOverOcean && Input.GetMouseButton(0))
             {
                 _dragDir = _lastDrag - posHit.point;
@@ -90,7 +96,10 @@ namespace Controllers
                 IsMoving = _dragging = false;
             }
 
-            _freeLook.Follow.position += _dragDir * maxDragSpeed;
+            if (_screenBounds.Contains(Input.mousePosition))
+            {
+                _freeLook.Follow.position += _dragDir * Time.deltaTime * 100;
+            }   
 
             if (!_dragging)
             {
