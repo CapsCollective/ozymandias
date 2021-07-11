@@ -12,10 +12,7 @@ namespace Entities.Outcomes
         [Button]
         public override bool Execute()
         {
-            if (!building)
-                return false;
-
-            return Manager.BuildingCards.Unlock(building);
+            return building && Manager.BuildingCards.Unlock(building);
         }
 
         public override string Description => "<color=#007000ff>Building Type Unlocked: " + building.name + "!</color>";
