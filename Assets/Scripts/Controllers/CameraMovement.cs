@@ -74,19 +74,18 @@ namespace Controllers
                 _freeLook.m_XAxis.m_InputAxisValue = 0;
             }
             
-            // Check if the cam is over the ocean
-            var isOverOcean = Physics.Raycast(
+            var isOverSurface = Physics.Raycast(
                 _cam.ScreenPointToRay(Input.mousePosition),
                 out var posHit, 1000f, _oceanMask);
 
             // Apply position
-            if (isOverOcean && Input.GetMouseButtonDown(0))
+            if (isOverSurface && Input.GetMouseButtonDown(0))
             {
                  IsMoving = _dragging = true;
                 _lastDrag = posHit.point;
             }
-
-            if (isOverOcean && Input.GetMouseButton(0))
+            
+            if (isOverSurface && Input.GetMouseButton(0))
             {
                 _dragDir = _lastDrag - posHit.point;
                 _dragDir.y = 0;
