@@ -124,9 +124,9 @@ namespace Entities
             }
         }
         
-        public static bool IsValid(IEnumerable<Cell> cells)
+        public static bool IsValid(Cell[] cells)
         {
-            return cells.All(IsValid);
+            return cells.All(IsValid) && cells.Distinct().Count() == cells.Count();
         }
 
         public static bool IsValid(Cell cell)//, bool excludeSafe)

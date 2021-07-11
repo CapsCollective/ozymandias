@@ -152,33 +152,11 @@ namespace Entities
                 isRuin = _isRuin
             };
         }
-        
-        // Animator Methods
-        // Functionality for buildings called in the animator
-        public void PlayBuildSound()
-        {
-            Jukebox.Instance.PlayBuild();
-        }
-    
-        public void PlayDestroySound()
-        {
-            Jukebox.Instance.PlayDestroy();
-        }
-        
-        public void Destroy()
-        {
-            Destroy(gameObject);
-        }
-        
-        public void Burst()
-        {
-            ParticleSystem.Play();
-        }
 
-        public void ChangeParticleSystemParent()
+        private void ChangeParticleSystemParent()
         {
             ParticleSystem.transform.parent = null;
-            var psMain = ParticleSystem.main;
+            ParticleSystem.MainModule psMain = ParticleSystem.main;
             psMain.stopAction = ParticleSystemStopAction.Destroy;
         }
         
