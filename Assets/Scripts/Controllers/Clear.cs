@@ -104,7 +104,7 @@ namespace Controllers
             
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += DeselectBuilding;
-            InputManager.Instance.DeleteBuilding.performed += (e) => ClearBuilding();
+            InputManager.Instance.IA_DeleteBuilding.performed += (e) => ClearBuilding();
 
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
             //CameraMovement.OnCameraMove += DeselectBuilding;
@@ -140,7 +140,7 @@ namespace Controllers
         private Building SelectHoveredBuilding()
         {
             Ray ray = _cam.ScreenPointToRay(
-                new Vector3(InputManager.MousePos.x, InputManager.MousePos.y, _cam.nearClipPlane));
+                new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
 
             return hit.collider ? hit.collider.GetComponentInParent<Building>() : null;

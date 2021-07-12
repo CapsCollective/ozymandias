@@ -52,10 +52,10 @@ namespace Controllers
             _rb = GetComponent<Rigidbody>();
             profile.TryGetSettings(out _depthOfField);
             freeLook = GetComponent<CinemachineFreeLook>();
-            InputManager.Instance.OnRightClick.performed += RightClick;
-            InputManager.Instance.OnRightClick.canceled += RightClick; 
-            InputManager.Instance.OnLeftClick.performed += LeftClick;
-            InputManager.Instance.OnLeftClick.canceled += LeftClick;
+            InputManager.Instance.IA_OnRightClick.performed += RightClick;
+            InputManager.Instance.IA_OnRightClick.canceled += RightClick; 
+            InputManager.Instance.IA_OnLeftClick.performed += LeftClick;
+            InputManager.Instance.IA_OnLeftClick.canceled += LeftClick;
             startPos = transform.position;
         }
 
@@ -86,11 +86,11 @@ namespace Controllers
         {
             if (Manager.inMenu) return;
 
-            freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.RotateCamera.ReadValue<float>();
+            freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.IA_RotateCamera.ReadValue<float>();
 
             if (!InputManager.UsingController)
             {
-                Ray posRay = Camera.main.ScreenPointToRay(InputManager.MousePos);
+                Ray posRay = Camera.main.ScreenPointToRay(InputManager.MousePosition);
 
                 if (Physics.Raycast(posRay, out posHit, 1000f, LayerMask.GetMask("Ocean")))
                 {
@@ -110,14 +110,14 @@ namespace Controllers
             } 
             else
             {
-                Vector2 inputDir = InputManager.Instance.MoveCamera.ReadValue<Vector2>();
+                Vector2 inputDir = InputManager.Instance.IA_MoveCamera.ReadValue<Vector2>();
                 Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
                 Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
                 freeLook.Follow.position += ((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * Time.deltaTime * controllerSpeed;
             }
 
             // Scrolling
-            float scroll = -InputManager.Instance.OnScroll.ReadValue<float>();
+            float scroll = -InputManager.Instance.IA_OnScroll.ReadValue<float>();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             freeLook.m_YAxis.Value += scrollAcceleration;

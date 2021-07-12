@@ -93,7 +93,7 @@ namespace Controllers
         {
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
             Click.PlacingBuilding = true;
-            Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePos.x, InputManager.MousePos.y, _cam.nearClipPlane));
+            Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
 
             if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui

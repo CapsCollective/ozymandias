@@ -18,10 +18,10 @@ namespace Utilities
 
         private void Awake()
         {
-            InputManager.Instance.OnLeftClick.performed += I_OnLeftClick;
-            InputManager.Instance.OnLeftClick.canceled += I_OnLeftClick;
-            InputManager.Instance.OnRightClick.performed += I_OnRightClick;
-            InputManager.Instance.OnRightClick.canceled += I_OnRightClick;
+            InputManager.Instance.IA_OnLeftClick.performed += I_OnLeftClick;
+            InputManager.Instance.IA_OnLeftClick.canceled += I_OnLeftClick;
+            InputManager.Instance.IA_OnRightClick.performed += I_OnRightClick;
+            InputManager.Instance.IA_OnRightClick.canceled += I_OnRightClick;
         }
 
         private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)

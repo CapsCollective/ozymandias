@@ -17,9 +17,9 @@ public class UIEventController : MonoBehaviour
     void Start()
     {
         eventSystem = GetComponent<EventSystem>();
-        InputManager.Instance.SelectCards.performed += SelectCards;
-        InputManager.Instance.UINavigate.canceled += Navigate;
-        InputManager.Instance.UICancel.performed += UICancel;
+        InputManager.Instance.IA_SelectCards.performed += SelectCards;
+        InputManager.Instance.IA_UINavigate.canceled += Navigate;
+        InputManager.Instance.IA_UICancel.performed += UICancel;
     }
 
     private void UICancel(UnityEngine.InputSystem.InputAction.CallbackContext obj)
