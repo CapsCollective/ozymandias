@@ -12,7 +12,7 @@ namespace Controllers
 {
     public class CameraMovement : MonoBehaviour
     {
-        public static bool Moving;
+        public static bool IsMoving;
         
         private Rigidbody _rb;
         private Camera _cam;

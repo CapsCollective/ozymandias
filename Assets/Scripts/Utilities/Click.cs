@@ -36,7 +36,7 @@ namespace Utilities
 
         private void I_OnRightClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (GameManager.Manager.isLoading)
+            if (GameManager.Manager.IsLoading)
                 return;
 
             if (obj.performed) _time1 = Time.time;
