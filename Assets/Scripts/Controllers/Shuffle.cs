@@ -9,11 +9,11 @@ namespace Controllers
 {
     public class Shuffle : UiUpdater
     {
-        public const float CostScale = 1.10f;
+        private const float CostScale = 1.10f;
     
         public static int ShuffleCount = 0;
-    
-        public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, ShuffleCount));
+
+        private int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(CostScale, ShuffleCount));
 
         public int baseCost = 30;
         public RectTransform icon;

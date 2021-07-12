@@ -26,7 +26,7 @@ namespace Utilities
 
         private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (GameManager.Manager.isLoading)
+            if (GameManager.Manager.IsLoading)
                 return;
 
             if (obj.performed) _time0 = Time.time;

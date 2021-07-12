@@ -7,7 +7,6 @@
 		_Active ("Active Color", Color) = (1, 1, 1, 1)
 		_Invalid ("Invalid Color", Color) = (1, 1, 1, 1)
 
-		_Effect ("Effect Color", Color) = (1, 1, 1, 1)
 		_Origin ("World-Space Effect Origin", Vector) = (0, 0, 0, 0)
 		_Radius ("World-Space Effect Radius", Float) = 10
 		_Exponent ("Exponent", Float) = 1
@@ -45,7 +44,6 @@
 			float4 _Active;
 			float4 _Invalid;
 
-			float4 _Effect;
 			float4 _Origin;
 			float _Radius;
 			float _Exponent;
@@ -75,7 +73,7 @@
 				float dist = distance(i.worldPos, _Origin);
 				float effect = pow(saturate(dist / _Radius), _Exponent);
 				
-                return lerp(col, _Effect, effect);
+                return lerp(col, (0,0,0,0), effect);
             }
             ENDCG
         }

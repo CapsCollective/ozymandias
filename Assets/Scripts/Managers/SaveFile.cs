@@ -44,8 +44,10 @@ namespace Managers
     public struct BuildingDetails
     {
         public string name;
-        public float x, y;
+        public int rootId;
         public int rotation;
+        public int sectionCount;
+        public bool isRuin;
     }
     
     [Serializable]
@@ -54,7 +56,8 @@ namespace Managers
         public static bool loading;
         
         public int wealth, turnCounter, threatLevel, clearCount;
-        public List<string> buildings, unlockedBuildings;
+        public List<BuildingDetails> buildings;
+        public List<string> unlockedBuildings;
         public List<AdventurerDetails> adventurers; 
         public Dictionary<Stat, List<Modifier>> modifiers;
         public List<QuestDetails> quests;
@@ -93,9 +96,6 @@ namespace Managers
             Manager.Stability = threatLevel;
             Clear.TerrainClearCount = clearCount;
             
-            if (turnCounter == 0)
-                Manager.StartGame();
-            
             Manager.Adventurers.Load(adventurers);
             
             Manager.Modifiers = modifiers;
@@ -118,6 +118,9 @@ namespace Managers
 
             await Manager.EventQueue.Load(eventQueue);
             
+            if (turnCounter == 0)
+                Manager.StartGame();
+
             //TODO: Reshuffle buildings
             
             loading = false;
