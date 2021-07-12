@@ -5,20 +5,22 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UI;
+using Controllers;
 
 public class UIEventController : MonoBehaviour
 {
-    [SerializeField] GameObject lastSelectedCard;
-
+    private int lastSelectedCard = 1;
     private bool isSelectingCard = false;
     private EventSystem eventSystem;
+    private BuildingPlacement buildingPlacement;
 
     // Start is called before the first frame update
     void Start()
     {
         eventSystem = GetComponent<EventSystem>();
+        buildingPlacement = FindObjectOfType<BuildingPlacement>();
         InputManager.Instance.IA_SelectCards.performed += SelectCards;
-        InputManager.Instance.IA_UINavigate.canceled += Navigate;
+        InputManager.Instance.IA_UINavigate.performed += Navigate;
         InputManager.Instance.IA_UICancel.performed += UICancel;
     }
 
@@ -26,21 +28,19 @@ public class UIEventController : MonoBehaviour
     {
         if (isSelectingCard)
         {
-            lastSelectedCard.GetComponent<BuildingCard>().DeselectCard();
-            lastSelectedCard.GetComponent<BuildingCard>().toggle.isOn = false;
+            buildingPlacement.ImitateHover(-1);
             isSelectingCard = false;
         }
     }
 
     public void Navigate(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        int dir = (int)obj.ReadValue<Vector2>().x;
         if (isSelectingCard)
         {
-            lastSelectedCard.GetComponent<BuildingCard>().DeselectCard();
-            lastSelectedCard.GetComponent<BuildingCard>().toggle.isOn = false;
-            lastSelectedCard = eventSystem.currentSelectedGameObject;
-            lastSelectedCard.GetComponent<BuildingCard>().SelectCard();
-            lastSelectedCard.GetComponent<BuildingCard>().toggle.isOn = true;
+            lastSelectedCard = buildingPlacement.NavigateCards(lastSelectedCard + dir);
+            Debug.Log($"{lastSelectedCard} / {dir}");
+            buildingPlacement.ImitateHover(lastSelectedCard);
         }
     }
 
@@ -48,8 +48,7 @@ public class UIEventController : MonoBehaviour
     {
         if (!isSelectingCard)
         {
-            eventSystem.SetSelectedGameObject(lastSelectedCard.gameObject);
-            lastSelectedCard.GetComponent<BuildingCard>().SelectCard();
+            buildingPlacement.ImitateHover(lastSelectedCard);
             isSelectingCard = true;
         }
     }

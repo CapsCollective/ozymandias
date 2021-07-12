@@ -89,6 +89,36 @@ namespace Controllers
 
         }
 
+        public void ImitateHover(int cardNum)
+        {
+            if (cardNum >= 0)
+            {
+                cards[cardNum].SelectCard();
+                if (cards[cardNum].toggle.interactable)
+                {
+                    cards[cardNum].toggle.isOn = true;
+                }
+            }
+
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if (i == cardNum) continue;
+
+                cards[i].DeselectCard();
+                if (cards[i].toggle.isOn) cards[i].toggle.isOn = false;
+            }
+        }
+
+        public int NavigateCards(int newCardNum)
+        {
+            if (newCardNum > cards.Length - 1)
+                newCardNum = 0;
+            else if (newCardNum < 0)
+                newCardNum = cards.Length - 1;
+
+            return newCardNum;
+        }
+
         private void LeftClick()
         {
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;

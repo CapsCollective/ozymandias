@@ -424,13 +424,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScrollSpeed: 0.05
-  maxDragSpeed: 1
+  controllerSpeed: 5
   dragAcceleration: 0.05
   scrollAccelerationSpeed: 0.1
   bounceTime: 0.1
-  startPos: {x: 2, y: 10.86, z: -12}
-  startRot: {x: 40, y: -15, z: 0}
   profile: {fileID: 11400000, guid: 08abc5f6c7c957f459d6ed1b8eeda8cc, type: 2}
   volume: {fileID: 1851331017}
   layerMask:
@@ -438,13 +435,6 @@ MonoBehaviour:
     m_Bits: 469762049
   DoFAdjustMultiplier: 20
   sensitivity: 5
-  dragSpeed: 3
-  scrollSpeed: 3
-  rotateSpeed: 3
-  minHeight: 4
-  maxHeight: 25
-  minAngle: 25
-  maxAngle: 60
   invertScroll: 0
 --- !u!114 &1115064009
 MonoBehaviour:
@@ -670,7 +660,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 51bdfe56de3a9e24c82b7b5df4f6d6df,
+    type: 3}
   m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -685,9 +676,9 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 4826372568487654227}
 --- !u!1 &5542565069444483710
 GameObject:
   m_ObjectHideFlags: 0
