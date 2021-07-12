@@ -68,7 +68,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""DeleteBuilding"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""2940d26f-e08c-4a18-804f-8f913c5b61d7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

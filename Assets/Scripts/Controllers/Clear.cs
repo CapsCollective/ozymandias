@@ -104,12 +104,21 @@ namespace Controllers
             
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += DeselectBuilding;
-            InputManager.Instance.IA_DeleteBuilding.performed += (e) => ClearBuilding();
+            InputManager.Instance.IA_DeleteBuilding.performed += DeleteBuildingInput;
+            InputManager.Instance.IA_DeleteBuilding.started += DeleteBuildingInput;
+            InputManager.Instance.IA_DeleteBuilding.canceled += DeleteBuildingInput;
 
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
             //CameraMovement.OnCameraMove += DeselectBuilding;
             Shade.OnShadeOpened += () => HoveredBuilding = null;
         }
+
+        private void DeleteBuildingInput(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if(obj.performed)
+                ClearBuilding();
+        }
+
 
         private void Update()
         {
