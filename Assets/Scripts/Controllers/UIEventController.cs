@@ -28,6 +28,7 @@ public class UIEventController : MonoBehaviour
         {
             lastSelectedCard.GetComponent<BuildingCard>().DeselectCard();
             lastSelectedCard.GetComponent<BuildingCard>().toggle.isOn = false;
+            isSelectingCard = false;
         }
     }
 
