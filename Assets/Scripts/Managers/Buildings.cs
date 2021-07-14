@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
@@ -14,13 +13,14 @@ namespace Managers
 {
     public class Buildings : MonoBehaviour
     {
+        [SerializeField] private GameObject guildHall;
         [SerializeField] private Event[] guildHallDestroyedEvents;
-
+        
         [HideInInspector] public int placedThisTurn;
 
         private readonly List<Building> _buildings = new List<Building>();
         private readonly List<Building> _terrain = new List<Building>();
-        public readonly Dictionary<string, Section.SectionData> _buildingCache = new Dictionary<string, Section.SectionData>();
+        public readonly Dictionary<string, BuildingSection.SectionData> BuildingCache = new Dictionary<string, BuildingSection.SectionData>();
 
         public int Count => _buildings.Count;
 
@@ -29,7 +29,7 @@ namespace Managers
             object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
             foreach(TextAsset o in buildingsText)
             {
-                _buildingCache.Add(o.name, JsonUtility.FromJson<Section.SectionData>(o.text));
+                BuildingCache.Add(o.name, JsonUtility.FromJson<BuildingSection.SectionData>(o.text));
             }
         }
 
@@ -96,22 +96,30 @@ namespace Managers
             return building.name;
         }
         
-        public List<string> Save()
+        public List<BuildingDetails> Save()
         {
             return _buildings.Select(x => x.Save())
                 .Concat(_terrain.Select(x => x.Save())).ToList();
         }
 
-        public async Task Load(List<string> buildings)
+        public async Task Load(List<BuildingDetails> buildings)
         {
-            foreach (string building in buildings)
+            foreach (BuildingDetails building in buildings)
             {
-                string[] details = building.Split(',');
-                Vector3 worldPosition = new Vector3(float.Parse(details[1], System.Globalization.CultureInfo.InvariantCulture), 0, float.Parse(details[2], System.Globalization.CultureInfo.InvariantCulture));
-                GameObject buildingInstance = await Addressables.InstantiateAsync(details[0], transform).Task;
-                Manager.Map.CreateBuilding(buildingInstance, worldPosition, int.Parse(details[3]));
+                GameObject buildingInstance = await Addressables.InstantiateAsync(building.name, transform).Task;
+                if (!Manager.Map.CreateBuilding(buildingInstance, building.rootId, building.rotation))
+                    Destroy(buildingInstance);
             }
+        }
 
+        public void SpawnGuildHall()
+        {
+            const int rootId = 429;
+            const int rotation = 0;
+
+            GameObject buildingInstance = Instantiate(guildHall, transform);
+            if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation))
+                Destroy(buildingInstance);
         }
     }
 }

@@ -1,134 +1,148 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
+using Cinemachine;
 
 namespace Controllers
 {
     public class CameraMovement : MonoBehaviour
     {
-        public static bool Moving;
-        
-        private Rigidbody _rb;
-        private Camera _cam;
-        private DepthOfField _depthOfField;
-
-        private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
-        private bool _dragging, _rotating;
-
-        public static Action OnCameraMove;
-
-        [SerializeField] private Vector3 startPos, startRot;
+        [SerializeField] private float maxScrollSpeed = 0.1f;
+        [SerializeField] private float maxDragSpeed = 1f;
+        [SerializeField] private float dragAcceleration = 0.1f;
+        [SerializeField] private float scrollAccelerationSpeed = 0.1f;
+        [SerializeField] private float bounceTime = 0.1f;
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
-
-        [Range(1,10)]
-        [SerializeField] private int
-            dragSpeed = 3,
-            scrollSpeed = 3,
-            rotateSpeed = 3;
-    
-        [SerializeField] private int
-            minHeight = 5,
-            maxHeight = 25,
-            minAngle = 25,
-            maxAngle = 60;
-
+        [SerializeField] private float doFAdjustMultiplier = 20f;
         [SerializeField] private bool invertScroll;
+        
+        private Camera _cam;
+        private DepthOfField _depthOfField;
+        private CinemachineFreeLook _freeLook;
+        private Vector3 _dragDir;
+        private Vector3 _vel = Vector3.zero;
+        private float _scrollAcceleration;
+        private float _scrollAccelerationRef;
+        private Vector3 _followVelRef = Vector3.zero;
+
+        private Vector3 _startPos, _startRot;
+        private Vector3 _lastDrag;
+        private bool _dragging, _rotating;
+        private Rect _screenBounds;
+
+        private int _oceanMask;
+
+        public static Action OnCameraMove;
+
+        public static bool IsMoving;
 
         private void Awake()
         {
+            _screenBounds = new Rect(Screen.width / 99f,
+                Screen.height / 99f,
+                Screen.width - ((Screen.width / 99f) * 2),
+                Screen.height - ((Screen.height / 99f) * 2));
+
             _cam = GetComponent<Camera>();
-            _rb = GetComponent<Rigidbody>();
             profile.TryGetSettings(out _depthOfField);
+            _freeLook = GetComponent<CinemachineFreeLook>();
+            
+            var camTf = _cam.transform;
+            _startPos = camTf.position;
+            _startRot = camTf.eulerAngles;
+            
+            _oceanMask = LayerMask.GetMask("Ocean");
         }
 
         private void Update()
         {
             if (Manager.inMenu) return;
-
-            volume.weight = Mathf.InverseLerp(maxHeight, minHeight, transform.position.y);
-            var ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(ray, out var hit, 100f, layerMask))
-            {
-                _depthOfField.focusDistance.value = hit.distance;
-            }
-
-            if (!_rotating && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                _dragOrigin = Input.mousePosition;
-                _cameraOrigin = transform.position;
-                _dragging = true;
-            }
-            else if (!_dragging && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                _rotateAxis = hit.point;
-                _rotating = true;
-            }
-
-            if (!Input.GetMouseButton(0)) _dragging = false;
-            if (!Input.GetMouseButton(1)) _rotating = false;
-
-            Moving = _rotating || _dragging;
             
-            if (_dragging)
+            // Apply rotation
+            if (Input.GetMouseButtonDown(1)) _rotating = true;
+            
+            if (Input.GetMouseButton(1))
             {
-                var dragLength = _dragOrigin - Input.mousePosition;
-                if (dragLength.magnitude > 1.0f) OnCameraMove?.Invoke();
-                
-                var dir = _cam.ScreenToViewportPoint(dragLength);
-                var t = transform;
-                var pos = t.position;
-                t.position = _cameraOrigin +
-                             Quaternion.Euler(0, t.eulerAngles.y, 0) *
-                             new Vector3(dir.x * dragSpeed * pos.y, 0, dir.y * dragSpeed * pos.y);
+                _freeLook.m_XAxis.m_InputAxisValue = -Input.GetAxis("Mouse X");
             }
-            else if (_rotating)
+            else if (Input.GetMouseButtonUp(1))
             {
-                transform.RotateAround(_rotateAxis, Vector3.up, Input.GetAxis("Mouse X") * rotateSpeed);
+                _rotating = false;
+                _freeLook.m_XAxis.m_InputAxisValue = 0;
             }
-            else
+            
+            var isOverSurface = Physics.Raycast(
+                _cam.ScreenPointToRay(Input.mousePosition),
+                out var posHit, 1000f, _oceanMask);
+
+            // Apply position
+            if (isOverSurface && Input.GetMouseButtonDown(0))
             {
-                if (transform.position.y > maxHeight)
-                {
-                    _rb.AddForce(new Vector3(0, -2.0f,0));
-                }
-                else if (transform.position.y < minHeight)
-                {
-                    _rb.AddForce(new Vector3(0, 2.0f, 0));
-                }
-                else
-                {
-                    var dir = invertScroll ? 1 : -1;
-                    // Map the angle by the height
-                    var t = transform;
-                    t.eulerAngles = new Vector3(
-                        Remap(t.position.y,
-                            minHeight,
-                            maxHeight - 5,
-                            minAngle,
-                            maxAngle), t.eulerAngles.y, 0);
-                    if (_rb.velocity.y < 10 && _rb.velocity.y > -10)
-                    {
-                        Vector3 force = new Vector3(0,
-                            dir * Mathf.Clamp(Input.GetAxis("Zoom"), -0.5f, 0.5f) * scrollSpeed * 30, 0);
-                        if (force != Vector3.zero) _rb.AddForce(force);
-                    }
-                }
+                 IsMoving = _dragging = true;
+                _lastDrag = posHit.point;
             }
+            
+            if (isOverSurface && Input.GetMouseButton(0))
+            {
+                _dragDir = _lastDrag - posHit.point;
+                _dragDir.y = 0;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                IsMoving = _dragging = false;
+            }
+
+            if (_screenBounds.Contains(Input.mousePosition))
+            {
+                _freeLook.Follow.position += _dragDir * Time.deltaTime * 100;
+            }   
+
+            if (!_dragging)
+            {
+                _dragDir = Vector3.SmoothDamp(
+                    _dragDir, Vector3.zero, ref _vel, dragAcceleration);
+            }
+            
+            // Apply scroll 
+            var scroll = -Input.mouseScrollDelta.y;
+            _scrollAcceleration += scroll * Time.deltaTime;
+            _scrollAcceleration = Mathf.SmoothDamp(_scrollAcceleration, 0, 
+                ref _scrollAccelerationRef, scrollAccelerationSpeed);
+            _scrollAcceleration = Mathf.Clamp(_scrollAcceleration, -maxScrollSpeed, maxScrollSpeed);
+            _freeLook.m_YAxis.Value += _scrollAcceleration;
+
+            volume.weight = Mathf.Lerp(1, 0, _freeLook.m_YAxis.Value);
+            var doFRay = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            if (Physics.Raycast(doFRay, out var hit, 100f, layerMask))
+            {
+                _depthOfField.focusDistance.value = Mathf.MoveTowards(
+                    _depthOfField.focusDistance.value, hit.distance, 
+                    Time.deltaTime * doFAdjustMultiplier);
+            }
+
+            var atLimit = _freeLook.m_YAxis.Value <= 0.01 | _freeLook.m_YAxis.Value >= 0.98;
+            if (atLimit && Mathf.Abs(_scrollAcceleration) > 0)
+                _freeLook.Follow.position += new Vector3(0, _scrollAcceleration, 0);
+            
+            // Apply follow
+            var followPos = _freeLook.Follow.position;
+            var clampedY = Mathf.Clamp(followPos.y, -1, 2);
+            followPos = new Vector3(followPos.x, clampedY, followPos.z);
+
+            var newFollowPos =  new Vector3(followPos.x, 1, followPos.z);
+            followPos = Vector3.SmoothDamp(
+                followPos, newFollowPos, ref _followVelRef, bounceTime);
+            _freeLook.Follow.position = followPos;
         }
 
         public void Center()
         {
             var t = transform;
-            t.position = startPos;
-            t.eulerAngles = startRot;
-        }
-
-        private static float Remap (float value, float min1, float max1, float min2, float max2) {
-            return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
+            t.position = _startPos;
+            t.eulerAngles = _startRot;
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using Utilities;
 using UnityEngine.UI;
 using Entities;
+using Managers;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
@@ -112,7 +113,7 @@ namespace Controllers
         private void Update()
         {
             // Don't hover new buildings while a building is selected, the camera is moving, or in the UI
-            if (_selectedBuilding || CameraMovement.Moving || IsSelectionDisabled())
+            if (_selectedBuilding || CameraMovement.IsMoving || IsSelectionDisabled())
             {
                 HoveredBuilding = null;
                 return;
@@ -126,15 +127,16 @@ namespace Controllers
             HoveredBuilding = SelectHoveredBuilding();
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             // Keep track of clear button position above selected building
             if (!_selectedBuilding) return;
-            
-            transform.position = Vector3.SmoothDamp(
-                transform.position,
-                _cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset), 
-                ref _velocity, 0.035f);
+
+            transform.position = _cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset);
+                //Vector3.SmoothDamp(
+                //transform.position,
+                //_cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset), 
+                //ref _velocity, 0.035f);
         }
 
         // Returns the building the cursor is hovering over if exists
@@ -181,7 +183,7 @@ namespace Controllers
             if (_selectedBuilding.type == BuildingType.Terrain)
             {
                 config.IsRefund = false;
-                config.DestructionCost = CalculateTerrainClearCost();
+                config.DestructionCost = CalculateTerrainClearCost(_selectedBuilding.SectionCount);
                 config.BuildingName = "Terrain";
             }
             else
@@ -210,10 +212,10 @@ namespace Controllers
             return Mathf.FloorToInt(_selectedBuilding.baseCost * RefundPercentage);
         }
         
-        private int CalculateTerrainClearCost()
+        private int CalculateTerrainClearCost(int count)
         {
             return (int) (Enumerable
-                .Range(TerrainClearCount, 4) // TODO: Replace 4 with tile count
+                .Range(TerrainClearCount, count) // TODO: Replace 4 with tile count
                 .Sum(i => Math.Pow(CostScale, i)) * BaseCost);
         }
 
@@ -234,8 +236,9 @@ namespace Controllers
             ) return;
             
             if (_selectedBuilding.type == BuildingType.Terrain)
-                TerrainClearCount += Manager.Map.GetCells(_selectedBuilding).Length;
+                TerrainClearCount += _selectedBuilding.SectionCount;
 
+            Manager.Map.ClearBuilding(_selectedBuilding);
             _selectedBuilding.Clear();
             DeselectBuilding();
         }

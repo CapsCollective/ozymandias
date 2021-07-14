@@ -48,5 +48,15 @@ namespace Utilities
             }
             return newList;
         }
+        
+        public static bool IsContainedWithin<T>(this List<T> a, Dictionary<T, List<T>> b)
+        {
+            return b.Values.Any(bT => IsMatch(a, bT));
+        }
+
+        public static bool IsMatch<T>(List<T> a, List<T> b)
+        {
+            return a.All(b.Contains);
+        }
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utilities;
+using static Managers.GameManager;
 
 namespace Controllers
 {
@@ -34,17 +35,17 @@ namespace Controllers
             Click.OnRightClick += RightClick;
 
             var canvasGroup = GetComponent<CanvasGroup>();
-            GameManager.OnNextTurn += () =>
+            OnNextTurn += () =>
             {
                 NewCards();
                 canvasGroup.interactable = false;
             };
-            GameManager.OnNewTurn += () =>
+            OnNewTurn += () =>
             {
                 canvasGroup.interactable = true;
             };
         
-            _remainingBuildings = GameManager.Manager.BuildingCards.All;
+            _remainingBuildings = Manager.BuildingCards.All;
             for (var i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
             _toggleGroup = GetComponent<ToggleGroup>();
         }
@@ -59,7 +60,7 @@ namespace Controllers
             }
 #endif
             // Clear previous highlights
-            GameManager.Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
+            Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
             _highlighted = new Cell[0];
 
             if (_previousSelected != Selected)
@@ -76,44 +77,36 @@ namespace Controllers
 
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
 
-            Cell closest = GameManager.Manager.Map.GetCellFromMouse();
-
+            Cell closest = Manager.Map.GetClosestCellToCursor();
+            if (closest == null || !closest.Active) return;
+            
             Building building = cards[Selected].buildingPrefab.GetComponent<Building>();
 
-            _highlighted = GameManager.Manager.Map.GetCells(closest, building, _rotation);
+            _highlighted = Manager.Map.GetCells(closest, building, _rotation).ToArray();
 
-            Map.HighlightState state = Map.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
-            GameManager.Manager.Map.Highlight(_highlighted, state);
+            Map.HighlightState state = Cell.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+            Manager.Map.Highlight(_highlighted, state);
 
         }
 
         private void LeftClick()
         {
-            if (Selected == Deselected) return;
+            if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
             Click.PlacingBuilding = true;
-            Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
-            Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
-
-            if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
-
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
-            if (!GameManager.Manager.Map.CreateBuilding(
-                buildingInstance, hit.point, _rotation, true)) return;
             
-            // TODO get particles working again
-            //Instantiate(particle, transform.parent).GetComponent<Trail>().SetTarget(cards[i].buildingPrefab.GetComponent<Building>().primaryStat);
-
+            if (!Manager.Map.CreateBuilding(buildingInstance,  Manager.Map.GetClosestCellToCursor().Id, _rotation, true))
+            {
+                Destroy(buildingInstance);
+                return;
+            }
+            
             cards[i].SwitchCard(ChangeCard);
             cards[i].toggle.isOn = false;
             Selected = Deselected;
             
-            BarFill.DelayBars = true;
-            GameManager.Manager.UpdateUi();
-            BarFill.DelayBars = false;
-            
-            // TODO find a better spot for this?
-            Jukebox.Instance.PlayBuild();
+            Manager.UpdateUi();
         }
     
         private void RightClick()
@@ -126,49 +119,47 @@ namespace Controllers
         public void NewCards()
         {
             _toggleGroup.SetAllTogglesOff();
-            for (var i = 0; i < 3; i++) cards[i].SwitchCard(ChangeCard);
+            for (int i = 0; i < 3; i++) cards[i].SwitchCard(ChangeCard);
         }
 
         private void ChangeCard(int i)
         {
-            if (_remainingBuildings.Count == 0) _remainingBuildings = 
-                GameManager.Manager.BuildingCards.All;
-            var valid = false;
+            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
+            bool valid = false;
 
             // Confirm no duplicate buildings
             while (!valid)
             {
                 valid = true;
                 cards[i].buildingPrefab = _remainingBuildings.PopRandom();
-                for (var j = 0; j < 3; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     if (i == j) continue;
                     if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
                 }
             }
 
-            GameManager.Manager.UpdateUi();
+            Manager.UpdateUi();
         }
 
         private void SetFirstCard(int i)
         {
-            if (_remainingBuildings.Count == 0) _remainingBuildings = 
-                GameManager.Manager.BuildingCards.All;
-            var valid = false;
+            if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.BuildingCards.All;
+            bool valid = false;
 
             // Confirm no duplicate buildings
             while (!valid)
             {
                 valid = true;
                 cards[i].buildingPrefab = testBuilding;
-                for (var j = 0; j < 3; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     if (i == j) continue;
                     if (cards[j].buildingPrefab == cards[i].buildingPrefab) valid = false;
                 }
             }
 
-            GameManager.Manager.UpdateUi();
+            Manager.UpdateUi();
         }
     }
 }
