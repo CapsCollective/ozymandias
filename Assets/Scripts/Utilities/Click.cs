@@ -18,7 +18,7 @@ namespace Utilities
 
         private void Update()
         {
-            if (GameManager.Manager.IsLoading) return;
+            if (GameManager.IsLoading) return;
 
             if (Input.GetMouseButtonDown(0)) _time0 = Time.time;
             if (Input.GetMouseButtonUp(0) && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();

@@ -36,7 +36,7 @@ namespace Managers
             }
         }
 
-        public bool IsLoading { get; private set; }
+        public static bool IsLoading { get; private set; }
         
         // All Managers/ Universal Controllers
         public Adventurers Adventurers { get; private set; }
