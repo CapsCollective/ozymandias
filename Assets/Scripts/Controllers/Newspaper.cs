@@ -32,6 +32,7 @@ namespace Controllers
         private Event _choiceEvent;
         private string _newspaperTitle;
         private Canvas _canvas;
+        private bool _choiceSelected;
 
         private void Start()
         {
@@ -70,6 +71,7 @@ namespace Controllers
 
             // Set all event choices on button texts
             for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i, i < _choiceEvent.choices.Count);
+            if (!_choiceSelected) UIEventController.SelectUI(continueButton.gameObject);
         }
 
         private void SetChoiceActive(int choice, bool active)
@@ -77,6 +79,12 @@ namespace Controllers
             choiceList[choice].gameObject.SetActive(active);
             if (active) choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text = 
                 _choiceEvent.choices[choice].name;
+
+            if (choice == 0 && active)
+            {
+                UIEventController.SelectUI(choiceList[choice].gameObject);
+                _choiceSelected = true;
+            };
         }
     
         public void OnChoiceSelected(int choice)
@@ -87,6 +95,7 @@ namespace Controllers
         
             Manager.UpdateUi();
             Manager.Save(); // Need to save again after a choice to lock in its outcomes
+            UIEventController.SelectUI(continueButton.gameObject);
         }
     
         private static readonly string[] NewspaperTitles = {
@@ -139,6 +148,7 @@ namespace Controllers
                     OnClosed?.Invoke();
                     _canvas.enabled = false;
                 });
+            UIEventController.SelectUI(null);
         }
         
         public void CloseNoExit()

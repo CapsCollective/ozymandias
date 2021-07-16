@@ -17,7 +17,7 @@ namespace Managers
         [SerializeField] private GameObject terrainPrefab;
         public bool inMenu;
         private bool _gameOver;
-
+        public bool turnTransitioning;
 
         public Event openingEvent;
         public Event[] supportWithdrawnEvents;
@@ -66,6 +66,8 @@ namespace Managers
             BuildingPlacement = FindObjectOfType<BuildingPlacement>();
             Newspaper = FindObjectOfType<Newspaper>();
             Tooltip = FindObjectOfType<Tooltip>();
+
+            InputManager.Instance.IA_NextTurn.performed += (e) => NextTurn();
             
             Load();
         }
@@ -155,6 +157,9 @@ namespace Managers
         [Button("Next Turn")]
         public void NextTurn()
         {
+            if (turnTransitioning || inMenu) return;
+
+            turnTransitioning = true;
             if (TurnCounter == 15)
             {
                 signoffScreen.GetComponent<Letter>().Open();
@@ -214,6 +219,7 @@ namespace Managers
             Save();
             EnterMenu();
             UpdateUi();
+            turnTransitioning = false;
         }
 
         public void UpdateUi()

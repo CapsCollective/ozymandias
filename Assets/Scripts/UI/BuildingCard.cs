@@ -15,6 +15,7 @@ namespace UI
         
         public Toggle toggle;
         public GameObject buildingPrefab;
+        public bool isReplacing;
         [SerializeField] private BuildingCardDisplay cardDisplay;
         [SerializeField] private int position;
         [SerializeField] private Ease tweenEase;
@@ -23,7 +24,6 @@ namespace UI
 
         private Vector3 _initialPosition;
         private RectTransform _rectTransform;
-        private bool _isReplacing;
 
 
         private void Start()
@@ -55,7 +55,7 @@ namespace UI
         {
             cardDisplay.SetHighlight(isOn);
             
-            if (_isReplacing) { return; }
+            if (isReplacing) { return; }
 
             if (isOn) BuildingPlacement.Selected = position;
             else
@@ -95,7 +95,7 @@ namespace UI
 
         public void SwitchCard(Action<int> callback)
         {
-            _isReplacing = true;
+            isReplacing = true;
             _rectTransform.DOLocalMove(
                     _initialPosition - _rectTransform.transform.up * 100, 
                     0.5f).SetEase(tweenEase)
@@ -103,7 +103,7 @@ namespace UI
                     callback(position);
                     _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase)
                         .OnComplete(() => {
-                            _isReplacing = false;
+                            isReplacing = false;
                         });
                 });
         }

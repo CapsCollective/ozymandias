@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Managers;
+using static Managers.GameManager;
 
 namespace Utilities
 {
@@ -26,7 +26,7 @@ namespace Utilities
 
         private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (GameManager.Manager.IsLoading)
+            if (Manager.IsLoading || Manager.inMenu || Manager.turnTransitioning)
                 return;
 
             if (obj.performed) _time0 = Time.time;
@@ -36,7 +36,7 @@ namespace Utilities
 
         private void I_OnRightClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (GameManager.Manager.IsLoading)
+            if (Manager.IsLoading || Manager.inMenu || Manager.turnTransitioning)
                 return;
 
             if (obj.performed) _time1 = Time.time;

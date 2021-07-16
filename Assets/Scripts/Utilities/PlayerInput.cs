@@ -81,6 +81,22 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""NextTurn"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9555a6f-7b47-4067-b0b5-7ed6ed3c7196"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShowPause"",
+                    ""type"": ""Button"",
+                    ""id"": ""38061098-501b-4c09-af6a-8b10442c20ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -235,6 +251,28 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Screenshot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3392453a-a4ab-48d5-abac-119e7b4455be"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""NextTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd2c6981-53c6-45c4-90bb-9a8c08b6da5e"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""ShowPause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -663,6 +701,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Player_RotateCamera = m_Player.FindAction("Rotate Camera", throwIfNotFound: true);
         m_Player_DeleteBuilding = m_Player.FindAction("DeleteBuilding", throwIfNotFound: true);
         m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
+        m_Player_NextTurn = m_Player.FindAction("NextTurn", throwIfNotFound: true);
+        m_Player_ShowPause = m_Player.FindAction("ShowPause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -733,6 +773,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RotateCamera;
     private readonly InputAction m_Player_DeleteBuilding;
     private readonly InputAction m_Player_Screenshot;
+    private readonly InputAction m_Player_NextTurn;
+    private readonly InputAction m_Player_ShowPause;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -745,6 +787,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
         public InputAction @DeleteBuilding => m_Wrapper.m_Player_DeleteBuilding;
         public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
+        public InputAction @NextTurn => m_Wrapper.m_Player_NextTurn;
+        public InputAction @ShowPause => m_Wrapper.m_Player_ShowPause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -778,6 +822,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Screenshot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
                 @Screenshot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
                 @Screenshot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
+                @NextTurn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
+                @NextTurn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
+                @NextTurn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
+                @ShowPause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
+                @ShowPause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
+                @ShowPause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -806,6 +856,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Screenshot.started += instance.OnScreenshot;
                 @Screenshot.performed += instance.OnScreenshot;
                 @Screenshot.canceled += instance.OnScreenshot;
+                @NextTurn.started += instance.OnNextTurn;
+                @NextTurn.performed += instance.OnNextTurn;
+                @NextTurn.canceled += instance.OnNextTurn;
+                @ShowPause.started += instance.OnShowPause;
+                @ShowPause.performed += instance.OnShowPause;
+                @ShowPause.canceled += instance.OnShowPause;
             }
         }
     }
@@ -951,6 +1007,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnDeleteBuilding(InputAction.CallbackContext context);
         void OnScreenshot(InputAction.CallbackContext context);
+        void OnNextTurn(InputAction.CallbackContext context);
+        void OnShowPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

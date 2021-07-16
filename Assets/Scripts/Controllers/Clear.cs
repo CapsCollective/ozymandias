@@ -115,10 +115,11 @@ namespace Controllers
 
         private void DeleteBuildingInput(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
+            if (Manager.inMenu || Manager.turnTransitioning) return;
+
             if(obj.performed)
                 ClearBuilding();
         }
-
 
         private void Update()
         {

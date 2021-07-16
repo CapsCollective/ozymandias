@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using Managers;
 
 public class InputManager
 {
@@ -32,6 +33,8 @@ public class InputManager
     public InputAction IA_MousePosition { get; private set; }
     public InputAction IA_MoveCamera { get; private set; }
     public InputAction IA_DeleteBuilding { get; private set; }
+    public InputAction IA_NextTurn { get; private set; }
+    public InputAction IA_ShowPause { get; private set; }
 
     // UI Input
     public InputAction IA_SelectCards { get; private set; }
@@ -62,6 +65,12 @@ public class InputManager
         IA_MoveCamera.Enable();
         IA_DeleteBuilding = PlayerInput.Player.DeleteBuilding;
         IA_DeleteBuilding.Enable();
+        IA_NextTurn = PlayerInput.Player.NextTurn;
+        IA_NextTurn.Enable();
+        IA_ShowPause = PlayerInput.Player.ShowPause;
+        IA_ShowPause.Enable();
+
+        // UI
         IA_SelectCards = PlayerInput.UI.SelectCards;
         IA_SelectCards.Enable();
         IA_UINavigate = PlayerInput.UI.Navigate;

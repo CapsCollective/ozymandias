@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entities;
 using Managers;
 using UI;
@@ -12,6 +13,8 @@ namespace Controllers
 {
     public class BuildingPlacement : MonoBehaviour
     {
+        public static Action OnBuildingPlaced;
+
         public const int Deselected = -1;
         public static int Selected = Deselected;
     
@@ -89,10 +92,14 @@ namespace Controllers
 
         }
 
+        public bool ChangingCard(int cardNum) => cards[cardNum].isReplacing;
+
         public void ImitateHover(int cardNum)
         {
+
             if (cardNum >= 0)
             {
+                if (cards[cardNum].isReplacing) return;
                 cards[cardNum].SelectCard();
                 if (cards[cardNum].toggle.interactable)
                 {
@@ -142,6 +149,7 @@ namespace Controllers
             Selected = Deselected;
             
             Manager.UpdateUi();
+            OnBuildingPlaced?.Invoke();
         }
     
         private void RightClick()
