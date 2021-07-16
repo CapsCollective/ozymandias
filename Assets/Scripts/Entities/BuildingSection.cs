@@ -9,9 +9,11 @@ namespace Entities
     {
         private const float NoiseScale = .5f;
         private const float HeightFactor = 1.5f;
+        private static string Directory => Application.dataPath + "/Resources" + "/SectionData/";
+        private string FileName => MeshFilter.sharedMesh.name;
+        private string FilePath => Directory + FileName;
 
         // Member variables
-        public int clockwiseRotations;
         public Transform cornerParent;
         public bool randomRotations;
         public Vector2 randomScale = Vector2.one;
@@ -24,10 +26,7 @@ namespace Entities
         private static readonly int HasGrass = Shader.PropertyToID("_HasGrass");
         private static readonly int RoofColor = Shader.PropertyToID("_RoofColor");
 
-        // Properties
-        private static string Directory => Application.dataPath + "/Resources" + "/SectionData/";
-        private string FileName => MeshFilter.sharedMesh.name;
-        private string FilePath => Directory + FileName;
+
 
         private MeshFilter MeshFilter => _meshFilter ? _meshFilter : _meshFilter = GetComponent<MeshFilter>();
 
@@ -61,7 +60,7 @@ namespace Entities
         }
 
         // Class Functions
-        public void Fit(Vector3[] corners)
+        public void Fit(Vector3[] corners, int clockwiseRotations)
         {
             for (int i = 0; i < clockwiseRotations; i++)
             {

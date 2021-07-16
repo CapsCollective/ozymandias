@@ -27,9 +27,10 @@ namespace Controllers
             _canvas = GetComponent<Canvas>();
             _originalPos = cardDisplay.transform.localPosition;
             
-            BuildingCards.OnUnlock += building =>
+            BuildingCards.OnUnlock += (building, unlockImmediately) =>
             {
                 _buildings.Push(building);
+                if(unlockImmediately) OpenCard();
             };
 
             Newspaper.OnClosed += OpenCard;
@@ -46,7 +47,7 @@ namespace Controllers
             Open();
         }
 
-        private void Open()
+        private void Open(bool fromRuin = false)
         {
             Manager.EnterMenu();
             _canvas.enabled = true;

@@ -51,37 +51,46 @@ namespace Managers
     }
     
     [Serializable]
+    public struct BuildingCardDetails
+    {
+        public List<string> all, current, discoverable;
+    }
+    
+    [Serializable]
     public class SaveFile
     {
         public static bool loading;
+
+        public int wealth, turnCounter, threatLevel, terrainClearCount, ruinsClearCount;
         
-        public int wealth, turnCounter, threatLevel, clearCount;
-        public List<BuildingDetails> buildings;
-        public List<string> unlockedBuildings;
         public List<AdventurerDetails> adventurers; 
         public Dictionary<Stat, List<Modifier>> modifiers;
         public List<QuestDetails> quests;
         public EventQueueDetails eventQueue;
-
+        public BuildingCardDetails buildingCards;
+        public List<BuildingDetails> buildings;
+        
         public void Save()
         {
-            wealth = Manager.Wealth;
-            turnCounter = Manager.TurnCounter;
-            threatLevel = Manager.Stability;
-            clearCount = Clear.TerrainClearCount;
-
             buildings = Manager.Buildings.Save();
-
-            adventurers = Manager.Adventurers.Save();
-
-            quests = Manager.Quests.Save();
-
-            eventQueue = Manager.EventQueue.Save();
+            buildingCards = Manager.BuildingCards.Save();
             
-            unlockedBuildings = Manager.BuildingCards.Save();
-            
-            modifiers = Manager.Modifiers;
-
+            if (Manager.IsGameOver)
+            {
+                turnCounter = 0; // Reset game
+            }
+            else
+            {
+                wealth = Manager.Wealth;
+                turnCounter = Manager.TurnCounter;
+                threatLevel = Manager.Stability;
+                terrainClearCount = Clear.TerrainClearCount;
+                ruinsClearCount = Clear.RuinsClearCount;
+                modifiers = Manager.Modifiers;
+                adventurers = Manager.Adventurers.Save();
+                quests = Manager.Quests.Save();
+                eventQueue = Manager.EventQueue.Save();
+            }
             PlayerPrefs.SetString("Save", JsonConvert.SerializeObject(this));
         }
 
@@ -89,39 +98,50 @@ namespace Managers
         {
             loading = true;
             string saveJson = PlayerPrefs.GetString("Save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
-            JsonConvert.PopulateObject(saveJson, this);
-
-            Manager.Wealth = wealth;
-            Manager.TurnCounter = turnCounter;
-            Manager.Stability = threatLevel;
-            Clear.TerrainClearCount = clearCount;
-            
-            Manager.Adventurers.Load(adventurers);
-            
-            Manager.Modifiers = modifiers;
-
-            foreach (Stat metric in Enum.GetValues(typeof(Stat)))
+            try
             {
-                Manager.ModifiersTotal.Add(metric, 0);
-                if (Manager.Modifiers.ContainsKey(metric)) continue;
-                modifiers.Add(metric, new List<Modifier>());
+                JsonConvert.PopulateObject(saveJson, this);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //TODO: Need a proper migration procedure for if we every change the save files
+                //Try again with a clear save
+                JsonConvert.PopulateObject(File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"), this);
+            }
+
+            Manager.TurnCounter = turnCounter;
+            Clear.TerrainClearCount = terrainClearCount;
+            Clear.RuinsClearCount = ruinsClearCount;
+
+            await Manager.Buildings.Load(buildings);
+            await Manager.BuildingCards.Load(buildingCards);
+            await Manager.EventQueue.Load(eventQueue);
+
+            Manager.Modifiers = modifiers ?? new Dictionary<Stat, List<Modifier>>();
+            
+            foreach (Stat stat in Enum.GetValues(typeof(Stat)))
+            {
+                Manager.ModifiersTotal.Add(stat, 0);
+                if (Manager.Modifiers.ContainsKey(stat)) continue;
+                Manager.Modifiers.Add(stat, new List<Modifier>());
             }
             
             foreach (var metricPair in Manager.Modifiers)
                 Manager.ModifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
-
-            await Manager.Buildings.Load(buildings);
-
-            await Manager.Quests.Load(quests);
-            
-            await Manager.BuildingCards.Load(unlockedBuildings);
-
-            await Manager.EventQueue.Load(eventQueue);
             
             if (turnCounter == 0)
+            {
                 Manager.StartGame();
-
-            //TODO: Reshuffle buildings
+            }
+            else
+            {
+                Manager.Wealth = wealth;
+                Manager.Stability = threatLevel;
+                Manager.Adventurers.Load(adventurers);
+                await Manager.Quests.Load(quests);
+                //TODO: Reshuffle buildings
+            }
             
             loading = false;
         }

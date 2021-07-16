@@ -23,8 +23,8 @@ namespace Entities
         [SerializeField] private int relaxIterations;
         [SerializeField] [Range(0f, 1f)] private float relaxStrength;
 
-        [field: HideInInspector] [field: SerializeField] private Graph<Vertex> VertexGraph { get; set; }
-        [field: HideInInspector] [field: SerializeField] private Graph<Cell> CellGraph { get; set; }
+        [field: SerializeField] private Graph<Vertex> VertexGraph { get; set; }
+        [field: SerializeField] private Graph<Cell> CellGraph { get; set; }
         private Graph<Vertex> RoadGraph { get; set; }
         private Dictionary<Cell, List<int>> UVMap { get; set; }
 
@@ -171,13 +171,21 @@ namespace Entities
         // Grid
         [Button("Regenerate (Warning: Destructive)")] public void Generate()
         {
+            HashSet<int> safeCells = new HashSet<int>();
+            HashSet<int> activeCells = new HashSet<int>();
+            foreach (Cell cell in CellGraph.Data)
+            {
+                if (cell.Safe) safeCells.Add(cell.Id);
+                if (cell.Active) activeCells.Add(cell.Id);
+            }
+            
             Random.InitState(seed);
             CreateVertices();
             CreateEdges();
             RemoveEdges();
             Subdivide();
             Relax();
-            CalculateCells();
+            CalculateCells(safeCells, activeCells);
         }
 
         // Create vertices in a grid
@@ -368,7 +376,7 @@ namespace Entities
         }
 
         // Form a graph of cells by grouping the vertices, then create edges by comparing shared vertices
-        private void CalculateCells()
+        private void CalculateCells(HashSet<int> safeCells, HashSet<int> activeCells)
         {
             CellGraph = new Graph<Cell>();
             Graph<Vertex> dupGraph = new Graph<Vertex>(VertexGraph);
@@ -385,6 +393,8 @@ namespace Entities
                     .Where(newCell => !CellGraph.Contains(newCell)))
                 {
                     newCell.Id = CellGraph.Add(newCell);
+                    newCell.Active = activeCells.Contains(newCell.Id) || activeCells.Count == 0;
+                    newCell.Safe = safeCells.Contains(newCell.Id);
                 }
 
                 dupGraph.Remove(root);
