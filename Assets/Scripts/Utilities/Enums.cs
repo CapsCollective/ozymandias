@@ -10,7 +10,7 @@
         Housing,
         Food,
         Spending,
-        Defense,
+        Defence,
         Threat
     }
 

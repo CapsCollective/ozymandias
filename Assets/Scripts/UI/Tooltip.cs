@@ -22,7 +22,9 @@ namespace UI
         Newspaper,
         Progress,
         Quests,
-        NextTurn
+        NextTurn,
+        Threat,
+        Defence
     }
 
     internal struct TooltipConfig
@@ -104,7 +106,7 @@ namespace UI
             {TooltipType.Stability, new TooltipConfig {
                 Title = "Town Stability",
                 Description = "The towns stability rises and falls by the constant struggle of the growing threat of " +
-                              "the outside world, and the defense of the town. Build defensive buildings, complete " +
+                              "the outside world, and the defence of the town. Build defensive buildings, complete " +
                               "quests, and most importantly attract more adventurers to keep this from running out, " +
                               "or else.",
                 Stat = Stat.Threat
@@ -161,7 +163,7 @@ namespace UI
                     break;
                 case Stat.Threat:
                     // TODO: Add a list of threat modifiers.
-                    details.text = $"{Manager.Defense} defense against {Manager.Threat} threat";
+                    details.text = $"{Manager.Defence} defence against {Manager.Threat} threat";
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +

@@ -21,7 +21,7 @@ namespace UI
             {Stat.Diviner, new Color(1.0f, 0.70f, 0.27f, 1.0f)},
             {Stat.Arcanist, new Color(0.84f, 0.40f, 1.0f, 1.0f)},
             {Stat.Spending, new Color(1.0f, 0.86f, 0.0f, 1.0f)},
-            {Stat.Defense, new Color(0.1f, 0.5f, 0.85f, 1.0f)},
+            {Stat.Defence, new Color(0.1f, 0.5f, 0.85f, 1.0f)},
             {Stat.Food, new Color(0.20f, 1f, 0.38f, 1.0f)}, // TODO: Fix Color 
             {Stat.Housing, new Color(0.98f, 0.67f, 0.45f, 1.0f)}
         };

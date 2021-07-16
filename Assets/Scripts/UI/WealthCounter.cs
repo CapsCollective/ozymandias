@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Utilities;
 using static Managers.GameManager;
 
 namespace UI
@@ -9,14 +11,22 @@ namespace UI
     {
         [SerializeField] private TextMeshProUGUI wealth;
         [SerializeField] private TextMeshProUGUI wealthPerTurn;
+        [SerializeField] private RectTransform spendingTag;
 
         private int _wpt;
         private int _previousWealth = 0;
         private int _targetWealth = 0;
+        private int _previousSpending = 0;
 
         // Update is called once per frame
         protected override void UpdateUi()
         {
+            if (_previousSpending != Manager.GetStat(Stat.Spending))
+            {
+                PunchBadge();
+                _previousSpending = Manager.GetStat(Stat.Spending);
+            }
+            
             _wpt = Manager.WealthPerTurn;
             wealth.text = _targetWealth.ToString();
             wealthPerTurn.text = "+" + _wpt;
@@ -36,6 +46,11 @@ namespace UI
             }
             wealth.text = Manager.Wealth.ToString();
             wealthPerTurn.text = "+" + Manager.WealthPerTurn;
+        }
+        
+        private void PunchBadge()
+        {
+            spendingTag.DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f);
         }
     }
 }

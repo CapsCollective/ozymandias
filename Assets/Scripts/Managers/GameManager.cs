@@ -119,11 +119,11 @@ namespace Managers
     
         public int Wealth { get;  set; }
 
-        public int Defense => Adventurers.Available + GetStat(Stat.Defense);
+        public int Defence => Adventurers.Available + GetStat(Stat.Defence);
 
         public int Threat => 9 + (3 * TurnCounter) + ModifiersTotal[Stat.Threat];
 
-        public int ChangePerTurn => Defense - Threat; // How much the top bar shifts each turn
+        public int ChangePerTurn => Defence - Threat; // How much the top bar shifts each turn
     
         public int Stability { get; set; } // Percentage of how far along the threat is.
 
