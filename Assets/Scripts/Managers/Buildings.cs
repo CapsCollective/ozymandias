@@ -20,9 +20,11 @@ namespace Managers
 
         private readonly List<Building> _buildings = new List<Building>();
         private readonly List<Building> _terrain = new List<Building>();
+        private readonly List<Building> _ruins = new List<Building>();
         public readonly Dictionary<string, BuildingSection.SectionData> BuildingCache = new Dictionary<string, BuildingSection.SectionData>();
 
         public int Count => _buildings.Count;
+        public int Ruins => _ruins.Count;
 
         private void Start()
         {
@@ -64,6 +66,7 @@ namespace Managers
         public void Add(Building building)
         {
             if (building.type == BuildingType.Terrain) _terrain.Add(building);
+            else if (building.IsRuin) _ruins.Add(building);
             else _buildings.Add(building);
 
             if(!SaveFile.loading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
@@ -81,10 +84,11 @@ namespace Managers
                 foreach (Event e in guildHallDestroyedEvents) Manager.EventQueue.Add(e, true);
                 Manager.NextTurn();
             }
-        
+
+            Manager.Map.ClearBuilding(building);
             if (building.type == BuildingType.Terrain) _terrain.Remove(building);
+            else if (building.IsRuin) _ruins.Remove(building);
             else _buildings.Remove(building);
-            Destroy(building.gameObject);
             Manager.UpdateUi();
         }
 
@@ -95,11 +99,27 @@ namespace Managers
             Remove(building);
             return building.name;
         }
-        
+
+        public void RemoveAll()
+        {
+            List<Building> dupList = new List<Building>(_buildings);
+            dupList.ForEach(building =>
+            {
+                if (building.type != BuildingType.Farm && building.type != BuildingType.GuildHall && Random.Range(0,_ruins.Count) == 0) ToRuin(building);
+                else building.Clear();
+            });
+        }
+
+        public void ToRuin(Building building)
+        {
+            _buildings.Remove(building);
+            _ruins.Add(building);
+            building.ToRuin();
+        }
+
         public List<BuildingDetails> Save()
         {
-            return _buildings.Select(x => x.Save())
-                .Concat(_terrain.Select(x => x.Save())).ToList();
+            return _buildings.Concat(_ruins).Concat(_terrain).Select(x => x.Save()).ToList();
         }
 
         public async Task Load(List<BuildingDetails> buildings)
@@ -107,19 +127,18 @@ namespace Managers
             foreach (BuildingDetails building in buildings)
             {
                 GameObject buildingInstance = await Addressables.InstantiateAsync(building.name, transform).Task;
-                if (!Manager.Map.CreateBuilding(buildingInstance, building.rootId, building.rotation))
+                if (!Manager.Map.CreateBuilding(buildingInstance, building.rootId, building.rotation, building.isRuin, sectionCount: building.sectionCount))
                     Destroy(buildingInstance);
             }
         }
 
         public void SpawnGuildHall()
         {
-            const int rootId = 429;
+            const int rootId = 296;
             const int rotation = 0;
 
             GameObject buildingInstance = Instantiate(guildHall, transform);
-            if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation))
-                Destroy(buildingInstance);
+            if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation)) Destroy(buildingInstance);
         }
     }
 }

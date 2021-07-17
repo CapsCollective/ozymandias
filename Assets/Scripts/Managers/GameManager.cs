@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Controllers;
+using Entities;
 using NaughtyAttributes;
 using UI;
 using UnityEngine;
@@ -16,8 +17,6 @@ namespace Managers
         [SerializeField] private Canvas loadingScreen, signoffScreen;
         [SerializeField] private GameObject terrainPrefab;
         public bool inMenu;
-        private bool _gameOver;
-
 
         public Event openingEvent;
         public Event[] supportWithdrawnEvents;
@@ -37,6 +36,7 @@ namespace Managers
         }
 
         public static bool IsLoading { get; private set; }
+        public bool IsGameOver { get; private set; }
         
         // All Managers/ Universal Controllers
         public Adventurers Adventurers { get; private set; }
@@ -198,15 +198,8 @@ namespace Managers
             EventQueue.Process();
         
             OnNewTurn?.Invoke();
-            //if (turnCounter % 5 == 0)
-            //{
-            //    var ev = Analytics.CustomEvent("Turn Counter", new Dictionary<string, object>
-            //    {
-            //        { "turn_number", turnCounter }
-            //    });
-            //}
-
-            Save();
+            
+            SaveFile.SaveState();
             EnterMenu();
             UpdateUi();
         }
@@ -216,24 +209,17 @@ namespace Managers
             OnUpdateUI?.Invoke();
         }
 
-        public void Save()
-        {
-            if(_gameOver) return;
-            new SaveFile().Save();
-        }
-        
         private async void Load()
         {
             IsLoading = true;
-            await new SaveFile().Load();
+            await SaveFile.LoadState();
             UpdateUi();
             IsLoading = false;
         }
 
         public void GameOver()
         {
-            _gameOver = true;
-            Settings.ClearSave();
+            IsGameOver = true;
             Newspaper.GameOver();
         }
 

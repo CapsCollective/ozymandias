@@ -8,6 +8,7 @@ namespace Entities.Outcomes
     {
         public override bool Execute()
         {
+            Manager.Buildings.RemoveAll();
             Manager.GameOver();
             return true;
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 using Utilities;
 using UnityEngine.UI;
 using Entities;
-using Managers;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
@@ -14,12 +13,16 @@ namespace Controllers
 {
     public class Clear : MonoBehaviour
     {
-        private const int BaseCost = 5;
-        private const float CostScale = 1.025f;
-        private const float RefundPercentage = 0.75f;
+        public static int TerrainClearCount { get; set; }
+        private const int TerrainBaseCost = 5;
+        private const float TerrainCostScale = 1.025f;
+        public static int RuinsClearCount { get; set; }
+        private const int RuinsBaseCost = 20;
+        private const float RuinsCostScale = 1.25f;
         
-        public static int TerrainClearCount;
+        private const float RefundPercentage = 0.50f;
         
+                
         private class SelectedBuildingConfig
         {
             public bool IsRefund;
@@ -40,18 +43,17 @@ namespace Controllers
         private OutlinePostProcess _outline;
         private Building _hoveredBuilding, _selectedBuilding;
         private SelectedBuildingConfig _config;
-        
-        private Vector3 _velocity = Vector3.zero;
         private float _timeSinceRaycast;
+
+        public static Action<Building> OnClear;
         
-        // TODO extract properties into member methods
         private Building HoveredBuilding
         {
             get => _hoveredBuilding;
             set {
                 // Deselection should only happen when the un-hovered building
                 // is not the same as the selected building
-                if (_hoveredBuilding && !_selectedBuilding)
+                if (_hoveredBuilding && !SelectedBuilding)
                 {
                     _hoveredBuilding.selected = false;
                 }
@@ -113,7 +115,7 @@ namespace Controllers
         private void Update()
         {
             // Don't hover new buildings while a building is selected, the camera is moving, or in the UI
-            if (_selectedBuilding || CameraMovement.IsMoving || IsSelectionDisabled())
+            if (SelectedBuilding || CameraMovement.IsMoving || IsSelectionDisabled())
             {
                 HoveredBuilding = null;
                 return;
@@ -130,13 +132,8 @@ namespace Controllers
         private void LateUpdate()
         {
             // Keep track of clear button position above selected building
-            if (!_selectedBuilding) return;
-
-            transform.position = _cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset);
-                //Vector3.SmoothDamp(
-                //transform.position,
-                //_cam.WorldToScreenPoint(_selectedBuilding.transform.position) + (Vector3.up * yOffset), 
-                //ref _velocity, 0.035f);
+            if (!SelectedBuilding) return;
+            transform.position = _cam.WorldToScreenPoint(SelectedBuilding.transform.position) + (Vector3.up * yOffset);
         }
 
         // Returns the building the cursor is hovering over if exists
@@ -156,7 +153,7 @@ namespace Controllers
             // Make sure that we don't bring up the button if we click on a UI element. 
             if (IsSelectionDisabled()) return;
             
-            if (_selectedBuilding) // Deselect current building if already selected
+            if (SelectedBuilding) // Deselect current building if already selected
             {
                 DeselectBuilding();
                 return;
@@ -178,19 +175,30 @@ namespace Controllers
         private SelectedBuildingConfig GetClearButtonConfiguration()
         {
             SelectedBuildingConfig config = new SelectedBuildingConfig();
-
-            // If the selected element is terrain, apply the cost increase algorithm to the destruction cost.
-            if (_selectedBuilding.type == BuildingType.Terrain)
+            
+            if (SelectedBuilding.IsRuin)
             {
+                config.BuildingName = "Ruin";
                 config.IsRefund = false;
-                config.DestructionCost = CalculateTerrainClearCost(_selectedBuilding.SectionCount);
+                //Scaled cost
+                config.DestructionCost = (int) (Enumerable
+                    .Range(RuinsClearCount, SelectedBuilding.SectionCount)
+                    .Sum(i => Mathf.Pow(RuinsCostScale, i)) * RuinsBaseCost);
+            }
+            else if (SelectedBuilding.type == BuildingType.Terrain)
+            {
                 config.BuildingName = "Terrain";
+                config.IsRefund = false;
+                //Scaled cost
+                config.DestructionCost = (int) (Enumerable
+                    .Range(TerrainClearCount, SelectedBuilding.SectionCount)
+                    .Sum(i => Mathf.Pow(TerrainCostScale, i)) * TerrainBaseCost);
             }
             else
             {
                 config.IsRefund = true;
-                config.DestructionCost = CalculateBuildingClearCost();
-                config.BuildingName = _selectedBuilding.name;
+                config.DestructionCost = Mathf.FloorToInt(SelectedBuilding.ScaledCost * RefundPercentage);
+                config.BuildingName = SelectedBuilding.name;
             }
 
             return config;
@@ -207,21 +215,9 @@ namespace Controllers
             buttonImage.color = new Color(oldButtonColor.r, oldButtonColor.g, oldButtonColor.b, opacity / 255f);
         }
 
-        private int CalculateBuildingClearCost()
-        {
-            return Mathf.FloorToInt(_selectedBuilding.baseCost * RefundPercentage);
-        }
-        
-        private int CalculateTerrainClearCost(int count)
-        {
-            return (int) (Enumerable
-                .Range(TerrainClearCount, count) // TODO: Replace 4 with tile count
-                .Sum(i => Math.Pow(CostScale, i)) * BaseCost);
-        }
-
         private void RepositionClearButton()
         {
-            Vector3 buildingPosition = _selectedBuilding.transform.position;
+            Vector3 buildingPosition = SelectedBuilding.transform.position;
             transform.position = _cam.WorldToScreenPoint(buildingPosition) + (Vector3.up * yOffset);
             _canvas.enabled = true;
         }
@@ -229,17 +225,19 @@ namespace Controllers
         public void ClearBuilding()
         {
             if (
-                !_selectedBuilding  ||
+                !SelectedBuilding  ||
                 _config == null ||
-                _selectedBuilding.indestructible || 
+                SelectedBuilding.indestructible || 
                 !Manager.Spend(_config.DestructionCost * (_config.IsRefund ? -1 : 1))
             ) return;
             
-            if (_selectedBuilding.type == BuildingType.Terrain)
-                TerrainClearCount += _selectedBuilding.SectionCount;
+            
+            if (SelectedBuilding.IsRuin) RuinsClearCount += SelectedBuilding.SectionCount;
+            if (SelectedBuilding.type == BuildingType.Terrain) TerrainClearCount += SelectedBuilding.SectionCount;
+            
+            OnClear.Invoke(SelectedBuilding);
 
-            Manager.Map.ClearBuilding(_selectedBuilding);
-            _selectedBuilding.Clear();
+            SelectedBuilding.Clear();
             DeselectBuilding();
         }
     }
