@@ -14,7 +14,8 @@ namespace Managers
 {
     public class BuildingCards : MonoBehaviour
     {
-        public static Action<Building, bool> OnUnlock;
+        public static Action<Building> OnUnlock;
+        public static Action OnDiscoverRuin;
         
         [SerializeField] private List<GameObject> starterBuildings;
         
@@ -37,7 +38,8 @@ namespace Managers
             if (!_all.Contains(building)) _all.Add(building);
             _current.Add(building);
             
-            OnUnlock?.Invoke(building.GetComponent<Building>(), isRuin);
+            OnUnlock?.Invoke(building.GetComponent<Building>());
+            if (isRuin) OnDiscoverRuin?.Invoke();
             Manager.Achievements.Unlock("A Helping Hand");
             if (_current.Count >= 5)
                 Manager.Achievements.Unlock("Modern Influences");
@@ -47,8 +49,7 @@ namespace Managers
         private void Discover(Building building)
         {
             // Gets more likely to discover buildings as ruins get cleared until non remain
-            if (_discoverable.Count != 0 &&
-                building.IsRuin &&
+            if (_discoverable.Count != 0 && building.IsRuin &&
                 Random.Range(0, Manager.Buildings.Ruins) <= _discoverable.Count
             ) Unlock(_discoverable.PopRandom(), true);
         }
