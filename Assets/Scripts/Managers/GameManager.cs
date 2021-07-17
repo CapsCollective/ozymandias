@@ -204,7 +204,7 @@ namespace Managers
         
             OnNewTurn?.Invoke();
             
-            new SaveFile().Save();
+            SaveFile.SaveState();
             EnterMenu();
             UpdateUi();
         }
@@ -218,7 +218,7 @@ namespace Managers
         {
             IsLoading = true;
             loadingScreen.enabled = true;
-            await new SaveFile().Load();
+            await SaveFile.LoadState();
             loadingScreen.enabled = false;
             signoffScreen.enabled = true;
             UpdateUi();

@@ -69,7 +69,17 @@ namespace Managers
         public EventQueueDetails eventQueue;
         public BuildingCardDetails buildingCards;
         public List<BuildingDetails> buildings;
+
+        public static void SaveState()
+        {
+            new SaveFile().Save();
+        }
         
+        public static async Task LoadState()
+        {
+            await new SaveFile().Load();
+        }
+
         public void Save()
         {
             buildings = Manager.Buildings.Save();
