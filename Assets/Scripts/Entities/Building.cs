@@ -22,15 +22,15 @@ namespace Entities
         public Sprite icon;
         public BuildingType type;
         public SerializedDictionary<Stat, int> stats;
-        public int baseCost;
-        public Color roofColor;
+        [SerializeField] private int baseCost;
+        [SerializeField] private Color roofColor;
         [SerializeField] private ScaleSpeed scaleSpeed;
 
-        [SerializeField] private int _rootId; // Cell id of the building root
+        private int _rootId; // Cell id of the building root
         private int _rotation;
-        private int _sectionCount; // 
-        private bool _isRuin;
-        public int SectionCount => _sectionCount;
+        private List<BuildingSection> _sections = new List<BuildingSection>();
+        public bool IsRuin { get; private set; }
+        public int SectionCount => _sections.Count;
         
         public int ScaledCost => Mathf.FloorToInt( baseCost * Mathf.Pow(1.25f, 
             Manager.Buildings.GetCount(type) * 4 / (float)scaleSpeed));
@@ -52,12 +52,12 @@ namespace Entities
 
         private readonly List<Renderer> _segments = new List<Renderer>();
 
-        public void Build(int rootId, int rotation, int sectionCount, Vector3[][] vertices, bool animate = false)
+        public void Build(int rootId, int rotation, int sectionCount, Vector3[][] vertices, bool isRuin, bool animate = false)
         {
             name = name.Replace("(Clone)", "");
             _rootId = rootId;
             _rotation = rotation;
-            _sectionCount = sectionCount;
+            IsRuin = isRuin;
             Random.InitState(rootId); // Init random with the id so it's the same each time
 
             if (type == BuildingType.Terrain)
@@ -66,31 +66,30 @@ namespace Entities
                 // TODO: Look into randomising the shape too
                 sections.ForEach(section => section.prefab = Random.Range(0,4) == 0 ? rock : tree);
             }
-            
-            if (fitToCell)
+
+            _sections = sections.GetRange(0,sectionCount).Select(section =>
+                Instantiate(section.prefab, transform).GetComponent<BuildingSection>()).ToList();
+
+            for (int i = 0; i < _sections.Count; i++)
             {
-                for (int i = 0; i < sectionCount; i++)
+                BuildingSection section = _sections[i];
+                
+                if (fitToCell)
                 {
-                    BuildingSection buildingSection = Instantiate(sections[i].prefab, transform).GetComponent<BuildingSection>();
-                    buildingSection.clockwiseRotations = sections[i].clockwiseRotations;
-                    buildingSection.Fit(vertices[i]);
-                    buildingSection.SetRoofColor(roofColor);
+                    section.Fit(vertices[i], sections[i].clockwiseRotations);
+                    section.SetRoofColor(IsRuin ? new Color(0,0,0) : roofColor);
                 }
-            }
-            else
-            {
-                for (int i = 0; i < sectionCount; i++)
+                else
                 {
-                    BuildingSection s = Instantiate(sections[i].prefab, transform).GetComponent<BuildingSection>();
                     Vector3 v = new Vector3(
                         vertices[i].Average(x => x.x), 0,
                         vertices[i].Average(x => x.z)
                     );
 
-                    Transform t = s.transform;
+                    Transform t = section.transform;
                     t.position = v;
                     t.eulerAngles = new Vector3(0, Random.value * 360, 0);
-                    t.localScale *= Random.Range(0.8f, 1.2f);
+                    t.localScale *= Random.Range(0.8f, 1.2f);         
                 }
             }
             if (animate)
@@ -98,6 +97,7 @@ namespace Entities
                 transform.localScale = Vector3.zero;
                 transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
                 ParticleSystem.Play();
+                Jukebox.Instance.PlayBuild(); // Only play sound if animated
             }
             if (grassMask)
             {
@@ -110,7 +110,10 @@ namespace Entities
             
             Manager.Buildings.Add(this);
             
-            // TODO: Work out what is this doing
+            // If I recall correctly, buildings have a bunch of segments and a particle emitter.
+            // I think what used to happen is the builder would try and get all segments but would accidentally grab the
+            // particle system and call the wrong method, resulting in a crash.
+            // so this was making sure that only the right segments are being processed, rather than the particleSystem
             foreach (Transform t in transform)
             {
                 if (t.GetComponent<ParticleSystem>()) continue;
@@ -123,14 +126,20 @@ namespace Entities
             //Animator.SetTrigger(ClearTrigger);
             ChangeParticleSystemParent();
             ParticleSystem.Play();
-            transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Manager.Buildings.Remove(this));
+            Manager.Buildings.Remove(this);
+            transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Destroy(gameObject));
+            
             Jukebox.Instance.PlayDestroy();
         }
         
-        public void ToRuins(bool animate = false)
+        public void ToRuin()
         {
             // TODO: Iterate through sections and replace with ruin
-            _isRuin = true;
+            IsRuin = true;
+            foreach (BuildingSection section in _sections)
+            {
+                section.SetRoofColor(new Color(0,0,0));
+            }
         }
         
         [Serializable]
@@ -148,8 +157,8 @@ namespace Entities
                 name = name,
                 rootId = _rootId,
                 rotation = _rotation,
-                sectionCount = _sectionCount,
-                isRuin = _isRuin
+                sectionCount = _sections.Count,
+                isRuin = IsRuin
             };
         }
 

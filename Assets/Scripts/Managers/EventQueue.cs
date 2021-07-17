@@ -157,23 +157,23 @@ namespace Managers
         
         public async Task Load(EventQueueDetails details)
         {
-            _nextBuildingUnlock = details.nextBuildingUnlock;
+            _nextBuildingUnlock = details.nextBuildingUnlock != 0 ? details.nextBuildingUnlock : 10;
             
             List<Event> allEvents = (await Addressables.LoadAssetsAsync<Event>(label, null).Task).ToList();
             foreach (Event e in allEvents)
             {
-                if(details.used.ContainsKey(e.type) && details.used[e.type].Contains(e.name)) _usedPools[e.type].Add(e);
-                else if(details.discarded.ContainsKey(e.type) && details.discarded[e.type].Contains(e.name)) _discardedPools[e.type].Add(e);
+                if(details.used != null && details.used.ContainsKey(e.type) && details.used[e.type].Contains(e.name)) _usedPools[e.type].Add(e);
+                else if(details.discarded != null && details.discarded.ContainsKey(e.type) && details.discarded[e.type].Contains(e.name)) _discardedPools[e.type].Add(e);
                 else _availablePools[e.type].Add(e);
             }
             
-            foreach (string eventName in details.headliners)
+            foreach (string eventName in details.headliners ?? new List<string>())
             {
                 Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
                 Manager.EventQueue._headliners.AddLast(e);
             }
 
-            foreach (string eventName in details.others)
+            foreach (string eventName in details.others ?? new List<string>())
             {
                 Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
                 Manager.EventQueue._others.AddLast(e);

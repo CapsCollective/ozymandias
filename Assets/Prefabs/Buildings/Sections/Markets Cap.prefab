@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 109120893004568004}
   - component: {fileID: 109120893004568005}
   m_Layer: 0
-  m_Name: Right
+  m_Name: Markets Cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,7 +126,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dee0aa36d79a36049bcb914b888b781e, type: 2}
+  - {fileID: 2100000, guid: 48c4957b94fb24645b1104420b431e1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,13 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f195e4bee49d7e4badbbfe07f2f6414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clockwiseRotations: 0
   cornerParent: {fileID: 109120892819358806}
   randomRotations: 0
   randomScale: {x: 1, y: 1}
   hasGrass: 0
   debug: 0
-  _meshCompute: {fileID: 7200000, guid: c7e07a0edc71d4746b822120e70ae422, type: 3}
+  meshCompute: {fileID: 0}
 --- !u!1 &109120893114330883
 GameObject:
   m_ObjectHideFlags: 0
