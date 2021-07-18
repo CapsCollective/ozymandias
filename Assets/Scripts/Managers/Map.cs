@@ -91,7 +91,7 @@ namespace Managers
         }
 
         // Tries to create and place a building from a world position and rotation, returns if successful
-        public bool CreateBuilding(GameObject buildingInstance, int rootId, int rotation = 0, bool animate = false, int sectionCount = -1)
+        public bool CreateBuilding(GameObject buildingInstance, int rootId, int rotation = 0,  bool isRuin = false, bool animate = false, int sectionCount = -1)
         {
             Building building = buildingInstance.GetComponent<Building>();
             bool isTerrain = building.type == BuildingType.Terrain;
@@ -120,7 +120,7 @@ namespace Managers
             {
                 // If all cells are valid
                 if (cellCount != cells.Count || !Manager.Spend(building.ScaledCost)) return false;
-                StartCoroutine(layout.CreateRoad(cells, roadMesh));
+                if (!isRuin) StartCoroutine(layout.CreateRoad(cells, roadMesh));
             }
             
             centre /= cellCount;
@@ -136,8 +136,7 @@ namespace Managers
             if (!BuildingMap.ContainsKey(building)) BuildingMap.Add(building, cells);
             else Debug.LogError("A Building is already here?");
             
-            building.Build(rootId, rotation, cells.Count, vertices, animate);
-            Jukebox.Instance.PlayBuild();
+            building.Build(rootId, rotation, cells.Count, vertices, isRuin, animate);
             return true;
         }
 

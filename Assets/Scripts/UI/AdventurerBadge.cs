@@ -14,6 +14,7 @@ namespace UI
         [SerializeField] private Image glow;
         private int _oldValue;
         private int _oldSatisfaction;
+        private bool _running;
         
         protected override void UpdateUi()
         {
@@ -52,7 +53,11 @@ namespace UI
         
         private void PunchBadge()
         {
-            GetComponent<RectTransform>().DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f);
+            if (_running) return;
+            _running = true;
+            GetComponent<RectTransform>()
+                .DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f)
+                .OnComplete(() => _running = false);
         }
     }
 }

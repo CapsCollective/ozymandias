@@ -32,6 +32,7 @@ namespace Controllers
                 _buildings.Push(building);
             };
 
+            BuildingCards.OnDiscoverRuin += OpenCard;
             Newspaper.OnClosed += OpenCard;
 
             Close();
