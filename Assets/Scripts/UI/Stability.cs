@@ -13,7 +13,7 @@ namespace UI
         [SerializeField] private Image direction;
         [SerializeField] private TextMeshProUGUI defenceCount, threatCount;
         private const float MinWidth = 50f;
-        private const float BarLength = 650f;
+        private const float BarLength = 600f;
         private const float Height = 30;
         private int _oldDefence, _oldThreat;
         

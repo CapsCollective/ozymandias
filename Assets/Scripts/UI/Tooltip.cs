@@ -46,10 +46,9 @@ namespace UI
         {
             {TooltipType.Brawler, new TooltipConfig {
                 Title = "Brawlers",
-                Description = "Brawlers are a staple of adventuring parties, and the only ones who prefer to beat " +
-                              "their way out of a situation than talk or trick. They can be rowdy when left " +
-                              "unattended, but give them plenty to fight, and maybe an audience to show off too and " +
-                              "they’ll be a great help.",
+                Description = "Brawlers are a staple of adventuring parties, the kind who prefer to beat their way " +
+                              "out of a situation than talk or trick. They can be rowdy when left unattended, but " +
+                              "give them plenty to fight, and maybe an audience to show off too and they’ll be a great help.",
                 Stat = Stat.Brawler
             }},
             {TooltipType.Outrider, new TooltipConfig {
@@ -61,27 +60,25 @@ namespace UI
             }},
             {TooltipType.Performer, new TooltipConfig {
                 Title = "Performers",
-                Description = "An odd and extravagant sort, performers aren’t the type to adventurer on their own, " +
-                              "often traveling with others, and spinning magic into their tales. However, they can " +
-                              "be as critical as they are kind, so we don’t want to give them a reason to spread " +
-                              "bad news about us.",
+                Description = "An odd and extravagant sort, performers avoid adventuring on their own, instead " +
+                              "traveling with others, and spinning magic into their tales. However, they can be as " +
+                              "critical as they are kind, so we don’t want to give them a reason to spread bad news about us.",
                 Stat = Stat.Performer
             }},
             {TooltipType.Diviner, new TooltipConfig {
                 Title = "Diviners",
                 Description = "By the will of the gods themselves, Diviners channel holy magic to protect and heal " +
-                              "others. They aren't all peace and love’ types however, as they can uphold their gods " +
-                              "with zealous force when confronted. A religious war is the last thing you want when " +
+                              "others. They aren't all 'peace and love' types however, and will uphold their god's " +
+                              "zealous force when confronted. A religious war is the last thing you want when " +
                               "creating a settlement.",
                 Stat = Stat.Diviner
             }},
             {TooltipType.Arcanist, new TooltipConfig {
                 Title = "Arcanists",
-                Description = "Arcanists pluck from the very fabric of the Ethereal plane to distort reality in " +
-                              "weird, wonderful, and most importantly profitable ways. They tend to be eccentric " +
-                              "scholars who enjoy isolation as much as they enjoy pursuing arcane knowledge. It is " +
-                              "recommended their magic is controlled and isolated due to *REDACTED* and " +
-                              "*SUPER REDACTED*.",
+                Description = "Arcanists pluck from the very fabric of reality in weird, wonderful, and most " +
+                              "importantly, profitable ways. They are eccentric scholars who enjoy isolation and the " +
+                              "pursuit of arcane knowledge. It is recommended their magic is controlled to prevent " +
+                              "*REDACTED*, and *SUPER REDACTED*.",
                 Stat = Stat.Arcanist
             }},
             {TooltipType.Housing, new TooltipConfig {
@@ -92,7 +89,7 @@ namespace UI
             }},
             {TooltipType.Food, new TooltipConfig {
                 Title = "Food",
-                Description = "he only thing adventurers love more than loot is food, so keep supply in plenty and " +
+                Description = "The only thing adventurers love more than loot is food, so keep supply in plenty and " +
                               "you won't have any problems (more than the usual).",
                 Stat = Stat.Food
             }},
@@ -105,11 +102,19 @@ namespace UI
             }},
             {TooltipType.Stability, new TooltipConfig {
                 Title = "Town Stability",
-                Description = "The towns stability rises and falls by the constant struggle of the growing threat of " +
-                              "the outside world, and the defence of the town. Build defensive buildings, complete " +
-                              "quests, and most importantly attract more adventurers to keep this from running out, " +
-                              "or else.",
+                Description = "The towns stability rises and falls each turn based on your defence against a growing " +
+                              "threat. If it hits 0, that's game over.",
+                Stat = Stat.Stability
+            }},
+            {TooltipType.Threat, new TooltipConfig {
+                Title = "Threat",
+                Description = "The ever growing dangers from the surrounding wilderness.",
                 Stat = Stat.Threat
+            }},
+            {TooltipType.Defence, new TooltipConfig {
+                Title = "Defence",
+                Description = "The total protection your town has against Threat.",
+                Stat = Stat.Defence
             }},
             {TooltipType.Newspaper, new TooltipConfig {
                 Title = "Newspaper",
@@ -161,9 +166,17 @@ namespace UI
                                    $"{getFormattedModifierString(Stat.Food)}" +
                                    $"{FoodDescriptor(Manager.FoodModifier)}";
                     break;
+                case Stat.Defence:
+                    details.text = $"{Manager.Defence} defence from total adventurers and defensive buildings\n" +
+                                   $"{getFormattedModifierString(Stat.Defence)}";
+                    break;
                 case Stat.Threat:
-                    // TODO: Add a list of threat modifiers.
-                    details.text = $"{Manager.Defence} defence against {Manager.Threat} threat";
+                    details.text = $"{Manager.Threat} threat (+3 per turn)\n" +
+                                   $"{getFormattedModifierString(Stat.Threat)}";
+                    break;
+                case Stat.Stability:
+                    int change = Manager.Defence - Manager.Threat;
+                    details.text = $"{Manager.Stability}/100 town stability ({(change > 0 ? "+" : "") + change} next turn)";
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +

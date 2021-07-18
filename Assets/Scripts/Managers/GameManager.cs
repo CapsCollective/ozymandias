@@ -121,10 +121,9 @@ namespace Managers
 
         public int Defence => Adventurers.Available + GetStat(Stat.Defence);
 
+        // TODO: How do we make a more engaging way to determine threat than just a turn counter?
         public int Threat => 9 + (3 * TurnCounter) + ModifiersTotal[Stat.Threat];
-
-        public int ChangePerTurn => Defence - Threat; // How much the top bar shifts each turn
-    
+        
         public int Stability { get; set; } // Percentage of how far along the threat is.
 
         public int TurnCounter { get; set; }
@@ -167,7 +166,7 @@ namespace Managers
         public void NewTurn()
         {
             Buildings.placedThisTurn = 0;
-            Stability += ChangePerTurn;
+            Stability += Defence - Threat;
             if (Stability > 100) Stability = 100;
             Wealth += WealthPerTurn;
             TurnCounter++;

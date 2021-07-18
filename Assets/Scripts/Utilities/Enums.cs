@@ -11,7 +11,8 @@
         Food,
         Spending,
         Defence,
-        Threat
+        Threat,
+        Stability
     }
 
     public enum BuildingType
