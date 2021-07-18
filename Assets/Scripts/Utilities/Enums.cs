@@ -10,8 +10,9 @@
         Housing,
         Food,
         Spending,
-        Defense,
-        Threat
+        Defence,
+        Threat,
+        Stability
     }
 
     public enum BuildingType
