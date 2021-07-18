@@ -80,13 +80,7 @@ namespace Managers
 
         public Dictionary<Stat, List<Modifier>> Modifiers = new Dictionary<Stat, List<Modifier>>();
         public readonly Dictionary<Stat, int> ModifiersTotal = new Dictionary<Stat, int>();
-        
-        public readonly Dictionary<AdventurerCategory, int> SpawnCounters = new Dictionary<AdventurerCategory, int>
-        {
-            { AdventurerCategory.Brawler, 0 }, { AdventurerCategory.Outrider, 0 }, { AdventurerCategory.Performer, 0 },
-            { AdventurerCategory.Diviner, 0 }, { AdventurerCategory.Arcanist, 0 }
-        };
-        
+
         public int GetStat(Stat stat)
         {
             int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
@@ -106,9 +100,9 @@ namespace Managers
             return GetStat(stat) - Adventurers.Count;
         }
 
-        public int TurnsToSpawn(AdventurerCategory category)
+        public float SpawnChance(AdventurerCategory category)
         {
-            return Mathf.Clamp((5 - GetSatisfaction(category))/2 + 2, 2, 8);
+            return Mathf.Clamp((GetSatisfaction(category)+10) * 2.5f, 0, 50);
         }
         
         public int RandomSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
@@ -177,11 +171,7 @@ namespace Managers
             // Spawn adventurers based on satisfaction
             foreach (AdventurerCategory category in Enum.GetValues(typeof(AdventurerCategory)))
             {
-                SpawnCounters[category]++;
-                int turnsToSpawn = TurnsToSpawn(category);
-                if (SpawnCounters[category] < turnsToSpawn) continue;
-                Adventurers.Add(category);
-                SpawnCounters[category] -= turnsToSpawn;
+                if (Random.Range(0, 100) < SpawnChance(category)) Adventurers.Add(category);
             }
             
             if (Stability <= 0)

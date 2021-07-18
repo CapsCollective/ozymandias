@@ -186,15 +186,12 @@ namespace UI
                 default: // Stat for a class
                     AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
                     string className = config.Stat.ToString();
-                    int turnUntilSpawn = Manager.TurnsToSpawn(category) - Manager.SpawnCounters[category];
-                    string spawnTurnText = turnUntilSpawn > 1 ? ("in " + turnUntilSpawn + " turns") : "next turn";
-
                     details.text =
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
                         $"{getFormattedFoodModifierString()}" +
                         $"{getFormattedModifierString(config.Stat.Value)}" +
-                        $"New {className} will arrive {spawnTurnText} (+1 every {Manager.TurnsToSpawn(category)} turns)";
+                        $"{Manager.SpawnChance(category):n1}% {className} spawn chance per turn";
                     break;
             }
         }
@@ -278,7 +275,6 @@ namespace UI
                 _ => ""
             };
         }
-        
         
         public void Fade(float opacity)
         {

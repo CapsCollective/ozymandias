@@ -36,8 +36,8 @@ namespace UI
             
             glow.color = Color.clear;
             
-            if(satisfaction - value >= 3) glow.color = new Color(0, 0.7f,0);
-            if(satisfaction - value <= -3) glow.color = new Color(0.8f, 0,0);
+            if (satisfaction - value >= 5) glow.color = new Color(0, 0.7f,0);
+            if (satisfaction - value <= -5) glow.color = new Color(0.8f, 0,0);
         }
 
         private void TriggerTicker(int amount)
