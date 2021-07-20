@@ -54,7 +54,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": ""Move Camera"",
                     ""type"": ""Value"",
                     ""id"": ""7c71ed57-0d72-4094-b95f-dbf4f29ae3ca"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -95,6 +95,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""38061098-501b-4c09-af6a-8b10442c20ae"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mouse Delta"",
+                    ""type"": ""Value"",
+                    ""id"": ""890c83d4-f8ea-488e-b0b8-c78427c7ce5b"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -156,6 +164,39 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""49ec3ced-10c8-4e38-beac-7f5ef2e9c85b"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=200)"",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""d4c8ed5a-618f-4433-bb7b-8ab2ed3e2ae6"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""5ac557c2-cfb3-4d50-b899-45696f68878a"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""d9cca30c-6cde-4ef8-b32d-a4279be96b61"",
                     ""path"": ""<Mouse>/position"",
@@ -171,11 +212,66 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""1c0022d7-0321-4991-a467-463415c025c0"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=5,y=5)"",
                     ""groups"": ""Controller"",
                     ""action"": ""Move Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""ec8071e7-80e4-4770-b152-759154f0fe4c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=7.5,y=7.5)"",
+                    ""groups"": """",
+                    ""action"": ""Move Camera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b65a6343-5158-4e06-8637-6f68652064ff"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Move Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""98186f29-6f64-4fcb-9f53-bc62f4e998ba"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Move Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""0368c5a4-f2fe-439b-baa8-df6ae8d4c4f8"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Move Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5df3fb8a-b5df-407a-9788-a80519ecdc19"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Move Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -217,6 +313,39 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Rotate Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""b7690c4c-9b83-490d-94fc-9a389fb8408a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=0.25)"",
+                    ""groups"": """",
+                    ""action"": ""Rotate Camera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e8ca6346-9311-4186-b1a5-cdf51dd87043"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""587e54d4-52b4-4958-ab91-0b67c4529916"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -273,6 +402,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""ShowPause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37736fb9-ded0-40a2-9b46-044f7eaf7d8b"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Mouse Delta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -703,6 +843,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
         m_Player_NextTurn = m_Player.FindAction("NextTurn", throwIfNotFound: true);
         m_Player_ShowPause = m_Player.FindAction("ShowPause", throwIfNotFound: true);
+        m_Player_MouseDelta = m_Player.FindAction("Mouse Delta", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -775,6 +916,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Screenshot;
     private readonly InputAction m_Player_NextTurn;
     private readonly InputAction m_Player_ShowPause;
+    private readonly InputAction m_Player_MouseDelta;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -789,6 +931,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
         public InputAction @NextTurn => m_Wrapper.m_Player_NextTurn;
         public InputAction @ShowPause => m_Wrapper.m_Player_ShowPause;
+        public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -828,6 +971,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @ShowPause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
                 @ShowPause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
                 @ShowPause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
+                @MouseDelta.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -862,6 +1008,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @ShowPause.started += instance.OnShowPause;
                 @ShowPause.performed += instance.OnShowPause;
                 @ShowPause.canceled += instance.OnShowPause;
+                @MouseDelta.started += instance.OnMouseDelta;
+                @MouseDelta.performed += instance.OnMouseDelta;
+                @MouseDelta.canceled += instance.OnMouseDelta;
             }
         }
     }
@@ -1009,6 +1158,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnScreenshot(InputAction.CallbackContext context);
         void OnNextTurn(InputAction.CallbackContext context);
         void OnShowPause(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

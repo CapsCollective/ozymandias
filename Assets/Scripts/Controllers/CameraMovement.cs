@@ -1,33 +1,28 @@
+using Cinemachine;
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 using static Managers.GameManager;
-using Cinemachine;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.InputSystem.Users;
 
 namespace Controllers
 {
     public class CameraMovement : MonoBehaviour
     {
         public static bool IsMoving;
-        
-        private Rigidbody _rb;
+
         private Camera _cam;
         private DepthOfField _depthOfField;
         private CinemachineFreeLook freeLook;
-        private Vector3 dragDir;
+        private Vector2 dragDir;
         private Vector3 vel = Vector3.zero;
         private float scrollAcceleration;
         private float scrollAccelerationRef = 0;
         private Vector3 followVelRef = Vector3.zero;
-        private bool leftClick = false;
+        private bool leftClick, rightClick;
         private RaycastHit posHit;
 
-        private Vector3 _dragOrigin, _cameraOrigin, _rotateAxis;
-        private Vector3 lastDrag;
+        private Vector2 lastDrag;
         private Vector3 startPos;
         private Quaternion startRot;
         private bool _dragging, _rotating;
@@ -35,6 +30,7 @@ namespace Controllers
         public static Action OnCameraMove;
 
         [SerializeField] private float controllerSpeed = 5f;
+        [SerializeField] private Vector2 dragSpeed;
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
         [SerializeField] private float bounceTime = 0.1f;
@@ -49,11 +45,10 @@ namespace Controllers
         private void Awake()
         {
             _cam = GetComponent<Camera>();
-            _rb = GetComponent<Rigidbody>();
             profile.TryGetSettings(out _depthOfField);
             freeLook = GetComponent<CinemachineFreeLook>();
             InputManager.Instance.IA_OnRightClick.performed += RightClick;
-            InputManager.Instance.IA_OnRightClick.canceled += RightClick; 
+            InputManager.Instance.IA_OnRightClick.canceled += RightClick;
             InputManager.Instance.IA_OnLeftClick.performed += LeftClick;
             InputManager.Instance.IA_OnLeftClick.canceled += LeftClick;
             startPos = transform.position;
@@ -69,15 +64,13 @@ namespace Controllers
 
         private void LeftClick(InputAction.CallbackContext context)
         {
+            leftClick = context.performed;
             if (context.performed)
             {
-                _dragging = true;
-                leftClick = true;
-                lastDrag = posHit.point;
+                lastDrag = InputManager.MousePosition;
             }
             else if (context.canceled)
             {
-                leftClick = false;
                 _dragging = false;
             }
         }
@@ -88,33 +81,27 @@ namespace Controllers
 
             freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.IA_RotateCamera.ReadValue<float>();
 
-            if (!InputManager.UsingController)
+            if (leftClick)
             {
-                Ray posRay = Camera.main.ScreenPointToRay(InputManager.MousePosition);
+                Vector2 dir = _cam.ScreenToViewportPoint(lastDrag) - _cam.ScreenToViewportPoint(InputManager.MousePosition);
+                if (dir.sqrMagnitude > 0.0002f) _dragging = true;
 
-                if (Physics.Raycast(posRay, out posHit, 1000f, LayerMask.GetMask("Ocean")))
+                if (_dragging)
                 {
-                    if (leftClick)
-                    {
-                        dragDir = lastDrag - posHit.point;
-                        dragDir.y = 0;
-                    }
+                    dragDir = dir * Mathf.Lerp(dragSpeed.x, dragSpeed.y, freeLook.m_YAxis.Value);
+                    lastDrag = InputManager.MousePosition;
                 }
-
-                freeLook.Follow.position += dragDir;
-
-                if (!_dragging)
-                {
-                    dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
-                }
-            } 
-            else
-            {
-                Vector2 inputDir = InputManager.Instance.IA_MoveCamera.ReadValue<Vector2>();
-                Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
-                Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
-                freeLook.Follow.position += ((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * Time.deltaTime * controllerSpeed;
             }
+
+            if (!_dragging)
+            {
+                dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
+            }
+
+            Vector2 inputDir = InputManager.Instance.IA_MoveCamera.ReadValue<Vector2>() + dragDir;
+            Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
+            Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
+            freeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * Time.deltaTime);
 
             // Scrolling
             float scroll = -InputManager.Instance.IA_OnScroll.ReadValue<float>();
@@ -138,7 +125,7 @@ namespace Controllers
             float clampedY = Mathf.Clamp(freeLook.Follow.position.y, -1, 2);
             freeLook.Follow.position = new Vector3(freeLook.Follow.position.x, clampedY, freeLook.Follow.position.z);
 
-            Vector3 newFollowPos =  new Vector3(freeLook.Follow.position.x, 1, freeLook.Follow.position.z);
+            Vector3 newFollowPos = new Vector3(freeLook.Follow.position.x, 1, freeLook.Follow.position.z);
             freeLook.Follow.position = Vector3.SmoothDamp(freeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
         }
 
@@ -149,7 +136,8 @@ namespace Controllers
             t.rotation = startRot;
         }
 
-        private static float Remap (float value, float min1, float max1, float min2, float max2) {
+        private static float Remap(float value, float min1, float max1, float min2, float max2)
+        {
             return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
         }
     }
