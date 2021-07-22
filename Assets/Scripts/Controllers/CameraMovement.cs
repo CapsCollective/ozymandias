@@ -58,49 +58,10 @@ namespace Controllers
             
             _oceanMask = LayerMask.GetMask("Ocean");
         }
-
-        private void Start()
-        {
-            startPos = _freeLook.Follow.position;
-            startHeight = _freeLook.m_Orbits[1].m_Height;
-            inMenu = true;
-            
-            _freeLook.Follow.position = menuPos;
-            _freeLook.m_Orbits[1].m_Height = menuOrbitHeight;
-        }
-
-        private bool isActivated = false;
-        private bool inMenu;
-        private Vector3 menuPos = new Vector3(-2.0f, 1.0f, -24.0f);
-        private Vector3 startPos;
-        private float menuOrbitHeight = 2.0f;
-        private float startHeight;
         
         private void Update()
         {
-            if (inMenu)
-            {
-                if (Input.GetKey(KeyCode.Space))
-                {
-                    isActivated = true;
-                    inMenu = false;
-                }
-            } 
-            else if (isActivated) 
-            {
-                _freeLook.Follow.position = Vector3.Lerp(_freeLook.Follow.position, startPos, Time.deltaTime + 0.01f);
-                _freeLook.m_Orbits[1].m_Height =
-                    Mathf.Lerp(_freeLook.m_Orbits[1].m_Height, startHeight, Time.deltaTime);
-
-                print((startPos - _freeLook.Follow.position).magnitude);
-                if ((startPos - _freeLook.Follow.position).magnitude < UnityVectorExtensions.Epsilon + 1)
-                {
-                    isActivated = false;
-                }
-            }
-            else
-            {
-                if (Manager.inMenu) return;
+            if (Manager.inMenu) return;
             
             // Apply rotation
             if (Input.GetMouseButtonDown(1)) _rotating = true;
@@ -177,7 +138,6 @@ namespace Controllers
             followPos = Vector3.SmoothDamp(
                 followPos, newFollowPos, ref _followVelRef, bounceTime);
             _freeLook.Follow.position = followPos;
-            }
         }
 
         public void Center()

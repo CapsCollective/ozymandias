@@ -1,5 +1,6 @@
 using System;
 using Cinemachine;
+using UI;
 using UnityEngine;
 
 namespace Controllers
@@ -54,7 +55,6 @@ namespace Controllers
         private float _startOrbitHeight;
         private Vector3 _startPos;
 
-
         private void Start()
         {
             _menuCanvas = GetComponent<Canvas>();
@@ -67,6 +67,9 @@ namespace Controllers
 
             freeLook.Follow.position = MenuPos;
             freeLook.m_Orbits[1].m_Height = MenuOrbitHeight;
+            
+            // var loadingScreen = Instantiate(loadingScreenPrefab).GetComponent<LoadingScreen>();
+            // loadingScreen.LoadMain();
         }
 
         private void Update()
@@ -74,9 +77,7 @@ namespace Controllers
             switch (_menuState)
             {
                 case MenuState.Initialising:
-                    _menuCanvas.enabled = true;
-                    _gameCanvas.enabled = false;
-                    _menuState = MenuState.InMenu;
+                    InMenuInit();
                     break;
                 case MenuState.InMenu:
                     break;
@@ -89,7 +90,21 @@ namespace Controllers
                     _menuCanvas.enabled = true;
                     _gameCanvas.enabled = false;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+        }
+        
+        private void InMenuInit()
+        {
+            _menuCanvas.enabled = true;
+            _gameCanvas.enabled = false;
+            _menuState = MenuState.InMenu;
+            
+            // Fade in music
+            StartCoroutine(Jukebox.Instance.FadeTo(
+                Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
+            StartCoroutine(Jukebox.DelayCall(2f, ()=>menuMusic.Play()));
         }
 
         private void StartingGameInit()
@@ -97,6 +112,11 @@ namespace Controllers
             _menuState = MenuState.StartingGame;
             _gameCanvasGroup.alpha = 0.0f;
             _gameCanvas.enabled = true;
+            
+            // TODO add some kind of juicy on-play sound here
+            StartCoroutine(Jukebox.Instance.FadeTo(
+                Jukebox.MusicVolume, Jukebox.LowestVolume, 5f));
+            StartCoroutine(Jukebox.DelayCall(6f, ()=>menuMusic.Stop()));
         }
 
         private void StartingGameUpdate()
@@ -135,21 +155,6 @@ namespace Controllers
             canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, fadeType.Target, Time.deltaTime + 0.1f);
             return fadeType.Condition(canvasGroup.alpha);
         }
-
-        // private void Start()
-        // {
-        //     // if (!isMainMenuScene) return;
-        //     // // Fade in music
-        //     // StartCoroutine(Jukebox.Instance.FadeTo(
-        //     //     Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
-        //     // StartCoroutine(Jukebox.DelayCall(1f, ()=>menuMusic.Play()));
-        //     //
-        //     // var loadingScreen = Instantiate(loadingScreenPrefab).GetComponent<LoadingScreen>();
-        //     // loadingScreen.LoadMain();
-        //     // StartCoroutine(Jukebox.Instance.FadeTo(
-        //     //     Jukebox.MusicVolume, Jukebox.LowestVolume, 1f));
-        //     // StartCoroutine(Jukebox.DelayCall(2f, ()=>menuMusic.Stop()));
-        // }
 
         public void Play()
         {

@@ -68,16 +68,17 @@ namespace Managers
             musicSlider.maxValue = 1f;
             var val = PlayerPrefs.GetFloat("Music", 1f);
             musicSlider.value = val;
+            musicSlider.onValueChanged.AddListener(SetMusicVolume);
 
             ambienceSlider.maxValue = 1f;
             val = PlayerPrefs.GetFloat("Ambience", 1f);
             ambienceSlider.value = val;
+            ambienceSlider.onValueChanged.AddListener(SetAmbienceVolume);
 
             sfxSlider.maxValue = 1f;
             val = PlayerPrefs.GetFloat("SFX", 1f);
             sfxSlider.value = val;
-            
-            OnSlidersChanged();
+            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         }
 
         public void QuitToMenu()
@@ -88,13 +89,6 @@ namespace Managers
         public void ExitGame()
         {
             Application.Quit();
-        }
-
-        public void OnSlidersChanged()
-        {
-            SetMusicVolume(musicSlider.value);
-            SetAmbienceVolume(ambienceSlider.value);
-            SetSFXVolume(sfxSlider.value);
         }
 
         public void SetFullScreen(bool isFullscreen)
