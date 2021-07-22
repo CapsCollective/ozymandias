@@ -2538,7 +2538,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -2551,8 +2551,8 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 513
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -3151,6 +3151,7 @@ GameObject:
   - component: {fileID: 8350138275067246698}
   - component: {fileID: 8479651741650175698}
   - component: {fileID: 467704414398937365}
+  - component: {fileID: 6463916713627084517}
   m_Layer: 5
   m_Name: Options Menu
   m_TagString: Untagged
@@ -3227,6 +3228,26 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6463916713627084517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8350138275067246697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a320a4ca5147643a9429add28e3aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  versionText: {fileID: 5770630415086324709}
+  resolutionDropdown: {fileID: 8350138276356290251}
+  audioMixer: {fileID: 24100000, guid: 6a36d648ffba74fbdbe9ec7f4e8d843a, type: 2}
+  musicSlider: {fileID: 8350138276175355322}
+  ambienceSlider: {fileID: 8350138275950264415}
+  sfxSlider: {fileID: 8350138275590763461}
+  fullscreenToggle: {fileID: 8350138275653680189}
+  shadowToggle: {fileID: 5336628889877405324}
 --- !u!1 &8350138275088807191
 GameObject:
   m_ObjectHideFlags: 0
@@ -4327,14 +4348,14 @@ MonoBehaviour:
   m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.001
+  m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6463916713627084517}
         m_TargetAssemblyTypeName: Managers.Settings, Assembly-CSharp
-        m_MethodName: SetSFXVolume
-        m_Mode: 0
+        m_MethodName: OnSlidersChanged
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5049,10 +5070,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6463916713627084517}
         m_TargetAssemblyTypeName: Managers.Settings, Assembly-CSharp
-        m_MethodName: SetAmbienceVolume
-        m_Mode: 0
+        m_MethodName: OnSlidersChanged
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5187,10 +5208,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6463916713627084517}
         m_TargetAssemblyTypeName: Managers.Settings, Assembly-CSharp
-        m_MethodName: SetMusicVolume
-        m_Mode: 0
+        m_MethodName: OnSlidersChanged
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

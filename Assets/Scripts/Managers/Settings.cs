@@ -12,8 +12,6 @@ namespace Managers
 {
     public class Settings : MonoBehaviour
     {
-        public GameObject loadingScreenPrefab;
-        
         // Misc
         public TextMeshProUGUI versionText;
 
@@ -30,10 +28,6 @@ namespace Managers
         // Fullscreen
         public Toggle fullscreenToggle;
         public Toggle shadowToggle;
-    
-    
-        public bool isMainMenuScene;
-        public AudioSource menuMusic;
 
         private void Start()
         {
@@ -41,73 +35,66 @@ namespace Managers
             var versionFile = Resources.Load<TextAsset>("VERSION");
             if (versionFile) versionText.text = versionFile.text;
             
-            //generate a list of available resolutions
+            // Generate a list of available resolutions
             _resolutions = Screen.resolutions;
             resolutionDropdown.ClearOptions();
-            List<string> options = new List<string>();
-            for (int i = 0; i < _resolutions.Length; i++)
+            var options = new List<string>();
+            foreach (var t in _resolutions)
             {
-                string optionText = _resolutions[i].width + " x " + _resolutions[i].height + " " + _resolutions[i].refreshRate + "Hz";
+                var optionText = t.width + " x " + t.height + " " + t.refreshRate + "Hz";
                 options.Add(optionText);
             }
             resolutionDropdown.AddOptions(options);
 
-            //fullscreen
-            bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+            // Setup fullscreen toggle
+            var isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
             SetFullScreen(isFullscreen);
             fullscreenToggle.isOn = isFullscreen;
-
-            bool getShadowToggle = Convert.ToBoolean(PlayerPrefs.GetInt("Shadows", 1));
+            
+            // Setup shadow toggle
+            var getShadowToggle = Convert.ToBoolean(PlayerPrefs.GetInt("Shadows", 1));
             ToggleShadows(getShadowToggle);
             shadowToggle.isOn = getShadowToggle;
 
-            //resolution
-            int res = PlayerPrefs.GetInt("Resolution", _resolutions.Length - 1); //Default to max res
+            // Setup resolution dropdown (default to max res)
+            var res = PlayerPrefs.GetInt(
+                "Resolution", _resolutions.Length - 1);
             SetResolution(res);
             resolutionDropdown.value = res;
-
             resolutionDropdown.RefreshShownValue();
-            //sound
+            
+            
+            // Setup audio sliders
             musicSlider.maxValue = 1f;
             var val = PlayerPrefs.GetFloat("Music", 1f);
-            SetMusicVolume(val);
             musicSlider.value = val;
 
             ambienceSlider.maxValue = 1f;
             val = PlayerPrefs.GetFloat("Ambience", 1f);
-            SetAmbienceVolume(val);
             ambienceSlider.value = val;
 
             sfxSlider.maxValue = 1f;
             val = PlayerPrefs.GetFloat("SFX", 1f);
-            SetSFXVolume(val);
             sfxSlider.value = val;
-
-            if (!isMainMenuScene) return;
-            // Fade in music
-            StartCoroutine(Jukebox.Instance.FadeTo(
-                Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
-            StartCoroutine(Jukebox.DelayCall(1f, ()=>menuMusic.Play()));
-        }
-
-        public void NewGame()
-        {
-            var loadingScreen = Instantiate(loadingScreenPrefab).GetComponent<LoadingScreen>();
-            loadingScreen.LoadMain();
-            StartCoroutine(Jukebox.Instance.FadeTo(
-                Jukebox.MusicVolume, Jukebox.LowestVolume, 1f));
-            StartCoroutine(Jukebox.DelayCall(2f, ()=>menuMusic.Stop()));
+            
+            OnSlidersChanged();
         }
 
         public void QuitToMenu()
         {
-            var loadingScreen = Instantiate(loadingScreenPrefab).GetComponent<LoadingScreen>();
-            loadingScreen.LoadMenu();
+            // TODO run the main menu anim and set state
         }
 
         public void ExitGame()
         {
             Application.Quit();
+        }
+
+        public void OnSlidersChanged()
+        {
+            SetMusicVolume(musicSlider.value);
+            SetAmbienceVolume(ambienceSlider.value);
+            SetSFXVolume(sfxSlider.value);
         }
 
         public void SetFullScreen(bool isFullscreen)
