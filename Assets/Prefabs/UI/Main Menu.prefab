@@ -246,8 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameUI: {fileID: 0}
-  loadingScreenPrefab: {fileID: 2635144924403466077, guid: c5c611f91e4fc470b8cb936ce139c5c8,
-    type: 3}
+  loadingScreen: {fileID: 0}
   menuMusic: {fileID: 7969370083660635714}
   freeLook: {fileID: 0}
 --- !u!225 &1382471725450256115
@@ -1589,6 +1588,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7969370083710150781}
     m_Modifications:
+    - target: {fileID: 67967034960909566, guid: 85178680a2e169f46a9b8b14190a6fbd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7969370083710150768}
+    - target: {fileID: 67967034960909566, guid: 85178680a2e169f46a9b8b14190a6fbd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 978970964056926934, guid: 85178680a2e169f46a9b8b14190a6fbd,
         type: 3}
       propertyPath: m_AnchorMax.x
