@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using Controllers;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Managers.GameManager;
 
 namespace Managers
 {
@@ -38,23 +37,21 @@ namespace Managers
             // Generate a list of available resolutions
             _resolutions = Screen.resolutions;
             resolutionDropdown.ClearOptions();
-            var options = new List<string>();
-            foreach (var t in _resolutions)
-            {
-                var optionText = t.width + " x " + t.height + " " + t.refreshRate + "Hz";
-                options.Add(optionText);
-            }
+            var options = _resolutions
+                .Select(t => t.width + " x " + t.height + " " + t.refreshRate + "Hz").ToList();
             resolutionDropdown.AddOptions(options);
 
             // Setup fullscreen toggle
             var isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
             SetFullScreen(isFullscreen);
             fullscreenToggle.isOn = isFullscreen;
+            fullscreenToggle.onValueChanged.AddListener(SetFullScreen);
             
             // Setup shadow toggle
             var getShadowToggle = Convert.ToBoolean(PlayerPrefs.GetInt("Shadows", 1));
             ToggleShadows(getShadowToggle);
             shadowToggle.isOn = getShadowToggle;
+            shadowToggle.onValueChanged.AddListener(ToggleShadows);
 
             // Setup resolution dropdown (default to max res)
             var res = PlayerPrefs.GetInt(
@@ -62,8 +59,8 @@ namespace Managers
             SetResolution(res);
             resolutionDropdown.value = res;
             resolutionDropdown.RefreshShownValue();
-            
-            
+            resolutionDropdown.onValueChanged.AddListener(SetResolution);
+
             // Setup audio sliders
             musicSlider.maxValue = 1f;
             var val = PlayerPrefs.GetFloat("Music", 1f);
@@ -78,12 +75,14 @@ namespace Managers
             sfxSlider.maxValue = 1f;
             val = PlayerPrefs.GetFloat("SFX", 1f);
             sfxSlider.value = val;
-            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+            sfxSlider.onValueChanged.AddListener(SetSfxVolume);
         }
 
         public void QuitToMenu()
         {
-            // TODO run the main menu anim and set state
+            GetComponent<Canvas>().enabled = false;
+            Manager.ExitMenu();
+            MainMenu.Instance.BackToMenu();
         }
 
         public void ExitGame()
@@ -91,32 +90,32 @@ namespace Managers
             Application.Quit();
         }
 
-        public void SetFullScreen(bool isFullscreen)
+        private void SetFullScreen(bool isFullscreen)
         {
             Screen.fullScreen = isFullscreen;
             PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
         }
 
-        public void SetResolution(int resolutionIndex)
+        private void SetResolution(int resolutionIndex)
         {
-            Resolution resolution = _resolutions[resolutionIndex];
+            var resolution = _resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             PlayerPrefs.SetInt("Resolution", resolutionIndex);
         }
 
-        public void SetMusicVolume(float volume)
+        private void SetMusicVolume(float volume)
         {
             audioMixer.SetFloat("musicSettingVolume", 20 * Mathf.Log10(volume));
             PlayerPrefs.SetFloat("Music", volume);
         }
 
-        public void SetAmbienceVolume(float volume)
+        private void SetAmbienceVolume(float volume)
         {
             audioMixer.SetFloat("ambianceSettingVolume", 20 * Mathf.Log10(volume));
             PlayerPrefs.SetFloat("Ambience", volume);
         }
 
-        public void SetSFXVolume(float volume)
+        private void SetSfxVolume(float volume)
         {
             audioMixer.SetFloat("sfxVolumeSetting", 20 * Mathf.Log10(volume));
             PlayerPrefs.SetFloat("SFX", volume);
@@ -124,7 +123,7 @@ namespace Managers
 
         public void ToggleShadows(bool toggle)
         {
-            int distance = toggle ? 50 : 0;
+            var distance = toggle ? 50 : 0;
             QualitySettings.shadowDistance = distance;
             PlayerPrefs.SetInt("Shadows", Convert.ToInt32(toggle));
         }
