@@ -1,5 +1,6 @@
 using System;
 using Cinemachine;
+using DG.Tweening;
 using Managers;
 using UnityEngine;
 
@@ -10,9 +11,11 @@ namespace Controllers
         private const float MenuOrbitHeight = 2.0f;
         private static readonly Vector3 MenuPos = new Vector3(-2.0f, 1.0f, -24.0f);
         
+        // Instance field
+        public static MainMenu Instance { get; private set; }
+        
         [SerializeField] private GameObject gameUI;
         [SerializeField] private GameObject loadingScreen;
-        [SerializeField] private AudioSource menuMusic;
         [SerializeField] private CinemachineFreeLook freeLook;
         
         private Canvas _menuCanvas;
@@ -20,7 +23,7 @@ namespace Controllers
         private Canvas _loadingCanvas;
         private CanvasGroup _menuCanvasGroup;
         private CanvasGroup _gameCanvasGroup;
-        private CanvasGroup _loadingCanvasGroup; // TODO maybe want to fade out at some point
+        private CanvasGroup _loadingCanvasGroup;
 
         private enum MenuState
         {
@@ -56,6 +59,10 @@ namespace Controllers
         private MenuState _menuState = MenuState.LoadingGame;
         private float _startOrbitHeight;
         private Vector3 _startPos;
+        
+        private void Awake() {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -105,20 +112,29 @@ namespace Controllers
         private void LoadingGameUpdate()
         {
             if (GameManager.IsLoading) return;
+            
+            // Fade out loading screen
+            _loadingCanvasGroup.DOFade(0.0f, 1.0f)
+                .OnComplete(() => _loadingCanvas.enabled = false);
+            
+            // Fade in music
+            StartCoroutine(Jukebox.Instance.FadeTo(
+                Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
+            StartCoroutine(Jukebox.DelayCall(2f, 
+                ()=>Jukebox.Instance.OnStartGame()));
+
+            // Run general menu initialisation
             InMenuInit();
         }
 
         private void InMenuInit()
         {
+            _menuCanvasGroup.alpha = 1.0f;
             _menuCanvas.enabled = true;
             _gameCanvas.enabled = false;
-            _loadingCanvas.enabled = false;
+            _menuCanvasGroup.interactable = true;
+            _menuCanvasGroup.blocksRaycasts = true;
             _menuState = MenuState.InMenu;
-            
-            // Fade in music
-            StartCoroutine(Jukebox.Instance.FadeTo(
-                Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
-            StartCoroutine(Jukebox.DelayCall(2f, ()=>menuMusic.Play()));
         }
 
         private void StartingGameInit()
@@ -130,7 +146,8 @@ namespace Controllers
             // TODO add some kind of juicy on-play sound here
             StartCoroutine(Jukebox.Instance.FadeTo(
                 Jukebox.MusicVolume, Jukebox.LowestVolume, 5f));
-            StartCoroutine(Jukebox.DelayCall(6f, ()=>menuMusic.Stop()));
+            StartCoroutine(Jukebox.DelayCall(6f, 
+                ()=>Jukebox.Instance.OnStartPlay()));
         }
 
         private void StartingGameUpdate()
@@ -149,13 +166,17 @@ namespace Controllers
             if (!finishedFadingGame) return;
             
             _gameCanvasGroup.alpha = 1.0f;
+            _menuCanvasGroup.interactable = false;
+            _menuCanvasGroup.blocksRaycasts = false;
             _menuState = MenuState.InGame;
         }
 
         private void OpeningMenuInit()
         {
             _menuCanvasGroup.alpha = 0.0f;
+            _menuCanvasGroup.blocksRaycasts = true;
             _menuCanvas.enabled = true;
+            Jukebox.Instance.OnEnterMenu();
             _menuState = MenuState.OpeningMenu;
         }
         
@@ -172,10 +193,7 @@ namespace Controllers
             if (!finishedMoving || !finishedFadingGame) return;
 
             var finishedFadingMenu = FadeCanvas(_menuCanvasGroup, FadeIn);
-            if (!finishedFadingMenu) return;
-            
-            _menuCanvasGroup.alpha = 1.0f;
-            _menuState = MenuState.InMenu;
+            if (finishedFadingMenu) InMenuInit();
         }
         
         private bool MoveCam(Vector3 targetPosition, float targetOrbitHeight)
