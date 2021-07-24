@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Managers;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -27,12 +26,11 @@ namespace Controllers
         private const string WaterAmbienceVolume = "waterAmbienceVolume";
         
         private const string TownVolume = "townVolume";
-        
+
         // Instance field
         public static Jukebox Instance { get; private set; }
         
         // Serialized fields
-        [SerializeField] private bool sfxOnly;
         [SerializeField] private float ambienceSpacing = 20f;
         [SerializeField] private float trackCutoff = 2f;
         
@@ -48,6 +46,7 @@ namespace Controllers
         [SerializeField] private AudioClip stampClip;
         [SerializeField] private AudioClip scrunchClip;
         
+        [SerializeField] private AudioClip menuTrack;
         [SerializeField] private AudioClip[] tracks;
         [SerializeField] private AudioMixer mixer;
         [SerializeField] private LayerMask waterDetectLm;
@@ -68,15 +67,11 @@ namespace Controllers
 
         private void Start()
         {
-            if (sfxOnly) return;
-            GameManager.OnNextTurn += StartNightAmbience;
-            OnTrackEnded();
+            OnNextTurn += StartNightAmbience;
         }
 
         private void Update()
         {
-            if (sfxOnly) return;
-            
             // Update the positions and volumes of various ambiences
             var ambiancePosition = _cam.transform.position;
             ambiancePosition.y = 0f;
@@ -131,8 +126,7 @@ namespace Controllers
         private void OnAmbianceEnded()
         {
             // If the playlist is empty, reshuffle it
-            if (_playlist.Count <= 0)
-                _playlist = new List<AudioClip>(tracks);
+            if (_playlist.Count <= 0) _playlist = new List<AudioClip>(tracks);
             _playlist.Shuffle();
             // Set the new clip to a random selection and play it
             musicPlayer.clip = _playlist.PopRandom();
@@ -159,8 +153,7 @@ namespace Controllers
             mixer.SetFloat(TownVolume, 
                 Mathf.Lerp(currentVolume, -_closestBuildingDistance + 5f, Time.deltaTime));
         }
-        
-        
+
         private void PlaySfx(AudioClip clip, float volume, float pitch = 1.0f)
         {
             // Play one-shot clip that can be layered over itself
@@ -168,6 +161,13 @@ namespace Controllers
             sfxPlayer.PlayOneShot(clip, volume);
         }
         
+        private void PlayTrack(AudioClip clip)
+        {
+            // Play one-shot track
+            musicPlayer.clip = clip;
+            musicPlayer.Play();
+        }
+
         public IEnumerator FadeTo(string mixerName, float targetVolume, float fadeTime)
         {
             // Lerp to target volume for mixer group
@@ -195,10 +195,29 @@ namespace Controllers
         {
             // Skip between music and ambience sections
             StopAllCoroutines();
-            if (musicPlayer.isPlaying)
-                OnTrackEnded();
-            else
-                OnAmbianceEnded();
+            if (musicPlayer.isPlaying) OnTrackEnded();
+            else OnAmbianceEnded();
+        }
+        
+        public void OnEnterMenu()
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeTo(MusicVolume, LowestVolume, trackCutoff));
+            StartCoroutine(FadeTo(AmbienceVolume, FullVolume, 5f));
+            StartCoroutine(DelayCall(trackCutoff, () => {musicPlayer.Stop();}));
+        }
+        
+        public void OnStartGame()
+        {
+            PlayTrack(menuTrack);
+        }
+        
+        public void OnStartPlay()
+        {
+            StartCoroutine(FadeTo(MusicVolume, LowestVolume, trackCutoff));
+            StartCoroutine(FadeTo(AmbienceVolume, FullVolume, 5f));
+            StartCoroutine(DelayCall(trackCutoff, () => {musicPlayer.Stop();}));
+            OnTrackEnded();
         }
         
         // Public SFX play functions
