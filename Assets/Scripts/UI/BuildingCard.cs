@@ -24,8 +24,7 @@ namespace UI
         private Vector3 _initialPosition;
         private RectTransform _rectTransform;
         private bool _isReplacing;
-
-
+        
         private void Start()
         {
             // Get the card's rect-transform details
@@ -87,7 +86,7 @@ namespace UI
         {
             _isReplacing = true;
             _rectTransform.DOLocalMove(
-                    _initialPosition - _rectTransform.transform.up * 100, 
+                    _initialPosition - _rectTransform.transform.up * 250, 
                     0.5f).SetEase(tweenEase)
                 .OnComplete(() => {
                     callback(position);
