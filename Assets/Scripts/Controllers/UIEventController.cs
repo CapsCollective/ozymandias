@@ -29,6 +29,7 @@ public class UIEventController : MonoBehaviour
         InputManager.Instance.IA_UINavigate.performed += Navigate;
         InputManager.Instance.IA_UICancel.performed += UICancel;
         InputManager.Instance.IA_ShowPause.performed += ShowPause;
+        InputManager.Instance.IA_DeselectCards.performed += UICancel;
         BuildingPlacement.OnBuildingPlaced += OnBuildingPlaced;
     }
 

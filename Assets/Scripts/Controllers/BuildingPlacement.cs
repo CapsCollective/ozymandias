@@ -51,6 +51,16 @@ namespace Controllers
             _remainingBuildings = Manager.BuildingCards.All;
             for (var i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
             _toggleGroup = GetComponent<ToggleGroup>();
+            InputManager.Instance.IA_RotateBuilding.performed += RotateBuilding;
+        }
+
+        private void RotateBuilding(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (Selected == Deselected) return;
+            int dir = (int)Mathf.Sign(obj.ReadValue<float>());
+            _rotation+=dir;
+            if (_rotation < 0) _rotation = 3;
+            _rotation %= 4;
         }
 
         private void Update()

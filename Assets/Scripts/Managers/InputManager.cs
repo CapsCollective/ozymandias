@@ -35,7 +35,8 @@ public class InputManager
     public InputAction IA_DeleteBuilding { get; private set; }
     public InputAction IA_NextTurn { get; private set; }
     public InputAction IA_ShowPause { get; private set; }
-    public InputAction IA_MouseDelta { get; private set; }
+    public InputAction IA_RotateBuilding { get; private set; }
+    public InputAction IA_DeselectCards { get; private set; }
 
     // UI Input
     public InputAction IA_SelectCards { get; private set; }
@@ -70,8 +71,10 @@ public class InputManager
         IA_NextTurn.Enable();
         IA_ShowPause = PlayerInput.Player.ShowPause;
         IA_ShowPause.Enable();
-        IA_MouseDelta = PlayerInput.Player.MouseDelta;
-        IA_MouseDelta.Enable();
+        IA_RotateBuilding = PlayerInput.Player.BuildingRotate;
+        IA_RotateBuilding.Enable();
+        IA_DeselectCards = PlayerInput.Player.DeselectCards;
+        IA_DeselectCards.Enable();
 
         // UI
         IA_SelectCards = PlayerInput.UI.SelectCards;

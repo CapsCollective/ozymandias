@@ -92,6 +92,22 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Building Rotate",
+                    "type": "Button",
+                    "id": "01d6d096-8732-49ae-81e2-e83f8abaa8b6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Deselect Cards",
+                    "type": "Button",
+                    "id": "6b1e673b-c665-4736-808e-5cbe4c9a7fdc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -298,7 +314,7 @@
                     "id": "cf6dbc72-e5f6-4092-ba04-1ed9645dd532",
                     "path": "<Mouse>/delta/x",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Scale(factor=0.25)",
                     "groups": "Mouse and Keyboard",
                     "action": "Rotate Camera",
                     "isComposite": false,
@@ -400,6 +416,50 @@
                     "processors": "",
                     "groups": "Mouse and Keyboard",
                     "action": "Mouse Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Shoulder Buttons",
+                    "id": "50e44425-7ee9-4bcd-8884-feb85973991b",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Building Rotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "bbe5c703-43fc-4bd6-9568-6cd0fb50ce37",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Building Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "64f13172-95c0-47e5-8966-a31c431cb98b",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Building Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a8bef5ae-fa16-4334-a9b9-038b3f171a8a",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Deselect Cards",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

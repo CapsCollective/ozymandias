@@ -105,6 +105,22 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Building Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""01d6d096-8732-49ae-81e2-e83f8abaa8b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Deselect Cards"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b1e673b-c665-4736-808e-5cbe4c9a7fdc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -311,7 +327,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""cf6dbc72-e5f6-4092-ba04-1ed9645dd532"",
                     ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Scale(factor=0.25)"",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
@@ -413,6 +429,50 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Mouse Delta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Shoulder Buttons"",
+                    ""id"": ""50e44425-7ee9-4bcd-8884-feb85973991b"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Building Rotate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""bbe5c703-43fc-4bd6-9568-6cd0fb50ce37"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Building Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""64f13172-95c0-47e5-8966-a31c431cb98b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Building Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8bef5ae-fa16-4334-a9b9-038b3f171a8a"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Deselect Cards"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -844,6 +904,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Player_NextTurn = m_Player.FindAction("NextTurn", throwIfNotFound: true);
         m_Player_ShowPause = m_Player.FindAction("ShowPause", throwIfNotFound: true);
         m_Player_MouseDelta = m_Player.FindAction("Mouse Delta", throwIfNotFound: true);
+        m_Player_BuildingRotate = m_Player.FindAction("Building Rotate", throwIfNotFound: true);
+        m_Player_DeselectCards = m_Player.FindAction("Deselect Cards", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -917,6 +979,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_NextTurn;
     private readonly InputAction m_Player_ShowPause;
     private readonly InputAction m_Player_MouseDelta;
+    private readonly InputAction m_Player_BuildingRotate;
+    private readonly InputAction m_Player_DeselectCards;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -932,6 +996,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @NextTurn => m_Wrapper.m_Player_NextTurn;
         public InputAction @ShowPause => m_Wrapper.m_Player_ShowPause;
         public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
+        public InputAction @BuildingRotate => m_Wrapper.m_Player_BuildingRotate;
+        public InputAction @DeselectCards => m_Wrapper.m_Player_DeselectCards;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -974,6 +1040,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @MouseDelta.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
                 @MouseDelta.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
                 @MouseDelta.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                @BuildingRotate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBuildingRotate;
+                @BuildingRotate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBuildingRotate;
+                @BuildingRotate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBuildingRotate;
+                @DeselectCards.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeselectCards;
+                @DeselectCards.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeselectCards;
+                @DeselectCards.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeselectCards;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1011,6 +1083,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @MouseDelta.started += instance.OnMouseDelta;
                 @MouseDelta.performed += instance.OnMouseDelta;
                 @MouseDelta.canceled += instance.OnMouseDelta;
+                @BuildingRotate.started += instance.OnBuildingRotate;
+                @BuildingRotate.performed += instance.OnBuildingRotate;
+                @BuildingRotate.canceled += instance.OnBuildingRotate;
+                @DeselectCards.started += instance.OnDeselectCards;
+                @DeselectCards.performed += instance.OnDeselectCards;
+                @DeselectCards.canceled += instance.OnDeselectCards;
             }
         }
     }
@@ -1159,6 +1237,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnNextTurn(InputAction.CallbackContext context);
         void OnShowPause(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
+        void OnBuildingRotate(InputAction.CallbackContext context);
+        void OnDeselectCards(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
