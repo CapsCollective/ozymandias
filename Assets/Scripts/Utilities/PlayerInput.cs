@@ -327,7 +327,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""cf6dbc72-e5f6-4092-ba04-1ed9645dd532"",
                     ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Scale(factor=0.25)"",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
