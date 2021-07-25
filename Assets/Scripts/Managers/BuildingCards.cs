@@ -75,7 +75,6 @@ namespace Managers
                 _current.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
             foreach (string b in buildings.discoverable)
                 _discoverable.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
-            Debug.Log(_discoverable.Count);
         }
     }
 }
