@@ -12,28 +12,29 @@ namespace UI
 {
     public class BuildingCardDisplay : MonoBehaviour
     {
-        private readonly Color _chevronGreen = new Color(0,1f,0,1f);
-        private readonly Color _chevronRed = new Color(1f,0,0,1f);
-        private readonly Color _costActive = new Color(0.8f,0.6f,0.2f,1f);
-        private readonly Color _costInactive = new Color(0.85f,0.85f,0.85f,1f);
+        private readonly Color _chevronGreen = new Color(0,0.7f,0.1f);
+        private readonly Color _chevronRed = new Color(1f,0,0);
+        private readonly Color _costActive = new Color(0.8f,0.6f,0.2f);
+        private readonly Color _costInactive = new Color(0.85f,0.85f,0.85f);
     
         private readonly Dictionary<Stat, Color> _statColors = new Dictionary<Stat, Color>
         {
-            {Stat.Brawler, new Color(0.75f, 0f, 0f, 1f)},
-            {Stat.Outrider, new Color(0.25f, 0.5f, 0.25f, 1f)},
-            {Stat.Performer, new Color(0f, 0.75f, 0.75f, 1f)},
-            {Stat.Diviner, new Color(0.65f, 0.45f, 0.15f, 1f)},
-            {Stat.Arcanist, new Color(0.65f, 0.0f, 1f, 1f)},
-            {Stat.Spending, new Color(0.8f, 0.6f, 0f, 1f)},
-            {Stat.Defence, new Color(0.1f, 0.5f, 0.85f, 1f)},
-            {Stat.Food, new Color(0f, 0.75f, 0f, 1f)},
-            {Stat.Housing, new Color(0.75f, 0.25f, 0f, 1.0f)}
+            {Stat.Brawler, new Color(0.7f, 0.3f, 0.3f)},
+            {Stat.Outrider, new Color(0.25f, 0.45f, 0.2f)},
+            {Stat.Performer, new Color(0.30f, 0.6f, 0.6f)},
+            {Stat.Diviner, new Color(0.75f, 0.6f, 0.3f)},
+            {Stat.Arcanist, new Color(0.6f, 0.3f, 0.75f)},
+            {Stat.Spending, new Color(0.8f, 0.6f, 0f)},
+            {Stat.Defence, new Color(0.25f, 0.35f, 1f)},
+            {Stat.Food, new Color(0.5f, 0.65f, 0f)},
+            {Stat.Housing, new Color(0.6f, 0.4f, 0f)}
         };
     
         [Serializable]
         private struct EffectBadge
         {
             public Image background, icon, chevron;
+            public CardBadge badge;
 
             public void SetActive(bool active)
             {
@@ -113,6 +114,9 @@ namespace UI
                 // Set the badge values
                 badges[i].background.color = _statColors[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
+                
+                badges[i].badge.Description = $"{(effects[i].Value > 0 ? "+" : "")}{effects[i].Value} " +
+                                              $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
             }
         }
     }

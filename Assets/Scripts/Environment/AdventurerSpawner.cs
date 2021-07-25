@@ -29,10 +29,7 @@ namespace Environment
         
         private void CheckWandering()
         {
-            if (_activeAdventurers.Count < Manager.Buildings.Count - 1)
-            {
-                StartCoroutine(SpawnWanderingAdventurer());
-            }
+            if (_activeAdventurers.Count < Manager.Buildings.Count - 1) SpawnWanderingAdventurer();
         }
         
         private void Update()
@@ -64,11 +61,11 @@ namespace Environment
             adventurersToRemove.Clear();
         }
         
-        private IEnumerator SpawnWanderingAdventurer()
+        private void SpawnWanderingAdventurer()
         {
             List<Vector3> path = Manager.Map.GetRandomRoadPath();
+            if (path.Count == 0) return;
             _activeAdventurers.Add(CreateAdventurer(path[0]), path);
-            yield return null;
         }
         
         /* Disabling for now as we update the quest setup
