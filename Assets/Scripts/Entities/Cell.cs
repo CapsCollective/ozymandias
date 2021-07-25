@@ -13,6 +13,7 @@ namespace Entities
         [field: SerializeField] public bool Safe { get; set; } // Keep clear from terrain filling
         [field: SerializeField] public List<Vertex> Vertices { get; set; }
         public Building Occupant { get; set; }
+        public int Rotation { get; set; }
         
         public Vector3 Centre => (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4;
         public Vector3 WorldSpace => Quaternion.Euler(90f, 0f, 30f) * Centre;
@@ -26,16 +27,6 @@ namespace Entities
             // Ensure cell is convex and correctly oriented
             if(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]).z > 0) vertices.Reverse();
             Vertices = vertices;
-        }
-        
-        public void RotateCell(int numRotations)
-        {
-            for (int i = 0; i < numRotations; i++)
-            {
-                Vertex front = Vertices[0];
-                Vertices.Remove(front);
-                Vertices.Add(front);
-            }
         }
         
         public static bool IsValid(Cell[] cells)
