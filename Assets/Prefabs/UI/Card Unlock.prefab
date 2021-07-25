@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Building Unlocked!
+  m_text: New Building Discovered!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81dc6c1fe7340e14388fde9997aeffaf, type: 2}
   m_sharedMaterial: {fileID: 1112195278679108204, guid: 81dc6c1fe7340e14388fde9997aeffaf,
@@ -228,8 +228,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardDisplay: {fileID: 6418953316381266797}
   text: {fileID: 6548617120763368874}
-  animateInDuration: 0.5
-  animateOutDuration: 0.75
+  animateInDuration: 1
+  animateOutDuration: 1
 --- !u!1 &8787457634004313258
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 6145662048638103715}
   - component: {fileID: 4434161566509543813}
   - component: {fileID: 258821528570545526}
+  - component: {fileID: 2672895986785753489}
   m_Layer: 5
   m_Name: Exit Button
   m_TagString: Untagged
@@ -375,6 +376,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bbf702e6b7f40eea835e5bc3bcb449d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2672895986785753489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8787457634004313258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b30315317814043855b210969d82321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleTarget: 1.1
+  duration: 0.3
+  target: {fileID: 4385172946603812396}
 --- !u!1001 &7691733660248703451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -494,6 +510,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7d2f3f91f10c405286e87e6c4a9f595, type: 3}
+--- !u!1 &4385172946603812396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6225598171372005367, guid: b7d2f3f91f10c405286e87e6c4a9f595,
+    type: 3}
+  m_PrefabInstance: {fileID: 7691733660248703451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7239196166634177808 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1065186583844717771, guid: b7d2f3f91f10c405286e87e6c4a9f595,
@@ -506,7 +528,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7691733660248703451}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4385172946603812396}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e39f12ea1d5e24e29aa49a5454ff6370, type: 3}

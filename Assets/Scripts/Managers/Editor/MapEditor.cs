@@ -11,7 +11,7 @@ namespace Managers
     {
         private enum ToolState
         {
-            None,
+            Ping,
             Add,
             Remove,
             Safe,
@@ -27,7 +27,7 @@ namespace Managers
             if (map == null) return;
 
             Event e = Event.current;
-            if (_state == ToolState.None || e.type != EventType.KeyDown || e.keyCode != KeyCode.Space) return;
+            if (e.type != EventType.KeyDown || e.keyCode != KeyCode.Space) return;
 
             // Raycast from cursor position in the scene view to the closest cell
             Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
@@ -36,6 +36,9 @@ namespace Managers
             if (cell == null) return;
             switch (_state)
             {
+                case ToolState.Ping:
+                    Debug.Log(cell.Id);
+                    break;
                 case ToolState.Add:
                     cell.Active = true;
                     break;
@@ -55,7 +58,7 @@ namespace Managers
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-            _state = (ToolState)GUILayout.Toolbar((int)_state, new [] { "None", "Add", "Remove", "Safe", "Unsafe" });
+            _state = (ToolState)GUILayout.Toolbar((int)_state, new [] { "Ping", "Add", "Remove", "Safe", "Unsafe" });
             
             if (GUILayout.Button("Generate Mesh"))
                 (target as Map)?.GenerateMesh(true);

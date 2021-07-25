@@ -148,7 +148,7 @@ namespace Controllers
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
             
-            if (!Manager.Map.CreateBuilding(buildingInstance,  Manager.Map.GetClosestCellToCursor().Id, _rotation, true))
+            if (!Manager.Map.CreateBuilding(buildingInstance,  Manager.Map.GetClosestCellToCursor().Id, _rotation, animate: true))
             {
                 Destroy(buildingInstance);
                 return;
