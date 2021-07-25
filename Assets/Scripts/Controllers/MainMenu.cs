@@ -8,9 +8,6 @@ namespace Controllers
 {
     public class MainMenu : MonoBehaviour
     {
-        private const float MenuOrbitHeight = 2.0f;
-        private static readonly Vector3 MenuPos = new Vector3(-2.0f, 1.0f, -24.0f);
-        
         // Instance field
         public static MainMenu Instance { get; private set; }
         
@@ -33,6 +30,29 @@ namespace Controllers
             InGame,
             OpeningMenu
         }
+        
+        private struct CameraMove
+        {
+            public Vector3 Position;
+            public float OrbitHeight;
+            public float XAxisValue;
+            public float YAxisValue;
+
+            public CameraMove(Vector3 pos, float orbitHeight, float xVal, float yVal)
+            {
+                Position = pos;
+                OrbitHeight = orbitHeight;
+                XAxisValue = xVal;
+                YAxisValue = yVal;
+            }
+        }
+        
+        private static readonly CameraMove MenuPos = new CameraMove(
+            new Vector3(-2.0f, 1.0f, -24.0f),
+            2.0f,
+            0.0f,
+            0.5f
+        );
         
         private readonly struct FadeType
         {
@@ -57,8 +77,8 @@ namespace Controllers
         );
         
         private MenuState _menuState = MenuState.LoadingGame;
-        private float _startOrbitHeight;
-        private Vector3 _startPos;
+        
+        private static CameraMove _startPos;
         
         private void Awake() {
             Instance = this;
@@ -101,12 +121,15 @@ namespace Controllers
         private void LoadingGameInit()
         {
             _loadingCanvas.enabled = true;
+            InputManager.TogglePlayerInput(false);
+            
+            _startPos.Position = freeLook.Follow.position;
+            _startPos.OrbitHeight = freeLook.m_Orbits[1].m_Height;
+            _startPos.XAxisValue = freeLook.m_XAxis.Value;
+            _startPos.YAxisValue = freeLook.m_YAxis.Value;
 
-            _startPos = freeLook.Follow.position;
-            _startOrbitHeight = freeLook.m_Orbits[1].m_Height;
-
-            freeLook.Follow.position = MenuPos;
-            freeLook.m_Orbits[1].m_Height = MenuOrbitHeight;
+            freeLook.Follow.position = MenuPos.Position;
+            freeLook.m_Orbits[1].m_Height = MenuPos.OrbitHeight;
         }
 
         private void LoadingGameUpdate()
@@ -122,6 +145,10 @@ namespace Controllers
                 Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
             StartCoroutine(Jukebox.DelayCall(2f, 
                 ()=>Jukebox.Instance.OnStartGame()));
+            
+            // Find the starting position and set to correct height
+            _startPos.Position = GameObject.Find("Guild Hall").transform.position;
+            _startPos.Position.y = 1.0f;
 
             // Run general menu initialisation
             InMenuInit();
@@ -152,7 +179,7 @@ namespace Controllers
 
         private void StartingGameUpdate()
         {
-            var finishedMoving = MoveCam(_startPos, _startOrbitHeight);
+            var finishedMoving = MoveCam(_startPos);
             var finishedFadingMenu = FadeCanvas(_menuCanvasGroup, FadeOut);
             if (finishedFadingMenu)
             {
@@ -168,6 +195,7 @@ namespace Controllers
             _gameCanvasGroup.alpha = 1.0f;
             _menuCanvasGroup.interactable = false;
             _menuCanvasGroup.blocksRaycasts = false;
+            InputManager.TogglePlayerInput(true);
             _menuState = MenuState.InGame;
         }
 
@@ -175,6 +203,7 @@ namespace Controllers
         {
             _menuCanvasGroup.alpha = 0.0f;
             _menuCanvasGroup.blocksRaycasts = true;
+            InputManager.TogglePlayerInput(false);
             _menuCanvas.enabled = true;
             Jukebox.Instance.OnEnterMenu();
             _menuState = MenuState.OpeningMenu;
@@ -182,7 +211,7 @@ namespace Controllers
         
         private void OpeningMenuUpdate()
         {
-            var finishedMoving = MoveCam(MenuPos, MenuOrbitHeight);
+            var finishedMoving = MoveCam(MenuPos);
             var finishedFadingGame = FadeCanvas(_gameCanvasGroup, FadeOut);
             if (finishedFadingGame)
             {
@@ -195,19 +224,39 @@ namespace Controllers
             var finishedFadingMenu = FadeCanvas(_menuCanvasGroup, FadeIn);
             if (finishedFadingMenu) InMenuInit();
         }
-        
-        private bool MoveCam(Vector3 targetPosition, float targetOrbitHeight)
+
+        private const float MoveMultiplier = 0.01f;
+        private const float MoveEpsilon = 0.05f;
+
+        private bool MoveCam(CameraMove cameraMove)
         {
+            var lerpTime = Time.deltaTime + MoveMultiplier;
+            
             // Lerp follow position
             var followPos = freeLook.Follow.position;
-            followPos = Vector3.Lerp(followPos, targetPosition, Time.deltaTime + 0.005f);
+            followPos = Vector3.Lerp(followPos, cameraMove.Position, lerpTime);
             freeLook.Follow.position = followPos;
                 
             // Lerp camera orbit
             freeLook.m_Orbits[1].m_Height = Mathf.Lerp(
-                freeLook.m_Orbits[1].m_Height, targetOrbitHeight, Time.deltaTime);
+                freeLook.m_Orbits[1].m_Height, cameraMove.OrbitHeight, lerpTime);
             
-            return (targetPosition - followPos).magnitude < 1.0f;
+            // Lerp camera X axis
+            freeLook.m_XAxis.Value =  Mathf.Lerp(
+                freeLook.m_XAxis.Value, cameraMove.XAxisValue, lerpTime);
+            
+            // Lerp camera Y axis
+            freeLook.m_YAxis.Value =  Mathf.Lerp(
+                freeLook.m_YAxis.Value, cameraMove.YAxisValue, lerpTime);
+
+            if ((cameraMove.Position - followPos).magnitude >= MoveEpsilon) return false;
+            
+            // Set all values directly on completion
+            freeLook.Follow.position = cameraMove.Position;
+            freeLook.m_Orbits[1].m_Height = cameraMove.OrbitHeight;
+            freeLook.m_XAxis.Value = cameraMove.XAxisValue;
+            freeLook.m_YAxis.Value = cameraMove.YAxisValue;
+            return true;
         }
 
         private static bool FadeCanvas(CanvasGroup canvasGroup, FadeType fadeType)
