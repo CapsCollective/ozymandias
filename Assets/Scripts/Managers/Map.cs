@@ -66,7 +66,7 @@ namespace Managers
         // Gets the closest cell to the cursor
         public Cell GetClosestCellToCursor()
         {
-            Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
+            Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
             return GetClosestCell(hit.point);
         }

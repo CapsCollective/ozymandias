@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 4323058296507135132}
   - component: {fileID: 340253856}
   - component: {fileID: 8532576421947153514}
+  - component: {fileID: 1336905341}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -423,13 +424,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScrollSpeed: 0.05
-  maxDragSpeed: 1
+  controllerSpeed: 5
+  dragSpeed: {x: 1000, y: 5000}
   dragAcceleration: 0.05
   scrollAccelerationSpeed: 0.1
   bounceTime: 0.1
-  startPos: {x: 2, y: 10.86, z: -12}
-  startRot: {x: 40, y: -15, z: 0}
   profile: {fileID: 11400000, guid: 08abc5f6c7c957f459d6ed1b8eeda8cc, type: 2}
   volume: {fileID: 1851331017}
   layerMask:
@@ -437,13 +436,6 @@ MonoBehaviour:
     m_Bits: 469762049
   DoFAdjustMultiplier: 20
   sensitivity: 5
-  dragSpeed: 3
-  scrollSpeed: 3
-  rotateSpeed: 3
-  minHeight: 4
-  maxHeight: 25
-  minAngle: 25
-  maxAngle: 60
   invertScroll: 0
 --- !u!114 &1115064009
 MonoBehaviour:
@@ -617,8 +609,8 @@ MonoBehaviour:
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
     Value: 0
-    m_SpeedMode: 0
-    m_MaxSpeed: 300
+    m_SpeedMode: 1
+    m_MaxSpeed: 0.5
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: 
@@ -657,6 +649,37 @@ MonoBehaviour:
   - {fileID: 46643436108606383}
   - {fileID: 4105162738892695482}
   - {fileID: 4388694482466129714}
+--- !u!114 &1336905341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826372568487654225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 51bdfe56de3a9e24c82b7b5df4f6d6df,
+    type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 4826372568487654227}
 --- !u!1 &5542565069444483710
 GameObject:
   m_ObjectHideFlags: 0

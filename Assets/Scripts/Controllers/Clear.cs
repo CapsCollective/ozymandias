@@ -106,10 +106,21 @@ namespace Controllers
             
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += DeselectBuilding;
+            InputManager.Instance.IA_DeleteBuilding.performed += DeleteBuildingInput;
+            InputManager.Instance.IA_DeleteBuilding.started += DeleteBuildingInput;
+            InputManager.Instance.IA_DeleteBuilding.canceled += DeleteBuildingInput;
 
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
             //CameraMovement.OnCameraMove += DeselectBuilding;
             Shade.OnShadeOpened += () => HoveredBuilding = null;
+        }
+
+        private void DeleteBuildingInput(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (Manager.inMenu || Manager.turnTransitioning) return;
+
+            if(obj.performed)
+                ClearBuilding();
         }
 
         private void Update()
@@ -140,7 +151,7 @@ namespace Controllers
         private Building SelectHoveredBuilding()
         {
             Ray ray = _cam.ScreenPointToRay(
-                new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
+                new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
 
             return hit.collider ? hit.collider.GetComponentInParent<Building>() : null;
