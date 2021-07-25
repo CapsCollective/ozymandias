@@ -135,7 +135,7 @@ namespace Managers
         public void SpawnGuildHall()
         {
             const int rootId = 296;
-            const int rotation = 0;
+            const int rotation = 1;
 
             GameObject buildingInstance = Instantiate(guildHall, transform);
             if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation)) Destroy(buildingInstance);

@@ -59,7 +59,7 @@ namespace UI
             _dummyCursor.SetActive(true);
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, 
-                Input.mousePosition, canvas.worldCamera, out var currentPos);
+                InputManager.MousePosition, canvas.worldCamera, out var currentPos);
             currentPos = canvas.transform.TransformPoint(currentPos);
 
             var endPos = button.gameObject.transform.position;

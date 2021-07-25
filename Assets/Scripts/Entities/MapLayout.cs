@@ -98,12 +98,14 @@ namespace Entities
             return current;
         }
 
+        // Set the rotation offset of each cell so that it aligns with its neighbours
         public void Align(List<Cell> cells, int rotation = 0)
         {
             List<Cell> visited = new List<Cell>();
             Queue<Cell> queue = new Queue<Cell>();
 
-            cells[0].RotateCell(rotation);
+            //cells[0].RotateCell(rotation);
+            cells[0].Rotation = rotation;
 
             queue.Enqueue(cells[0]);
             while (queue.Count > 0)
@@ -125,9 +127,9 @@ namespace Entities
             Vertex pivot = root.Vertices[0];
             for (int i = 0; i < 4; i++)
             {
-                if (other.Vertices.Contains(root.Vertices[i]) && other.Vertices.Contains(root.Vertices[(i + 1) % 4]))
+                if (other.Vertices.Contains(root.Vertices[(i + root.Rotation) % 4]) && other.Vertices.Contains(root.Vertices[(i + root.Rotation + 1) % 4]))
                 {
-                    pivot = root.Vertices[i];
+                    pivot = root.Vertices[(i + root.Rotation) % 4];
                     break;
                 }
             }
@@ -137,9 +139,10 @@ namespace Entities
             int whatItIs = other.Vertices.IndexOf(pivot);
             int whatItShouldBe = (pivotIndexInRoot + 3) % 4;
 
-            int rotations = (whatItIs - whatItShouldBe + 4) % 4;
+            int rotations = (whatItIs + root.Rotation - whatItShouldBe + 4) % 4;
 
-            other.RotateCell(rotations);
+            //other.RotateCell(rotations);
+            other.Rotation = rotations;
         }
 
         public Cell GetCell(int id)

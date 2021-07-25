@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Controllers;
 using Entities;
+using UnityEditor;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -37,6 +38,9 @@ namespace Managers
         {
             gridMesh.sharedMesh = layout.GenerateCellMesh(debug);
             roadMesh.sharedMesh = new Mesh();
+            #if UNITY_EDITOR
+                EditorUtility.SetDirty(layout);
+            #endif
         }
 
         public void ClearMesh()
@@ -52,10 +56,6 @@ namespace Managers
             foreach (Cell cell in cells)
             {
                 if (cell == null || !cell.Active) continue;
-                foreach (Vector3 vertex in cell.Vertices)
-                {
-                    
-                }
                 foreach (int vertexIndex in layout.GetUVs(cell))
                     uv[vertexIndex].x = (int) state / 2f;
             }
@@ -66,7 +66,7 @@ namespace Managers
         // Gets the closest cell to the cursor
         public Cell GetClosestCellToCursor()
         {
-            Ray ray = _cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _cam.nearClipPlane));
+            Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
             return GetClosestCell(hit.point);
         }
@@ -127,9 +127,9 @@ namespace Managers
             buildingInstance.transform.position = transform.TransformPoint(centre);
 
             // Align and retrieve vertices that fit the building sections in the right direction
-            layout.Align(cells, rotation);
+            if(!isTerrain) layout.Align(cells, rotation);
             Vector3[][] vertices = new Vector3[cells.Count][];
-            for (int i = 0; i < vertices.Length; i++) vertices[i] = CellUnitToWorld(cells[i]);
+            for (int i = 0; i < vertices.Length; i++) vertices[i] = GetCornerPositions(cells[i]);
 
             // Register occupancy
             foreach (Cell cell in cells) cell.Occupant = building;
@@ -153,15 +153,15 @@ namespace Managers
             layout.FillGrid(terrainPrefab, container);
         }
 
-        private Vector3[] CellUnitToWorld(Cell cell)
+        private Vector3[] GetCornerPositions(Cell cell)
         {
-            Vector3[] vertices = new Vector3[4];
+            Vector3[] corners = new Vector3[4];
             for (int i = 0; i < 4; i++)
             {
-                vertices[i] = transform.TransformPoint(cell.Vertices[i]);
+                corners[i] = transform.TransformPoint(cell.Vertices[(i + cell.Rotation) % 4]);
             }
 
-            return vertices;
+            return corners;
         }
 
        public List<Cell> RandomBuildingCells =>  BuildingMap[Manager.Buildings.SelectRandom()];

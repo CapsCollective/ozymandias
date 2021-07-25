@@ -1,6 +1,7 @@
 ﻿using System;
-using UnityEngine;
 using Managers;
+using UnityEngine;
+using static Managers.GameManager;
 
 namespace Utilities
 {
@@ -16,17 +17,31 @@ namespace Utilities
     
         private float _time0, _time1;
 
-        private void Update()
+        private void Awake()
         {
-            if (GameManager.IsLoading) return;
+            InputManager.Instance.IA_OnLeftClick.performed += I_OnLeftClick;
+            InputManager.Instance.IA_OnLeftClick.canceled += I_OnLeftClick;
+            InputManager.Instance.IA_OnRightClick.performed += I_OnRightClick;
+            InputManager.Instance.IA_OnRightClick.canceled += I_OnRightClick;
+        }
 
-            if (Input.GetMouseButtonDown(0)) _time0 = Time.time;
-            if (Input.GetMouseButtonUp(0) && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();
-        
-            if (Input.GetMouseButtonDown(1)) _time1 = Time.time;
-            if (Input.GetMouseButtonUp(1) && Time.time - _time1 < clickSpeed) OnRightClick?.Invoke();
+        private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (GameManager.IsLoading || Manager.inMenu || Manager.turnTransitioning)
+                return;
 
-            if (Input.GetMouseButtonUp(0)) PlacingBuilding = false;
+            if (obj.performed) _time0 = Time.time;
+            if(obj.canceled && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();
+            if (obj.canceled) PlacingBuilding = false;
+        }
+
+        private void I_OnRightClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (GameManager.IsLoading || Manager.inMenu || Manager.turnTransitioning)
+                return;
+
+            if (obj.performed) _time1 = Time.time;
+            if (obj.canceled && Time.time - _time1 < clickSpeed) OnRightClick?.Invoke();
         }
 
         private void OnDestroy()

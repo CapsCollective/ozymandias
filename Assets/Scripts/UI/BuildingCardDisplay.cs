@@ -12,24 +12,29 @@ namespace UI
 {
     public class BuildingCardDisplay : MonoBehaviour
     {
+        private readonly Color _chevronGreen = new Color(0,0.7f,0.1f);
+        private readonly Color _chevronRed = new Color(1f,0,0);
+        private readonly Color _costActive = new Color(0.8f,0.6f,0.2f);
+        private readonly Color _costInactive = new Color(0.85f,0.85f,0.85f);
     
         private readonly Dictionary<Stat, Color> _statColors = new Dictionary<Stat, Color>
         {
-            {Stat.Brawler, new Color(0.92f, 0.48f, 0.48f, 1.0f)},
-            {Stat.Outrider, new Color(0.50f, 0.88f, 0.48f, 1.0f)},
-            {Stat.Performer, new Color(0.0f, 0.95f, 1.0f, 1.0f)},
-            {Stat.Diviner, new Color(1.0f, 0.70f, 0.27f, 1.0f)},
-            {Stat.Arcanist, new Color(0.84f, 0.40f, 1.0f, 1.0f)},
-            {Stat.Spending, new Color(1.0f, 0.86f, 0.0f, 1.0f)},
-            {Stat.Defence, new Color(0.1f, 0.5f, 0.85f, 1.0f)},
-            {Stat.Food, new Color(0.20f, 1f, 0.38f, 1.0f)}, // TODO: Fix Color 
-            {Stat.Housing, new Color(0.98f, 0.67f, 0.45f, 1.0f)}
+            {Stat.Brawler, new Color(0.7f, 0.3f, 0.3f)},
+            {Stat.Outrider, new Color(0.25f, 0.45f, 0.2f)},
+            {Stat.Performer, new Color(0.30f, 0.6f, 0.6f)},
+            {Stat.Diviner, new Color(0.75f, 0.6f, 0.3f)},
+            {Stat.Arcanist, new Color(0.6f, 0.3f, 0.75f)},
+            {Stat.Spending, new Color(0.8f, 0.6f, 0f)},
+            {Stat.Defence, new Color(0.25f, 0.35f, 1f)},
+            {Stat.Food, new Color(0.5f, 0.65f, 0f)},
+            {Stat.Housing, new Color(0.6f, 0.4f, 0f)}
         };
     
         [Serializable]
         private struct EffectBadge
         {
             public Image background, icon, chevron;
+            public CardBadge badge;
 
             public void SetActive(bool active)
             {
@@ -43,7 +48,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI cost;
-        [SerializeField] private Image costIconTexture;
+        [SerializeField] private Image costIcon;
         [SerializeField] private Image cardHighlight;
     
         [SerializeField] private List<EffectBadge> badges;
@@ -76,23 +81,22 @@ namespace UI
             {
                 // Brighten the card if selectable
                 _cardBack.color = Color.white;
-                cost.color = new Color(0.93f, 0.63f, 0.03f);
-                costIconTexture.color = new Color(1f, 0.71f, 0.16f);
+                cost.color = _costActive;
+                costIcon.color = _costActive;
             }
             else
             {
                 // Darken the card if unselectable
-                var grey = new Color(0.8f, 0.8f, 0.8f);
-                _cardBack.color = grey;
-                cost.color = grey;
-                costIconTexture.color = grey;
+                _cardBack.color = _costInactive;
+                cost.color = _costInactive;
+                costIcon.color = _costInactive;
             }
 
             var effects = building.stats
                 .OrderByDescending(x => x.Value).ToList();
             
             // Set the class badges to the card
-            for (var i = 0; i < badges.Count; i++)
+            for (int i = 0; i < badges.Count; i++)
             {
                 if (i >= effects.Count)
                 {
@@ -103,14 +107,16 @@ namespace UI
                 badges[i].SetActive(true);
             
                 // Set the chevron values
-                badges[i].chevron.color = 
-                    effects[i].Value > 0 ? new Color(0.37f, 0.73f, 0.19f) : new Color(0.82f, 0.17f, 0.14f);
+                badges[i].chevron.color = effects[i].Value > 0 ? _chevronGreen : _chevronRed;
                 badges[i].chevron.transform.localRotation = 
                     Quaternion.Euler(effects[i].Value > 0 ? new Vector3(0, 0, 180) : Vector3.zero);
                 badges[i].chevron.sprite = chevronSizes[Math.Abs(effects[i].Value)-1];
                 // Set the badge values
                 badges[i].background.color = _statColors[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
+                
+                badges[i].badge.Description = $"{(effects[i].Value > 0 ? "+" : "")}{effects[i].Value} " +
+                                              $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
             }
         }
     }

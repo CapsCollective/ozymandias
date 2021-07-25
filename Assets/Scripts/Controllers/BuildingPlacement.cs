@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entities;
 using Managers;
 using UI;
@@ -12,6 +13,8 @@ namespace Controllers
 {
     public class BuildingPlacement : MonoBehaviour
     {
+        public static Action OnBuildingPlaced;
+
         public const int Deselected = -1;
         public static int Selected = Deselected;
     
@@ -48,16 +51,26 @@ namespace Controllers
             _remainingBuildings = Manager.BuildingCards.All;
             for (var i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
             _toggleGroup = GetComponent<ToggleGroup>();
+            InputManager.Instance.IA_RotateBuilding.performed += RotateBuilding;
+        }
+
+        private void RotateBuilding(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (Selected == Deselected) return;
+            int dir = (int)Mathf.Sign(obj.ReadValue<float>());
+            _rotation+=dir;
+            if (_rotation < 0) _rotation = 3;
+            _rotation %= 4;
         }
 
         private void Update()
         {
 #if UNITY_EDITOR
             //Random debug code
-            if (Input.GetKeyDown(KeyCode.F10))
-            {
-                SetFirstCard(0);
-            }
+            //if (Input.GetKeyDown(KeyCode.F10))
+            //{
+            //    SetFirstCard(0);
+            //}
 #endif
             // Clear previous highlights
             Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
@@ -89,10 +102,49 @@ namespace Controllers
 
         }
 
+        public bool ChangingCard(int cardNum) => cards[cardNum].isReplacing;
+
+        public void ImitateHover(int cardNum)
+        {
+
+            if (cardNum >= 0)
+            {
+                if (cards[cardNum].isReplacing) return;
+                cards[cardNum].SelectCard();
+                if (cards[cardNum].toggle.interactable)
+                {
+                    cards[cardNum].toggle.isOn = true;
+                }
+            }
+
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if (i == cardNum) continue;
+
+                cards[i].DeselectCard();
+                if (cards[i].toggle.isOn) cards[i].toggle.isOn = false;
+            }
+        }
+
+        public int NavigateCards(int newCardNum)
+        {
+            if (newCardNum > cards.Length - 1)
+                newCardNum = 0;
+            else if (newCardNum < 0)
+                newCardNum = cards.Length - 1;
+
+            return newCardNum;
+        }
+
         private void LeftClick()
         {
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;
             Click.PlacingBuilding = true;
+            Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
+            Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
+
+            if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
+
             int i = Selected;
             GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
             
@@ -107,6 +159,7 @@ namespace Controllers
             Selected = Deselected;
             
             Manager.UpdateUi();
+            OnBuildingPlaced?.Invoke();
         }
     
         private void RightClick()
