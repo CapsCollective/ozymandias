@@ -90,8 +90,6 @@ namespace Managers
 
         private void Remove(QuestFlyer flyer)
         {
-            Debug.Log(flyer.quest);
-            Debug.Log(flyer.quest.Assigned.Count);
             foreach (var adventurer in flyer.quest.Assigned) adventurer.assignedQuest = null;
             flyer.quest.Assigned = new List<Adventurer>();
             flyer.gameObject.SetActive(false);
