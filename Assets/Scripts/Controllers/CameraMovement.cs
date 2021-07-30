@@ -77,7 +77,7 @@ namespace Controllers
 
         private void Update()
         {
-            if (Manager.inMenu) return;
+            if (Manager.InMenu) return;
 
             freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.IA_RotateCamera.ReadValue<float>();
 

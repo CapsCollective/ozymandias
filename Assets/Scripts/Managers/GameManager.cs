@@ -14,18 +14,14 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private Canvas loadingScreen, signoffScreen;
-        [SerializeField] private GameObject terrainPrefab;
-        public bool inMenu;
-        private bool _gameOver;
-        public bool turnTransitioning;
-
         public Event openingEvent;
         public Event[] supportWithdrawnEvents;
 
         public static Action OnNewTurn;
         public static Action OnNextTurn;
         public static Action OnUpdateUI;
+        public static Action OnGameStart;
+        public static Action OnGameEnd;
     
         private static GameManager _instance;
         public static GameManager Manager
@@ -37,8 +33,10 @@ namespace Managers
             }
         }
 
-        public static bool IsLoading { get; private set; }
-        public bool IsGameOver { get; private set; }
+        public bool InMenu { get; private set; }
+        public bool TurnTransitioning { get; private set; }
+        public bool IsLoading { get; private set; }
+        public bool IsGameOver { get; set; }
         
         // All Managers/ Universal Controllers
         public Adventurers Adventurers { get; private set; }
@@ -70,7 +68,9 @@ namespace Managers
             Tooltip = FindObjectOfType<Tooltip>();
 
             InputManager.Instance.IA_NextTurn.performed += (e) => NextTurn();
-            
+
+            Newspaper.OnClosed += CheckGameEnd;
+
             Load();
         }
 
@@ -140,11 +140,11 @@ namespace Managers
             // Start game with 10 Adventurers
             for (int i = 0; i < 10; i++) Manager.Adventurers.Add();
 
+            TurnCounter = 1;
             Stability = 100;
             Wealth = 100;
             
             Buildings.SpawnGuildHall();
-            Map.FillGrid(terrainPrefab, Manager.Buildings.transform);
             
             EventQueue.Add(openingEvent, true);
         }
@@ -152,8 +152,8 @@ namespace Managers
         [Button("Next Turn")]
         public void NextTurn()
         {
-            if (turnTransitioning || inMenu) return;
-            turnTransitioning = true;
+            if (TurnTransitioning || InMenu) return;
+            TurnTransitioning = true;
             OnNextTurn?.Invoke();
         }
 
@@ -197,7 +197,7 @@ namespace Managers
             SaveFile.SaveState();
             EnterMenu();
             UpdateUi();
-            turnTransitioning = false;
+            TurnTransitioning = false;
         }
 
         public void UpdateUi()
@@ -213,22 +213,31 @@ namespace Managers
             IsLoading = false;
         }
 
-        public void GameOver()
+        private void CheckGameEnd()
         {
-            IsGameOver = true;
-            Newspaper.GameOver();
+            if (!IsGameOver) return; 
+            OnGameEnd.Invoke();
+            
+            Map.FillGrid();
+            Manager.IsGameOver = false; //Reset for next game
+            Manager.TurnCounter = 0;
+            Clear.RuinsClearCount = 0;
+            Clear.TerrainClearCount = 0;
+
+            MainMenu.Instance.BackToMenu();
+            SaveFile.SaveState();
         }
 
         public void EnterMenu()
         {
-            inMenu = true;
+            InMenu = true;
             Shade.Instance.SetDisplay(true);
             BuildingPlacement.GetComponent<ToggleGroup>().SetAllTogglesOff();
         }
     
         public void ExitMenu()
         {
-            inMenu = false;
+            InMenu = false;
             Shade.Instance.SetDisplay(false);
         }
         

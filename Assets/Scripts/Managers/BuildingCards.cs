@@ -30,6 +30,7 @@ namespace Managers
         private void Awake()
         {
             Clear.OnClear += Discover;
+            OnGameEnd += GameOver;
         }
 
         public bool Unlock(GameObject building, bool isRuin = false)
@@ -56,14 +57,11 @@ namespace Managers
 
         public BuildingCardDetails Save()
         {
-            List<string> all = _all.Select(x => x.name).ToList();
             return new BuildingCardDetails
             {
-                all = all,
-                current = Manager.IsGameOver ? _current.Select(x => x.name).ToList() : new List<string>(),
-                discoverable = Manager.IsGameOver ?
-                    all.RandomSelection(Mathf.Min(MaxDiscoverable, all.Count)) : 
-                    _discoverable.Select(x => x.name).ToList()
+                all =  _all.Select(x => x.name).ToList(),
+                current = _current.Select(x => x.name).ToList(),
+                discoverable = _discoverable.Select(x => x.name).ToList()
             };
         }
         
@@ -75,6 +73,13 @@ namespace Managers
                 _current.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
             foreach (string b in buildings.discoverable)
                 _discoverable.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
+        }
+
+        public void GameOver()
+        {
+            _current.Clear();
+            _discoverable.Clear();
+            _discoverable.AddRange(_all.RandomSelection(Mathf.Min(MaxDiscoverable, _all.Count)));
         }
     }
 }

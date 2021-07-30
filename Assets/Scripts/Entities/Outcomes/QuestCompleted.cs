@@ -9,9 +9,6 @@ namespace Entities.Outcomes
     
         public override bool Execute()
         {
-            foreach (var adventurer in quest.assigned) adventurer.assignedQuest = null;
-            quest.assigned = new List<Adventurer>();
-        
             return Manager.Quests.Remove(quest);
         }
 

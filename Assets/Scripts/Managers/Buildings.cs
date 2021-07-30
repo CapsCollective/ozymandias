@@ -28,6 +28,8 @@ namespace Managers
 
         private void Start()
         {
+            OnGameEnd += GameOver;
+            
             object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
             foreach(TextAsset o in buildingsText)
             {
@@ -100,7 +102,7 @@ namespace Managers
             return building.name;
         }
 
-        public void RemoveAll()
+        public void GameOver()
         {
             List<Building> dupList = new List<Building>(_buildings);
             dupList.ForEach(building =>
@@ -138,7 +140,7 @@ namespace Managers
             const int rotation = 1;
 
             GameObject buildingInstance = Instantiate(guildHall, transform);
-            if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation)) Destroy(buildingInstance);
+            if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation, animate: true)) Destroy(buildingInstance);
         }
     }
 }

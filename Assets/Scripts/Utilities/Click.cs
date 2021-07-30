@@ -27,7 +27,7 @@ namespace Utilities
 
         private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (GameManager.IsLoading || Manager.inMenu || Manager.turnTransitioning)
+            if (Manager.IsLoading || Manager.InMenu || Manager.TurnTransitioning)
                 return;
 
             if (obj.performed) _time0 = Time.time;
@@ -37,7 +37,7 @@ namespace Utilities
 
         private void I_OnRightClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (GameManager.IsLoading || Manager.inMenu || Manager.turnTransitioning)
+            if (Manager.IsLoading || Manager.InMenu || Manager.TurnTransitioning)
                 return;
 
             if (obj.performed) _time1 = Time.time;

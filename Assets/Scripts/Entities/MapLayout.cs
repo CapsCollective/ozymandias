@@ -31,17 +31,17 @@ namespace Entities
         public static Action OnRoadReady;
 
         //Procedurally places buildings
-        public void FillGrid(GameObject terrainPrefab, Transform container)
+        public void FillGrid(GameObject terrainPrefab)
         {
-            GameObject terrain = Instantiate(terrainPrefab, container);
+            GameObject terrain = Instantiate(terrainPrefab, Manager.Buildings.transform);
             bool wasCreated = true;
             
             foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && !cell.Safe))
             {
-                if (wasCreated) terrain = Instantiate(terrainPrefab, container);
+                if (wasCreated) terrain = Instantiate(terrainPrefab, Manager.Buildings.transform);
 
-                // Create building if valid
-                wasCreated = Manager.Map.CreateBuilding(terrain, cell.Id);
+                // Create building if valid, only animate if happening during the game over transition
+                wasCreated = Manager.Map.CreateBuilding(terrain, cell.Id, animate: Manager.IsGameOver);
             }
             if (!wasCreated) Destroy(terrain);
         }

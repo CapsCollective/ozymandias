@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entities.Outcomes;
 using Managers;
@@ -17,37 +18,37 @@ namespace Entities
         public int turns = 5;
         public int adventurers = 2;
         [Range(0.5f, 3f)] public float costScale = 1.5f; // How many turns worth of gold to send, sets cost when created.
-        [ReadOnly] public int cost;
 
         public string title;
         [TextArea] public string description;
         public Event completeEvent; // Keep empty if randomly chosen
         public Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
-        public int turnsLeft;
-        public List<Adventurer> assigned;
+        public int Cost { get; set; }
+        public int TurnsLeft { get; private set; }
+        public List<Adventurer> Assigned { get; set; }
 
         public void StartQuest()
         {
             if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
-            assigned = new List<Adventurer>();
-            turnsLeft = turns;
-            Manager.Spend(cost);
-            for (int i = 0; i < adventurers; i++) assigned.Add(Manager.Adventurers.Assign(this));
+            Assigned = new List<Adventurer>();
+            TurnsLeft = turns;
+            Manager.Spend(Cost);
+            for (int i = 0; i < adventurers; i++) Assigned.Add(Manager.Adventurers.Assign(this));
             GameManager.OnNewTurn += OnNewTurn;
             Manager.UpdateUi();
         }
     
         private void OnNewTurn()
         {
-            if (turnsLeft <= 1)
+            if (TurnsLeft <= 1)
             {
                 if (completeEvent) Manager.EventQueue.Add(completeEvent, true);
                 else Debug.LogError("Quest was completed with no event.");
                 GameManager.OnNewTurn -= OnNewTurn;
             }
-            Debug.Log($"Quest in progress: {title}. {turnsLeft} turns remaining.");
-            turnsLeft--;
+            Debug.Log($"Quest in progress: {title}. {TurnsLeft} turns remaining.");
+            TurnsLeft--;
         }
 
         public QuestDetails Save()
@@ -55,28 +56,19 @@ namespace Entities
             return new QuestDetails
             {
                 name = name,
-                turnsLeft = turnsLeft,
-                cost = cost,
-                assigned = assigned.Select(a => a.name).ToList()
+                turnsLeft = TurnsLeft,
+                cost = Cost,
+                assigned = Assigned.Select(a => a.name).ToList()
             };
         }
 
         public void Load(QuestDetails details)
         {
-            cost = details.cost;
-            turnsLeft = details.turnsLeft;
+            Cost = details.cost;
+            TurnsLeft = details.turnsLeft;
             if (details.assigned.Count == 0) return;
             Manager.Adventurers.Assign(this, details.assigned);
             GameManager.OnNewTurn += OnNewTurn; //Resume Quest
-        }
-
-        // Need this so if a quest is in progress and the game ends
-        // The quest won't keep running
-        private void HandleSceneChange(Scene a, Scene b)
-        {
-            assigned = new List<Adventurer>();
-            GameManager.OnNewTurn -= OnNewTurn;
-            SceneManager.activeSceneChanged -= HandleSceneChange;
         }
 
 #if UNITY_EDITOR

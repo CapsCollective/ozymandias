@@ -3,6 +3,7 @@ using Cinemachine;
 using DG.Tweening;
 using Managers;
 using UnityEngine;
+using static Managers.GameManager;
 
 namespace Controllers
 {
@@ -134,7 +135,7 @@ namespace Controllers
 
         private void LoadingGameUpdate()
         {
-            if (GameManager.IsLoading) return;
+            if (Manager.IsLoading) return;
             
             // Fade out loading screen
             _loadingCanvasGroup.DOFade(0.0f, 1.0f)
@@ -147,8 +148,8 @@ namespace Controllers
                 ()=>Jukebox.Instance.OnStartGame()));
             
             // Find the starting position and set to correct height
-            _startPos.Position = GameObject.Find("Guild Hall").transform.position;
-            _startPos.Position.y = 1.0f;
+            // TODO: Replace this with a check of the guild hall location once dynamic spawning is created
+            _startPos.Position = new Vector3(-10, 1, -12);
 
             // Run general menu initialisation
             InMenuInit();
@@ -195,14 +196,20 @@ namespace Controllers
             _gameCanvasGroup.alpha = 1.0f;
             _menuCanvasGroup.interactable = false;
             _menuCanvasGroup.blocksRaycasts = false;
+            _gameCanvasGroup.interactable = true;
+            _gameCanvasGroup.blocksRaycasts = true;
             InputManager.TogglePlayerInput(true);
             _menuState = MenuState.InGame;
+            
+            if (Manager.TurnCounter == 0) Manager.StartGame();
         }
 
         private void OpeningMenuInit()
         {
             _menuCanvasGroup.alpha = 0.0f;
             _menuCanvasGroup.blocksRaycasts = true;
+            _gameCanvasGroup.interactable = false;
+            _gameCanvasGroup.blocksRaycasts = false;
             InputManager.TogglePlayerInput(false);
             _menuCanvas.enabled = true;
             Jukebox.Instance.OnEnterMenu();

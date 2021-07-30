@@ -41,9 +41,9 @@ namespace Utilities
 
         // Gets a random subset from a list of count
         // Absolutely not the fastest way to do this, fix if needed
-        public static List<string> RandomSelection(this List<string> list, int count)
+        public static List<GameObject> RandomSelection(this List<GameObject> list, int count)
         {
-            List<string> dupList = new List<string>(list);
+            List<GameObject> dupList = new List<GameObject>(list);
             for (int i = 0; i < list.Count - count; i++)
             {
                 dupList.RemoveAt(Random.Range(0, dupList.Count));

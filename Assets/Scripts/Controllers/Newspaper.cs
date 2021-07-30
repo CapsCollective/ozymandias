@@ -23,10 +23,11 @@ namespace Controllers
         [SerializeField] private Image articleImage;
         [SerializeField] private Button[] choiceList;
         [SerializeField] private Button continueButton;
-        [SerializeField] private Button gameOverButton;
         [SerializeField] private TextMeshProUGUI turnCounter;
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
+        [SerializeField] private GameObject gameOverButtonContent;
+
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
         private Event _choiceEvent;
@@ -34,6 +35,13 @@ namespace Controllers
         private Canvas _canvas;
         private bool _choiceSelected;
 
+        private enum ButtonState
+        {
+            Close,
+            Choice,
+            GameOver
+        }
+        
         private void Start()
         {
             _canvas = GetComponent<Canvas>();
@@ -59,7 +67,8 @@ namespace Controllers
             turnCounter.text = _newspaperTitle + ", Turn " + Manager.TurnCounter;
         
             _choiceEvent = events[0];
-            if (_choiceEvent.choices.Count > 0) SetContinueButtonEnabled(false);
+            if (_choiceEvent.choices.Count > 0) SetContinueButtonState(ButtonState.Choice);
+            else SetContinueButtonState(Manager.IsGameOver ? ButtonState.GameOver : ButtonState.Close);
         
             // Set the image for the main article and a newspaper title
             if(events[0].image) articleImage.sprite = events[0].image;
@@ -90,7 +99,7 @@ namespace Controllers
         public void OnChoiceSelected(int choice)
         {
             articleList[0].AddChoiceOutcome (_choiceEvent.MakeChoice(choice));
-            SetContinueButtonEnabled(true);
+            SetContinueButtonState(ButtonState.Close);
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             Manager.UpdateUi();
@@ -107,23 +116,13 @@ namespace Controllers
         {
             return NewspaperTitles[Random.Range(0, NewspaperTitles.Length)];
         }
-
-        public void GameOver()
+        
+        private void SetContinueButtonState(ButtonState state)
         {
-            continueButton.gameObject.SetActive(false);
-            gameOverButton.gameObject.SetActive(true);
-        }
-
-        public void QuitToMenu()
-        {
-            Manager.Settings.QuitToMenu();
-        }
-
-        private void SetContinueButtonEnabled(bool state)
-        {
-            continueButton.enabled = state;
-            continueButtonContent.SetActive(state);
-            disableButtonContent.SetActive(!state);
+            continueButton.enabled = state != ButtonState.Choice;
+            continueButtonContent.SetActive(state == ButtonState.Close);
+            disableButtonContent.SetActive(state == ButtonState.Choice);
+            gameOverButtonContent.SetActive(state == ButtonState.GameOver);
         }
         
         public void Open()
@@ -149,14 +148,6 @@ namespace Controllers
                     _canvas.enabled = false;
                 });
             UIEventController.SelectUI(null);
-        }
-        
-        public void CloseNoExit()
-        {
-            transform.DOLocalMove(new Vector3(2000, 800, 0), animateOutDuration);
-            transform
-                .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
-                .OnComplete(() => { _canvas.enabled = false; });
         }
     }
 }
