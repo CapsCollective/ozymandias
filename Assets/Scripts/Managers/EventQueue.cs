@@ -34,6 +34,8 @@ namespace Managers
         
         private void Awake()
         {
+            OnGameEnd += GameOver;
+            
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
             {
                 _availablePools.Add(type, new List<Event>());
@@ -179,5 +181,18 @@ namespace Managers
                 Manager.EventQueue._others.AddLast(e);
             }
         }
+        
+        public void GameOver()
+        {
+            _nextBuildingUnlock = 10;
+            foreach (EventType type in Enum.GetValues(typeof(EventType)))
+            {
+                _availablePools[type].AddRange(_usedPools[type]);
+                _availablePools[type].AddRange(_discardedPools[type]);
+                _usedPools[type] = new List<Event>();
+                _discardedPools[type] = new List<Event>();
+            }
+        }
+        
     }
 }

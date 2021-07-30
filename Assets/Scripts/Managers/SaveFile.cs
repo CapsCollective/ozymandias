@@ -61,7 +61,7 @@ namespace Managers
     {
         public static bool loading;
 
-        public int wealth, turnCounter, threatLevel, terrainClearCount, ruinsClearCount;
+        public int wealth, turnCounter, stability, terrainClearCount, ruinsClearCount;
         
         public List<AdventurerDetails> adventurers; 
         public Dictionary<Stat, List<Modifier>> modifiers;
@@ -93,7 +93,7 @@ namespace Managers
             {
                 wealth = Manager.Wealth;
                 turnCounter = Manager.TurnCounter;
-                threatLevel = Manager.Stability;
+                stability = Manager.Stability;
                 terrainClearCount = Clear.TerrainClearCount;
                 ruinsClearCount = Clear.RuinsClearCount;
                 modifiers = Manager.Modifiers;
@@ -125,6 +125,7 @@ namespace Managers
             Clear.RuinsClearCount = ruinsClearCount;
 
             await Manager.Buildings.Load(buildings);
+            if(Manager.Buildings.Count == 0) Manager.Map.FillGrid();
             await Manager.BuildingCards.Load(buildingCards);
             await Manager.EventQueue.Load(eventQueue);
 
@@ -140,14 +141,10 @@ namespace Managers
             foreach (var metricPair in Manager.Modifiers)
                 Manager.ModifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
             
-            if (turnCounter == 0)
-            {
-                Manager.StartGame();
-            }
-            else
+            if (turnCounter != 0) // Only for continuing a game
             {
                 Manager.Wealth = wealth;
-                Manager.Stability = threatLevel;
+                Manager.Stability = stability;
                 Manager.Adventurers.Load(adventurers);
                 await Manager.Quests.Load(quests);
                 //TODO: Reshuffle buildings

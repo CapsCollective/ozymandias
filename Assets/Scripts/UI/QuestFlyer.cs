@@ -117,9 +117,9 @@ namespace UI
             if (!displaying || !quest) return;
             if (stamps[0].activeSelf)
             {
-                string turnText = "\nReturn in: " + quest.turnsLeft;
+                string turnText = "\nReturn in: " + quest.TurnsLeft;
 
-                switch (quest.turnsLeft)
+                switch (quest.TurnsLeft)
                 {
                     case 0:
                         turnText = "\nReturning today";
@@ -137,13 +137,13 @@ namespace UI
             else
             {
                 bool enoughAdventurers = Manager.Adventurers.Removable > quest.adventurers;
-                bool enoughMoney = Manager.Wealth >= quest.cost;
+                bool enoughMoney = Manager.Wealth >= quest.Cost;
                 statsText.text =
                     (enoughAdventurers ? "" : "<color=#820000ff>") + 
                     "Adventurers: " + quest.adventurers +
                     (enoughAdventurers ? "" : "</color>") +
                     (enoughMoney ? "" : "<color=#820000ff>") +
-                    "\nCost: " + quest.cost +
+                    "\nCost: " + quest.Cost +
                     (enoughMoney ? "" : "</color>") +
                     "\nDuration: " + quest.turns + " turns";
 

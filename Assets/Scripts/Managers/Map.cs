@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Controllers;
 using Entities;
 using UnityEditor;
 using UnityEngine;
@@ -21,6 +19,7 @@ namespace Managers
 
         public LayerMask layerMask;
         [SerializeField] private MeshFilter gridMesh, roadMesh;
+        [SerializeField] private GameObject terrainPrefab;
         [SerializeField] private MapLayout layout;
         
         private Dictionary<Building, List<Cell>> BuildingMap { get; set; }
@@ -148,9 +147,9 @@ namespace Managers
             BuildingMap.Remove(building);
         }
         
-        public void FillGrid(GameObject terrainPrefab, Transform container)
+        public void FillGrid()
         {
-            layout.FillGrid(terrainPrefab, container);
+            layout.FillGrid(terrainPrefab);
         }
 
         private Vector3[] GetCornerPositions(Cell cell)

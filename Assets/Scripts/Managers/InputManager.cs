@@ -54,39 +54,35 @@ public class InputManager
         PlayerInput = new PlayerInput();
 
         IA_OnLeftClick = PlayerInput.Player.LeftClick;
-        IA_OnLeftClick.Enable();
         IA_OnRightClick = PlayerInput.Player.RightClick;
-        IA_OnRightClick.Enable();
         IA_OnScroll = PlayerInput.Player.Scroll;
-        IA_OnScroll.Enable();
         IA_RotateCamera = PlayerInput.Player.RotateCamera;
-        IA_RotateCamera.Enable();
         IA_MousePosition = PlayerInput.Player.MousePosition;
-        IA_MousePosition.Enable();
         IA_MoveCamera = PlayerInput.Player.MoveCamera;
-        IA_MoveCamera.Enable();
         IA_DeleteBuilding = PlayerInput.Player.DeleteBuilding;
-        IA_DeleteBuilding.Enable();
         IA_NextTurn = PlayerInput.Player.NextTurn;
-        IA_NextTurn.Enable();
         IA_ShowPause = PlayerInput.Player.ShowPause;
-        IA_ShowPause.Enable();
         IA_RotateBuilding = PlayerInput.Player.BuildingRotate;
-        IA_RotateBuilding.Enable();
         IA_DeselectCards = PlayerInput.Player.DeselectCards;
-        IA_DeselectCards.Enable();
 
         // UI
         IA_SelectCards = PlayerInput.UI.SelectCards;
-        IA_SelectCards.Enable();
         IA_UINavigate = PlayerInput.UI.Navigate;
-        IA_UINavigate.Enable();
         IA_UICancel = PlayerInput.UI.Cancel;
-        IA_UICancel.Enable();
 
-        PlayerInput.Enable();
+        PlayerInput.UI.Enable();
+
+        // Remove this line to disable Player Input on launch
+        PlayerInput.Player.Enable();
+
         InputUser.onChange += InputUser_onChange;
         Debug.Log("InputManager running.");
+    }
+
+    public static void TogglePlayerInput(bool toggle)
+    {
+        if (toggle) Instance.PlayerInput.Player.Enable();
+        else Instance.PlayerInput.Player.Disable();
     }
 
     private void InputUser_onChange(InputUser arg1, InputUserChange arg2, InputDevice arg3)

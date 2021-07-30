@@ -77,7 +77,7 @@ namespace Controllers
 
         private void Update()
         {
-            if (Manager.inMenu) return;
+            if (Manager.InMenu) return;
 
             freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.IA_RotateCamera.ReadValue<float>();
 
@@ -101,7 +101,7 @@ namespace Controllers
             Vector2 inputDir = InputManager.Instance.IA_MoveCamera.ReadValue<Vector2>() + dragDir;
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
-            freeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * Time.deltaTime);
+            freeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
 
             // Scrolling
             float scroll = -InputManager.Instance.IA_OnScroll.ReadValue<float>();

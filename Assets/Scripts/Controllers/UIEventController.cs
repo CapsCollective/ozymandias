@@ -56,7 +56,7 @@ public class UIEventController : MonoBehaviour
 
     private void UICancel(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (Manager.inMenu) return;
+        if (Manager.InMenu) return;
 
         if (isSelectingCard)
         {
@@ -67,7 +67,7 @@ public class UIEventController : MonoBehaviour
 
     public void Navigate(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (Manager.inMenu || buildingPlacement.ChangingCard(lastSelectedCard)) return;
+        if (Manager.InMenu || buildingPlacement.ChangingCard(lastSelectedCard)) return;
 
         int dir = (int)obj.ReadValue<Vector2>().x;
         if (isSelectingCard)
@@ -79,7 +79,7 @@ public class UIEventController : MonoBehaviour
 
     private void SelectCards(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (Manager.inMenu) return;
+        if (Manager.InMenu) return;
 
         if (!isSelectingCard)
         {

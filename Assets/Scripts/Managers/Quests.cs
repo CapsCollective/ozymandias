@@ -27,6 +27,8 @@ namespace Managers
         
         private void Start()
         {
+            OnGameEnd += GameOver;
+            
             _canvas = GetComponent<Canvas>();
 
             foreach (var flyer in availableFlyers)
@@ -35,14 +37,6 @@ namespace Managers
             }
             
             Close();
-        }
-        
-        private void Update()
-        {
-            //if (!Input.GetMouseButtonDown(0) || !_selectedQuest) return;
-            //if (_selectedQuest.mouseOver) return;
-            //_selectedQuest.ResetDisplay();
-            //_selectedQuest = null;
         }
 
         private void OnFlyerClick(GameObject flyer)
@@ -62,10 +56,6 @@ namespace Managers
                 .DOLocalMove(Vector3.zero, animateInDuration)
                 .OnStart(() => { _canvas.enabled = true; });
             transform.DOLocalRotate(Vector3.zero, animateInDuration);
-            
-            /*if (PlayerPrefs.GetInt("tutorial_video_quests", 0) > 0) return;
-            PlayerPrefs.SetInt("tutorial_video_quests", 1);
-            TutorialPlayerController.Instance.PlayClip(2);*/
         }
         
         public void Close()
@@ -79,11 +69,12 @@ namespace Managers
         public bool Add(Quest q)
         {
             if (availableFlyers.Count == 0 || usedFlyers.Any(x => x.quest == q)) return false;
+            q.Assigned = new List<Adventurer>(); // Reset the assigned
             QuestFlyer flyer = availableFlyers.PopRandom();
             flyer.gameObject.SetActive(true);
-            q.cost = (int)(GameManager.Manager.WealthPerTurn * q.costScale);
+            q.Cost = (int)(Manager.WealthPerTurn * q.costScale);
             flyer.SetQuest(q);
-            if (q.assigned.Count > 0) flyer.RandomRotateStamps(); // Mark active quests when being added (for loading)
+            if (q.Assigned.Count > 0) flyer.RandomRotateStamps(); // Mark active quests when being added (for loading)
             usedFlyers.Add(flyer);
             counter.UpdateCounter(usedFlyers.Count, true);
             return true;
@@ -93,11 +84,18 @@ namespace Managers
         {
             QuestFlyer flyer = usedFlyers.Find(x => x.quest == q);
             if (!flyer) return false;
+            Remove(flyer);
+            return true;
+        }
+
+        private void Remove(QuestFlyer flyer)
+        {
+            foreach (var adventurer in flyer.quest.Assigned) adventurer.assignedQuest = null;
+            flyer.quest.Assigned = new List<Adventurer>();
             flyer.gameObject.SetActive(false);
             usedFlyers.Remove(flyer);
             counter.UpdateCounter(usedFlyers.Count);
             availableFlyers.Add(flyer);
-            return true;
         }
 
         public List<QuestDetails> Save()
@@ -115,5 +113,9 @@ namespace Managers
             }
         }
         
+        public void GameOver()
+        {
+            usedFlyers.ToList().ForEach(Remove);
+        }
     }
 }

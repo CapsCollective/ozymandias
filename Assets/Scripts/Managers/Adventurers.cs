@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entities;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -11,16 +13,22 @@ namespace Managers
     {
         [SerializeField] private GameObject prefab;
         [SerializeField] private Transform graveyard;
-        
+
         private readonly List<Adventurer> _adventurers = new List<Adventurer>();
-        
+
         public int Count => _adventurers.Count;
         public int Available => _adventurers.Count(x => !x.assignedQuest);
         public int Removable => _adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
+
         public IEnumerable<Adventurer> List => _adventurers
             .OrderByDescending(x => x.assignedQuest ? x.assignedQuest.title : "")
             .ThenByDescending(x => x.turnJoined);
-        
+
+        private void Start()
+        {
+            OnGameEnd += GameOver;
+        }
+
         public Adventurer Assign(Quest q)
         {
             List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
@@ -30,16 +38,16 @@ namespace Managers
             removable[randomIndex].assignedQuest = q;
             return removable[randomIndex];
         }
-        
+
         public void Assign(Quest q, List<string> names)
         {
             foreach (Adventurer adventurer in names.Select(n => _adventurers.Find(a => a.name == n)))
             {
-                q.assigned.Add(adventurer);
+                q.Assigned.Add(adventurer);
                 adventurer.assignedQuest = q;
             }
         }
-    
+
         private Adventurer New()
         {
             Adventurer adventurer = Instantiate(prefab, transform).GetComponent<Adventurer>();
@@ -52,7 +60,7 @@ namespace Managers
         {
             New().Init(category);
         }
-    
+
         public void Add(PremadeAdventurer adventurer)
         {
             New().Load(new AdventurerDetails
@@ -63,7 +71,7 @@ namespace Managers
                 turnJoined = Manager.TurnCounter
             });
         }
-        
+
         public void Add(AdventurerDetails adventurer)
         {
             New().Load(adventurer);
@@ -75,7 +83,7 @@ namespace Managers
             if (removable.Count == 0) return false;
             int randomIndex = Random.Range(0, removable.Count);
             Adventurer toRemove = removable[randomIndex];
-        
+
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
             else Destroy(toRemove);
@@ -102,6 +110,13 @@ namespace Managers
         public void Load(List<AdventurerDetails> adventurers)
         {
             foreach (AdventurerDetails adventurer in adventurers) Add(adventurer);
+        }
+
+        public void GameOver()
+        {
+            _adventurers.Clear();
+            foreach (Transform child in transform) Destroy(child.gameObject);
+            foreach (Transform child in graveyard) Destroy(child.gameObject);
         }
 
         public int GetCount(AdventurerCategory category)

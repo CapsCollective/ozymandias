@@ -14,7 +14,7 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            tooltip.position = transform.position + new Vector3(0, 50);
+            tooltip.position = transform.position;
             tooltipText.text = Description;
             Fade(1);
         }
