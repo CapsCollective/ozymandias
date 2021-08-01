@@ -31,6 +31,7 @@ Shader "Custom/WavingTrees"
         {
             float2 uv_MainTex;
             float3 wPos;
+            float3 oPos;
             float4 screenPos;
         };
 
@@ -100,6 +101,7 @@ Shader "Custom/WavingTrees"
             UNITY_INITIALIZE_OUTPUT(Input, o);
             float3 vertexWorldSpace = mul(unity_ObjectToWorld, v.vertex);
             o.wPos = vertexWorldSpace;
+            o.oPos = unity_ObjectToWorld._m03_m13_m23;
             v.vertex.xz += GetMask(vertexWorldSpace.xy) * (snoise(vertexWorldSpace.xz * (_Time.x * _WindSpeed)) * _WindStrength);
             o.screenPos = ComputeScreenPos(UnityObjectToClipPos(v.vertex));
         }
@@ -107,7 +109,7 @@ Shader "Custom/WavingTrees"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             // Albedo comes from a texture tinted by color
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * ((_Color + snoise(IN.oPos.xy) * 0.25));
             fixed n = tex2D(_NoiseTex, IN.uv_MainTex).r;
             float alpha = saturate(pow(distance(IN.wPos, _WorldSpaceCameraPos) / _AlphaDistance, _AlphaFalloff));
 
