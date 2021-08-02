@@ -55,7 +55,7 @@ namespace Controllers
 
             var cardTransform = cardDisplay.transform;
             cardTransform.localPosition = new Vector3(1000, 200, 0);
-            cardTransform.localRotation = new Quaternion( 0.0f, 0.0f, 20.0f, 0.0f);
+            cardTransform.localRotation = new Quaternion( 0.0f, 0.0f, 10.0f, 0.0f);
             
             cardDisplay.transform.DOLocalRotate(Vector3.zero, animateInDuration);
             cardDisplay.transform
@@ -69,11 +69,13 @@ namespace Controllers
         public void Close()
         {
             text.DOFade(0.0f, 0.5f);
-            cardDisplay.transform.DOLocalMove(new Vector3(-500, -300, 0), animateOutDuration);
+            cardDisplay.transform.DOLocalMove(new Vector3(-300, -500, 0), animateOutDuration);
+            cardDisplay.transform.DOScale(Vector3.one * 0.4f, animateOutDuration);
             cardDisplay.transform
                 .DOLocalRotate(new Vector3(0, 0, 20), animateOutDuration)
                 .OnComplete(() =>
                 {
+                    cardDisplay.transform.localScale = Vector3.one;
                     _displayBuilding = null;
                     if (_buildings.Any()) OpenCard();
                     else
