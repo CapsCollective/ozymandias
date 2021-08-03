@@ -5,7 +5,10 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
+#if UNITY_EDITOR_WIN
 [ExecuteAlways]
+#endif
+
 public class DrawGrassInstanced : MonoBehaviour
 {
     public enum GrassPaintMode
