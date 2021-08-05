@@ -8,25 +8,6 @@ using static Managers.GameManager;
 
 namespace UI
 {
-    public enum TooltipType
-    {
-        Brawler,
-        Outrider,
-        Performer,
-        Diviner,
-        Arcanist,
-        Housing,
-        Food,
-        Wealth,
-        Stability,
-        Newspaper,
-        Progress,
-        Quests,
-        NextTurn,
-        Threat,
-        Defence
-    }
-
     internal struct TooltipConfig
     {
         public string Title, Description;
@@ -158,21 +139,21 @@ namespace UI
                         ? "Adventurers will start to flee"
                         : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
                     details.text = $"{Manager.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
-                                   $"{getFormattedModifierString(Stat.Housing)}" +
+                                   $"{FormattedModifierString(Stat.Housing)}" +
                                    $"{descriptive} ({spawnText})";
                     break;
                 case Stat.Food:
                     details.text = $"{Manager.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
-                                   $"{getFormattedModifierString(Stat.Food)}" +
+                                   $"{FormattedModifierString(Stat.Food)}" +
                                    $"{FoodDescriptor(Manager.FoodModifier)}";
                     break;
                 case Stat.Defence:
                     details.text = $"{Manager.Defence} defence from total adventurers and defensive buildings\n" +
-                                   $"{getFormattedModifierString(Stat.Defence)}";
+                                   $"{FormattedModifierString(Stat.Defence)}";
                     break;
                 case Stat.Threat:
                     details.text = $"{Manager.Threat} threat (+3 per turn)\n" +
-                                   $"{getFormattedModifierString(Stat.Threat)}";
+                                   $"{FormattedModifierString(Stat.Threat)}";
                     break;
                 case Stat.Stability:
                     int change = Manager.Defence - Manager.Threat;
@@ -181,44 +162,47 @@ namespace UI
                 case Stat.Spending:
                     details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +
                                    $"(5 wealth per adventurer) times {(100 + Manager.GetStat(Stat.Spending))/100f} from spending modifier.\n" +
-                                   $"{getFormattedModifierString(Stat.Spending)}";
+                                   $"{FormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class
-                    AdventurerCategory category = (AdventurerCategory) config.Stat.Value;
+                    AdventurerType adventurerType = (AdventurerType) config.Stat.Value;
                     string className = config.Stat.ToString();
                     details.text =
                         $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
-                        $"{Manager.Adventurers.GetCount(category)} {className}s\n" +
-                        $"{getFormattedFoodModifierString()}" +
-                        $"{getFormattedModifierString(config.Stat.Value)}" +
-                        $"{Manager.SpawnChance(category):n1}% {className} spawn chance per turn";
+                        $"{Manager.Adventurers.GetCount(adventurerType)} {className}s\n" +
+                        $"{FormattedFoodModifierString}" +
+                        $"{FormattedModifierString(config.Stat.Value)}" +
+                        $"{Manager.SpawnChance(adventurerType):n1}% {className} spawn chance per turn";
                     break;
             }
         }
 
         // Formatted string for food modifiers (specifically for adventurer)
-        private string getFormattedFoodModifierString()
+        private string FormattedFoodModifierString
         {
-            int mod = Manager.FoodModifier;
-            if (mod == 0) return "";
-            bool isFoodInSurplus = Math.Sign(mod) == 1;
-            string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
-            char foodSign = isFoodInSurplus ? '+' : '-';
-            string textColor = isFoodInSurplus ? getPositiveHexColor() : getNegativeHexColor();
+            get
+            {
+                int mod = Manager.FoodModifier;
+                if (mod == 0) return "";
+                bool isFoodInSurplus = Math.Sign(mod) == 1;
+                string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
+                char foodSign = isFoodInSurplus ? '+' : '-';
+                string textColor = isFoodInSurplus ? PositiveHexColor : NegativeHexColor;
 
-            return $"  ● <color={textColor}>{foodSign}{Math.Abs(mod)}</color>" +
-                   $" from food {foodDescriptor}\n";
+                return $"  ● <color={textColor}>{foodSign}{Math.Abs(mod)}</color>" +
+                       $" from food {foodDescriptor}\n";
+            }
         }
 
         // Formatted string for listing all stat modifiers. 
-        private string getFormattedModifierString(Stat stat)
+        private string FormattedModifierString(Stat stat)
         {
             string formattedModifierString = "";
 
             foreach (var modifier in Manager.Modifiers[stat])
             {
                 char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
-                string textColor = sign == '+' ? getPositiveHexColor() : getNegativeHexColor();
+                string textColor = sign == '+' ? PositiveHexColor : NegativeHexColor;
                 string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
                 formattedModifierString += 
                     $"  ● <color={textColor}>{sign}{Math.Abs(modifier.amount)}</color> " +
@@ -228,15 +212,9 @@ namespace UI
             return formattedModifierString;
         }
 
-        private string getPositiveHexColor()
-        {
-            return "#1bfc30";
-        }
+        private string PositiveHexColor => "#1bfc30";
         
-        private string getNegativeHexColor()
-        {
-            return "#FF0000";
-        }
+        private string NegativeHexColor => "#FF0000";
 
         private string HousingDescriptor(int spawnRate)
         {

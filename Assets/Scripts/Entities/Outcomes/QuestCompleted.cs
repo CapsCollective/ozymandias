@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using static Managers.GameManager;
+﻿using static Managers.GameManager;
 
 namespace Entities.Outcomes
 {
@@ -12,7 +11,7 @@ namespace Entities.Outcomes
             return Manager.Quests.Remove(quest);
         }
 
-        public override string Description => "<color=#007000ff>Quest completed: " + quest.title + ".\n" + 
+        public override string Description => "<color=#007000ff>Quest completed: " + quest.Title + ".\n" + 
                                               quest.adventurers + " Adventurer" + (quest.adventurers > 1 ? "s have" : " has") + " returned.</color>";
     }
 }

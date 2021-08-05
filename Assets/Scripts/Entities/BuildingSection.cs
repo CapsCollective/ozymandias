@@ -19,14 +19,12 @@ namespace Entities
         public Vector2 randomScale = Vector2.one;
         public bool hasGrass = true;
         public bool debug;
-        [SerializeField] private ComputeShader meshCompute;
+        private ComputeShader _meshCompute;
         
         private MeshFilter _meshFilter;
         private bool _usesShader;
         private static readonly int HasGrass = Shader.PropertyToID("_HasGrass");
         private static readonly int RoofColor = Shader.PropertyToID("_RoofColor");
-
-
 
         private MeshFilter MeshFilter => _meshFilter ? _meshFilter : _meshFilter = GetComponent<MeshFilter>();
 
@@ -43,13 +41,12 @@ namespace Entities
 
         private void Awake()
         {
-            meshCompute = (ComputeShader)Resources.Load("SectionCompute");
-            _usesShader = meshCompute != null && 
+            _meshCompute = (ComputeShader)Resources.Load("SectionCompute");
+            _usesShader = _meshCompute != null && 
                           (Application.platform == RuntimePlatform.WindowsPlayer || 
                            Application.platform == RuntimePlatform.WindowsEditor);
         
-            if (randomRotations)
-                transform.rotation = Random.rotation;
+            if (randomRotations) transform.rotation = Random.rotation;
             Vector3 pos = transform.position;
             float noise = Mathf.PerlinNoise(pos.x * NoiseScale, pos.z * NoiseScale);
             transform.localScale = Vector3.one * Mathf.Lerp(randomScale.x, randomScale.y, noise);
@@ -86,16 +83,16 @@ namespace Entities
                 vertexBuffer.SetData(planePositions);
                 cornerBuffer.SetData(corners);
             
-                meshCompute.SetBuffer(0, "sectionBuffer", sectionBuffer);
-                meshCompute.SetBuffer(0, "vertexBuffer", vertexBuffer);
-                meshCompute.SetBuffer(0, "cornerBuffer", cornerBuffer);
-                meshCompute.SetFloat("heightFactor", HeightFactor);
-                meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
+                _meshCompute.SetBuffer(0, "sectionBuffer", sectionBuffer);
+                _meshCompute.SetBuffer(0, "vertexBuffer", vertexBuffer);
+                _meshCompute.SetBuffer(0, "cornerBuffer", cornerBuffer);
+                _meshCompute.SetFloat("heightFactor", HeightFactor);
+                _meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
 
                 if(planePositions.Length / 512 > 0)
-                    meshCompute.Dispatch(0, planePositions.Length / 512, 8, 1);
+                    _meshCompute.Dispatch(0, planePositions.Length / 512, 8, 1);
                 else
-                    meshCompute.Dispatch(0, 1, 8, 1);
+                    _meshCompute.Dispatch(0, 1, 8, 1);
             
                 vertexBuffer.GetData(planePositions);
 

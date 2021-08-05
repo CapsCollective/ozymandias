@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using static Managers.GameManager;
 
+//TODO: Looks like its not used, check if we can delete
 public class MainMenuEnvironmentController : MonoBehaviour
 {
     [SerializeField] private Light sun;

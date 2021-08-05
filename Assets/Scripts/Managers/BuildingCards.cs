@@ -30,7 +30,7 @@ namespace Managers
         private void Awake()
         {
             Clear.OnClear += Discover;
-            OnGameEnd += GameOver;
+            GameManager.OnGameEnd += OnGameEnd;
         }
 
         public bool Unlock(GameObject building, bool isRuin = false)
@@ -75,7 +75,7 @@ namespace Managers
                 _discoverable.Add(await Addressables.LoadAssetAsync<GameObject>(b).Task);
         }
 
-        public void GameOver()
+        private void OnGameEnd()
         {
             _current.Clear();
             _discoverable.Clear();

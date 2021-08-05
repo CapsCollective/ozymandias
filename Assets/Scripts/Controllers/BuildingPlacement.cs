@@ -20,13 +20,12 @@ namespace Controllers
     
         [SerializeField] private BuildingCard[] cards;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private GameObject particle;
         [SerializeField] private Transform container;
         [SerializeField] private GameObject testBuilding;
-        private List<GameObject> _remainingBuildings = new List<GameObject>();
+        private List<GameObject> _remainingBuildings = new List<GameObject>(); //TODO: Move this variable and logic into the BuildingCards
         private Camera _cam;
         private int _rotation;
-        private Cell[] _highlighted = new Cell[0];
+        private List<Cell> _selectedCells = new List<Cell>();
         private int _previousSelected = Selected;
         private ToggleGroup _toggleGroup;
 
@@ -63,20 +62,14 @@ namespace Controllers
             _rotation %= 4;
         }
 
+        //TODO: Move this logic from update to on mouse input so its not recalculating every frame
         private void Update()
         {
-#if UNITY_EDITOR
-            //Random debug code
-            //if (Input.GetKeyDown(KeyCode.F10))
-            //{
-            //    SetFirstCard(0);
-            //}
-#endif
             // Clear previous highlights
-            Manager.Map.Highlight(_highlighted, Map.HighlightState.Inactive);
-            _highlighted = new Cell[0];
+            Manager.Map.Highlight(_selectedCells, Map.HighlightState.Inactive);
+            _selectedCells.Clear();
 
-            if (_previousSelected != Selected)
+            if (_previousSelected != Selected) // If selected has changed
             {
                 if (CursorSelect.Cursor.currentCursor != CursorSelect.CursorType.Destroy)
                 {
@@ -95,11 +88,10 @@ namespace Controllers
             
             Building building = cards[Selected].buildingPrefab.GetComponent<Building>();
 
-            _highlighted = Manager.Map.GetCells(closest, building, _rotation).ToArray();
+            _selectedCells = Manager.Map.GetCells(building, closest.Id, _rotation);
 
-            Map.HighlightState state = Cell.IsValid(_highlighted) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
-            Manager.Map.Highlight(_highlighted, state);
-
+            Map.HighlightState state = Cell.IsValid(_selectedCells) ? Map.HighlightState.Valid : Map.HighlightState.Invalid;
+            Manager.Map.Highlight(_selectedCells, state);
         }
 
         public bool ChangingCard(int cardNum) => cards[cardNum].isReplacing;
@@ -146,11 +138,10 @@ namespace Controllers
             if (!hit.collider || EventSystem.current.IsPointerOverGameObject()) return; // No placing through ui
 
             int i = Selected;
-            GameObject buildingInstance = Instantiate(cards[i].buildingPrefab, container);
-            
-            if (!Manager.Map.CreateBuilding(buildingInstance,  Manager.Map.GetClosestCellToCursor().Id, _rotation, animate: true))
+            Building building = Instantiate(cards[i].buildingPrefab, container).GetComponent<Building>();
+            if (!Manager.Buildings.Add(building, Manager.Map.GetClosestCellToCursor().Id, _rotation, animate: true))
             {
-                Destroy(buildingInstance);
+                Destroy(building.gameObject);
                 return;
             }
             

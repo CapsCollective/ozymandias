@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entities;
@@ -21,14 +20,19 @@ namespace Managers
         public int Removable => _adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
 
         public IEnumerable<Adventurer> List => _adventurers
-            .OrderByDescending(x => x.assignedQuest ? x.assignedQuest.title : "")
+            .OrderByDescending(x => x.assignedQuest ? x.assignedQuest.Title : "")
             .ThenByDescending(x => x.turnJoined);
-
-        private void Start()
+        
+        private void Awake()
         {
-            OnGameEnd += GameOver;
+            GameManager.OnGameEnd += OnGameEnd;
         }
 
+        public int GetCount(AdventurerType type)
+        {
+            return _adventurers.Count(a => a.type == type);
+        }
+        
         public Adventurer Assign(Quest q)
         {
             List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
@@ -52,13 +56,13 @@ namespace Managers
         {
             Adventurer adventurer = Instantiate(prefab, transform).GetComponent<Adventurer>();
             _adventurers.Add(adventurer);
-            Manager.Achievements.SetCitySize(Count);
+            Manager.Achievements.SetCitySize(Count); //TODO: Make this an action callback instead
             return adventurer;
         }
 
-        public void Add(AdventurerCategory? category = null)
+        public void Add(AdventurerType? category = null)
         {
-            New().Init(category);
+            New().Create(category);
         }
 
         public void Add(PremadeAdventurer adventurer)
@@ -66,7 +70,7 @@ namespace Managers
             New().Load(new AdventurerDetails
             {
                 name = adventurer.name,
-                category = adventurer.category,
+                type = adventurer.type,
                 isSpecial = adventurer.isSpecial,
                 turnJoined = Manager.TurnCounter
             });
@@ -112,16 +116,11 @@ namespace Managers
             foreach (AdventurerDetails adventurer in adventurers) Add(adventurer);
         }
 
-        public void GameOver()
+        private void OnGameEnd()
         {
             _adventurers.Clear();
             foreach (Transform child in transform) Destroy(child.gameObject);
             foreach (Transform child in graveyard) Destroy(child.gameObject);
-        }
-
-        public int GetCount(AdventurerCategory category)
-        {
-            return _adventurers.Count(a => a.category == category);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using Utilities;
 using static Managers.GameManager;
 
 namespace UI

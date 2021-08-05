@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Controllers;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 using Utilities;
@@ -21,6 +22,7 @@ namespace Managers
         public int turnsLeft;
         public int cost;
         public List<string> assigned;
+        public List<int> occupied;
     }
     
     [Serializable]
@@ -35,7 +37,7 @@ namespace Managers
     public struct AdventurerDetails
     {
         public string name;
-        public AdventurerCategory category;
+        public AdventurerType type;
         public bool isSpecial;
         public int turnJoined;
     }
@@ -59,8 +61,6 @@ namespace Managers
     [Serializable]
     public class SaveFile
     {
-        public static bool loading;
-
         public int wealth, turnCounter, stability, terrainClearCount, ruinsClearCount;
         
         public List<AdventurerDetails> adventurers; 
@@ -106,7 +106,6 @@ namespace Managers
 
         public async Task Load()
         {
-            loading = true;
             string saveJson = PlayerPrefs.GetString("Save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
             try
             {
@@ -149,8 +148,6 @@ namespace Managers
                 await Manager.Quests.Load(quests);
                 //TODO: Reshuffle buildings
             }
-            
-            loading = false;
         }
     }
     

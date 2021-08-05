@@ -1,6 +1,7 @@
+using Managers;
 using UnityEngine;
 
-namespace Managers
+namespace Controllers
 {
     public class ShowAfterTurn : MonoBehaviour
     {

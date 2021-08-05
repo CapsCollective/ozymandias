@@ -63,7 +63,7 @@ namespace Environment
         
         private void SpawnWanderingAdventurer()
         {
-            List<Vector3> path = Manager.Map.GetRandomRoadPath();
+            List<Vector3> path = Manager.Map.RandomRoadPath;
             if (path.Count == 0) return;
             _activeAdventurers.Add(CreateAdventurer(path[0]), path);
         }

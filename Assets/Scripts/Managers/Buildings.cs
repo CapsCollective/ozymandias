@@ -13,8 +13,9 @@ namespace Managers
 {
     public class Buildings : MonoBehaviour
     {
-        [SerializeField] private GameObject guildHall;
+        [SerializeField] private GameObject rockSection, treeSection, terrainPrefab, guildHallPrefab;
         [SerializeField] private Event[] guildHallDestroyedEvents;
+        [SerializeField] private Material outlineMaterial;
         
         [HideInInspector] public int placedThisTurn;
 
@@ -25,10 +26,14 @@ namespace Managers
 
         public int Count => _buildings.Count;
         public int Ruins => _ruins.Count;
-
-        private void Start()
+        public GameObject TreeSection => treeSection;
+        public GameObject RockSection => rockSection;
+        public GameObject TerrainPrefab => terrainPrefab;
+        public Material OutlineMaterial => outlineMaterial;
+        
+        private void Awake()
         {
-            OnGameEnd += GameOver;
+            GameManager.OnGameEnd += OnGameEnd;
             
             object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
             foreach(TextAsset o in buildingsText)
@@ -47,12 +52,12 @@ namespace Managers
             return _buildings.Count(x => x.type == type);
         }
         
-        public float GetClosestBuildingDistance(Vector3 from)
+        public float GetClosestDistance(Vector3 position)
         {
             // Find distance of closest building to the camera
             try
             {
-                return _buildings.Select(building => Vector3.Distance(from, building.transform.position)).Min();
+                return _buildings.Select(building => Vector3.Distance(position, building.transform.position)).Min();
             }
             catch
             {
@@ -60,21 +65,39 @@ namespace Managers
             }
         }
 
-        public Building SelectRandom()
+        public Building GetClosest(Vector3 position)
         {
-            return _buildings.SelectRandom();
-        }
-        
-        public void Add(Building building)
+            Building closestBuilding = null;
+            float closestDistance = float.MaxValue;
+            foreach (Building building in _buildings)
+            {
+                float distance = Vector3.Distance(building.transform.position, position);
+                if (!(distance < closestDistance)) continue;
+                closestBuilding = building;
+                closestDistance = distance;
+            }
+    
+            return closestBuilding;
+        } 
+
+        public Cell RandomCell => _buildings.SelectRandom().Occupied.SelectRandom();
+
+        public bool Add(Building building, int rootId, int rotation = 0, int sectionCount = -1,  bool isRuin = false, bool animate = false)
         {
-            if (building.type == BuildingType.Terrain) _terrain.Add(building);
+            // Quests are handled by the quest manager
+            if (building.IsQuest || !building.Create(rootId, rotation, sectionCount, isRuin, animate )) return false;
+            
+            // Add to correct collection for querying
+            if (building.IsTerrain) _terrain.Add(building);
             else if (building.IsRuin) _ruins.Add(building);
             else _buildings.Add(building);
-
-            if(!SaveFile.loading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
+            
+            //TODO: Make this a action callback
+            if(!Manager.IsLoading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
             if (_buildings.Count >= 30 && Clear.TerrainClearCount == 0) Manager.Achievements.Unlock("One With Nature");
             
-            if(!SaveFile.loading) Manager.UpdateUi();
+            if(!Manager.IsLoading) Manager.UpdateUi();
+            return true;
         }
         
         public void Remove(Building building)
@@ -87,10 +110,11 @@ namespace Managers
                 Manager.NextTurn();
             }
 
-            Manager.Map.ClearBuilding(building);
-            if (building.type == BuildingType.Terrain) _terrain.Remove(building);
+            if (building.IsTerrain) _terrain.Remove(building);
             else if (building.IsRuin) _ruins.Remove(building);
             else _buildings.Remove(building);
+            
+            building.Destroy();
             Manager.UpdateUi();
         }
 
@@ -102,17 +126,21 @@ namespace Managers
             return building.name;
         }
 
-        public void GameOver()
+        private void OnGameEnd()
         {
             List<Building> dupList = new List<Building>(_buildings);
             dupList.ForEach(building =>
             {
-                if (building.type != BuildingType.Farm && building.type != BuildingType.GuildHall && Random.Range(0,_ruins.Count) == 0) ToRuin(building);
-                else building.Clear();
+                if (building.type != BuildingType.Farm && 
+                    building.type != BuildingType.GuildHall && 
+                    Random.Range(0,_ruins.Count) == 0
+                ) ToRuin(building);
+                else building.Destroy();
             });
+            _buildings.Clear();
         }
 
-        public void ToRuin(Building building)
+        private void ToRuin(Building building)
         {
             _buildings.Remove(building);
             _ruins.Add(building);
@@ -126,11 +154,11 @@ namespace Managers
 
         public async Task Load(List<BuildingDetails> buildings)
         {
-            foreach (BuildingDetails building in buildings)
+            foreach (BuildingDetails details in buildings)
             {
-                GameObject buildingInstance = await Addressables.InstantiateAsync(building.name, transform).Task;
-                if (!Manager.Map.CreateBuilding(buildingInstance, building.rootId, building.rotation, building.isRuin, sectionCount: building.sectionCount))
-                    Destroy(buildingInstance);
+                Building building = (await Addressables.InstantiateAsync(details.name, transform).Task).GetComponent<Building>();
+                if (!Manager.Buildings.Add(building, details.rootId, details.rotation, details.sectionCount, details.isRuin))
+                    Destroy(building.gameObject);
             }
         }
 
@@ -139,8 +167,8 @@ namespace Managers
             const int rootId = 296;
             const int rotation = 1;
 
-            GameObject buildingInstance = Instantiate(guildHall, transform);
-            if (!Manager.Map.CreateBuilding(buildingInstance, rootId, rotation, animate: true)) Destroy(buildingInstance);
+            Building building = Instantiate(guildHallPrefab, transform).GetComponent<Building>();
+            if (!Manager.Buildings.Add(building, rootId, rotation, animate: true)) Destroy(building.gameObject);
         }
     }
 }

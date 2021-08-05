@@ -12,9 +12,9 @@ namespace UI
         public void Display(Adventurer adventurer)
         {
             nameText.text = adventurer.name;
-            classText.text = adventurer.category.ToString();
+            classText.text = adventurer.type.ToString();
             daysText.text = (Manager.TurnCounter - adventurer.turnJoined) + " Days";
-            locationText.text = adventurer.assignedQuest ? adventurer.assignedQuest.title : "In Town";
+            locationText.text = adventurer.assignedQuest ? adventurer.assignedQuest.Title : "In Town";
         }
     }
 }

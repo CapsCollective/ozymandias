@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Controllers;
-using Entities;
 using NaughtyAttributes;
 using UI;
 using UnityEngine;
@@ -92,21 +91,21 @@ namespace Managers
             return mod * Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod;
         }
 
-        private int GetSatisfaction(AdventurerCategory category)
+        private int GetSatisfaction(AdventurerType type)
         {
-            return GetStat((Stat)category) - Adventurers.GetCount(category);
+            return GetStat((Stat)type) - Adventurers.GetCount(type);
         }
         
         public int GetSatisfaction(Stat stat)
         {
             if ((int) stat < 5) // If the stat is for an adventuring category
-                return GetSatisfaction((AdventurerCategory)stat);
+                return GetSatisfaction((AdventurerType)stat);
             return GetStat(stat) - Adventurers.Count;
         }
 
-        public float SpawnChance(AdventurerCategory category)
+        public float SpawnChance(AdventurerType type)
         {
-            return Mathf.Clamp((GetSatisfaction(category)+10) * 2.5f, 0, 50);
+            return Mathf.Clamp((GetSatisfaction(type)+10) * 2.5f, 0, 50);
         }
         
         public int RandomSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
@@ -128,13 +127,12 @@ namespace Managers
         
         public bool Spend(int amount)
         {
-            if (SaveFile.loading) return true; //Don't spend money when loading
+            if (IsLoading) return true; //Don't spend money when loading
             if (Wealth < amount) return false;
             Wealth -= amount;
             return true;
         }
 
-        [Button("StartGame")]
         public void StartGame()
         {
             // Start game with 10 Adventurers
@@ -157,7 +155,6 @@ namespace Managers
             OnNextTurn?.Invoke();
         }
 
-        [SerializeField] private SerializedDictionary<int, Event> manualEvents;
         public void NewTurn()
         {
             Buildings.placedThisTurn = 0;
@@ -165,12 +162,9 @@ namespace Managers
             if (Stability > 100) Stability = 100;
             Wealth += WealthPerTurn;
             TurnCounter++;
-            
-            if(Buildings.GetCount(BuildingType.GuildHall) > 0 && manualEvents.ContainsKey(TurnCounter)) // Check guild hall still exists
-                EventQueue.Add(manualEvents[TurnCounter], true);
 
             // Spawn adventurers based on satisfaction
-            foreach (AdventurerCategory category in Enum.GetValues(typeof(AdventurerCategory)))
+            foreach (AdventurerType category in Enum.GetValues(typeof(AdventurerType)))
             {
                 if (Random.Range(0, 100) < SpawnChance(category)) Adventurers.Add(category);
             }
@@ -248,5 +242,19 @@ namespace Managers
             OnNextTurn = null;
             OnUpdateUI = null;
         }
+
+        [Button("Print Save")]
+        public void PrintSave()
+        {
+            Debug.Log(PlayerPrefs.GetString("Save"));
+        }
+        
+        [Button("Extra Wealth")]
+        public void ExtraWealth()
+        {
+            Wealth += 10000;
+            UpdateUi();
+        }
+        
     }
 }

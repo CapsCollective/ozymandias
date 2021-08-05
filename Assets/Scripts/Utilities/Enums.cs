@@ -44,7 +44,8 @@
         Tailor,
         Apothecary,
         Jeweller,
-        Cartographer
+        Cartographer,
+        Quest
     }
 
     public enum EventType
@@ -63,12 +64,31 @@
         Radiant
     }
 
-    public enum AdventurerCategory
+    public enum AdventurerType
     {
         Brawler,
         Outrider,
         Performer,
         Diviner,
         Arcanist
+    }
+    
+    public enum TooltipType
+    {
+        Brawler,
+        Outrider,
+        Performer,
+        Diviner,
+        Arcanist,
+        Housing,
+        Food,
+        Wealth,
+        Stability,
+        Newspaper,
+        Progress,
+        Quests,
+        NextTurn,
+        Threat,
+        Defence
     }
 }

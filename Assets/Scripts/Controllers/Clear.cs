@@ -55,11 +55,11 @@ namespace Controllers
                 // is not the same as the selected building
                 if (_hoveredBuilding && !SelectedBuilding)
                 {
-                    _hoveredBuilding.selected = false;
+                    _hoveredBuilding.Selected = false;
                 }
                 _hoveredBuilding = value;
                 if (!_hoveredBuilding) return;
-                _hoveredBuilding.selected = true;
+                _hoveredBuilding.Selected = true;
                 SetHighlightColor(hoverColor);
             }
         }
@@ -69,27 +69,35 @@ namespace Controllers
             get => _selectedBuilding;
             set
             {
-                if (_selectedBuilding) _selectedBuilding.selected = false;
+                if (_selectedBuilding) _selectedBuilding.Selected = false;
 
                 _selectedBuilding = value;
                 _canvas.enabled = _selectedBuilding;
                 if (!_selectedBuilding) return;
                 
-                _selectedBuilding.selected = true;
+                _selectedBuilding.Selected = true;
                 SetHighlightColor(selectColor);
-                
-                // Find building position and reposition clearButton to overlay on top of it.  
-                RepositionClearButton();
 
-                // Get UI config information
-                _config = GetClearButtonConfiguration();
+                if (_selectedBuilding.IsQuest)
+                {
+                    //TODO: Open quest flyer
+                    Debug.Log(_selectedBuilding.Quest.name);
+                }
+                else
+                {
+                    // Find building position and reposition clearButton to overlay on top of it.  
+                    RepositionClearButton();
 
-                // Set button opacity (based on whether the player can afford to destroy a building) and text
-                SetButtonOpacity(_config.IsRefund || Manager.Wealth >= _config.DestructionCost ? 255f : 166f);
+                    // Get UI config information
+                    _config = GetClearButtonConfiguration();
+
+                    // Set button opacity (based on whether the player can afford to destroy a building) and text
+                    SetButtonOpacity(_config.IsRefund || Manager.Wealth >= _config.DestructionCost ? 255f : 166f);
             
-                nameText.text = _config.BuildingName;
-                if (_config.BuildingName == "Guild Hall") costText.text = "Cost: Don't";
-                else costText.text = (_config.IsRefund ? "Refund: " : "Cost: ") + _config.DestructionCost;
+                    nameText.text = _config.BuildingName;
+                    if (_config.BuildingName == "Guild Hall") costText.text = "Cost: Don't";
+                    else costText.text = (_config.IsRefund ? "Refund: " : "Cost: ") + _config.DestructionCost;
+                }
             }
         }
         
@@ -196,7 +204,7 @@ namespace Controllers
                     .Range(RuinsClearCount, SelectedBuilding.SectionCount)
                     .Sum(i => Mathf.Pow(RuinsCostScale, i)) * RuinsBaseCost);
             }
-            else if (SelectedBuilding.type == BuildingType.Terrain)
+            else if (SelectedBuilding.IsTerrain)
             {
                 config.BuildingName = "Terrain";
                 config.IsRefund = false;
@@ -242,13 +250,11 @@ namespace Controllers
                 !Manager.Spend(_config.DestructionCost * (_config.IsRefund ? -1 : 1))
             ) return;
             
-            
             if (SelectedBuilding.IsRuin) RuinsClearCount += SelectedBuilding.SectionCount;
-            if (SelectedBuilding.type == BuildingType.Terrain) TerrainClearCount += SelectedBuilding.SectionCount;
+            if (SelectedBuilding.IsTerrain) TerrainClearCount += SelectedBuilding.SectionCount;
             
             OnClear.Invoke(SelectedBuilding);
-
-            SelectedBuilding.Clear();
+            Manager.Buildings.Remove(SelectedBuilding);
             DeselectBuilding();
         }
     }

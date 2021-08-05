@@ -29,9 +29,9 @@ namespace Entities
             Vertices = vertices;
         }
         
-        public static bool IsValid(Cell[] cells)
+        public static bool IsValid(List<Cell> cells)
         {
-            return cells.All(IsValid) && cells.Distinct().Count() == cells.Count();
+            return cells.All(IsValid) && cells.Distinct().Count() == cells.Count;
         }
 
         public static bool IsValid(Cell cell)

@@ -20,7 +20,7 @@ namespace Entities.Outcomes
             get
             {
                 if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
-                return "<color=#007000ff>New quest added: " + quest.title + "</color>";
+                return "<color=#007000ff>New quest added: " + quest.Title + "</color>";
             }
         }
     }

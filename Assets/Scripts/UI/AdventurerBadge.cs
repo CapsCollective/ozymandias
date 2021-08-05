@@ -9,7 +9,7 @@ namespace UI
 {
     public class AdventurerBadge : UiUpdater
     {
-        [SerializeField] private AdventurerCategory category;
+        [SerializeField] private AdventurerType type;
         [SerializeField] private TextMeshProUGUI count, countTicker;
         [SerializeField] private Image glow;
         private int _oldValue;
@@ -18,8 +18,8 @@ namespace UI
         
         protected override void UpdateUi()
         {
-            int value = Manager.Adventurers.GetCount(category);
-            int satisfaction = Manager.GetStat((Stat)category);
+            int value = Manager.Adventurers.GetCount(type);
+            int satisfaction = Manager.GetStat((Stat)type);
 
             if (value > _oldValue)
             {

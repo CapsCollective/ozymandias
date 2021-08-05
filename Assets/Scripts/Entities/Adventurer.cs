@@ -54,34 +54,28 @@ namespace Entities
 
         public Quest assignedQuest;
 
-        public AdventurerCategory category;
+        public AdventurerType type;
 
         public bool isSpecial; // Works as a regular adventurer but is required for certain events so wont be removed
 
         public int turnJoined;
 
-        public static string NewName()
-        {
-            return firstNames[Random.Range(0, firstNames.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
-        }
+        public static string RandomName =>
+            firstNames[Random.Range(0, firstNames.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
 
-        public static AdventurerCategory NewCategory()
-        {
-            return Random.Range(0, 5) switch
-            {
-                0 => AdventurerCategory.Brawler,
-                1 => AdventurerCategory.Outrider,
-                2 => AdventurerCategory.Performer,
-                3 => AdventurerCategory.Diviner,
-                4 => AdventurerCategory.Arcanist,
-                _ => AdventurerCategory.Brawler
-            };
-        }
+        public static AdventurerType RandomType => Random.Range(0, 5) switch {
+            0 => AdventurerType.Brawler,
+            1 => AdventurerType.Outrider,
+            2 => AdventurerType.Performer,
+            3 => AdventurerType.Diviner,
+            4 => AdventurerType.Arcanist,
+            _ => AdventurerType.Brawler
+        };
 
-        public void Init(AdventurerCategory? aCategory = null)
+        public void Create(AdventurerType? aType = null)
         {
-            name = NewName();
-            category = aCategory ?? NewCategory();
+            name = RandomName;
+            type = aType ?? RandomType;
             turnJoined = Manager.TurnCounter;
         }
     
@@ -90,7 +84,7 @@ namespace Entities
             return new AdventurerDetails
             {
                 name = name,
-                category = category,
+                type = type,
                 isSpecial = isSpecial,
                 turnJoined = turnJoined
             };
@@ -99,7 +93,7 @@ namespace Entities
         public void Load(AdventurerDetails adventurer)
         {
             name = adventurer.name;
-            category = adventurer.category;
+            type = adventurer.type;
             isSpecial = adventurer.isSpecial;
             turnJoined = adventurer.turnJoined;
         }

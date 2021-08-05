@@ -31,26 +31,26 @@ namespace Entities
         public static Action OnRoadReady;
 
         //Procedurally places buildings
-        public void FillGrid(GameObject terrainPrefab)
+        public void FillGrid()
         {
-            GameObject terrain = Instantiate(terrainPrefab, Manager.Buildings.transform);
+            Building terrain = null;
             bool wasCreated = true;
             
             foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && !cell.Safe))
             {
-                if (wasCreated) terrain = Instantiate(terrainPrefab, Manager.Buildings.transform);
+                if (wasCreated) terrain = Instantiate(Manager.Buildings.TerrainPrefab, Manager.Buildings.transform).GetComponent<Building>();
 
                 // Create building if valid, only animate if happening during the game over transition
-                wasCreated = Manager.Map.CreateBuilding(terrain, cell.Id, animate: Manager.IsGameOver);
+                wasCreated = Manager.Buildings.Add(terrain, cell.Id, animate: Manager.IsGameOver);
             }
-            if (!wasCreated) Destroy(terrain);
+            if (!wasCreated) Destroy(terrain.gameObject);
         }
     
-        // Querying
+        #region Querying
         
         private Vertex RandomBoundaryVertex => VertexGraph.Data.Where(v => v.Boundary).ToList().SelectRandom();
-    
-        public List<Vertex> GetVertices(List<Cell> cells)
+
+        private List<Vertex> GetVertices(List<Cell> cells)
         {
             List<Vertex> vertices = new List<Vertex>();
             foreach (Cell cell in cells)
@@ -150,9 +150,9 @@ namespace Entities
             return CellGraph.GetData(id);
         }
 
-        public List<Cell> GetCells(Cell root, Building building, int rotation = 0)
+        public List<Cell> GetCells(Building building, int rootId, int rotation = 0)
         {
-            return building.sections.Select(sectionInfo => Step(root, sectionInfo.directions, rotation)).ToList();
+            return building.sections.Select(sectionInfo => Step(CellGraph.GetData(rootId), sectionInfo.directions, rotation)).ToList();
         }
 
         public Cell GetClosest(Vector3 unitPos)
@@ -171,7 +171,13 @@ namespace Entities
             return minDist < maxDist ? closest : null;
         }
 
-        // Grid
+        public List<Cell> GetNeighbours(Cell cell)
+        {
+            return CellGraph.GetAdjacentData(cell.Id);
+        }
+
+        #endregion
+        #region GridGeneration
         [Button("Regenerate (Warning: Destructive)")] public void Generate()
         {
             HashSet<int> safeCells = new HashSet<int>();
@@ -448,7 +454,9 @@ namespace Entities
             };
         }
         
-        // Roads
+        #endregion 
+        #region Roads
+        
         public IEnumerator CreateRoad(List<Cell> cells, MeshFilter mesh)
         {
             // TODO: Finding the perimeter can be made easier by making a ring around the cells 
@@ -504,6 +512,12 @@ namespace Entities
             yield return new WaitForEndOfFrame();
         }
 
+        public void ClearRoad(MeshFilter mesh)
+        {
+            RoadGraph = new Graph<Vertex>();
+            mesh.sharedMesh = GenerateRoadMesh();
+        }
+        
         private void AddRoad(List<Vertex> road)
         {
             for (int i = 0; i < road.Count; i++)
@@ -641,15 +655,13 @@ namespace Entities
             return roadMesh;
         }
         
-        public List<Vector3> GetRandomRoadPath()
-        {
-            return Algorithms.AStar(RoadGraph,RandomBuildingVertex, RandomBuildingVertex)
-                .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();  
-        }
+        public List<Vector3> RandomRoadPath => Algorithms.AStar(RoadGraph,RandomRoadVertex, RandomRoadVertex)
+                .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
 
-        private Vertex RandomBuildingVertex => Manager.Map.RandomBuildingCells
-            .SelectMany(c => c.Vertices)
+        private Vertex RandomRoadVertex => Manager.Buildings.RandomCell.Vertices
             .Where(v => RoadGraph.Data.Contains(v))
             .ToList().SelectRandom();
+        
+        #endregion
     }
 }

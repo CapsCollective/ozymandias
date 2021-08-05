@@ -76,7 +76,7 @@ namespace UI
 
         private void OnButtonClick()
         {
-            quest.StartQuest();
+            quest.Start();
         
             // TODO: Reenable functionality once new quest setup is done
             //FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(quest.adventurers);
@@ -101,8 +101,8 @@ namespace UI
         public void SetQuest(Quest q)
         {
             quest = q;
-            titleText.text = q.title;
-            descriptionText.text = q.description;
+            titleText.text = q.Title;
+            descriptionText.text = q.Description;
             sendButton.gameObject.SetActive(true);
             foreach (GameObject stamp in stamps)
             {
