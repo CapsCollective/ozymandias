@@ -28,7 +28,7 @@ namespace Managers
         public Toggle fullscreenToggle;
         public Toggle shadowToggle;
 
-        private void Start()
+        private void Awake()
         {
             // Set the version text value from file
             var versionFile = Resources.Load<TextAsset>("VERSION");

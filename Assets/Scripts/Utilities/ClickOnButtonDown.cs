@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Controllers;
+using static Managers.GameManager;
 
 namespace Utilities
 {
@@ -28,7 +28,7 @@ namespace Utilities
         
         private static void OnClick()
         {
-            Jukebox.Instance.PlayClick();
+            Manager.Jukebox.PlayClick();
             OnUIClick?.Invoke();
         }
     }

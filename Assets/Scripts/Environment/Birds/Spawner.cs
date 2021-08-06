@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour {
     [SerializeField] private Color colour;
     [SerializeField] private GizmoType showSpawnRegion;
 
-    private void Awake () {
+    private void Start() {
         for (int i = 0; i < spawnCount; i++) {
             Transform t = transform;
             Vector3 pos = t.position + Random.insideUnitSphere * spawnRadius;
@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos () {
+    private void OnDrawGizmos() {
         if (showSpawnRegion == GizmoType.Always) {
             DrawGizmos ();
         }

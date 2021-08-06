@@ -19,12 +19,9 @@ namespace Managers
         [SerializeField] private MeshFilter gridMesh, roadMesh;
         [SerializeField] private MapLayout layout;
         
-        private Camera _cam;
-
         private void Awake()
         {
             GameManager.OnGameEnd += OnGameEnd;
-            _cam = Camera.main;
             GenerateMesh();
         }
 
@@ -55,14 +52,6 @@ namespace Managers
             }
 
             gridMesh.sharedMesh.uv = uv;
-        }
-
-        // Gets the closest cell to the cursor
-        public Cell GetClosestCellToCursor()
-        {
-            Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
-            Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
-            return GetClosestCell(hit.point);
         }
 
         // Gets the closest cell by world position

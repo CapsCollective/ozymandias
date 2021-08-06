@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 using static Managers.GameManager;
 
@@ -22,7 +23,7 @@ namespace Controllers
         {
             _canvas.enabled = true;
             Manager.EnterMenu();
-            Jukebox.Instance.PlayScrunch();
+            Manager.Jukebox.PlayScrunch();
             var rot = Random.Range(0f, -5f);
             transform.DOLocalRotate(new Vector3(0, 0, rot), animateInDuration);
             transform.DOLocalMove(Vector3.zero, animateInDuration);

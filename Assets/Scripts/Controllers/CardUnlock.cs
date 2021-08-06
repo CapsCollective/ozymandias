@@ -51,7 +51,7 @@ namespace Controllers
         {
             Manager.EnterMenu();
             _canvas.enabled = true;
-            Jukebox.Instance.PlayScrunch();
+            Manager.Jukebox.PlayScrunch();
 
             var cardTransform = cardDisplay.transform;
             cardTransform.localPosition = new Vector3(1000, 200, 0);

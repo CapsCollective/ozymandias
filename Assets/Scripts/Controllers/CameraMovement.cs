@@ -29,7 +29,6 @@ namespace Controllers
 
         public static Action OnCameraMove;
 
-        [SerializeField] private float controllerSpeed = 5f;
         [SerializeField] private Vector2 dragSpeed;
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
@@ -38,19 +37,16 @@ namespace Controllers
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float DoFAdjustMultiplier = 5f;
-        [SerializeField] private float sensitivity = 5f;
 
-        [SerializeField] private bool invertScroll;
-
-        private void Awake()
+        private void Start()
         {
             _cam = GetComponent<Camera>();
             profile.TryGetSettings(out _depthOfField);
             freeLook = GetComponent<CinemachineFreeLook>();
-            InputManager.Instance.IA_OnRightClick.performed += RightClick;
-            InputManager.Instance.IA_OnRightClick.canceled += RightClick;
-            InputManager.Instance.IA_OnLeftClick.performed += LeftClick;
-            InputManager.Instance.IA_OnLeftClick.canceled += LeftClick;
+            Manager.Inputs.IA_OnRightClick.performed += RightClick;
+            Manager.Inputs.IA_OnRightClick.canceled += RightClick;
+            Manager.Inputs.IA_OnLeftClick.performed += LeftClick;
+            Manager.Inputs.IA_OnLeftClick.canceled += LeftClick;
             startPos = transform.position;
         }
 
@@ -67,7 +63,7 @@ namespace Controllers
             leftClick = context.performed;
             if (context.performed)
             {
-                lastDrag = InputManager.MousePosition;
+                lastDrag = Manager.Inputs.MousePosition;
             }
             else if (context.canceled)
             {
@@ -79,17 +75,17 @@ namespace Controllers
         {
             if (Manager.InMenu) return;
 
-            freeLook.m_XAxis.m_InputAxisValue = -InputManager.Instance.IA_RotateCamera.ReadValue<float>();
+            freeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.IA_RotateCamera.ReadValue<float>();
 
             if (leftClick)
             {
-                Vector2 dir = _cam.ScreenToViewportPoint(lastDrag) - _cam.ScreenToViewportPoint(InputManager.MousePosition);
+                Vector2 dir = _cam.ScreenToViewportPoint(lastDrag) - _cam.ScreenToViewportPoint(Manager.Inputs.MousePosition);
                 if (dir.sqrMagnitude > 0.0002f) _dragging = true;
 
                 if (_dragging)
                 {
                     dragDir = dir * Mathf.Lerp(dragSpeed.x, dragSpeed.y, freeLook.m_YAxis.Value);
-                    lastDrag = InputManager.MousePosition;
+                    lastDrag = Manager.Inputs.MousePosition;
                 }
             }
 
@@ -98,13 +94,13 @@ namespace Controllers
                 dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
             }
 
-            Vector2 inputDir = InputManager.Instance.IA_MoveCamera.ReadValue<Vector2>() + dragDir;
+            Vector2 inputDir = Manager.Inputs.IA_MoveCamera.ReadValue<Vector2>() + dragDir;
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
             freeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
 
             // Scrolling
-            float scroll = -InputManager.Instance.IA_OnScroll.ReadValue<float>();
+            float scroll = -Manager.Inputs.IA_OnScroll.ReadValue<float>();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             freeLook.m_YAxis.Value += scrollAcceleration;

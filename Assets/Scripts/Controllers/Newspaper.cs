@@ -55,7 +55,7 @@ namespace Controllers
         private void OnNewTurn()
         {
             Open();
-            if (Random.Range(0, 5) == 2) Jukebox.Instance.PlayMorning(); // 1/5 chance to play sound
+            if (Random.Range(0, 5) == 2) Manager.Jukebox.PlayMorning(); // 1/5 chance to play sound
             
             if (PlayerPrefs.GetInt("tutorial_video_events", 0) > 0) return;
             PlayerPrefs.SetInt("tutorial_video_events", 1);
@@ -98,6 +98,9 @@ namespace Controllers
     
         public void OnChoiceSelected(int choice)
         {
+            //TODO: This needs to be more robust for the controller input
+            if (!_canvas.enabled) return; // Ignore input if newspaper is closed
+            
             articleList[0].AddChoiceOutcome (_choiceEvent.MakeChoice(choice));
             SetContinueButtonState(ButtonState.Close);
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
@@ -129,7 +132,7 @@ namespace Controllers
         {
             _canvas.enabled = true;
             Manager.EnterMenu();
-            Jukebox.Instance.PlayScrunch();
+            Manager.Jukebox.PlayScrunch();
             transform
                 .DOLocalMove(Vector3.zero, animateInDuration)
                 .OnStart(() => { _canvas.enabled = true; });

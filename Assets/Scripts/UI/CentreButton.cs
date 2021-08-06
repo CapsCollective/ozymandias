@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
 using Controllers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -59,7 +59,7 @@ namespace UI
             _dummyCursor.SetActive(true);
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, 
-                InputManager.MousePosition, canvas.worldCamera, out var currentPos);
+                Manager.Inputs.MousePosition, canvas.worldCamera, out var currentPos);
             currentPos = canvas.transform.TransformPoint(currentPos);
 
             var endPos = button.gameObject.transform.position;
@@ -74,7 +74,7 @@ namespace UI
                 yield return null;
             }
         
-            Jukebox.Instance.PlayClick();
+            Manager.Jukebox.PlayClick();
             cameraMovement.Center();
             _dummyCursor.SetActive(false);
             Cursor.lockState = CursorLockMode.None;

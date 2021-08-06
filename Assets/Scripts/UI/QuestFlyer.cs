@@ -1,5 +1,4 @@
 ﻿using System;
-using Controllers;
 using Entities;
 using TMPro;
 using UnityEngine;
@@ -82,7 +81,7 @@ namespace UI
             //FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(quest.adventurers);
             mouseOver = false;
             RandomRotateStamps();
-            Jukebox.Instance.PlayStamp();
+            Manager.Jukebox.PlayStamp();
             SetDisplaying(true);
         }
     

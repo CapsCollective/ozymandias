@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Managers.GameManager;
 
-public class ExtendedToggle : Toggle
+namespace UI
 {
-    public override void OnSubmit(BaseEventData eventData)
+    public class ExtendedToggle : Toggle
     {
-        if (InputManager.UsingController)
+        public override void OnSubmit(BaseEventData eventData)
         {
-            return;
+            if (Manager.Inputs.UsingController)
+            {
+                return;
+            }
+            base.OnSubmit(eventData);
         }
-        base.OnSubmit(eventData);
     }
 }

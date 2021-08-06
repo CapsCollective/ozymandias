@@ -1,9 +1,9 @@
-﻿using Controllers;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using Camera = UnityEngine.Camera;
+using static Managers.GameManager;
 
-namespace Environment
+namespace Controllers
 {
     public class MapAnimator : MonoBehaviour
     {
@@ -55,7 +55,7 @@ namespace Environment
 
         private void UpdateEffectOrigin()
         {
-            Ray ray = _cam.ScreenPointToRay(new Vector3(InputManager.MousePosition.x, InputManager.MousePosition.y, _cam.nearClipPlane));
+            Ray ray = _cam.ScreenPointToRay(new Vector3(Manager.Inputs.MousePosition.x, Manager.Inputs.MousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit);
 
             _meshRenderer.material.SetVector(Origin, hit.point);

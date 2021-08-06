@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Controllers;
 using NaughtyAttributes;
@@ -46,6 +46,8 @@ namespace Managers
         public EventQueue EventQueue { get; private set; }
         public Settings Settings { get; private set; }
         public Map Map { get; private set; }
+        public Jukebox Jukebox { get; private set; }
+        public Inputs Inputs { get; private set; }
         public Newspaper Newspaper { get; private set; }
         public BuildingPlacement BuildingPlacement { get; private set; }
         public Tooltip Tooltip { get; private set; }
@@ -61,12 +63,14 @@ namespace Managers
             EventQueue = FindObjectOfType<EventQueue>();
             Settings = FindObjectOfType<Settings>();
             Map = FindObjectOfType<Map>();
+            Jukebox = FindObjectOfType<Jukebox>();
+            Inputs = new Inputs();
 
             BuildingPlacement = FindObjectOfType<BuildingPlacement>();
             Newspaper = FindObjectOfType<Newspaper>();
             Tooltip = FindObjectOfType<Tooltip>();
 
-            InputManager.Instance.IA_NextTurn.performed += (e) => NextTurn();
+            Inputs.IA_NextTurn.performed += (e) => NextTurn();
 
             Newspaper.OnClosed += CheckGameEnd;
 

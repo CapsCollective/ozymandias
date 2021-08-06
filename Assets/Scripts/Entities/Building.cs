@@ -167,7 +167,7 @@ namespace Entities
             ParticleSystem.Play();
             transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Destroy(gameObject));
             
-            Jukebox.Instance.PlayDestroy();
+            Manager.Jukebox.PlayDestroy();
         }
         
         public void Grow(Cell newCell)
@@ -211,7 +211,7 @@ namespace Entities
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
             ParticleSystem.Play();
-            Jukebox.Instance.PlayBuild(); // Only play sound if animated
+            Manager.Jukebox.PlayBuild(); // Only play sound if animated
         }
         
         public void ToRuin()

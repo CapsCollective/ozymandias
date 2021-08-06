@@ -9,7 +9,7 @@ using Utilities;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
-namespace Controllers
+namespace Managers
 {
     public class Jukebox : MonoBehaviour
     {
@@ -26,9 +26,6 @@ namespace Controllers
         private const string WaterAmbienceVolume = "waterAmbienceVolume";
         
         private const string TownVolume = "townVolume";
-
-        // Instance field
-        public static Jukebox Instance { get; private set; }
         
         // Serialized fields
         [SerializeField] private float ambienceSpacing = 20f;
@@ -60,13 +57,9 @@ namespace Controllers
         private Camera _cam;
         private float _timeWaited;
 
-        private void Awake() {
-            Instance = this;
-            _cam = Camera.main;
-        }
-
-        private void Start()
+        private void Awake()
         {
+            _cam = Camera.main;
             OnNextTurn += StartNightAmbience;
         }
 

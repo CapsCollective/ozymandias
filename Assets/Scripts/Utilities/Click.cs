@@ -1,10 +1,10 @@
 ﻿using System;
-using Managers;
 using UnityEngine;
 using static Managers.GameManager;
 
 namespace Utilities
 {
+    //TODO: Move this into the Input Controller
     public class Click : MonoBehaviour
     {
         public static bool PlacingBuilding;
@@ -19,10 +19,10 @@ namespace Utilities
 
         private void Awake()
         {
-            InputManager.Instance.IA_OnLeftClick.performed += I_OnLeftClick;
-            InputManager.Instance.IA_OnLeftClick.canceled += I_OnLeftClick;
-            InputManager.Instance.IA_OnRightClick.performed += I_OnRightClick;
-            InputManager.Instance.IA_OnRightClick.canceled += I_OnRightClick;
+            Manager.Inputs.IA_OnLeftClick.performed += I_OnLeftClick;
+            Manager.Inputs.IA_OnLeftClick.canceled += I_OnLeftClick;
+            Manager.Inputs.IA_OnRightClick.performed += I_OnRightClick;
+            Manager.Inputs.IA_OnRightClick.canceled += I_OnRightClick;
         }
 
         private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)

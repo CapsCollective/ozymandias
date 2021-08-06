@@ -5,7 +5,6 @@ using Entities;
 using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using static Managers.GameManager;
 
 namespace Managers
 {

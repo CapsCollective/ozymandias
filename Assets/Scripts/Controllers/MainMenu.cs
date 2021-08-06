@@ -122,7 +122,7 @@ namespace Controllers
         private void LoadingGameInit()
         {
             _loadingCanvas.enabled = true;
-            InputManager.TogglePlayerInput(false);
+            Manager.Inputs.TogglePlayerInput(false);
             
             _startPos.Position = freeLook.Follow.position;
             _startPos.OrbitHeight = freeLook.m_Orbits[1].m_Height;
@@ -142,10 +142,10 @@ namespace Controllers
                 .OnComplete(() => _loadingCanvas.enabled = false);
             
             // Fade in music
-            StartCoroutine(Jukebox.Instance.FadeTo(
+            StartCoroutine(Manager.Jukebox.FadeTo(
                 Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
             StartCoroutine(Jukebox.DelayCall(2f, 
-                ()=>Jukebox.Instance.OnStartGame()));
+                ()=>Manager.Jukebox.OnStartGame()));
             
             // Find the starting position and set to correct height
             // TODO: Replace this with a check of the guild hall location once dynamic spawning is created
@@ -172,10 +172,10 @@ namespace Controllers
             _gameCanvas.enabled = true;
             
             // TODO add some kind of juicy on-play sound here
-            StartCoroutine(Jukebox.Instance.FadeTo(
+            StartCoroutine(Manager.Jukebox.FadeTo(
                 Jukebox.MusicVolume, Jukebox.LowestVolume, 5f));
             StartCoroutine(Jukebox.DelayCall(6f, 
-                ()=>Jukebox.Instance.OnStartPlay()));
+                ()=>Manager.Jukebox.OnStartPlay()));
         }
 
         private void StartingGameUpdate()
@@ -198,7 +198,7 @@ namespace Controllers
             _menuCanvasGroup.blocksRaycasts = false;
             _gameCanvasGroup.interactable = true;
             _gameCanvasGroup.blocksRaycasts = true;
-            InputManager.TogglePlayerInput(true);
+            Manager.Inputs.TogglePlayerInput(true);
             _menuState = MenuState.InGame;
             
             if (Manager.TurnCounter == 0) Manager.StartGame();
@@ -210,9 +210,9 @@ namespace Controllers
             _menuCanvasGroup.blocksRaycasts = true;
             _gameCanvasGroup.interactable = false;
             _gameCanvasGroup.blocksRaycasts = false;
-            InputManager.TogglePlayerInput(false);
+            Manager.Inputs.TogglePlayerInput(false);
             _menuCanvas.enabled = true;
-            Jukebox.Instance.OnEnterMenu();
+            Manager.Jukebox.OnEnterMenu();
             _menuState = MenuState.OpeningMenu;
         }
         
