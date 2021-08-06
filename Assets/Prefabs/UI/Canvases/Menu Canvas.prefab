@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 7969370083710150781}
   - component: {fileID: 7969370083710150780}
   - component: {fileID: 7969370083710150783}
+  - component: {fileID: 1382471725450256115}
   - component: {fileID: 7969370083710150782}
   - component: {fileID: 5842321732844048004}
-  - component: {fileID: 1382471725450256115}
   m_Layer: 5
-  m_Name: Main Menu
+  m_Name: Menu Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,6 +88,18 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!225 &1382471725450256115
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7969370083710150768}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &7969370083710150782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,18 +132,6 @@ MonoBehaviour:
   gameUI: {fileID: 0}
   loadingScreen: {fileID: 0}
   freeLook: {fileID: 0}
---- !u!225 &1382471725450256115
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7969370083710150768}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &7969370084023345986
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,11 +2032,6 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 645679991143393213, guid: 4beee33e0839b04489c417f174808016,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 955325985032496519, guid: 4beee33e0839b04489c417f174808016,
         type: 3}
       propertyPath: m_textAlignment
@@ -2120,12 +2115,12 @@ PrefabInstance:
     - target: {fileID: 5338707172111991862, guid: 4beee33e0839b04489c417f174808016,
         type: 3}
       propertyPath: m_Size
-      value: 0.5421687
+      value: 0.5421686
       objectReference: {fileID: 0}
     - target: {fileID: 5338707172111991862, guid: 4beee33e0839b04489c417f174808016,
         type: 3}
       propertyPath: m_Value
-      value: 1.0000001
+      value: 0.9999998
       objectReference: {fileID: 0}
     - target: {fileID: 6430685573906269210, guid: 4beee33e0839b04489c417f174808016,
         type: 3}

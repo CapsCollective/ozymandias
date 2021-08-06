@@ -91,4 +91,20 @@
         Threat,
         Defence
     }
+    
+    public enum HighlightState
+    {
+        Inactive,
+        Valid,
+        Invalid
+    }
+    
+    public enum Direction
+    {
+        Left,
+        Forward,
+        Right,
+        Back
+    }
+
 }

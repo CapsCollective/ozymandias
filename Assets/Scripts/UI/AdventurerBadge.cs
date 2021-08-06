@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using static Managers.GameManager;
+using static GameState.GameManager;
 
 namespace UI
 {

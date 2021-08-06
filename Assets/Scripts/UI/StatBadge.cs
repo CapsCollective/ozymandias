@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using static Managers.GameManager;
+using static GameState.GameManager;
 
 namespace UI
 {
@@ -35,6 +35,7 @@ namespace UI
             _running = true;
             GetComponent<RectTransform>()
                 .DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f)
-                .OnComplete(() => _running = false);        }
+                .OnComplete(() => _running = false);
+        }
     }
 }

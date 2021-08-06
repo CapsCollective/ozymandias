@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Utilities;
-using static Managers.GameManager;
+using static GameState.GameManager;
 
 namespace UI
 {
