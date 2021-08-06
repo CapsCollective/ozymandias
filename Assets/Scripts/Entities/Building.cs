@@ -171,9 +171,9 @@ namespace Entities
         
         private void Update()
         {
-            if (!selected || mat == null) return;
+            if (!selected || mat == null || Manager.InMenu) return;
 
-            foreach (Renderer r in _segments)
+            foreach (var r in _segments)
             {
                 //t.GetComponent<Renderer>().material.SetInt("_Selected", selected ? 1 : 0);
                 BuildingOutline.OutlineBuffer?.DrawRenderer(r, mat);
