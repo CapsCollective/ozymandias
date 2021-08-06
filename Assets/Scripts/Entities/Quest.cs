@@ -30,12 +30,12 @@ namespace Entities
         //[SerializeField] private Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
         private int _turnCreated; //Prevents quest from immediately growing when created from event
+        private readonly List<Adventurer> _assigned = new List<Adventurer>();
         
         public string Title => title;
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
-        public List<Adventurer> Assigned { get; private set; }
         private Building Building { get; set; }
         private bool IsActive => TurnsLeft != -1;
 
@@ -59,16 +59,16 @@ namespace Entities
         public void Remove()
         {
             if (location == Location.Grid) ClearBuilding();
+            _assigned.Clear();
             GameManager.OnNewTurn -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
         
         public void Start()
         {
             //if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
-            Assigned = new List<Adventurer>();
             TurnsLeft = turns;
             Manager.Spend(Cost);
-            for (int i = 0; i < adventurers; i++) Assigned.Add(Manager.Adventurers.Assign(this));
+            for (int i = 0; i < adventurers; i++) _assigned.Add(Manager.Adventurers.Assign(this));
             Manager.UpdateUi();
         }
 
@@ -139,7 +139,7 @@ namespace Entities
                 name = name,
                 turnsLeft = TurnsLeft,
                 cost = Cost,
-                assigned = Assigned.Select(a => a.name).ToList(),
+                assigned = _assigned.Select(a => a.name).ToList(),
                 occupied = Building.Occupied.Select(cell => cell.Id).ToList()
             };
         }
@@ -151,9 +151,12 @@ namespace Entities
             TurnsLeft = details.turnsLeft;
             if (location == Location.Grid) CreateBuilding(details.occupied); 
             if (!IsActive) return;
-            Manager.Adventurers.Assign(this, details.assigned);
+            foreach (string adventurerName in details.assigned) 
+                _assigned.Add(Manager.Adventurers.Assign(this, adventurerName));
         }
 
+        #region Debug
+        
         [Button("Add")]
         public void DebugAdd()
         {
@@ -171,5 +174,7 @@ namespace Entities
         {
             GrowBuilding();
         }
+        
+        #endregion
     }
 }

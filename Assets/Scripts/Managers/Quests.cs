@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Entities;
-using JetBrains.Annotations;
 using UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -27,7 +26,7 @@ namespace Managers
         
         private void Awake()
         {
-            OnGameEnd += GameOver;
+            GameManager.OnGameEnd += OnGameEnd;
         }
         
         public bool Add(Quest q)
@@ -61,7 +60,7 @@ namespace Managers
             }
         }
 
-        private void GameOver()
+        private void OnGameEnd()
         {
             for (int i = _quests.Count - 1 ; i >= 0 ; i--) Remove(_quests[i]);
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Controllers;
 using NaughtyAttributes;
@@ -243,6 +243,8 @@ namespace Managers
             OnUpdateUI = null;
         }
 
+        #region Debug
+        
         [Button("Print Save")]
         public void PrintSave()
         {
@@ -256,5 +258,6 @@ namespace Managers
             UpdateUi();
         }
         
+        #endregion
     }
 }

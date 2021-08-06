@@ -43,13 +43,12 @@ namespace Managers
             return removable[randomIndex];
         }
 
-        public void Assign(Quest q, List<string> names)
+        public Adventurer Assign(Quest q, string adventurerName)
         {
-            foreach (Adventurer adventurer in names.Select(n => _adventurers.Find(a => a.name == n)))
-            {
-                q.Assigned.Add(adventurer);
-                adventurer.assignedQuest = q;
-            }
+            Adventurer assigned = _adventurers.Find(a => a.name == adventurerName);
+            if(assigned == null) Debug.LogError("Adventurer with name " + name + " not found.");
+            assigned.assignedQuest = q;
+            return assigned;
         }
 
         private Adventurer New()
