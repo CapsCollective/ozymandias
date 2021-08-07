@@ -195,6 +195,8 @@ namespace Controllers
             _menuState = MenuState.StartingGame;
             _gameCanvasGroup.alpha = 0.0f;
             _gameCanvas.enabled = true;
+            _menuCanvasGroup.interactable = false;
+            _menuCanvasGroup.blocksRaycasts = false;
             Manager.InMenu = false;
             
             // TODO add some kind of juicy on-play sound here
@@ -261,6 +263,18 @@ namespace Controllers
         private void StartingCreditsInit()
         {
             _menuState = MenuState.StartingCredits;
+            _menuCanvasGroup.interactable = false;
+            _menuCanvasGroup.blocksRaycasts = false;
+            StartCoroutine(Jukebox.Instance.FadeTo(
+                Jukebox.MusicVolume, Jukebox.LowestVolume, 4f));
+            StartCoroutine(Jukebox.DelayCall(3f, 
+                ()=>
+                {
+                    Jukebox.Instance.OnStartCredits();
+                    StartCoroutine(Jukebox.Instance.FadeTo(
+                        Jukebox.MusicVolume, Jukebox.FullVolume, 5f));
+                }));
+            
         }
         
         private void StartingCreditsUpdate()
