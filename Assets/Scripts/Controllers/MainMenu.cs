@@ -107,6 +107,12 @@ namespace Controllers
             _loadingCanvasGroup = loadingScreen.GetComponent<CanvasGroup>();
 
             LoadingGameInit();
+            
+            // Add cancel binding for credits
+            InputManager.Instance.PlayerInput.UI.Cancel.performed += context =>
+            {
+                if (_menuState == MenuState.InCredits) ResetCredits();
+            };
         }
 
         private void Update()
@@ -268,6 +274,7 @@ namespace Controllers
         
         private bool _moveEnded = true;
         private CameraMove _currentMove;
+        private CanvasGroup _currentPanel;
         private int _currentWaypoint = -1;
 
         private void InCreditsUpdate()
@@ -296,14 +303,21 @@ namespace Controllers
             }
             
             // Fade in current panel
-            var currentPanel = creditsWaypoints[_currentWaypoint].panel;
-            if (FadeCanvas(currentPanel, FadeIn, 2.5f)) currentPanel.alpha = 1.0f;
+            _currentPanel = creditsWaypoints[_currentWaypoint].panel;
+            if (FadeCanvas(_currentPanel, FadeIn, 2.5f)) _currentPanel.alpha = 1.0f;
 
             // Run the move and reset the parameters if finished
             if (!MoveCam(_currentMove, creditsCurve, 0.0015f)) return;
             _moveEnded = true;
             if (_currentWaypoint+1 < creditsWaypoints.Count) return;
-            currentPanel.alpha = 0.0f;
+            ResetCredits();
+        }
+
+        private void ResetCredits()
+        {
+            _moveEnded = true;
+            _currentPanel.alpha = 0.0f;
+            _currentPanel = null;
             _currentWaypoint = -1;
             OpeningMenuInit();
         }
@@ -335,7 +349,7 @@ namespace Controllers
                 freeLook.m_YAxis.Value, cameraMove.YAxisValue, lerpTime);
             
             if ((horizontalPos - followPos).magnitude >= MoveEpsilon) return false;
-            
+
             // Set all values directly on completion
             freeLook.Follow.position = horizontalPos;
             freeLook.m_Orbits[1].m_Height = cameraMove.OrbitHeight;
