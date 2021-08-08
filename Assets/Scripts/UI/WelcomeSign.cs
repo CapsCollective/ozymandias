@@ -6,7 +6,7 @@ namespace UI
     public class WelcomeSign : MonoBehaviour
     {
         private TextMesh _textMesh;
-        private const string SignContent = "Welcome to <town name here> !\nPopulation: ";
+        private const string SignContent = "Welcome Adenturers!\nPopulation: ";
 
         private void Start()
         {
