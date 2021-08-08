@@ -84,11 +84,6 @@ namespace GameState
             FindObjectOfType<MainMenu>().BackToMenu();
         }
 
-        public void ExitGame()
-        {
-            Application.Quit();
-        }
-
         private void SetFullScreen(bool isFullscreen)
         {
             Screen.fullScreen = isFullscreen;

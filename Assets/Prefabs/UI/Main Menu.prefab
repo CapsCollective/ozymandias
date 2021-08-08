@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 7969370083710150781}
   - component: {fileID: 7969370083710150780}
   - component: {fileID: 7969370083710150783}
-  - component: {fileID: 1382471725450256115}
   - component: {fileID: 7969370083710150782}
   - component: {fileID: 5842321732844048004}
+  - component: {fileID: 1382471725450256115}
   m_Layer: 5
-  m_Name: Menu Canvas
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,18 +87,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!225 &1382471725450256115
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7969370083710150768}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &7969370083710150782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,17 +119,7 @@ MonoBehaviour:
   gameUI: {fileID: 0}
   loadingScreen: {fileID: 0}
   freeLook: {fileID: 0}
-  creditsWaypoints:
-  - location: {fileID: 0}
-    panel: {fileID: 0}
-  - location: {fileID: 0}
-    panel: {fileID: 0}
-  - location: {fileID: 0}
-    panel: {fileID: 0}
-  - location: {fileID: 0}
-    panel: {fileID: 0}
-  - location: {fileID: 0}
-    panel: {fileID: 0}
+  creditsWaypoints: []
   menuTransitionCurve:
     serializedVersion: 2
     m_Curve:
@@ -190,6 +168,18 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &1382471725450256115
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7969370083710150768}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7969370084023345986
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,8 +749,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5842321732844048004}
-        m_TargetAssemblyTypeName: GameState.MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
@@ -1507,8 +1497,20 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
       - m_Target: {fileID: 5842321732844048004}
-        m_TargetAssemblyTypeName: GameState.MainMenu, Assembly-CSharp
+        m_TargetAssemblyTypeName: Controllers.MainMenu, Assembly-CSharp
         m_MethodName: RunCredits
         m_Mode: 1
         m_Arguments:

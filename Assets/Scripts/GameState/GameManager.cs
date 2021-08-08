@@ -21,7 +21,7 @@ namespace GameState
         public static Action OnExitMenu;
         
         public static GameManager Manager { get; private set; }
-        public bool InMenu { get; private set; }
+        public bool InMenu { get; internal set; }
         public bool TurnTransitioning { get; private set; }
         public bool IsLoading { get; private set; }
         public bool IsGameOver { get; set; }

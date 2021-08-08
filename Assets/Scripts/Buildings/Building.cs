@@ -239,7 +239,7 @@ namespace Buildings
         private void Update()
         {
             //TODO: Make this on mouse input instead of every frame?
-            if (!Selected) return;
+            if (!Selected || Manager.InMenu) return;
 
             foreach (Renderer r in _sectionRenderers)
             {

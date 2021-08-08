@@ -44,6 +44,7 @@ namespace GameState
         [SerializeField] private AudioClip scrunchClip;
         
         [SerializeField] private AudioClip menuTrack;
+        [SerializeField] private AudioClip creditsTrack;
         [SerializeField] private AudioClip[] tracks;
         [SerializeField] private AudioMixer mixer;
         [SerializeField] private LayerMask waterDetectLm;
@@ -203,6 +204,11 @@ namespace GameState
         public void OnStartGame()
         {
             PlayTrack(menuTrack);
+        }
+        
+        public void OnStartCredits()
+        {
+            PlayTrack(creditsTrack);
         }
         
         public void OnStartPlay()

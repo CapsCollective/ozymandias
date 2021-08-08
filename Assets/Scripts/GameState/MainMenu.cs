@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
@@ -8,9 +9,19 @@ namespace GameState
 {
     public class MainMenu : MonoBehaviour
     {
+        [Serializable]
+        private struct CreditsWaypoint
+        {
+            public Transform location;
+            public CanvasGroup panel;
+        }
+        
         [SerializeField] private GameObject gameUI;
         [SerializeField] private GameObject loadingScreen;
         [SerializeField] private CinemachineFreeLook freeLook;
+        [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
+        [SerializeField] private AnimationCurve menuTransitionCurve;
+        [SerializeField] private AnimationCurve creditsCurve;
         
         private Canvas _menuCanvas;
         private Canvas _gameCanvas;
@@ -25,7 +36,9 @@ namespace GameState
             InMenu,
             StartingGame,
             InGame,
-            OpeningMenu
+            OpeningMenu,
+            StartingCredits,
+            InCredits
         }
         
         private struct CameraMove
@@ -87,6 +100,16 @@ namespace GameState
             OpeningMenuInit();
         }
         
+        public void RunCredits()
+        {
+            StartingCreditsInit();
+        }
+        
+        public void ExitGame()
+        {
+            Application.Quit();
+        }
+        
         private void Start()
         {
             _menuCanvas = GetComponent<Canvas>();
@@ -99,6 +122,12 @@ namespace GameState
             OnGameEnd += OpeningMenuInit;
 
             LoadingGameInit();
+            
+            // Add cancel binding for credits
+            Manager.Inputs.PlayerInput.UI.Cancel.performed += context =>
+            {
+                if (_menuState == MenuState.InCredits) ResetCredits();
+            };
         }
 
         private void Update()
@@ -117,6 +146,12 @@ namespace GameState
                     break;
                 case MenuState.OpeningMenu:
                     OpeningMenuUpdate();
+                    break;
+                case MenuState.StartingCredits:
+                    StartingCreditsUpdate();
+                    break;
+                case MenuState.InCredits:
+                    InCreditsUpdate();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -166,6 +201,7 @@ namespace GameState
             _gameCanvas.enabled = false;
             _menuCanvasGroup.interactable = true;
             _menuCanvasGroup.blocksRaycasts = true;
+            Manager.InMenu = true;
             _menuState = MenuState.InMenu;
         }
 
@@ -174,6 +210,9 @@ namespace GameState
             _menuState = MenuState.StartingGame;
             _gameCanvasGroup.alpha = 0.0f;
             _gameCanvas.enabled = true;
+            _menuCanvasGroup.interactable = false;
+            _menuCanvasGroup.blocksRaycasts = false;
+            Manager.InMenu = false;
             
             // TODO add some kind of juicy on-play sound here
             StartCoroutine(Manager.Jukebox.FadeTo(
@@ -184,7 +223,7 @@ namespace GameState
 
         private void StartingGameUpdate()
         {
-            var finishedMoving = MoveCam(_startPos);
+            var finishedMoving = MoveCam(_startPos, menuTransitionCurve);
             var finishedFadingMenu = FadeCanvas(_menuCanvasGroup, FadeOut);
             if (finishedFadingMenu)
             {
@@ -222,7 +261,7 @@ namespace GameState
         
         private void OpeningMenuUpdate()
         {
-            var finishedMoving = MoveCam(MenuPos);
+            var finishedMoving = MoveCam(MenuPos, menuTransitionCurve);
             var finishedFadingGame = FadeCanvas(_gameCanvasGroup, FadeOut);
             if (finishedFadingGame)
             {
@@ -236,16 +275,94 @@ namespace GameState
             if (finishedFadingMenu) InMenuInit();
         }
 
-        private const float MoveMultiplier = 0.01f;
-        private const float MoveEpsilon = 0.05f;
-
-        private bool MoveCam(CameraMove cameraMove)
+        private void StartingCreditsInit()
         {
-            var lerpTime = Time.deltaTime + MoveMultiplier;
+            _menuState = MenuState.StartingCredits;
+            _menuCanvasGroup.interactable = false;
+            _menuCanvasGroup.blocksRaycasts = false;
+            StartCoroutine(Manager.Jukebox.FadeTo(
+                Jukebox.MusicVolume, Jukebox.LowestVolume, 4f));
+            StartCoroutine(Jukebox.DelayCall(3f, 
+                ()=>
+                {
+                    Manager.Jukebox.OnStartCredits();
+                    StartCoroutine(Manager.Jukebox.FadeTo(
+                        Jukebox.MusicVolume, Jukebox.FullVolume, 5f));
+                }));
             
+        }
+        
+        private void StartingCreditsUpdate()
+        {
+            var finishedFadingMenu = FadeCanvas(_menuCanvasGroup, FadeOut);
+            if (!finishedFadingMenu) return;
+            _menuCanvasGroup.alpha = 0.0f;
+            _menuCanvas.enabled = false;
+            _menuState = MenuState.InCredits;
+        }
+        
+        private bool _moveEnded = true;
+        private CameraMove _currentMove;
+        private CanvasGroup _currentPanel;
+        private int _currentWaypoint = -1;
+
+        private void InCreditsUpdate()
+        {
+            // Check to see if a new waypoint is required
+            if (_moveEnded)
+            {
+                // Build a camera move object for the waypoint
+                var currentTransform = creditsWaypoints[++_currentWaypoint].location;
+                var pos = currentTransform.position;
+                var rot = currentTransform.eulerAngles;
+                _currentMove = new CameraMove(
+                    pos,
+                    2.0f,
+                    rot.y % 180.0f,
+                    pos.y
+                );
+                _moveEnded = false;
+            }
+
+            // Fade out previous panel if it exists
+            if (_currentWaypoint-1 >= 0)
+            {
+                var previousPanel = creditsWaypoints[_currentWaypoint-1].panel;
+                if (FadeCanvas(previousPanel, FadeOut, 5f)) previousPanel.alpha = 0.0f;
+            }
+            
+            // Fade in current panel
+            _currentPanel = creditsWaypoints[_currentWaypoint].panel;
+            if (FadeCanvas(_currentPanel, FadeIn, 2.5f)) _currentPanel.alpha = 1.0f;
+
+            // Run the move and reset the parameters if finished
+            if (!MoveCam(_currentMove, creditsCurve, 0.0015f)) return;
+            _moveEnded = true;
+            if (_currentWaypoint+1 < creditsWaypoints.Count) return;
+            ResetCredits();
+        }
+
+        private void ResetCredits()
+        {
+            _moveEnded = true;
+            _currentPanel.alpha = 0.0f;
+            _currentPanel = null;
+            _currentWaypoint = -1;
+            OpeningMenuInit();
+        }
+
+        private const float MoveEpsilon = 0.05f;
+        private float _moveAnimTime;
+
+        private bool MoveCam(CameraMove cameraMove, AnimationCurve curve, float multiplier = 0.005f)
+        {
+            _moveAnimTime += Time.deltaTime;
+            var lerpTime = curve.Evaluate(_moveAnimTime * multiplier);
+
             // Lerp follow position
             var followPos = freeLook.Follow.position;
-            followPos = Vector3.Lerp(followPos, cameraMove.Position, lerpTime);
+            var horizontalPos = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
+            followPos = Vector3.Lerp(followPos, horizontalPos, lerpTime);
             freeLook.Follow.position = followPos;
                 
             // Lerp camera orbit
@@ -259,20 +376,22 @@ namespace GameState
             // Lerp camera Y axis
             freeLook.m_YAxis.Value =  Mathf.Lerp(
                 freeLook.m_YAxis.Value, cameraMove.YAxisValue, lerpTime);
-
-            if ((cameraMove.Position - followPos).magnitude >= MoveEpsilon) return false;
             
+            if ((horizontalPos - followPos).magnitude >= MoveEpsilon) return false;
+
             // Set all values directly on completion
-            freeLook.Follow.position = cameraMove.Position;
+            freeLook.Follow.position = horizontalPos;
             freeLook.m_Orbits[1].m_Height = cameraMove.OrbitHeight;
             freeLook.m_XAxis.Value = cameraMove.XAxisValue;
             freeLook.m_YAxis.Value = cameraMove.YAxisValue;
+            _moveAnimTime = 0.0f;
             return true;
         }
-
-        private static bool FadeCanvas(CanvasGroup canvasGroup, FadeType fadeType)
+        
+        private static bool FadeCanvas(CanvasGroup canvasGroup, FadeType fadeType, float multiplier = 3f)
         {
-            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, fadeType.Target, Time.deltaTime + 0.1f);
+            canvasGroup.alpha = Mathf.Lerp(
+                canvasGroup.alpha, fadeType.Target, Time.deltaTime + 0.01f * multiplier);
             return fadeType.Condition(canvasGroup.alpha);
         }
     }
