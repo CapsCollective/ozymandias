@@ -15,7 +15,7 @@ namespace Buildings
         {
             _cam = Camera.main;
             OutlineBuffer = new CommandBuffer {name = "Outline Buffer"};
-            _cam.AddCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
+            if (_cam) _cam.AddCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
 
             _bufferName = Shader.PropertyToID("_OutlineBuffer");
         }
@@ -32,7 +32,7 @@ namespace Buildings
 
         private void OnDisable()
         {
-            _cam.RemoveCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
+            if (_cam) _cam.RemoveCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
             OutlineBuffer.Clear();
             OutlineBuffer.Dispose();
         }

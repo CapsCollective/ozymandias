@@ -284,6 +284,7 @@ namespace GameState
 
         private void StartingCreditsInit()
         {
+            Manager.InMenu = true;
             _menuState = MenuState.StartingCredits;
             _menuCanvasGroup.interactable = false;
             _menuCanvasGroup.blocksRaycasts = false;
