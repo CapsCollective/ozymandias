@@ -332,7 +332,6 @@ GameObject:
   - component: {fileID: 4826372568487654226}
   - component: {fileID: 240691718}
   - component: {fileID: 1115064009}
-  - component: {fileID: 4323058296507135132}
   - component: {fileID: 340253856}
   - component: {fileID: 8532576421947153514}
   - component: {fileID: 1336905341}
@@ -424,7 +423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df7c4e3aad71a9449c32f7c1b70f51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerSpeed: 5
   dragSpeed: {x: 1000, y: 5000}
   dragAcceleration: 0.05
   scrollAccelerationSpeed: 0.1
@@ -435,8 +433,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 201326592
   DoFAdjustMultiplier: 20
-  sensitivity: 5
-  invertScroll: 0
 --- !u!114 &1115064009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,18 +495,6 @@ MonoBehaviour:
   - assemblyQualifiedName: OutlinePostProcess, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_AfterStackBundles: []
---- !u!114 &4323058296507135132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4826372568487654225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb1d98c8f455dcf4cbc092605f3faa75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &340253856
 MonoBehaviour:
   m_ObjectHideFlags: 0

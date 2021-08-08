@@ -1,18 +1,17 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Controllers;
+using static GameState.GameManager;
 
 namespace Utilities
 {
     public class ClickOnButtonDown : MonoBehaviour
     {
-        // Public fields
         public static Action OnUIClick;
         
         private void Awake()
         {
-            var target = GetComponent<Button>();
+            Button target = GetComponent<Button>();
             if (target != null)
             {
                 target.onClick.AddListener(OnClick);
@@ -28,7 +27,7 @@ namespace Utilities
         
         private static void OnClick()
         {
-            Jukebox.Instance.PlayClick();
+            Manager.Jukebox.PlayClick();
             OnUIClick?.Invoke();
         }
     }

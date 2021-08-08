@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
-using static Managers.GameManager;
 using DG.Tweening;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using static GameState.GameManager;
 
 namespace UI
 {
