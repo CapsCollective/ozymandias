@@ -29,9 +29,8 @@ namespace GameState
 
         private void Awake()
         {
-            // Set the version text value from file
-            var versionFile = Resources.Load<TextAsset>("VERSION");
-            if (versionFile) versionText.text = versionFile.text;
+            // Set the version text value
+            versionText.text = Application.version;
             
             // Generate a list of available resolutions
             _resolutions = Screen.resolutions;
