@@ -8,15 +8,15 @@ jobs:
   check-bumped:
     runs-on: ubuntu-latest
     env:
-      VERSION_FILE: Assets/Resources/VERSION.txt
+      VERSION_FILE: ProjectSettings/ProjectSettings.asset
     steps:
       - name: Checkout current branch
         uses: actions/checkout@v2
         
       - name: Assign new version string
         run: |
-          NEW_VERSION=`cat ${{ env.VERSION_FILE }}`
-          echo '::set-output name=VERSION::'$NEW_VERSION
+          NEW_VERSION=`grep -Po "bundleVersion: \K[0-9.]*" ${{ env.VERSION_FILE }}`
+          echo '::set-output name=VERSION::'v$NEW_VERSION
         id: branch
       
       - name: Checkout develop branch
@@ -26,8 +26,8 @@ jobs:
       
       - name: Assign old version string
         run: |
-          OLD_VERSION=`cat ${{ env.VERSION_FILE }}`
-          echo '::set-output name=VERSION::'$OLD_VERSION
+          OLD_VERSION=`grep -Po "bundleVersion: \K[0-9.]*" ${{ env.VERSION_FILE }}`
+          echo '::set-output name=VERSION::'v$OLD_VERSION
         id: develop
 
       - name: Download semver script
