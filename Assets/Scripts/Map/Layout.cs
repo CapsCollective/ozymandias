@@ -29,8 +29,6 @@ namespace Map
         private Graph<Vertex> RoadGraph { get; set; }
         private Dictionary<Cell, List<int>> UVMap { get; set; }
 
-        public static Action OnRoadReady;
-
         //Procedurally places buildings
         public void FillGrid()
         {
@@ -509,7 +507,6 @@ namespace Map
             // Add the perimeter to RoadGraph
             AddRoad(perimeter);
             mesh.sharedMesh = GenerateRoadMesh();
-            OnRoadReady?.Invoke();
             yield return new WaitForEndOfFrame();
         }
 
@@ -655,14 +652,27 @@ namespace Map
 
             return roadMesh;
         }
-        
-        public List<Vector3> RandomRoadPath => Algorithms.AStar(RoadGraph,RandomRoadVertex, RandomRoadVertex)
-                .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
 
-        private Vertex RandomRoadVertex => Manager.Buildings.RandomCell.Vertices
-            .Where(v => RoadGraph.Data.Contains(v))
-            .ToList().SelectRandom();
-        
+        public List<Vector3> RandomRoadPath
+        {
+            get
+            {
+                var path = Algorithms.AStar(RoadGraph, RandomRoadVertex, RandomRoadVertex);
+                return path.Count == 0 ? new List<Vector3>() : 
+                    path.Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
+            }
+        }
+
+        private Vertex RandomRoadVertex
+        {
+            get
+            {
+                var verts = Manager.Buildings.RandomCell.Vertices
+                    .Where(v => RoadGraph.Data.Contains(v)).ToList();
+                return verts.Count > 0 ? verts.SelectRandom() : null;
+            }
+        }
+
         #endregion
     }
 }
