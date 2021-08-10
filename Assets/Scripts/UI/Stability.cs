@@ -12,9 +12,8 @@ namespace UI
         [SerializeField] private RectTransform threatBar, defenceBadge, threatBadge;
         [SerializeField] private Image direction;
         [SerializeField] private TextMeshProUGUI defenceCount, threatCount;
-        private const float MinWidth = 50f;
-        private const float BarLength = 600f;
-        private const float Height = 30;
+        private const float BarLength = 580f;
+        private const float Height = 25;
         private int _oldDefence, _oldThreat;
         
         protected override void UpdateUi()
@@ -37,11 +36,11 @@ namespace UI
                 _oldThreat = threat;
             }
             
-            float width = MinWidth + BarLength * (100 - Mathf.Max(Manager.Stability, 0)) / 100f;
+            float width = BarLength * (100 - Mathf.Max(Manager.Stability, 0)) / 100f;
             threatBar.DOSizeDelta(new Vector2(width, Height), 0.5f);
 
             direction.enabled = change != 0 && Manager.Stability > 0;
-            direction.rectTransform.DOAnchorPosX(Mathf.Clamp(-width-30f, -610,-110), 0.5f);
+            direction.rectTransform.DOAnchorPosX(Mathf.Clamp(-width-30f, -530,-110), 0.5f);
             direction.rectTransform.DORotate(new Vector3(0,0, change > 0 ? 90: -90), 0.5f);
             direction.sprite = chevrons[Mathf.Clamp(Mathf.Abs(change) / 5, 0, 2)];
         }
