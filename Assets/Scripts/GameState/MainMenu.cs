@@ -193,9 +193,8 @@ namespace GameState
             StartCoroutine(Jukebox.DelayCall(2f, 
                 ()=>Manager.Jukebox.OnStartGame()));
             
-            // Find the starting position and set to correct height
-            // TODO: Replace this with a check of the guild hall location once dynamic spawning is created
-            _startPos.Position = new Vector3(-10, 1, -12);
+            // Find the starting position for the town
+            _startPos.Position = Manager.Buildings.GuildHallLocation;
 
             // Run general menu initialisation
             InMenuInit();

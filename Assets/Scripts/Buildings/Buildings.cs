@@ -29,6 +29,9 @@ namespace Buildings
         public GameObject TerrainPrefab => terrainPrefab;
         public Material OutlineMaterial => outlineMaterial;
         
+        // TODO: Replace this with a check of the guild hall location once dynamic spawning is created
+        public Vector3 GuildHallLocation => new Vector3(-10, 1, -12);
+        
         private void Awake()
         {
             OnGameStart += SpawnGuildHall;
