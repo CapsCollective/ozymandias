@@ -83,7 +83,7 @@ namespace Utilities
         {
             List<Vertex> path = new List<Vertex>();
             
-            if (root == target)
+            if (root == null || target == null || root == target)
                 return path;
 
             List<Vertex> open = new List<Vertex> { root };

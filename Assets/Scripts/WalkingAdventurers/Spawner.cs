@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Map;
 using UnityEngine;
 using static GameState.GameManager;
 
@@ -17,23 +16,17 @@ namespace WalkingAdventurers
         private readonly Dictionary<GameObject, List<Vector3>> _activeAdventurers = 
             new Dictionary<GameObject, List<Vector3>>();
 
-        private void Start()
-        {
-            Layout.OnRoadReady += SpawnAdventurers;
-        }
-        
-        private void SpawnAdventurers()
-        {
-            InvokeRepeating(nameof(CheckWandering), 1f, wanderingUpdateFrequency);
-        }
-        
-        private void CheckWandering()
-        {
-            if (_activeAdventurers.Count < Manager.Buildings.Count - 1) SpawnWanderingAdventurer();
-        }
-        
+        private float _wanderUpdateTime;
+
         private void Update()
         {
+            // Run the wander update at its specified frequency
+            if ((_wanderUpdateTime += Time.deltaTime) > wanderingUpdateFrequency)
+            {
+                CheckWandering();
+                _wanderUpdateTime = 0.0f;
+            }
+
             List<GameObject> adventurersToRemove = new List<GameObject>();
             foreach (var adventurerPath in _activeAdventurers)
             {
@@ -61,9 +54,14 @@ namespace WalkingAdventurers
             adventurersToRemove.Clear();
         }
         
+        private void CheckWandering()
+        {
+            if (_activeAdventurers.Count < Manager.Buildings.Count - 1) SpawnWanderingAdventurer();
+        }
+        
         private void SpawnWanderingAdventurer()
         {
-            List<Vector3> path = Manager.Map.RandomRoadPath;
+            var path = Manager.Map.RandomRoadPath;
             if (path.Count == 0) return;
             _activeAdventurers.Add(CreateAdventurer(path[0]), path);
         }
@@ -129,11 +127,6 @@ namespace WalkingAdventurers
             adventurerManager.SetAlphaTo(to);
             if (destroy)
                 Destroy(adventurer);
-        }
-
-        private void OnDestroy()
-        {
-            Layout.OnRoadReady -= SpawnAdventurers;
         }
     }
 }

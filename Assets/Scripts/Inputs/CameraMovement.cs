@@ -127,9 +127,7 @@ namespace Inputs
 
         public void Center()
         {
-            var t = transform;
-            t.position = startPos;
-            t.rotation = startRot;
+            freeLook.Follow.position = Manager.Buildings.GuildHallLocation;
         }
 
         private static float Remap(float value, float min1, float max1, float min2, float max2)

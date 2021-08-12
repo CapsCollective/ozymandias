@@ -28,6 +28,10 @@ namespace Inputs
             var isMac = (Application.platform == RuntimePlatform.OSXPlayer || 
                          Application.platform == RuntimePlatform.OSXEditor);
             _dummyCursor = isMac ? dummyCursorNonScaling : dummyCursorScaling;
+            button.onClick.AddListener(() =>
+            {
+                cameraMovement.Center();
+            });
         }
 
         private void Update()
