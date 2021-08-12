@@ -190,6 +190,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  playButton: {fileID: 7969370084023345998}
+  optionsButton: {fileID: 8742463584455719804}
+  creditsButton: {fileID: 1173496842440494453}
+  quitButton: {fileID: 7969370084673296117}
+  optionsCanvas: {fileID: 1960514491615245269}
 --- !u!1 &7969370084023345986
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,31 +317,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7969370084023345999}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5842321732844048004}
-        m_TargetAssemblyTypeName: Controllers.MainMenu, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1960514491615245269}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7969370084023345985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,19 +739,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7969370084673296114}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5842321732844048004}
-        m_TargetAssemblyTypeName: GameState.MainMenu, Assembly-CSharp
-        m_MethodName: ExitGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7969370084673296116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,7 +780,7 @@ GameObject:
   - component: {fileID: 7969370084709393046}
   - component: {fileID: 7969370084709393032}
   - component: {fileID: 7969370084709393035}
-  - component: {fileID: 5987301461274292476}
+  - component: {fileID: 8742463584455719804}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -904,7 +873,7 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
---- !u!114 &5987301461274292476
+--- !u!114 &8742463584455719804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -913,7 +882,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7969370084709393037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -923,7 +892,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -945,25 +914,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7969370084709393046}
-  toggleTransition: 1
-  graphic: {fileID: 0}
-  m_Group: {fileID: 8565022135558610449}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1960514491615245269}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 0
+      m_Calls: []
 --- !u!1 &7969370084773511123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,7 +1320,7 @@ GameObject:
   - component: {fileID: 7969370085183187430}
   - component: {fileID: 7969370085183187416}
   - component: {fileID: 7969370085183187419}
-  - component: {fileID: 2869392296023083507}
+  - component: {fileID: 1173496842440494453}
   m_Layer: 5
   m_Name: Credits Button
   m_TagString: Untagged
@@ -1460,7 +1413,7 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
---- !u!114 &2869392296023083507
+--- !u!114 &1173496842440494453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1469,7 +1422,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7969370085183187421}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1479,7 +1432,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1501,25 +1454,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7969370085183187430}
-  toggleTransition: 1
-  graphic: {fileID: 0}
-  m_Group: {fileID: 8565022135558610449}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5842321732844048004}
-        m_TargetAssemblyTypeName: GameState.MainMenu, Assembly-CSharp
-        m_MethodName: RunCredits
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 0
+      m_Calls: []
 --- !u!1 &8307720527610191912
 GameObject:
   m_ObjectHideFlags: 0

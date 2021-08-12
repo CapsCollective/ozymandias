@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using static GameState.GameManager;
 
 namespace GameState
@@ -22,6 +23,11 @@ namespace GameState
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve;
         [SerializeField] private AnimationCurve creditsCurve;
+        [SerializeField] private Button playButton;
+        [SerializeField] private Button optionsButton;
+        [SerializeField] private Button creditsButton;
+        [SerializeField] private Button quitButton;
+        [SerializeField] private Canvas optionsCanvas;
         
         private Canvas _menuCanvas;
         private Canvas _gameCanvas;
@@ -89,25 +95,10 @@ namespace GameState
         private MenuState _menuState = MenuState.LoadingGame;
         
         private static CameraMove _startPos;
-        
-        public void Play()
-        {
-            StartingGameInit();
-        }
-        
+
         public void BackToMenu()
         {
             OpeningMenuInit();
-        }
-        
-        public void RunCredits()
-        {
-            StartingCreditsInit();
-        }
-        
-        public void ExitGame()
-        {
-            Application.Quit();
         }
         
         private void Start()
@@ -120,6 +111,22 @@ namespace GameState
             _loadingCanvasGroup = loadingScreen.GetComponent<CanvasGroup>();
 
             OnGameEnd += OpeningMenuInit;
+
+            playButton.onClick.AddListener(() =>
+            {
+                optionsCanvas.enabled = false;
+                StartingGameInit();
+            });
+            optionsButton.onClick.AddListener(() =>
+            {
+                optionsCanvas.enabled = !optionsCanvas.enabled;
+            });
+            creditsButton.onClick.AddListener(() =>
+            {
+                optionsCanvas.enabled = false;
+                StartingCreditsInit();
+            });
+            quitButton.onClick.AddListener(Application.Quit);
 
             LoadingGameInit();
             
@@ -186,9 +193,8 @@ namespace GameState
             StartCoroutine(Jukebox.DelayCall(2f, 
                 ()=>Manager.Jukebox.OnStartGame()));
             
-            // Find the starting position and set to correct height
-            // TODO: Replace this with a check of the guild hall location once dynamic spawning is created
-            _startPos.Position = new Vector3(-10, 1, -12);
+            // Find the starting position for the town
+            _startPos.Position = Manager.Buildings.GuildHallLocation;
 
             // Run general menu initialisation
             InMenuInit();
@@ -277,6 +283,7 @@ namespace GameState
 
         private void StartingCreditsInit()
         {
+            Manager.InMenu = true;
             _menuState = MenuState.StartingCredits;
             _menuCanvasGroup.interactable = false;
             _menuCanvasGroup.blocksRaycasts = false;
