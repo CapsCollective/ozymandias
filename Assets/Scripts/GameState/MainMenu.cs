@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
+using UI;
 using UnityEngine;
 using static GameState.GameManager;
 
@@ -18,6 +19,7 @@ namespace GameState
         
         [SerializeField] private GameObject gameUI;
         [SerializeField] private GameObject loadingScreen;
+        [SerializeField] private Book book;
         [SerializeField] private CinemachineFreeLook freeLook;
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve;
@@ -108,6 +110,11 @@ namespace GameState
         public void ExitGame()
         {
             Application.Quit();
+        }
+
+        private void SettingsCallback()
+        {
+            book.Open();
         }
         
         private void Start()

@@ -17,9 +17,7 @@ namespace Tooltip
     public class TooltipDisplay : MonoBehaviour
     {
         private CanvasGroup _cg;
-        [SerializeField] private TextMeshProUGUI title;
-        [SerializeField] private TextMeshProUGUI details;
-        [SerializeField] private TextMeshProUGUI description;
+        [SerializeField] private TextMeshProUGUI title, details, description;
 
         const float FadeDuration = 0.3f;
 

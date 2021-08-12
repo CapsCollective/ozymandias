@@ -30,7 +30,7 @@ namespace GameState
         private void Awake()
         {
             // Set the version text value
-            versionText.text = Application.version;
+            versionText.text = "Version " + Application.version;
             
             // Generate a list of available resolutions
             _resolutions = Screen.resolutions;
