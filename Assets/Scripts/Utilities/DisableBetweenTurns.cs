@@ -1,3 +1,4 @@
+using GameState;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,11 @@ namespace Utilities
         private void Start()
         {
             var button = GetComponent<Button>();
-            Managers.GameManager.OnNextTurn += () =>
+            GameManager.OnNextTurnStart += () =>
             {
                 button.interactable = false;
             };
-            Managers.GameManager.OnNewTurn += () => {
+            GameManager.OnNextTurnEnd += () => {
                 button.interactable = true;
             };
         }

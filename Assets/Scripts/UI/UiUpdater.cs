@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static Managers.GameManager;
+using static GameState.GameManager;
 
 namespace UI
 {
