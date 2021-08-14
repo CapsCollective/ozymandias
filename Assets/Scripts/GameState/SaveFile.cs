@@ -91,8 +91,8 @@ namespace GameState
                 wealth = Manager.Wealth;
                 turnCounter = Manager.TurnCounter;
                 stability = Manager.Stability;
-                terrainClearCount = Clear.TerrainClearCount;
-                ruinsClearCount = Clear.RuinsClearCount;
+                terrainClearCount = BuildingSelect.TerrainClearCount;
+                ruinsClearCount = BuildingSelect.RuinsClearCount;
                 modifiers = Manager.Modifiers;
                 adventurers = Manager.Adventurers.Save();
                 quests = Manager.Quests.Save();
@@ -117,8 +117,8 @@ namespace GameState
             }
 
             Manager.TurnCounter = turnCounter;
-            Clear.TerrainClearCount = terrainClearCount;
-            Clear.RuinsClearCount = ruinsClearCount;
+            BuildingSelect.TerrainClearCount = terrainClearCount;
+            BuildingSelect.RuinsClearCount = ruinsClearCount;
 
             await Manager.Buildings.Load(buildings);
             if(Manager.Buildings.Count == 0) Manager.Map.FillGrid();

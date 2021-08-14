@@ -201,8 +201,8 @@ namespace GameState
             Map.FillGrid();
             Manager.IsGameOver = false; //Reset for next game
             Manager.TurnCounter = 0;
-            Clear.RuinsClearCount = 0;
-            Clear.TerrainClearCount = 0;
+            BuildingSelect.RuinsClearCount = 0;
+            BuildingSelect.TerrainClearCount = 0;
             
             SaveFile.SaveState();
         }
