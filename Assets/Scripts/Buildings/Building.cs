@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using GameState;
+using Managers;
 using Map;
 using NaughtyAttributes;
 using Quests;
 using UnityEngine;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace Buildings
@@ -123,7 +123,7 @@ namespace Buildings
             else
             {
                 // If all cells are valid
-                if (cellCount != Occupied.Count || !Manager.Spend(ScaledCost)) return false;
+                if (cellCount != Occupied.Count || !Manager.Stats.Spend(ScaledCost)) return false;
                 if (!isRuin) Manager.Map.CreateRoad(Occupied);
                 Manager.Map.Align(Occupied, rotation); // Align vertices to rotate the building sections in the right direction
             }
@@ -240,7 +240,7 @@ namespace Buildings
         private void Update()
         {
             //TODO: Make this on mouse input instead of every frame?
-            if (!Selected || Manager.InMenu) return;
+            if (!Selected || !Manager.State.InGame) return;
 
             foreach (Renderer r in _sectionRenderers)
             {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GameState;
+using Managers;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 using EventType = Utilities.EventType;
 
@@ -22,7 +22,8 @@ namespace Events
         [SerializeField] private AssetLabelReference label;
         
         private int _nextBuildingUnlock = 20;
-
+        private Newspaper _newspaper;
+        
         private readonly LinkedList<Event> _headliners = new LinkedList<Event>();
         private readonly LinkedList<Event> _others = new LinkedList<Event>();
 
@@ -31,13 +32,13 @@ namespace Events
             _usedPools = new Dictionary<EventType, List<Event>>(), //Events already run but will be re-added on a shuffle
             _discardedPools = new Dictionary<EventType, List<Event>>(); //Events that shouldn't be run again
     
-        [ReadOnly] private readonly List<Event> _current = new List<Event>(4);
-        [ReadOnly] private readonly List<string> _outcomeDescriptions = new List<string>(4);
+        private readonly List<Event> _current = new List<Event>(4);
+        private readonly List<string> _outcomeDescriptions = new List<string>(4);
         
         private void Awake()
         {
-            OnGameStart += () => Add(openingEvent, true);
-            GameManager.OnGameEnd += OnGameEnd;
+            State.OnNewGame += () => Add(openingEvent, true);
+            State.OnGameEnd += OnGameEnd;
             
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
             {
@@ -45,6 +46,8 @@ namespace Events
                 _usedPools.Add(type, new List<Event>());
                 _discardedPools.Add(type, new List<Event>());
             }
+
+            _newspaper = FindObjectOfType<Newspaper>();
         }
       
         public void Process()
@@ -69,7 +72,8 @@ namespace Events
 
             foreach (Event e in _current) _outcomeDescriptions.Add(e.Execute());
         
-            Manager.Newspaper.UpdateDisplay(_current, _outcomeDescriptions);
+            _newspaper.UpdateDisplay(_current, _outcomeDescriptions);
+            UpdateUi();
         }
 
         private void AddRandomSelection()
@@ -96,7 +100,7 @@ namespace Events
                 if (Random.Range(0,50) > Manager.Stability) eventPool.Add(PickRandom(EventType.Threat));
             }*/
             
-            int randomSpawnChance = Manager.RandomSpawnChance;
+            int randomSpawnChance = Manager.Stats.RandomSpawnChance;
             if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
             else if(Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
             

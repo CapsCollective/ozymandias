@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GameState;
+using Managers;
 using Map;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Buildings
 {
@@ -34,8 +34,9 @@ namespace Buildings
         
         private void Awake()
         {
-            OnGameStart += SpawnGuildHall;
-            OnGameEnd += RemoveAll;
+            State.OnNewGame += SpawnGuildHall;
+            State.OnGameEnd += RemoveAll;
+            State.OnNextTurnEnd += () => placedThisTurn = 0;
             
             object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
             foreach(TextAsset o in buildingsText)
@@ -95,10 +96,10 @@ namespace Buildings
             else _buildings.Add(building);
             
             //TODO: Make this a action callback
-            if(!Manager.IsLoading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
-            if (_buildings.Count >= 30 && Clear.TerrainClearCount == 0) Manager.Achievements.Unlock("One With Nature");
+            //if (!Manager.IsLoading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
+            //if (_buildings.Count >= 30 && Clear.TerrainClearCount == 0) Manager.Achievements.Unlock("One With Nature");
             
-            if(!Manager.IsLoading) Manager.UpdateUi();
+            if(!Manager.State.Loading) UpdateUi();
             return true;
         }
         
@@ -107,9 +108,9 @@ namespace Buildings
             if (building.type == BuildingType.GuildHall)
             {
                 //TODO: Add an 'are you sure?' dialogue
-                Manager.Achievements.Unlock("Now Why Would You Do That?");
+                //Manager.Achievements.Unlock("Now Why Would You Do That?");
                 Manager.EventQueue.AddGuildHallDestroyedEvents();
-                Manager.NextTurnStart();
+                Manager.State.EnterState(GameState.NextTurn);
             }
 
             if (building.IsTerrain) _terrain.Remove(building);
@@ -117,7 +118,7 @@ namespace Buildings
             else _buildings.Remove(building);
             
             building.Destroy();
-            Manager.UpdateUi();
+            UpdateUi();
         }
 
         public string Remove(BuildingType type)

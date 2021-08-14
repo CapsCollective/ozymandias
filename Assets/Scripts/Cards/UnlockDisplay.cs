@@ -5,7 +5,8 @@ using DG.Tweening;
 using Events;
 using TMPro;
 using UnityEngine;
-using static GameState.GameManager;
+using Utilities;
+using static Managers.GameManager;
 
 namespace Cards
 {
@@ -18,7 +19,7 @@ namespace Cards
 
         private Vector3 _originalPos;
         private Canvas _canvas;
-        private Stack<Building> _buildings = new Stack<Building>();
+        private readonly Stack<Building> _buildings = new Stack<Building>();
         private Building _displayBuilding;
 
         private void Start()
@@ -26,20 +27,14 @@ namespace Cards
             _canvas = GetComponent<Canvas>();
             _originalPos = cardDisplay.transform.localPosition;
             
-            Cards.OnUnlock += building =>
-            {
-                _buildings.Push(building);
-            };
-
-            Cards.OnDiscoverRuin += OpenCard;
-            Newspaper.OnClosed += OpenCard;
-
-            Close();
+            Cards.OnUnlock += _buildings.Push;
+            Cards.OnDiscoverRuin += CheckUnlockCard;
+            Newspaper.OnClosed += CheckUnlockCard;
         }
 
-        private void OpenCard()
+        private void CheckUnlockCard()
         {
-            if (!_buildings.Any() || _displayBuilding) return;
+            if (!_buildings.Any() || _displayBuilding || !Manager.State.InGame) return;
 
             _displayBuilding = _buildings.Pop();
             cardDisplay.UpdateDetails(_displayBuilding);
@@ -48,21 +43,17 @@ namespace Cards
 
         private void Open()
         {
-            Manager.EnterMenu();
+            Manager.State.EnterState(GameState.InMenu);
             _canvas.enabled = true;
             Manager.Jukebox.PlayScrunch();
 
-            var cardTransform = cardDisplay.transform;
+            Transform cardTransform = cardDisplay.transform;
             cardTransform.localPosition = new Vector3(1000, 200, 0);
             cardTransform.localRotation = new Quaternion( 0.0f, 0.0f, 10.0f, 0.0f);
             
-            cardDisplay.transform.DOLocalRotate(Vector3.zero, animateInDuration);
-            cardDisplay.transform
-                .DOLocalMove(_originalPos, animateInDuration)
-                .OnComplete(() =>
-                {
-                    text.DOFade(1.0f, 0.5f);
-                });
+            cardTransform.DOLocalRotate(Vector3.zero, animateInDuration);
+            cardTransform.DOLocalMove(_originalPos, animateInDuration)
+                .OnComplete(() => text.DOFade(1.0f, 0.5f));
         }
         
         public void Close()
@@ -70,17 +61,16 @@ namespace Cards
             text.DOFade(0.0f, 0.5f);
             cardDisplay.transform.DOLocalMove(new Vector3(-300, -500, 0), animateOutDuration);
             cardDisplay.transform.DOScale(Vector3.one * 0.4f, animateOutDuration);
-            cardDisplay.transform
-                .DOLocalRotate(new Vector3(0, 0, 20), animateOutDuration)
+            cardDisplay.transform.DOLocalRotate(new Vector3(0, 0, 20), animateOutDuration)
                 .OnComplete(() =>
                 {
                     cardDisplay.transform.localScale = Vector3.one;
                     _displayBuilding = null;
-                    if (_buildings.Any()) OpenCard();
+                    if (_buildings.Any()) CheckUnlockCard();
                     else
                     {
                         _canvas.enabled = false;
-                        Manager.ExitMenu();
+                        Manager.State.EnterState(GameState.InGame);
                     }
                 });
         }

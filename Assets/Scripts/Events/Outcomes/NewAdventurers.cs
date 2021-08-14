@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Adventurers;
 using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace Events.Outcomes

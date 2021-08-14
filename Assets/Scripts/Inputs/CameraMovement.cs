@@ -3,7 +3,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Inputs
 {
@@ -73,7 +73,7 @@ namespace Inputs
 
         private void Update()
         {
-            if (Manager.InMenu) return;
+            if (!Manager.State.InGame) return;
 
             freeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.IA_RotateCamera.ReadValue<float>();
 

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Buildings;
-using GameState;
+using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utilities;
 using Random = UnityEngine.Random;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Cards
 {
@@ -30,7 +30,7 @@ namespace Cards
         private void Awake()
         {
             Clear.OnClear += Discover;
-            GameManager.OnGameEnd += OnGameEnd;
+            State.OnGameEnd += OnGameEnd;
         }
 
         public bool Unlock(GameObject building, bool isRuin = false)
@@ -41,9 +41,6 @@ namespace Cards
             
             OnUnlock?.Invoke(building.GetComponent<Building>());
             if (isRuin) OnDiscoverRuin?.Invoke();
-            Manager.Achievements.Unlock("A Helping Hand");
-            if (_current.Count >= 5)
-                Manager.Achievements.Unlock("Modern Influences");
             return true;
         }
 

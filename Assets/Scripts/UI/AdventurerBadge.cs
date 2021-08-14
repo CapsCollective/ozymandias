@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -19,7 +19,7 @@ namespace UI
         protected override void UpdateUi()
         {
             int value = Manager.Adventurers.GetCount(type);
-            int satisfaction = Manager.GetStat((Stat)type);
+            int satisfaction = Manager.Stats.GetStat((Stat)type);
 
             if (value > _oldValue)
             {

@@ -138,6 +138,12 @@ namespace Utilities
             return path;
         }
 
+        public static IEnumerator DelayCall(float duration, Action callback)
+        {
+            // Defer callback action by duration
+            yield return new WaitForSeconds(duration);
+            callback();
+        }
 
         private readonly struct Costs
         {

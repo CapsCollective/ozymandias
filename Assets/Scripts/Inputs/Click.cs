@@ -1,6 +1,7 @@
 ﻿using System;
+using Managers;
 using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Inputs
 {
@@ -27,8 +28,7 @@ namespace Inputs
 
         private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (Manager.IsLoading || Manager.InMenu || Manager.TurnTransitioning)
-                return;
+            if (!Manager.State.InGame) return;
 
             if (obj.performed) _time0 = Time.time;
             if(obj.canceled && Time.time - _time0 < clickSpeed) OnLeftClick?.Invoke();
@@ -37,8 +37,7 @@ namespace Inputs
 
         private void I_OnRightClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (Manager.IsLoading || Manager.InMenu || Manager.TurnTransitioning)
-                return;
+            if (!Manager.State.InGame) return;
 
             if (obj.performed) _time1 = Time.time;
             if (obj.canceled && Time.time - _time1 < clickSpeed) OnRightClick?.Invoke();

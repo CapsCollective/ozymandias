@@ -1,7 +1,8 @@
 using Buildings;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static GameState.GameManager;
+using Utilities;
+using static Managers.GameManager;
 
 namespace Inputs
 {
@@ -9,9 +10,6 @@ namespace Inputs
     public class UIEventController : MonoBehaviour
     {
         private static EventSystem _eventSystem;
-
-        [SerializeField] private Canvas optionsMenu;
-        [SerializeField] private GameObject optionsFirstSelected;
 
         private int lastSelectedCard = 1;
         private bool isSelectingCard = false;
@@ -30,7 +28,6 @@ namespace Inputs
             Manager.Inputs.IA_SelectCards.performed += SelectCards;
             Manager.Inputs.IA_UINavigate.performed += Navigate;
             Manager.Inputs.IA_UICancel.performed += UICancel;
-            Manager.Inputs.IA_ShowPause.performed += ShowPause;
             Manager.Inputs.IA_DeselectCards.performed += UICancel;
         }
 
@@ -38,26 +35,10 @@ namespace Inputs
         {
             isSelectingCard = false;
         }
-
-        private void ShowPause(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            if (!optionsMenu.enabled)
-            {
-                optionsMenu.enabled = true;
-                Manager.EnterMenu();
-                SelectUI(optionsFirstSelected);
-            }
-            else
-            {
-                optionsMenu.enabled = false;
-                Manager.ExitMenu();
-                SelectUI(null);
-            }
-        }
-
+        
         private void UICancel(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (Manager.InMenu) return;
+            if (Manager.State.InIntro) return;
 
             if (isSelectingCard)
             {
@@ -66,9 +47,9 @@ namespace Inputs
             }
         }
 
-        public void Navigate(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void Navigate(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (Manager.InMenu || _place.ChangingCard(lastSelectedCard)) return;
+            if (Manager.State.InIntro || _place.ChangingCard(lastSelectedCard)) return;
 
             int dir = (int)obj.ReadValue<Vector2>().x;
             if (isSelectingCard)
@@ -80,7 +61,7 @@ namespace Inputs
 
         private void SelectCards(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (Manager.InMenu) return;
+            if (!Manager.State.InGame) return;
 
             if (!isSelectingCard)
             {

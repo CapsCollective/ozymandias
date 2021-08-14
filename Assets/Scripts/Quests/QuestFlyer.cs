@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace UI
@@ -136,7 +136,7 @@ namespace UI
             else
             {
                 bool enoughAdventurers = Manager.Adventurers.Removable > quest.adventurers;
-                bool enoughMoney = Manager.Wealth >= quest.Cost;
+                bool enoughMoney = Manager.Stats.Wealth >= quest.Cost;
                 statsText.text =
                     (enoughAdventurers ? "" : "<color=#820000ff>") + 
                     "Adventurers: " + quest.adventurers +

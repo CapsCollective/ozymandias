@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Events.Outcomes
 {
@@ -8,7 +8,7 @@ namespace Events.Outcomes
     {
         public override bool Execute()
         {
-            Manager.IsGameOver = true;
+            Manager.State.IsGameOver = true;
             return true;
         }
     }

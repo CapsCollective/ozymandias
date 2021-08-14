@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -21,18 +21,18 @@ namespace UI
         // Update is called once per frame
         protected override void UpdateUi()
         {
-            if (_previousSpending != Manager.GetStat(Stat.Spending))
+            if (_previousSpending != Manager.Stats.GetStat(Stat.Spending))
             {
                 PunchBadge();
-                _previousSpending = Manager.GetStat(Stat.Spending);
+                _previousSpending = Manager.Stats.GetStat(Stat.Spending);
             }
             
-            _wpt = Manager.WealthPerTurn;
+            _wpt = Manager.Stats.WealthPerTurn;
             wealth.text = _targetWealth.ToString();
             wealthPerTurn.text = "+" + _wpt;
-            if (_targetWealth == Manager.Wealth) return; // Don't double update
+            if (_targetWealth == Manager.Stats.Wealth) return; // Don't double update
             _previousWealth = _targetWealth;
-            _targetWealth = Manager.Wealth;
+            _targetWealth = Manager.Stats.Wealth;
             StartCoroutine(Scale());
         }
 
@@ -44,8 +44,8 @@ namespace UI
                 wealth.text = w.ToString();
                 yield return null;
             }
-            wealth.text = Manager.Wealth.ToString();
-            wealthPerTurn.text = "+" + Manager.WealthPerTurn;
+            wealth.text = Manager.Stats.Wealth.ToString();
+            wealthPerTurn.text = "+" + Manager.Stats.WealthPerTurn;
         }
         
         private void PunchBadge()

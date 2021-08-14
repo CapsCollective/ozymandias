@@ -5,7 +5,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Cards
 {
@@ -39,7 +39,7 @@ namespace Cards
             var building = buildingPrefab.GetComponent<Building>();
             
             // Set toggle interactable
-            toggle.interactable = building.ScaledCost <= Manager.Wealth;
+            toggle.interactable = building.ScaledCost <= Manager.Stats.Wealth;
             if (toggle.isOn && !toggle.interactable)
             {
                 // Unselect the card if un-interactable

@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Inputs
 {

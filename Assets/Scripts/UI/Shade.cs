@@ -1,7 +1,8 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using static Managers.GameManager;
+using static Managers.State;
 
 namespace UI
 {
@@ -11,12 +12,11 @@ namespace UI
         private Image _image;
         private bool _active;
 
-        private void Awake()
+        private void Start()
         {
             _image = GetComponent<Image>();
             gameObject.SetActive(false);
-            OnEnterMenu += () => SetDisplay(true);
-            OnExitMenu += () => SetDisplay(false);
+            OnEnterState += () => SetDisplay(Manager.State.InMenu);
         }
 
         private void SetDisplay(bool display)

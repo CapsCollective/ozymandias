@@ -4,7 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Tooltip
 {
@@ -131,46 +131,46 @@ namespace Tooltip
             {
                 case null: break;
                 case Stat.Housing:
-                    int spawnRate = Manager.RandomSpawnChance;
+                    int spawnRate = Manager.Stats.RandomSpawnChance;
                     string descriptive = HousingDescriptor(spawnRate);
                     string spawnText = spawnRate == -1
                         ? "Adventurers will start to flee"
                         : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
-                    details.text = $"{Manager.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
+                    details.text = $"{Manager.Stats.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
                                    $"{FormattedModifierString(Stat.Housing)}" +
                                    $"{descriptive} ({spawnText})";
                     break;
                 case Stat.Food:
-                    details.text = $"{Manager.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
+                    details.text = $"{Manager.Stats.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
                                    $"{FormattedModifierString(Stat.Food)}" +
-                                   $"{FoodDescriptor(Manager.FoodModifier)}";
+                                   $"{FoodDescriptor(Manager.Stats.FoodModifier)}";
                     break;
                 case Stat.Defence:
-                    details.text = $"{Manager.Defence} defence from total adventurers and defensive buildings\n" +
+                    details.text = $"{Manager.Stats.Defence} defence from total adventurers and defensive buildings\n" +
                                    $"{FormattedModifierString(Stat.Defence)}";
                     break;
                 case Stat.Threat:
-                    details.text = $"{Manager.Threat} threat (+3 per turn)\n" +
+                    details.text = $"{Manager.Stats.Threat} threat (+3 per turn)\n" +
                                    $"{FormattedModifierString(Stat.Threat)}";
                     break;
                 case Stat.Stability:
-                    int change = Manager.Defence - Manager.Threat;
-                    details.text = $"{Manager.Stability}/100 town stability ({(change > 0 ? "+" : "") + change} next turn)";
+                    int change = Manager.Stats.Defence - Manager.Stats.Threat;
+                    details.text = $"{Manager.Stats.Stability}/100 town stability ({(change > 0 ? "+" : "") + change} next turn)";
                     break;
                 case Stat.Spending:
-                    details.text = $"{Manager.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +
-                                   $"(5 wealth per adventurer) times {(100 + Manager.GetStat(Stat.Spending))/100f} from spending modifier.\n" +
+                    details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +
+                                   $"(5 wealth per adventurer) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} from spending modifier.\n" +
                                    $"{FormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class
                     AdventurerType adventurerType = (AdventurerType) config.Stat.Value;
                     string className = config.Stat.ToString();
                     details.text =
-                        $"{Manager.GetStat(config.Stat.Value)} {className} satisfaction for " +
+                        $"{Manager.Stats.GetStat(config.Stat.Value)} {className} satisfaction for " +
                         $"{Manager.Adventurers.GetCount(adventurerType)} {className}s\n" +
                         $"{FormattedFoodModifierString}" +
                         $"{FormattedModifierString(config.Stat.Value)}" +
-                        $"{Manager.SpawnChance(adventurerType):n1}% {className} spawn chance per turn";
+                        $"{Manager.Stats.SpawnChance(adventurerType):n1}% {className} spawn chance per turn";
                     break;
             }
         }
@@ -180,7 +180,7 @@ namespace Tooltip
         {
             get
             {
-                int mod = Manager.FoodModifier;
+                int mod = Manager.Stats.FoodModifier;
                 if (mod == 0) return "";
                 bool isFoodInSurplus = Math.Sign(mod) == 1;
                 string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
@@ -197,7 +197,7 @@ namespace Tooltip
         {
             string formattedModifierString = "";
 
-            foreach (var modifier in Manager.Modifiers[stat])
+            foreach (var modifier in Manager.Stats.Modifiers[stat])
             {
                 char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
                 string textColor = sign == '+' ? PositiveHexColor : NegativeHexColor;

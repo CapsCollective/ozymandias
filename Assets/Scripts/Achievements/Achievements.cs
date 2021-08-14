@@ -2,7 +2,7 @@
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Achievements
 {
@@ -94,19 +94,7 @@ namespace Achievements
             progress.transform.Find("Kingdom").GetComponent<Image>().color = new Color(255, 160, 0, 255);
         }*/
         }
-
-        public void Open()
-        {
-            _canvas.enabled = true;
-            Manager.EnterMenu();
-            notification.SetActive(false);
-        }
-
-        public void Close()
-        {
-            _canvas.enabled = false;
-            Manager.ExitMenu();
-        }
+        
         
         private void OnDestroy()
         {

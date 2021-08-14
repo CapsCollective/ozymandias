@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Events.Outcomes
 {

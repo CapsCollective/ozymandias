@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -18,8 +18,8 @@ namespace UI
         
         protected override void UpdateUi()
         {
-            int defence = Manager.Defence;
-            int threat = Manager.Threat;
+            int defence = Manager.Stats.Defence;
+            int threat = Manager.Stats.Threat;
             int change = defence - threat;
             
             if (_oldDefence != defence)
@@ -36,10 +36,10 @@ namespace UI
                 _oldThreat = threat;
             }
             
-            float width = BarLength * (100 - Mathf.Max(Manager.Stability, 0)) / 100f;
+            float width = BarLength * (100 - Mathf.Max(Manager.Stats.Stability, 0)) / 100f;
             threatBar.DOSizeDelta(new Vector2(width, Height), 0.5f);
 
-            direction.enabled = change != 0 && Manager.Stability > 0;
+            direction.enabled = change != 0 && Manager.Stats.Stability > 0;
             direction.rectTransform.DOAnchorPosX(Mathf.Clamp(-width-30f, -530,-110), 0.5f);
             direction.rectTransform.DORotate(new Vector3(0,0, change > 0 ? 90: -90), 0.5f);
             direction.sprite = chevrons[Mathf.Clamp(Mathf.Abs(change) / 5, 0, 2)];

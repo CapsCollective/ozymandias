@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Cards;
 using Inputs;
+using Managers;
 using Map;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Buildings
 {
@@ -48,16 +48,12 @@ namespace Buildings
 
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += RightClick;
-            OnEnterMenu += () => { _toggleGroup.SetAllTogglesOff(); };
-
-            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
-            OnNextTurnStart += () =>
+            State.OnEnterState += () =>
             {
-                NewCards();
-                canvasGroup.interactable = false;
+                if( Manager.State.NextTurn) NewCards();
+                _toggleGroup.SetAllTogglesOff();
             };
-            OnNextTurnEnd += () => { canvasGroup.interactable = true; };
-
+            
             _remainingBuildings = Manager.Cards.All;
             for (var i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
             _toggleGroup = GetComponent<ToggleGroup>();
@@ -162,7 +158,6 @@ namespace Buildings
             cards[i].toggle.isOn = false;
             Selected = Deselected;
 
-            Manager.UpdateUi();
             OnBuildingPlaced?.Invoke();
         }
 
@@ -173,7 +168,7 @@ namespace Buildings
             _rotation %= 4;
         }
 
-        public void NewCards()
+        private void NewCards()
         {
             _toggleGroup.SetAllTogglesOff();
             for (int i = 0; i < 3; i++) cards[i].SwitchCard(ChangeCard);
@@ -196,7 +191,7 @@ namespace Buildings
                 }
             }
 
-            Manager.UpdateUi();
+            UpdateUi();
         }
     }
 }

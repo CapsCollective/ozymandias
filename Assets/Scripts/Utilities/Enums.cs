@@ -106,5 +106,18 @@
         Right,
         Back
     }
-
+    
+    public enum GameState
+    {                      
+        Loading,   // ┌────────────────────────────────┐
+        ToIntro,   // │              ┌──►NextTurn───┐  │
+        InIntro,   // │ ┌►ToGame─►InGame◄──►InMenu◄─┘  │
+        ToGame,    // │ │                    ▲ │ │     │
+        InGame,    // │ │   ┌────────────────┘ │ └──┐  │
+        NextTurn,  // │ │   ▼      ┌─Loading   │    │  │
+        InMenu,    // │ ├─InIntro◄─┴──ToIntro◄─┤─┐  │  │
+        EndGame,   // │ └►ToCredits─►InCredits─┘ │  ▼  │
+        ToCredits, // │                        GameEnd │
+        InCredits  // └────────────────────────────────┘
+    }
 }
