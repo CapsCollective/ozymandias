@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Inputs;
+using Quests;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -67,6 +68,7 @@ namespace Buildings
         private float _timeSinceRaycast;
 
         public static Action<Building> OnClear;
+        public static Action<Quest> OnQuestSelected;
         
         private Building HoveredBuilding
         {
@@ -257,7 +259,7 @@ namespace Buildings
             switch (_config.Type)
             {
                 case SelectionType.Quest:
-                    // TODO open quest flyer here
+                    OnQuestSelected?.Invoke(SelectedBuilding.Quest);
                     break;
                 case SelectionType.Refund:
                 case SelectionType.Clear:

@@ -1,124 +1,77 @@
-﻿using System;
-using Quests;
+﻿using Buildings;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static GameState.GameManager;
 using Random = UnityEngine.Random;
 
-namespace UI
+namespace Quests
 {
-    public class QuestFlyer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class QuestFlyer : MonoBehaviour
     {
-        public Action<GameObject> CallbackMethod;
-
         [SerializeField] private TextMeshProUGUI titleText, descriptionText, statsText;
         [SerializeField] private Button sendButton;
-        [SerializeField] private GameObject displayContent, simpleContent;
-        [SerializeField] private GameObject[] stamps;
-
-        public Quest quest;
-        public bool mouseOver;
-
-        private Vector3 _startScale;
-        private Vector3 _startPos;
-        private bool _displaying;
-        private Transform _t;
+        [SerializeField] private GameObject stamp;
         
+        private Canvas _canvas;
+        private Quest _quest;
+
         private void Start()
         {
-            _t = transform;
-            _startScale = _t.localScale;
-            _startPos = _t.localPosition;
-            
-            sendButton.onClick.AddListener(OnButtonClick);
-            SetDisplaying(false);
-        }
-        
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            mouseOver = true;
-            if (_displaying) return;
-            transform.localScale = _startScale * 1.1f;
+            _canvas = GetComponent<Canvas>();
+            sendButton.onClick.AddListener(StartQuest);
+            BuildingSelect.OnQuestSelected += quest =>
+            {
+                _quest = quest;
+                UpdateContent();
+                Open();
+            };
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        private void Open()
         {
-            mouseOver = false;
-            if (_displaying) return;
-            ResetDisplay();
-        }
-    
-        public void ResetDisplay()
-        {
-            _displaying = false;
-            SetDisplaying(false);
-            var transform1 = transform;
-            transform1.localScale = _startScale;
-            transform1.localPosition = _startPos;
+            Manager.EnterMenu();
+            _canvas.enabled = true;
         }
         
-        public void OnPointerClick(PointerEventData eventData)
+        private void Close()
         {
-            CallbackMethod(gameObject);
+            _canvas.enabled = false;
+            Manager.ExitMenu();
         }
 
-        public void DisplaySelected()
+        private void StartQuest()
         {
-            _displaying = true;
-            SetDisplaying(true);
-            _t.localScale = _startScale * 4;
-            _t.localPosition = Vector3.zero;
-            _t.SetSiblingIndex(10);
-        }
-
-        private void OnButtonClick()
-        {
-            quest.Start();
-        
+            _quest.Start();
             // TODO: Reenable functionality once new quest setup is done
             //FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(quest.adventurers);
-            mouseOver = false;
             RandomRotateStamps();
             Manager.Jukebox.PlayStamp();
-            SetDisplaying(true);
+            Close();
         }
-    
-        public void RandomRotateStamps()
+
+        private void RandomRotateStamps()
         {
-            float stampRotation = Random.Range(3f, 6f);
+            var stampRotation = Random.Range(3f, 6f);
             stampRotation = (Random.value < 0.5) ? stampRotation : -stampRotation;
             sendButton.gameObject.SetActive(false);
-            foreach (GameObject stamp in stamps)
-            {
-                stamp.SetActive(true);
-                stamp.transform.localEulerAngles = new Vector3(0, 0, stampRotation);
-            }
+            stamp.SetActive(true);
+            stamp.transform.localEulerAngles = new Vector3(0, 0, stampRotation);
         }
 
-        public void SetQuest(Quest q)
+        private void UpdateContent()
         {
-            quest = q;
-            titleText.text = q.Title;
-            descriptionText.text = q.Description;
-            sendButton.gameObject.SetActive(true);
-            foreach (GameObject stamp in stamps)
-            {
-                stamp.SetActive(false);
-            }
-        }
+            titleText.text = _quest.Title;
+            descriptionText.text = _quest.Description;
+            
+            sendButton.gameObject.SetActive(!_quest.IsActive);
+            stamp.SetActive(_quest.IsActive);
 
-        private void SetDisplaying(bool displaying)
-        {
-            displayContent.SetActive(displaying);
-            simpleContent.SetActive(!displaying);
-            if (!displaying || !quest) return;
-            if (stamps[0].activeSelf)
+            if (stamp.activeSelf)
             {
-                string turnText = "\nReturn in: " + quest.TurnsLeft;
+                var turnText = "\nReturn in: " + _quest.TurnsLeft;
 
-                switch (quest.TurnsLeft)
+                switch (_quest.TurnsLeft)
                 {
                     case 0:
                         turnText = "\nReturning today";
@@ -131,20 +84,20 @@ namespace UI
                         break;
                 }
 
-                statsText.text = "Adventurers: " + quest.adventurers + turnText;
+                statsText.text = "Adventurers: " + _quest.adventurers + turnText;
             }
             else
             {
-                bool enoughAdventurers = Manager.Adventurers.Removable > quest.adventurers;
-                bool enoughMoney = Manager.Wealth >= quest.Cost;
+                var enoughAdventurers = Manager.Adventurers.Removable > _quest.adventurers;
+                var enoughMoney = Manager.Wealth >= _quest.Cost;
                 statsText.text =
                     (enoughAdventurers ? "" : "<color=#820000ff>") + 
-                    "Adventurers: " + quest.adventurers +
+                    "Adventurers: " + _quest.adventurers +
                     (enoughAdventurers ? "" : "</color>") +
                     (enoughMoney ? "" : "<color=#820000ff>") +
-                    "\nCost: " + quest.Cost +
+                    "\nCost: " + _quest.Cost +
                     (enoughMoney ? "" : "</color>") +
-                    "\nDuration: " + quest.turns + " turns";
+                    "\nDuration: " + _quest.turns + " turns";
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
             }
