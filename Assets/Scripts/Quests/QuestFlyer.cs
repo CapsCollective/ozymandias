@@ -1,4 +1,6 @@
 ﻿using Buildings;
+using DG.Tweening;
+using Inputs;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +12,11 @@ namespace Quests
     public class QuestFlyer : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI titleText, descriptionText, statsText;
-        [SerializeField] private Button sendButton;
+        [SerializeField] private Button sendButton, closeButton;
         [SerializeField] private GameObject stamp;
+        
+        [SerializeField] private float animateInDuration = .5f;
+        [SerializeField] private float animateOutDuration = .75f;
         
         private Canvas _canvas;
         private Quest _quest;
@@ -20,24 +25,38 @@ namespace Quests
         {
             _canvas = GetComponent<Canvas>();
             sendButton.onClick.AddListener(StartQuest);
+            closeButton.onClick.AddListener(() => Close());
             BuildingSelect.OnQuestSelected += quest =>
             {
                 _quest = quest;
                 UpdateContent();
                 Open();
             };
+
+            Close();
         }
 
         private void Open()
         {
             Manager.EnterMenu();
-            _canvas.enabled = true;
+            Manager.Jukebox.PlayScrunch();
+            transform
+                .DOLocalMove(Vector3.zero, animateInDuration)
+                .OnStart(() => { _canvas.enabled = true; });
+            transform.DOLocalRotate(Vector3.zero, animateInDuration);
         }
         
-        private void Close()
+        private void Close(float delay = 0.0f)
         {
-            _canvas.enabled = false;
             Manager.ExitMenu();
+            transform
+                .DOLocalMove(new Vector3(-500, 1000, 0), animateOutDuration)
+                .SetDelay(delay);
+            transform
+                .DOLocalRotate(new Vector3(0, 0, 40), animateOutDuration)
+                .SetDelay(delay)
+                .OnComplete(() => { _canvas.enabled = false; });
+            UIEventController.SelectUI(null);
         }
 
         private void StartQuest()
@@ -47,7 +66,7 @@ namespace Quests
             //FindObjectOfType<Environment.AdventurerSpawner>().SendAdventurersOnQuest(quest.adventurers);
             RandomRotateStamps();
             Manager.Jukebox.PlayStamp();
-            Close();
+            Close(0.5f);
         }
 
         private void RandomRotateStamps()
