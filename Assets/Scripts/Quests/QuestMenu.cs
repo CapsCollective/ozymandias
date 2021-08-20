@@ -38,7 +38,7 @@ namespace Quests
 
         private Quest SelectedQuest
         {
-            get => Quests[_selectedQuest];
+            get => Quests.Count > 0 ? Quests[_selectedQuest] : null;
 
             set
             {
@@ -50,6 +50,7 @@ namespace Quests
                 }
             }
         }
+
         private QuestFlyer OpenFlyer => flyers[_openFlyer];
         private QuestFlyer ClosedFlyer => flyers[_openFlyer == 0 ? 1 : 0];
         private static List<Quest> Quests => Manager.Quests.quests;
@@ -64,7 +65,7 @@ namespace Quests
             {
                 SelectedQuest = quest;
                 OpenFlyer.UpdateContent(SelectedQuest);
-                // FocusBuilding(null); // TODO how to get the building of a quest?
+                FocusBuilding(SelectedQuest.Building);
                 Open();
             };
             
@@ -81,7 +82,9 @@ namespace Quests
         
         public void OpenMenu()
         {
+            if (!SelectedQuest) return;
             OpenFlyer.UpdateContent(SelectedQuest);
+            FocusBuilding(SelectedQuest.Building);
             Open();
         }
 
@@ -97,7 +100,7 @@ namespace Quests
             _selectedQuest = CycleIdx(_selectedQuest, Quests.Count, dir);
             SwapFlyers(dir, SelectedQuest);
             Manager.Jukebox.PlayScrunch();
-            // FocusBuilding(null); TODO uncomment this once param set
+            FocusBuilding(SelectedQuest.Building);
         }
 
         private void SwapFlyers(SwapDir dir, Quest selectedQuest)
@@ -127,7 +130,6 @@ namespace Quests
 
         private void FocusBuilding(Building building)
         {
-            // TODO make this move the camera to a building
             Vector3 buildingPos = building.transform.position;
             buildingPos.y = 1.0f;
             freeLook.Follow.transform.DOMove(buildingPos, 0.5f);
@@ -137,6 +139,9 @@ namespace Quests
         {
             Manager.EnterMenu();
             Manager.Jukebox.PlayScrunch();
+            var hasSingleQuest = Quests.Count == 1;
+            nextButton.gameObject.SetActive(!hasSingleQuest);
+            previousButton.gameObject.SetActive(!hasSingleQuest);
             _canvas.enabled = true;
             OpenFlyer.transform.eulerAngles = _offScreenRot;
             OpenFlyer.transform
