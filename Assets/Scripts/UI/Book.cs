@@ -9,15 +9,53 @@ namespace UI
 {
     public class Book : MonoBehaviour
     {
+        private enum BookPage
+        {
+            Settings,
+            Progress,
+            Unlocks
+        }
+
         private static readonly Vector3 ClosePos = new Vector3(0, -1000, 0);
         private static readonly Vector3 PunchScale = Vector3.one * 0.5f;
         
         [SerializeField] private Canvas canvas;
-        [SerializeField] private Button closeButton, quitButton, introSettingsButton, openBookButton;
+        [SerializeField] private CanvasGroup closeButtonCanvasGroup;
+        [SerializeField] private Button 
+            closeButton, 
+            quitButton, 
+            introSettingsButton, 
+            openBookButton, 
+            settingsRibbon,
+            progressRibbon,
+            unlocksRibbon;
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
+        [SerializeField] private SerializedDictionary<BookPage, CanvasGroup> pages;
         private GameState _closeState; // The state the book will enter when 
         private bool _isOpen, _transitioning;
+        
+        private BookPage _page = BookPage.Settings;
+        private BookPage Page
+        {
+            set
+            {
+                 if (_page == value) return;
+                
+                 //TODO: Page turn sound effect
+                
+                pages[_page].interactable = false;
+                pages[_page].blocksRaycasts = false;
+                pages[_page].DOFade(0, 0.2f).OnComplete(() =>
+                {
+                    _page = value;
+                    pages[_page].DOFade(1f, 0.2f);
+                    pages[_page].interactable = true;
+                    pages[_page].blocksRaycasts = true;
+                });
+            }
+        }
+        
         private void Start()
         {
             introSettingsButton.onClick.AddListener(Open);
@@ -28,6 +66,10 @@ namespace UI
                 _closeState = GameState.ToIntro;
                 Close();
             });
+            
+            settingsRibbon.onClick.AddListener(() => Page = BookPage.Settings);
+            unlocksRibbon.onClick.AddListener(() => Page = BookPage.Unlocks);
+            progressRibbon.onClick.AddListener(() => Page = BookPage.Progress);
 
             Manager.Inputs.IA_ShowPause.performed += _ =>
             {
@@ -50,6 +92,8 @@ namespace UI
                 .OnComplete(() =>
                 {
                     closeButton.gameObject.SetActive(true);
+                    closeButtonCanvasGroup.alpha = 0;
+                    closeButtonCanvasGroup.DOFade(1, 0.5f);
                     _transitioning = false;
                     _isOpen = true;
                 });

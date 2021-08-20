@@ -22,6 +22,8 @@ namespace Managers
         public Dictionary<Stat, List<Modifier>> Modifiers = new Dictionary<Stat, List<Modifier>>();
         public readonly Dictionary<Stat, int> ModifiersTotal = new Dictionary<Stat, int>();
 
+        public int SkillPoints { get; set; }
+        
         private void Start()
         {
             State.OnNewGame += OnNewGame;

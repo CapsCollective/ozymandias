@@ -18,6 +18,10 @@ namespace Cards
         public static Action OnDiscoverRuin;
         
         [SerializeField] private List<GameObject> starterBuildings;
+        [SerializeField] private List<GameObject> unlockableBuildings;
+        public List<GameObject> StarterBuildings => starterBuildings;
+        public List<GameObject> UnlockableBuildings => unlockableBuildings;
+
         
         private readonly List<GameObject> 
             _all = new List<GameObject>(), // All unlocked buildings across all playthroughs

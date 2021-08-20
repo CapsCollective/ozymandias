@@ -1,47 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Managers;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 using static Managers.GameManager;
+using Object = System.Object;
 
 namespace Achievements
 {
+    [Serializable]
+    public struct AchievementConfig
+    {
+        public Achievement achievement;
+        public string title;
+        public Sprite icon;
+        public int points;
+        [TextArea] public string lockedDescription, unlockedDescription;
+    }
+
     public class Achievements : MonoBehaviour
     {
-        [SerializeField] private Color lockedColor, unlockedColor;
-        [SerializeField] private Slider progressBar;
-        [SerializeField] private Image villageBadge, cityBadge, kingdomBadge;
-        [SerializeField] private GameObject notification;
-    
-        private readonly Dictionary<string, Achievement> _achievements = new Dictionary<string, Achievement>();
-        private readonly Dictionary<string, bool> _unlocked = new Dictionary<string, bool>();
-        private Canvas _canvas;
+        [SerializeField] private GameObject achievementDisplayPrefab;
+        [SerializeField] private Transform achievementDisplayContainer;
+        [SerializeField] private List<AchievementConfig> achievementConfigs;
+        private List<Achievement> Unlocked { get; set; }
 
-        private void Awake()
-        {
-            _canvas = GetComponent<Canvas>();
-            
-            //unlocked = JsonUtility.FromJson<Dictionary<string, bool>>(PlayerPrefs.GetString("Achievements", "{'Village People': 'true'}"));
-            foreach (Achievement achievement in FindObjectsOfType<Achievement>())
-            {
-                _achievements.Add(achievement.title, achievement);
-                _unlocked.Add(achievement.title, PlayerPrefs.GetInt(achievement.title, 0) == 1);
-                achievement.Unlocked = _unlocked[achievement.title];
-            }
-        }
+        //[SerializeField] private Color lockedColor, unlockedColor;
+        //[SerializeField] private Slider progressBar;
+        //[SerializeField] private Image villageBadge, cityBadge, kingdomBadge;
+        //[SerializeField] private GameObject notification;
 
-        public void Unlock(string achievementTitle)
+        public void Unlock(Achievement achievement)
         {
-            //TODO: Put an analytics here
+            if (Unlocked.Contains(achievement)) return;
             //TODO: Unlock Sound Effect
-            if (!_achievements.ContainsKey(achievementTitle) || _unlocked[achievementTitle]) return;
-            _achievements[achievementTitle].Unlocked = true;
-            _unlocked[achievementTitle] = true;
-            PlayerPrefs.SetInt(achievementTitle, 1);
-            notification.SetActive(true);
+            //TODO: Save 
         }
         
-        public void SetCitySize(int count)
+        /*public void SetCitySize(int count)
         {
             if (count < 15)
             {
@@ -73,7 +71,7 @@ namespace Achievements
                 cityBadge.color = unlockedColor;
                 kingdomBadge.color = unlockedColor;
                 Unlock("You Dropped This");
-            }
+            }*/
             /*
         //update achievement progress and change tier gem colours accordingly
         float progressTier = progress.transform.Find("Slider").GetComponent<Slider>().value += 1 / 8f;
@@ -93,16 +91,25 @@ namespace Achievements
         {
             progress.transform.Find("Kingdom").GetComponent<Image>().color = new Color(255, 160, 0, 255);
         }*/
-        }
         
-        
-        private void OnDestroy()
+
+        public AchievementDetails Save()
         {
-            foreach (var achievement in _unlocked)
+            return new AchievementDetails
             {
-                PlayerPrefs.SetInt(achievement.Key, achievement.Value ? 1 : 0);
-            }
-            PlayerPrefs.Save();
+                unlocked = Unlocked,
+                
+            };
+        }
+
+        public void Load(AchievementDetails details)
+        {
+            // Unlocked = details.unlocked;
+            // foreach (var config in achievementConfigs)
+            // {
+            //     AchievementDisplay display = Instantiate(achievementDisplayPrefab, achievementDisplayContainer).GetComponent<AchievementDisplay>();
+            //     display.Display(config, details.unlocked.Contains(config.achievement));
+            // }
         }
     }
 }

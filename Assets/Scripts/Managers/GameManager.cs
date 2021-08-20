@@ -14,6 +14,7 @@ namespace Managers
         public static GameManager Manager { get; private set; }
         
         // All Managers/ Universal Controllers
+        public Inputs.Inputs Inputs { get; private set; }
         public State State { get; private set; }
         public Stats Stats { get; private set; }
         public Adventurers.Adventurers Adventurers { get; private set; }
@@ -24,13 +25,14 @@ namespace Managers
         public EventQueue EventQueue { get; private set; }
         public Map.Map Map { get; private set; }
         public Jukebox Jukebox { get; private set; }
-        public Inputs.Inputs Inputs { get; private set; }
         public TooltipDisplay Tooltip { get; private set; }
 
         private void Awake()
         {
             Manager = this;
             Random.InitState((int)DateTime.Now.Ticks);
+            Inputs = new Inputs.Inputs();
+            
             State = FindObjectOfType<State>();
             Stats = FindObjectOfType<Stats>();
             Adventurers = FindObjectOfType<Adventurers.Adventurers>();
@@ -41,7 +43,6 @@ namespace Managers
             EventQueue = FindObjectOfType<EventQueue>();
             Map = FindObjectOfType<Map.Map>();
             Jukebox = FindObjectOfType<Jukebox>();
-            Inputs = new Inputs.Inputs();
             Tooltip = FindObjectOfType<TooltipDisplay>();
 
             State.EnterState(GameState.Loading);

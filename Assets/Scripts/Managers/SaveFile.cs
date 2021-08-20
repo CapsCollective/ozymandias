@@ -61,6 +61,13 @@ namespace Managers
     }
     
     [Serializable]
+    public struct AchievementDetails
+    {
+        public List<Achievement> unlocked;
+        public int gamesPlayed, totalBuildings, totalAdventurers, mostAdventurers, highestTurn;
+    }
+    
+    [Serializable]
     public class SaveFile
     {
         public StatDetails stats;
@@ -69,6 +76,7 @@ namespace Managers
         public EventQueueDetails eventQueue;
         public BuildingCardDetails buildingCards;
         public List<BuildingDetails> buildings;
+        public AchievementDetails achievements;
 
         public static void SaveState()
         {
@@ -99,6 +107,9 @@ namespace Managers
                 quests = Manager.Quests.Save();
                 eventQueue = Manager.EventQueue.Save();
             }
+
+            achievements = Manager.Achievements.Save();
+            
             PlayerPrefs.SetString("Save", JsonConvert.SerializeObject(this));
         }
 
@@ -130,6 +141,9 @@ namespace Managers
                 await Manager.Quests.Load(quests);
                 //TODO: Reshuffle buildings
             }
+            
+            Manager.Achievements.Load(achievements);
+            
             UpdateUi();
         }
     }
