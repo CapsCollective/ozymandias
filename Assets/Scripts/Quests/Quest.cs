@@ -40,8 +40,8 @@ namespace Quests
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
-        private Building Building { get; set; }
-        private bool IsActive => TurnsLeft != -1;
+        public Building Building { get; private set; }
+        public bool IsActive => TurnsLeft != -1;
 
         public void Add()
         {

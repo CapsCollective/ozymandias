@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using Inputs;
+using Quests;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
@@ -12,7 +12,7 @@ using static GameState.GameManager;
 
 namespace Buildings
 {
-    public class Clear : MonoBehaviour
+    public class BuildingSelect : MonoBehaviour
     {
         public static int TerrainClearCount { get; set; }
         private const int TerrainBaseCost = 5;
@@ -23,34 +23,55 @@ namespace Buildings
         
         private const float RefundPercentage = 0.50f;
         
-                
-        private class SelectedBuildingConfig
+        private enum SelectionType
         {
-            public bool IsRefund;
-            public int DestructionCost;
-            public string BuildingName;
+            Clear,
+            Refund,
+            Quest
+        }
+                
+        private class SelectionConfig
+        {
+            public readonly string Title;
+            public readonly int Cost;
+            public readonly SelectionType Type;
+            
+            public SelectionConfig(string title, SelectionType type, int cost = 0)
+            {
+                Title = title;
+                Type = type;
+                Cost = cost;
+            }
+            
+            public bool IsRefund => Type == SelectionType.Refund;
+            
+            public bool IsQuest => Type == SelectionType.Quest;
         }
         
         [SerializeField] private int yOffset;
         [SerializeField] private Image buttonImage;
-        [SerializeField] private TextMeshProUGUI nameText, costText;
+        [SerializeField] private TextMeshProUGUI nameText, costText, questTitleText;
+        [SerializeField] private Sprite buildingButtonBacking, questButtonBacking;
+        
         [SerializeField] private LayerMask collisionMask;
+        
         [SerializeField] [ColorUsage(false, true)] private Color hoverColor;
         [SerializeField] [ColorUsage(false, true)] private Color selectColor;
+        
         [SerializeField] private float raycastInterval;
 
         private Canvas _canvas;
         private Camera _cam;
         private OutlinePostProcess _outline;
         private Building _hoveredBuilding, _selectedBuilding;
-        private SelectedBuildingConfig _config;
+        private SelectionConfig _config;
         private float _timeSinceRaycast;
 
         public static Action<Building> OnClear;
+        public static Action<Quest> OnQuestSelected;
         
         private Building HoveredBuilding
         {
-            get => _hoveredBuilding;
             set {
                 // Deselection should only happen when the un-hovered building
                 // is not the same as the selected building
@@ -78,27 +99,25 @@ namespace Buildings
                 
                 _selectedBuilding.Selected = true;
                 SetHighlightColor(selectColor);
+                
+                // Find building position and reposition clearButton to overlay on top of it.  
+                RepositionButton();
 
-                if (_selectedBuilding.IsQuest)
-                {
-                    //TODO: Open quest flyer
-                    Debug.Log(_selectedBuilding.Quest.name);
-                }
-                else
-                {
-                    // Find building position and reposition clearButton to overlay on top of it.  
-                    RepositionClearButton();
-
-                    // Get UI config information
-                    _config = GetClearButtonConfiguration();
-
-                    // Set button opacity (based on whether the player can afford to destroy a building) and text
-                    SetButtonOpacity(_config.IsRefund || Manager.Wealth >= _config.DestructionCost ? 255f : 166f);
-            
-                    nameText.text = _config.BuildingName;
-                    if (_config.BuildingName == "Guild Hall") costText.text = "Cost: Don't";
-                    else costText.text = (_config.IsRefund ? "Refund: " : "Cost: ") + _config.DestructionCost;
-                }
+                // Get UI config information
+                _config = GetButtonConfiguration();
+                
+                // Set title text values
+                nameText.text = _config.IsQuest ? "" : _config.Title;
+                questTitleText.text = _config.IsQuest ? _config.Title : "";
+                
+                // Set button image values
+                SetButtonOpacity(_config.IsRefund || Manager.Wealth >= _config.Cost ? 255f : 166f);
+                buttonImage.sprite = _config.IsQuest ? questButtonBacking : buildingButtonBacking;
+                
+                // Set Cost text values
+                if (_config.IsQuest) costText.text = "";
+                else if (_config.Title == "Guild Hall") costText.text = "Cost: Everything";
+                else costText.text = (_config.IsRefund ? "Refund: " : "Cost: ") + _config.Cost;
             }
         }
         
@@ -112,7 +131,7 @@ namespace Buildings
             _canvas = GetComponent<Canvas>();
             _cam = Camera.main;
             if (_cam) _cam.GetComponentInChildren<PostProcessVolume>().profile.TryGetSettings(out _outline);
-            
+
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += DeselectBuilding;
             Manager.Inputs.IA_DeleteBuilding.performed += DeleteBuildingInput;
@@ -126,9 +145,7 @@ namespace Buildings
         private void DeleteBuildingInput(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             if (Manager.InMenu || Manager.TurnTransitioning) return;
-
-            if(obj.performed)
-                ClearBuilding();
+            if(obj.performed) SelectBuilding();
         }
 
         private void Update()
@@ -150,7 +167,7 @@ namespace Buildings
 
         private void LateUpdate()
         {
-            // Keep track of clear button position above selected building
+            // Keep track of the button position above selected building
             if (!SelectedBuilding) return;
             transform.position = _cam.WorldToScreenPoint(SelectedBuilding.transform.position) + (Vector3.up * yOffset);
         }
@@ -191,36 +208,31 @@ namespace Buildings
             return Place.Selected != Place.Deselected || EventSystem.current.IsPointerOverGameObject();
         }
         
-        private SelectedBuildingConfig GetClearButtonConfiguration()
+        private SelectionConfig GetButtonConfiguration()
         {
-            SelectedBuildingConfig config = new SelectedBuildingConfig();
-            
-            if (SelectedBuilding.IsRuin)
+            if (SelectedBuilding.IsQuest)
             {
-                config.BuildingName = "Ruin";
-                config.IsRefund = false;
-                //Scaled cost
-                config.DestructionCost = (int) (Enumerable
-                    .Range(RuinsClearCount, SelectedBuilding.SectionCount)
-                    .Sum(i => Mathf.Pow(RuinsCostScale, i)) * RuinsBaseCost);
+                return new SelectionConfig(_selectedBuilding.Quest.Title, SelectionType.Quest);
+            }
+            else if (SelectedBuilding.IsRuin)
+            {
+                var cost = (int) 
+                    Enumerable.Range(RuinsClearCount, SelectedBuilding.SectionCount)
+                        .Sum(i => Mathf.Pow(RuinsCostScale, i)) * RuinsBaseCost;
+                return new SelectionConfig("Ruin", SelectionType.Clear, cost);
             }
             else if (SelectedBuilding.IsTerrain)
             {
-                config.BuildingName = "Terrain";
-                config.IsRefund = false;
-                //Scaled cost
-                config.DestructionCost = (int) (Enumerable
-                    .Range(TerrainClearCount, SelectedBuilding.SectionCount)
-                    .Sum(i => Mathf.Pow(TerrainCostScale, i)) * TerrainBaseCost);
+                var cost = (int)
+                    Enumerable.Range(TerrainClearCount, SelectedBuilding.SectionCount)
+                        .Sum(i => Mathf.Pow(TerrainCostScale, i)) * TerrainBaseCost;
+                return new SelectionConfig("Terrain", SelectionType.Clear, cost);
             }
             else
             {
-                config.IsRefund = true;
-                config.DestructionCost = Mathf.FloorToInt(SelectedBuilding.ScaledCost * RefundPercentage);
-                config.BuildingName = SelectedBuilding.name;
+                return new SelectionConfig(SelectedBuilding.name, SelectionType.Refund, 
+                    Mathf.FloorToInt(SelectedBuilding.ScaledCost * RefundPercentage));
             }
-
-            return config;
         }
 
         private void SetButtonOpacity(float opacity)
@@ -234,28 +246,41 @@ namespace Buildings
             buttonImage.color = new Color(oldButtonColor.r, oldButtonColor.g, oldButtonColor.b, opacity / 255f);
         }
 
-        private void RepositionClearButton()
+        private void RepositionButton()
         {
             Vector3 buildingPosition = SelectedBuilding.transform.position;
             transform.position = _cam.WorldToScreenPoint(buildingPosition) + (Vector3.up * yOffset);
             _canvas.enabled = true;
         }
 
-        public void ClearBuilding()
+        public void SelectBuilding()
         {
-            if (
-                !SelectedBuilding  ||
-                _config == null ||
-                SelectedBuilding.indestructible || 
-                !Manager.Spend(_config.DestructionCost * (_config.IsRefund ? -1 : 1))
-            ) return;
+            // Switch on config type
+            switch (_config.Type)
+            {
+                case SelectionType.Quest:
+                    OnQuestSelected?.Invoke(SelectedBuilding.Quest);
+                    break;
+                case SelectionType.Refund:
+                case SelectionType.Clear:
+                {
+                    var affordable = Manager.Spend(
+                        _config.Cost * (_config.IsRefund ? -1 : 1));
+                    
+                    if (!SelectedBuilding  || _config == null || 
+                        SelectedBuilding.indestructible || !affordable) return;
             
-            if (SelectedBuilding.IsRuin) RuinsClearCount += SelectedBuilding.SectionCount;
-            if (SelectedBuilding.IsTerrain) TerrainClearCount += SelectedBuilding.SectionCount;
+                    if (SelectedBuilding.IsRuin) RuinsClearCount += SelectedBuilding.SectionCount;
+                    if (SelectedBuilding.IsTerrain) TerrainClearCount += SelectedBuilding.SectionCount;
             
-            OnClear.Invoke(SelectedBuilding);
-            Manager.Buildings.Remove(SelectedBuilding);
-            DeselectBuilding();
+                    OnClear.Invoke(SelectedBuilding);
+                    Manager.Buildings.Remove(SelectedBuilding);
+                    DeselectBuilding();
+                    break;
+                }
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

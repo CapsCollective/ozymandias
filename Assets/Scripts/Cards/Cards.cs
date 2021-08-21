@@ -29,7 +29,7 @@ namespace Cards
 
         private void Awake()
         {
-            Clear.OnClear += Discover;
+            BuildingSelect.OnClear += Discover;
             GameManager.OnGameEnd += OnGameEnd;
         }
 
