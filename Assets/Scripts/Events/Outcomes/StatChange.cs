@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Events.Outcomes
 {
@@ -15,15 +16,15 @@ namespace Events.Outcomes
     
         public override bool Execute(bool fromChoice)
         {
-            if (!Manager.Modifiers.ContainsKey(statToChange)) return false;
+            if (!Manager.Stats.Modifiers.ContainsKey(statToChange)) return false;
         
-            Manager.Modifiers[statToChange].Add(new Modifier
+            Manager.Stats.Modifiers[statToChange].Add(new Stats.Modifier
             {
                 amount = amount,
                 turnsLeft = turns,
                 reason = reason
             });
-            Manager.ModifiersTotal[statToChange] += amount;
+            Manager.Stats.ModifiersTotal[statToChange] += amount;
             return true;
         }
     

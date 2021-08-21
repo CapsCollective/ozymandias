@@ -6,14 +6,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Cinemachine;
-using static GameState.GameManager;
+using Utilities;
+using static Managers.GameManager;
 
 namespace Quests
 {
     public class QuestMenu : MonoBehaviour
     {
-        [SerializeField] private CinemachineFreeLook freeLook;
-        [SerializeField] private Button closeButton, nextButton, previousButton;
+        [SerializeField] private Button openQuestsButton, closeButton, nextButton, previousButton;
         [SerializeField] private QuestFlyer[] flyers;
         
         [SerializeField] private float animateAcrossDuration = 0.5f;
@@ -58,6 +58,13 @@ namespace Quests
         private void Start()
         {
             _canvas = GetComponent<Canvas>();
+            openQuestsButton.onClick.AddListener(() =>
+            {
+                if (!SelectedQuest) return;
+                OpenFlyer.UpdateContent(SelectedQuest);
+                FocusBuilding(SelectedQuest.Building);
+                Open();
+            });
             closeButton.onClick.AddListener(Close);
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
             previousButton.onClick.AddListener(() => ChangeQuest(SwapDir.Left));
@@ -78,14 +85,6 @@ namespace Quests
                 // Set their positions off-screen
                 flyer.transform.localPosition = _offScreenPos;
             }
-        }
-        
-        public void OpenMenu()
-        {
-            if (!SelectedQuest) return;
-            OpenFlyer.UpdateContent(SelectedQuest);
-            FocusBuilding(SelectedQuest.Building);
-            Open();
         }
 
         private static int CycleIdx(int idx, int collectionLength, SwapDir dir)
@@ -132,12 +131,12 @@ namespace Quests
         {
             Vector3 buildingPos = building.transform.position;
             buildingPos.y = 1.0f;
-            freeLook.Follow.transform.DOMove(buildingPos, 0.5f);
+            Manager.Camera.MoveTo(buildingPos, 0.5f);
         }
 
         private void Open()
         {
-            Manager.EnterMenu();
+            Manager.State.EnterState(GameState.InMenu);
             Manager.Jukebox.PlayScrunch();
             var hasSingleQuest = Quests.Count == 1;
             nextButton.gameObject.SetActive(!hasSingleQuest);
@@ -152,7 +151,7 @@ namespace Quests
         
         private void Close()
         {
-            Manager.ExitMenu();
+            Manager.State.EnterState(GameState.InGame);
             OpenFlyer.transform.DOLocalMove(_offScreenPos, animateOutDuration);
             OpenFlyer.transform
                 .DOLocalRotate(_offScreenRot, animateOutDuration)

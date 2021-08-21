@@ -2,7 +2,7 @@
 using Events.Outcomes;
 using NaughtyAttributes;
 using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 using EventType = Utilities.EventType;
 
 namespace Events

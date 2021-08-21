@@ -1,22 +1,80 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Buildings;
-using GameState;
+using DG.Tweening;
+using Managers;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
+using static Managers.GameManager;
 
 namespace Map
 {
     public class Map : MonoBehaviour
     {
+        private static readonly int Radius = Shader.PropertyToID("_Radius");
+        private static readonly int Effect = Shader.PropertyToID("_Effect");
+        private static readonly int Origin = Shader.PropertyToID("_Origin");
+        
         public LayerMask layerMask;
         [SerializeField] private MeshFilter gridMesh, roadMesh;
         [SerializeField] private Layout layout;
-        
+
+        private bool _flooded;
+        private MeshRenderer _meshRenderer;
+        private Camera _cam;
+        private float _radius;
+        private Color _effectColor;
+
+        #region Fill Animation
+
         private void Awake()
         {
-            GameManager.OnGameEnd += OnGameEnd;
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _cam = Camera.main;
+
+            _meshRenderer.material.SetFloat(Radius, 0);
+            _meshRenderer.material.SetColor(Effect, new Color(0, 0.3f, 0, 0));
+        }
+
+        private void LateUpdate()
+        {
+            //TODO: Do we need to do this every frame, or only when it's updating?
+            UpdateEffectOrigin();
+        
+            if (Place.Selected != Place.Deselected && !_flooded) Flood();
+        
+            if (Place.Selected == Place.Deselected && _flooded) Drain();
+        }
+
+        private void Drain()
+        {
+            _flooded = false;
+            DOTween.To(() => _radius, x => _radius = x, 0, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat(Radius, _radius));
+            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
+        }
+
+        private void Flood()
+        {
+            _flooded = true;
+            DOTween.To(() => _radius, x => _radius = x, 70, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat(Radius, _radius));
+            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0.5f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
+        }
+
+        private void UpdateEffectOrigin()
+        {
+            Ray ray = _cam.ScreenPointToRay(new Vector3(Manager.Inputs.MousePosition.x, Manager.Inputs.MousePosition.y,
+                _cam.nearClipPlane));
+            Physics.Raycast(ray, out RaycastHit hit);
+
+            _meshRenderer.material.SetVector(Origin, hit.point);
+        }
+        
+        #endregion
+        
+        private void Start()
+        {
+            State.OnGameEnd += () => layout.ClearRoad(roadMesh);
             GenerateMesh();
         }
 
@@ -35,20 +93,8 @@ namespace Map
             roadMesh.sharedMesh = null;
         }
 
-        public void Highlight(IEnumerable<Cell> cells, HighlightState state)
-        {
-            Vector2[] uv = gridMesh.sharedMesh.uv;
 
-            foreach (Cell cell in cells)
-            {
-                if (cell == null || !cell.Active) continue;
-                foreach (int vertexIndex in layout.GetUVs(cell))
-                    uv[vertexIndex].x = (int) state / 2f;
-            }
-
-            gridMesh.sharedMesh.uv = uv;
-        }
-
+        #region Querying
         // Gets the closest cell by world position
         public Cell GetClosestCell(Vector3 worldPosition)
         {
@@ -77,6 +123,36 @@ namespace Map
         {
             return layout.GetNeighbours(cell);
         }
+        
+        public Vector3[] GetCornerPositions(Cell cell)
+        {
+            Vector3[] corners = new Vector3[4];
+            for (int i = 0; i < 4; i++)
+            {
+                corners[i] = transform.TransformPoint(cell.Vertices[(i + cell.Rotation) % 4]);
+            }
+
+            return corners;
+        }
+        
+        public List<Vector3> RandomRoadPath => layout.RandomRoadPath;
+        
+        #endregion
+
+        #region Functionality
+        public void Highlight(IEnumerable<Cell> cells, HighlightState state)
+        {
+            Vector2[] uv = gridMesh.sharedMesh.uv;
+
+            foreach (Cell cell in cells)
+            {
+                if (cell == null || !cell.Active) continue;
+                foreach (int vertexIndex in layout.GetUVs(cell))
+                    uv[vertexIndex].x = (int) state / 2f;
+            }
+
+            gridMesh.sharedMesh.uv = uv;
+        }
 
         // Sets the rotation of all cells to be uniformly oriented
         public void Align(List<Cell> cells, int rotation)
@@ -88,28 +164,11 @@ namespace Map
         {
             layout.FillGrid();
         }
-
-        public Vector3[] GetCornerPositions(Cell cell)
-        {
-            Vector3[] corners = new Vector3[4];
-            for (int i = 0; i < 4; i++)
-            {
-                corners[i] = transform.TransformPoint(cell.Vertices[(i + cell.Rotation) % 4]);
-            }
-
-            return corners;
-        }
-
+        
         public void CreateRoad(List<Cell> cells)
         {
             StartCoroutine(layout.CreateRoad(cells, roadMesh));
         }
-        
-        public List<Vector3> RandomRoadPath => layout.RandomRoadPath;
-
-        private void OnGameEnd()
-        {
-            layout.ClearRoad(roadMesh);
-        }
+        #endregion
     }
 }

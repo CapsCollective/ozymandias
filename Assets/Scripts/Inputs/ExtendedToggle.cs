@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Inputs
 {

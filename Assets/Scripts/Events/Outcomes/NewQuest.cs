@@ -1,7 +1,7 @@
 ﻿using NaughtyAttributes;
 using Quests;
 using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Events.Outcomes
 {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Tooltip
 {

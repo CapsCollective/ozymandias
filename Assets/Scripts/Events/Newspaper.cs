@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using GameState;
 using Inputs;
+using Managers;
 using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
-using static GameState.GameManager;
+using Utilities;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace Events
@@ -22,7 +23,7 @@ namespace Events
         [SerializeField] private NewspaperEvent[] articleList;
         [SerializeField] private Image articleImage;
         [SerializeField] private Button[] choiceList;
-        [SerializeField] private Button continueButton;
+        [SerializeField] private Button continueButton, openNewspaperButton;
         [SerializeField] private TextMeshProUGUI turnCounter;
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
@@ -47,9 +48,9 @@ namespace Events
             _canvas = GetComponent<Canvas>();
             _newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + _newspaperTitle + " }";
-            OnNextTurnEnd += NextTurnOpen;
+            State.OnNextTurnEnd += NextTurnOpen;
+            openNewspaperButton.onClick.AddListener(Open);
             continueButton.onClick.AddListener(Close);
-            Close();
         }
 
         private void NextTurnOpen()
@@ -60,11 +61,11 @@ namespace Events
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
         {
-            turnCounter.text = _newspaperTitle + ", Turn " + Manager.TurnCounter;
+            turnCounter.text = _newspaperTitle + ", Turn " + Manager.Stats.TurnCounter;
         
             _choiceEvent = events[0];
             if (_choiceEvent.choices.Count > 0) SetContinueButtonState(ButtonState.Choice);
-            else SetContinueButtonState(Manager.IsGameOver ? ButtonState.GameOver : ButtonState.Close);
+            else SetContinueButtonState(Manager.State.IsGameOver ? ButtonState.GameOver : ButtonState.Close);
         
             // Set the image for the main article and a newspaper title
             if(events[0].image) articleImage.sprite = events[0].image;
@@ -101,7 +102,7 @@ namespace Events
             SetContinueButtonState(ButtonState.Close);
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
-            Manager.UpdateUi();
+            UpdateUi();
             SaveFile.SaveState(); // Need to save again after a choice to lock in its outcomes
             UIEventController.SelectUI(continueButton.gameObject);
         }
@@ -126,21 +127,19 @@ namespace Events
         
         private void Open()
         {
-            _canvas.enabled = true;
-            Manager.EnterMenu();
+            Manager.State.EnterState(GameState.InMenu);
             Manager.Jukebox.PlayScrunch();
-            transform
-                .DOLocalMove(Vector3.zero, animateInDuration)
-                .OnStart(() => { _canvas.enabled = true; });
+            
+            _canvas.enabled = true;
+            transform.DOLocalMove(Vector3.zero, animateInDuration);
             transform.DOLocalRotate(Vector3.zero, animateInDuration);
         }
 
         private void Close()
         {
-            Manager.ExitMenu();
+            Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
             transform.DOLocalMove(new Vector3(2000, 800, 0), animateOutDuration);
-            transform
-                .DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
+            transform.DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
                 .OnComplete(() =>
                 {
                     OnClosed?.Invoke();

@@ -1,24 +1,21 @@
 using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
-    public class WelcomeSign : MonoBehaviour
+    public class WelcomeSign : UiUpdater
     {
         private TextMesh _textMesh;
         private const string SignContent = "Welcome Adventurers!\nPopulation: ";
 
         private void Start()
         {
-            void UpdatePopulation()
-            {
-                _textMesh.text = SignContent + Manager.Adventurers.Count.ToString("00");
-            }
-
             _textMesh = GetComponent<TextMesh>();
-        
-            OnUpdateUI += UpdatePopulation;
-            UpdatePopulation();
+        }
+
+        protected override void UpdateUi()
+        {
+            _textMesh.text = SignContent + Manager.Adventurers.Count.ToString("00");
         }
     }
 }

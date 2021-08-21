@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -15,7 +15,7 @@ namespace UI
         
         protected override void UpdateUi()
         {
-            int satisfaction = Manager.GetSatisfaction(stat);
+            int satisfaction = Manager.Stats.GetSatisfaction(stat);
             glow.color = Color.clear;
             
             

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GameState;
+using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -24,7 +24,7 @@ namespace Quests
         
         private void Awake()
         {
-            GameManager.OnGameEnd += OnGameEnd;
+            State.OnGameEnd += OnGameEnd;
         }
         
         public bool Add(Quest q)

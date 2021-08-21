@@ -1,4 +1,4 @@
-using GameState;
+using Managers;
 using UnityEngine;
 
 namespace Utilities
@@ -8,14 +8,13 @@ namespace Utilities
         private void Start()
         {
             gameObject.SetActive(false);
-            GameManager.OnNextTurnEnd += ShowGameObject;
-
+            State.OnNextTurnEnd += ShowGameObject;
         }
 
         private void ShowGameObject()
         {
             gameObject.SetActive(true);
-            GameManager.OnNextTurnEnd -= ShowGameObject;
+            State.OnNextTurnEnd -= ShowGameObject;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Inputs;
+using Managers;
 using Quests;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Buildings
 {
@@ -102,7 +103,7 @@ namespace Buildings
                 
                 // Find building position and reposition clearButton to overlay on top of it.  
                 RepositionButton();
-
+                
                 // Get UI config information
                 _config = GetButtonConfiguration();
                 
@@ -111,7 +112,7 @@ namespace Buildings
                 questTitleText.text = _config.IsQuest ? _config.Title : "";
                 
                 // Set button image values
-                SetButtonOpacity(_config.IsRefund || Manager.Wealth >= _config.Cost ? 255f : 166f);
+                SetButtonOpacity(_config.IsRefund || Manager.Stats.Wealth >= _config.Cost ? 255f : 166f);
                 buttonImage.sprite = _config.IsQuest ? questButtonBacking : buildingButtonBacking;
                 
                 // Set Cost text values
@@ -139,12 +140,12 @@ namespace Buildings
             Manager.Inputs.IA_DeleteBuilding.canceled += DeleteBuildingInput;
 
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
-            OnEnterMenu += () => HoveredBuilding = null;
+            State.OnEnterState += () => HoveredBuilding = null;
         }
 
         private void DeleteBuildingInput(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (Manager.InMenu || Manager.TurnTransitioning) return;
+            if (!Manager.State.InGame) return;
             if(obj.performed) SelectBuilding();
         }
 
@@ -264,7 +265,7 @@ namespace Buildings
                 case SelectionType.Refund:
                 case SelectionType.Clear:
                 {
-                    var affordable = Manager.Spend(
+                    bool affordable = Manager.Stats.Spend(
                         _config.Cost * (_config.IsRefund ? -1 : 1));
                     
                     if (!SelectedBuilding  || _config == null || 
