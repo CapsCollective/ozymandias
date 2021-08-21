@@ -16,7 +16,6 @@ namespace Inputs
         
         [SerializeField] private Button button;
         [SerializeField] private TextMeshProUGUI buttonText;
-        [SerializeField] private CameraMovement cameraMovement;
         [SerializeField] private Canvas canvas;
         
         
@@ -30,13 +29,13 @@ namespace Inputs
             _dummyCursor = isMac ? dummyCursorNonScaling : dummyCursorScaling;
             button.onClick.AddListener(() =>
             {
-                cameraMovement.Center();
+                Manager.Camera.MoveTo(Manager.Buildings.GuildHallLocation);
             });
         }
 
         private void Update()
         {
-            var cameraPos = cameraMovement.gameObject.transform.position;
+            var cameraPos = Manager.Camera.transform.position;
             var townDist = Vector3.Magnitude(cameraPos);
             
             var isBeyondBounds = townDist > InnerDistance;
@@ -78,7 +77,7 @@ namespace Inputs
             }
         
             Manager.Jukebox.PlayClick();
-            cameraMovement.Center();
+            Manager.Camera.MoveTo(Manager.Buildings.GuildHallLocation);
             _dummyCursor.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

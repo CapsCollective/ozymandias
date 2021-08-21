@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,12 @@ namespace WalkingAdventurers
             new Dictionary<GameObject, List<Vector3>>();
 
         private float _wanderUpdateTime;
+
+        private void Start()
+        {
+            // TODO: Reenable functionality once new quest setup is done
+            // Manager.Quests.OnQuestStarted += quest => SendAdventurersOnQuest(quest.adventurers);
+        }
 
         private void Update()
         {

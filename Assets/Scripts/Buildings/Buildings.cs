@@ -95,10 +95,6 @@ namespace Buildings
             else if (building.IsRuin) _ruins.Add(building);
             else _buildings.Add(building);
             
-            //TODO: Make this a action callback
-            //if (!Manager.IsLoading && ++placedThisTurn >= 5) Manager.Achievements.Unlock("I'm Saving Up!");
-            //if (_buildings.Count >= 30 && Clear.TerrainClearCount == 0) Manager.Achievements.Unlock("One With Nature");
-            
             if(!Manager.State.Loading) UpdateUi();
             return true;
         }

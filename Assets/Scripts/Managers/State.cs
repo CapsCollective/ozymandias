@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Buildings;
 using Cinemachine;
 using DG.Tweening;
-using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -28,7 +27,6 @@ namespace Managers
         
         [SerializeField] private Canvas loadingCanvas, menuCanvas, gameCanvas;
         [SerializeField] private CanvasGroup loadingCanvasGroup, menuCanvasGroup, gameCanvasGroup;
-        [SerializeField] private CinemachineFreeLook freeLook;
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
         [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
@@ -173,6 +171,7 @@ namespace Managers
         {
             loadingCanvas.enabled = true;
             Manager.Inputs.TogglePlayerInput(false);
+            CinemachineFreeLook freeLook = Manager.Camera.FreeLook;
             
             _startPos.Position = freeLook.Follow.position;
             _startPos.OrbitHeight = freeLook.m_Orbits[1].m_Height;
@@ -305,8 +304,8 @@ namespace Managers
             Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
-            Clear.RuinsClearCount = 0;
-            Clear.TerrainClearCount = 0;
+            BuildingSelect.RuinsClearCount = 0;
+            BuildingSelect.TerrainClearCount = 0;
             
             SaveFile.SaveState();
             EnterState(GameState.ToIntro);
@@ -389,8 +388,10 @@ namespace Managers
         private float _moveAnimTime;
         private static readonly int Tint = Shader.PropertyToID("_Tint");
 
+        //TODO: Move to the CameraMovement
         private bool MoveCam(CameraMove cameraMove, AnimationCurve curve, float multiplier = 0.005f)
         {
+            CinemachineFreeLook freeLook = Manager.Camera.FreeLook;
             _moveAnimTime += Time.deltaTime;
             var lerpTime = curve.Evaluate(_moveAnimTime * multiplier);
 

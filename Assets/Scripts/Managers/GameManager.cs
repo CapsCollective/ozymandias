@@ -1,5 +1,6 @@
 ﻿using System;
 using Events;
+using Inputs;
 using NaughtyAttributes;
 using Tooltip;
 using UnityEngine;
@@ -26,6 +27,7 @@ namespace Managers
         public Map.Map Map { get; private set; }
         public Jukebox Jukebox { get; private set; }
         public TooltipDisplay Tooltip { get; private set; }
+        public CameraMovement Camera { get; private set; }
 
         private void Awake()
         {
@@ -44,6 +46,7 @@ namespace Managers
             Map = FindObjectOfType<Map.Map>();
             Jukebox = FindObjectOfType<Jukebox>();
             Tooltip = FindObjectOfType<TooltipDisplay>();
+            Camera = FindObjectOfType<CameraMovement>();
 
             State.EnterState(GameState.Loading);
         }

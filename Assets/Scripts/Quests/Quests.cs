@@ -18,9 +18,9 @@ namespace Quests
         [SerializeField] private GameObject sectionPrefab;
         public GameObject SectionPrefab => sectionPrefab;
 
-        private readonly List<Quest> _quests = new List<Quest>();
+        public readonly List<Quest> quests = new List<Quest>();
         
-        public int Count => _quests.Count;
+        public int Count => quests.Count;
         
         private void Awake()
         {
@@ -29,23 +29,23 @@ namespace Quests
         
         public bool Add(Quest q)
         {
-            if (_quests.Contains(q)) return false;
-            _quests.Add(q);
+            if (quests.Contains(q)) return false;
+            quests.Add(q);
             q.Add();
             return true;
         }
 
         public bool Remove(Quest q)
         {
-            if (!_quests.Contains(q)) return false;
-            _quests.Remove(q);
+            if (!quests.Contains(q)) return false;
+            quests.Remove(q);
             q.Remove();
             return true;
         }
 
         public List<QuestDetails> Save()
         {
-            return _quests.Select(x => x.Save()).ToList();
+            return quests.Select(x => x.Save()).ToList();
         }
         
         public async Task Load(List<QuestDetails> quests)
@@ -53,14 +53,14 @@ namespace Quests
             foreach (QuestDetails details in quests)
             {
                 Quest q = await Addressables.LoadAssetAsync<Quest>(details.name).Task;
-                _quests.Add(q);
+                this.quests.Add(q);
                 q.Load(details);
             }
         }
 
         private void OnGameEnd()
         {
-            for (int i = _quests.Count - 1 ; i >= 0 ; i--) Remove(_quests[i]);
+            for (int i = quests.Count - 1 ; i >= 0 ; i--) Remove(quests[i]);
         }
     }
 }
