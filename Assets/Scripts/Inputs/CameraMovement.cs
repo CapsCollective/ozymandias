@@ -40,11 +40,15 @@ namespace Inputs
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float DoFAdjustMultiplier = 5f;
 
-        private void Start()
+        private void Awake()
         {
             _cam = GetComponent<Camera>();
             profile.TryGetSettings(out _depthOfField);
             FreeLook = GetComponent<CinemachineFreeLook>();
+        }
+
+        private void Start()
+        {
             Manager.Inputs.IA_OnRightClick.performed += RightClick;
             Manager.Inputs.IA_OnRightClick.canceled += RightClick;
             Manager.Inputs.IA_OnLeftClick.performed += LeftClick;

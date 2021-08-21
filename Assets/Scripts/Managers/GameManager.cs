@@ -47,7 +47,10 @@ namespace Managers
             Jukebox = FindObjectOfType<Jukebox>();
             Tooltip = FindObjectOfType<TooltipDisplay>();
             Camera = FindObjectOfType<CameraMovement>();
+        }
 
+        public void Start()
+        {
             State.EnterState(GameState.Loading);
         }
 
