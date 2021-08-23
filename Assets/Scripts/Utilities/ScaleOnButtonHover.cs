@@ -30,5 +30,11 @@ namespace Utilities
             // End the on-hover animation
             target.transform.DOScale(1.0f, duration);
         }
+        
+        public void OnDisable()
+        {
+            // End the on-hover animation if the target gets disabled
+            if (target) target.transform.DOScale(1.0f, duration);
+        }
     }
 }

@@ -89,6 +89,7 @@ namespace Managers
 
         public static Action OnEnterState;
         public static Action OnNewGame;
+        public static Action OnLoadingEnd;
         public static Action OnGameEnd;
         public static Action OnNextTurnEnd;
 
@@ -110,7 +111,6 @@ namespace Managers
         {
             _state = state;
             OnEnterState?.Invoke();
-            Debug.Log(state);
             switch (_state)
             {
                 case GameState.Loading:
@@ -182,6 +182,8 @@ namespace Managers
             freeLook.m_Orbits[1].m_Height = MenuPos.OrbitHeight;
 
             await SaveFile.LoadState();
+            
+            OnLoadingEnd.Invoke();
             
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 1.0f).OnComplete(() => loadingCanvas.enabled = false);

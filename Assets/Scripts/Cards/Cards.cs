@@ -21,7 +21,6 @@ namespace Cards
         [SerializeField] private List<GameObject> unlockableBuildings;
         public List<GameObject> StarterBuildings => starterBuildings;
         public List<GameObject> UnlockableBuildings => unlockableBuildings;
-
         
         private readonly List<GameObject> 
             _all = new List<GameObject>(), // All unlocked buildings across all playthroughs
@@ -56,6 +55,16 @@ namespace Cards
             ) Unlock(_discoverable.PopRandom(), true);
         }
 
+        public bool IsDiscoverableOrUnlocked(GameObject building)
+        {
+            return _current.Contains(building) || _discoverable.Contains(building);
+        }
+        
+        public bool IsUnlocked(GameObject building)
+        {
+            return _all.Contains(building);
+        }
+        
         public BuildingCardDetails Save()
         {
             return new BuildingCardDetails

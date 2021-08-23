@@ -26,7 +26,7 @@ namespace Events.Outcomes
         
             foreach (Outcome outcome in outcomes)
             {
-                bool res = outcome is StatChange ? outcome.Execute(fromChoice) : outcome.Execute();
+                bool res = outcome is ModiferAdded ? outcome.Execute(fromChoice) : outcome.Execute();
             
                 if (res && outcome.Description != "") description += "• " + outcome.Description + "\n";
             }

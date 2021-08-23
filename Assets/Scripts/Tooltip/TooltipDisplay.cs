@@ -163,14 +163,14 @@ namespace Tooltip
                                    $"{FormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class
-                    AdventurerType adventurerType = (AdventurerType) config.Stat.Value;
+                    Guild guild = (Guild) config.Stat.Value;
                     string className = config.Stat.ToString();
                     details.text =
                         $"{Manager.Stats.GetStat(config.Stat.Value)} {className} satisfaction for " +
-                        $"{Manager.Adventurers.GetCount(adventurerType)} {className}s\n" +
+                        $"{Manager.Adventurers.GetCount(guild)} {className}s\n" +
                         $"{FormattedFoodModifierString}" +
                         $"{FormattedModifierString(config.Stat.Value)}" +
-                        $"{Manager.Stats.SpawnChance(adventurerType):n1}% {className} spawn chance per turn";
+                        $"{Manager.Stats.SpawnChance(guild):n1}% {className} spawn chance per turn";
                     break;
             }
         }

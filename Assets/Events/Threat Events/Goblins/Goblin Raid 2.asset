@@ -16,13 +16,13 @@ MonoBehaviour:
   article: We've managed to break down the goblin camp and recover some equipment
     and weaponry from them. They won't be messing with us anytime soon (we hope)!
   image: {fileID: 21300000, guid: 2573032232992b746899488da8752944, type: 3}
-  type: 5
+  type: 0
   headliner: 1
   outcomes:
   - {fileID: 60381319703950361}
   - {fileID: 2843191013445652168}
   choices: []
-  oneTime: 0
+  buildingToUnlock: {fileID: 0}
 --- !u!114 &60381319703950361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,6 +39,7 @@ MonoBehaviour:
   statToChange: 2
   amount: 5
   turns: 4
+  reason: 
 --- !u!114 &2843191013445652168
 MonoBehaviour:
   m_ObjectHideFlags: 0

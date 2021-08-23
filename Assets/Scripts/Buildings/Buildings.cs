@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Managers;
@@ -7,11 +8,14 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utilities;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Buildings
 {
     public class Buildings : MonoBehaviour
     {
+        public static Action<Building> OnBuild;
+        
         [SerializeField] private GameObject rockSection, treeSection, terrainPrefab, guildHallPrefab;
         [SerializeField] private Material outlineMaterial;
         
@@ -94,8 +98,12 @@ namespace Buildings
             if (building.IsTerrain) _terrain.Add(building);
             else if (building.IsRuin) _ruins.Add(building);
             else _buildings.Add(building);
-            
-            if(!Manager.State.Loading) UpdateUi();
+
+            if (!Manager.State.Loading)
+            {
+                OnBuild?.Invoke(building);
+                UpdateUi();
+            }
             return true;
         }
         

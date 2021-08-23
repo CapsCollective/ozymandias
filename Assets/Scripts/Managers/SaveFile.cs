@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using GuildRequests;
 using Newtonsoft.Json;
 using UnityEngine;
 using Utilities;
@@ -30,16 +31,16 @@ namespace Managers
     [Serializable]
     public struct EventQueueDetails
     {
-        public int nextBuildingUnlock;
+        public bool storyActive;
         public List<string> headliners, others;
-        public Dictionary<EventType, List<string>> used, discarded;
+        public Dictionary<EventType, List<string>> used;
     }
     
     [Serializable]
     public struct AdventurerDetails
     {
         public string name;
-        public AdventurerType type;
+        public Guild type;
         public bool isSpecial;
         public int turnJoined;
     }
@@ -64,9 +65,21 @@ namespace Managers
     public struct AchievementDetails
     {
         public List<Achievement> unlocked;
-        public int gamesPlayed, totalBuildings, totalAdventurers, mostAdventurers, highestTurn;
     }
     
+    [Serializable]
+    public struct RequestDetails
+    {
+        public string name;
+        public int completed, required;
+    }
+    
+    [Serializable]
+    public struct FavourDetails
+    {
+        public Dictionary<Guild, int> guildTokens;
+    }
+
     [Serializable]
     public class SaveFile
     {
@@ -77,7 +90,8 @@ namespace Managers
         public BuildingCardDetails buildingCards;
         public List<BuildingDetails> buildings;
         public AchievementDetails achievements;
-
+        public Dictionary<Guild, RequestDetails> requests;
+        public FavourDetails favours;
         public static void SaveState()
         {
             new SaveFile().Save();
@@ -108,7 +122,9 @@ namespace Managers
                 eventQueue = Manager.EventQueue.Save();
             }
 
-            achievements = Manager.Achievements.Save();
+            //achievements = Manager.Achievements.Save();
+            requests = Manager.Requests.Save();
+            favours = Manager.Favours.Save();
             
             PlayerPrefs.SetString("Save", JsonConvert.SerializeObject(this));
         }
@@ -134,6 +150,8 @@ namespace Managers
             if(Manager.Buildings.Count == 0) Manager.Map.FillGrid();
             await Manager.Cards.Load(buildingCards);
             await Manager.EventQueue.Load(eventQueue);
+            await Manager.Requests.Load(requests);
+            Manager.Favours.Load(favours);
 
             if (Manager.Stats.TurnCounter != 0) // Only for continuing a game
             {
@@ -141,9 +159,7 @@ namespace Managers
                 await Manager.Quests.Load(quests);
                 //TODO: Reshuffle buildings
             }
-            
-            Manager.Achievements.Load(achievements);
-            
+
             UpdateUi();
         }
     }

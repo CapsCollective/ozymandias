@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8607306174784003876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: Chain Event(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 075a7428eedc24a479e31c08357788d5, type: 2}
+  toFront: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Dwarf Kicker 1
+  m_EditorClassIdentifier: 
+  headline: Too Big for Their Boots?
+  article: Locals and adventurers alike cower in their cowardly fear as eye-witness
+    stories continue to stream in about The Dwarf Kicker. Reports describe the assailant
+    as a man with one very large boot that he uses to kick over dwarves in order
+    to steal their coin purses. More to follow.
+  image: {fileID: 21300000, guid: c54c94b000211194e8045c1ba3a94c8f, type: 3}
+  type: 2
+  headliner: 0
+  outcomes:
+  - {fileID: -8607306174784003876}
+  choices: []
+  buildingToUnlock: {fileID: 0}

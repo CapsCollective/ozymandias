@@ -119,7 +119,7 @@ namespace Events
         
         private void SetContinueButtonState(ButtonState state)
         {
-            continueButton.enabled = state != ButtonState.Choice;
+            continueButton.interactable = state != ButtonState.Choice;
             continueButtonContent.SetActive(state == ButtonState.Close);
             disableButtonContent.SetActive(state == ButtonState.Choice);
             gameOverButtonContent.SetActive(state == ButtonState.GameOver);
