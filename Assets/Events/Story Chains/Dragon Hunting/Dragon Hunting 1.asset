@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8344730185774727063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: It's hunting season!
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -2934952753131235551}
+--- !u!114 &-2934952753131235551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: Chain Event
+  m_EditorClassIdentifier: 
+  customDescription: How will the dragons react?
+  next: {fileID: 11400000, guid: 316d0d770959bd54b885df3f760f7ada, type: 2}
+  toFront: 0
+--- !u!114 &-2307961685299184443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Save the dragons
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5367839716922054802}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Dragon Hunting 1
+  m_EditorClassIdentifier: 
+  headline: Dragon On The Decision
+  article: Conservationists and adventurers' disagreements have come to a head today
+    after a heated debate over what to do about the steadily more dangerous dragon-related
+    fires popping up around the town. While many adventurers would relish the chance
+    to receive a chunk of coin for slaying the beasts, many claim this would throw
+    of nature's delicate balance.
+  image: {fileID: 21300000, guid: a4f398ec1eb7a84418db078fe82cea2a, type: 3}
+  type: 0
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -2307961685299184443}
+  - {fileID: -8344730185774727063}
+  buildingToUnlock: {fileID: 0}
+--- !u!114 &5367839716922054802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: Chain Event(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: How will we defend ourselves?
+  next: {fileID: 11400000, guid: 7bd6b99edfb82cf4ab8d265a3af7cab2, type: 2}
+  toFront: 0

@@ -15,9 +15,13 @@ namespace Events
 {
     public class Newspaper : MonoBehaviour
     {
+        // Constants
+        private static readonly Vector3 ClosePos = new Vector3(2000, 800, 0);
+        private static readonly Vector3 CloseRot = new Vector3(0, 0, -20);
+        
         // Public fields
         public static Action OnClosed;
-        
+
         // Serialised Fields
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private NewspaperEvent[] articleList;
@@ -51,6 +55,9 @@ namespace Events
             State.OnNextTurnEnd += NextTurnOpen;
             openNewspaperButton.onClick.AddListener(Open);
             continueButton.onClick.AddListener(Close);
+            Transform t = transform;
+            t.position = ClosePos;
+            t.eulerAngles = CloseRot;
         }
 
         private void NextTurnOpen()
@@ -119,7 +126,7 @@ namespace Events
         
         private void SetContinueButtonState(ButtonState state)
         {
-            continueButton.enabled = state != ButtonState.Choice;
+            continueButton.interactable = state != ButtonState.Choice;
             continueButtonContent.SetActive(state == ButtonState.Close);
             disableButtonContent.SetActive(state == ButtonState.Choice);
             gameOverButtonContent.SetActive(state == ButtonState.GameOver);
@@ -138,8 +145,8 @@ namespace Events
         private void Close()
         {
             Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
-            transform.DOLocalMove(new Vector3(2000, 800, 0), animateOutDuration);
-            transform.DOLocalRotate(new Vector3(0, 0, -20), animateOutDuration)
+            transform.DOLocalMove(ClosePos, animateOutDuration);
+            transform.DOLocalRotate(CloseRot, animateOutDuration)
                 .OnComplete(() =>
                 {
                     OnClosed?.Invoke();

@@ -1,5 +1,7 @@
 ﻿using System;
 using Events;
+using GuildFavours;
+using GuildRequests;
 using Inputs;
 using NaughtyAttributes;
 using Tooltip;
@@ -23,6 +25,8 @@ namespace Managers
         public Achievements.Achievements Achievements { get; private set; }
         public Cards.Cards Cards { get; private set; }
         public Quests.Quests Quests { get; private set; }
+        public Requests Requests { get; private set; }
+        public Favours Favours { get; private set; }
         public EventQueue EventQueue { get; private set; }
         public Map.Map Map { get; private set; }
         public Jukebox Jukebox { get; private set; }
@@ -42,6 +46,8 @@ namespace Managers
             Achievements = FindObjectOfType<Achievements.Achievements>();
             Cards = FindObjectOfType<Cards.Cards>();
             Quests = FindObjectOfType<Quests.Quests>();
+            Requests = FindObjectOfType<Requests>();
+            Favours = FindObjectOfType<Favours>();
             EventQueue = FindObjectOfType<EventQueue>();
             Map = FindObjectOfType<Map.Map>();
             Jukebox = FindObjectOfType<Jukebox>();

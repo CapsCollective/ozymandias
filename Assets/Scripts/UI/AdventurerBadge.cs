@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -9,7 +10,7 @@ namespace UI
 {
     public class AdventurerBadge : UiUpdater
     {
-        [SerializeField] private AdventurerType type;
+        [SerializeField] private Guild guild;
         [SerializeField] private TextMeshProUGUI count, countTicker;
         [SerializeField] private Image glow;
         private int _oldValue;
@@ -18,8 +19,8 @@ namespace UI
         
         protected override void UpdateUi()
         {
-            int value = Manager.Adventurers.GetCount(type);
-            int satisfaction = Manager.Stats.GetStat((Stat)type);
+            int value = Manager.Adventurers.GetCount(guild);
+            int satisfaction = Manager.Stats.GetStat((Stat)guild);
 
             if (value > _oldValue)
             {

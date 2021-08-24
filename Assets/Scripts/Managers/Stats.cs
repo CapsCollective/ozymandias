@@ -21,8 +21,6 @@ namespace Managers
 
         public Dictionary<Stat, List<Modifier>> Modifiers = new Dictionary<Stat, List<Modifier>>();
         public readonly Dictionary<Stat, int> ModifiersTotal = new Dictionary<Stat, int>();
-
-        public int SkillPoints { get; set; }
         
         private void Start()
         {
@@ -37,21 +35,21 @@ namespace Managers
             return mod * Manager.Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod;
         }
 
-        private int GetSatisfaction(AdventurerType type)
+        private int GetSatisfaction(Guild guild)
         {
-            return GetStat((Stat)type) - Manager.Adventurers.GetCount(type);
+            return GetStat((Stat)guild) - Manager.Adventurers.GetCount(guild);
         }
         
         public int GetSatisfaction(Stat stat)
         {
             if ((int) stat < 5) // If the stat is for an adventuring category
-                return GetSatisfaction((AdventurerType)stat);
+                return GetSatisfaction((Guild)stat);
             return GetStat(stat) - Manager.Adventurers.Count;
         }
 
-        public float SpawnChance(AdventurerType type)
+        public float SpawnChance(Guild guild)
         {
-            return Mathf.Clamp((GetSatisfaction(type)+10) * 2.5f, 0, 50);
+            return Mathf.Clamp((GetSatisfaction(guild)+10) * 2.5f, 0, 50);
         }
         
         public int RandomSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
@@ -99,7 +97,7 @@ namespace Managers
             TurnCounter++;
 
             // Spawn adventurers based on satisfaction
-            foreach (AdventurerType category in Enum.GetValues(typeof(AdventurerType)))
+            foreach (Guild category in Enum.GetValues(typeof(Guild)))
             {
                 if (Random.Range(0, 100) < SpawnChance(category)) Manager.Adventurers.Add(category);
             }

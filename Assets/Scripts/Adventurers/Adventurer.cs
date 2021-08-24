@@ -2,6 +2,7 @@ using System;
 using Managers;
 using Quests;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
@@ -55,7 +56,7 @@ namespace Adventurers
 
         public Quest assignedQuest;
 
-        public AdventurerType type;
+        public Guild guild;
 
         public bool isSpecial; // Works as a regular adventurer but is required for certain events so wont be removed
 
@@ -64,20 +65,21 @@ namespace Adventurers
         public static string RandomName =>
             firstNames[Random.Range(0, firstNames.Length)] + " " + lastNames[Random.Range(0, lastNames.Length)];
 
-        public static AdventurerType RandomType => Random.Range(0, 5) switch {
-            0 => AdventurerType.Brawler,
-            1 => AdventurerType.Outrider,
-            2 => AdventurerType.Performer,
-            3 => AdventurerType.Diviner,
-            4 => AdventurerType.Arcanist,
-            _ => AdventurerType.Brawler
+        public static Guild RandomType => Random.Range(0, 5) switch {
+            0 => Guild.Brawler,
+            1 => Guild.Outrider,
+            2 => Guild.Performer,
+            3 => Guild.Diviner,
+            4 => Guild.Arcanist,
+            _ => Guild.Brawler
         };
 
-        public void Create(AdventurerType? aType = null)
+        public Adventurer Create(Guild? aType = null)
         {
             name = RandomName;
-            type = aType ?? RandomType;
+            guild = aType ?? RandomType;
             turnJoined = Manager.Stats.TurnCounter;
+            return this;
         }
     
         public AdventurerDetails Save()
@@ -85,18 +87,19 @@ namespace Adventurers
             return new AdventurerDetails
             {
                 name = name,
-                type = type,
+                type = guild,
                 isSpecial = isSpecial,
                 turnJoined = turnJoined
             };
         }
 
-        public void Load(AdventurerDetails adventurer)
+        public Adventurer Load(AdventurerDetails adventurer)
         {
             name = adventurer.name;
-            type = adventurer.type;
+            guild = adventurer.type;
             isSpecial = adventurer.isSpecial;
             turnJoined = adventurer.turnJoined;
+            return this;
         }
     }
 }
