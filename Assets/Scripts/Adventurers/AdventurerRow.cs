@@ -1,6 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Adventurers
 {
@@ -12,7 +12,7 @@ namespace Adventurers
         {
             nameText.text = adventurer.name;
             classText.text = adventurer.type.ToString();
-            daysText.text = (Manager.TurnCounter - adventurer.turnJoined) + " Days";
+            daysText.text = (Manager.Stats.TurnCounter - adventurer.turnJoined) + " Days";
             locationText.text = adventurer.assignedQuest ? adventurer.assignedQuest.Title : "In Town";
         }
     }

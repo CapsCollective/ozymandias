@@ -2,12 +2,12 @@
 using System.Linq;
 using Adventurers;
 using Buildings;
-using GameState;
+using Managers;
 using Map;
 using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 using Event = Events.Event;
 
 namespace Quests
@@ -40,14 +40,14 @@ namespace Quests
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
-        private Building Building { get; set; }
-        private bool IsActive => TurnsLeft != -1;
+        public Building Building { get; private set; }
+        public bool IsActive => TurnsLeft != -1;
 
         public void Add()
         {
-            _turnCreated = Manager.TurnCounter;
+            _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
-            GameManager.OnNextTurnEnd += OnNewTurn;
+            State.OnNextTurnEnd += OnNewTurn;
             if (location == Location.Grid)
             {
                 //TODO: Pick a cell
@@ -64,22 +64,22 @@ namespace Quests
         {
             if (location == Location.Grid) ClearBuilding();
             _assigned.Clear();
-            GameManager.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
+            State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
         
         public void Start()
         {
             //if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
             TurnsLeft = turns;
-            Manager.Spend(Cost);
+            Manager.Stats.Spend(Cost);
             for (int i = 0; i < adventurers; i++) _assigned.Add(Manager.Adventurers.Assign(this));
-            Manager.UpdateUi();
+            UpdateUi();
         }
 
         private bool CreateBuilding(List<int> occupied)
         {
             Building = Instantiate(Manager.Quests.BuildingPrefab, Manager.Quests.transform).GetComponent<Building>();
-            if (Building.Create(occupied, this, !Manager.IsLoading)) return true;
+            if (Building.Create(occupied, this, !Manager.State.Loading)) return true;
             Destroy(Building);
             return false;
         }
@@ -130,7 +130,7 @@ namespace Quests
                 Debug.Log($"Quest in progress: {title}. {TurnsLeft} turns remaining.");
                 TurnsLeft--;                
             }
-            else if(location == Location.Grid && _turnCreated != Manager.TurnCounter)
+            else if(location == Location.Grid && _turnCreated != Manager.Stats.TurnCounter)
             {
                 GrowBuilding();
             }
@@ -150,7 +150,7 @@ namespace Quests
 
         public void Load(QuestDetails details)
         {
-            GameManager.OnNextTurnEnd += OnNewTurn;
+            State.OnNextTurnEnd += OnNewTurn;
             Cost = details.cost;
             TurnsLeft = details.turnsLeft;
             if (location == Location.Grid) CreateBuilding(details.occupied); 

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Buildings;
-using GameState;
+using Managers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Utilities;
 using Random = UnityEngine.Random;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Cards
 {
@@ -18,6 +18,10 @@ namespace Cards
         public static Action OnDiscoverRuin;
         
         [SerializeField] private List<GameObject> starterBuildings;
+        [SerializeField] private List<GameObject> unlockableBuildings;
+        public List<GameObject> StarterBuildings => starterBuildings;
+        public List<GameObject> UnlockableBuildings => unlockableBuildings;
+
         
         private readonly List<GameObject> 
             _all = new List<GameObject>(), // All unlocked buildings across all playthroughs
@@ -29,8 +33,8 @@ namespace Cards
 
         private void Awake()
         {
-            Clear.OnClear += Discover;
-            GameManager.OnGameEnd += OnGameEnd;
+            BuildingSelect.OnClear += Discover;
+            State.OnGameEnd += OnGameEnd;
         }
 
         public bool Unlock(GameObject building, bool isRuin = false)
@@ -41,9 +45,6 @@ namespace Cards
             
             OnUnlock?.Invoke(building.GetComponent<Building>());
             if (isRuin) OnDiscoverRuin?.Invoke();
-            Manager.Achievements.Unlock("A Helping Hand");
-            if (_current.Count >= 5)
-                Manager.Achievements.Unlock("Modern Influences");
             return true;
         }
 

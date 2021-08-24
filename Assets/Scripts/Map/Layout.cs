@@ -8,7 +8,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Map
 {
@@ -40,7 +40,7 @@ namespace Map
                 if (wasCreated) terrain = Instantiate(Manager.Buildings.TerrainPrefab, Manager.Buildings.transform).GetComponent<Building>();
 
                 // Create building if valid, only animate if happening during the game over transition
-                wasCreated = Manager.Buildings.Add(terrain, cell.Id, animate: Manager.IsGameOver);
+                wasCreated = Manager.Buildings.Add(terrain, cell.Id, animate: Manager.State.IsGameOver);
             }
             if (!wasCreated) Destroy(terrain.gameObject);
         }

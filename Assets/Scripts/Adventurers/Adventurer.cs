@@ -1,10 +1,10 @@
 using System;
-using GameState;
+using Managers;
 using Quests;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Adventurers
 {
@@ -77,7 +77,7 @@ namespace Adventurers
         {
             name = RandomName;
             type = aType ?? RandomType;
-            turnJoined = Manager.TurnCounter;
+            turnJoined = Manager.Stats.TurnCounter;
         }
     
         public AdventurerDetails Save()

@@ -58,7 +58,7 @@ namespace Cards
         
         private Image _cardBack;
         
-        private void Start()
+        private void Awake()
         {
             _cardBack = GetComponent<Image>();
         }

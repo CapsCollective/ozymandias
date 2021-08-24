@@ -1,19 +1,21 @@
 using System;
 using Cinemachine;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
-using static GameState.GameManager;
+using static Managers.GameManager;
 
 namespace Inputs
 {
     public class CameraMovement : MonoBehaviour
     {
         public static bool IsMoving;
-
+        public CinemachineFreeLook FreeLook { get; private set; }
+        
         private Camera _cam;
         private DepthOfField _depthOfField;
-        private CinemachineFreeLook freeLook;
+
         private Vector2 dragDir;
         private Vector3 vel = Vector3.zero;
         private float scrollAcceleration;
@@ -38,11 +40,15 @@ namespace Inputs
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float DoFAdjustMultiplier = 5f;
 
-        private void Start()
+        private void Awake()
         {
             _cam = GetComponent<Camera>();
             profile.TryGetSettings(out _depthOfField);
-            freeLook = GetComponent<CinemachineFreeLook>();
+            FreeLook = GetComponent<CinemachineFreeLook>();
+        }
+
+        private void Start()
+        {
             Manager.Inputs.IA_OnRightClick.performed += RightClick;
             Manager.Inputs.IA_OnRightClick.canceled += RightClick;
             Manager.Inputs.IA_OnLeftClick.performed += LeftClick;
@@ -54,7 +60,7 @@ namespace Inputs
         {
             if (context.canceled)
             {
-                freeLook.m_XAxis.m_InputAxisValue = 0;
+                FreeLook.m_XAxis.m_InputAxisValue = 0;
             }
         }
 
@@ -73,9 +79,9 @@ namespace Inputs
 
         private void Update()
         {
-            if (Manager.InMenu) return;
+            if (!Manager.State.InGame) return;
 
-            freeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.IA_RotateCamera.ReadValue<float>();
+            FreeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.IA_RotateCamera.ReadValue<float>();
 
             if (leftClick)
             {
@@ -84,7 +90,7 @@ namespace Inputs
 
                 if (_dragging)
                 {
-                    dragDir = dir * Mathf.Lerp(dragSpeed.x, dragSpeed.y, freeLook.m_YAxis.Value);
+                    dragDir = dir * Mathf.Lerp(dragSpeed.x, dragSpeed.y, FreeLook.m_YAxis.Value);
                     lastDrag = Manager.Inputs.MousePosition;
                 }
             }
@@ -97,16 +103,16 @@ namespace Inputs
             Vector2 inputDir = Manager.Inputs.IA_MoveCamera.ReadValue<Vector2>() + dragDir;
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
-            freeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
+            FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
 
             // Scrolling
             float scroll = -Manager.Inputs.IA_OnScroll.ReadValue<float>();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
-            freeLook.m_YAxis.Value += scrollAcceleration;
+            FreeLook.m_YAxis.Value += scrollAcceleration;
 
             // Depth of Field stuff
-            volume.weight = Mathf.Lerp(1, 0, freeLook.m_YAxis.Value);
+            volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
             var DoFRay = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(DoFRay, out var hit, 100f, layerMask))
             {
@@ -114,20 +120,20 @@ namespace Inputs
             }
 
             // Bounciness stuff
-            bool atLimit = freeLook.m_YAxis.Value <= 0.01 | freeLook.m_YAxis.Value >= 0.98;
+            bool atLimit = FreeLook.m_YAxis.Value <= 0.01 | FreeLook.m_YAxis.Value >= 0.98;
             if (atLimit && Mathf.Abs(scrollAcceleration) > 0)
-                freeLook.Follow.position += new Vector3(0, scrollAcceleration, 0);
+                FreeLook.Follow.position += new Vector3(0, scrollAcceleration, 0);
 
-            float clampedY = Mathf.Clamp(freeLook.Follow.position.y, -1, 2);
-            freeLook.Follow.position = new Vector3(freeLook.Follow.position.x, clampedY, freeLook.Follow.position.z);
+            float clampedY = Mathf.Clamp(FreeLook.Follow.position.y, -1, 2);
+            FreeLook.Follow.position = new Vector3(FreeLook.Follow.position.x, clampedY, FreeLook.Follow.position.z);
 
-            Vector3 newFollowPos = new Vector3(freeLook.Follow.position.x, 1, freeLook.Follow.position.z);
-            freeLook.Follow.position = Vector3.SmoothDamp(freeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
+            Vector3 newFollowPos = new Vector3(FreeLook.Follow.position.x, 1, FreeLook.Follow.position.z);
+            FreeLook.Follow.position = Vector3.SmoothDamp(FreeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
         }
 
-        public void Center()
+        public void MoveTo(Vector3 pos, float duration = 0.5f)
         {
-            freeLook.Follow.position = Manager.Buildings.GuildHallLocation;
+            FreeLook.Follow.transform.DOMove(pos, duration);
         }
 
         private static float Remap(float value, float min1, float max1, float min2, float max2)

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using GameState;
+using Managers;
 using Quests;
 using UnityEngine;
 using Utilities;
-using static GameState.GameManager;
+using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
 namespace Adventurers
@@ -26,7 +26,7 @@ namespace Adventurers
         
         private void Awake()
         {
-            GameManager.OnGameEnd += OnGameEnd;
+            State.OnGameEnd += OnGameEnd;
         }
 
         public int GetCount(AdventurerType type)
@@ -56,7 +56,7 @@ namespace Adventurers
         {
             Adventurer adventurer = Instantiate(prefab, transform).GetComponent<Adventurer>();
             _adventurers.Add(adventurer);
-            Manager.Achievements.SetCitySize(Count); //TODO: Make this an action callback instead
+            //Manager.Achievements.SetCitySize(Count); //TODO: Make this an action callback instead
             return adventurer;
         }
 
@@ -72,7 +72,7 @@ namespace Adventurers
                 name = adventurer.name,
                 type = adventurer.type,
                 isSpecial = adventurer.isSpecial,
-                turnJoined = Manager.TurnCounter
+                turnJoined = Manager.Stats.TurnCounter
             });
         }
 
@@ -91,7 +91,6 @@ namespace Adventurers
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
             else Destroy(toRemove);
-            Manager.Achievements.SetCitySize(Count);
             return true;
         }
 
@@ -102,7 +101,6 @@ namespace Adventurers
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform;
             else Destroy(toRemove);
-            Manager.Achievements.SetCitySize(Count);
             return true;
         }
 
