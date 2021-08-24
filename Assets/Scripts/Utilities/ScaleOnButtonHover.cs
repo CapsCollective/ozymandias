@@ -33,8 +33,9 @@ namespace Utilities
         
         public void OnDisable()
         {
+            // TODO: This causes an error and needs to be looked at
             // End the on-hover animation if the target gets disabled
-            if (target) target.transform.DOScale(1.0f, duration);
+            //if (target) target.transform.DOScale(1.0f, duration);
         }
     }
 }

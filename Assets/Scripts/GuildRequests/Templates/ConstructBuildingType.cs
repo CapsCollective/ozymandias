@@ -23,7 +23,6 @@ namespace GuildRequests
 
         private void CheckBuilt(Building building)
         {
-            Debug.Log(building.type + " checked");
             if (building.type == buildingType) completed++;
         }
     }

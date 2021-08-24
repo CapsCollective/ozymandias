@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using GuildRequests;
 using Newtonsoft.Json;
 using UnityEngine;
 using Utilities;
