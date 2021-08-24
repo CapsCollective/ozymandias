@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Utilities
 {
-    public class ScaleOnButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class ScaleOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         // Serialised fields
         [SerializeField] private float scaleTarget = 1.2f;
@@ -31,11 +31,10 @@ namespace Utilities
             target.transform.DOScale(1.0f, duration);
         }
         
-        public void OnDisable()
+        public void OnEnable()
         {
-            // TODO: This causes an error and needs to be looked at
             // End the on-hover animation if the target gets disabled
-            //if (target) target.transform.DOScale(1.0f, duration);
+            if (target) target.transform.localScale = Vector3.one;
         }
     }
 }
