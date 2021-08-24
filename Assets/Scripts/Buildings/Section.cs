@@ -21,7 +21,8 @@ namespace Buildings
         public bool hasGrass = true;
         public bool debug;
         private ComputeShader _meshCompute;
-        
+
+
         private MeshFilter _meshFilter;
         private bool _usesShader;
         private static readonly int HasGrass = Shader.PropertyToID("_HasGrass");
@@ -114,7 +115,9 @@ namespace Buildings
                 planePositions[i] = transform.InverseTransformPoint(
                     _usesShader ? planePositions[i] : CalculateMesh());
                 planePositions[i].y += HeightFactor * sectionData[i].y;
+
             }
+
             // Apply morphed vertices to Mesh Filter
             MeshFilter.mesh.vertices = planePositions;
 
