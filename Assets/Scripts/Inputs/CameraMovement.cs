@@ -1,6 +1,8 @@
 using System;
 using Cinemachine;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
@@ -131,9 +133,9 @@ namespace Inputs
             FreeLook.Follow.position = Vector3.SmoothDamp(FreeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
         }
 
-        public void MoveTo(Vector3 pos, float duration = 0.5f)
+        public TweenerCore<Vector3,Vector3,VectorOptions> MoveTo(Vector3 pos, float duration = 0.5f)
         {
-            FreeLook.Follow.transform.DOMove(pos, duration);
+            return FreeLook.Follow.transform.DOMove(pos, duration);
         }
 
         private static float Remap(float value, float min1, float max1, float min2, float max2)
