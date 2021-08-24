@@ -27,7 +27,7 @@ namespace Cards
             foreach (GameObject building in Manager.Cards.UnlockableBuildings)
             {
                 CardDisplay card = Instantiate(cardDisplayPrefab, transform).GetComponent<CardDisplay>();
-                card.gameObject.AddComponent<ScaleOnButtonHover>();
+                //card.gameObject.AddComponent<ScaleOnHover>();
                 bool isUnlocked = Manager.Cards.IsUnlocked(building);
                 card.UpdateDetails(isUnlocked ?
                     building.GetComponent<Building>() :
