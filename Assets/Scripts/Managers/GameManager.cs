@@ -74,6 +74,12 @@ namespace Managers
             Debug.Log(PlayerPrefs.GetString("Save"));
         }
         
+        [Button("Take Screenshot")]
+        public void Screenshot()
+        {
+            ScreenCapture.CaptureScreenshot($"FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
+        }
+        
         [Button("Extra Wealth")]
         public void ExtraWealth()
         {
