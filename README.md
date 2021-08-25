@@ -4,7 +4,7 @@
 
 #### _"Run a fantasy town for adventurers. Save it from monsters. Save it from itself. Watch it crumble to dust. Do it all again."_
 
-![repo_banner](https://user-images.githubusercontent.com/9414994/115142205-d767dc00-a083-11eb-8ef7-46a679501c68.png)
+![repo_banner](Promotional/repo_banner.png)
 
 ## About
 
