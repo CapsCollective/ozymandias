@@ -30,6 +30,8 @@ namespace Inputs
         private Vector3 startPos;
         private Quaternion startRot;
         private bool _dragging, _rotating;
+        
+        private CursorSelect.CursorType _previousCursor = CursorSelect.CursorType.Pointer;
 
         public static Action OnCameraMove;
 
@@ -60,9 +62,11 @@ namespace Inputs
 
         private void RightClick(InputAction.CallbackContext context)
         {
-            if (context.canceled)
+            if (context.performed) StartCursorGrab();
+            else if (context.canceled)
             {
                 FreeLook.m_XAxis.m_InputAxisValue = 0;
+                EndCursorGrab();
             }
         }
 
@@ -76,6 +80,7 @@ namespace Inputs
             else if (context.canceled)
             {
                 _dragging = false;
+                EndCursorGrab();
             }
         }
 
@@ -88,7 +93,11 @@ namespace Inputs
             if (leftClick)
             {
                 Vector2 dir = _cam.ScreenToViewportPoint(lastDrag) - _cam.ScreenToViewportPoint(Manager.Inputs.MousePosition);
-                if (dir.sqrMagnitude > 0.0002f) _dragging = true;
+                if (dir.sqrMagnitude > 0.0002f)
+                {
+                    StartCursorGrab();
+                    _dragging = true;
+                }
 
                 if (_dragging)
                 {
@@ -141,6 +150,18 @@ namespace Inputs
         private static float Remap(float value, float min1, float max1, float min2, float max2)
         {
             return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
+        }
+        
+        private void StartCursorGrab()
+        {
+            if (CursorSelect.Cursor.CurrentCursor == CursorSelect.CursorType.Grab) return;
+            _previousCursor = CursorSelect.Cursor.CurrentCursor;
+            CursorSelect.Cursor.CurrentCursor = CursorSelect.CursorType.Grab;
+        }
+        
+        private void EndCursorGrab()
+        {
+            CursorSelect.Cursor.CurrentCursor = _previousCursor;
         }
     }
 }
