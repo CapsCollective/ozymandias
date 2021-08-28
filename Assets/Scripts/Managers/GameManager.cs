@@ -32,6 +32,7 @@ namespace Managers
         public Jukebox Jukebox { get; private set; }
         public TooltipDisplay Tooltip { get; private set; }
         public CameraMovement Camera { get; private set; }
+        public CursorSelect Cursor { get; private set; }
 
         private void Awake()
         {
@@ -53,6 +54,7 @@ namespace Managers
             Jukebox = FindObjectOfType<Jukebox>();
             Tooltip = FindObjectOfType<TooltipDisplay>();
             Camera = FindObjectOfType<CameraMovement>();
+            Cursor = FindObjectOfType<CursorSelect>();
         }
 
         public void Start()
