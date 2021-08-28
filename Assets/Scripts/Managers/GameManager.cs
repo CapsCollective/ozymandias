@@ -32,6 +32,7 @@ namespace Managers
         public Jukebox Jukebox { get; private set; }
         public TooltipDisplay Tooltip { get; private set; }
         public CameraMovement Camera { get; private set; }
+        public CursorSelect Cursor { get; private set; }
 
         private void Awake()
         {
@@ -53,6 +54,7 @@ namespace Managers
             Jukebox = FindObjectOfType<Jukebox>();
             Tooltip = FindObjectOfType<TooltipDisplay>();
             Camera = FindObjectOfType<CameraMovement>();
+            Cursor = FindObjectOfType<CursorSelect>();
         }
 
         public void Start()
@@ -72,6 +74,12 @@ namespace Managers
         public void PrintSave()
         {
             Debug.Log(PlayerPrefs.GetString("Save"));
+        }
+        
+        [Button("Take Screenshot")]
+        public void Screenshot()
+        {
+            ScreenCapture.CaptureScreenshot($"FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
         }
         
         [Button("Extra Wealth")]
