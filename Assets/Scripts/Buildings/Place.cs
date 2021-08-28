@@ -78,14 +78,10 @@ namespace Buildings
 
             if (_previousSelected != Selected) // If selected has changed
             {
-                //TODO: This logic shouldn't be determined by the cursor but in the clear controller
-                if (CursorSelect.Cursor.CurrentCursor != CursorSelect.CursorType.Destroy)
-                {
-                    CursorSelect.Cursor.CurrentCursor = Selected != Deselected
+                Manager.Cursor.Current = Selected != Deselected
                         ? CursorSelect.CursorType.Build
-                        : CursorSelect.CursorType.Pointer;;
-                    _previousSelected = Selected;
-                }
+                        : CursorSelect.CursorType.Pointer;
+                _previousSelected = Selected;
             }
 
             if (Selected == Deselected || EventSystem.current.IsPointerOverGameObject()) return;

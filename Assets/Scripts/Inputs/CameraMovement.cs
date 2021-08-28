@@ -154,14 +154,14 @@ namespace Inputs
         
         private void StartCursorGrab()
         {
-            if (CursorSelect.Cursor.CurrentCursor == CursorSelect.CursorType.Grab) return;
-            _previousCursor = CursorSelect.Cursor.CurrentCursor;
-            CursorSelect.Cursor.CurrentCursor = CursorSelect.CursorType.Grab;
+            if (Manager.Cursor.Current == CursorSelect.CursorType.Grab) return;
+            _previousCursor = Manager.Cursor.Current;
+            Manager.Cursor.Current = CursorSelect.CursorType.Grab;
         }
         
         private void EndCursorGrab()
         {
-            CursorSelect.Cursor.CurrentCursor = _previousCursor;
+            Manager.Cursor.Current = _previousCursor;
         }
     }
 }
