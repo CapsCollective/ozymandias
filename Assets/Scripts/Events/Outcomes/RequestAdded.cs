@@ -1,5 +1,4 @@
-﻿using GuildRequests;
-using GuildRequests.Templates;
+﻿using Requests.Templates;
 using UnityEngine;
 using static Managers.GameManager;
 

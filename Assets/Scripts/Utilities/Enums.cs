@@ -149,10 +149,4 @@
     {
         Test = 0,
     }
-    
-    public enum Upgrade
-    {
-        Test = 0,
-        
-    }
 }

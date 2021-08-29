@@ -74,9 +74,10 @@ namespace Managers
     }
     
     [Serializable]
-    public struct FavourDetails
+    public struct UpgradeDetails
     {
         public Dictionary<Guild, int> guildTokens;
+        public Dictionary<string, int> upgradeLevels;
     }
 
     [Serializable]
@@ -90,7 +91,7 @@ namespace Managers
         public List<BuildingDetails> buildings;
         public AchievementDetails achievements;
         public Dictionary<Guild, RequestDetails> requests;
-        public FavourDetails favours;
+        public UpgradeDetails upgrades;
         public static void SaveState()
         {
             new SaveFile().Save();
@@ -123,7 +124,7 @@ namespace Managers
 
             //achievements = Manager.Achievements.Save();
             requests = Manager.Requests.Save();
-            favours = Manager.Favours.Save();
+            upgrades = Manager.Upgrades.Save();
             
             PlayerPrefs.SetString("Save", JsonConvert.SerializeObject(this));
         }
@@ -150,7 +151,7 @@ namespace Managers
             await Manager.Cards.Load(buildingCards);
             await Manager.EventQueue.Load(eventQueue);
             await Manager.Requests.Load(requests);
-            Manager.Favours.Load(favours);
+            Manager.Upgrades.Load(upgrades);
 
             if (Manager.Stats.TurnCounter != 0) // Only for continuing a game
             {
