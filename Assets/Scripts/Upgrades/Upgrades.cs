@@ -29,7 +29,7 @@ namespace Upgrades
         [SerializeField] private PurchaseBox purchaseBox;
 
         private Upgrade _selected;
-        private Dictionary<string, Upgrade> _upgrades;
+        private Dictionary<UpgradeType, Upgrade> _upgrades;
 
         private void Awake()
         {
@@ -37,7 +37,7 @@ namespace Upgrades
 
             purchaseBox.purchaseButton.onClick.AddListener(Purchase);
             purchaseBox.deselectButton.onClick.AddListener(Deselect);
-            _upgrades = GetComponentsInChildren<Upgrade>().ToDictionary(upgrade => upgrade.title);
+            _upgrades = GetComponentsInChildren<Upgrade>().ToDictionary(upgrade => upgrade.type);
         }
 
         private void Purchase()
@@ -62,6 +62,8 @@ namespace Upgrades
             }
 
             _selected = upgrade;
+            purchaseBox.transform.pivot = new Vector2(0.5f, 1.1f);
+            if(upgrade.transform.localPosition.y < -80) purchaseBox.transform.pivot = new Vector2(0.5f, -0.1f);
             purchaseBox.transform.position = upgrade.transform.position;
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);
@@ -70,8 +72,9 @@ namespace Upgrades
         private void DisplayDetails(Upgrade upgrade)
         {
             purchaseBox.title.text = upgrade.title;
-            purchaseBox.description.text = $"{upgrade.description}\n\nLevel: {upgrade.level}{(upgrade.maxLevel != -1 ? $"/{upgrade.maxLevel}" : "")}";
-            purchaseBox.purchaseButton.interactable = Affordable(upgrade.costs) && (upgrade.maxLevel == -1 || upgrade.level < upgrade.maxLevel);
+            purchaseBox.description.text = upgrade.Description;
+                
+            purchaseBox.purchaseButton.interactable = !upgrade.LevelMaxed && Affordable(upgrade.costs);
 
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
@@ -119,7 +122,7 @@ namespace Upgrades
             {
                 if (!GuildTokens.ContainsKey(guild)) GuildTokens.Add(guild, 0);
             }
-            foreach (KeyValuePair<string,int> upgradeLevel in details.upgradeLevels)
+            foreach (KeyValuePair<UpgradeType,int> upgradeLevel in details.upgradeLevels)
             {
                 if(_upgrades.ContainsKey(upgradeLevel.Key))
                     _upgrades[upgradeLevel.Key].level = upgradeLevel.Value;

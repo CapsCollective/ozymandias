@@ -77,7 +77,7 @@ namespace Managers
     public struct UpgradeDetails
     {
         public Dictionary<Guild, int> guildTokens;
-        public Dictionary<string, int> upgradeLevels;
+        public Dictionary<UpgradeType, int> upgradeLevels;
     }
 
     [Serializable]
