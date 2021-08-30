@@ -588,12 +588,20 @@ namespace Map
                         Vector2.one
                     };
 
-                    int[] triangles = { 0, 1, 2, 2, 1, 3 };
+                    Vector3[] normals = {
+                        Vector3.back,
+                        Vector3.back,
+                        Vector3.back,
+                        Vector3.back,
+                    };
+
+                    int[] triangles = { 0, 1, 2, 3, 1, 2 };
 
                     Mesh quad = new Mesh {
                         vertices = vertices,
                         uv = uv,
-                        triangles = triangles
+                        triangles = triangles,
+                        normals = normals
                     };
 
                     return quad;
@@ -618,12 +626,20 @@ namespace Map
                         Vector2.one
                     };
 
+                    Vector3[] normals = {
+                        Vector3.back,
+                        Vector3.back,
+                        Vector3.back,
+                        Vector3.back,
+                    };
+
                     int[] triangles = { 0, 1, 2, 2, 1, 3 };
 
                     Mesh quad = new Mesh {
                         vertices = vertices,
                         uv = uv,
-                        triangles = triangles
+                        triangles = triangles,
+                        normals = normals
                     };
 
                     return quad;

@@ -21,6 +21,7 @@ namespace Buildings
 
         [SerializeField] private Card[] cards;
         [SerializeField] private LayerMask layerMask;
+        [SerializeField] private GameObject testBuilding;
 
         //TODO: Move this variable and logic into the BuildingCards
         private List<GameObject> _remainingBuildings = new List<GameObject>();
@@ -57,7 +58,7 @@ namespace Buildings
             _remainingBuildings = Manager.Cards.All;
             for (var i = 0; i < 3; i++) cards[i].buildingPrefab = _remainingBuildings.PopRandom();
             _toggleGroup = GetComponent<ToggleGroup>();
-            Manager.Inputs.IA_RotateBuilding.performed += RotateBuilding;
+            Manager.Inputs.OnRotateBuilding.performed += RotateBuilding;
         }
 
         private void RotateBuilding(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -72,6 +73,11 @@ namespace Buildings
         //TODO: Move this logic from update to on mouse input so its not recalculating every frame
         private void Update()
         {
+#if UNITY_EDITOR
+            if (UnityEngine.InputSystem.Keyboard.current.f5Key.wasPressedThisFrame)
+                cards[0].buildingPrefab = testBuilding;
+#endif
+
             // Clear previous highlights
             Manager.Map.Highlight(_selectedCells, HighlightState.Inactive);
             _selectedCells.Clear();

@@ -16,7 +16,11 @@
         _SmoothnessTex("Smoothness (R)", 2D) = "black" {}
         _Metallic ("Metallic", Range(0,1)) = 0.0
         _EmissionTex("Emission (RGB)", 2D) = "black" {}
+        _WindowEmissionTex("Window (RGB)", 2D) = "black" {}
+        _WindowMaxBrightness("Window Max Brightness", Float) = 10.0
         _EmissionIntensity("Intensity (R)", Float) = 0.0
+        _NoiseTex("Noise Texture", 2D) = "white" {}
+        _NoiseScale("Noise Scale ", Float) = 0.0
     }
     SubShader
     {
@@ -25,14 +29,15 @@
         LOD 200
 
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard vertex:vert fullforwardshadows
 
-        #pragma target 3.0
-
+        #pragma target 4.0
 
         sampler2D _MainTex;
         sampler2D _SmoothnessTex;
         sampler2D _EmissionTex;
+        sampler2D _WindowEmissionTex;
+        sampler2D _NoiseTex;
         fixed3 _RoofColor;
         int _Selected;
 
@@ -45,12 +50,24 @@
         {
             float2 uv_MainTex;
             float4 color : COLOR;
+            float3 oPos;
+            float3 wPos;
         };
 
         half _EmissionIntensity;
+        half _WindowEmissionIntensity;
+        half _WindowMaxBrightness = 10;
         half _Glossiness;
         half _Metallic;
+        half _NoiseScale;
         fixed4 _Color;
+
+        void vert(inout appdata_full v, out Input o) 
+        {
+            UNITY_INITIALIZE_OUTPUT(Input, o);
+            o.wPos = mul(unity_ObjectToWorld, v.vertex);
+            o.oPos = unity_ObjectToWorld._m03_m13_m23;
+        }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
@@ -59,13 +76,9 @@
             o.Metallic = _Metallic;
             o.Smoothness = tex2D(_SmoothnessTex, IN.uv_MainTex);
 
-            fixed4 selection = fixed4(0, 0, 0, 0);
-
-            if (_Selected){
-                selection += lerp(fixed4(0.5, 0, 0, 0), fixed4(0.1,0,0,0), abs(sin(_Time.z)));
-            }
-
-            o.Emission = (tex2D(_EmissionTex, IN.uv_MainTex) * _EmissionIntensity) + selection;
+            half positionalIntensity = tex2D(_NoiseTex, IN.oPos.xz * _NoiseScale) + 0.25;
+            half windowI = lerp(0, _WindowMaxBrightness, step(0.25, _WindowEmissionIntensity * positionalIntensity));
+            o.Emission = (tex2D(_EmissionTex, IN.uv_MainTex) * _EmissionIntensity) + (tex2D(_WindowEmissionTex, IN.uv_MainTex) * (windowI + positionalIntensity));
             o.Alpha = c.a;
         }
         ENDCG
