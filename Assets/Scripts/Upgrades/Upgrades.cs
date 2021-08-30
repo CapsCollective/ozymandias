@@ -24,7 +24,7 @@ namespace Upgrades
             public Canvas canvas;
             public TextMeshProUGUI title, description;
             public SerializedDictionary<Guild, GameObject> costs;
-            public Button purchaseButton;
+            public Button purchaseButton, deselectButton;
         }
         [SerializeField] private PurchaseBox purchaseBox;
 
@@ -36,6 +36,7 @@ namespace Upgrades
             State.OnEnterState += Deselect;
 
             purchaseBox.purchaseButton.onClick.AddListener(Purchase);
+            purchaseBox.deselectButton.onClick.AddListener(Deselect);
             _upgrades = GetComponentsInChildren<Upgrade>().ToDictionary(upgrade => upgrade.title);
         }
 
