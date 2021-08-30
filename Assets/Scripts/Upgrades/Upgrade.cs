@@ -31,6 +31,8 @@ namespace Upgrades
         
         public bool NoLevelCap => maxLevel != -1;
         public bool LevelMaxed => maxLevel != -1 && level >= maxLevel;
+        public bool Unlocked => level > 0;
+        
         public string Description => 
             $"{description}\n\n" +
             $"Level: {level}{(NoLevelCap ? $"/{maxLevel}" : "")}\n" +
@@ -48,11 +50,14 @@ namespace Upgrades
         public void Display(bool visible)
         {
             gameObject.SetActive(visible);
-            children.ForEach(upgrade => upgrade.Display(level != 0));
+            children.ForEach(upgrade => upgrade.Display(Unlocked));
             if (!visible) return;
             
-            connections.ForEach(connection => connection.sprite = level == 0 ? halfConnection : fullConnection);
-            background.color = new Color(1f, 1f, 1f, level != 0 ? 1f : 0.8f);
+            connections.ForEach(connection => connection.sprite = Unlocked ? fullConnection : halfConnection);
+            
+            if (!Unlocked) background.color = new Color(1f, 1f, 1f, 0.8f);                
+            else if (LevelMaxed) background.color = Color.black;
+            else background.color = Color.white;
         }
     }
 }
