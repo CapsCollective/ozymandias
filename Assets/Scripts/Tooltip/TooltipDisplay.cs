@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Managers;
 using TMPro;
 using UnityEngine;
 using Utilities;
@@ -159,7 +160,7 @@ namespace Tooltip
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"5 per adventurer({Manager.Adventurers.Available}) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} spending modifier.\n" +
+                                   $"{Stats.WealthPerAdventurer} per adventurer({Manager.Adventurers.Available}) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} spending modifier.\n" +
                                    $"{FormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class

@@ -64,13 +64,10 @@ namespace Buildings
         //public bool Free { get; set; } TODO: Used for random free card, used for placement only
         
         public int ScaledCost => //Free ? 0 :
-            Mathf.FloorToInt(baseCost * Mathf.Pow(BuildingCostScale, Manager.Buildings.GetCount(type) * 4 / (float)scaleSpeed));
+            (int)(baseCost * Mathf.Pow(BuildingCostScale, Manager.Buildings.GetCount(type) * 4 / (float)scaleSpeed));
         public int Refund =>
-            Mathf.FloorToInt(
-                baseCost *
-                Mathf.Pow(1.25f, (Manager.Buildings.GetCount(type) - 1) * 4 / (float)scaleSpeed) *
-                (BaseRefundPercentage + Manager.Upgrades.GetLevel(UpgradeType.Refund)) / 10f
-            );
+            (int)(baseCost * Mathf.Pow(BuildingCostScale, (Manager.Buildings.GetCount(type) - 1) * 4 / (float)scaleSpeed) *
+            (BaseRefundPercentage + Manager.Upgrades.GetLevel(UpgradeType.Refund)) / 10f);
         public int TerrainClearCost => (int)(TerrainBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
             Enumerable.Range(TerrainClearCount, SectionCount).Sum(i => Mathf.Pow(TerrainCostScale, i)));
         public int RuinsClearCost => (int)(RuinsBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Ruins)) / 10f *
