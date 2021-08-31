@@ -110,7 +110,6 @@ namespace Events
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             UpdateUi();
-            SaveFile.SaveState(); // Need to save again after a choice to lock in its outcomes
             UIEventController.SelectUI(continueButton.gameObject);
         }
     
@@ -150,6 +149,7 @@ namespace Events
                 .OnComplete(() =>
                 {
                     OnClosed?.Invoke();
+                    SaveFile.SaveState(); // Save here so state only locks in after paper is closed
                     _canvas.enabled = false;
                 });
             UIEventController.SelectUI(null);

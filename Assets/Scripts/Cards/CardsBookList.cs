@@ -1,7 +1,6 @@
 using Buildings;
 using Managers;
 using UnityEngine;
-using Utilities;
 using static Managers.GameManager;
 
 namespace Cards

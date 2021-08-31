@@ -13,11 +13,6 @@ namespace Cards
 {
     public class CardDisplay : MonoBehaviour
     {
-        private readonly Color _chevronGreen = new Color(0,0.7f,0.1f);
-        private readonly Color _chevronRed = new Color(1f,0,0);
-        private readonly Color _costActive = new Color(0.8f,0.6f,0.2f);
-        private readonly Color _costInactive = new Color(0.85f,0.85f,0.85f);
-
         [Serializable]
         private struct EffectBadge
         {
@@ -81,15 +76,15 @@ namespace Cards
             {
                 // Brighten the card if selectable
                 _cardBack.color = Color.white;
-                cost.color = _costActive;
-                costIcon.color = _costActive;
+                cost.color = Colors.CostActive;
+                costIcon.color = Colors.CostActive;
             }
             else
             {
                 // Darken the card if unselectable
-                _cardBack.color = _costInactive;
-                cost.color = _costInactive;
-                costIcon.color = _costInactive;
+                _cardBack.color = Colors.CostInactive;
+                cost.color = Colors.CostInactive;
+                costIcon.color = Colors.CostInactive;
             }
 
             var effects = building.stats
@@ -107,12 +102,12 @@ namespace Cards
                 badges[i].SetActive(true);
             
                 // Set the chevron values
-                badges[i].chevron.color = effects[i].Value > 0 ? _chevronGreen : _chevronRed;
+                badges[i].chevron.color = effects[i].Value > 0 ? Colors.Green : Colors.Red;
                 badges[i].chevron.transform.localRotation = 
                     Quaternion.Euler(effects[i].Value > 0 ? new Vector3(0, 0, 180) : Vector3.zero);
                 badges[i].chevron.sprite = chevronSizes[Math.Abs(effects[i].Value)-1];
                 // Set the badge values
-                badges[i].background.color = Structs.StatColours[effects[i].Key];
+                badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
                 
                 badges[i].badge.Description = $"{(effects[i].Value > 0 ? "+" : "")}{effects[i].Value} " +

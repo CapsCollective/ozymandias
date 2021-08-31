@@ -15,15 +15,6 @@ namespace Buildings
 {
     public class BuildingSelect : MonoBehaviour
     {
-        public static int TerrainClearCount { get; set; }
-        private const int TerrainBaseCost = 5;
-        private const float TerrainCostScale = 1.025f;
-        public static int RuinsClearCount { get; set; }
-        private const int RuinsBaseCost = 20;
-        private const float RuinsCostScale = 1.25f;
-        
-        private const float RefundPercentage = 0.50f;
-        
         private enum SelectionType
         {
             Clear,
@@ -211,29 +202,14 @@ namespace Buildings
         
         private SelectionConfig GetButtonConfiguration()
         {
-            if (SelectedBuilding.IsQuest)
-            {
+            if (SelectedBuilding.IsQuest) 
                 return new SelectionConfig(_selectedBuilding.Quest.Title, SelectionType.Quest);
-            }
-            else if (SelectedBuilding.IsRuin)
-            {
-                var cost = (int) 
-                    Enumerable.Range(RuinsClearCount, SelectedBuilding.SectionCount)
-                        .Sum(i => Mathf.Pow(RuinsCostScale, i)) * RuinsBaseCost;
-                return new SelectionConfig("Ruin", SelectionType.Clear, cost);
-            }
-            else if (SelectedBuilding.IsTerrain)
-            {
-                var cost = (int)
-                    Enumerable.Range(TerrainClearCount, SelectedBuilding.SectionCount)
-                        .Sum(i => Mathf.Pow(TerrainCostScale, i)) * TerrainBaseCost;
-                return new SelectionConfig("Terrain", SelectionType.Clear, cost);
-            }
-            else
-            {
-                return new SelectionConfig(SelectedBuilding.name, SelectionType.Refund, 
-                    Mathf.FloorToInt(SelectedBuilding.ScaledCost * RefundPercentage));
-            }
+            if (SelectedBuilding.IsRuin)
+                return new SelectionConfig("Ruin", SelectionType.Clear, SelectedBuilding.RuinsClearCost);
+            if (SelectedBuilding.IsTerrain)
+                return new SelectionConfig("Terrain", SelectionType.Clear, SelectedBuilding.TerrainClearCost);
+            
+            return new SelectionConfig(SelectedBuilding.name, SelectionType.Refund, SelectedBuilding.Refund); 
         }
 
         private void SetButtonOpacity(float opacity)
@@ -271,8 +247,8 @@ namespace Buildings
                     if (!SelectedBuilding  || _config == null || 
                         SelectedBuilding.indestructible || !affordable) return;
             
-                    if (SelectedBuilding.IsRuin) RuinsClearCount += SelectedBuilding.SectionCount;
-                    if (SelectedBuilding.IsTerrain) TerrainClearCount += SelectedBuilding.SectionCount;
+                    if (SelectedBuilding.IsRuin) Building.RuinsClearCount += SelectedBuilding.SectionCount;
+                    if (SelectedBuilding.IsTerrain) Building.TerrainClearCount += SelectedBuilding.SectionCount;
             
                     OnClear.Invoke(SelectedBuilding);
                     Manager.Buildings.Remove(SelectedBuilding);

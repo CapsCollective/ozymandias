@@ -28,7 +28,6 @@ namespace Cards
             _discoverable = new List<GameObject>(); // Discoverable from ruins
 
         public List<GameObject> All => starterBuildings.Concat(_current).ToList();
-        private int MaxDiscoverable => 3; // TODO: System to determine how many cards are discoverable
 
         private void Awake()
         {
@@ -89,7 +88,7 @@ namespace Cards
         {
             _current.Clear();
             _discoverable.Clear();
-            _discoverable.AddRange(_all.RandomSelection(Mathf.Min(MaxDiscoverable, _all.Count)));
+            _discoverable.AddRange(_all.RandomSelection(Mathf.Min(Manager.Upgrades.GetLevel(UpgradeType.Discoveries), _all.Count)));
         }
     }
 }

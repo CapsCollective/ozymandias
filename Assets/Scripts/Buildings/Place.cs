@@ -174,7 +174,7 @@ namespace Buildings
             if (_remainingBuildings.Count == 0) _remainingBuildings = Manager.Cards.All;
             bool valid = false;
 
-            // Confirm no duplicate buildings
+            // Confirm no duplicate buildings in the case of a shuffle
             while (!valid)
             {
                 valid = true;

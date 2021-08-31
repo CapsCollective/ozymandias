@@ -35,7 +35,7 @@ namespace Quests
 
         private int _turnCreated; //Prevents quest from immediately growing when created from event
         private readonly List<Adventurer> _assigned = new List<Adventurer>();
-        
+
         public string Title => title;
         public string Description => description;
         public int Cost { get; private set; }
@@ -45,6 +45,7 @@ namespace Quests
 
         public void Add()
         {
+            Cost = (int)(Manager.Stats.WealthPerTurn * costScale * (10f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost) / 10f)); 
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
             State.OnNextTurnEnd += OnNewTurn;
@@ -130,7 +131,11 @@ namespace Quests
                 Debug.Log($"Quest in progress: {title}. {TurnsLeft} turns remaining.");
                 TurnsLeft--;                
             }
-            else if(location == Location.Grid && _turnCreated != Manager.Stats.TurnCounter)
+            else if (
+                location == Location.Grid && 
+                _turnCreated != Manager.Stats.TurnCounter && 
+                Random.Range(0,10) < Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
+            )
             {
                 GrowBuilding();
             }

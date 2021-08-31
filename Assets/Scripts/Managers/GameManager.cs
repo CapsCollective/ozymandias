@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using Events;
-using GuildFavours;
-using GuildRequests;
 using Inputs;
 using NaughtyAttributes;
 using Tooltip;
@@ -22,11 +21,10 @@ namespace Managers
         public Stats Stats { get; private set; }
         public Adventurers.Adventurers Adventurers { get; private set; }
         public Buildings.Buildings Buildings { get; private set; }
-        public Achievements.Achievements Achievements { get; private set; }
         public Cards.Cards Cards { get; private set; }
         public Quests.Quests Quests { get; private set; }
-        public Requests Requests { get; private set; }
-        public Favours Favours { get; private set; }
+        public Requests.Requests Requests { get; private set; }
+        public Upgrades.Upgrades  Upgrades{ get; private set; }
         public EventQueue EventQueue { get; private set; }
         public Map.Map Map { get; private set; }
         public Jukebox Jukebox { get; private set; }
@@ -44,11 +42,10 @@ namespace Managers
             Stats = FindObjectOfType<Stats>();
             Adventurers = FindObjectOfType<Adventurers.Adventurers>();
             Buildings = FindObjectOfType<Buildings.Buildings>();
-            Achievements = FindObjectOfType<Achievements.Achievements>();
             Cards = FindObjectOfType<Cards.Cards>();
             Quests = FindObjectOfType<Quests.Quests>();
-            Requests = FindObjectOfType<Requests>();
-            Favours = FindObjectOfType<Favours>();
+            Requests = FindObjectOfType<Requests.Requests>();
+            Upgrades = FindObjectOfType<Upgrades.Upgrades>();
             EventQueue = FindObjectOfType<EventQueue>();
             Map = FindObjectOfType<Map.Map>();
             Jukebox = FindObjectOfType<Jukebox>();
@@ -86,6 +83,16 @@ namespace Managers
         public void ExtraWealth()
         {
             Stats.Wealth += 10000;
+            UpdateUi();
+        }
+        
+        [Button("Extra Tokens")]
+        public void ExtraTokens()
+        {
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
+            {
+                Upgrades.GuildTokens[guild] = 99;
+            }
             UpdateUi();
         }
         

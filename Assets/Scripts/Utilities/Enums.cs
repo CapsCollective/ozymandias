@@ -149,10 +149,29 @@
     {
         Test = 0,
     }
-    
-    public enum Upgrade
+
+    public enum UpgradeType
     {
-        Test = 0,
-        
+        Discoveries,
+        //Starting Stat Boosts
+        Brawler,
+        Outrider,
+        Performer,
+        Diviner,
+        Arcanist,
+        Housing,
+        Food,
+        Spending,
+        Stability,
+        Wealth,
+        //Price Reductions
+        Ruins,
+        Refund,
+        Terrain,
+        QuestCost,
+        //Special Abilities
+        FreeCard,
+        CampSpread,
+        MaxAdventurerSpawn
     }
 }

@@ -1,8 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
-using Event = Events.Event;
 
-namespace UI
+namespace Events
 {
     public class NewspaperEvent : MonoBehaviour
     {
