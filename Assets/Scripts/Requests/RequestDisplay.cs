@@ -54,17 +54,17 @@ namespace Requests
             else
             {
                 _bookDisplay.description.text = Request.Description;
-                _bookDisplay.count.text = Request.completed + "/" + Request.required;
+                _bookDisplay.count.text = Request.Completed + "/" + Request.Required;
                 _bookDisplay.slider.gameObject.SetActive(true);
-                _bookDisplay.slider.value = (float)Request.completed / Request.required;
+                _bookDisplay.slider.value = (float)Request.Completed / Request.Required;
 
-                if (Request.completed == 0) {
+                if (Request.Completed == 0) {
                     _oldCompleted = 0; // Reset for new requests
                     _notificationDisplay.slider.value = 0;
                 }
                 
-                if (Request.completed <= _oldCompleted) return;
-                _oldCompleted = Request.completed;
+                if (Request.Completed <= _oldCompleted) return;
+                _oldCompleted = Request.Completed;
                 
                 // Cancel any current tweens in case updates trigger twice in quick succession
                 DOTween.Kill(_notificationDisplay);
@@ -74,10 +74,10 @@ namespace Requests
                 _notificationCanvasGroup.alpha = 1;
 
                 _notificationDisplay.description.text = Request.Description;
-                _notificationDisplay.count.text = Request.completed + "/" + Request.required;
+                _notificationDisplay.count.text = Request.Completed + "/" + Request.Required;
 
                 _notificationDisplay.slider
-                    .DOValue((float)Request.completed / Request.required, 0.5f)
+                    .DOValue((float)Request.Completed / Request.Required, 0.5f)
                     .OnComplete(() =>
                     {
                         _notificationCanvasGroup.DOFade(0, 2f)

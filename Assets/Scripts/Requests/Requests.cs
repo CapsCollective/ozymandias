@@ -62,8 +62,8 @@ namespace Requests
                 .ToDictionary(request => request.Key, request => new RequestDetails
                 {
                     name = request.Value.name, 
-                    completed = request.Value.completed,
-                    required = request.Value.required
+                    completed = request.Value.Completed,
+                    required = request.Value.Required
                 });
         }
 
@@ -76,8 +76,8 @@ namespace Requests
             foreach (KeyValuePair<Guild, RequestDetails> request in requests)
             {
                 _requests[request.Key] = await Addressables.LoadAssetAsync<Request>(request.Value.name).Task;
-                _requests[request.Key].completed = request.Value.completed;
-                _requests[request.Key].required = request.Value.required;
+                _requests[request.Key].Completed = request.Value.completed;
+                _requests[request.Key].Required = request.Value.required;
                 _requests[request.Key].Start();
                 displays[request.Key].Request = _requests[request.Key];
             }

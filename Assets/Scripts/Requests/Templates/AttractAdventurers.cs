@@ -6,7 +6,7 @@ namespace Requests.Templates
     [CreateAssetMenu(fileName = "Attract Adventurers", menuName = "Requests/Attract Adventurers")]
     public sealed class AttractAdventurers : Request
     {
-        public override string Description => $"Attract {required} {guild}s";
+        public override string Description => $"Attract {Required} {guild}s";
         protected override int RequiredScaled => 3;
 
         public override void Start()
@@ -21,7 +21,7 @@ namespace Requests.Templates
 
         private void CheckJoin(Adventurer adventurer)
         {
-            if (adventurer.guild == guild) completed++;
+            if (adventurer.guild == guild) Completed++;
         }
     }
 }

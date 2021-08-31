@@ -9,7 +9,7 @@ namespace Requests.Templates
     public sealed class ConstructBuildingType : Request
     {
         [SerializeField] private BuildingType buildingType;
-        public override string Description => $"Build {required} {buildingType}s";
+        public override string Description => $"Build {Required} {buildingType}s";
         protected override int RequiredScaled => 3;
 
         public override void Start()
@@ -24,7 +24,7 @@ namespace Requests.Templates
 
         private void CheckBuilt(Building building)
         {
-            if (building.type == buildingType) completed++;
+            if (building.type == buildingType) Completed++;
         }
         
         public override void Configure(EventCreator.RequestConfig config)
