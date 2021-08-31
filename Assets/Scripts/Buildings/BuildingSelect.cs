@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Inputs;
 using Managers;
 using Quests;
@@ -15,6 +17,14 @@ namespace Buildings
 {
     public class BuildingSelect : MonoBehaviour
     {
+        [Serializable]
+        private struct EffectBadge
+        {
+            public RectTransform transform;
+            public CanvasGroup canvasGroup;
+            public Image background, icon, chevron;
+        }
+        
         private enum SelectionType
         {
             Clear,
@@ -44,6 +54,7 @@ namespace Buildings
         [SerializeField] private Image buttonImage;
         [SerializeField] private TextMeshProUGUI nameText, costText, questTitleText;
         [SerializeField] private Sprite buildingButtonBacking, questButtonBacking;
+        [SerializeField] private CanvasGroup buttonCanvasGroup;
         
         [SerializeField] private LayerMask collisionMask;
         
@@ -51,6 +62,10 @@ namespace Buildings
         [SerializeField] [ColorUsage(false, true)] private Color selectColor;
         
         [SerializeField] private float raycastInterval;
+
+        [SerializeField] private List<EffectBadge> badges;
+        [SerializeField] private List<Sprite> chevronSizes;
+        [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
 
         private Canvas _canvas;
         private Camera _cam;
@@ -86,8 +101,16 @@ namespace Buildings
                 if (_selectedBuilding) _selectedBuilding.Selected = false;
 
                 _selectedBuilding = value;
-                _canvas.enabled = _selectedBuilding;
-                if (!_selectedBuilding) return;
+
+                if (!_selectedBuilding)
+                {
+                    DOTween.Kill(buttonCanvasGroup);
+                    buttonCanvasGroup.DOFade(0, 0.3f).OnComplete(() => _canvas.enabled = false);
+                    HideEffects();
+                    return;
+                }
+
+                _canvas.enabled = true;
                 
                 _selectedBuilding.Selected = true;
                 SetHighlightColor(selectColor);
@@ -103,13 +126,19 @@ namespace Buildings
                 questTitleText.text = _config.IsQuest ? _config.Title : "";
                 
                 // Set button image values
-                SetButtonOpacity(_config.IsRefund || Manager.Stats.Wealth >= _config.Cost ? 255f : 166f);
+                DOTween.Kill(buttonCanvasGroup);
+                buttonCanvasGroup.alpha = 0;
+                buttonCanvasGroup.DOFade(_config.IsRefund || Manager.Stats.Wealth >= _config.Cost ? 1f : 0.7f, 0.5f);
                 buttonImage.sprite = _config.IsQuest ? questButtonBacking : buildingButtonBacking;
                 
                 // Set Cost text values
                 if (_config.IsQuest) costText.text = "";
                 else if (_config.Title == "Guild Hall") costText.text = "Cost: Everything";
                 else costText.text = (_config.IsRefund ? "Refund: " : "Cost: ") + _config.Cost;
+
+                badges.ForEach(badge => badge.canvasGroup.alpha = 0);
+                // Fade in building effects
+                if (_config.IsRefund) DisplayEffects();
             }
         }
         
@@ -129,6 +158,7 @@ namespace Buildings
             Manager.Inputs.IA_DeleteBuilding.performed += DeleteBuildingInput;
             Manager.Inputs.IA_DeleteBuilding.started += DeleteBuildingInput;
             Manager.Inputs.IA_DeleteBuilding.canceled += DeleteBuildingInput;
+            GetComponentInChildren<Button>().onClick.AddListener(SelectBuilding);
 
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
             State.OnEnterState += () => HoveredBuilding = null;
@@ -212,17 +242,48 @@ namespace Buildings
             return new SelectionConfig(SelectedBuilding.name, SelectionType.Refund, SelectedBuilding.Refund); 
         }
 
-        private void SetButtonOpacity(float opacity)
+        private void DisplayEffects()
         {
-            // Set for button text
-            Color oldColor = costText.color;
-            costText.color = nameText.color = new Color(oldColor.r, oldColor.g, oldColor.b, opacity);
+            var effects = SelectedBuilding.stats.OrderByDescending(x => x.Value).ToList();
 
-            // Set for button colour
-            Color oldButtonColor = buttonImage.color;
-            buttonImage.color = new Color(oldButtonColor.r, oldButtonColor.g, oldButtonColor.b, opacity / 255f);
+            for (int i = 0; i < badges.Count; i++)
+            {
+                if (i >= effects.Count)
+                {
+                    // Hide the badge and chevron if there are no more effects to display
+                    badges[i].canvasGroup.gameObject.SetActive(false);
+                    continue;
+                }
+                
+                badges[i].canvasGroup.gameObject.SetActive(true);
+                badges[i].transform.localPosition = new Vector2(0, -50);
+                int i1 = i; // copy to variable so it doesnt change during delay
+                StartCoroutine(Algorithms.DelayCall(0.1f * i, () =>
+                {
+                    badges[i1].transform.DOLocalMove(Vector3.zero, 1f);
+                    badges[i1].canvasGroup.DOFade(1, 1f);
+                }));
+
+                // Set the chevron values
+                badges[i].chevron.color = effects[i].Value > 0 ? Colors.Green : Colors.Red;
+                badges[i].chevron.transform.localRotation = 
+                    Quaternion.Euler(effects[i].Value > 0 ? new Vector3(0, 0, 180) : Vector3.zero);
+                badges[i].chevron.sprite = chevronSizes[Math.Abs(effects[i].Value)-1];
+                // Set the badge values
+                badges[i].background.color = Colors.StatColours[effects[i].Key];
+                badges[i].icon.sprite = statIcons[effects[i].Key];
+            }
         }
-
+        
+        private void HideEffects()
+        {
+            for (int i = 0; i < badges.Count; i++)
+            {
+                badges[i].transform.DOLocalMove(new Vector2(0, -50),0.3f);
+                badges[i].canvasGroup.DOFade(0, 0.3f);
+            }
+        }
+        
         private void RepositionButton()
         {
             Vector3 buildingPosition = SelectedBuilding.transform.position;
@@ -230,7 +291,7 @@ namespace Buildings
             _canvas.enabled = true;
         }
 
-        public void SelectBuilding()
+        private void SelectBuilding()
         {
             // Switch on config type
             switch (_config.Type)
