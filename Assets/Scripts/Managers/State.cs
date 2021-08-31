@@ -294,7 +294,6 @@ namespace Managers
                 OnNextTurnEnd.Invoke();
                 Manager.EventQueue.Process();
                 gameCanvasGroup.interactable = true;
-                SaveFile.SaveState();
             });
         }
         
@@ -306,8 +305,8 @@ namespace Managers
             Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
-            BuildingSelect.RuinsClearCount = 0;
-            BuildingSelect.TerrainClearCount = 0;
+            Building.RuinsClearCount = 0;
+            Building.TerrainClearCount = 0;
             
             SaveFile.SaveState();
             EnterState(GameState.ToIntro);

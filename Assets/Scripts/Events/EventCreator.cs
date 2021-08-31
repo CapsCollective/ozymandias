@@ -214,18 +214,18 @@ namespace Events
                     }
                     request.Configure(config.config);
                     request.guild = guild;
-                    addedOutcome.request = request;
                     AssetDatabase.CreateAsset(request, $"Assets/Events/Requests/{guild}/{config.name} Request.asset");
+                    addedOutcome.request = request;
                     
                     // Completed Event
                     Event completedEvent = ScriptableObject.CreateInstance<Event>();
-                    request.completedEvent = completedEvent;
                     completedEvent.headline = config.completeHeadline;
                     completedEvent.article = config.completeArticle;
                     completedEvent.image = LoadSprite(config.completeImage);
                     completedEvent.type = EventType.Other;
                     AssetDatabase.CreateAsset(completedEvent, $"Assets/Events/Requests/{guild}/{config.name} Completed.asset");
-
+                    request.completedEvent = completedEvent;
+                    
                     // Completed Outcome
                     RequestCompleted completedOutcome = ScriptableObject.CreateInstance<RequestCompleted>();
                     completedOutcome.name = "Completed Outcome";

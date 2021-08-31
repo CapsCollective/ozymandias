@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -51,9 +50,31 @@ namespace Buildings
         public bool IsTerrain => type == BuildingType.Terrain;
         public bool IsQuest => type == BuildingType.Quest;
         public int SectionCount => _sections.Count;
+        
+        public static int TerrainClearCount { get; set; }
+        private const int TerrainBaseCost = 5;
+        private const float TerrainCostScale = 1.025f;
+        public static int RuinsClearCount { get; set; }
+        private const int RuinsBaseCost = 20;
+        private const float RuinsCostScale = 1.25f;
+        
+        private const float BuildingCostScale = 1.25f;
+        private const float BaseRefundPercentage = 5f; // Representing 50%
 
-        public int ScaledCost =>
-            Mathf.FloorToInt(baseCost * Mathf.Pow(1.25f, Manager.Buildings.GetCount(type) * 4 / (float)scaleSpeed));
+        //public bool Free { get; set; } TODO: Used for random free card, used for placement only
+        
+        public int ScaledCost => //Free ? 0 :
+            Mathf.FloorToInt(baseCost * Mathf.Pow(BuildingCostScale, Manager.Buildings.GetCount(type) * 4 / (float)scaleSpeed));
+        public int Refund =>
+            Mathf.FloorToInt(
+                baseCost *
+                Mathf.Pow(1.25f, (Manager.Buildings.GetCount(type) - 1) * 4 / (float)scaleSpeed) *
+                (BaseRefundPercentage + Manager.Upgrades.GetLevel(UpgradeType.Refund)) / 10f
+            );
+        public int TerrainClearCost => (int)(TerrainBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
+            Enumerable.Range(TerrainClearCount, SectionCount).Sum(i => Mathf.Pow(TerrainCostScale, i)));
+        public int RuinsClearCost => (int)(RuinsBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Ruins)) / 10f *
+            Enumerable.Range(RuinsClearCount, SectionCount).Sum(i => Mathf.Pow(RuinsCostScale, i)));
 
         [HorizontalLine] public List<SectionInfo> sections;
         public bool indestructible;

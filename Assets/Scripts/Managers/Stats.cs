@@ -28,11 +28,24 @@ namespace Managers
             State.OnNextTurnEnd += OnNextTurnEnd;
         }
 
+        private static readonly Dictionary<Stat, UpgradeType> UpgradeMap = new Dictionary<Stat, UpgradeType>
+        {
+            { Stat.Brawler, UpgradeType.Brawler },
+            { Stat.Outrider, UpgradeType.Outrider },
+            { Stat.Performer, UpgradeType.Performer },
+            { Stat.Diviner, UpgradeType.Diviner },
+            { Stat.Arcanist, UpgradeType.Arcanist },
+            { Stat.Spending, UpgradeType.Spending },
+            { Stat.Housing, UpgradeType.Housing},
+            { Stat.Food, UpgradeType.Food }
+        };
+
         public int GetStat(Stat stat)
         {
             int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
-            return mod * Manager.Buildings.GetStat(stat) + ModifiersTotal[stat] + foodMod;
+            int upgradeMod = UpgradeMap.ContainsKey(stat) ? Manager.Upgrades.GetLevel(UpgradeMap[stat]) : 0;
+            return mod * (Manager.Buildings.GetStat(stat) + upgradeMod) + ModifiersTotal[stat] + foodMod;
         }
 
         private int GetSatisfaction(Guild guild)
@@ -49,7 +62,10 @@ namespace Managers
 
         public float SpawnChance(Guild guild)
         {
-            return Mathf.Clamp((GetSatisfaction(guild)+10) * 2.5f, 0, 50);
+            return Mathf.Clamp(
+                (GetSatisfaction(guild) + 10) * 2.5f, 
+                0, 50 + 10 * Manager.Upgrades.GetLevel(UpgradeType.MaxAdventurerSpawn)
+            );
         }
         
         public int RandomSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
@@ -63,9 +79,9 @@ namespace Managers
         public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence);
 
         // TODO: How do we make a more engaging way to determine threat than just a turn counter?
-        public int Threat => 9 + (3 * TurnCounter) + ModifiersTotal[Stat.Threat];
+        public int Threat => 3 * TurnCounter + ModifiersTotal[Stat.Threat];
         
-        public int Stability { get; set; } // Percentage of how far along the threat is.
+        public int Stability { get; private set; } // Percentage of how far along the threat is.
 
         public int TurnCounter { get; set; }
         
@@ -78,15 +94,12 @@ namespace Managers
         }
 
         #region State Callbacks
-        
-        public void OnNewGame()
-        {
-            // Start game with 10 Adventurers
-            for (int i = 0; i < 10; i++) Manager.Adventurers.Add();
 
+        private void OnNewGame()
+        {
             TurnCounter = 1;
-            Stability = 100;
-            Wealth = 100;
+            Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
+            Wealth = 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
         }
 
         private void OnNextTurnEnd()
@@ -126,8 +139,8 @@ namespace Managers
                 wealth = Wealth,
                 turnCounter = TurnCounter,
                 stability = Stability,
-                terrainClearCount = BuildingSelect.TerrainClearCount,
-                ruinsClearCount = BuildingSelect.RuinsClearCount,
+                terrainClearCount = Building.TerrainClearCount,
+                ruinsClearCount = Building.RuinsClearCount,
                 modifiers = Modifiers
             };
         }
@@ -135,8 +148,8 @@ namespace Managers
         public void Load(StatDetails details)
         {
             TurnCounter = details.turnCounter;
-            BuildingSelect.TerrainClearCount = details.terrainClearCount;
-            BuildingSelect.RuinsClearCount = details.ruinsClearCount;
+            Building.TerrainClearCount = details.terrainClearCount;
+            Building.RuinsClearCount = details.ruinsClearCount;
             Wealth = details.wealth;
             Stability = details.stability;
             

@@ -32,6 +32,7 @@ namespace Map
         //Procedurally places buildings
         public void FillGrid()
         {
+            //TODO: Pick a spawn cell from a list of 'safe' placements, avoid building trees in cell within a distance of the hall, Store the cell 
             Building terrain = null;
             bool wasCreated = true;
             

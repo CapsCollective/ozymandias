@@ -163,6 +163,7 @@
         Food,
         Spending,
         Stability,
+        Wealth,
         //Price Reductions
         Ruins,
         Refund,

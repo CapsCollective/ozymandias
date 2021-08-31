@@ -31,6 +31,9 @@ namespace Upgrades
         private Upgrade _selected;
         private Dictionary<UpgradeType, Upgrade> _upgrades;
 
+        public int GetLevel(UpgradeType type) => _upgrades[type].level;
+        public bool IsUnlocked(UpgradeType type) => _upgrades[type].level > 0;
+
         private void Awake()
         {
             State.OnEnterState += Deselect;
