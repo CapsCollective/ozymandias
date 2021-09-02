@@ -6,7 +6,7 @@ namespace Adventurers
     [CreateAssetMenu(fileName = "Adventurer")][System.Serializable]
     public class PremadeAdventurer : ScriptableObject
     {
-        public AdventurerType type;
+        public Guild type;
         public bool isSpecial;
     }
 }

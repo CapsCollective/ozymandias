@@ -13,24 +13,6 @@ namespace Cards
 {
     public class CardDisplay : MonoBehaviour
     {
-        private readonly Color _chevronGreen = new Color(0,0.7f,0.1f);
-        private readonly Color _chevronRed = new Color(1f,0,0);
-        private readonly Color _costActive = new Color(0.8f,0.6f,0.2f);
-        private readonly Color _costInactive = new Color(0.85f,0.85f,0.85f);
-    
-        private readonly Dictionary<Stat, Color> _statColors = new Dictionary<Stat, Color>
-        {
-            {Stat.Brawler, new Color(0.7f, 0.3f, 0.3f)},
-            {Stat.Outrider, new Color(0.25f, 0.45f, 0.2f)},
-            {Stat.Performer, new Color(0.30f, 0.6f, 0.6f)},
-            {Stat.Diviner, new Color(0.75f, 0.6f, 0.3f)},
-            {Stat.Arcanist, new Color(0.6f, 0.3f, 0.75f)},
-            {Stat.Spending, new Color(0.8f, 0.6f, 0f)},
-            {Stat.Defence, new Color(0.25f, 0.35f, 1f)},
-            {Stat.Food, new Color(0.5f, 0.65f, 0f)},
-            {Stat.Housing, new Color(0.6f, 0.4f, 0f)}
-        };
-    
         [Serializable]
         private struct EffectBadge
         {
@@ -55,6 +37,8 @@ namespace Cards
         [SerializeField] private List<EffectBadge> badges;
         [SerializeField] private List<Sprite> chevronSizes;
         [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
+
+        [SerializeField] private Sprite lockedIcon;
         
         private Image _cardBack;
         
@@ -71,7 +55,17 @@ namespace Cards
 
         public void UpdateDetails(Building building, bool interactable = true)
         {
-        
+            if (building == null)
+            {
+                //TODO: Make actual locked design
+                title.text = "???";
+                icon.sprite = lockedIcon;
+                cost.text = "?";
+                description.text = "This card hasn't been unlocked yet.";
+                badges.ForEach(badge => badge.SetActive(false));
+                return;
+            }
+            
             // Set card details
             title.text = building.name;
             description.text = building.description;
@@ -82,15 +76,15 @@ namespace Cards
             {
                 // Brighten the card if selectable
                 _cardBack.color = Color.white;
-                cost.color = _costActive;
-                costIcon.color = _costActive;
+                cost.color = Colors.CostActive;
+                costIcon.color = Colors.CostActive;
             }
             else
             {
                 // Darken the card if unselectable
-                _cardBack.color = _costInactive;
-                cost.color = _costInactive;
-                costIcon.color = _costInactive;
+                _cardBack.color = Colors.CostInactive;
+                cost.color = Colors.CostInactive;
+                costIcon.color = Colors.CostInactive;
             }
 
             var effects = building.stats
@@ -108,12 +102,12 @@ namespace Cards
                 badges[i].SetActive(true);
             
                 // Set the chevron values
-                badges[i].chevron.color = effects[i].Value > 0 ? _chevronGreen : _chevronRed;
+                badges[i].chevron.color = effects[i].Value > 0 ? Colors.Green : Colors.Red;
                 badges[i].chevron.transform.localRotation = 
                     Quaternion.Euler(effects[i].Value > 0 ? new Vector3(0, 0, 180) : Vector3.zero);
                 badges[i].chevron.sprite = chevronSizes[Math.Abs(effects[i].Value)-1];
                 // Set the badge values
-                badges[i].background.color = _statColors[effects[i].Key];
+                badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
                 
                 badges[i].badge.Description = $"{(effects[i].Value > 0 ? "+" : "")}{effects[i].Value} " +

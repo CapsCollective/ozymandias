@@ -50,21 +50,45 @@
 
     public enum EventType
     {
-        Flavour,
-        AdventurersJoin,
-        Threat,
-        Chaos,
-        Endgame,
-        Chain,
-        Special,
-        Advert,
-        GameOver,
-        AdventurersLeave,
-        Blueprint,
-        Radiant
+        Other = 0,
+        Advert = 1,
+        Flavour = 2,
+        Story = 3,
+        AdventurersJoin = 4,
+        AdventurersLeave = 5,
+        Chaos = 6,
+        Threat = 7,
+        BrawlerRequest = 8,
+        OutriderRequest = 9,
+        PerformerRequest = 10,
+        DivinerRequest = 11,
+        ArcanistRequest = 12
     }
 
-    public enum AdventurerType
+    public enum OutcomeType
+    {
+        Debug,
+        FlavourText,
+        ChainEvent,
+        AdventurersAdded,
+        AdventurersRemoved,
+        BuildingDamaged,
+        CardUnlocked,
+        GameOver,
+        ModifierAdded,
+        ModifierRemoved,
+        QuestAdded,
+        QuestCompleted,
+        RequestAdded,
+        RequestCompleted
+    }
+
+    public enum RequestType
+    {
+        
+    }
+
+    public enum Guild
     {
         Brawler,
         Outrider,
@@ -124,12 +148,30 @@
     public enum Achievement
     {
         Test = 0,
-        
     }
-    
-    public enum Upgrade
+
+    public enum UpgradeType
     {
-        Test = 0,
-        
+        Discoveries,
+        //Starting Stat Boosts
+        Brawler,
+        Outrider,
+        Performer,
+        Diviner,
+        Arcanist,
+        Housing,
+        Food,
+        Spending,
+        Stability,
+        Wealth,
+        //Price Reductions
+        Ruins,
+        Refund,
+        Terrain,
+        QuestCost,
+        //Special Abilities
+        FreeCard,
+        CampSpread,
+        MaxAdventurerSpawn
     }
 }

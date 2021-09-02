@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 using Events;
 using Events.Outcomes;
+using Debug = UnityEngine.Debug;
 using Event = Events.Event;
 using EventType = Utilities.EventType;
 
@@ -337,9 +338,9 @@ public class ScenarioEditor : EditorWindow
             choiceListView.Refresh();
         });
 
-        // TextField tfChoiceText = root.Query<TextField>("tfChoiceDescription");
-        // tfChoiceText.SetValueWithoutNotify(c.ChoiceText);
-        // tfChoiceText.RegisterValueChangedCallback((s) => scenario.choices[choiceListView.selectedIndex].ChoiceText = s.newValue);
+         // TextField tfChoiceText = root.Query<TextField>("tfChoiceDescription");
+         // tfChoiceText.SetValueWithoutNotify(c.ChoiceText);
+         // tfChoiceText.RegisterValueChangedCallback((s) => scenario.choices[choiceListView.selectedIndex].ChoiceText = s.newValue);
     }
 
     private void RefreshScenario()
@@ -348,7 +349,7 @@ public class ScenarioEditor : EditorWindow
         {
             AssetDatabase.SaveAssets();
             var serializedObject = new SerializedObject(scenario);
-            tfScenarioTitle.BindProperty(serializedObject.FindProperty("headline"));
+            tfScenarioTitle.BindProperty(serializedObject.FindProperty("Headline"));
             tfScenarioTitle.RegisterCallback<FocusOutEvent>(e => AssetDatabase.SaveAssets());
             tfScenarioDescription.BindProperty(serializedObject.FindProperty("article"));
             tfScenarioDescription.RegisterCallback<FocusOutEvent>(e => AssetDatabase.SaveAssets());

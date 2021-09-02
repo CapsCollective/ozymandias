@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UI
+namespace Cards
 {
     public class CardBadge : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {

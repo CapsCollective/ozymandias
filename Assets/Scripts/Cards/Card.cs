@@ -1,6 +1,7 @@
 ﻿using System;
 using Buildings;
 using DG.Tweening;
+using Inputs;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,8 +12,6 @@ namespace Cards
 {
     public class Card : UiUpdater, IPointerEnterHandler, IPointerExitHandler
     {
-        private const int Deselected = -1;
-        
         public Toggle toggle;
         public GameObject buildingPrefab;
         public bool isReplacing;
@@ -44,7 +43,7 @@ namespace Cards
             {
                 // Unselect the card if un-interactable
                 toggle.isOn = false;
-                Place.Selected = Deselected;
+                Place.Selected = Place.Deselected;
                 cardDisplay.SetHighlight(false);
             }
 
@@ -56,11 +55,10 @@ namespace Cards
             cardDisplay.SetHighlight(isOn);
             
             if (isReplacing) { return; }
-
             if (isOn) Place.Selected = position;
             else
             {
-                Place.Selected = Deselected;
+                Place.Selected = Place.Deselected;
                 OnPointerExit(null);
             }
         }

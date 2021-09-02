@@ -85,6 +85,10 @@ namespace Quests
                 // Set their positions off-screen
                 flyer.transform.localPosition = _offScreenPos;
             }
+            
+            // Hide buttons on start
+            DisplayCloseButton(false);
+            DisplayMoveButtons(false);
         }
 
         private static int CycleIdx(int idx, int collectionLength, SwapDir dir)
@@ -97,6 +101,7 @@ namespace Quests
             if (_inAnim) return;
             _inAnim = true;
             _selectedQuest = CycleIdx(_selectedQuest, Quests.Count, dir);
+            DisplayMoveButtons(false);
             SwapFlyers(dir, SelectedQuest);
             Manager.Jukebox.PlayScrunch();
             FocusBuilding(SelectedQuest.Building);
@@ -114,6 +119,7 @@ namespace Quests
                 .DOLocalMove(new Vector3(-nextStartX, 0, 0), animateAcrossDuration)
                 .OnComplete(() =>
                 {
+                    DisplayMoveButtons(true);
                     currentFlyer.gameObject.SetActive(false);
                     _inAnim = false;
                 });
@@ -127,7 +133,7 @@ namespace Quests
             _openFlyer = CycleIdx(_openFlyer, FlyerCount, dir);
         }
 
-        private void FocusBuilding(Building building)
+        private static void FocusBuilding(Building building)
         {
             Vector3 buildingPos = building.transform.position;
             buildingPos.y = 1.0f;
@@ -136,6 +142,8 @@ namespace Quests
 
         private void Open()
         {
+            DisplayCloseButton(false);
+            DisplayMoveButtons(false);
             Manager.State.EnterState(GameState.InMenu);
             Manager.Jukebox.PlayScrunch();
             var hasSingleQuest = Quests.Count == 1;
@@ -145,18 +153,37 @@ namespace Quests
             OpenFlyer.transform.eulerAngles = _offScreenRot;
             OpenFlyer.transform
                 .DOLocalMove(Vector3.zero, animateInDuration)
-                .OnStart(() => OpenFlyer.gameObject.SetActive(true));
+                .OnStart(() => OpenFlyer.gameObject.SetActive(true))
+                .OnComplete(() =>
+                {
+                    DisplayMoveButtons(true);
+                    DisplayCloseButton(true);
+                });
             OpenFlyer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
         }
         
         private void Close()
         {
+            DisplayCloseButton(false);
+            DisplayMoveButtons(false);
             Manager.State.EnterState(GameState.InGame);
             OpenFlyer.transform.DOLocalMove(_offScreenPos, animateOutDuration);
             OpenFlyer.transform
                 .DOLocalRotate(_offScreenRot, animateOutDuration)
                 .OnComplete(() => { _canvas.enabled = false; });
             UIEventController.SelectUI(null);
+        }
+
+        private void DisplayMoveButtons(bool display)
+        {
+            var alpha = display ? 1.0f : 0.0f;
+            nextButton.image.DOFade(alpha, 0.2f);
+            previousButton.image.DOFade(alpha, 0.2f);
+        }
+        
+        private void DisplayCloseButton(bool display)
+        {
+            closeButton.image.DOFade(display ? 1.0f : 0.0f, 0.2f);
         }
     }
 }

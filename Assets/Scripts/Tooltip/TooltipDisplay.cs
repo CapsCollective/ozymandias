@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Managers;
 using TMPro;
 using UnityEngine;
 using Utilities;
@@ -158,19 +159,19 @@ namespace Tooltip
                     details.text = $"{Manager.Stats.Stability}/100 town stability ({(change > 0 ? "+" : "") + change} next turn)";
                     break;
                 case Stat.Spending:
-                    details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn from {Manager.Adventurers.Count} adventurers \n" +
-                                   $"(5 wealth per adventurer) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} from spending modifier.\n" +
+                    details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
+                                   $"{Stats.WealthPerAdventurer} per adventurer({Manager.Adventurers.Available}) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} spending modifier.\n" +
                                    $"{FormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class
-                    AdventurerType adventurerType = (AdventurerType) config.Stat.Value;
+                    Guild guild = (Guild) config.Stat.Value;
                     string className = config.Stat.ToString();
                     details.text =
                         $"{Manager.Stats.GetStat(config.Stat.Value)} {className} satisfaction for " +
-                        $"{Manager.Adventurers.GetCount(adventurerType)} {className}s\n" +
+                        $"{Manager.Adventurers.GetCount(guild)} {className}s\n" +
                         $"{FormattedFoodModifierString}" +
                         $"{FormattedModifierString(config.Stat.Value)}" +
-                        $"{Manager.Stats.SpawnChance(adventurerType):n1}% {className} spawn chance per turn";
+                        $"{Manager.Stats.SpawnChance(guild):n1}% {className} spawn chance per turn";
                     break;
             }
         }

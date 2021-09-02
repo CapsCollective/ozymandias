@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,15 +11,15 @@ namespace Inputs
     {
         private const float InnerDistance = 50;
         private const float OuterDistance = 160;
-        
+
         private bool _isCentering;
         private GameObject _dummyCursor;
         
         [SerializeField] private Button button;
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private Canvas canvas;
-        
-        
+        [SerializeField] private Image buttonImage;
+
         [SerializeField] private GameObject dummyCursorNonScaling;
         [SerializeField] private GameObject dummyCursorScaling;
 
@@ -27,10 +28,7 @@ namespace Inputs
             var isMac = (Application.platform == RuntimePlatform.OSXPlayer || 
                          Application.platform == RuntimePlatform.OSXEditor);
             _dummyCursor = isMac ? dummyCursorNonScaling : dummyCursorScaling;
-            button.onClick.AddListener(() =>
-            {
-                Manager.Camera.MoveTo(Manager.Buildings.GuildHallLocation);
-            });
+            button.onClick.AddListener(CenterCamera);
         }
 
         private void Update()
@@ -52,6 +50,20 @@ namespace Inputs
             if (distanceFromTown < 80) return "Return to Town";
             if (distanceFromTown < 120) return "Please, Return to Town";
             return distanceFromTown < 160 ? "There's nothing here" : "Fine, I'll do it myself";
+        }
+
+        private void CenterCamera()
+        {
+            Manager.Camera.MoveTo(Manager.Buildings.GuildHallLocation)
+                .OnStart(() => { 
+                    button.interactable = false;
+                    buttonText.alpha = 0;
+                })
+                .OnComplete(() => { 
+                    button.interactable = true; 
+                    buttonText.alpha = 1;
+                    _isCentering = false;
+                });
         }
 
         private IEnumerator ManualCenter()
@@ -77,11 +89,10 @@ namespace Inputs
             }
         
             Manager.Jukebox.PlayClick();
-            Manager.Camera.MoveTo(Manager.Buildings.GuildHallLocation);
+            CenterCamera();
             _dummyCursor.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            _isCentering = false;
         }
     }
 }

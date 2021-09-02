@@ -21,7 +21,6 @@ namespace Cards
         [SerializeField] private List<GameObject> unlockableBuildings;
         public List<GameObject> StarterBuildings => starterBuildings;
         public List<GameObject> UnlockableBuildings => unlockableBuildings;
-
         
         private readonly List<GameObject> 
             _all = new List<GameObject>(), // All unlocked buildings across all playthroughs
@@ -29,7 +28,6 @@ namespace Cards
             _discoverable = new List<GameObject>(); // Discoverable from ruins
 
         public List<GameObject> All => starterBuildings.Concat(_current).ToList();
-        private int MaxDiscoverable => 3; // TODO: System to determine how many cards are discoverable
 
         private void Awake()
         {
@@ -56,6 +54,16 @@ namespace Cards
             ) Unlock(_discoverable.PopRandom(), true);
         }
 
+        public bool IsDiscoverableOrUnlocked(GameObject building)
+        {
+            return _current.Contains(building) || _discoverable.Contains(building);
+        }
+        
+        public bool IsUnlocked(GameObject building)
+        {
+            return _all.Contains(building);
+        }
+        
         public BuildingCardDetails Save()
         {
             return new BuildingCardDetails
@@ -80,7 +88,7 @@ namespace Cards
         {
             _current.Clear();
             _discoverable.Clear();
-            _discoverable.AddRange(_all.RandomSelection(Mathf.Min(MaxDiscoverable, _all.Count)));
+            _discoverable.AddRange(_all.RandomSelection(Mathf.Min(Manager.Upgrades.GetLevel(UpgradeType.Discoveries), _all.Count)));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Events;
 using Inputs;
 using NaughtyAttributes;
@@ -20,14 +21,16 @@ namespace Managers
         public Stats Stats { get; private set; }
         public Adventurers.Adventurers Adventurers { get; private set; }
         public Buildings.Buildings Buildings { get; private set; }
-        public Achievements.Achievements Achievements { get; private set; }
         public Cards.Cards Cards { get; private set; }
         public Quests.Quests Quests { get; private set; }
+        public Requests.Requests Requests { get; private set; }
+        public Upgrades.Upgrades  Upgrades{ get; private set; }
         public EventQueue EventQueue { get; private set; }
         public Map.Map Map { get; private set; }
         public Jukebox Jukebox { get; private set; }
         public TooltipDisplay Tooltip { get; private set; }
         public CameraMovement Camera { get; private set; }
+        public CursorSelect Cursor { get; private set; }
 
         private void Awake()
         {
@@ -39,14 +42,16 @@ namespace Managers
             Stats = FindObjectOfType<Stats>();
             Adventurers = FindObjectOfType<Adventurers.Adventurers>();
             Buildings = FindObjectOfType<Buildings.Buildings>();
-            Achievements = FindObjectOfType<Achievements.Achievements>();
             Cards = FindObjectOfType<Cards.Cards>();
             Quests = FindObjectOfType<Quests.Quests>();
+            Requests = FindObjectOfType<Requests.Requests>();
+            Upgrades = FindObjectOfType<Upgrades.Upgrades>();
             EventQueue = FindObjectOfType<EventQueue>();
             Map = FindObjectOfType<Map.Map>();
             Jukebox = FindObjectOfType<Jukebox>();
             Tooltip = FindObjectOfType<TooltipDisplay>();
             Camera = FindObjectOfType<CameraMovement>();
+            Cursor = FindObjectOfType<CursorSelect>();
         }
 
         public void Start()
@@ -68,10 +73,26 @@ namespace Managers
             Debug.Log(PlayerPrefs.GetString("Save"));
         }
         
+        [Button("Take Screenshot")]
+        public void Screenshot()
+        {
+            ScreenCapture.CaptureScreenshot($"FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
+        }
+        
         [Button("Extra Wealth")]
         public void ExtraWealth()
         {
             Stats.Wealth += 10000;
+            UpdateUi();
+        }
+        
+        [Button("Extra Tokens")]
+        public void ExtraTokens()
+        {
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
+            {
+                Upgrades.GuildTokens[guild] = 99;
+            }
             UpdateUi();
         }
         

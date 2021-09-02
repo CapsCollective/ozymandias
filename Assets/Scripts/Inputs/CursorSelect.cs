@@ -4,34 +4,38 @@ namespace Inputs
 {
     public class CursorSelect : MonoBehaviour
     {
-        public static CursorSelect Cursor { get; private set; }
+        public enum CursorType
+        {
+            Pointer,
+            Build,
+            Grab
+        }
     
         [SerializeField] private Texture2D pointerCursor;
         [SerializeField] private Texture2D buildCursor;
-        [SerializeField] private Texture2D destroyCursor;
-    
+        [SerializeField] private Texture2D grabCursor;
+        
+        private readonly Vector2 _hotspot = new Vector2(5, 15);
         private Texture2D[] _cursors;
-        private readonly Vector2[] _hotspots = {
-            new Vector2(5, 15), // Pointer
-            new Vector2(5, 15), // Build
-            new Vector2(5, 15), // Destroy
-        };
-        public CursorType currentCursor = CursorType.Pointer;
 
-        public enum CursorType
+        private CursorType _current = CursorType.Pointer;
+        public CursorType Current
         {
-            Pointer, Build, Destroy
+            get => _current;
+
+            set
+            {
+                if (_current == value) return;
+                _current = value;
+                Cursor.SetCursor(_cursors[(int) _current], _hotspot, CursorMode.Auto);
+            }
         }
-    
+        
+        
+
         private void Awake() {
-            Cursor = this;
-            _cursors = new []{pointerCursor, buildCursor, destroyCursor};
-        }
-
-        public void Select(CursorType cursorType)
-        {
-            currentCursor = cursorType;
-            UnityEngine.Cursor.SetCursor(_cursors[(int) cursorType], _hotspots[(int) cursorType], CursorMode.Auto);
+            _cursors = new []{pointerCursor, buildCursor, grabCursor};
+            Current = CursorType.Pointer;
         }
     }
 }

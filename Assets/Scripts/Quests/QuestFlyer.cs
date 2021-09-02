@@ -72,7 +72,7 @@ namespace Quests
                     (enoughMoney ? "" : "<color=#820000ff>") +
                     "\nCost: " + quest.Cost +
                     (enoughMoney ? "" : "</color>") +
-                    "\nDuration: " + quest.turns + " turns";
+                    "\nReward: " + "goat kisses";
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
             }

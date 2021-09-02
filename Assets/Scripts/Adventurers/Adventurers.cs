@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
@@ -11,6 +12,8 @@ namespace Adventurers
 {
     public class Adventurers : MonoBehaviour
     {
+        public static Action<Adventurer> OnAdventurerJoin;
+        
         [SerializeField] private GameObject prefab;
         [SerializeField] private Transform graveyard;
 
@@ -29,9 +32,9 @@ namespace Adventurers
             State.OnGameEnd += OnGameEnd;
         }
 
-        public int GetCount(AdventurerType type)
+        public int GetCount(Guild type)
         {
-            return _adventurers.Count(a => a.type == type);
+            return _adventurers.Count(a => a.guild == type);
         }
         
         public Adventurer Assign(Quest q)
@@ -56,29 +59,31 @@ namespace Adventurers
         {
             Adventurer adventurer = Instantiate(prefab, transform).GetComponent<Adventurer>();
             _adventurers.Add(adventurer);
-            //Manager.Achievements.SetCitySize(Count); //TODO: Make this an action callback instead
             return adventurer;
         }
 
-        public void Add(AdventurerType? category = null)
+        public void Add(Guild? category = null)
         {
-            New().Create(category);
+            Adventurer created = New().Create(category);
+            OnAdventurerJoin?.Invoke(created);
         }
 
         public void Add(PremadeAdventurer adventurer)
         {
-            New().Load(new AdventurerDetails
+            Adventurer created = New().Load(new AdventurerDetails
             {
                 name = adventurer.name,
                 type = adventurer.type,
                 isSpecial = adventurer.isSpecial,
                 turnJoined = Manager.Stats.TurnCounter
             });
+            OnAdventurerJoin?.Invoke(created);
         }
 
-        public void Add(AdventurerDetails adventurer)
+        private void Add(AdventurerDetails adventurer)
         {
-            New().Load(adventurer);
+            Adventurer created = New().Load(adventurer);
+            if (!Manager.State.Loading) OnAdventurerJoin?.Invoke(created);
         }
 
         public bool Remove(bool kill) //Removes a random adventurer, ensuring they aren't special

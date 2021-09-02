@@ -92,6 +92,7 @@ namespace Managers
 
         public static Action OnEnterState;
         public static Action OnNewGame;
+        public static Action OnLoadingEnd;
         public static Action OnGameEnd;
         public static Action OnNextTurnEnd;
 
@@ -117,7 +118,6 @@ namespace Managers
         {
             _state = state;
             OnEnterState?.Invoke();
-            Debug.Log(state);
             switch (_state)
             {
                 case GameState.Loading:
@@ -189,6 +189,8 @@ namespace Managers
             freeLook.m_Orbits[1].m_Height = MenuPos.OrbitHeight;
 
             await SaveFile.LoadState();
+            
+            OnLoadingEnd.Invoke();
             
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 1.0f).OnComplete(() => loadingCanvas.enabled = false);
@@ -303,7 +305,6 @@ namespace Managers
                 OnNextTurnEnd.Invoke();
                 Manager.EventQueue.Process();
                 gameCanvasGroup.interactable = true;
-                SaveFile.SaveState();
             });
         }
         
@@ -328,8 +329,8 @@ namespace Managers
             Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
-            BuildingSelect.RuinsClearCount = 0;
-            BuildingSelect.TerrainClearCount = 0;
+            Building.RuinsClearCount = 0;
+            Building.TerrainClearCount = 0;
             
             SaveFile.SaveState();
             EnterState(GameState.ToIntro);

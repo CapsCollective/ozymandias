@@ -1,6 +1,8 @@
 using System;
 using Cinemachine;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
@@ -28,6 +30,8 @@ namespace Inputs
         private Vector3 startPos;
         private Quaternion startRot;
         private bool _dragging, _rotating;
+        
+        private CursorSelect.CursorType _previousCursor = CursorSelect.CursorType.Pointer;
 
         public static Action OnCameraMove;
 
@@ -58,9 +62,11 @@ namespace Inputs
 
         private void RightClick(InputAction.CallbackContext context)
         {
-            if (context.canceled)
+            if (context.performed) StartCursorGrab();
+            else if (context.canceled)
             {
                 FreeLook.m_XAxis.m_InputAxisValue = 0;
+                EndCursorGrab();
             }
         }
 
@@ -74,6 +80,7 @@ namespace Inputs
             else if (context.canceled)
             {
                 _dragging = false;
+                EndCursorGrab();
             }
         }
 
@@ -86,7 +93,11 @@ namespace Inputs
             if (leftClick)
             {
                 Vector2 dir = _cam.ScreenToViewportPoint(lastDrag) - _cam.ScreenToViewportPoint(Manager.Inputs.MousePosition);
-                if (dir.sqrMagnitude > 0.0002f) _dragging = true;
+                if (dir.sqrMagnitude > 0.0002f)
+                {
+                    StartCursorGrab();
+                    _dragging = true;
+                }
 
                 if (_dragging)
                 {
@@ -131,14 +142,26 @@ namespace Inputs
             FreeLook.Follow.position = Vector3.SmoothDamp(FreeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
         }
 
-        public void MoveTo(Vector3 pos, float duration = 0.5f)
+        public TweenerCore<Vector3,Vector3,VectorOptions> MoveTo(Vector3 pos, float duration = 0.5f)
         {
-            FreeLook.Follow.transform.DOMove(pos, duration);
+            return FreeLook.Follow.transform.DOMove(pos, duration);
         }
 
         private static float Remap(float value, float min1, float max1, float min2, float max2)
         {
             return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
+        }
+        
+        private void StartCursorGrab()
+        {
+            if (Manager.Cursor.Current == CursorSelect.CursorType.Grab) return;
+            _previousCursor = Manager.Cursor.Current;
+            Manager.Cursor.Current = CursorSelect.CursorType.Grab;
+        }
+        
+        private void EndCursorGrab()
+        {
+            Manager.Cursor.Current = _previousCursor;
         }
     }
 }
