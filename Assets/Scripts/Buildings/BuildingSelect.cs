@@ -126,9 +126,9 @@ namespace Buildings
 
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += DeselectBuilding;
-            Manager.Inputs.IA_DeleteBuilding.performed += DeleteBuildingInput;
-            Manager.Inputs.IA_DeleteBuilding.started += DeleteBuildingInput;
-            Manager.Inputs.IA_DeleteBuilding.canceled += DeleteBuildingInput;
+            Manager.Inputs.OnDeleteBuilding.performed += DeleteBuildingInput;
+            Manager.Inputs.OnDeleteBuilding.started += DeleteBuildingInput;
+            Manager.Inputs.OnDeleteBuilding.canceled += DeleteBuildingInput;
 
             ClickOnButtonDown.OnUIClick += DeselectBuilding;
             State.OnEnterState += () => HoveredBuilding = null;

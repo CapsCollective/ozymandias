@@ -8,6 +8,15 @@ namespace Buildings
     [RequireComponent(typeof(MeshFilter))]
     public class Section : MonoBehaviour
     {
+        private static Vector3[] Corners =
+        {
+            new Vector3(-0.5f, 0, -0.5f),
+            new Vector3(-0.5f, 0, 0.5f),
+            new Vector3(0.5f, 0, -0.5f),
+            new Vector3(0.5f, 0, -0.5f),
+            new Vector3(-0.5f, 1, -0.5f),
+        };
+
         private const float NoiseScale = .5f;
         private const float HeightFactor = 1.5f;
         private static string Directory => Application.dataPath + "/Resources" + "/SectionData/";
@@ -21,7 +30,7 @@ namespace Buildings
         public bool hasGrass = true;
         public bool debug;
         private ComputeShader _meshCompute;
-        
+
         private MeshFilter _meshFilter;
         private bool _usesShader;
         private static readonly int HasGrass = Shader.PropertyToID("_HasGrass");
@@ -114,7 +123,10 @@ namespace Buildings
                 planePositions[i] = transform.InverseTransformPoint(
                     _usesShader ? planePositions[i] : CalculateMesh());
                 planePositions[i].y += HeightFactor * sectionData[i].y;
+
+
             }
+
             // Apply morphed vertices to Mesh Filter
             MeshFilter.mesh.vertices = planePositions;
 
@@ -140,25 +152,34 @@ namespace Buildings
         [Button("Save Deform Coordinates to Text File")]
         public void Save()
         {
-            SectionData sectionData = new SectionData(MeshFilter, cornerParent);
+            SectionData sectionData = new SectionData(MeshFilter);
             File.WriteAllText(FilePath + ".json", JsonUtility.ToJson(sectionData));
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
                 UnityEditor.AssetDatabase.Refresh();
-            #endif
+#endif
         }
-    
+
+#if UNITY_EDITOR
+        public static void EditorSave(MeshFilter mf)
+        {
+            SectionData sectionData = new SectionData(mf);
+            File.WriteAllText(Directory + mf.sharedMesh.name + ".json", JsonUtility.ToJson(sectionData));
+            UnityEditor.AssetDatabase.Refresh();
+        }
+#endif
+
         [System.Serializable]
         public class SectionData
         {
             public Vector3[] VertexCoordinates;
 
-            public SectionData(MeshFilter meshFilter, Transform cornerParent)
+            public SectionData(MeshFilter meshFilter)
             {
-                VertexCoordinates = Calculate(meshFilter, cornerParent);
+                VertexCoordinates = Calculate(meshFilter);
             }
 
-            public static Vector3[] Calculate(MeshFilter mf, Transform cornerParent)
+            public static Vector3[] Calculate(MeshFilter mf)
             {
                 Vector3[] worldVertices = mf.sharedMesh.vertices;
                 for (int i = 0; i < worldVertices.Length; i++)
@@ -167,10 +188,10 @@ namespace Buildings
                 int vertexCount = worldVertices.Length;
                 Vector3[] uv = new Vector3[vertexCount];
 
-                Vector3 p0 = cornerParent.GetChild(0).position;
-                Vector3 p1 = cornerParent.GetChild(1).position;
-                Vector3 p2 = cornerParent.GetChild(4).position;
-                Vector3 p3 = cornerParent.GetChild(3).position;
+                Vector3 p0 = Corners[0];
+                Vector3 p1 = Corners[1];
+                Vector3 p2 = Corners[4];
+                Vector3 p3 = Corners[3];
 
                 for (int i = 0; i < vertexCount; i++)
                 {

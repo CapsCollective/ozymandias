@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using NaughtyAttributes;
 using static Managers.GameManager;
 
 namespace Managers
@@ -36,8 +37,10 @@ namespace Managers
         [SerializeField] private Gradient ambientGradient;   
         [SerializeField] private Gradient sunColorGradient;
         [SerializeField] private Gradient skyColorGradient;
+        [SerializeField] private Gradient horizonColorGradient;
         [SerializeField] private Material skyMaterial;
-        
+        [SerializeField] [Range(0, 1)] private float ToDDebug;
+
         private struct CameraMove
         {
             public Vector3 Position;
@@ -99,7 +102,11 @@ namespace Managers
             creditsButton.onClick.AddListener(() => EnterState(GameState.ToCredits));
             quitButton.onClick.AddListener(Application.Quit);
             nextTurnButton.onClick.AddListener(() => EnterState(GameState.NextTurn));
-
+            Manager.Inputs.OnNextTurn.performed += (ctx) =>
+            {
+                if (InGame)
+                    EnterState(GameState.NextTurn);
+            };
             // Add cancel binding for credits
             Manager.Inputs.PlayerInput.UI.Cancel.performed += context =>
             {
@@ -289,7 +296,11 @@ namespace Managers
                 RenderSettings.ambientLight = ambientGradient.Evaluate(timer);
                 RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
                 //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
-                skyMaterial.SetColor(Tint, skyColorGradient.Evaluate(timer));
+                skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(timer));
+                skyMaterial.SetColor("_HorizonColor", ambientGradient.Evaluate(timer));
+                float windowIntensity = (0.5f - Mathf.Abs(timer % (2 * 0.5f) - 0.5f)) * 2;
+                Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
+
             }).OnComplete(() => {
                 OnNextTurnEnd.Invoke();
                 Manager.EventQueue.Process();
@@ -297,6 +308,19 @@ namespace Managers
             });
         }
         
+        [Button]
+        private void SetTime()
+        {
+            sun.color = sunColorGradient.Evaluate(ToDDebug);
+            RenderSettings.ambientLight = ambientGradient.Evaluate(ToDDebug);
+            RenderSettings.fogColor = sunColorGradient.Evaluate(ToDDebug);
+            //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
+            skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(ToDDebug));
+            skyMaterial.SetColor("_HorizonColor", horizonColorGradient.Evaluate(ToDDebug));
+            float windowIntensity = (0.5f - Mathf.Abs(ToDDebug % (2*0.5f) - 0.5f)) * 2;
+            Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
+        }
+
         private void InMenuInit() {}
         
         private void EndGameInit()

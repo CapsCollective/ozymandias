@@ -414,6 +414,17 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d2b02c9a-093a-4bb6-85f8-c97c2d800b04"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""NextTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""fd2c6981-53c6-45c4-90bb-9a8c08b6da5e"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",

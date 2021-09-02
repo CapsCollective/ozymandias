@@ -13,7 +13,7 @@ namespace Inputs
             get
             {
                 if(!UsingController)
-                    return IA_MousePosition.ReadValue<Vector2>();
+                    return OnMousePosition.ReadValue<Vector2>();
                 return Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
             }
         }
@@ -24,44 +24,44 @@ namespace Inputs
 
         // Player Input
         public PlayerInput PlayerInput { get; private set; }
-        public InputAction IA_OnLeftClick { get; private set; }
-        public InputAction IA_OnRightClick { get; private set; }
-        public InputAction IA_OnScroll { get; private set; }
-        public InputAction IA_RotateCamera { get; private set; }
-        public InputAction IA_MousePosition { get; private set; }
-        public InputAction IA_MoveCamera { get; private set; }
-        public InputAction IA_DeleteBuilding { get; private set; }
-        public InputAction IA_NextTurn { get; private set; }
-        public InputAction IA_ShowPause { get; private set; }
-        public InputAction IA_RotateBuilding { get; private set; }
-        public InputAction IA_DeselectCards { get; private set; }
+        public InputAction OnOnLeftClick { get; private set; }
+        public InputAction OnOnRightClick { get; private set; }
+        public InputAction OnOnScroll { get; private set; }
+        public InputAction OnRotateCamera { get; private set; }
+        public InputAction OnMousePosition { get; private set; }
+        public InputAction OnMoveCamera { get; private set; }
+        public InputAction OnDeleteBuilding { get; private set; }
+        public InputAction OnNextTurn { get; private set; }
+        public InputAction OnShowPause { get; private set; }
+        public InputAction OnRotateBuilding { get; private set; }
+        public InputAction OnDeselectCards { get; private set; }
 
         // UI Input
-        public InputAction IA_SelectCards { get; private set; }
-        public InputAction IA_CancelBuild { get; private set; }
-        public InputAction IA_UINavigate { get; private set; }
-        public InputAction IA_UICancel { get; private set; }
+        public InputAction OnSelectCards { get; private set; }
+        public InputAction OnCancelBuild { get; private set; }
+        public InputAction OnUINavigate { get; private set; }
+        public InputAction OnUICancel { get; private set; }
 
         public Inputs()
         {
             PlayerInput = new PlayerInput();
 
-            IA_OnLeftClick = PlayerInput.Player.LeftClick;
-            IA_OnRightClick = PlayerInput.Player.RightClick;
-            IA_OnScroll = PlayerInput.Player.Scroll;
-            IA_RotateCamera = PlayerInput.Player.RotateCamera;
-            IA_MousePosition = PlayerInput.Player.MousePosition;
-            IA_MoveCamera = PlayerInput.Player.MoveCamera;
-            IA_DeleteBuilding = PlayerInput.Player.DeleteBuilding;
-            IA_NextTurn = PlayerInput.Player.NextTurn;
-            IA_ShowPause = PlayerInput.Player.ShowPause;
-            IA_RotateBuilding = PlayerInput.Player.BuildingRotate;
-            IA_DeselectCards = PlayerInput.Player.DeselectCards;
+            OnOnLeftClick = PlayerInput.Player.LeftClick;
+            OnOnRightClick = PlayerInput.Player.RightClick;
+            OnOnScroll = PlayerInput.Player.Scroll;
+            OnRotateCamera = PlayerInput.Player.RotateCamera;
+            OnMousePosition = PlayerInput.Player.MousePosition;
+            OnMoveCamera = PlayerInput.Player.MoveCamera;
+            OnDeleteBuilding = PlayerInput.Player.DeleteBuilding;
+            OnNextTurn = PlayerInput.Player.NextTurn;
+            OnShowPause = PlayerInput.Player.ShowPause;
+            OnRotateBuilding = PlayerInput.Player.BuildingRotate;
+            OnDeselectCards = PlayerInput.Player.DeselectCards;
 
             // UI
-            IA_SelectCards = PlayerInput.UI.SelectCards;
-            IA_UINavigate = PlayerInput.UI.Navigate;
-            IA_UICancel = PlayerInput.UI.Cancel;
+            OnSelectCards = PlayerInput.UI.SelectCards;
+            OnUINavigate = PlayerInput.UI.Navigate;
+            OnUICancel = PlayerInput.UI.Cancel;
 
             PlayerInput.UI.Enable();
 

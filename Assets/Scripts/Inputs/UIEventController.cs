@@ -25,10 +25,10 @@ namespace Inputs
 
         private void Start()
         {
-            Manager.Inputs.IA_SelectCards.performed += SelectCards;
-            Manager.Inputs.IA_UINavigate.performed += Navigate;
-            Manager.Inputs.IA_UICancel.performed += UICancel;
-            Manager.Inputs.IA_DeselectCards.performed += UICancel;
+            Manager.Inputs.OnSelectCards.performed += SelectCards;
+            Manager.Inputs.OnUINavigate.performed += Navigate;
+            Manager.Inputs.OnUICancel.performed += UICancel;
+            Manager.Inputs.OnDeselectCards.performed += UICancel;
         }
 
         private void OnBuildingPlaced()

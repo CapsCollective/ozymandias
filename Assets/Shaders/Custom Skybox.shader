@@ -7,8 +7,9 @@ Shader "Custom/Skybox"
 		_Intensity("Intensity", Float) = 0
 		_SkyColor("Sky Color", Color) = (0,0,0,0)
 		_HorizonColor("Horizon Color", Color) = (1,1,1,0)
-		_Exponent("Exponent", Float) = 0
+		_Exponent("Exponent", Float) = 1
 		_Vector2("Vector 2", Vector) = (0,0,0,0)
+		_Float0("Float 0", Float) = 0
 
 	}
 	
@@ -72,6 +73,7 @@ Shader "Custom/Skybox"
 			uniform float4 _HorizonColor;
 			uniform float4 _SkyColor;
 			uniform float2 _Vector2;
+			uniform float _Float0;
 			uniform float _Exponent;
 			uniform float _Intensity;
 
@@ -115,7 +117,7 @@ Shader "Custom/Skybox"
 				#endif
 				float2 texCoord24 = i.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
 				float dotResult30 = dot( float3( ( texCoord24 + _Vector2 ) ,  0.0 ) , float3(0,1,0) );
-				float4 lerpResult12 = lerp( _HorizonColor , _SkyColor , pow( ( ( dotResult30 * 0.5 ) + 0.5 ) , _Exponent ));
+				float4 lerpResult12 = lerp( _HorizonColor , _SkyColor , pow( ( ( dotResult30 * 1.0 ) + _Float0 ) , _Exponent ));
 				
 				
 				finalColor = ( lerpResult12 * _Intensity );
@@ -130,23 +132,25 @@ Shader "Custom/Skybox"
 }
 /*ASEBEGIN
 Version=18712
-267;155;1445;766;1254.264;505.2959;1.3;True;True
+1920;0;1920;1059;1678.053;580.6016;1.311659;True;True
 Node;AmplifyShaderEditor.Vector2Node;39;-1624.764,-25.59599;Inherit;False;Property;_Vector2;Vector 2;4;0;Create;True;0;0;0;False;0;False;0,0;0,0.78;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.TextureCoordinatesNode;24;-1641.026,-165.9122;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;38;-1381.664,-115.2959;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.Vector3Node;32;-1398.229,96.08011;Inherit;False;Constant;_Vector1;Vector 1;2;0;Create;True;0;0;0;False;0;False;0,1,0;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.DotProductOpNode;30;-1058.928,-39.11989;Inherit;True;2;0;FLOAT2;0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;35;-811.4125,-43.105;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;36;-546.5876,-32.92767;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;22;-387.9111,184.4816;Inherit;False;Property;_Exponent;Exponent;3;0;Create;True;0;0;0;False;0;False;0;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;15;-223.7428,-129.6963;Inherit;False;Property;_SkyColor;Sky Color;1;0;Create;True;0;0;0;False;0;False;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;42;-666.7641,258.86;Inherit;False;Property;_Float0;Float 0;5;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;35;-811.4125,-43.105;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;36;-546.5876,-32.92767;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;22;-387.9111,184.4816;Inherit;False;Property;_Exponent;Exponent;3;0;Create;True;0;0;0;False;0;False;1;1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.PowerNode;16;-255.4154,45.41983;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;15;-223.7428,-129.6963;Inherit;False;Property;_SkyColor;Sky Color;1;0;Create;True;0;0;0;False;0;False;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.ColorNode;14;-239.3428,-301.2964;Inherit;False;Property;_HorizonColor;Horizon Color;2;0;Create;True;0;0;0;False;0;False;1,1,1,0;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;18;215.0835,64.96246;Inherit;False;Property;_Intensity;Intensity;0;0;Create;True;0;0;0;False;0;False;0;1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.LerpOp;12;72.66628,-19.23112;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.NormalizeNode;6;-1214.322,-220.82;Inherit;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.Vector2Node;41;-1867.987,-139.7413;Inherit;False;Constant;_Vector3;Vector 3;5;0;Create;True;0;0;0;False;0;False;0,-0.5;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;17;360.6099,-46.78106;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.Vector4Node;31;-952.3282,263.7801;Inherit;False;Constant;_Vector0;Vector 0;2;0;Create;True;0;0;0;False;0;False;0,1,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.NormalizeNode;6;-1214.322,-220.82;Inherit;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;28;570.5726,-36.40459;Float;False;True;-1;2;ASEMaterialInspector;100;1;Custom/Skybox;0770190933193b94aaa3065e307002fa;True;Unlit;0;0;Unlit;2;True;0;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;True;0;False;-1;0;False;-1;False;False;False;False;False;False;True;0;False;-1;True;0;False;-1;True;True;True;True;True;0;False;-1;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;RenderType=Opaque=RenderType;True;2;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=ForwardBase;False;0;;0;0;Standard;1;Vertex Position,InvertActionOnDeselection;1;0;1;True;False;;False;0
 WireConnection;38;0;24;0
 WireConnection;38;1;39;0
@@ -154,6 +158,7 @@ WireConnection;30;0;38;0
 WireConnection;30;1;32;0
 WireConnection;35;0;30;0
 WireConnection;36;0;35;0
+WireConnection;36;1;42;0
 WireConnection;16;0;36;0
 WireConnection;16;1;22;0
 WireConnection;12;0;14;0
@@ -163,4 +168,4 @@ WireConnection;17;0;12;0
 WireConnection;17;1;18;0
 WireConnection;28;0;17;0
 ASEEND*/
-//CHKSM=9575B02051B60A8B84167BCB099F93D74FC55B74
+//CHKSM=9EB130CAEEAC5B9BEE4FB0BB28CD995945696677
