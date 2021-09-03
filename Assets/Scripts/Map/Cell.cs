@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
+using Structures;
 using UnityEngine;
 
 namespace Map
@@ -13,7 +13,7 @@ namespace Map
         [field: SerializeField] public bool Active { get; set; }
         [field: SerializeField] public bool Safe { get; set; } // Keep clear from terrain filling
         [field: SerializeField] public List<Vertex> Vertices { get; set; }
-        public Building Occupant { get; set; }
+        public Structure Occupant { get; set; }
         public int Rotation { get; set; }
         
         public Vector3 Centre => (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4;
@@ -46,7 +46,8 @@ namespace Map
             {
                 return ReferenceEquals(cell, null);
             }
-
+            if (cell == null) return false;
+            
             foreach (Vertex vertex in cell.Vertices)
             {
                 bool contains = false;
@@ -59,6 +60,7 @@ namespace Map
 
                 if (!contains) return false;
             }
+
             return true;
         }
 

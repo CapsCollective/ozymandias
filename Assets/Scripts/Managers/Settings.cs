@@ -51,8 +51,7 @@ namespace Managers
             shadowToggle.onValueChanged.AddListener(ToggleShadows);
 
             // Setup resolution dropdown (default to max res)
-            var res = PlayerPrefs.GetInt(
-                "Resolution", _resolutions.Length - 1);
+            var res = PlayerPrefs.GetInt("Resolution", _resolutions.Length - 1);
             SetResolution(res);
             resolutionDropdown.value = res;
             resolutionDropdown.RefreshShownValue();
@@ -83,7 +82,8 @@ namespace Managers
 
         private void SetResolution(int resolutionIndex)
         {
-            var resolution = _resolutions[resolutionIndex];
+            if (resolutionIndex >= _resolutions.Length) return;
+            Resolution resolution = _resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             PlayerPrefs.SetInt("Resolution", resolutionIndex);
         }

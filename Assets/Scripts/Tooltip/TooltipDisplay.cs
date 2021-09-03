@@ -160,7 +160,7 @@ namespace Tooltip
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"{Stats.WealthPerAdventurer} per adventurer({Manager.Adventurers.Available}) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} spending modifier.\n" +
+                                   $"{WealthPerAdventurer} per adventurer({Manager.Adventurers.Available}) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} spending modifier.\n" +
                                    $"{FormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a class

@@ -63,7 +63,7 @@ namespace WalkingAdventurers
         
         private void CheckWandering()
         {
-            if (_activeAdventurers.Count < Manager.Buildings.Count - 1) SpawnWanderingAdventurer();
+            if (_activeAdventurers.Count < Manager.Structures.Count - 1) SpawnWanderingAdventurer();
         }
         
         private void SpawnWanderingAdventurer()

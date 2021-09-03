@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa2eefb1e444240ac9a4ac3a3cead75, type: 3}
+  m_Name: Tannery
+  m_EditorClassIdentifier: 
+  type: 11
+  description: Sometimes tanned hide is all you need to defend against a ball of
+    fire. The fancy types can't stand the stink though.
+  icon: {fileID: 21300000, guid: 966cec692d085474db39ce2daf165592, type: 3}
+  stats:
+    list:
+    - Key: 0
+      Value: 2
+    - Key: 1
+      Value: 3
+    - Key: 2
+      Value: -1
+    keyCollision: 0
+  baseCost: 50
+  scaleSpeed: 4
+  roofColor: {r: 0, g: 0, b: 0, a: 0}
+  sections:
+  - prefab: {fileID: 975589971532305496, guid: ab5bc033f6ba2b347a527d3496c8e63e, type: 3}
+    directions: 
+    clockwiseRotations: 0
+  - prefab: {fileID: 2298694409906288546, guid: a0083f7447e18f948ae853aa712f0b57,
+      type: 3}
+    directions: 03000000
+    clockwiseRotations: 0
+  - prefab: {fileID: 6522821318518506269, guid: 74ee83746e9ddd14485c1a33d353e5cf,
+      type: 3}
+    directions: 00000000
+    clockwiseRotations: 0
+  starter: 0
+  unlocked: 0

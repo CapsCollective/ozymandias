@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa2eefb1e444240ac9a4ac3a3cead75, type: 3}
+  m_Name: Apothecary
+  m_EditorClassIdentifier: 
+  type: 23
+  description: The one (and only) thing Outriders and Diviners can agree on is some
+    potions can be all you need when bleeding out.
+  icon: {fileID: 21300000, guid: 0bd3ba3e96c33784eabe1267305fe6d2, type: 3}
+  stats:
+    list:
+    - Key: 1
+      Value: 1
+    - Key: 3
+      Value: 2
+    - Key: 7
+      Value: 2
+    keyCollision: 0
+  baseCost: 70
+  scaleSpeed: 4
+  roofColor: {r: 0, g: 0, b: 0, a: 0}
+  sections:
+  - prefab: {fileID: 4049330680661710625, guid: 4f15be9aa6ccf29478b8742b627b1768,
+      type: 3}
+    directions: 
+    clockwiseRotations: 0
+  - prefab: {fileID: 4049330680661710625, guid: 4f15be9aa6ccf29478b8742b627b1768,
+      type: 3}
+    directions: 03000000
+    clockwiseRotations: 0
+  - prefab: {fileID: 4656057957952714449, guid: f40447335018edd4b9ec0f11ef7914a5,
+      type: 3}
+    directions: 0300000000000000
+    clockwiseRotations: 0
+  - prefab: {fileID: 4656057957952714449, guid: f40447335018edd4b9ec0f11ef7914a5,
+      type: 3}
+    directions: 02000000
+    clockwiseRotations: 0
+  starter: 0
+  unlocked: 0

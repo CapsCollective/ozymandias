@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Utilities
@@ -167,6 +168,8 @@ namespace Utilities
             }
             return false;
         }
+
+        public static implicit operator Dictionary<TKey, TValue>(SerializedDictionary<TKey, TValue> d) => d.dict;
 
         // IEnumerable
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => dict.GetEnumerator();

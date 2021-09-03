@@ -11,9 +11,6 @@ namespace Quests
     {
         [SerializeField] private Transform dock, forestPath, mountainPath;
         [SerializeField] private QuestCounter counter;
-
-        [SerializeField] private GameObject buildingPrefab;
-        public GameObject BuildingPrefab => buildingPrefab;
         
         [SerializeField] private GameObject sectionPrefab;
         public GameObject SectionPrefab => sectionPrefab;

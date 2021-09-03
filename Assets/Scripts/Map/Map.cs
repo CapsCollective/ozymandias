@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Buildings;
 using DG.Tweening;
 using Managers;
+using Structures;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
@@ -37,25 +37,19 @@ namespace Map
             _meshRenderer.material.SetColor(Effect, new Color(0, 0.3f, 0, 0));
         }
 
-        private void LateUpdate()
+        public void Drain()
         {
-            //TODO: Do we need to do this every frame, or only when it's updating?
+            if (!_flooded) return;
             UpdateEffectOrigin();
-        
-            if (Place.Selected != Place.Deselected && !_flooded) Flood();
-        
-            if (Place.Selected == Place.Deselected && _flooded) Drain();
-        }
-
-        private void Drain()
-        {
             _flooded = false;
             DOTween.To(() => _radius, x => _radius = x, 0, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat(Radius, _radius));
             DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
         }
 
-        private void Flood()
+        public void Flood()
         {
+            if (_flooded) return;
+            UpdateEffectOrigin();
             _flooded = true;
             DOTween.To(() => _radius, x => _radius = x, 70, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat(Radius, _radius));
             DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0.5f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
@@ -109,21 +103,22 @@ namespace Map
         }
 
         // Gets all cells a building would take up given its root and rotation
-        public List<Cell> GetCells(Building building, int rootId, int rotation = 0)
+        public List<Cell> GetCells(List<SectionInfo>  sections, int rootId, int rotation = 0)
         {
-            return layout.GetCells(building, rootId, rotation);
+            return layout.GetCells(sections, rootId, rotation);
         }
 
-        public List<Cell> GetCells(List<int> ids)
-        {
-            return ids.Select(id => layout.GetCell(id)).ToList();
-        }
-
-        public List<Cell> GetNeighbours(Cell cell)
-        {
-            return layout.GetNeighbours(cell);
-        }
+        public Cell GetCell(int id) => layout.GetCell(id);
         
+        public List<Cell> GetCells(List<int> ids) => ids.Select(id => layout.GetCell(id)).ToList();
+
+        public List<Cell> GetNeighbours(Cell cell) => layout.GetNeighbours(cell);
+
+        public List<Structure> GetNeighbours(Structure structure)
+        {
+            return structure.Occupied.SelectMany(cell => GetNeighbours(cell).Select(neighbour => neighbour.Occupant)).Distinct().ToList();   
+        }
+
         public Vector3[] GetCornerPositions(Cell cell)
         {
             Vector3[] corners = new Vector3[4];

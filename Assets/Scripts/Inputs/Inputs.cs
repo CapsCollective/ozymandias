@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using static Managers.GameManager;
 
 namespace Inputs
 {
@@ -87,10 +89,9 @@ namespace Inputs
             }
         }
 
-        // [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        // static void OnGameLoad()
-        // {
-        //     new Inputs();
-        // }
+        public void SelectUI(GameObject gameObject)
+        {
+            EventSystem.current.SetSelectedGameObject(gameObject);
+        }
     }
 }

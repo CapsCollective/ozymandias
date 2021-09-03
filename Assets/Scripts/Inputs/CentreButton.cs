@@ -54,7 +54,7 @@ namespace Inputs
 
         private void CenterCamera()
         {
-            Manager.Camera.MoveTo(Manager.Buildings.GuildHallLocation)
+            Manager.Camera.MoveTo(Manager.Structures.SpawnLocation.WorldSpace)
                 .OnStart(() => { 
                     button.interactable = false;
                     buttonText.alpha = 0;

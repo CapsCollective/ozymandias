@@ -6,6 +6,7 @@ using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -31,7 +32,7 @@ namespace Inputs
         private Quaternion startRot;
         private bool _dragging, _rotating;
         
-        private CursorSelect.CursorType _previousCursor = CursorSelect.CursorType.Pointer;
+        private CursorType _previousCursor = CursorType.Pointer;
 
         public static Action OnCameraMove;
 
@@ -147,20 +148,16 @@ namespace Inputs
             return FreeLook.Follow.transform.DOMove(pos, duration);
         }
 
-        private static float Remap(float value, float min1, float max1, float min2, float max2)
-        {
-            return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
-        }
-        
         private void StartCursorGrab()
         {
-            if (Manager.Cursor.Current == CursorSelect.CursorType.Grab) return;
+            if (Manager.Cursor.Current == CursorType.Grab) return;
             _previousCursor = Manager.Cursor.Current;
-            Manager.Cursor.Current = CursorSelect.CursorType.Grab;
+            Manager.Cursor.Current = CursorType.Grab;
         }
         
         private void EndCursorGrab()
         {
+            //TODO: Causing bug where cursor being set to build incorrectly
             Manager.Cursor.Current = _previousCursor;
         }
     }

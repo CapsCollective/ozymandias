@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Events;
 using Inputs;
 using NaughtyAttributes;
 using Tooltip;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Utilities;
 using Random = UnityEngine.Random;
 
@@ -20,7 +20,7 @@ namespace Managers
         public State State { get; private set; }
         public Stats Stats { get; private set; }
         public Adventurers.Adventurers Adventurers { get; private set; }
-        public Buildings.Buildings Buildings { get; private set; }
+        public Structures.Structures Structures { get; private set; }
         public Cards.Cards Cards { get; private set; }
         public Quests.Quests Quests { get; private set; }
         public Requests.Requests Requests { get; private set; }
@@ -41,7 +41,7 @@ namespace Managers
             State = FindObjectOfType<State>();
             Stats = FindObjectOfType<Stats>();
             Adventurers = FindObjectOfType<Adventurers.Adventurers>();
-            Buildings = FindObjectOfType<Buildings.Buildings>();
+            Structures = FindObjectOfType<Structures.Structures>();
             Cards = FindObjectOfType<Cards.Cards>();
             Quests = FindObjectOfType<Quests.Quests>();
             Requests = FindObjectOfType<Requests.Requests>();
@@ -60,11 +60,21 @@ namespace Managers
         }
 
         public static Action OnUpdateUI;
-        public static void UpdateUi()
-        {
-            OnUpdateUI.Invoke();
-        }
+        public static void UpdateUi() => OnUpdateUI.Invoke();
+
+        public static void SelectUi(GameObject gameObject) => EventSystem.current.SetSelectedGameObject(gameObject);
         
+        #region Balancing Constants
+        
+        public const int TerrainBaseCost = 5;
+        public const float TerrainCostScale = 1.025f;
+        public const int RuinsBaseCost = 20;
+        public const float RuinsCostScale = 1.25f;
+        public const int WealthPerAdventurer = 5;
+        public const int ThreatPerTurn = 2;
+
+        #endregion
+
         #region Debug
         
         [Button("Print Save")]

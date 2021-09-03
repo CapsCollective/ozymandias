@@ -1,11 +1,12 @@
 using System;
-using Buildings;
 using DG.Tweening;
 using Inputs;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Cinemachine;
+using Structures;
+using UnityEngine.EventSystems;
 using Utilities;
 using static Managers.GameManager;
 
@@ -62,17 +63,18 @@ namespace Quests
             {
                 if (!SelectedQuest) return;
                 OpenFlyer.UpdateContent(SelectedQuest);
-                FocusBuilding(SelectedQuest.Building);
+                FocusBuilding(SelectedQuest.Structure);
                 Open();
             });
             closeButton.onClick.AddListener(Close);
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
             previousButton.onClick.AddListener(() => ChangeQuest(SwapDir.Left));
-            BuildingSelect.OnQuestSelected += quest =>
+            Select.OnQuestSelected += quest =>
             {
                 SelectedQuest = quest;
+                Debug.Log(SelectedQuest);
                 OpenFlyer.UpdateContent(SelectedQuest);
-                FocusBuilding(SelectedQuest.Building);
+                FocusBuilding(SelectedQuest.Structure);
                 Open();
             };
             
@@ -104,7 +106,7 @@ namespace Quests
             DisplayMoveButtons(false);
             SwapFlyers(dir, SelectedQuest);
             Manager.Jukebox.PlayScrunch();
-            FocusBuilding(SelectedQuest.Building);
+            FocusBuilding(SelectedQuest.Structure);
         }
 
         private void SwapFlyers(SwapDir dir, Quest selectedQuest)
@@ -133,9 +135,9 @@ namespace Quests
             _openFlyer = CycleIdx(_openFlyer, FlyerCount, dir);
         }
 
-        private static void FocusBuilding(Building building)
+        private static void FocusBuilding(Structure structure)
         {
-            Vector3 buildingPos = building.transform.position;
+            Vector3 buildingPos = structure.transform.position;
             buildingPos.y = 1.0f;
             Manager.Camera.MoveTo(buildingPos, 0.5f);
         }
@@ -171,7 +173,7 @@ namespace Quests
             OpenFlyer.transform
                 .DOLocalRotate(_offScreenRot, animateOutDuration)
                 .OnComplete(() => { _canvas.enabled = false; });
-            UIEventController.SelectUI(null);
+            SelectUi(null);
         }
 
         private void DisplayMoveButtons(bool display)

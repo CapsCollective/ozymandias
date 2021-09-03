@@ -1,6 +1,6 @@
 ﻿using System;
-using Managers;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -26,7 +26,7 @@ namespace Inputs
             Manager.Inputs.IA_OnRightClick.canceled += I_OnRightClick;
         }
 
-        private void I_OnLeftClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void I_OnLeftClick(InputAction.CallbackContext obj)
         {
             if (!Manager.State.InGame) return;
 
@@ -35,7 +35,7 @@ namespace Inputs
             if (obj.canceled) PlacingBuilding = false;
         }
 
-        private void I_OnRightClick(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void I_OnRightClick(InputAction.CallbackContext obj)
         {
             if (!Manager.State.InGame) return;
 

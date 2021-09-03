@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Buildings;
 using Cinemachine;
 using DG.Tweening;
+using Structures;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -192,7 +192,7 @@ namespace Managers
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
             StartCoroutine(Algorithms.DelayCall(2f, () => Manager.Jukebox.OnStartGame()));
             // Find the starting position for the town
-            _startPos.Position = Manager.Buildings.GuildHallLocation;
+            _startPos.Position = Manager.Structures.SpawnLocation.WorldSpace;
             // Run general menu initialisation
             EnterState(GameState.InIntro);
         }
@@ -305,8 +305,8 @@ namespace Managers
             Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
-            Building.RuinsClearCount = 0;
-            Building.TerrainClearCount = 0;
+            Structure.RuinsClearCount = 0;
+            Structure.TerrainClearCount = 0;
             
             SaveFile.SaveState();
             EnterState(GameState.ToIntro);

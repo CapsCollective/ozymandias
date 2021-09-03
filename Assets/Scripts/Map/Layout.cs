@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
 using CielaSpike;
 using NaughtyAttributes;
+using Structures;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
@@ -33,17 +33,8 @@ namespace Map
         public void FillGrid()
         {
             //TODO: Pick a spawn cell from a list of 'safe' placements, avoid building trees in cell within a distance of the hall, Store the cell 
-            Building terrain = null;
-            bool wasCreated = true;
-            
-            foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && !cell.Safe))
-            {
-                if (wasCreated) terrain = Instantiate(Manager.Buildings.TerrainPrefab, Manager.Buildings.transform).GetComponent<Building>();
-
-                // Create building if valid, only animate if happening during the game over transition
-                wasCreated = Manager.Buildings.Add(terrain, cell.Id, animate: Manager.State.IsGameOver);
-            }
-            if (!wasCreated) Destroy(terrain.gameObject);
+            foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && !cell.Safe && cell.Active))
+                Manager.Structures.AddTerrain(cell.Id);
         }
     
         #region Querying
@@ -150,9 +141,9 @@ namespace Map
             return CellGraph.GetData(id);
         }
 
-        public List<Cell> GetCells(Building building, int rootId, int rotation = 0)
+        public List<Cell> GetCells(List<SectionInfo> structure, int rootId, int rotation = 0)
         {
-            return building.sections.Select(sectionInfo => Step(CellGraph.GetData(rootId), sectionInfo.directions, rotation)).ToList();
+            return structure.Select(sectionInfo => Step(CellGraph.GetData(rootId), sectionInfo.directions, rotation)).ToList();
         }
 
         public Cell GetClosest(Vector3 unitPos)
@@ -668,7 +659,7 @@ namespace Map
         {
             get
             {
-                var verts = Manager.Buildings.RandomCell.Vertices
+                var verts = Manager.Structures.RandomCell.Vertices
                     .Where(v => RoadGraph.Data.Contains(v)).ToList();
                 return verts.Count > 0 ? verts.SelectRandom() : null;
             }
