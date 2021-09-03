@@ -20,10 +20,10 @@ namespace Inputs
 
         private void Start()
         {
-            Manager.Inputs.IA_OnLeftClick.performed += I_OnLeftClick;
-            Manager.Inputs.IA_OnLeftClick.canceled += I_OnLeftClick;
-            Manager.Inputs.IA_OnRightClick.performed += I_OnRightClick;
-            Manager.Inputs.IA_OnRightClick.canceled += I_OnRightClick;
+            Manager.Inputs.OnLeftClick.performed += I_OnLeftClick;
+            Manager.Inputs.OnLeftClick.canceled += I_OnLeftClick;
+            Manager.Inputs.OnRightClick.performed += I_OnRightClick;
+            Manager.Inputs.OnRightClick.canceled += I_OnRightClick;
         }
 
         private void I_OnLeftClick(InputAction.CallbackContext obj)

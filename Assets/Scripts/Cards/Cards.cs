@@ -26,7 +26,10 @@ namespace Cards
         [SerializeField] private Blueprint guildHall;
         public Blueprint GuildHall => guildHall;
         
-        [SerializeField] private List<Card> hand; 
+        [SerializeField] private List<Card> hand;
+
+        [SerializeField] private Blueprint debugBlueprint;
+        
         private List<Blueprint> Deck { get; set; } // Remaining cards in the deck
         private List<Blueprint> Unlocked { get; set; } // Unlocked across all playthroughs
         private List<Blueprint> Playable { get; set; } // Currently playable (both starter and unlocked/ discovered)
@@ -126,6 +129,12 @@ namespace Cards
 
         private void Update()
         {
+            #if UNITY_EDITOR
+            if (UnityEngine.InputSystem.Keyboard.current.f5Key.wasPressedThisFrame)
+                hand[0].Blueprint = debugBlueprint;
+            #endif
+
+            
             if (!Manager.Cards.SelectedCard || EventSystem.current.IsPointerOverGameObject())
             {
                 _hoveredCell = null;

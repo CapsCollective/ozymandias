@@ -158,7 +158,7 @@ namespace Structures
             Cards.Cards.OnCardSelected += card => Deselect();
             Click.OnLeftClick += LeftClick;
             Click.OnRightClick += Deselect;
-            Manager.Inputs.IA_DeleteBuilding.performed += _ => { if (Manager.State.InGame) Interact(); };
+            Manager.Inputs.OnDeleteBuilding.performed += _ => { if (Manager.State.InGame) Interact(); };
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
             State.OnEnterState += () => HoveredStructure = null;
         }

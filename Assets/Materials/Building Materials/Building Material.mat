@@ -45,7 +45,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionTex:
         m_Texture: {fileID: 2800000, guid: 915c3cfbc7b8eb1439d29bc5a337b952, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 16dba6982b1582041a54b605f794b46a, type: 3}
@@ -53,6 +53,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -65,7 +69,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SmoothnessTex:
         m_Texture: {fileID: 2800000, guid: 77f2b8b02ad08ca44a07ef50eeab1b52, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindowEmissionTex:
+        m_Texture: {fileID: 2800000, guid: 37e43b99e76025443ab6b2d3462c7b72, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
@@ -80,6 +88,7 @@ Material:
     - _Height: 1.05
     - _Metallic: 0
     - _Mode: 0
+    - _NoiseScale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Scale: 1
@@ -88,6 +97,8 @@ Material:
     - _SrcBlend: 1
     - _Stretch: 1
     - _UVSec: 0
+    - _WindowEmissionIntensity: 0
+    - _WindowMaxBrightness: 10
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

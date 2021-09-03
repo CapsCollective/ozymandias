@@ -32,8 +32,6 @@ namespace Inputs
         private Quaternion startRot;
         private bool _dragging, _rotating;
         
-        private CursorType _previousCursor = CursorType.Pointer;
-
         public static Action OnCameraMove;
 
         [SerializeField] private Vector2 dragSpeed;
@@ -54,10 +52,10 @@ namespace Inputs
 
         private void Start()
         {
-            Manager.Inputs.IA_OnRightClick.performed += RightClick;
-            Manager.Inputs.IA_OnRightClick.canceled += RightClick;
-            Manager.Inputs.IA_OnLeftClick.performed += LeftClick;
-            Manager.Inputs.IA_OnLeftClick.canceled += LeftClick;
+            Manager.Inputs.OnRightClick.performed += RightClick;
+            Manager.Inputs.OnRightClick.canceled += RightClick;
+            Manager.Inputs.OnLeftClick.performed += LeftClick;
+            Manager.Inputs.OnLeftClick.canceled += LeftClick;
             startPos = transform.position;
         }
 
@@ -89,7 +87,7 @@ namespace Inputs
         {
             if (!Manager.State.InGame) return;
 
-            FreeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.IA_RotateCamera.ReadValue<float>();
+            FreeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.OnRotateCamera.ReadValue<float>();
 
             if (leftClick)
             {
@@ -112,13 +110,13 @@ namespace Inputs
                 dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
             }
 
-            Vector2 inputDir = Manager.Inputs.IA_MoveCamera.ReadValue<Vector2>() + dragDir;
+            Vector2 inputDir = Manager.Inputs.OnMoveCamera.ReadValue<Vector2>() + dragDir;
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
             FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
 
             // Scrolling
-            float scroll = -Manager.Inputs.IA_OnScroll.ReadValue<float>();
+            float scroll = -Manager.Inputs.OnScroll.ReadValue<float>();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             FreeLook.m_YAxis.Value += scrollAcceleration;
@@ -150,15 +148,12 @@ namespace Inputs
 
         private void StartCursorGrab()
         {
-            if (Manager.Cursor.Current == CursorType.Grab) return;
-            _previousCursor = Manager.Cursor.Current;
             Manager.Cursor.Current = CursorType.Grab;
         }
         
         private void EndCursorGrab()
         {
-            //TODO: Causing bug where cursor being set to build incorrectly
-            Manager.Cursor.Current = _previousCursor;
+            Manager.Cursor.Current = Manager.Cards.SelectedCard ? CursorType.Build : CursorType.Pointer;
         }
     }
 }
