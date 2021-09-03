@@ -120,7 +120,6 @@ GameObject:
   - component: {fileID: 3720158692292676812}
   - component: {fileID: 5475721258133621089}
   - component: {fileID: 7747285992698156223}
-  - component: {fileID: 4020114589471263462}
   - component: {fileID: 5577493786464880486}
   m_Layer: 5
   m_Name: Building Cards
@@ -202,18 +201,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 1
---- !u!114 &4020114589471263462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5475721258133621116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f694d8845e15154db96b0a3a88fa47a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5577493786464880486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,13 +239,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e22b42b41b30e64f8a565d67992210f, type: 2}
   - {fileID: 11400000, guid: f615080d3cd449e4b8959e1aed05f9fd, type: 2}
   guildHall: {fileID: 11400000, guid: 6ece9827b575c1b479706112a29a4148, type: 2}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16777216
   hand:
   - {fileID: 6728767104420435425}
   - {fileID: 7418807938519430716}
   - {fileID: 1268618846049657482}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 16777216
+  debugBlueprint: {fileID: 0}
 --- !u!1001 &117359046602310083
 PrefabInstance:
   m_ObjectHideFlags: 0

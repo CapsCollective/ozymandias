@@ -155,10 +155,10 @@ namespace Structures
             _cam = Camera.main;
             if (_cam) _cam.GetComponentInChildren<PostProcessVolume>().profile.TryGetSettings(out _outline);
 
-            Cards.Cards.OnCardSelected += card => Deselect();
-            Click.OnLeftClick += LeftClick;
-            Click.OnRightClick += Deselect;
-            Manager.Inputs.OnDeleteBuilding.performed += _ => { if (Manager.State.InGame) Interact(); };
+            Cards.Cards.OnCardSelected += _ => Deselect();
+            Manager.Inputs.OnLeftClick.performed += _ => ToggleSelect();
+            Manager.Inputs.OnRightClick.performed += _ => Deselect();
+            Manager.Inputs.OnConfirmSelectedStructure.performed += _ => Interact();
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
             State.OnEnterState += () => HoveredStructure = null;
         }
@@ -197,7 +197,7 @@ namespace Structures
             return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
         }
         
-        private void LeftClick()
+        private void ToggleSelect()
         {
             // Make sure that we don't bring up the button if we click on a UI element. 
             if (IsSelectionDisabled()) return;
@@ -218,7 +218,7 @@ namespace Structures
 
         private static bool IsSelectionDisabled()
         {
-            return Manager.Cards.SelectedCard || EventSystem.current.IsPointerOverGameObject() || Click.PlacingBuilding;
+            return Manager.Cards.SelectedCard || EventSystem.current.IsPointerOverGameObject() || Manager.Cards.PlacingBuilding;
         }
         
         private SelectionConfig GetButtonConfiguration()
@@ -287,6 +287,7 @@ namespace Structures
 
         private void Interact()
         {
+            if (!SelectedStructure) return;
             // Switch on config type
             switch (_config.Type)
             {

@@ -250,6 +250,7 @@ namespace Managers
 
         private void ToGameUpdate()
         {
+            Manager.Cards.DropCards();
             var finishedMoving = MoveCam(_startPos, menuTransitionCurve);
             var finishedFadingMenu = FadeCanvas(menuCanvasGroup, FadeOut);
             if (finishedFadingMenu)
@@ -270,6 +271,7 @@ namespace Managers
             gameCanvasGroup.blocksRaycasts = true;
             Manager.Inputs.TogglePlayerInput(true);
             EnterState(GameState.InGame);
+            Manager.Cards.PopCards();
         }
 
         private void InGameInit()

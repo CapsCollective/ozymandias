@@ -24,48 +24,54 @@ namespace Inputs
         public InputControlScheme ControlScheme;
 
         // Player Input
-        public PlayerInput PlayerInput { get; private set; }
-        public InputAction OnLeftClick { get; private set; }
-        public InputAction OnRightClick { get; private set; }
-        public InputAction OnScroll { get; private set; }
-        public InputAction OnRotateCamera { get; private set; }
-        public InputAction OnMousePosition { get; private set; }
-        public InputAction OnMoveCamera { get; private set; }
-        public InputAction OnDeleteBuilding { get; private set; }
-        public InputAction OnNextTurn { get; private set; }
-        public InputAction OnShowPause { get; private set; }
-        public InputAction OnRotateBuilding { get; private set; }
-        public InputAction OnDeselectCards { get; private set; }
-
-        // UI Input
-        public InputAction OnSelectCards { get; private set; }
-        public InputAction OnUINavigate { get; private set; }
-        public InputAction OnUICancel { get; private set; }
+        public PlayerInput PlayerInput { get; }
+        
+        public InputAction OnLeftMouse { get; }
+        public InputAction OnLeftClick { get; }
+        public InputAction OnRightMouse { get; }
+        public InputAction OnRightClick { get; }
+        public InputAction OnZoomCamera { get; }
+        public InputAction OnRotateCamera { get; }
+        public InputAction OnMousePosition { get; }
+        public InputAction OnMoveCamera { get; }
+        public InputAction OnConfirmSelectedStructure { get; }
+        public InputAction OnNextTurn { get; }
+        public InputAction OnToggleBook { get; }
+        public InputAction OnRotateBuilding { get; }
+        public InputAction OnSelectCards { get; }
+        public InputAction OnDeselectCards { get; }
+        public InputAction OnNavigateCards { get; }
+        public InputAction OnSelectCardIndex { get; }
+        
 
         public Inputs()
         {
             PlayerInput = new PlayerInput();
 
-            OnLeftClick = PlayerInput.Player.LeftClick;
-            OnRightClick = PlayerInput.Player.RightClick;
-            OnScroll = PlayerInput.Player.Scroll;
-            OnRotateCamera = PlayerInput.Player.RotateCamera;
             OnMousePosition = PlayerInput.Player.MousePosition;
-            OnMoveCamera = PlayerInput.Player.MoveCamera;
-            OnDeleteBuilding = PlayerInput.Player.DeleteBuilding;
-            OnNextTurn = PlayerInput.Player.NextTurn;
-            OnShowPause = PlayerInput.Player.ShowPause;
-            OnRotateBuilding = PlayerInput.Player.BuildingRotate;
-            OnDeselectCards = PlayerInput.Player.DeselectCards;
+            OnLeftMouse = PlayerInput.Player.LeftMouse;
+            OnLeftClick = PlayerInput.Player.LeftClick;
+            OnRightMouse = PlayerInput.Player.RightMouse;
+            OnRightClick = PlayerInput.Player.RightClick;
 
-            // UI
-            OnSelectCards = PlayerInput.UI.SelectCards;
-            OnUINavigate = PlayerInput.UI.Navigate;
-            OnUICancel = PlayerInput.UI.Cancel;
+            // Camera Controls
+            OnMoveCamera = PlayerInput.Player.MoveCamera;
+            OnRotateCamera = PlayerInput.Player.RotateCamera;
+            OnZoomCamera = PlayerInput.Player.ZoomCamera;
+            
+            // UI Navigation
+            OnConfirmSelectedStructure = PlayerInput.Player.ConfirmSelectedStructure;
+            OnNextTurn = PlayerInput.Player.NextTurn;
+            OnToggleBook = PlayerInput.Player.ToggleBook;
+            OnRotateBuilding = PlayerInput.Player.RotateBuilding;
+            
+            // Cards
+            OnSelectCards = PlayerInput.Player.SelectCards;
+            OnDeselectCards = PlayerInput.Player.DeselectCards;
+            OnNavigateCards = PlayerInput.Player.NavigateCards;
+            OnSelectCardIndex = PlayerInput.Player.SelectCardIndex;
 
             PlayerInput.UI.Enable();
-
-            // Remove this line to disable Player Input on launch
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;

@@ -28,12 +28,9 @@ namespace Inputs
         private RaycastHit posHit;
 
         private Vector2 lastDrag;
-        private Vector3 startPos;
         private Quaternion startRot;
         private bool _dragging, _rotating;
         
-        public static Action OnCameraMove;
-
         [SerializeField] private Vector2 dragSpeed;
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
@@ -52,16 +49,15 @@ namespace Inputs
 
         private void Start()
         {
-            Manager.Inputs.OnRightClick.performed += RightClick;
-            Manager.Inputs.OnRightClick.canceled += RightClick;
-            Manager.Inputs.OnLeftClick.performed += LeftClick;
-            Manager.Inputs.OnLeftClick.canceled += LeftClick;
-            startPos = transform.position;
+            Manager.Inputs.OnRightMouse.started += RightClick;
+            Manager.Inputs.OnRightMouse.canceled += RightClick;
+            Manager.Inputs.OnLeftMouse.started += LeftClick;
+            Manager.Inputs.OnLeftMouse.canceled += LeftClick;
         }
 
         private void RightClick(InputAction.CallbackContext context)
         {
-            if (context.performed) StartCursorGrab();
+            if (context.started) StartCursorGrab();
             else if (context.canceled)
             {
                 FreeLook.m_XAxis.m_InputAxisValue = 0;
@@ -71,13 +67,14 @@ namespace Inputs
 
         private void LeftClick(InputAction.CallbackContext context)
         {
-            leftClick = context.performed;
-            if (context.performed)
+            if (context.started)
             {
+                leftClick = true;
                 lastDrag = Manager.Inputs.MousePosition;
             }
             else if (context.canceled)
             {
+                leftClick = false;
                 _dragging = false;
                 EndCursorGrab();
             }
@@ -116,7 +113,7 @@ namespace Inputs
             FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
 
             // Scrolling
-            float scroll = -Manager.Inputs.OnScroll.ReadValue<float>();
+            float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             FreeLook.m_YAxis.Value += scrollAcceleration;

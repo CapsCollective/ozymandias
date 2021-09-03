@@ -72,7 +72,7 @@ namespace UI
             unlocksRibbon.onClick.AddListener(() => Page = BookPage.Unlocks);
             progressRibbon.onClick.AddListener(() => Page = BookPage.Progress);
 
-            Manager.Inputs.OnShowPause.performed += _ =>
+            Manager.Inputs.OnToggleBook.performed += _ =>
             {
                 if(Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
             };

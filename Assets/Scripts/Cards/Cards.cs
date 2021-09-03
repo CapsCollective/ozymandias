@@ -7,6 +7,8 @@ using Map;
 using Structures;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Utilities;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
@@ -18,31 +20,55 @@ namespace Cards
         public static Action<Card> OnCardSelected;
         public static Action<Blueprint> OnUnlock;
         public static Action OnDiscoverRuin;
+
+        [SerializeField] private List<Blueprint> all;
+        [SerializeField] private Blueprint guildHall;
+        [SerializeField] private LayerMask layerMask;
+        [SerializeField] private List<Card> hand;
+        [SerializeField] private Blueprint debugBlueprint;
+
+        private Camera _cam;
+        private int _prevRotation, _rotation;
+        private List<Cell> _selectedCells = new List<Cell>();
+        private bool _cellsValid;
+        private Cell _hoveredCell; // Used to only trigger calculations on cell changing
+        private int _prevCardIndex = 1, _selectedCardIndex = -1;
+        private Card _selectedCard;
+        private ToggleGroup _toggleGroup;
+        public  Card SelectedCard
+        {
+            get => _selectedCard;
+            set
+            {
+                _prevCardIndex = _selectedCardIndex;
+                _selectedCardIndex = hand.FindIndex(card => card == value);
+                
+                _selectedCard = value;
+                if(_selectedCard) Manager.Map.Flood();
+                else Manager.Map.Drain();
+                
+                Manager.Cursor.Current = _selectedCard ? CursorType.Build : CursorType.Pointer;
+                OnCardSelected?.Invoke(_selectedCard);
+            }
+        }
+
+        public bool PlacingBuilding { get; set; }
         
         #region Blueprint Lists
-        [SerializeField] private List<Blueprint> all;
         public List<Blueprint> All => all; // All playable (excludes guild hall)
-        
-        [SerializeField] private Blueprint guildHall;
         public Blueprint GuildHall => guildHall;
-        
-        [SerializeField] private List<Card> hand;
-
-        [SerializeField] private Blueprint debugBlueprint;
-        
         private List<Blueprint> Deck { get; set; } // Remaining cards in the deck
         private List<Blueprint> Unlocked { get; set; } // Unlocked across all playthroughs
         private List<Blueprint> Playable { get; set; } // Currently playable (both starter and unlocked/ discovered)
         private List<Blueprint> Discoverable { get; set; } // Cards discoverable in ruins
-        public bool IsDiscoverableOrPlayable(Blueprint blueprint) => Discoverable.Contains(blueprint) || Playable.Contains(blueprint);
         public bool IsUnlocked(Blueprint blueprint) => Unlocked.Contains(blueprint);
         public Blueprint Find(BuildingType type) => type == BuildingType.GuildHall ? GuildHall : All.Find(blueprint => blueprint.type == type);
-        
         #endregion
         
         private void Awake()
         {
             _cam = Camera.main;
+            _toggleGroup = GetComponent<ToggleGroup>();
 
             Select.OnClear += structure =>
             {
@@ -60,44 +86,22 @@ namespace Cards
             State.OnLoadingEnd += InitCards;
             State.OnEnterState += () => { if(Manager.State.NextTurn) NewCards(); };
         }
-        
+
         private void Start()
         {
-            Click.OnLeftClick += LeftClick;
-            Click.OnRightClick += RightClick;
-            // Manager.Inputs.IA_SelectCards.performed += SelectCards;
-            // Manager.Inputs.IA_UINavigate.performed += Navigate;
-            // Manager.Inputs.IA_UICancel.performed += UICancel;
-            // Manager.Inputs.IA_DeselectCards.performed += UICancel;
-            // Manager.Inputs.IA_RotateBuilding.performed += RotateBuilding;
+            Manager.Inputs.OnLeftClick.performed += PlaceBuilding;
+            Manager.Inputs.OnRotateBuilding.performed += RotateBuilding;
+            Manager.Inputs.OnSelectCards.performed += SelectCards;
+            Manager.Inputs.OnDeselectCards.performed += DeselectCards;
+            Manager.Inputs.OnNavigateCards.performed += NavigateCards;
+            Manager.Inputs.OnSelectCardIndex.performed += SelectCardIndex;
         }
-        
         
         #region Card Select
-        private Card _selectedCard;
-        public  Card SelectedCard
-        {
-            get => _selectedCard;
-            set
-            {
-                _selectedCard = value;
-                if(_selectedCard) Manager.Map.Flood();
-                else Manager.Map.Drain();
-                
-                Manager.Cursor.Current = _selectedCard ? CursorType.Build : CursorType.Pointer;
-                OnCardSelected?.Invoke(_selectedCard);
-            }
-        }
-        
-        private void InitCards()
-        {
-            hand.ForEach(card => card.Blueprint = NewCard());
-        }
-        
-        private void NewCards()
-        {
-            hand.ForEach(card => card.Replace());
-        }
+        public void PopCards() => hand.ForEach(card => card.Pop());
+        public void DropCards() => hand.ForEach(card => card.Drop());
+        private void InitCards() => hand.ForEach(card => card.Blueprint = NewCard());
+        private void NewCards() => hand.ForEach(card => card.Replace());
 
         public Blueprint NewCard()
         {
@@ -108,13 +112,81 @@ namespace Cards
         }
         #endregion
         
+        #region Input Management
+        
+        private void PlaceBuilding(InputAction.CallbackContext obj)
+        {
+            if (!SelectedCard || !_cellsValid || EventSystem.current.IsPointerOverGameObject()) return;
+            PlacingBuilding = true;
+            Blueprint blueprint = SelectedCard.Blueprint;
+            SelectedCard.Replace();
+            if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
+            SelectedCard = null;
+        }
+
+        private void LateUpdate()
+        {
+            // Always set to false at end of frame to prevent select from immediately selecting placed buildings
+            PlacingBuilding = false;
+        }
+
+        private void RotateBuilding(InputAction.CallbackContext obj)
+        {
+            if (!Manager.Cards.SelectedCard) return;
+            _rotation = (_rotation + (int)Mathf.Sign(obj.ReadValue<float>()) + 4) % 4; // + 4 to offset negatives
+        }
+        
+        private void SelectCards(InputAction.CallbackContext obj)
+        {
+            if (!Manager.State.InGame || _selectedCardIndex != -1) return;
+            SelectCard(_prevCardIndex);
+        }
+        
+        private void DeselectCards(InputAction.CallbackContext obj)
+        {
+            if (!Manager.State.InGame || _selectedCardIndex == -1) return;
+            SelectCard(-1);
+        }
+        
+        private void NavigateCards(InputAction.CallbackContext obj)
+        {
+            if (!Manager.State.InGame || _selectedCardIndex == -1) return;
+            SelectCard((_selectedCardIndex + (int)obj.ReadValue<Vector2>().x + hand.Count) % hand.Count);
+        }
+
+        private void SelectCardIndex(InputAction.CallbackContext obj)
+        {
+            if (!Manager.State.InGame) return;
+
+            int index = (int)obj.ReadValue<float>() - 1;
+            SelectCard(_selectedCardIndex == index ? -1 : index);
+        }
+        
+        private void SelectCard(int cardIndex)
+        {
+            if (cardIndex == _selectedCardIndex) return;
+            
+            if (cardIndex >= 0)
+            {
+                if (hand[cardIndex].IsReplacing) return;
+                int originalIndex = cardIndex;
+                do // Attempt to find a valid card
+                {
+                    if (hand[cardIndex].Toggle.interactable)
+                    {
+                        hand[cardIndex].Toggle.isOn = true;
+                        hand[cardIndex].OnPointerEnter(null);
+                        break;
+                    }    
+                    cardIndex = (cardIndex + 1) % hand.Count;
+                } while (originalIndex != cardIndex);
+            }
+            else _toggleGroup.SetAllTogglesOff();
+        }
+
+        #endregion
+
         #region Building Placement
-        [SerializeField] private LayerMask layerMask;
-        private Camera _cam;
-        private int _prevRotation, _rotation;
-        private List<Cell> _selectedCells = new List<Cell>();
-        private bool _cellsValid;
-        private Cell _hoveredCell; // Used to only trigger calculations on cell changing
         private Cell ClosestCellToCursor
         {
             get
@@ -130,7 +202,7 @@ namespace Cards
         private void Update()
         {
             #if UNITY_EDITOR
-            if (UnityEngine.InputSystem.Keyboard.current.f5Key.wasPressedThisFrame)
+            if (Keyboard.current.f5Key.wasPressedThisFrame)
                 hand[0].Blueprint = debugBlueprint;
             #endif
 
@@ -143,7 +215,7 @@ namespace Cards
             }
             
             Cell closest = ClosestCellToCursor;
-            if (closest == null || !closest.Active || (_prevRotation == _rotation && _hoveredCell == closest)) return;
+            if (closest == null || !closest.Active || (_prevRotation == _rotation && _hoveredCell == closest && _prevCardIndex == _selectedCardIndex)) return;
             _hoveredCell = closest;
             _prevRotation = _rotation;
             
@@ -160,22 +232,6 @@ namespace Cards
             _selectedCells.Clear();
         }
         
-        private void LeftClick()
-        {
-            if (!SelectedCard || !_cellsValid || EventSystem.current.IsPointerOverGameObject()) return;
-            Click.PlacingBuilding = true;
-            Blueprint blueprint = SelectedCard.Blueprint;
-            SelectedCard.Replace(); // Check again as card can be deselected
-            if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
-            SelectedCard = null;
-        }
-
-        private void RightClick()
-        {
-            if (!SelectedCard) return;
-            _rotation++;
-            _rotation %= 4;
-        }
         #endregion
         
         public bool Unlock(Blueprint blueprint, bool isRuin = false)

@@ -21,9 +21,33 @@ namespace Inputs
             ""id"": ""6204d203-e191-4cf7-aa67-8d57576b1d94"",
             ""actions"": [
                 {
+                    ""name"": ""Mouse Position"",
+                    ""type"": ""Value"",
+                    ""id"": ""71bbbbfa-9f59-45ec-9c5d-60ea66455924"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mouse Delta"",
+                    ""type"": ""Value"",
+                    ""id"": ""890c83d4-f8ea-488e-b0b8-c78427c7ce5b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Left Click"",
                     ""type"": ""Button"",
                     ""id"": ""48b20d88-baee-4019-aea3-e565b6e52b5c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap""
+                },
+                {
+                    ""name"": ""Left Mouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""31a8fc31-16b9-4c27-afae-81f0bafd08a2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -37,18 +61,10 @@ namespace Inputs
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Scroll"",
-                    ""type"": ""Value"",
-                    ""id"": ""61557cdb-469e-403a-8ccd-07f5d962dbaa"",
-                    ""expectedControlType"": """",
-                    ""processors"": ""Normalize(max=1),Scale(factor=0.01)"",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Mouse Position"",
-                    ""type"": ""Value"",
-                    ""id"": ""71bbbbfa-9f59-45ec-9c5d-60ea66455924"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""Right Mouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""a86eadf2-f04a-4ef0-890c-3514f8dfd90e"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -69,12 +85,84 @@ namespace Inputs
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""DeleteBuilding"",
+                    ""name"": ""Zoom Camera"",
+                    ""type"": ""Value"",
+                    ""id"": ""61557cdb-469e-403a-8ccd-07f5d962dbaa"",
+                    ""expectedControlType"": """",
+                    ""processors"": ""Normalize(max=1),Scale(factor=0.01)"",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Toggle Book"",
+                    ""type"": ""Button"",
+                    ""id"": ""38061098-501b-4c09-af6a-8b10442c20ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Toggle Tooltips"",
+                    ""type"": ""Button"",
+                    ""id"": ""66c79df1-d6cc-4d63-9162-523c1c2b24dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Next Turn"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9555a6f-7b47-4067-b0b5-7ed6ed3c7196"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Confirm Selected Structure"",
                     ""type"": ""PassThrough"",
                     ""id"": ""2940d26f-e08c-4a18-804f-8f913c5b61d7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=1,pressPoint=0.5)""
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Rotate Building"",
+                    ""type"": ""Button"",
+                    ""id"": ""01d6d096-8732-49ae-81e2-e83f8abaa8b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select Cards"",
+                    ""type"": ""Button"",
+                    ""id"": ""3688873b-b781-4552-a280-8318c205cd71"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Deselect Cards"",
+                    ""type"": ""Button"",
+                    ""id"": ""47714686-228f-4886-a09b-26c740e5bd54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Navigate Cards"",
+                    ""type"": ""Value"",
+                    ""id"": ""3f065f30-0d1e-4f9c-854c-cf59b1871781"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Select Card Index"",
+                    ""type"": ""Value"",
+                    ""id"": ""272c9955-db7e-4e68-85fc-8d7cf6981830"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""Screenshot"",
@@ -85,41 +173,9 @@ namespace Inputs
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""NextTurn"",
+                    ""name"": ""Navigate Bookmarks"",
                     ""type"": ""Button"",
-                    ""id"": ""b9555a6f-7b47-4067-b0b5-7ed6ed3c7196"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ShowPause"",
-                    ""type"": ""Button"",
-                    ""id"": ""38061098-501b-4c09-af6a-8b10442c20ae"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Mouse Delta"",
-                    ""type"": ""Value"",
-                    ""id"": ""890c83d4-f8ea-488e-b0b8-c78427c7ce5b"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Building Rotate"",
-                    ""type"": ""Button"",
-                    ""id"": ""01d6d096-8732-49ae-81e2-e83f8abaa8b6"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Deselect Cards"",
-                    ""type"": ""Button"",
-                    ""id"": ""6b1e673b-c665-4736-808e-5cbe4c9a7fdc"",
+                    ""id"": ""9282166e-cc5f-499a-b853-720b0b7bd76e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -152,76 +208,10 @@ namespace Inputs
                     ""name"": """",
                     ""id"": ""5a28b8e6-ea21-41f8-8b98-18e1a587184a"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Right Click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b357a7ad-016e-4555-b16b-a214876a3fb1"",
-                    ""path"": ""<Mouse>/scroll/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Scroll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""59f19d06-3e47-48b9-84cd-09950509ff35"",
-                    ""path"": ""<Gamepad>/rightStick/y"",
-                    ""interactions"": """",
-                    ""processors"": ""Scale(factor=2)"",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Scroll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Keyboard"",
-                    ""id"": ""49ec3ced-10c8-4e38-beac-7f5ef2e9c85b"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": ""Scale(factor=200)"",
-                    ""groups"": """",
-                    ""action"": ""Scroll"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""d4c8ed5a-618f-4433-bb7b-8ab2ed3e2ae6"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Scroll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""5ac557c2-cfb3-4d50-b899-45696f68878a"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Scroll"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d9cca30c-6cde-4ef8-b32d-a4279be96b61"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Mouse Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -340,7 +330,7 @@ namespace Inputs
                     ""id"": ""b7690c4c-9b83-490d-94fc-9a389fb8408a"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
-                    ""processors"": ""Scale(factor=0.25)"",
+                    ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": true,
@@ -370,34 +360,144 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
+                    ""id"": ""fd2c6981-53c6-45c4-90bb-9a8c08b6da5e"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Toggle Book"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a75c688-e4ec-4432-9692-be31b5164126"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Toggle Book"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Shoulder Buttons"",
+                    ""id"": ""50e44425-7ee9-4bcd-8884-feb85973991b"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Building"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""bbe5c703-43fc-4bd6-9568-6cd0fb50ce37"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Rotate Building"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""64f13172-95c0-47e5-8966-a31c431cb98b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Rotate Building"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bfcbcb77-86fe-4b5d-8f19-38bc63be84f0"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Rotate Building"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""191d1206-a623-48a4-9195-106ab0f036c2"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Rotate Building"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""048798e2-bacf-4c0d-bb66-ced35fe06f18"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Select Cards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a4805b4-d333-4691-86a6-9a5cc8c59f70"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Deselect Cards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9adc02fc-ee2b-4aa8-9c39-374503459508"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Cards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f98e91fb-106b-4dc1-8adb-a58b3c6ea0d8"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Toggle Tooltips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""cc970a85-536d-41f1-a2fd-a272b252fae9"",
                     ""path"": ""<Keyboard>/delete"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""DeleteBuilding"",
+                    ""action"": ""Confirm Selected Structure"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""5c32499e-11c4-47eb-8a32-e112a9763e3b"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""DeleteBuilding"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7c2fddbe-1afc-4232-9222-6328fdebe022"",
-                    ""path"": ""<Keyboard>/f5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Screenshot"",
+                    ""action"": ""Confirm Selected Structure"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -408,7 +508,7 @@ namespace Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""NextTurn"",
+                    ""action"": ""Next Turn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -419,18 +519,7 @@ namespace Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""NextTurn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fd2c6981-53c6-45c4-90bb-9a8c08b6da5e"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""ShowPause"",
+                    ""action"": ""Next Turn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -446,48 +535,169 @@ namespace Inputs
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Shoulder Buttons"",
-                    ""id"": ""50e44425-7ee9-4bcd-8884-feb85973991b"",
-                    ""path"": ""1DAxis"",
+                    ""name"": """",
+                    ""id"": ""d9cca30c-6cde-4ef8-b32d-a4279be96b61"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Mouse Position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b357a7ad-016e-4555-b16b-a214876a3fb1"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Zoom Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59f19d06-3e47-48b9-84cd-09950509ff35"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Zoom Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""49ec3ced-10c8-4e38-beac-7f5ef2e9c85b"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=200)"",
                     ""groups"": """",
-                    ""action"": ""Building Rotate"",
+                    ""action"": ""Zoom Camera"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""bbe5c703-43fc-4bd6-9568-6cd0fb50ce37"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""name"": ""positive"",
+                    ""id"": ""d4c8ed5a-618f-4433-bb7b-8ab2ed3e2ae6"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Building Rotate"",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Zoom Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""64f13172-95c0-47e5-8966-a31c431cb98b"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""name"": ""negative"",
+                    ""id"": ""5ac557c2-cfb3-4d50-b899-45696f68878a"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Building Rotate"",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Zoom Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a8bef5ae-fa16-4334-a9b9-038b3f171a8a"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""id"": ""7c2fddbe-1afc-4232-9222-6328fdebe022"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Screenshot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a086e9d9-9e59-4c02-8f04-9caa80ef30a7"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Select Card Index"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2992a63f-0b9e-44c3-a352-9e2f6db1da6c"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Select Card Index"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9dc7110-b4cf-4f96-b7d1-615cefb22bc4"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Select Card Index"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56d3c50c-aa05-4202-8b91-e7fdb6918d84"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Left Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17fc50cd-0695-445d-b595-02efc789dd01"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Right Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Shoulder Buttons"",
+                    ""id"": ""edc09bf7-f22d-4717-ac78-07f1802b87ef"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate Bookmarks"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""5a1ce9b9-7dcd-4c00-a72f-7f3a4401cc1c"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Deselect Cards"",
+                    ""action"": ""Navigate Bookmarks"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""9204114e-4eac-43ec-a3d7-b8000350d3cf"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Bookmarks"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -572,14 +782,6 @@ namespace Inputs
                     ""type"": ""PassThrough"",
                     ""id"": ""f343d9c8-4719-4eca-a21b-a43bcb75be2d"",
                     ""expectedControlType"": ""Quaternion"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""SelectCards"",
-                    ""type"": ""Button"",
-                    ""id"": ""871a52a2-940c-45dd-81e8-2186b0122f54"",
-                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -859,17 +1061,6 @@ namespace Inputs
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""721d8f07-79aa-4399-8d0a-78188eb75e25"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectCards"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -906,19 +1097,26 @@ namespace Inputs
 }");
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-            m_Player_LeftClick = m_Player.FindAction("Left Click", throwIfNotFound: true);
-            m_Player_RightClick = m_Player.FindAction("Right Click", throwIfNotFound: true);
-            m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
             m_Player_MousePosition = m_Player.FindAction("Mouse Position", throwIfNotFound: true);
+            m_Player_MouseDelta = m_Player.FindAction("Mouse Delta", throwIfNotFound: true);
+            m_Player_LeftClick = m_Player.FindAction("Left Click", throwIfNotFound: true);
+            m_Player_LeftMouse = m_Player.FindAction("Left Mouse", throwIfNotFound: true);
+            m_Player_RightClick = m_Player.FindAction("Right Click", throwIfNotFound: true);
+            m_Player_RightMouse = m_Player.FindAction("Right Mouse", throwIfNotFound: true);
             m_Player_MoveCamera = m_Player.FindAction("Move Camera", throwIfNotFound: true);
             m_Player_RotateCamera = m_Player.FindAction("Rotate Camera", throwIfNotFound: true);
-            m_Player_DeleteBuilding = m_Player.FindAction("DeleteBuilding", throwIfNotFound: true);
-            m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
-            m_Player_NextTurn = m_Player.FindAction("NextTurn", throwIfNotFound: true);
-            m_Player_ShowPause = m_Player.FindAction("ShowPause", throwIfNotFound: true);
-            m_Player_MouseDelta = m_Player.FindAction("Mouse Delta", throwIfNotFound: true);
-            m_Player_BuildingRotate = m_Player.FindAction("Building Rotate", throwIfNotFound: true);
+            m_Player_ZoomCamera = m_Player.FindAction("Zoom Camera", throwIfNotFound: true);
+            m_Player_ToggleBook = m_Player.FindAction("Toggle Book", throwIfNotFound: true);
+            m_Player_ToggleTooltips = m_Player.FindAction("Toggle Tooltips", throwIfNotFound: true);
+            m_Player_NextTurn = m_Player.FindAction("Next Turn", throwIfNotFound: true);
+            m_Player_ConfirmSelectedStructure = m_Player.FindAction("Confirm Selected Structure", throwIfNotFound: true);
+            m_Player_RotateBuilding = m_Player.FindAction("Rotate Building", throwIfNotFound: true);
+            m_Player_SelectCards = m_Player.FindAction("Select Cards", throwIfNotFound: true);
             m_Player_DeselectCards = m_Player.FindAction("Deselect Cards", throwIfNotFound: true);
+            m_Player_NavigateCards = m_Player.FindAction("Navigate Cards", throwIfNotFound: true);
+            m_Player_SelectCardIndex = m_Player.FindAction("Select Card Index", throwIfNotFound: true);
+            m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
+            m_Player_NavigateBookmarks = m_Player.FindAction("Navigate Bookmarks", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -931,7 +1129,6 @@ namespace Inputs
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-            m_UI_SelectCards = m_UI.FindAction("SelectCards", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -981,36 +1178,50 @@ namespace Inputs
         // Player
         private readonly InputActionMap m_Player;
         private IPlayerActions m_PlayerActionsCallbackInterface;
-        private readonly InputAction m_Player_LeftClick;
-        private readonly InputAction m_Player_RightClick;
-        private readonly InputAction m_Player_Scroll;
         private readonly InputAction m_Player_MousePosition;
+        private readonly InputAction m_Player_MouseDelta;
+        private readonly InputAction m_Player_LeftClick;
+        private readonly InputAction m_Player_LeftMouse;
+        private readonly InputAction m_Player_RightClick;
+        private readonly InputAction m_Player_RightMouse;
         private readonly InputAction m_Player_MoveCamera;
         private readonly InputAction m_Player_RotateCamera;
-        private readonly InputAction m_Player_DeleteBuilding;
-        private readonly InputAction m_Player_Screenshot;
+        private readonly InputAction m_Player_ZoomCamera;
+        private readonly InputAction m_Player_ToggleBook;
+        private readonly InputAction m_Player_ToggleTooltips;
         private readonly InputAction m_Player_NextTurn;
-        private readonly InputAction m_Player_ShowPause;
-        private readonly InputAction m_Player_MouseDelta;
-        private readonly InputAction m_Player_BuildingRotate;
+        private readonly InputAction m_Player_ConfirmSelectedStructure;
+        private readonly InputAction m_Player_RotateBuilding;
+        private readonly InputAction m_Player_SelectCards;
         private readonly InputAction m_Player_DeselectCards;
+        private readonly InputAction m_Player_NavigateCards;
+        private readonly InputAction m_Player_SelectCardIndex;
+        private readonly InputAction m_Player_Screenshot;
+        private readonly InputAction m_Player_NavigateBookmarks;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
             public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-            public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
-            public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
-            public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
             public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+            public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
+            public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
+            public InputAction @LeftMouse => m_Wrapper.m_Player_LeftMouse;
+            public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
+            public InputAction @RightMouse => m_Wrapper.m_Player_RightMouse;
             public InputAction @MoveCamera => m_Wrapper.m_Player_MoveCamera;
             public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
-            public InputAction @DeleteBuilding => m_Wrapper.m_Player_DeleteBuilding;
-            public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
+            public InputAction @ZoomCamera => m_Wrapper.m_Player_ZoomCamera;
+            public InputAction @ToggleBook => m_Wrapper.m_Player_ToggleBook;
+            public InputAction @ToggleTooltips => m_Wrapper.m_Player_ToggleTooltips;
             public InputAction @NextTurn => m_Wrapper.m_Player_NextTurn;
-            public InputAction @ShowPause => m_Wrapper.m_Player_ShowPause;
-            public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
-            public InputAction @BuildingRotate => m_Wrapper.m_Player_BuildingRotate;
+            public InputAction @ConfirmSelectedStructure => m_Wrapper.m_Player_ConfirmSelectedStructure;
+            public InputAction @RotateBuilding => m_Wrapper.m_Player_RotateBuilding;
+            public InputAction @SelectCards => m_Wrapper.m_Player_SelectCards;
             public InputAction @DeselectCards => m_Wrapper.m_Player_DeselectCards;
+            public InputAction @NavigateCards => m_Wrapper.m_Player_NavigateCards;
+            public InputAction @SelectCardIndex => m_Wrapper.m_Player_SelectCardIndex;
+            public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
+            public InputAction @NavigateBookmarks => m_Wrapper.m_Player_NavigateBookmarks;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1020,88 +1231,130 @@ namespace Inputs
             {
                 if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
                 {
-                    @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
-                    @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
-                    @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
-                    @RightClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
-                    @RightClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
-                    @RightClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
-                    @Scroll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
-                    @Scroll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
-                    @Scroll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScroll;
                     @MousePosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
                     @MousePosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
                     @MousePosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
+                    @MouseDelta.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                    @MouseDelta.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                    @MouseDelta.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                    @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                    @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                    @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                    @LeftMouse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftMouse;
+                    @LeftMouse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftMouse;
+                    @LeftMouse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftMouse;
+                    @RightClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                    @RightClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                    @RightClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                    @RightMouse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightMouse;
+                    @RightMouse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightMouse;
+                    @RightMouse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightMouse;
                     @MoveCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCamera;
                     @MoveCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCamera;
                     @MoveCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCamera;
                     @RotateCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateCamera;
                     @RotateCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateCamera;
                     @RotateCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateCamera;
-                    @DeleteBuilding.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteBuilding;
-                    @DeleteBuilding.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteBuilding;
-                    @DeleteBuilding.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteBuilding;
-                    @Screenshot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
-                    @Screenshot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
-                    @Screenshot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
+                    @ZoomCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomCamera;
+                    @ZoomCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomCamera;
+                    @ZoomCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomCamera;
+                    @ToggleBook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleBook;
+                    @ToggleBook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleBook;
+                    @ToggleBook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleBook;
+                    @ToggleTooltips.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
+                    @ToggleTooltips.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
+                    @ToggleTooltips.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
                     @NextTurn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
                     @NextTurn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
                     @NextTurn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
-                    @ShowPause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
-                    @ShowPause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
-                    @ShowPause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPause;
-                    @MouseDelta.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
-                    @MouseDelta.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
-                    @MouseDelta.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
-                    @BuildingRotate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBuildingRotate;
-                    @BuildingRotate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBuildingRotate;
-                    @BuildingRotate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBuildingRotate;
+                    @ConfirmSelectedStructure.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConfirmSelectedStructure;
+                    @ConfirmSelectedStructure.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConfirmSelectedStructure;
+                    @ConfirmSelectedStructure.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConfirmSelectedStructure;
+                    @RotateBuilding.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateBuilding;
+                    @RotateBuilding.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateBuilding;
+                    @RotateBuilding.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateBuilding;
+                    @SelectCards.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectCards;
+                    @SelectCards.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectCards;
+                    @SelectCards.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectCards;
                     @DeselectCards.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeselectCards;
                     @DeselectCards.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeselectCards;
                     @DeselectCards.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeselectCards;
+                    @NavigateCards.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateCards;
+                    @NavigateCards.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateCards;
+                    @NavigateCards.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateCards;
+                    @SelectCardIndex.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectCardIndex;
+                    @SelectCardIndex.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectCardIndex;
+                    @SelectCardIndex.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectCardIndex;
+                    @Screenshot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
+                    @Screenshot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
+                    @Screenshot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
+                    @NavigateBookmarks.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
+                    @NavigateBookmarks.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
+                    @NavigateBookmarks.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @LeftClick.started += instance.OnLeftClick;
-                    @LeftClick.performed += instance.OnLeftClick;
-                    @LeftClick.canceled += instance.OnLeftClick;
-                    @RightClick.started += instance.OnRightClick;
-                    @RightClick.performed += instance.OnRightClick;
-                    @RightClick.canceled += instance.OnRightClick;
-                    @Scroll.started += instance.OnScroll;
-                    @Scroll.performed += instance.OnScroll;
-                    @Scroll.canceled += instance.OnScroll;
                     @MousePosition.started += instance.OnMousePosition;
                     @MousePosition.performed += instance.OnMousePosition;
                     @MousePosition.canceled += instance.OnMousePosition;
+                    @MouseDelta.started += instance.OnMouseDelta;
+                    @MouseDelta.performed += instance.OnMouseDelta;
+                    @MouseDelta.canceled += instance.OnMouseDelta;
+                    @LeftClick.started += instance.OnLeftClick;
+                    @LeftClick.performed += instance.OnLeftClick;
+                    @LeftClick.canceled += instance.OnLeftClick;
+                    @LeftMouse.started += instance.OnLeftMouse;
+                    @LeftMouse.performed += instance.OnLeftMouse;
+                    @LeftMouse.canceled += instance.OnLeftMouse;
+                    @RightClick.started += instance.OnRightClick;
+                    @RightClick.performed += instance.OnRightClick;
+                    @RightClick.canceled += instance.OnRightClick;
+                    @RightMouse.started += instance.OnRightMouse;
+                    @RightMouse.performed += instance.OnRightMouse;
+                    @RightMouse.canceled += instance.OnRightMouse;
                     @MoveCamera.started += instance.OnMoveCamera;
                     @MoveCamera.performed += instance.OnMoveCamera;
                     @MoveCamera.canceled += instance.OnMoveCamera;
                     @RotateCamera.started += instance.OnRotateCamera;
                     @RotateCamera.performed += instance.OnRotateCamera;
                     @RotateCamera.canceled += instance.OnRotateCamera;
-                    @DeleteBuilding.started += instance.OnDeleteBuilding;
-                    @DeleteBuilding.performed += instance.OnDeleteBuilding;
-                    @DeleteBuilding.canceled += instance.OnDeleteBuilding;
-                    @Screenshot.started += instance.OnScreenshot;
-                    @Screenshot.performed += instance.OnScreenshot;
-                    @Screenshot.canceled += instance.OnScreenshot;
+                    @ZoomCamera.started += instance.OnZoomCamera;
+                    @ZoomCamera.performed += instance.OnZoomCamera;
+                    @ZoomCamera.canceled += instance.OnZoomCamera;
+                    @ToggleBook.started += instance.OnToggleBook;
+                    @ToggleBook.performed += instance.OnToggleBook;
+                    @ToggleBook.canceled += instance.OnToggleBook;
+                    @ToggleTooltips.started += instance.OnToggleTooltips;
+                    @ToggleTooltips.performed += instance.OnToggleTooltips;
+                    @ToggleTooltips.canceled += instance.OnToggleTooltips;
                     @NextTurn.started += instance.OnNextTurn;
                     @NextTurn.performed += instance.OnNextTurn;
                     @NextTurn.canceled += instance.OnNextTurn;
-                    @ShowPause.started += instance.OnShowPause;
-                    @ShowPause.performed += instance.OnShowPause;
-                    @ShowPause.canceled += instance.OnShowPause;
-                    @MouseDelta.started += instance.OnMouseDelta;
-                    @MouseDelta.performed += instance.OnMouseDelta;
-                    @MouseDelta.canceled += instance.OnMouseDelta;
-                    @BuildingRotate.started += instance.OnBuildingRotate;
-                    @BuildingRotate.performed += instance.OnBuildingRotate;
-                    @BuildingRotate.canceled += instance.OnBuildingRotate;
+                    @ConfirmSelectedStructure.started += instance.OnConfirmSelectedStructure;
+                    @ConfirmSelectedStructure.performed += instance.OnConfirmSelectedStructure;
+                    @ConfirmSelectedStructure.canceled += instance.OnConfirmSelectedStructure;
+                    @RotateBuilding.started += instance.OnRotateBuilding;
+                    @RotateBuilding.performed += instance.OnRotateBuilding;
+                    @RotateBuilding.canceled += instance.OnRotateBuilding;
+                    @SelectCards.started += instance.OnSelectCards;
+                    @SelectCards.performed += instance.OnSelectCards;
+                    @SelectCards.canceled += instance.OnSelectCards;
                     @DeselectCards.started += instance.OnDeselectCards;
                     @DeselectCards.performed += instance.OnDeselectCards;
                     @DeselectCards.canceled += instance.OnDeselectCards;
+                    @NavigateCards.started += instance.OnNavigateCards;
+                    @NavigateCards.performed += instance.OnNavigateCards;
+                    @NavigateCards.canceled += instance.OnNavigateCards;
+                    @SelectCardIndex.started += instance.OnSelectCardIndex;
+                    @SelectCardIndex.performed += instance.OnSelectCardIndex;
+                    @SelectCardIndex.canceled += instance.OnSelectCardIndex;
+                    @Screenshot.started += instance.OnScreenshot;
+                    @Screenshot.performed += instance.OnScreenshot;
+                    @Screenshot.canceled += instance.OnScreenshot;
+                    @NavigateBookmarks.started += instance.OnNavigateBookmarks;
+                    @NavigateBookmarks.performed += instance.OnNavigateBookmarks;
+                    @NavigateBookmarks.canceled += instance.OnNavigateBookmarks;
                 }
             }
         }
@@ -1120,7 +1373,6 @@ namespace Inputs
         private readonly InputAction m_UI_RightClick;
         private readonly InputAction m_UI_TrackedDevicePosition;
         private readonly InputAction m_UI_TrackedDeviceOrientation;
-        private readonly InputAction m_UI_SelectCards;
         public struct UIActions
         {
             private @PlayerInput m_Wrapper;
@@ -1135,7 +1387,6 @@ namespace Inputs
             public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
             public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
             public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
-            public InputAction @SelectCards => m_Wrapper.m_UI_SelectCards;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1175,9 +1426,6 @@ namespace Inputs
                     @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
-                    @SelectCards.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectCards;
-                    @SelectCards.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectCards;
-                    @SelectCards.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectCards;
                 }
                 m_Wrapper.m_UIActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1212,9 +1460,6 @@ namespace Inputs
                     @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
-                    @SelectCards.started += instance.OnSelectCards;
-                    @SelectCards.performed += instance.OnSelectCards;
-                    @SelectCards.canceled += instance.OnSelectCards;
                 }
             }
         }
@@ -1239,19 +1484,26 @@ namespace Inputs
         }
         public interface IPlayerActions
         {
-            void OnLeftClick(InputAction.CallbackContext context);
-            void OnRightClick(InputAction.CallbackContext context);
-            void OnScroll(InputAction.CallbackContext context);
             void OnMousePosition(InputAction.CallbackContext context);
+            void OnMouseDelta(InputAction.CallbackContext context);
+            void OnLeftClick(InputAction.CallbackContext context);
+            void OnLeftMouse(InputAction.CallbackContext context);
+            void OnRightClick(InputAction.CallbackContext context);
+            void OnRightMouse(InputAction.CallbackContext context);
             void OnMoveCamera(InputAction.CallbackContext context);
             void OnRotateCamera(InputAction.CallbackContext context);
-            void OnDeleteBuilding(InputAction.CallbackContext context);
-            void OnScreenshot(InputAction.CallbackContext context);
+            void OnZoomCamera(InputAction.CallbackContext context);
+            void OnToggleBook(InputAction.CallbackContext context);
+            void OnToggleTooltips(InputAction.CallbackContext context);
             void OnNextTurn(InputAction.CallbackContext context);
-            void OnShowPause(InputAction.CallbackContext context);
-            void OnMouseDelta(InputAction.CallbackContext context);
-            void OnBuildingRotate(InputAction.CallbackContext context);
+            void OnConfirmSelectedStructure(InputAction.CallbackContext context);
+            void OnRotateBuilding(InputAction.CallbackContext context);
+            void OnSelectCards(InputAction.CallbackContext context);
             void OnDeselectCards(InputAction.CallbackContext context);
+            void OnNavigateCards(InputAction.CallbackContext context);
+            void OnSelectCardIndex(InputAction.CallbackContext context);
+            void OnScreenshot(InputAction.CallbackContext context);
+            void OnNavigateBookmarks(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
@@ -1265,7 +1517,6 @@ namespace Inputs
             void OnRightClick(InputAction.CallbackContext context);
             void OnTrackedDevicePosition(InputAction.CallbackContext context);
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
-            void OnSelectCards(InputAction.CallbackContext context);
         }
     }
 }
