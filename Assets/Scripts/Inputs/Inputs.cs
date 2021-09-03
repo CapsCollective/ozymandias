@@ -25,9 +25,15 @@ namespace Inputs
 
         // Player Input
         public PlayerInput PlayerInput { get; private set; }
+<<<<<<< HEAD
         public InputAction OnLeftClick { get; private set; }
         public InputAction OnRightClick { get; private set; }
         public InputAction OnScroll { get; private set; }
+=======
+        public InputAction OnOnLeftClick { get; private set; }
+        public InputAction OnOnRightClick { get; private set; }
+        public InputAction OnOnScroll { get; private set; }
+>>>>>>> develop
         public InputAction OnRotateCamera { get; private set; }
         public InputAction OnMousePosition { get; private set; }
         public InputAction OnMoveCamera { get; private set; }
@@ -39,6 +45,10 @@ namespace Inputs
 
         // UI Input
         public InputAction OnSelectCards { get; private set; }
+<<<<<<< HEAD
+=======
+        public InputAction OnCancelBuild { get; private set; }
+>>>>>>> develop
         public InputAction OnUINavigate { get; private set; }
         public InputAction OnUICancel { get; private set; }
 
@@ -46,9 +56,15 @@ namespace Inputs
         {
             PlayerInput = new PlayerInput();
 
+<<<<<<< HEAD
             OnLeftClick = PlayerInput.Player.LeftClick;
             OnRightClick = PlayerInput.Player.RightClick;
             OnScroll = PlayerInput.Player.Scroll;
+=======
+            OnOnLeftClick = PlayerInput.Player.LeftClick;
+            OnOnRightClick = PlayerInput.Player.RightClick;
+            OnOnScroll = PlayerInput.Player.Scroll;
+>>>>>>> develop
             OnRotateCamera = PlayerInput.Player.RotateCamera;
             OnMousePosition = PlayerInput.Player.MousePosition;
             OnMoveCamera = PlayerInput.Player.MoveCamera;
