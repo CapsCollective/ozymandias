@@ -52,17 +52,10 @@ namespace Inputs
 
         private void Start()
         {
-<<<<<<< HEAD
             Manager.Inputs.OnRightClick.performed += RightClick;
             Manager.Inputs.OnRightClick.canceled += RightClick;
             Manager.Inputs.OnLeftClick.performed += LeftClick;
             Manager.Inputs.OnLeftClick.canceled += LeftClick;
-=======
-            Manager.Inputs.OnOnRightClick.performed += RightClick;
-            Manager.Inputs.OnOnRightClick.canceled += RightClick;
-            Manager.Inputs.OnOnLeftClick.performed += LeftClick;
-            Manager.Inputs.OnOnLeftClick.canceled += LeftClick;
->>>>>>> develop
             startPos = transform.position;
         }
 
@@ -123,11 +116,7 @@ namespace Inputs
             FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
 
             // Scrolling
-<<<<<<< HEAD
             float scroll = -Manager.Inputs.OnScroll.ReadValue<float>();
-=======
-            float scroll = -Manager.Inputs.OnOnScroll.ReadValue<float>();
->>>>>>> develop
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             FreeLook.m_YAxis.Value += scrollAcceleration;

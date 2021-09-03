@@ -157,26 +157,10 @@ namespace Structures
 
             Cards.Cards.OnCardSelected += card => Deselect();
             Click.OnLeftClick += LeftClick;
-<<<<<<< HEAD:Assets/Scripts/Structures/Select.cs
             Click.OnRightClick += Deselect;
             Manager.Inputs.OnDeleteBuilding.performed += _ => { if (Manager.State.InGame) Interact(); };
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
             State.OnEnterState += () => HoveredStructure = null;
-=======
-            Click.OnRightClick += DeselectBuilding;
-            Manager.Inputs.OnDeleteBuilding.performed += DeleteBuildingInput;
-            Manager.Inputs.OnDeleteBuilding.started += DeleteBuildingInput;
-            Manager.Inputs.OnDeleteBuilding.canceled += DeleteBuildingInput;
-
-            ClickOnButtonDown.OnUIClick += DeselectBuilding;
-            State.OnEnterState += () => HoveredBuilding = null;
-        }
-
-        private void DeleteBuildingInput(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            if (!Manager.State.InGame) return;
-            if(obj.performed) SelectBuilding();
->>>>>>> develop:Assets/Scripts/Buildings/BuildingSelect.cs
         }
 
         private void Update()

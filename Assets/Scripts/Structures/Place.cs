@@ -27,7 +27,7 @@ namespace Structures
 
         /*public void ImitateHover(int cardNum)
         {
-<<<<<<< HEAD:Assets/Scripts/Structures/Place.cs
+
             if (cardNum >= 0)
             {
                 if (cards[cardNum].isReplacing) return;
@@ -46,14 +46,6 @@ namespace Structures
                 if (cards[i].toggle.isOn) cards[i].toggle.isOn = false;
             }
         }*/
-=======
-            Manager.Inputs.OnSelectCards.performed += SelectCards;
-            Manager.Inputs.OnUINavigate.performed += Navigate;
-            Manager.Inputs.OnUICancel.performed += UICancel;
-            Manager.Inputs.OnDeselectCards.performed += UICancel;
-        }
->>>>>>> develop:Assets/Scripts/Inputs/UIEventController.cs
-
         #endregion
 
         

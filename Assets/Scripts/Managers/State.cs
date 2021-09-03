@@ -102,19 +102,10 @@ namespace Managers
             creditsButton.onClick.AddListener(() => EnterState(GameState.ToCredits));
             quitButton.onClick.AddListener(Application.Quit);
             nextTurnButton.onClick.AddListener(() => EnterState(GameState.NextTurn));
-<<<<<<< HEAD
             
             Manager.Inputs.OnNextTurn.performed += _ => { if (InGame) EnterState(GameState.NextTurn); };
-=======
-            Manager.Inputs.OnNextTurn.performed += (ctx) =>
-            {
-                if (InGame)
-                    EnterState(GameState.NextTurn);
-            };
->>>>>>> develop
             // Add cancel binding for credits
-            Manager.Inputs.PlayerInput.UI.Cancel.performed += context =>
-            {
+            Manager.Inputs.PlayerInput.UI.Cancel.performed += _ => {
                 if (Manager.State.InCredits) ResetCredits();
             };
         }
