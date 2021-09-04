@@ -101,7 +101,7 @@ namespace Upgrades
             purchaseBox.canvas.enabled = false;
         }
 
-        private bool Affordable(SerializedDictionary<Guild, int> costs)
+        private bool Affordable(Dictionary<Guild, int> costs)
         {
             return  costs.All(cost => GuildTokens[cost.Key] >= cost.Value);
         }

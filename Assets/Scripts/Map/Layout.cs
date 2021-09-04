@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
 using CielaSpike;
 using NaughtyAttributes;
+using Structures;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
@@ -33,17 +33,8 @@ namespace Map
         public void FillGrid()
         {
             //TODO: Pick a spawn cell from a list of 'safe' placements, avoid building trees in cell within a distance of the hall, Store the cell 
-            Building terrain = null;
-            bool wasCreated = true;
-            
-            foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && !cell.Safe))
-            {
-                if (wasCreated) terrain = Instantiate(Manager.Buildings.TerrainPrefab, Manager.Buildings.transform).GetComponent<Building>();
-
-                // Create building if valid, only animate if happening during the game over transition
-                wasCreated = Manager.Buildings.Add(terrain, cell.Id, animate: Manager.State.IsGameOver);
-            }
-            if (!wasCreated) Destroy(terrain.gameObject);
+            foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && cell.Active))
+                Manager.Structures.AddTerrain(cell.Id);
         }
     
         #region Querying
@@ -150,9 +141,14 @@ namespace Map
             return CellGraph.GetData(id);
         }
 
-        public List<Cell> GetCells(Building building, int rootId, int rotation = 0)
+        public List<Cell> GetCells(Vector3 worldPosition, float worldRadius)
         {
-            return building.sections.Select(sectionInfo => Step(CellGraph.GetData(rootId), sectionInfo.directions, rotation)).ToList();
+            return CellGraph.Data.Where(cell => Vector3.Distance(cell.WorldSpace, worldPosition) < worldRadius).ToList();
+        }
+        
+        public List<Cell> GetCells(List<SectionInfo> structure, int rootId, int rotation = 0)
+        {
+            return structure.Select(sectionInfo => Step(CellGraph.GetData(rootId), sectionInfo.directions, rotation)).ToList();
         }
 
         public Cell GetClosest(Vector3 unitPos)
@@ -180,21 +176,16 @@ namespace Map
         #region GridGeneration
         [Button("Regenerate (Warning: Destructive)")] public void Generate()
         {
-            HashSet<int> safeCells = new HashSet<int>();
             HashSet<int> activeCells = new HashSet<int>();
-            foreach (Cell cell in CellGraph.Data)
-            {
-                if (cell.Safe) safeCells.Add(cell.Id);
-                if (cell.Active) activeCells.Add(cell.Id);
-            }
-            
+            foreach (Cell cell in CellGraph.Data.Where(cell => cell.Active)) activeCells.Add(cell.Id);
+
             Random.InitState(seed);
             CreateVertices();
             CreateEdges();
             RemoveEdges();
             Subdivide();
             Relax();
-            CalculateCells(safeCells, activeCells);
+            CalculateCells(activeCells);
         }
 
         // Create vertices in a grid
@@ -385,7 +376,7 @@ namespace Map
         }
 
         // Form a graph of cells by grouping the vertices, then create edges by comparing shared vertices
-        private void CalculateCells(HashSet<int> safeCells, HashSet<int> activeCells)
+        private void CalculateCells(HashSet<int> activeCells)
         {
             CellGraph = new Graph<Cell>();
             Graph<Vertex> dupGraph = new Graph<Vertex>(VertexGraph);
@@ -403,7 +394,6 @@ namespace Map
                 {
                     newCell.Id = CellGraph.Add(newCell);
                     newCell.Active = activeCells.Contains(newCell.Id) || activeCells.Count == 0;
-                    newCell.Safe = safeCells.Contains(newCell.Id);
                 }
 
                 dupGraph.Remove(root);
@@ -434,7 +424,7 @@ namespace Map
                 for (int i = 0; i < 4; i++)
                 {
                     vertices.Add(cell.Vertices[i] + (cell.Centre - cell.Vertices[i]).normalized * lineWeight / 100f);
-                    uv.Add(debug && cell.Safe ? new Vector2(1f, 0f) : Vector2.zero); // Set to base or invalid if a 'safe' cell
+                    uv.Add(Vector2.zero); // Set to base or invalid if a 'safe' cell
                 }
                 UVMap.Add(cell, Enumerable.Range( vertices.Count - 4, 4).ToList());
 
@@ -684,7 +674,7 @@ namespace Map
         {
             get
             {
-                var verts = Manager.Buildings.RandomCell.Vertices
+                var verts = Manager.Structures.RandomCell.Vertices
                     .Where(v => RoadGraph.Data.Contains(v)).ToList();
                 return verts.Count > 0 ? verts.SelectRandom() : null;
             }

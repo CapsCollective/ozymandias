@@ -77,7 +77,7 @@ namespace Managers
             _timeWaited = 0;
             
             // Update world values
-            _closestBuildingDistance = Manager.Buildings.GetClosestDistance(_cam.transform.position);
+            _closestBuildingDistance = Manager.Structures.GetClosestDistance(_cam.transform.position);
             CheckAmbiencePlayer();
         }
         

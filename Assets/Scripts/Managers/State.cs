@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Buildings;
 using Cinemachine;
 using DG.Tweening;
+using Structures;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -102,14 +102,10 @@ namespace Managers
             creditsButton.onClick.AddListener(() => EnterState(GameState.ToCredits));
             quitButton.onClick.AddListener(Application.Quit);
             nextTurnButton.onClick.AddListener(() => EnterState(GameState.NextTurn));
-            Manager.Inputs.OnNextTurn.performed += (ctx) =>
-            {
-                if (InGame)
-                    EnterState(GameState.NextTurn);
-            };
+            
+            Manager.Inputs.OnNextTurn.performed += _ => { if (InGame) EnterState(GameState.NextTurn); };
             // Add cancel binding for credits
-            Manager.Inputs.PlayerInput.UI.Cancel.performed += context =>
-            {
+            Manager.Inputs.PlayerInput.UI.Cancel.performed += _ => {
                 if (Manager.State.InCredits) ResetCredits();
             };
         }
@@ -198,8 +194,6 @@ namespace Managers
             // Fade in music
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
             StartCoroutine(Algorithms.DelayCall(2f, () => Manager.Jukebox.OnStartGame()));
-            // Find the starting position for the town
-            _startPos.Position = Manager.Buildings.GuildHallLocation;
             // Run general menu initialisation
             EnterState(GameState.InIntro);
         }
@@ -242,6 +236,9 @@ namespace Managers
         
         private void ToGameInit()
         {
+            // Find the starting position for the town
+            _startPos.Position = Manager.Structures.TownCentre;
+            
             gameCanvasGroup.alpha = 0.0f;
             gameCanvas.enabled = true;
             menuCanvasGroup.interactable = false;
@@ -254,6 +251,7 @@ namespace Managers
 
         private void ToGameUpdate()
         {
+            Manager.Cards.DropCards();
             var finishedMoving = MoveCam(_startPos, menuTransitionCurve);
             var finishedFadingMenu = FadeCanvas(menuCanvasGroup, FadeOut);
             if (finishedFadingMenu)
@@ -274,6 +272,7 @@ namespace Managers
             gameCanvasGroup.blocksRaycasts = true;
             Manager.Inputs.TogglePlayerInput(true);
             EnterState(GameState.InGame);
+            Manager.Cards.PopCards();
         }
 
         private void InGameInit()
@@ -329,8 +328,6 @@ namespace Managers
             Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
-            Building.RuinsClearCount = 0;
-            Building.TerrainClearCount = 0;
             
             SaveFile.SaveState();
             EnterState(GameState.ToIntro);
@@ -371,7 +368,7 @@ namespace Managers
             {
                 // Build a camera move object for the waypoint
                 var currentTransform = creditsWaypoints[++_currentWaypoint].location;
-                var pos = currentTransform.position;
+                var pos = _currentWaypoint == 0 ? Manager.Structures.TownCentre + Vector3.up * 0.5f : currentTransform.position;
                 var rot = currentTransform.eulerAngles;
                 _currentMove = new CameraMove(
                     pos,

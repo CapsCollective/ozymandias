@@ -15,10 +15,16 @@
         Stability
     }
 
+    public enum StructureType
+    {
+        Building,
+        Ruins,
+        Terrain,
+        Quest
+    }
+    
     public enum BuildingType
     {
-        Terrain,
-        Ruins,
         GuildHall,
         Blacksmith,
         Tavern,
@@ -44,8 +50,7 @@
         Tailor,
         Apothecary,
         Jeweller,
-        Cartographer,
-        Quest
+        Cartographer
     }
 
     public enum EventType
@@ -173,5 +178,12 @@
         FreeCard,
         CampSpread,
         MaxAdventurerSpawn
+    }
+    
+    public enum CursorType
+    {
+        Pointer,
+        Build,
+        Grab
     }
 }

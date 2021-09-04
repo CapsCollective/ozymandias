@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa2eefb1e444240ac9a4ac3a3cead75, type: 3}
+  m_Name: Farm
+  m_EditorClassIdentifier: 
+  type: 8
+  description: Gives the villagers something to do, and provides a steady food source.
+  icon: {fileID: 21300000, guid: 32f9c14a7fa7efb45ad7da0d5015ef12, type: 3}
+  stats:
+    list:
+    - Key: 6
+      Value: 3
+    keyCollision: 0
+  baseCost: 30
+  scaleSpeed: 4
+  roofColor: {r: 1, g: 0.92588764, b: 0.3160377, a: 0}
+  sections:
+  - prefab: {fileID: 1781965436090392511, guid: afc31b75d19dbc74a83d71051e5c5bf6,
+      type: 3}
+    directions: 
+    clockwiseRotations: 0
+  - prefab: {fileID: 1781965436090392511, guid: afc31b75d19dbc74a83d71051e5c5bf6,
+      type: 3}
+    directions: 00000000
+    clockwiseRotations: 2
+  starter: 1

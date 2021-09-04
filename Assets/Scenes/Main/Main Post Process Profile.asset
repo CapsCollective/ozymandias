@@ -1,33 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8620667774695889759
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
-  m_Name: DepthOfField
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  focusDistance:
-    overrideState: 1
-    value: 2.5
-  aperture:
-    overrideState: 1
-    value: 4.5
-  focalLength:
-    overrideState: 1
-    value: 45
-  kernelSize:
-    overrideState: 1
-    value: 1
 --- !u!114 &-7338665164342852898
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -56,6 +28,34 @@ MonoBehaviour:
   opacity:
     overrideState: 0
     value: 1
+--- !u!114 &-1628528029671805922
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fe6eacc6c262b47b54e7e76f0b024b, type: 3}
+  m_Name: OutlinePostProcess
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  color:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  threshold:
+    overrideState: 0
+    value: 0.5
+  scale:
+    overrideState: 1
+    value: 2
+  opacity:
+    overrideState: 1
+    value: 0.7
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,8 +72,7 @@ MonoBehaviour:
   - {fileID: 649819111546567965}
   - {fileID: 7163872150524762076}
   - {fileID: 4020107971636230565}
-  - {fileID: -8620667774695889759}
-  - {fileID: -7338665164342852898}
+  - {fileID: -1628528029671805922}
 --- !u!114 &649819111546567965
 MonoBehaviour:
   m_ObjectHideFlags: 3

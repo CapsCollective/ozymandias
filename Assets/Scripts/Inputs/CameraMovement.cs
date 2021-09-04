@@ -6,6 +6,7 @@ using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -27,14 +28,9 @@ namespace Inputs
         private RaycastHit posHit;
 
         private Vector2 lastDrag;
-        private Vector3 startPos;
         private Quaternion startRot;
         private bool _dragging, _rotating;
         
-        private CursorSelect.CursorType _previousCursor = CursorSelect.CursorType.Pointer;
-
-        public static Action OnCameraMove;
-
         [SerializeField] private Vector2 dragSpeed;
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
@@ -53,16 +49,15 @@ namespace Inputs
 
         private void Start()
         {
-            Manager.Inputs.OnOnRightClick.performed += RightClick;
-            Manager.Inputs.OnOnRightClick.canceled += RightClick;
-            Manager.Inputs.OnOnLeftClick.performed += LeftClick;
-            Manager.Inputs.OnOnLeftClick.canceled += LeftClick;
-            startPos = transform.position;
+            Manager.Inputs.OnRightMouse.started += RightClick;
+            Manager.Inputs.OnRightMouse.canceled += RightClick;
+            Manager.Inputs.OnLeftMouse.started += LeftClick;
+            Manager.Inputs.OnLeftMouse.canceled += LeftClick;
         }
 
         private void RightClick(InputAction.CallbackContext context)
         {
-            if (context.performed) StartCursorGrab();
+            if (context.started) StartCursorGrab();
             else if (context.canceled)
             {
                 FreeLook.m_XAxis.m_InputAxisValue = 0;
@@ -72,13 +67,14 @@ namespace Inputs
 
         private void LeftClick(InputAction.CallbackContext context)
         {
-            leftClick = context.performed;
-            if (context.performed)
+            if (context.started)
             {
+                leftClick = true;
                 lastDrag = Manager.Inputs.MousePosition;
             }
             else if (context.canceled)
             {
+                leftClick = false;
                 _dragging = false;
                 EndCursorGrab();
             }
@@ -117,7 +113,7 @@ namespace Inputs
             FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
 
             // Scrolling
-            float scroll = -Manager.Inputs.OnOnScroll.ReadValue<float>();
+            float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             FreeLook.m_YAxis.Value += scrollAcceleration;
@@ -147,21 +143,14 @@ namespace Inputs
             return FreeLook.Follow.transform.DOMove(pos, duration);
         }
 
-        private static float Remap(float value, float min1, float max1, float min2, float max2)
-        {
-            return Mathf.Clamp((value - min1) / (max1 - min1) * (max2 - min2) + min2, min2, max2);
-        }
-        
         private void StartCursorGrab()
         {
-            if (Manager.Cursor.Current == CursorSelect.CursorType.Grab) return;
-            _previousCursor = Manager.Cursor.Current;
-            Manager.Cursor.Current = CursorSelect.CursorType.Grab;
+            Manager.Cursor.Current = CursorType.Grab;
         }
         
         private void EndCursorGrab()
         {
-            Manager.Cursor.Current = _previousCursor;
+            Manager.Cursor.Current = Manager.Cards.SelectedCard ? CursorType.Build : CursorType.Pointer;
         }
     }
 }

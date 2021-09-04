@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
+using Structures;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
@@ -45,7 +45,7 @@ namespace Managers
             int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
             int upgradeMod = UpgradeMap.ContainsKey(stat) ? Manager.Upgrades.GetLevel(UpgradeMap[stat]) : 0;
-            return mod * (Manager.Buildings.GetStat(stat) + upgradeMod) + ModifiersTotal[stat] + foodMod;
+            return mod * (Manager.Structures.GetStat(stat) + upgradeMod) + ModifiersTotal[stat] + foodMod;
         }
 
         private int GetSatisfaction(Guild guild)
@@ -72,7 +72,6 @@ namespace Managers
         
         public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
 
-        public const int WealthPerAdventurer = 5;
         public int WealthPerTurn => (int)(WealthPerAdventurer * (1f + GetStat(Stat.Spending)/100f) * Manager.Adventurers.Available); //5 gold per adventurer times spending
     
         public int Wealth { get;  set; }
@@ -80,7 +79,7 @@ namespace Managers
         public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence);
 
         // TODO: How do we make a more engaging way to determine threat than just a turn counter?
-        public int Threat => 3 * TurnCounter + ModifiersTotal[Stat.Threat];
+        public int Threat => ThreatPerTurn * (TurnCounter-1) + ModifiersTotal[Stat.Threat];
         
         public int Stability { get; private set; } // Percentage of how far along the threat is.
 
@@ -140,8 +139,6 @@ namespace Managers
                 wealth = Wealth,
                 turnCounter = TurnCounter,
                 stability = Stability,
-                terrainClearCount = Building.TerrainClearCount,
-                ruinsClearCount = Building.RuinsClearCount,
                 modifiers = Modifiers
             };
         }
@@ -149,8 +146,6 @@ namespace Managers
         public void Load(StatDetails details)
         {
             TurnCounter = details.turnCounter;
-            Building.TerrainClearCount = details.terrainClearCount;
-            Building.RuinsClearCount = details.ruinsClearCount;
             Wealth = details.wealth;
             Stability = details.stability;
             

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa2eefb1e444240ac9a4ac3a3cead75, type: 3}
+  m_Name: Watchtower
+  m_EditorClassIdentifier: 
+  type: 9
+  description: Keeps a lookout for any danger. Also provides a quiet spot for archanists
+    to hide away and study.
+  icon: {fileID: 21300000, guid: 2f7525a44b434e648896d879a77796bc, type: 3}
+  stats:
+    list:
+    - Key: 4
+      Value: 1
+    - Key: 8
+      Value: 2
+    keyCollision: 0
+  baseCost: 50
+  scaleSpeed: 3
+  roofColor: {r: 0, g: 0, b: 0, a: 0}
+  sections:
+  - prefab: {fileID: 6308240301270168813, guid: f0ffacd521b75f542aed52be8393423c,
+      type: 3}
+    directions: 
+    clockwiseRotations: 0
+  - prefab: {fileID: 6308240301270168813, guid: f0ffacd521b75f542aed52be8393423c,
+      type: 3}
+    directions: 00000000
+    clockwiseRotations: 2
+  starter: 1

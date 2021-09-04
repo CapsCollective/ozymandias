@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Events.Outcomes;
 using NaughtyAttributes;
+using Structures;
 using UnityEngine;
 using static Managers.GameManager;
 using EventType = Utilities.EventType;
@@ -23,7 +24,7 @@ namespace Events
         [Tooltip("Up to 4 choices, with their own outcomes")]
         public List<Choice> choices = new List<Choice>();
 
-        public GameObject buildingToUnlock; // (Only for story chains) The building this event will unlock
+        public Blueprint blueprintToUnlock; // (Only for story chains) The building this event will unlock
         
         public string Execute() // Run the event's and return the outcome's description
         {
@@ -35,7 +36,7 @@ namespace Events
             return Outcome.Execute(choices[choice].outcomes);
         }
 
-        [Button()] // Debug to test specific events
+        [Button] // Debug to test specific events
         public void AddToQueue()
         {
             Manager.EventQueue.Add(this, true);

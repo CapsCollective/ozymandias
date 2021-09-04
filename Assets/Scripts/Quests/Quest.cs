@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
-using Buildings;
 using Managers;
 using Map;
 using NaughtyAttributes;
+using Structures;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -40,7 +40,7 @@ namespace Quests
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
-        public Building Building { get; private set; }
+        public Structure Structure { get; private set; }
         public bool IsActive => TurnsLeft != -1;
 
         public void Add()
@@ -77,26 +77,24 @@ namespace Quests
             UpdateUi();
         }
 
-        private bool CreateBuilding(List<int> occupied)
+        private void CreateBuilding(List<int> occupied)
         {
-            Building = Instantiate(Manager.Quests.BuildingPrefab, Manager.Quests.transform).GetComponent<Building>();
-            if (Building.Create(occupied, this, !Manager.State.Loading)) return true;
-            Destroy(Building);
-            return false;
+            Structure = Instantiate(Manager.Structures.StructurePrefab, Manager.Quests.transform).GetComponent<Structure>();
+            Structure.CreateQuest(occupied, this);
         }
 
         private void GrowBuilding()
         {
-            if (Building == null) return;
+            if (Structure == null) return;
             
             int cellChoiceCount = 4; //TODO: Play around with this to see what feels best
             
-            Vector3 target = Manager.Buildings.GetClosest(Building.Occupied[0].WorldSpace).transform.position;
+            Vector3 target = Manager.Structures.GetClosest(Structure.Occupied[0].WorldSpace).transform.position;
             
             // Get a new cell from a random selection of X closest neighbours
             Dictionary<Cell, float> distances = new Dictionary<Cell, float>();
 
-            foreach (Cell cell in Building.Occupied)
+            foreach (Cell cell in Structure.Occupied)
             {
                 Manager.Map.GetNeighbours(cell).ForEach(neighbour =>
                 {
@@ -110,13 +108,13 @@ namespace Quests
                 .Take(Mathf.Min(cellChoiceCount, distances.Count))
                 .ToList().SelectRandom().Key;
             
-            Building.Grow(newCell);
+            Structure.Grow(newCell);
         }
 
         private void ClearBuilding()
         {
-            Building.Destroy();
-            Building = null;
+            Structure.Destroy();
+            Structure = null;
         }
         
         private void OnNewTurn()
@@ -149,7 +147,7 @@ namespace Quests
                 turnsLeft = TurnsLeft,
                 cost = Cost,
                 assigned = _assigned.Select(a => a.name).ToList(),
-                occupied = Building.Occupied.Select(cell => cell.Id).ToList()
+                occupied = Structure ? Structure.Occupied.Select(cell => cell.Id).ToList() : null
             };
         }
 

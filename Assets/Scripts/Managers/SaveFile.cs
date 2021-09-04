@@ -43,21 +43,33 @@ namespace Managers
         public bool isSpecial;
         public int turnJoined;
     }
+
+    [Serializable]
+    public struct StructureDetails
+    {
+        public List<BuildingDetails> buildings;
+        public List<TerrainDetails> terrain;
+    }
     
     [Serializable]
     public struct BuildingDetails
     {
-        public string name;
+        public BuildingType type;
         public int rootId;
         public int rotation;
-        public int sectionCount;
         public bool isRuin;
     }
     
-    [Serializable]
-    public struct BuildingCardDetails
+    public struct TerrainDetails
     {
-        public List<string> all, current, discoverable;
+        public int rootId;
+        public int sectionCount;
+    }
+    
+    [Serializable]
+    public struct CardDetails
+    {
+        public List<BuildingType> deck, unlocked, playable, discoverable;
     }
     
     [Serializable]
@@ -87,8 +99,8 @@ namespace Managers
         public List<AdventurerDetails> adventurers; 
         public List<QuestDetails> quests;
         public EventQueueDetails eventQueue;
-        public BuildingCardDetails buildingCards;
-        public List<BuildingDetails> buildings;
+        public CardDetails cards;
+        public StructureDetails structures;
         public AchievementDetails achievements;
         public Dictionary<Guild, RequestDetails> requests;
         public UpgradeDetails upgrades;
@@ -104,8 +116,8 @@ namespace Managers
 
         public void Save()
         {
-            buildings = Manager.Buildings.Save();
-            buildingCards = Manager.Cards.Save();
+            structures = Manager.Structures.Save();
+            cards = Manager.Cards.Save();
             
             if (Manager.State.IsGameOver)
             {
@@ -145,10 +157,9 @@ namespace Managers
             }
 
             Manager.Stats.Load(stats);
-
-            await Manager.Buildings.Load(buildings);
-            if(Manager.Buildings.Count == 0) Manager.Map.FillGrid();
-            await Manager.Cards.Load(buildingCards);
+            Manager.Structures.Load(structures);
+            if(Manager.Structures.Count == 0) Manager.Map.FillGrid();
+            Manager.Cards.Load(cards);
             await Manager.EventQueue.Load(eventQueue);
             await Manager.Requests.Load(requests);
             Manager.Upgrades.Load(upgrades);
@@ -157,7 +168,6 @@ namespace Managers
             {
                 Manager.Adventurers.Load(adventurers);
                 await Manager.Quests.Load(quests);
-                //TODO: Reshuffle buildings
             }
 
             UpdateUi();
