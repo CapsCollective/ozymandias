@@ -25,14 +25,12 @@ namespace Structures
         public int SectionCount => _sections.Count;
         
         // Clear cost calculations TODO: make this based on distance to guild hall instead
-        public static int TerrainClearCount { get; set; }
-        public static int RuinsClearCount { get; set; }
         public int TerrainClearCost => 
-            (int)(TerrainBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
-                  Enumerable.Range(TerrainClearCount, SectionCount).Sum(i => Mathf.Pow(TerrainCostScale, i)));
+            (int)(TerrainBaseCost * SectionCount * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
+                  Mathf.Pow(TerrainCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre)));
         public int RuinsClearCost =>
-            (int)(RuinsBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Ruins)) / 10f * 
-                  Enumerable.Range(RuinsClearCount, SectionCount).Sum(i => Mathf.Pow(RuinsCostScale, i)));
+            (int)(RuinsBaseCost * SectionCount * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
+                  Mathf.Pow(RuinsCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre)));
         
         // Stored here as well as blueprints so the stats can be modified by adjacency bonuses
         public Dictionary<Stat, int> Stats { get; private set; }

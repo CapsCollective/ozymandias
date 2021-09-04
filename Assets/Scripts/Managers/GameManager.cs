@@ -67,9 +67,9 @@ namespace Managers
         #region Balancing Constants
         
         public const int TerrainBaseCost = 5;
-        public const float TerrainCostScale = 1.025f;
+        public const float TerrainCostScale = 1.15f;
         public const int RuinsBaseCost = 20;
-        public const float RuinsCostScale = 1.25f;
+        public const float RuinsCostScale = 1.15f;
         public const int WealthPerAdventurer = 5;
         public const int ThreatPerTurn = 2;
 

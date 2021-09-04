@@ -298,9 +298,7 @@ namespace Structures
                 case SelectionType.Clear:
                 {
                     if (!SelectedStructure || !Manager.Stats.Spend(_config.Cost * (_config.IsRefund ? -1 : 1))) return;
-                    if (SelectedStructure.IsRuin) Structure.RuinsClearCount += SelectedStructure.SectionCount;
-                    if (SelectedStructure.IsTerrain) Structure.TerrainClearCount += SelectedStructure.SectionCount;
-            
+
                     OnClear.Invoke(SelectedStructure);
                     Manager.Structures.Remove(SelectedStructure);
                     Deselect();

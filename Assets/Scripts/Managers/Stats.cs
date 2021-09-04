@@ -139,8 +139,6 @@ namespace Managers
                 wealth = Wealth,
                 turnCounter = TurnCounter,
                 stability = Stability,
-                terrainClearCount = Structure.TerrainClearCount,
-                ruinsClearCount = Structure.RuinsClearCount,
                 modifiers = Modifiers
             };
         }
@@ -148,8 +146,6 @@ namespace Managers
         public void Load(StatDetails details)
         {
             TurnCounter = details.turnCounter;
-            Structure.TerrainClearCount = details.terrainClearCount;
-            Structure.RuinsClearCount = details.ruinsClearCount;
             Wealth = details.wealth;
             Stability = details.stability;
             
