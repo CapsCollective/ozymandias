@@ -27,9 +27,12 @@ namespace Requests.Templates
             if (structure.Blueprint.type == buildingType) Completed++;
         }
         
+#if (UNITY_EDITOR)
+
         public override void Configure(EventCreator.RequestConfig config)
         {
             buildingType = config.buildingType;
         }
+#endif
     }
 }
