@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
 namespace WalkingAdventurers
 {
     public class Spawner : MonoBehaviour
     {
-        [SerializeField] private GameObject adventurerModel;
+        [SerializeField] private GameObject adventurerModel, dogModel;
         [SerializeField] private float adventurerSpeed = .3f;
         [SerializeField] private float wanderingUpdateFrequency = 3f;
         //[SerializeField] private float partyScatter = .5f;
@@ -41,6 +42,7 @@ namespace WalkingAdventurers
                 if (adventurerPath.Value.Count > 0)
                 {
                     List<Vector3> path = adventurerPath.Value;
+                    adventurer.transform.LookAt(path[0]);
                     adventurer.transform.position = Vector3.MoveTowards(
                         adventurer.transform.position, path[0], 
                         adventurerSpeed * Time.deltaTime);
@@ -111,7 +113,8 @@ namespace WalkingAdventurers
 
         private GameObject CreateAdventurer(Vector3 start)
         {
-            GameObject newAdventurer = Instantiate(adventurerModel, start, Quaternion.identity);
+            // 10% chance to spawn dog
+            GameObject newAdventurer = Instantiate(Random.Range(0, 10) == 0 ? dogModel : adventurerModel, start, Quaternion.identity);
             newAdventurer.transform.parent = transform;
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
             StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));
