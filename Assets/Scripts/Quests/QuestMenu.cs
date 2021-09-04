@@ -63,7 +63,7 @@ namespace Quests
             {
                 if (!SelectedQuest) return;
                 OpenFlyer.UpdateContent(SelectedQuest);
-                FocusBuilding(SelectedQuest.Structure);
+                FocusStructure(SelectedQuest.Structure);
                 Open();
             });
             closeButton.onClick.AddListener(Close);
@@ -74,7 +74,7 @@ namespace Quests
                 SelectedQuest = quest;
                 Debug.Log(SelectedQuest);
                 OpenFlyer.UpdateContent(SelectedQuest);
-                FocusBuilding(SelectedQuest.Structure);
+                FocusStructure(SelectedQuest.Structure);
                 Open();
             };
             
@@ -106,7 +106,7 @@ namespace Quests
             DisplayMoveButtons(false);
             SwapFlyers(dir, SelectedQuest);
             Manager.Jukebox.PlayScrunch();
-            FocusBuilding(SelectedQuest.Structure);
+            FocusStructure(SelectedQuest.Structure);
         }
 
         private void SwapFlyers(SwapDir dir, Quest selectedQuest)
@@ -135,7 +135,7 @@ namespace Quests
             _openFlyer = CycleIdx(_openFlyer, FlyerCount, dir);
         }
 
-        private static void FocusBuilding(Structure structure)
+        private static void FocusStructure(Structure structure)
         {
             Vector3 buildingPos = structure.transform.position;
             buildingPos.y = 1.0f;

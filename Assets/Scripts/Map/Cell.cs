@@ -11,7 +11,6 @@ namespace Map
     {
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public bool Active { get; set; }
-        [field: SerializeField] public bool Safe { get; set; } // Keep clear from terrain filling
         [field: SerializeField] public List<Vertex> Vertices { get; set; }
         public Structure Occupant { get; set; }
         public int Rotation { get; set; }
@@ -24,7 +23,6 @@ namespace Map
         {
             vertices = vertices.GetRange(0, 4); // Limit to 4 points
             Active = active;
-            Safe = safe;
             // Ensure cell is convex and correctly oriented
             if(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]).z > 0) vertices.Reverse();
             Vertices = vertices;

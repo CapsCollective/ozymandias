@@ -45,12 +45,6 @@ namespace Map.Editor
                 case ToolState.Remove:
                     cell.Active = false;
                     break;
-                case ToolState.Safe:
-                    cell.Safe = true;
-                    break;
-                case ToolState.Unsafe:
-                    cell.Safe = false;
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

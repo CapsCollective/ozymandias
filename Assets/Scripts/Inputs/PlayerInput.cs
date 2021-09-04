@@ -42,7 +42,7 @@ namespace Inputs
                     ""id"": ""48b20d88-baee-4019-aea3-e565b6e52b5c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap""
+                    ""interactions"": ""Tap(duration=0.3)""
                 },
                 {
                     ""name"": ""Left Mouse"",
@@ -208,7 +208,7 @@ namespace Inputs
                     ""name"": """",
                     ""id"": ""5a28b8e6-ea21-41f8-8b98-18e1a587184a"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": ""Tap(duration=0.3)"",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Right Click"",
@@ -417,7 +417,7 @@ namespace Inputs
                     ""name"": """",
                     ""id"": ""bfcbcb77-86fe-4b5d-8f19-38bc63be84f0"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": ""Tap(duration=0.3)"",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Rotate Building"",

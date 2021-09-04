@@ -13,10 +13,12 @@ namespace Structures
     public class Structures : MonoBehaviour
     {
         public static Action<Structure> OnBuild;
+
+        [Serializable] private struct Location { public int root, rotation; }
         
         [SerializeField] private GameObject rockSection, treeSection, structurePrefab;
         [SerializeField] private Material outlineMaterial;
-        [SerializeField] private List<int> spawnLocations; // TODO: Pick new spawn point from random if no guild hall exists 
+        [SerializeField] private List<Location> spawnLocations; // TODO: Pick new spawn point from random if no guild hall exists 
 
         private readonly List<Structure> _buildings = new List<Structure>();
         private readonly List<Structure> _terrain = new List<Structure>();
@@ -30,7 +32,8 @@ namespace Structures
         public GameObject StructurePrefab => structurePrefab;
         public Material OutlineMaterial => outlineMaterial;
         
-        public Cell SpawnLocation { get; private set; }
+        private Location SpawnLocation { get; set; }
+        public Vector3 TownCentre { get; private set; }
         
         private void Awake()
         {
@@ -153,6 +156,7 @@ namespace Structures
             });
             _buildings.Clear();
             SpawnLocation = NewSpawnLocation();
+            TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
         }
 
         private void ToRuin(Structure structure)
@@ -162,15 +166,12 @@ namespace Structures
             structure.ToRuin();
         }
 
-        private Cell NewSpawnLocation()
-        {
-            return Manager.Map.GetCell(spawnLocations.SelectRandom());
-        }
+        private Location NewSpawnLocation() => spawnLocations.SelectRandom();
         
         private void SpawnGuildHall()
         {
-            const int rotation = 1;
-            Manager.Structures.AddBuilding(Manager.Cards.GuildHall, SpawnLocation.Id, rotation);
+            foreach (Cell cell in Manager.Map.GetCells(TownCentre, 4).Where(cell => cell.Occupied)) Remove(cell.Occupant);
+            Manager.Structures.AddBuilding(Manager.Cards.GuildHall, SpawnLocation.root, SpawnLocation.rotation);
         }
 
         public StructureDetails Save()
@@ -186,11 +187,17 @@ namespace Structures
         {
             foreach (BuildingDetails building in details.buildings)
                 AddBuilding(Manager.Cards.Find(building.type), building.rootId, building.rotation, building.isRuin);
+            
             foreach (TerrainDetails terrain in details.terrain)
-            {
                 AddTerrain(terrain.rootId, terrain.sectionCount);
+            Structure guildHall = _buildings.Find(structure => structure.Blueprint.type == BuildingType.GuildHall);
+            if (guildHall)
+                TownCentre = guildHall.Occupied[0].WorldSpace;
+            else
+            {
+                SpawnLocation = NewSpawnLocation();
+                TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
             }
-            SpawnLocation = _buildings.Find(structure => structure.Blueprint.type == BuildingType.GuildHall)?.Occupied[0] ?? NewSpawnLocation();
         }
     }
 }

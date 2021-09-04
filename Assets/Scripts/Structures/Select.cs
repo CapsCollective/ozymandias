@@ -218,7 +218,7 @@ namespace Structures
 
         private static bool IsSelectionDisabled()
         {
-            return Manager.Cards.SelectedCard || EventSystem.current.IsPointerOverGameObject() || Manager.Cards.PlacingBuilding;
+            return Manager.Cards.SelectedCard || IsOverUi || Manager.Cards.PlacingBuilding;
         }
         
         private SelectionConfig GetButtonConfiguration()

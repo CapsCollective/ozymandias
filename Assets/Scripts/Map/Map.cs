@@ -90,23 +90,16 @@ namespace Map
 
         #region Querying
         // Gets the closest cell by world position
-        public Cell GetClosestCell(Vector3 worldPosition)
-        {
-            return layout.GetClosest(transform.InverseTransformPoint(worldPosition));
-        }
+        public Cell GetClosestCell(Vector3 worldPosition) =>
+            layout.GetClosest(transform.InverseTransformPoint(worldPosition));
 
         // Gets all cells within radius of a world position
-        public List<Cell> GetCells(Vector3 worldPosition, float worldRadius)
-        {
-            // TODO: Implement
-            return new List<Cell>();
-        }
+        public List<Cell> GetCells(Vector3 worldPosition, float worldRadius) => 
+            layout.GetCells(worldPosition, worldRadius);
 
         // Gets all cells a building would take up given its root and rotation
-        public List<Cell> GetCells(List<SectionInfo>  sections, int rootId, int rotation = 0)
-        {
-            return layout.GetCells(sections, rootId, rotation);
-        }
+        public List<Cell> GetCells(List<SectionInfo>  sections, int rootId, int rotation = 0) =>
+            layout.GetCells(sections, rootId, rotation);
 
         public Cell GetCell(int id) => layout.GetCell(id);
         
@@ -114,10 +107,8 @@ namespace Map
 
         public List<Cell> GetNeighbours(Cell cell) => layout.GetNeighbours(cell);
 
-        public List<Structure> GetNeighbours(Structure structure)
-        {
-            return structure.Occupied.SelectMany(cell => GetNeighbours(cell).Select(neighbour => neighbour.Occupant)).Distinct().ToList();   
-        }
+        public List<Structure> GetNeighbours(Structure structure) =>
+            structure.Occupied.SelectMany(cell => GetNeighbours(cell).Select(neighbour => neighbour.Occupant)).Distinct().ToList();
 
         public Vector3[] GetCornerPositions(Cell cell)
         {

@@ -116,7 +116,7 @@ namespace Cards
         
         private void PlaceBuilding(InputAction.CallbackContext obj)
         {
-            if (!SelectedCard || !_cellsValid || EventSystem.current.IsPointerOverGameObject()) return;
+            if (!SelectedCard || !_cellsValid || IsOverUi) return;
             PlacingBuilding = true;
             Blueprint blueprint = SelectedCard.Blueprint;
             SelectedCard.Replace();
@@ -207,7 +207,7 @@ namespace Cards
             #endif
 
             
-            if (!Manager.Cards.SelectedCard || EventSystem.current.IsPointerOverGameObject())
+            if (!Manager.Cards.SelectedCard || IsOverUi)
             {
                 _hoveredCell = null;
                 ClearCells(); 

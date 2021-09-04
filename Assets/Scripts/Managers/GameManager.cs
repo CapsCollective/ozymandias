@@ -61,8 +61,8 @@ namespace Managers
 
         public static Action OnUpdateUI;
         public static void UpdateUi() => OnUpdateUI.Invoke();
-
         public static void SelectUi(GameObject gameObject) => EventSystem.current.SetSelectedGameObject(gameObject);
+        public static bool IsOverUi => EventSystem.current.IsPointerOverGameObject();
         
         #region Balancing Constants
         

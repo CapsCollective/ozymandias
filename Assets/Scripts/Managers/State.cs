@@ -194,8 +194,6 @@ namespace Managers
             // Fade in music
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
             StartCoroutine(Algorithms.DelayCall(2f, () => Manager.Jukebox.OnStartGame()));
-            // Find the starting position for the town
-            _startPos.Position = Manager.Structures.SpawnLocation.WorldSpace;
             // Run general menu initialisation
             EnterState(GameState.InIntro);
         }
@@ -238,6 +236,9 @@ namespace Managers
         
         private void ToGameInit()
         {
+            // Find the starting position for the town
+            _startPos.Position = Manager.Structures.TownCentre;
+            
             gameCanvasGroup.alpha = 0.0f;
             gameCanvas.enabled = true;
             menuCanvasGroup.interactable = false;
@@ -369,7 +370,7 @@ namespace Managers
             {
                 // Build a camera move object for the waypoint
                 var currentTransform = creditsWaypoints[++_currentWaypoint].location;
-                var pos = currentTransform.position;
+                var pos = _currentWaypoint == 0 ? Manager.Structures.TownCentre + Vector3.up * 0.5f : currentTransform.position;
                 var rot = currentTransform.eulerAngles;
                 _currentMove = new CameraMove(
                     pos,
