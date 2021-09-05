@@ -37,6 +37,7 @@ namespace Quests
         private readonly List<Adventurer> _assigned = new List<Adventurer>();
 
         public string Title => title;
+        public string Reward { get; private set; }
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
@@ -146,6 +147,7 @@ namespace Quests
                 name = name,
                 turnsLeft = TurnsLeft,
                 cost = Cost,
+                reward = Reward,
                 assigned = _assigned.Select(a => a.name).ToList(),
                 occupied = Structure ? Structure.Occupied.Select(cell => cell.Id).ToList() : null
             };
@@ -155,6 +157,7 @@ namespace Quests
         {
             State.OnNextTurnEnd += OnNewTurn;
             Cost = details.cost;
+            Reward = "a bowl of gruel"; // TODO serialise this
             TurnsLeft = details.turnsLeft;
             if (location == Location.Grid) CreateBuilding(details.occupied); 
             if (!IsActive) return;

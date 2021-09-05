@@ -23,6 +23,7 @@ namespace Managers
         public string name;
         public int turnsLeft;
         public int cost;
+        public string reward;
         public List<string> assigned;
         public List<int> occupied;
     }
