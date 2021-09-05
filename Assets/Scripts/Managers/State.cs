@@ -173,6 +173,7 @@ namespace Managers
         private async void LoadingInit()
         {
             loadingCanvas.enabled = true;
+            gameCanvasGroup.interactable = false;
             Manager.Inputs.TogglePlayerInput(false);
             CinemachineFreeLook freeLook = Manager.Camera.FreeLook;
             
@@ -271,15 +272,13 @@ namespace Managers
             gameCanvasGroup.interactable = true;
             gameCanvasGroup.blocksRaycasts = true;
             Manager.Inputs.TogglePlayerInput(true);
-            EnterState(GameState.InGame);
+            if (Manager.Stats.TurnCounter == 0) OnNewGame.Invoke();
             Manager.Cards.PopCards();
+            UpdateUi();
+            EnterState(GameState.InGame);
         }
 
-        private void InGameInit()
-        {
-            if (Manager.Stats.TurnCounter == 0) OnNewGame.Invoke();
-            UpdateUi();
-        }
+        private void InGameInit() { }
 
         private void NextTurnInit()
         {

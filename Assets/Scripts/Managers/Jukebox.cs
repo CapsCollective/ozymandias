@@ -42,6 +42,9 @@ namespace Managers
         [SerializeField] private AudioClip destroyClip;
         [SerializeField] private AudioClip stampClip;
         [SerializeField] private AudioClip scrunchClip;
+        [SerializeField] private AudioClip barkClip;
+        [SerializeField] private AudioClip fishCaughtClip;
+        [SerializeField] private AudioClip reelingClip;
         
         [SerializeField] private AudioClip menuTrack;
         [SerializeField] private AudioClip creditsTrack;
@@ -222,7 +225,7 @@ namespace Managers
         {
             PlaySfx(buildClip, .4f);
         }
-        
+
         public void PlayDestroy()
         {
             PlaySfx(destroyClip, .4f);
@@ -241,6 +244,16 @@ namespace Managers
         public void PlayMorning()
         {
             PlaySfx(morningClip, .1f);
+        }
+        
+        public void PlayBark()
+        {
+            PlaySfx(barkClip, .4f);
+        }
+
+        public void PlayFishCaught()
+        {
+            PlaySfx(fishCaughtClip, .4f);
         }
     }
 }

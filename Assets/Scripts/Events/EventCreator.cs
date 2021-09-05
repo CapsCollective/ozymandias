@@ -14,6 +14,7 @@ using EventType = Utilities.EventType;
 
 namespace Events
 {
+#if (UNITY_EDITOR)
     public static class EventCreator
     {
         #region Config Structs
@@ -296,4 +297,5 @@ namespace Events
             return AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
         }
     }
+#endif
 }
