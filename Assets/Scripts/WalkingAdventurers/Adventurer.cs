@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace WalkingAdventurers
@@ -10,7 +11,7 @@ namespace WalkingAdventurers
 
         private void Awake()
         {
-            _propertyBlocks = new[] {new MaterialPropertyBlock(), new MaterialPropertyBlock()};
+            _propertyBlocks = renderers.Select(_ => new MaterialPropertyBlock()).ToArray();
         }
         
         public void SetAlphaTo(float alpha)

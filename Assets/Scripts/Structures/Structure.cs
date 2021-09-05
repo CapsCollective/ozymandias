@@ -164,7 +164,7 @@ namespace Structures
             ParticleSystem.Play();
             transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Destroy(gameObject));
             
-            Manager.Jukebox.PlayDestroy();
+            if(Manager.State.InGame) Manager.Jukebox.PlayDestroy();
         }
         
         public void Grow(Cell newCell)
