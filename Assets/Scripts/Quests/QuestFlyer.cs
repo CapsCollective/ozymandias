@@ -12,16 +12,29 @@ namespace Quests
         [SerializeField] private TextMeshProUGUI titleText, descriptionText, statsText;
         [SerializeField] private Button sendButton;
         [SerializeField] private GameObject stamp;
+        [SerializeField] private Slider adventurerSlider, costSlider;
         
-        public Action OnStartClicked;
+        public Action<int, int> OnStartClicked;
+        public Action<int> OnAdventurerValueChanged;
+        public Action<int> OnCostValueChanged;
 
         private void Start()
         {
+            adventurerSlider.onValueChanged.AddListener(value =>
+            {
+                OnAdventurerValueChanged?.Invoke((int) value);
+            });
+            costSlider.onValueChanged.AddListener(value =>
+            {
+                OnCostValueChanged?.Invoke((int) value);
+            });
             sendButton.onClick.AddListener(() =>
             {
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();
-                OnStartClicked.Invoke();
+                OnStartClicked?.Invoke(
+                    (int) adventurerSlider.value,
+                    (int) costSlider.value);
             });
         }
 
@@ -34,7 +47,7 @@ namespace Quests
             stamp.transform.localEulerAngles = new Vector3(0, 0, stampRotation);
         }
 
-        public void UpdateContent(Quest quest)
+        public void UpdateContent(Quest quest, bool valueChange = false)
         {
             titleText.text = quest.Title;
             descriptionText.text = quest.Description;
@@ -42,9 +55,11 @@ namespace Quests
             sendButton.gameObject.SetActive(!quest.IsActive);
             stamp.SetActive(quest.IsActive);
 
-            if (stamp.activeSelf)
+            if (quest.IsActive)
             {
                 var turnText = "\nReturn in: " + quest.TurnsLeft;
+                adventurerSlider.gameObject.SetActive(false);
+                costSlider.gameObject.SetActive(false);
 
                 switch (quest.TurnsLeft)
                 {
@@ -59,19 +74,50 @@ namespace Quests
                         break;
                 }
 
-                statsText.text = "Adventurers: " + quest.adventurers + turnText;
+                statsText.text = "Adventurers: " + quest.AssignedCount + turnText;
             }
             else
             {
-                bool enoughAdventurers = Manager.Adventurers.Removable > quest.adventurers;
-                bool enoughMoney = Manager.Stats.Wealth >= quest.Cost;
+                var availableAdventurers = Math.Min(
+                    quest.MaxAdventurers,
+                    Manager.Adventurers.Available);
+                
+                var availableWealth = Math.Min(
+                    quest.MaxCost,
+                    Manager.Stats.Wealth);
+                
+                costSlider.gameObject.SetActive(
+                    availableWealth > quest.MinCost);
+                adventurerSlider.gameObject.SetActive(
+                    quest.QuestLocation is Quest.Location.Grid &&
+                    availableAdventurers > quest.MinAdventurers);
+
+                if (!valueChange)
+                {
+                    // Set default values for sliders
+                    adventurerSlider.maxValue = availableAdventurers;
+                    adventurerSlider.minValue = quest.MinAdventurers;
+                    adventurerSlider.value = quest.adventurers;
+                    
+                    costSlider.maxValue = availableWealth;
+                    costSlider.minValue = quest.MinCost;
+                    costSlider.value = quest.Cost;
+                }
+
+                // Use slider assigned values
+                var adventurers = (int) adventurerSlider.value;
+                var cost = (int) costSlider.value;
+
+                bool enoughAdventurers = Manager.Adventurers.Removable > adventurers;
+                bool enoughMoney = Manager.Stats.Wealth >= cost;
                 statsText.text =
                     (enoughAdventurers ? "" : "<color=#820000ff>") + 
-                    "Adventurers: " + quest.adventurers +
+                    "Adventurers: " + adventurers +
                     (enoughAdventurers ? "" : "</color>") +
                     (enoughMoney ? "" : "<color=#820000ff>") +
-                    "\nCost: " + quest.Cost +
+                    "\nCost: " + cost +
                     (enoughMoney ? "" : "</color>") +
+                    "\nTurns: " + quest.Turns +
                     "\nReward: " + quest.Reward;
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
