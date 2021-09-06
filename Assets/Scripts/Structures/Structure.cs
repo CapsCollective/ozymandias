@@ -22,8 +22,8 @@ namespace Structures
         public bool IsRuin => StructureType == StructureType.Ruins;
         public bool IsTerrain => StructureType == StructureType.Terrain;
         public bool IsQuest => StructureType == StructureType.Quest;
-        private bool IsBuildingType(BuildingType type) => Blueprint && Blueprint.type == type;
-        private int SectionCount => _sections.Count;
+        public bool IsBuildingType(BuildingType type) => Blueprint && Blueprint.type == type;
+        public int SectionCount => _sections.Count;
 
         public Stat? Bonus { get; private set; }
 

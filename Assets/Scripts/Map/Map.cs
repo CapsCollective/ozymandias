@@ -124,8 +124,7 @@ namespace Map
 
             return corners;
         }
-        
-        public List<Vector3> RandomRoadPath => layout.RandomRoadPath;
+        public Layout Layout => layout;
         
         #endregion
 

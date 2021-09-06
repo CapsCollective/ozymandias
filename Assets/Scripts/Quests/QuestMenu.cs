@@ -82,7 +82,21 @@ namespace Quests
             {
                 // This is a lambda to the call because we only want
                 // SelectedQuest evaluated at call time, not assignment
-                flyer.OnStartClicked += () => SelectedQuest.Start();
+                flyer.OnStartClicked += (adventurers, cost) =>
+                {
+                    SelectedQuest.Begin(adventurers, cost);
+                    flyer.UpdateContent(SelectedQuest);
+                };
+
+                flyer.OnAdventurerValueChanged += value =>
+                {
+                    flyer.UpdateContent(SelectedQuest, true);
+                };
+                
+                flyer.OnCostValueChanged += value =>
+                {
+                    flyer.UpdateContent(SelectedQuest, true);
+                };
                 
                 // Set their positions off-screen
                 flyer.transform.localPosition = _offScreenPos;
