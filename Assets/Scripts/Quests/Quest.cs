@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
 using Managers;
@@ -9,6 +10,7 @@ using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
+using Random = UnityEngine.Random;
 
 namespace Quests
 {
@@ -22,6 +24,8 @@ namespace Quests
             Mountains,
             Dock
         }
+        
+        public static Action<Quest> OnQuestStarted;
         
         public int adventurers = 2;
         public int _adventurersUsed = 2;
@@ -43,6 +47,7 @@ namespace Quests
         public int TurnsLeft { get; private set; }
         public Structure Structure { get; private set; }
         public bool IsActive => TurnsLeft != -1;
+        public bool IsRadiant => QuestLocation is Location.Grid;
         public int MaxAdventurers => 2 + Structure.SectionCount;
         public int MinAdventurers => 3;
         public int MaxCost => (int)(Cost * 1.5);
@@ -89,6 +94,7 @@ namespace Quests
             Manager.Stats.Spend(cost);
             _assigned.AddRange(Manager.Adventurers.Assign(this, adventurersUsed));
             UpdateUi();
+            OnQuestStarted?.Invoke(this);
         }
 
         private void CreateBuilding(List<int> occupied)

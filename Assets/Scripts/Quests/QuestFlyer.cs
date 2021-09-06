@@ -89,8 +89,8 @@ namespace Quests
                 costSlider.gameObject.SetActive(
                     availableWealth > quest.MinCost);
                 adventurerSlider.gameObject.SetActive(
-                    quest.QuestLocation is Quest.Location.Grid &&
-                    availableAdventurers > quest.MinAdventurers);
+                    quest.IsRadiant
+                    && availableAdventurers > quest.MinAdventurers);
 
                 if (!valueChange)
                 {
