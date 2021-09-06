@@ -22,6 +22,7 @@ namespace Upgrades
         {
             public RectTransform transform;
             public Canvas canvas;
+            public GameObject costBox;
             public TextMeshProUGUI title, description;
             public SerializedDictionary<Guild, GameObject> costs;
             public Button purchaseButton, deselectButton;
@@ -76,8 +77,10 @@ namespace Upgrades
         {
             purchaseBox.title.text = upgrade.title;
             purchaseBox.description.text = upgrade.Description;
-                
-            purchaseBox.purchaseButton.interactable = !upgrade.LevelMaxed && Affordable(upgrade.costs);
+
+            purchaseBox.purchaseButton.gameObject.SetActive(!upgrade.LevelMaxed);
+            purchaseBox.costBox.gameObject.SetActive(!upgrade.LevelMaxed);
+            purchaseBox.purchaseButton.interactable = Affordable(upgrade.costs);
 
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {

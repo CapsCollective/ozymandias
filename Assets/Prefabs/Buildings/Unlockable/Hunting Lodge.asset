@@ -21,15 +21,30 @@ MonoBehaviour:
     - Key: 1
       Value: 2
     - Key: 6
-      Value: 2
+      Value: 1
     keyCollision: 0
   baseCost: 40
   scaleSpeed: 3
-  roofColor: {r: 0, g: 0, b: 0, a: 0}
+  roofColor: {r: 0.12506017, g: 0.4433962, b: 0, a: 0}
   sections:
-  - prefab: {fileID: 2095048616072259078, guid: d88abb6c92cc7f54595c0fd3796b2d6d,
+  - prefab: {fileID: 1894597543630758934, guid: edf8d3f1f238c7048ab644d3ecf1082b,
       type: 3}
     directions: 
     clockwiseRotations: 0
+  - prefab: {fileID: 4656057957952714449, guid: f40447335018edd4b9ec0f11ef7914a5,
+      type: 3}
+    directions: 00000000
+    clockwiseRotations: 2
+  - prefab: {fileID: 3455616402048513333, guid: 60022fed467cb12469079023da215e7e,
+      type: 3}
+    directions: 02000000
+    clockwiseRotations: 0
   starter: 0
-  unlocked: 0
+  adjacencyConfig:
+    hasBonus: 1
+    specialCheck: 1
+    upgrade: 32
+    stat: 6
+    structureType: 2
+    neighbourType: 0
+    customDescription: from adjacent Forest

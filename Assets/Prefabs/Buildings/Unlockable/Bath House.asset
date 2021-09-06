@@ -25,22 +25,30 @@ MonoBehaviour:
     keyCollision: 0
   baseCost: 50
   scaleSpeed: 4
-  roofColor: {r: 0, g: 0, b: 0, a: 0}
+  roofColor: {r: 0, g: 0.5754717, b: 0.5599963, a: 0}
   sections:
   - prefab: {fileID: 1894597543630758934, guid: edf8d3f1f238c7048ab644d3ecf1082b,
       type: 3}
     directions: 
     clockwiseRotations: 0
-  - prefab: {fileID: 7924284712729236552, guid: 715a2ecc972fe99489437720d093db58,
-      type: 3}
-    directions: 00000000
-    clockwiseRotations: 0
-  - prefab: {fileID: 6844331012895056320, guid: a32ae482ea6d6624bada3dae12e0544a,
+  - prefab: {fileID: 1894597543630758934, guid: edf8d3f1f238c7048ab644d3ecf1082b,
       type: 3}
     directions: 02000000
     clockwiseRotations: 0
-  - prefab: {fileID: 117222089155844661, guid: fa5182e456a6d7244a382f19c46dde33, type: 3}
+  - prefab: {fileID: 3455616402048513333, guid: 60022fed467cb12469079023da215e7e,
+      type: 3}
+    directions: 00000000
+    clockwiseRotations: 2
+  - prefab: {fileID: 3455616402048513333, guid: 60022fed467cb12469079023da215e7e,
+      type: 3}
     directions: 0200000002000000
     clockwiseRotations: 0
   starter: 0
-  unlocked: 0
+  adjacencyConfig:
+    hasBonus: 1
+    specialCheck: 1
+    upgrade: 30
+    stat: 3
+    structureType: 0
+    neighbourType: 0
+    customDescription: from adjacent Water Source

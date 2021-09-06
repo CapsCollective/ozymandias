@@ -14,6 +14,19 @@ namespace Structures
         public int clockwiseRotations;
     }
     
+    [Serializable]
+    public class AdjacencyConfiguration
+    {
+        public bool hasBonus;
+        public bool specialCheck; // For Farms, Watchtower and Monastery
+        public UpgradeType upgrade;
+        public Stat stat;
+        public StructureType structureType = StructureType.Building;
+        public BuildingType neighbourType;
+        public string customDescription;
+        public string Description => customDescription != "" ? customDescription : $"from adjacent {neighbourType}"; 
+    }
+    
     [CreateAssetMenu(fileName = "Blueprint")]
     public class Blueprint : ScriptableObject
     {
@@ -35,6 +48,9 @@ namespace Structures
         public Color roofColor;
         public List<SectionInfo> sections;
         public bool starter;
+        
+        public AdjacencyConfiguration adjacencyConfig;
+
         public bool Free { get; set; }
         private const float BuildingCostScale = 1.25f;
         private const float BaseRefundPercentage = 5f; // Representing 50%

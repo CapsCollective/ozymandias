@@ -114,7 +114,7 @@ namespace WalkingAdventurers
         private GameObject CreateAdventurer(Vector3 start)
         {
             // 10% chance to spawn dog
-            GameObject newAdventurer = Instantiate(Random.Range(0, 5) == 0 ? dogModel : adventurerModel, start, Quaternion.identity);
+            GameObject newAdventurer = Instantiate(Random.Range(0, 10) == 0 ? dogModel : adventurerModel, start, Quaternion.identity);
             newAdventurer.transform.parent = transform;
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
             StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));

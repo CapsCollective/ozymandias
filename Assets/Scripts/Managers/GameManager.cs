@@ -13,6 +13,7 @@ namespace Managers
 
     public class GameManager : MonoBehaviour
     {
+        #region Static Accessors
         public static GameManager Manager { get; private set; }
         
         // All Managers/ Universal Controllers
@@ -53,17 +54,20 @@ namespace Managers
             Camera = FindObjectOfType<CameraMovement>();
             Cursor = FindObjectOfType<CursorSelect>();
         }
+        #endregion
 
+        #region State & UI
         public void Start()
         {
             State.EnterState(GameState.Loading);
         }
-
+        
         public static Action OnUpdateUI;
         public static void UpdateUi() => OnUpdateUI.Invoke();
         public static void SelectUi(GameObject gameObject) => EventSystem.current.SetSelectedGameObject(gameObject);
         public static bool IsOverUi => EventSystem.current.IsPointerOverGameObject();
-        
+        #endregion
+
         #region Balancing Constants
         
         public const int TerrainBaseCost = 5;
@@ -105,7 +109,12 @@ namespace Managers
             }
             UpdateUi();
         }
-        
+
+        [Button("Unlock All Cards")]
+        public void UnlockAllCards()
+        {
+            Manager.Cards.UnlockAll();
+        }
         #endregion
     }
 }

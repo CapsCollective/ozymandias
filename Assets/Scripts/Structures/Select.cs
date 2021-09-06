@@ -7,7 +7,6 @@ using Managers;
 using Quests;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using Utilities;
@@ -64,6 +63,8 @@ namespace Structures
         [SerializeField] private float raycastInterval;
 
         [SerializeField] private List<EffectBadge> badges;
+        [SerializeField] private EffectBadge bonusBadge;
+        [SerializeField] private TextMeshProUGUI bonusText;
         [SerializeField] private List<Sprite> chevronSizes;
         [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
 
@@ -139,6 +140,7 @@ namespace Structures
                 else costText.text = (_config.IsRefund ? "Refund: " : "Cost: ") + _config.Cost;
 
                 badges.ForEach(badge => badge.canvasGroup.alpha = 0);
+                bonusBadge.canvasGroup.alpha = 0;
                 // Fade in building effects
                 if (_config.IsRefund) DisplayEffects();
             }
@@ -160,7 +162,11 @@ namespace Structures
             Manager.Inputs.OnRightClick.performed += _ => Deselect();
             Manager.Inputs.OnConfirmSelectedStructure.performed += _ => Interact();
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
-            State.OnEnterState += () => HoveredStructure = null;
+            State.OnEnterState += () =>
+            {
+                SelectedStructure = null;
+                HoveredStructure = null;
+            };
         }
 
         private void Update()
@@ -267,6 +273,17 @@ namespace Structures
                 badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
             }
+            
+            if (!SelectedStructure.Bonus.HasValue) return;
+            bonusBadge.transform.localPosition = new Vector2(0, -320);
+            StartCoroutine(Algorithms.DelayCall(0.2f, () =>
+            {
+                bonusBadge.icon.sprite = statIcons[SelectedStructure.Bonus.Value];
+                bonusBadge.background.color = Colors.StatColours[SelectedStructure.Bonus.Value];
+                bonusText.text = SelectedStructure.Blueprint.adjacencyConfig.Description;
+                bonusBadge.transform.DOLocalMove(new Vector2(0, -270), 1f);
+                bonusBadge.canvasGroup.DOFade(1, 1f);
+            }));
         }
         
         private void HideEffects()
@@ -276,6 +293,8 @@ namespace Structures
                 badges[i].transform.DOLocalMove(new Vector2(0, -50),0.3f);
                 badges[i].canvasGroup.DOFade(0, 0.3f);
             }
+            bonusBadge.transform.DOLocalMove(new Vector2(0, -320), 0.3f);
+            bonusBadge.canvasGroup.DOFade(0, 0.3f);
         }
         
         private void RepositionButton()

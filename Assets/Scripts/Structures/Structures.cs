@@ -49,7 +49,7 @@ namespace Structures
 
         public int GetStat(Stat stat)
         {
-            return _buildings.Sum(b => b.Stats.ContainsKey(stat) ? b.Stats[stat] : 0);
+            return _buildings.Sum(b => (b.Stats.ContainsKey(stat) ? b.Stats[stat] : 0) + (b.Bonus == stat ? 1 : 0));
         }
         
         public int GetCount(BuildingType type)

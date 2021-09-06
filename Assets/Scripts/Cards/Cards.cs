@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Inputs;
 using Managers;
 using Map;
 using Structures;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities;
@@ -244,6 +242,13 @@ namespace Cards
             OnUnlock?.Invoke(blueprint);
             if (isRuin) OnDiscoverRuin?.Invoke();
             return true;
+        }
+
+        public void UnlockAll()
+        {
+            Deck = new List<Blueprint>(All);
+            Playable = new List<Blueprint>(All);
+            Discoverable = new List<Blueprint>();
         }
 
         public CardDetails Save()

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Managers;
@@ -19,17 +18,21 @@ namespace Structures
         public Quest Quest { get; private set; }
         public List<Cell> Occupied { get; private set; }
         public bool Selected { get; set; }
+        public bool IsBuilding => StructureType == StructureType.Building;
         public bool IsRuin => StructureType == StructureType.Ruins;
         public bool IsTerrain => StructureType == StructureType.Terrain;
         public bool IsQuest => StructureType == StructureType.Quest;
-        public int SectionCount => _sections.Count;
-        
+        private bool IsBuildingType(BuildingType type) => Blueprint && Blueprint.type == type;
+        private int SectionCount => _sections.Count;
+
+        public Stat? Bonus { get; private set; }
+
         // Clear cost calculations TODO: make this based on distance to guild hall instead
         public int TerrainClearCost => 
             (int)(TerrainBaseCost * SectionCount * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
                   Mathf.Pow(TerrainCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre)));
         public int RuinsClearCost =>
-            (int)(RuinsBaseCost * SectionCount * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
+            (int)(RuinsBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
                   Mathf.Pow(RuinsCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre)));
         
         // Stored here as well as blueprints so the stats can be modified by adjacency bonuses
@@ -153,6 +156,7 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++) AddSection(_sections[i], Occupied[i], i);
             
             if (!Manager.State.Loading) AnimateCreate();
+            Bonus = AdjacencyBonus();
             return true;
         }
 
@@ -165,6 +169,7 @@ namespace Structures
             transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Destroy(gameObject));
             
             if(Manager.State.InGame) Manager.Jukebox.PlayDestroy();
+            Manager.Map.GetNeighbours(this).ForEach(neighbour => neighbour.Bonus = neighbour.AdjacencyBonus());
         }
         
         public void Grow(Cell newCell)
@@ -220,7 +225,35 @@ namespace Structures
                 section.SetRoofColor(new Color(0,0,0));
             }
         }
+        
+        private Stat? AdjacencyBonus(bool propagate = true)
+        {
+            // Only applies to buildings with unlocked bonuses
+            if (!IsBuilding || !Blueprint.adjacencyConfig.hasBonus || !Manager.Upgrades.IsUnlocked(Blueprint.adjacencyConfig.upgrade)) return null;
+            
+            AdjacencyConfiguration config = Blueprint.adjacencyConfig;
+            int farmCount = 0;
+            bool noAdjacentBuildings = true;
+            bool hasBonus = false;
+            
+            foreach (Structure neighbour in Manager.Map.GetNeighbours(this))
+            {
+                if (propagate) neighbour.Bonus = neighbour.AdjacencyBonus(false); // Recheck neighbours too
+                // Checking for Terrain and Ruin bonuses
+                if (config.structureType != StructureType.Building && neighbour.StructureType == config.structureType) hasBonus = true;
+                if (neighbour.StructureType != StructureType.Building) continue; 
+                noAdjacentBuildings = false;
+                if (neighbour.IsBuildingType(BuildingType.Farm)) farmCount++;
+                else if (!config.specialCheck && neighbour.IsBuildingType(config.neighbourType)) hasBonus = true;
+            }
 
+            // Special adjacency rules
+            if (farmCount >= 2 && IsBuildingType(BuildingType.Farm)) hasBonus = true;
+            if (noAdjacentBuildings && (IsBuildingType(BuildingType.Watchtower) || IsBuildingType(BuildingType.Monastery))) hasBonus = true;
+            
+            return hasBonus ? config.stat : (Stat?)null; 
+        }
+        
         public BuildingDetails SaveBuilding()
         {
             return new BuildingDetails
