@@ -24,9 +24,9 @@ namespace Map
         [SerializeField] private int relaxIterations;
         [SerializeField] [Range(0f, 1f)] private float relaxStrength;
 
-        [field: SerializeField] private Graph<Vertex> VertexGraph { get; set; }
+        [field: SerializeField] public Graph<Vertex> VertexGraph { get; set; }
         [field: SerializeField] private Graph<Cell> CellGraph { get; set; }
-        private Graph<Vertex> RoadGraph { get; set; }
+        public Graph<Vertex> RoadGraph { get; set; }
         private Dictionary<Cell, List<int>> UVMap { get; set; }
 
         //Procedurally places buildings
@@ -670,7 +670,7 @@ namespace Map
             }
         }
 
-        private Vertex RandomRoadVertex
+        public Vertex RandomRoadVertex
         {
             get
             {

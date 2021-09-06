@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
 using Managers;
@@ -9,13 +10,14 @@ using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
+using Random = UnityEngine.Random;
 
 namespace Quests
 {
     [CreateAssetMenu]
     public class Quest : ScriptableObject
     {
-        private enum Location
+        public enum Location
         {
             Grid,
             Forest,
@@ -23,13 +25,15 @@ namespace Quests
             Dock
         }
         
-        public int turns = 5;
+        public static Action<Quest> OnQuestStarted;
+        
         public int adventurers = 2;
         [Range(0.5f, 3f)] public float costScale = 1.5f; // How many turns worth of gold to send, sets cost when created.
 
         [SerializeField] private Location location;
         [SerializeField] private string title;
         [TextArea] [SerializeField] private string description;
+        [SerializeField] private string reward;
         [SerializeField] private Event completeEvent; // Keep empty if randomly chosen
         //[SerializeField] private Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
@@ -37,11 +41,26 @@ namespace Quests
         private readonly List<Adventurer> _assigned = new List<Adventurer>();
 
         public string Title => title;
+        public string Reward => reward;
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
         public Structure Structure { get; private set; }
         public bool IsActive => TurnsLeft != -1;
+        public bool IsRadiant => QuestLocation is Location.Grid;
+        public int MaxAdventurers => 2 + Structure.SectionCount;
+        public int MinAdventurers => 3;
+        public int MaxCost => (int)(Cost * 1.5);
+        public int MinCost => (int)(Cost * 0.5);
+        public int AssignedCount => _assigned.Count;
+        public int Turns => 5; // TODO scale turns with cost
+
+        public Location QuestLocation
+        {
+            get => location;
+
+            private set => location = value;
+        }
 
         public void Add()
         {
@@ -67,14 +86,15 @@ namespace Quests
             _assigned.Clear();
             State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
-        
-        public void Start()
+
+        public void Begin(int adventurersUsed, int cost)
         {
             //if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
-            TurnsLeft = turns;
-            Manager.Stats.Spend(Cost);
-            for (int i = 0; i < adventurers; i++) _assigned.Add(Manager.Adventurers.Assign(this));
+            TurnsLeft = Turns;
+            Manager.Stats.Spend(cost);
+            _assigned.AddRange(Manager.Adventurers.Assign(this, adventurersUsed));
             UpdateUi();
+            OnQuestStarted?.Invoke(this);
         }
 
         private void CreateBuilding(List<int> occupied)
@@ -132,7 +152,7 @@ namespace Quests
             else if (
                 location == Location.Grid && 
                 _turnCreated != Manager.Stats.TurnCounter && 
-                Random.Range(0,10) < Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
+                Random.Range(0,10) > Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
             )
             {
                 GrowBuilding();
