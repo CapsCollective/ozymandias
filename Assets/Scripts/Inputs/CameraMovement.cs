@@ -43,6 +43,11 @@ namespace Inputs
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private float DoFAdjustMultiplier = 5f;
+        [Header("Clamping")]
+        [SerializeField] private Vector3 clampCenterPos;
+        [SerializeField] private float clampDistance;
+        [SerializeField] private float pushForce = 5.0f;
+        [SerializeField] private bool showDebug = false;
 
         private void Awake()
         {
@@ -140,6 +145,12 @@ namespace Inputs
 
             Vector3 newFollowPos = new Vector3(FreeLook.Follow.position.x, 1, FreeLook.Follow.position.z);
             FreeLook.Follow.position = Vector3.SmoothDamp(FreeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
+
+            float dot = Vector3.Dot(Vector3.back, (FreeLook.Follow.position - clampCenterPos).normalized);
+            float distanceFromBorder = Vector3.Distance(FreeLook.Follow.position, clampCenterPos) / clampDistance;
+            distanceFromBorder -= Mathf.Abs(dot);
+            if(distanceFromBorder > 1.0f)
+                FreeLook.Follow.position += ((clampCenterPos - FreeLook.Follow.position).normalized * (distanceFromBorder - 1.0f) * pushForce) * Time.deltaTime;
         }
 
         public TweenerCore<Vector3,Vector3,VectorOptions> MoveTo(Vector3 pos, float duration = 0.5f)
@@ -162,6 +173,15 @@ namespace Inputs
         private void EndCursorGrab()
         {
             Manager.Cursor.Current = _previousCursor;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            if (!showDebug) return;
+            Gizmos.DrawWireSphere(clampCenterPos, 0.25f);
+            Gizmos.DrawWireSphere(clampCenterPos, clampDistance);
+            Gizmos.DrawWireSphere(clampCenterPos + new Vector3(0,0,clampCenterPos.z), clampDistance);
+            Gizmos.DrawWireSphere(clampCenterPos + new Vector3(0,0,-clampCenterPos.z), clampDistance);
         }
     }
 }
