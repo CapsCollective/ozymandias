@@ -28,12 +28,12 @@ namespace Quests
         public static Action<Quest> OnQuestStarted;
         
         public int adventurers = 2;
-        public int _adventurersUsed = 2;
         [Range(0.5f, 3f)] public float costScale = 1.5f; // How many turns worth of gold to send, sets cost when created.
 
         [SerializeField] private Location location;
         [SerializeField] private string title;
         [TextArea] [SerializeField] private string description;
+        [SerializeField] private string reward;
         [SerializeField] private Event completeEvent; // Keep empty if randomly chosen
         //[SerializeField] private Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
@@ -41,7 +41,7 @@ namespace Quests
         private readonly List<Adventurer> _assigned = new List<Adventurer>();
 
         public string Title => title;
-        public string Reward { get; private set; }
+        public string Reward => reward;
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
@@ -166,7 +166,6 @@ namespace Quests
                 name = name,
                 turnsLeft = TurnsLeft,
                 cost = Cost,
-                reward = Reward,
                 assigned = _assigned.Select(a => a.name).ToList(),
                 occupied = Structure ? Structure.Occupied.Select(cell => cell.Id).ToList() : null
             };
@@ -176,7 +175,6 @@ namespace Quests
         {
             State.OnNextTurnEnd += OnNewTurn;
             Cost = details.cost;
-            Reward = "a bowl of gruel"; // TODO serialise this
             TurnsLeft = details.turnsLeft;
             if (location == Location.Grid) CreateBuilding(details.occupied); 
             if (!IsActive) return;
