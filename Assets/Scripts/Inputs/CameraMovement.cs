@@ -146,11 +146,13 @@ namespace Inputs
         private void StartCursorGrab()
         {
             Manager.Cursor.Current = CursorType.Grab;
+            IsMoving = true;
         }
         
         private void EndCursorGrab()
         {
             Manager.Cursor.Current = Manager.Cards.SelectedCard ? CursorType.Build : CursorType.Pointer;
+            IsMoving = false;
         }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using DG.Tweening;
-using Managers;
 using Structures;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Utilities;
 using static Managers.GameManager;
 
 namespace Cards

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
-using Structures;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;

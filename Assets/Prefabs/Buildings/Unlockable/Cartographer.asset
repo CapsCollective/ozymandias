@@ -27,23 +27,30 @@ MonoBehaviour:
     keyCollision: 0
   baseCost: 50
   scaleSpeed: 3
-  roofColor: {r: 0, g: 0, b: 0, a: 0}
+  roofColor: {r: 0.7264151, g: 0.6404754, b: 0, a: 0}
   sections:
-  - prefab: {fileID: 5887413574364880360, guid: 261c67562b9d90d4daa4c30791285e0e,
+  - prefab: {fileID: 4049330680661710625, guid: 4f15be9aa6ccf29478b8742b627b1768,
       type: 3}
     directions: 
     clockwiseRotations: 0
-  - prefab: {fileID: 4928161612291528335, guid: fc51f6062f8a6304f896c83c00829bcb,
+  - prefab: {fileID: 4049330680661710625, guid: 4f15be9aa6ccf29478b8742b627b1768,
       type: 3}
     directions: 00000000
     clockwiseRotations: 0
-  - prefab: {fileID: 7807415793164627192, guid: 191f57d82c6bd6341b833d5909906d8b,
+  - prefab: {fileID: 3455616402048513333, guid: 60022fed467cb12469079023da215e7e,
       type: 3}
     directions: 03000000
     clockwiseRotations: 0
-  - prefab: {fileID: 3853615423410724166, guid: 0ef11965969b7514faf0951de753d81b,
+  - prefab: {fileID: 3455616402048513333, guid: 60022fed467cb12469079023da215e7e,
       type: 3}
     directions: 0300000002000000
     clockwiseRotations: 0
   starter: 0
-  unlocked: 0
+  adjacencyConfig:
+    hasBonus: 1
+    specialCheck: 1
+    upgrade: 31
+    stat: 1
+    structureType: 2
+    neighbourType: 0
+    customDescription: from adjacent Forest

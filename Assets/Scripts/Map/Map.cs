@@ -108,7 +108,11 @@ namespace Map
         public List<Cell> GetNeighbours(Cell cell) => layout.GetNeighbours(cell);
 
         public List<Structure> GetNeighbours(Structure structure) =>
-            structure.Occupied.SelectMany(cell => GetNeighbours(cell).Select(neighbour => neighbour.Occupant)).Distinct().ToList();
+            structure.Occupied
+                .SelectMany(cell => GetNeighbours(cell)
+                    .Select(neighbour => neighbour.Occupant)
+                    .Where(occupant => occupant && occupant != structure) // Exclude null values and self
+                ).Distinct().ToList();
 
         public Vector3[] GetCornerPositions(Cell cell)
         {

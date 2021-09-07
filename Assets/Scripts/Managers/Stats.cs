@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Structures;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;

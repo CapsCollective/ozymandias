@@ -23,28 +23,26 @@ namespace Upgrades
         [HorizontalLine]
         [SerializeField] private List<Upgrade> children;
         [SerializeField] private List<Image> connections;
+        //[SerializeField] private Blueprint requiredBuilding; TODO: Lock upgrades unless relevant building has been unlocked
         
         [HorizontalLine]
         [ReadOnly] public int level;
         [SerializeField] private Image background;
         [SerializeField] private Sprite halfConnection, fullConnection;
         
-        public bool NoLevelCap => maxLevel != -1;
-        public bool LevelMaxed => maxLevel != -1 && level >= maxLevel;
+        public bool HasLevelCap => maxLevel != -1;
+        public bool LevelMaxed => HasLevelCap && level >= maxLevel;
         public bool Unlocked => level > 0;
+        private bool SingleUnlock => maxLevel == 1;
         
         public string Description => 
-            $"{description}\n\n" +
-            $"Level: {level}{(NoLevelCap ? $"/{maxLevel}" : "")}\n" +
-            $"{baseEffect + level * multiplier}{(percentage ? "%" : "")}{(level < maxLevel || maxLevel == -1 ? $"→{baseEffect + (level + 1) * multiplier}{(percentage ? "%": "")}" : "")} {effect}";
-        
+            $"{description}\n\n" + LevelText + EffectText;
+        private string LevelText => SingleUnlock ? (level == 0 ? "Locked: " : "Unlocked: ") : $"Level: {level}{ (HasLevelCap ? $"/{maxLevel}" : "") }\n";
+        private string EffectText => (SingleUnlock ? "" : $"{baseEffect + level * multiplier}{(percentage ? "%" : "")}{(level < maxLevel || maxLevel == -1 ? $"→{baseEffect + (level + 1) * multiplier}{(percentage ? "%": "")}" : "")} ") + effect;
+
         private void Awake()
         {
-            GetComponentInChildren<Button>().onClick.AddListener(() =>
-            {
-                Manager.Upgrades.Select(this);
-            });
-            
+            GetComponentInChildren<Button>().onClick.AddListener(() => { Manager.Upgrades.Select(this); });
         }
 
         public void Display(bool visible)
