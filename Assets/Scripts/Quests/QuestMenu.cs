@@ -72,7 +72,6 @@ namespace Quests
             Select.OnQuestSelected += quest =>
             {
                 SelectedQuest = quest;
-                Debug.Log(SelectedQuest);
                 OpenFlyer.UpdateContent(SelectedQuest);
                 FocusStructure(SelectedQuest.Structure);
                 Open();

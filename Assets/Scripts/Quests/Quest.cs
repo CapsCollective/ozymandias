@@ -70,9 +70,7 @@ namespace Quests
             State.OnNextTurnEnd += OnNewTurn;
             if (location == Location.Grid)
             {
-                //TODO: Pick a cell
-                int startingCellId = 690;
-                CreateBuilding(new List<int>{startingCellId});
+                CreateBuilding(new List<int>{Manager.Structures.NewQuestSpawn()});
             }
             else
             {

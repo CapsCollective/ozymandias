@@ -19,6 +19,16 @@ namespace Quests
         
         public int Count => quests.Count;
         
+        // If a location is far enough away from the other quests
+        const int MinDistance = 3;
+
+        public bool FarEnoughAway(Vector3 position)
+        {
+            return quests
+                .Where(quest => quest.Structure)
+                .All(quest => Vector3.Distance(quest.Structure.transform.position, position) > MinDistance);
+        }
+        
         private void Awake()
         {
             State.OnGameEnd += OnGameEnd;
