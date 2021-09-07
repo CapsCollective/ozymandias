@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3720158692292676812}
   - component: {fileID: 5475721258133621089}
   - component: {fileID: 7747285992698156223}
-  - component: {fileID: 4020114589471263462}
+  - component: {fileID: 5577493786464880486}
   m_Layer: 5
   m_Name: Building Cards
   m_TagString: Untagged
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 1
---- !u!114 &4020114589471263462
+--- !u!114 &5577493786464880486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,16 +210,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 5475721258133621116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f694d8845e15154db96b0a3a88fa47a, type: 3}
+  m_Script: {fileID: 11500000, guid: f208b155d5ad4e74892f5f1604a8f5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
+  all:
+  - {fileID: 11400000, guid: 11f1d5c18e315fb4a95b05a545ac7b87, type: 2}
+  - {fileID: 11400000, guid: 329f70c01c18c9445b1943bf3dfcc872, type: 2}
+  - {fileID: 11400000, guid: 0820d991ef8cb484f89357fa733ac6e8, type: 2}
+  - {fileID: 11400000, guid: 3a65ed62deb460b4d84e3b86c6ac95d8, type: 2}
+  - {fileID: 11400000, guid: fdc5d4a8b74a5f4428c0ccfcd8370650, type: 2}
+  - {fileID: 11400000, guid: 9e049278b049b924c9e91c22b3c3258c, type: 2}
+  - {fileID: 11400000, guid: 4ae60c4a5c2d3cb489bab3382c0eae24, type: 2}
+  - {fileID: 11400000, guid: 28f83b7e1574fcd4d8142b9331b1a6d7, type: 2}
+  - {fileID: 11400000, guid: e4f374a8280928e44bc07569a68f09b0, type: 2}
+  - {fileID: 11400000, guid: a990f2563e3be184cb641e888d646ade, type: 2}
+  - {fileID: 11400000, guid: 069014ef131bda64282ad80f63699ec7, type: 2}
+  - {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
+  - {fileID: 11400000, guid: d0ac4cced9571c34d92ea74a6321fbd6, type: 2}
+  - {fileID: 11400000, guid: 4907e39eac328794e94817b5a77e9a5d, type: 2}
+  - {fileID: 11400000, guid: e7491c9e0d87f0c4dbbaabfed3cc0d21, type: 2}
+  - {fileID: 11400000, guid: 0a34f29438590124498e039055016f0c, type: 2}
+  - {fileID: 11400000, guid: 1725c9c1d3a04bc438103c56fc348895, type: 2}
+  - {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}
+  - {fileID: 11400000, guid: 1e49bdfd9848d18478bde803ac073dcf, type: 2}
+  - {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
+  - {fileID: 11400000, guid: 2e68900698ee8c94a9c0a88125bca081, type: 2}
+  - {fileID: 11400000, guid: 45371a86b03af9745a511db33d6725fc, type: 2}
+  - {fileID: 11400000, guid: 5e22b42b41b30e64f8a565d67992210f, type: 2}
+  - {fileID: 11400000, guid: f615080d3cd449e4b8959e1aed05f9fd, type: 2}
+  guildHall: {fileID: 11400000, guid: 6ece9827b575c1b479706112a29a4148, type: 2}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16777216
+  hand:
   - {fileID: 6728767104420435425}
   - {fileID: 7418807938519430716}
   - {fileID: 1268618846049657482}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 83886081
+  debugBlueprint: {fileID: 0}
 --- !u!1001 &117359046602310083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +254,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2718358265850406877}
     m_Modifications:
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 683299288730573708, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -345,7 +402,7 @@ PrefabInstance:
     - target: {fileID: 5218907673502732654, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
       propertyPath: m_Name
-      value: Building Card 3
+      value: Card 3
       objectReference: {fileID: 0}
     - target: {fileID: 5782078233785038748, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
@@ -524,6 +581,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 704309987502799765}
     m_Modifications:
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 683299288730573708, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -642,7 +729,7 @@ PrefabInstance:
     - target: {fileID: 5218907673502732654, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
       propertyPath: m_Name
-      value: Building Card 1
+      value: Card 1
       objectReference: {fileID: 0}
     - target: {fileID: 5782078233785038748, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
@@ -816,6 +903,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6845105386657066317}
     m_Modifications:
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74071745258360709, guid: e0cfdd53e09f042388fafc21800681d7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 683299288730573708, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -914,7 +1031,7 @@ PrefabInstance:
     - target: {fileID: 5218907673502732654, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}
       propertyPath: m_Name
-      value: Building Card 2
+      value: Card 2
       objectReference: {fileID: 0}
     - target: {fileID: 5782078233785038748, guid: e0cfdd53e09f042388fafc21800681d7,
         type: 3}

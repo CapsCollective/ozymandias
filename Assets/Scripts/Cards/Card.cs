@@ -1,7 +1,5 @@
-﻿using System;
-using Buildings;
-using DG.Tweening;
-using Inputs;
+﻿using DG.Tweening;
+using Structures;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,103 +10,103 @@ namespace Cards
 {
     public class Card : UiUpdater, IPointerEnterHandler, IPointerExitHandler
     {
-        public Toggle toggle;
-        public GameObject buildingPrefab;
-        public bool isReplacing;
+        public Toggle Toggle { get; private set; }
+        public Blueprint Blueprint { get; set; }
         [SerializeField] private CardDisplay cardDisplay;
-        [SerializeField] private int position;
         [SerializeField] private Ease tweenEase;
         [SerializeField] private int popupMultiplier = 60;
         [SerializeField] private int highlightMultiplier = 20;
 
         private Vector3 _initialPosition;
         private RectTransform _rectTransform;
-        private bool _isReplacing;
+        public bool IsReplacing { get; private set; }
         
         private void Start()
         {
             // Get the card's rect-transform details
-            toggle = GetComponent<Toggle>();
+            Toggle = GetComponent<Toggle>();
             _rectTransform = GetComponent<RectTransform>();
             _initialPosition = _rectTransform.localPosition;
         }
 
         protected override void UpdateUi()
         {
-            var building = buildingPrefab.GetComponent<Building>();
-            
             // Set toggle interactable
-            toggle.interactable = building.ScaledCost <= Manager.Stats.Wealth;
-            if (toggle.isOn && !toggle.interactable)
+            Toggle.interactable = Blueprint && Blueprint.ScaledCost <= Manager.Stats.Wealth;
+            if (Toggle.isOn && !Toggle.interactable)
             {
                 // Unselect the card if un-interactable
-                toggle.isOn = false;
-                Place.Selected = Place.Deselected;
+                Toggle.isOn = false;
                 cardDisplay.SetHighlight(false);
             }
 
-            cardDisplay.UpdateDetails(building, toggle.interactable);
+            cardDisplay.UpdateDetails(Blueprint, Toggle.interactable);
         }
 
         public void ToggleSelect(bool isOn)
         {
             cardDisplay.SetHighlight(isOn);
+
+            if (IsReplacing) return;
             
-            if (isReplacing) { return; }
-            if (isOn) Place.Selected = position;
+            if (isOn) Manager.Cards.SelectedCard = this;
             else
             {
-                Place.Selected = Place.Deselected;
+                // Deselect if not changing to another cards
+                if (Manager.Cards.SelectedCard == this) Manager.Cards.SelectedCard = null;
                 OnPointerExit(null);
             }
         }
-
-        public void SelectCard()
-        {
-            ApplyTween(_initialPosition + _rectTransform.transform.up * popupMultiplier,
-                new Vector3(1.1f, 1.1f), 0.5f);
-        }
-
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
             // Run pointer enter tween
-            SelectCard();
-        }
-
-        public void DeselectCard()
-        {
-            if (!_rectTransform) return;
-
-            var move = _initialPosition;
-            if (toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
-
-            ApplyTween(move, Vector3.one, 0.5f);
+            ApplyTween(_initialPosition + _rectTransform.transform.up * popupMultiplier, new Vector3(1.1f, 1.1f), 0.5f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             // Run pointer exit tween
-            DeselectCard();
-        }
+            if (!_rectTransform) return;
 
-        public void SwitchCard(Action<int> callback)
+            var move = _initialPosition;
+            if (Toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
+
+            ApplyTween(move, Vector3.one, 0.5f);
+        }
+        
+        public void Drop()
         {
-            isReplacing = true;
-            _rectTransform.DOLocalMove(
-                    _initialPosition - _rectTransform.transform.up * 250, 
-                    0.5f).SetEase(tweenEase)
-                .OnComplete(() => {
-                    callback(position);
-                    _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase)
-                        .OnComplete(() => {
-                            isReplacing = false;
-                        });
+            _rectTransform.localPosition = _initialPosition - _rectTransform.transform.up * 250;
+        }
+        
+        public void Pop()
+        {
+            if(_rectTransform.localPosition != _initialPosition)
+                _rectTransform.DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase);
+        }
+        
+        // Animated replacement with a new card
+        public void Replace()
+        {
+            Toggle.isOn = false;
+            IsReplacing = true;
+            _rectTransform
+                .DOLocalMove(_initialPosition - _rectTransform.transform.up * 250, 0.5f)
+                .SetEase(tweenEase)
+                .OnComplete(() =>
+                {
+                    Blueprint = Manager.Cards.NewCard();
+                    UpdateUi();
+                    _rectTransform
+                        .DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase)
+                        .OnComplete(() => { IsReplacing = false; });
                 });
         }
-
+        
         private void ApplyTween(Vector3 localMove, Vector3 scale, float duration)
         {
-            if (!_rectTransform) return;
+            if (!_rectTransform || IsReplacing) return;
             _rectTransform.DOLocalMove(localMove, duration).SetEase(tweenEase);
             _rectTransform.DOScale(scale, duration).SetEase(tweenEase);
         }

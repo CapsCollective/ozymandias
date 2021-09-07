@@ -1,5 +1,5 @@
-using Buildings;
 using Managers;
+using Structures;
 using UnityEngine;
 using static Managers.GameManager;
 
@@ -17,33 +17,18 @@ namespace Cards
         
         private void Display()
         {
-            foreach (GameObject building in Manager.Cards.StarterBuildings)
+            foreach (Blueprint blueprint in Manager.Cards.All)
             {
-                Instantiate(cardDisplayPrefab, transform)
-                    .GetComponent<CardDisplay>()
-                    .UpdateDetails(building.GetComponent<Building>());
-            }
-            foreach (GameObject building in Manager.Cards.UnlockableBuildings)
-            {
+                bool isUnlocked = Manager.Cards.IsUnlocked(blueprint);
+                
                 CardDisplay card = Instantiate(cardDisplayPrefab, transform).GetComponent<CardDisplay>();
-                //card.gameObject.AddComponent<ScaleOnHover>();
-                bool isUnlocked = Manager.Cards.IsUnlocked(building);
-                card.UpdateDetails(isUnlocked ?
-                    building.GetComponent<Building>() :
-                    null
-                );
-
-                if (!isUnlocked)
+                card.UpdateDetails(isUnlocked || blueprint.starter ? blueprint : null);
+                
+                // Update list on card unlock
+                if(isUnlocked) Cards.OnUnlock += (unlocked) =>
                 {
-                    // Update list on card unlock
-                    Cards.OnUnlock += (unlocked) =>
-                    {
-                        if (unlocked.name == building.name)
-                        {
-                            card.UpdateDetails(building.GetComponent<Building>());
-                        }
-                    };
-                }
+                    if (unlocked.type == blueprint.type) card.UpdateDetails(blueprint);
+                };
             }
         }
     }

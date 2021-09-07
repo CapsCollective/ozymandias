@@ -37,14 +37,21 @@ namespace Adventurers
             return _adventurers.Count(a => a.guild == type);
         }
         
-        public Adventurer Assign(Quest q)
+        public Adventurer Assign(Quest quest)
         {
             List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
             if (removable.Count == 0) return null;
 
             int randomIndex = Random.Range(0, removable.Count);
-            removable[randomIndex].assignedQuest = q;
+            removable[randomIndex].assignedQuest = quest;
             return removable[randomIndex];
+        }
+        
+        public List<Adventurer> Assign(Quest quest, int adventurerCount)
+        {
+            // Return a list of assigned adventurers
+            return Enumerable.Range(0, adventurerCount)
+                .Select(i => Assign(quest)).ToList();
         }
 
         public Adventurer Assign(Quest q, string adventurerName)

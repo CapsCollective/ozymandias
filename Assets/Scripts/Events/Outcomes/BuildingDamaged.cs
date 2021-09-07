@@ -14,7 +14,7 @@ namespace Events.Outcomes
     
         public override bool Execute()
         {
-            buildingName = Manager.Buildings.Remove(type);
+            buildingName = Manager.Structures.Remove(type);
             return buildingName != null;
         }
     

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
 using DG.Tweening;
 using Events;
+using Structures;
 using TMPro;
 using UnityEngine;
 using Utilities;
@@ -19,8 +19,8 @@ namespace Cards
 
         private Vector3 _originalPos;
         private Canvas _canvas;
-        private readonly Stack<Building> _buildings = new Stack<Building>();
-        private Building _displayBuilding;
+        private readonly Stack<Blueprint> _buildings = new Stack<Blueprint>();
+        private Blueprint _displayBuilding;
 
         private void Start()
         {

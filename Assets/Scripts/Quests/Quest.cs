@@ -1,21 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
-using Buildings;
 using Managers;
 using Map;
 using NaughtyAttributes;
+using Structures;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
+using Random = UnityEngine.Random;
 
 namespace Quests
 {
     [CreateAssetMenu]
     public class Quest : ScriptableObject
     {
-        private enum Location
+        public enum Location
         {
             Grid,
             Forest,
@@ -23,13 +25,15 @@ namespace Quests
             Dock
         }
         
-        public int turns = 5;
+        public static Action<Quest> OnQuestStarted;
+        
         public int adventurers = 2;
         [Range(0.5f, 3f)] public float costScale = 1.5f; // How many turns worth of gold to send, sets cost when created.
 
         [SerializeField] private Location location;
         [SerializeField] private string title;
         [TextArea] [SerializeField] private string description;
+        [SerializeField] private string reward;
         [SerializeField] private Event completeEvent; // Keep empty if randomly chosen
         //[SerializeField] private Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
 
@@ -37,11 +41,26 @@ namespace Quests
         private readonly List<Adventurer> _assigned = new List<Adventurer>();
 
         public string Title => title;
+        public string Reward => reward;
         public string Description => description;
         public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
-        public Building Building { get; private set; }
+        public Structure Structure { get; private set; }
         public bool IsActive => TurnsLeft != -1;
+        public bool IsRadiant => QuestLocation is Location.Grid;
+        public int MaxAdventurers => 2 + Structure.SectionCount;
+        public int MinAdventurers => 3;
+        public int MaxCost => (int)(Cost * 1.5);
+        public int MinCost => (int)(Cost * 0.5);
+        public int AssignedCount => _assigned.Count;
+        public int Turns => 5; // TODO scale turns with cost
+
+        public Location QuestLocation
+        {
+            get => location;
+
+            private set => location = value;
+        }
 
         public void Add()
         {
@@ -67,36 +86,35 @@ namespace Quests
             _assigned.Clear();
             State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
-        
-        public void Start()
+
+        public void Begin(int adventurersUsed, int cost)
         {
             //if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
-            TurnsLeft = turns;
-            Manager.Stats.Spend(Cost);
-            for (int i = 0; i < adventurers; i++) _assigned.Add(Manager.Adventurers.Assign(this));
+            TurnsLeft = Turns;
+            Manager.Stats.Spend(cost);
+            _assigned.AddRange(Manager.Adventurers.Assign(this, adventurersUsed));
             UpdateUi();
+            OnQuestStarted?.Invoke(this);
         }
 
-        private bool CreateBuilding(List<int> occupied)
+        private void CreateBuilding(List<int> occupied)
         {
-            Building = Instantiate(Manager.Quests.BuildingPrefab, Manager.Quests.transform).GetComponent<Building>();
-            if (Building.Create(occupied, this, !Manager.State.Loading)) return true;
-            Destroy(Building);
-            return false;
+            Structure = Instantiate(Manager.Structures.StructurePrefab, Manager.Quests.transform).GetComponent<Structure>();
+            Structure.CreateQuest(occupied, this);
         }
 
         private void GrowBuilding()
         {
-            if (Building == null) return;
+            if (Structure == null) return;
             
             int cellChoiceCount = 4; //TODO: Play around with this to see what feels best
             
-            Vector3 target = Manager.Buildings.GetClosest(Building.Occupied[0].WorldSpace).transform.position;
+            Vector3 target = Manager.Structures.GetClosest(Structure.Occupied[0].WorldSpace).transform.position;
             
             // Get a new cell from a random selection of X closest neighbours
             Dictionary<Cell, float> distances = new Dictionary<Cell, float>();
 
-            foreach (Cell cell in Building.Occupied)
+            foreach (Cell cell in Structure.Occupied)
             {
                 Manager.Map.GetNeighbours(cell).ForEach(neighbour =>
                 {
@@ -110,13 +128,13 @@ namespace Quests
                 .Take(Mathf.Min(cellChoiceCount, distances.Count))
                 .ToList().SelectRandom().Key;
             
-            Building.Grow(newCell);
+            Structure.Grow(newCell);
         }
 
         private void ClearBuilding()
         {
-            Building.Destroy();
-            Building = null;
+            Structure.Destroy();
+            Structure = null;
         }
         
         private void OnNewTurn()
@@ -134,7 +152,7 @@ namespace Quests
             else if (
                 location == Location.Grid && 
                 _turnCreated != Manager.Stats.TurnCounter && 
-                Random.Range(0,10) < Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
+                Random.Range(0,10) > Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
             )
             {
                 GrowBuilding();
@@ -149,7 +167,7 @@ namespace Quests
                 turnsLeft = TurnsLeft,
                 cost = Cost,
                 assigned = _assigned.Select(a => a.name).ToList(),
-                occupied = Building.Occupied.Select(cell => cell.Id).ToList()
+                occupied = Structure ? Structure.Occupied.Select(cell => cell.Id).ToList() : null
             };
         }
 

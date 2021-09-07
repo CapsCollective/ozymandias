@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa2eefb1e444240ac9a4ac3a3cead75, type: 3}
+  m_Name: Blacksmith
+  m_EditorClassIdentifier: 
+  type: 1
+  description: The fighting types need a steady supply of sharpened steel to keep
+    themselves from getting sliced.
+  icon: {fileID: 21300000, guid: 19d6b2c00f666664188e853b83045ceb, type: 3}
+  stats:
+    list:
+    - Key: 0
+      Value: 2
+    - Key: 1
+      Value: 1
+    keyCollision: 0
+  baseCost: 30
+  scaleSpeed: 3
+  roofColor: {r: 0.6132076, g: 0.27321196, b: 0.24007654, a: 0}
+  sections:
+  - prefab: {fileID: 3455616402048513333, guid: 60022fed467cb12469079023da215e7e,
+      type: 3}
+    directions: 
+    clockwiseRotations: 2
+  - prefab: {fileID: 1526313147604979907, guid: ae281b48b521138458f2c00c84552a1b,
+      type: 3}
+    directions: 02000000
+    clockwiseRotations: 0
+  starter: 1
+  adjacencyConfig:
+    hasBonus: 1
+    specialCheck: 0
+    upgrade: 18
+    stat: 7
+    structureType: 0
+    neighbourType: 13
+    customDescription: 

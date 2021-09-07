@@ -83,7 +83,9 @@ namespace Events
             if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
             else if(Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
-            if (Manager.Stats.TurnCounter >= 5)
+            // TODO: Events that increase threat a fixed amount spawn relative to how far ahead your defence is
+            // Camp quest events spawn relative to turns progressed, to balance fixed/ scaling 
+            /*if (Manager.Stats.TurnCounter >= 5)
             {
                 // 20% chance to start a new story while no other is active
                 if (!StoryActive && Random.Range(0, 5) == 0)
@@ -94,7 +96,7 @@ namespace Events
                         Event story = PickRandom(EventType.Story);
                         if (story == null) break; // Catch case for if there are no stories
                         
-                        if (story.buildingToUnlock == null || !Manager.Cards.IsDiscoverableOrUnlocked(story.buildingToUnlock))
+                        if (story.blueprintToUnlock == null || !Manager.Cards.IsDiscoverableOrPlayable(story.blueprintToUnlock))
                         {
                             eventPool.Add(story);
                             break;
@@ -110,7 +112,7 @@ namespace Events
             
                 // Start spawning threat events at 50, and gets more likely the higher it gets
                 if (Random.Range(0,50) > Manager.Stats.Stability) eventPool.Add(PickRandom(EventType.Threat));
-            }
+            }*/
             
             while (eventPool.Count <= 3) eventPool.Add(PickRandom(EventType.Flavour)); //Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order

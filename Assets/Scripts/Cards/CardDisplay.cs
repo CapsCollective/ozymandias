@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
 using DG.Tweening;
+using Structures;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -53,9 +52,9 @@ namespace Cards
             cardHighlight.DOFade(isOn ? 1 : 0, 0.5f);
         }
 
-        public void UpdateDetails(Building building, bool interactable = true)
+        public void UpdateDetails(Blueprint blueprint, bool interactable = true)
         {
-            if (building == null)
+            if (blueprint == null)
             {
                 //TODO: Make actual locked design
                 title.text = "???";
@@ -67,10 +66,10 @@ namespace Cards
             }
             
             // Set card details
-            title.text = building.name;
-            description.text = building.description;
-            cost.text = building.ScaledCost.ToString();
-            icon.sprite = building.icon;
+            title.text = blueprint.name;
+            description.text = blueprint.description;
+            cost.text = blueprint.ScaledCost.ToString();
+            icon.sprite = blueprint.icon;
 
             if (interactable)
             {
@@ -87,8 +86,7 @@ namespace Cards
                 costIcon.color = Colors.CostInactive;
             }
 
-            var effects = building.stats
-                .OrderByDescending(x => x.Value).ToList();
+            var effects = blueprint.stats.OrderByDescending(x => x.Value).ToList();
             
             // Set the class badges to the card
             for (int i = 0; i < badges.Count; i++)

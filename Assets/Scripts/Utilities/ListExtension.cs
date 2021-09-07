@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Structures;
 using UnityEngine;
 
 namespace Utilities
@@ -41,9 +42,9 @@ namespace Utilities
 
         // Gets a random subset from a list of count
         // Absolutely not the fastest way to do this, fix if needed
-        public static List<GameObject> RandomSelection(this List<GameObject> list, int count)
+        public static List<Blueprint> RandomSelection(this List<Blueprint> list, int count)
         {
-            List<GameObject> dupList = new List<GameObject>(list);
+            List<Blueprint> dupList = new List<Blueprint>(list);
             for (int i = 0; i < list.Count - count; i++)
             {
                 dupList.RemoveAt(Random.Range(0, dupList.Count));

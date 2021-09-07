@@ -84,7 +84,7 @@ namespace Events
 
             // Set all event choices on button texts
             for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i, i < _choiceEvent.choices.Count);
-            if (!_choiceSelected) UIEventController.SelectUI(continueButton.gameObject);
+            if (!_choiceSelected) SelectUi(continueButton.gameObject);
         }
 
         private void SetChoiceActive(int choice, bool active)
@@ -95,7 +95,7 @@ namespace Events
 
             if (choice == 0 && active)
             {
-                UIEventController.SelectUI(choiceList[choice].gameObject);
+                SelectUi(choiceList[choice].gameObject);
                 _choiceSelected = true;
             };
         }
@@ -109,8 +109,8 @@ namespace Events
             SetContinueButtonState(ButtonState.Close);
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
+            SelectUi(continueButton.gameObject);
             UpdateUi();
-            UIEventController.SelectUI(continueButton.gameObject);
         }
     
         private static readonly string[] NewspaperTitles = {
@@ -152,7 +152,7 @@ namespace Events
                     SaveFile.SaveState(); // Save here so state only locks in after paper is closed
                     _canvas.enabled = false;
                 });
-            UIEventController.SelectUI(null);
+            SelectUi(null);
         }
     }
 }

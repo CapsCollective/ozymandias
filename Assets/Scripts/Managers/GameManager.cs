@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Events;
 using Inputs;
 using NaughtyAttributes;
 using Tooltip;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Utilities;
 using Random = UnityEngine.Random;
 
@@ -13,6 +13,7 @@ namespace Managers
 
     public class GameManager : MonoBehaviour
     {
+        #region Static Accessors
         public static GameManager Manager { get; private set; }
         
         // All Managers/ Universal Controllers
@@ -20,7 +21,7 @@ namespace Managers
         public State State { get; private set; }
         public Stats Stats { get; private set; }
         public Adventurers.Adventurers Adventurers { get; private set; }
-        public Buildings.Buildings Buildings { get; private set; }
+        public Structures.Structures Structures { get; private set; }
         public Cards.Cards Cards { get; private set; }
         public Quests.Quests Quests { get; private set; }
         public Requests.Requests Requests { get; private set; }
@@ -41,7 +42,7 @@ namespace Managers
             State = FindObjectOfType<State>();
             Stats = FindObjectOfType<Stats>();
             Adventurers = FindObjectOfType<Adventurers.Adventurers>();
-            Buildings = FindObjectOfType<Buildings.Buildings>();
+            Structures = FindObjectOfType<Structures.Structures>();
             Cards = FindObjectOfType<Cards.Cards>();
             Quests = FindObjectOfType<Quests.Quests>();
             Requests = FindObjectOfType<Requests.Requests>();
@@ -53,18 +54,31 @@ namespace Managers
             Camera = FindObjectOfType<CameraMovement>();
             Cursor = FindObjectOfType<CursorSelect>();
         }
+        #endregion
 
+        #region State & UI
         public void Start()
         {
             State.EnterState(GameState.Loading);
         }
-
-        public static Action OnUpdateUI;
-        public static void UpdateUi()
-        {
-            OnUpdateUI.Invoke();
-        }
         
+        public static Action OnUpdateUI;
+        public static void UpdateUi() => OnUpdateUI.Invoke();
+        public static void SelectUi(GameObject gameObject) => EventSystem.current.SetSelectedGameObject(gameObject);
+        public static bool IsOverUi => EventSystem.current.IsPointerOverGameObject();
+        #endregion
+
+        #region Balancing Constants
+        
+        public const int TerrainBaseCost = 5;
+        public const float TerrainCostScale = 1.15f;
+        public const int RuinsBaseCost = 20;
+        public const float RuinsCostScale = 1.10f;
+        public const int WealthPerAdventurer = 5;
+        public const int ThreatPerTurn = 2;
+
+        #endregion
+
         #region Debug
         
         [Button("Print Save")]
@@ -95,7 +109,12 @@ namespace Managers
             }
             UpdateUi();
         }
-        
+
+        [Button("Unlock All Cards")]
+        public void UnlockAllCards()
+        {
+            Manager.Cards.UnlockAll();
+        }
         #endregion
     }
 }

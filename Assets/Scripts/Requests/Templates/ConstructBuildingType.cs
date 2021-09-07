@@ -1,5 +1,5 @@
-﻿using Buildings;
-using Events;
+﻿using Events;
+using Structures;
 using UnityEngine;
 using Utilities;
 
@@ -14,22 +14,25 @@ namespace Requests.Templates
 
         public override void Start()
         {
-            Buildings.Buildings.OnBuild += CheckBuilt;
+            Structures.Structures.OnBuild += CheckBuilt;
         }
         
         public override void Complete()
         {
-            Buildings.Buildings.OnBuild -= CheckBuilt;
+            Structures.Structures.OnBuild -= CheckBuilt;
         }
 
-        private void CheckBuilt(Building building)
+        private void CheckBuilt(Structure structure)
         {
-            if (building.type == buildingType) Completed++;
+            if (structure.Blueprint.type == buildingType) Completed++;
         }
         
+#if (UNITY_EDITOR)
+
         public override void Configure(EventCreator.RequestConfig config)
         {
             buildingType = config.buildingType;
         }
+#endif
     }
 }

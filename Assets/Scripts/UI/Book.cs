@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Inputs;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -71,7 +72,7 @@ namespace UI
             unlocksRibbon.onClick.AddListener(() => Page = BookPage.Unlocks);
             progressRibbon.onClick.AddListener(() => Page = BookPage.Progress);
 
-            Manager.Inputs.OnShowPause.performed += _ =>
+            Manager.Inputs.OnToggleBook.performed += _ =>
             {
                 if(Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
             };
@@ -104,7 +105,8 @@ namespace UI
             _transitioning = true;
             Manager.State.EnterState(_closeState);
             closeButton.gameObject.SetActive(false);
-            UIEventController.SelectUI(null);
+            SelectUi(null);
+            
             transform.DOPunchScale(PunchScale, animateOutDuration, 0, 0);
             transform.DOLocalMove(ClosePos, animateOutDuration)
                 .OnComplete(() =>

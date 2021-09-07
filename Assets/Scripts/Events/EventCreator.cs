@@ -14,6 +14,7 @@ using EventType = Utilities.EventType;
 
 namespace Events
 {
+#if (UNITY_EDITOR)
     public static class EventCreator
     {
         #region Config Structs
@@ -116,7 +117,8 @@ namespace Events
                     Choice choice = ScriptableObject.CreateInstance<Choice>();
                     foreach (OutcomeConfig outcomeConfig in choiceConfig.outcomes)
                     {
-                        Outcome outcome;
+                        // Commented to silence warning
+                        // Outcome outcome;
                         switch (outcomeConfig.type)
                         {
                             case OutcomeType.Debug:
@@ -132,13 +134,14 @@ namespace Events
                 }
                 return root;
             }
-
-            static Quest CreateQuest(QuestConfig config)
-            {
-                Quest quest = ScriptableObject.CreateInstance<Quest>();
-
-                return quest;
-            }
+            
+            // Commented to silence warning
+            // static Quest CreateQuest(QuestConfig config)
+            // {
+            //     Quest quest = ScriptableObject.CreateInstance<Quest>();
+            //
+            //     return quest;
+            // }
         }
         
         #region Requests
@@ -296,4 +299,5 @@ namespace Events
             return AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
         }
     }
+#endif
 }

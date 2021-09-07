@@ -1,16 +1,11 @@
 using UnityEngine;
+using Utilities;
 
 namespace Inputs
 {
     public class CursorSelect : MonoBehaviour
     {
-        public enum CursorType
-        {
-            Pointer,
-            Build,
-            Grab
-        }
-    
+
         [SerializeField] private Texture2D pointerCursor;
         [SerializeField] private Texture2D buildCursor;
         [SerializeField] private Texture2D grabCursor;

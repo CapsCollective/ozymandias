@@ -15,10 +15,16 @@
         Stability
     }
 
+    public enum StructureType
+    {
+        Building,
+        Ruins,
+        Terrain,
+        Quest
+    }
+    
     public enum BuildingType
     {
-        Terrain,
-        Ruins,
         GuildHall,
         Blacksmith,
         Tavern,
@@ -44,8 +50,7 @@
         Tailor,
         Apothecary,
         Jeweller,
-        Cartographer,
-        Quest
+        Cartographer
     }
 
     public enum EventType
@@ -172,6 +177,33 @@
         //Special Abilities
         FreeCard,
         CampSpread,
-        MaxAdventurerSpawn
+        MaxAdventurerSpawn,
+        //Adjacency Bonuses
+        Blacksmith, // + Enchanter: Arcane Upselling - Spending
+        Farm, // + 2 Farms: Cross Pollination - Food
+        Herbalist, // + Apothecary: Fresh Ingredients - Outrider
+        House, // + Bakery: Freshly Baked - Spending
+        Inn, // + Fighting Pit: Weekend Games - Brawler
+        Library, // + Ruins: Research Expeditions - Arcanist
+        Markets, // + Bakery: Camping Supplies - Housing
+        Shrine, // + Jewellers: Holy Offerings - Diviners
+        Tavern, // + Brewery: Craft Beers - Performers
+        Watchtower, // + No Neighbours: Blissful Silence - Arcanists
+        Armoury, // + Blacksmith: Military Industrial Complex - Brawler
+        Barracks, // + Tailor: Guard Uniforms - Defence
+        BathHouse, // + Water source: Hot Springs - Diviners
+        Cartographers, // + Forest: Exploration Parties - Outrider
+        HuntingLodge, // + Forest: Fresh Meat - Food
+        Monastery, // + No Neighbours: Meditative Aura - Diviners
+        Plaza, // + Guild Hall: Town Centre - Spending
+        Tailor, // + Tannery: Stylish Armour - Performers
+        Tannery, // + Hunting Lodge: Extra Padded Armour - Defence
+    }
+    
+    public enum CursorType
+    {
+        Pointer,
+        Build,
+        Grab
     }
 }

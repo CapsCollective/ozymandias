@@ -1,17 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Map;
+using Quests;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
 namespace WalkingAdventurers
 {
     public class Spawner : MonoBehaviour
     {
-        [SerializeField] private GameObject adventurerModel;
+        [SerializeField] private GameObject adventurerModel, dogModel;
         [SerializeField] private float adventurerSpeed = .3f;
         [SerializeField] private float wanderingUpdateFrequency = 3f;
-        //[SerializeField] private float partyScatter = .5f;
+        [SerializeField] private float partyScatter = .5f;
         [SerializeField] private float fadeDuration = 1f;
         
         private readonly Dictionary<GameObject, List<Vector3>> _activeAdventurers = 
@@ -21,8 +25,10 @@ namespace WalkingAdventurers
 
         private void Start()
         {
-            // TODO: Reenable functionality once new quest setup is done
-            // Manager.Quests.OnQuestStarted += quest => SendAdventurersOnQuest(quest.adventurers);
+            Quest.OnQuestStarted += quest =>
+            {
+                StartCoroutine(SpawnQuestingAdventurers(quest));
+            };
         }
 
         private void Update()
@@ -41,6 +47,7 @@ namespace WalkingAdventurers
                 if (adventurerPath.Value.Count > 0)
                 {
                     List<Vector3> path = adventurerPath.Value;
+                    adventurer.transform.LookAt(path[0]);
                     adventurer.transform.position = Vector3.MoveTowards(
                         adventurer.transform.position, path[0], 
                         adventurerSpeed * Time.deltaTime);
@@ -63,55 +70,72 @@ namespace WalkingAdventurers
         
         private void CheckWandering()
         {
-            if (_activeAdventurers.Count < Manager.Buildings.Count - 1) SpawnWanderingAdventurer();
+            if (_activeAdventurers.Count < Manager.Structures.Count - 1) SpawnWanderingAdventurer();
         }
         
         private void SpawnWanderingAdventurer()
         {
-            var path = Manager.Map.RandomRoadPath;
+            var path = Manager.Map.Layout.RandomRoadPath;
             if (path.Count == 0) return;
             _activeAdventurers.Add(CreateAdventurer(path[0]), path);
         }
-        
-        /* Disabling for now as we update the quest setup
-         public void SendAdventurersOnQuest(int number)
-        {
-            StartCoroutine(SpawnQuestingAdventurers(number));
-        }
 
-        private IEnumerator SpawnQuestingAdventurers(int num)
+        private IEnumerator SpawnQuestingAdventurers(Quest quest)
         {
-            List<Vertex> gridPath = _mapLayout.AStar(_mapLayout.VertexGraph,start, end);
+            // Get closest vert to town centre
+            Vertex start = Manager.Map.GetClosestCell(Manager.Structures.TownCentre).Vertices[0];
+            List<Vector3> finalPath;
             
-            List<Vertex> wildPath = new List<Vertex>();
-            Vertex finalRoadPoint = null;
-            for (int i = gridPath.Count - 1; i >= 0; i--)
+            if (quest.IsRadiant)
             {
-                if (!_mapLayout.RoadGraph.Contains(gridPath[i]))
+                // Get closest vert to radiant quest location
+                Vertex end = Manager.Map.GetClosestCell(quest.Structure.transform.position).Vertices[0];
+
+                // Generate path regardless of roads
+                var naivePath = Utilities.Algorithms.AStar(
+                    Manager.Map.Layout.VertexGraph, 
+                    start, end);
+                
+                // Iterate backwards through the path until finding a vertex in
+                // the road graph to break off from and reverse it on completion
+                Vertex lastVert = null;
+                var forestPath = new List<Vertex>();
+                for (var i = naivePath.Count - 1; i >= 0; i--)
                 {
-                    wildPath.Add(gridPath[i]);
+                    lastVert = naivePath[i];
+                    if (Manager.Map.Layout.RoadGraph.Contains(lastVert)) break;
+                    forestPath.Add(lastVert);
                 }
-                else
-                {
-                    finalRoadPoint = gridPath[i];
-                    break;
-                }
+                forestPath.Reverse();
+                
+                // Generate path from start to end of road
+                var roadPath = Utilities.Algorithms.AStar(
+                    Manager.Map.Layout.RoadGraph, 
+                    start, lastVert);
+                
+                // Concat the forest path to the road path and normalise positions
+                finalPath = roadPath.Concat(forestPath)
+                    .Select(vertex => Manager.Map.transform.TransformPoint(vertex))
+                    .ToList();
             }
-            List<Vertex> roadPath = _mapLayout.AStar(_mapLayout.RoadGraph,start, finalRoadPoint);
-            List<Vector3> finalPath = roadPath.Concat(wildPath)
-                .Select(vertex => Manager.Map.transform.TransformPoint(vertex)).ToList();
-            
-            for (var i = 0; i < num; i++)
+            else
             {
+                throw new NotImplementedException();
+            }
+            
+            // Spawn party members offset by a set timing
+            for (var i = 0; i < quest.AssignedCount; i++)
+            {
+                // The path is copied here to avoid grouping behaviour from a shared list
                 _activeAdventurers.Add(CreateAdventurer(start), new List<Vector3>(finalPath));
                 yield return new WaitForSeconds(partyScatter);
             }
-            yield return null;
-        }*/
+        }
 
         private GameObject CreateAdventurer(Vector3 start)
         {
-            GameObject newAdventurer = Instantiate(adventurerModel, start, Quaternion.identity);
+            // 10% chance to spawn dog
+            GameObject newAdventurer = Instantiate(Random.Range(0, 10) == 0 ? dogModel : adventurerModel, start, Quaternion.identity);
             newAdventurer.transform.parent = transform;
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
             StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));

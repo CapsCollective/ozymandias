@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa2eefb1e444240ac9a4ac3a3cead75, type: 3}
+  m_Name: House
+  m_EditorClassIdentifier: 
+  type: 6
+  description: A cozy little shack for adventurers to stash their loot and sleep
+    off their concussions.
+  icon: {fileID: 21300000, guid: b654a4861c885e94a914341e8f1e97e0, type: 3}
+  stats:
+    list:
+    - Key: 5
+      Value: 1
+    keyCollision: 0
+  baseCost: 10
+  scaleSpeed: 4
+  roofColor: {r: 0.34901962, g: 0.21176471, b: 0.12156863, a: 0}
+  sections:
+  - prefab: {fileID: 310647785430848519, guid: 699b7165eb99c98448ad4c7527ea66cc, type: 3}
+    directions: 
+    clockwiseRotations: 0
+  starter: 1
+  adjacencyConfig:
+    hasBonus: 1
+    specialCheck: 0
+    upgrade: 21
+    stat: 7
+    structureType: 0
+    neighbourType: 17
+    customDescription: 
