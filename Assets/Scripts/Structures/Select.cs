@@ -276,14 +276,17 @@ namespace Structures
             
             if (!SelectedStructure.Bonus.HasValue) return;
             bonusBadge.transform.localPosition = new Vector2(0, -320);
-            StartCoroutine(Algorithms.DelayCall(0.2f, () =>
-            {
-                bonusBadge.icon.sprite = statIcons[SelectedStructure.Bonus.Value];
-                bonusBadge.background.color = Colors.StatColours[SelectedStructure.Bonus.Value];
-                bonusText.text = SelectedStructure.Blueprint.adjacencyConfig.Description;
-                bonusBadge.transform.DOLocalMove(new Vector2(0, -270), 1f);
-                bonusBadge.canvasGroup.DOFade(1, 1f);
-            }));
+
+            const float delay = 0.5f;
+            bonusBadge.canvasGroup.DOFade(1, 1f).SetDelay(delay);
+            bonusBadge.transform
+                .DOLocalMove(new Vector2(0, -270), 1f)
+                .SetDelay(delay)
+                .OnStart(() => {
+                    bonusBadge.icon.sprite = statIcons[SelectedStructure.Bonus.Value];
+                    bonusBadge.background.color = Colors.StatColours[SelectedStructure.Bonus.Value];
+                    bonusText.text = SelectedStructure.Blueprint.adjacencyConfig.Description;
+                });
         }
         
         private void HideEffects()
