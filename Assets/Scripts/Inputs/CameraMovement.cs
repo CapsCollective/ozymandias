@@ -43,7 +43,19 @@ namespace Inputs
         [SerializeField] private Vector3 clampCenterPos;
         [SerializeField] private float clampDistance;
         [SerializeField] private float pushForce = 5.0f;
-        [SerializeField] private bool showDebug = false;
+        [SerializeField] private float dotMultiplier = 2.0f;
+        [SerializeField] private bool showDebugSphere = false;
+        [SerializeField] private Mesh debugMesh;
+        [SerializeField] private Material debugMaterial;
+
+        private Vector2[] screenSamplePositions =
+        {
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.75f),
+            new Vector2(0.25f, 0.1f),
+            new Vector2(0.75f, 0.1f),
+
+        };
 
         private void Awake()
         {
@@ -125,11 +137,17 @@ namespace Inputs
 
             // Depth of Field stuff
             volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
-            var DoFRay = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(DoFRay, out var hit, 100f, layerMask))
+            float avgHitDist = 0;
+            for (int i = 0; i < screenSamplePositions.Length; i++)
             {
-                _depthOfField.focusDistance.value = Mathf.MoveTowards(_depthOfField.focusDistance.value, hit.distance, Time.deltaTime * DoFAdjustMultiplier);
+                var DoFRay = _cam.ViewportPointToRay(screenSamplePositions[i]);
+                if (Physics.Raycast(DoFRay, out var hit, 100f, layerMask))
+                {
+                    avgHitDist += hit.distance;
+                }
             }
+            avgHitDist /= screenSamplePositions.Length;
+             _depthOfField.focusDistance.value = Mathf.MoveTowards(_depthOfField.focusDistance.value, avgHitDist, Time.deltaTime * DoFAdjustMultiplier);
 
             // Bounciness stuff
             bool atLimit = FreeLook.m_YAxis.Value <= 0.01 | FreeLook.m_YAxis.Value >= 0.98;
@@ -142,11 +160,12 @@ namespace Inputs
             Vector3 newFollowPos = new Vector3(FreeLook.Follow.position.x, 1, FreeLook.Follow.position.z);
             FreeLook.Follow.position = Vector3.SmoothDamp(FreeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
 
-            float dot = Vector3.Dot(Vector3.back, (FreeLook.Follow.position - clampCenterPos).normalized);
+            float dot = Vector3.Dot(Vector3.back, (FreeLook.Follow.position - clampCenterPos).normalized) * dotMultiplier;
             float distanceFromBorder = Vector3.Distance(FreeLook.Follow.position, clampCenterPos) / clampDistance;
-            distanceFromBorder -= Mathf.Abs(dot);
+            if (dot > 0)
+                distanceFromBorder -= dot;
             if(distanceFromBorder > 1.0f)
-                FreeLook.Follow.position += ((clampCenterPos - FreeLook.Follow.position).normalized * (distanceFromBorder - 1.0f) * pushForce) * Time.deltaTime;
+                    FreeLook.Follow.position += ((clampCenterPos - FreeLook.Follow.position).normalized * (distanceFromBorder - 1.0f) * pushForce) * Time.deltaTime;
         }
 
         public TweenerCore<Vector3,Vector3,VectorOptions> MoveTo(Vector3 pos, float duration = 0.5f)
@@ -166,13 +185,19 @@ namespace Inputs
             IsMoving = false;
         }
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
-            if (!showDebug) return;
-            Gizmos.DrawWireSphere(clampCenterPos, 0.25f);
+            if (!showDebugSphere) return;
             Gizmos.DrawWireSphere(clampCenterPos, clampDistance);
-            Gizmos.DrawWireSphere(clampCenterPos + new Vector3(0,0,clampCenterPos.z), clampDistance);
-            Gizmos.DrawWireSphere(clampCenterPos + new Vector3(0,0,-clampCenterPos.z), clampDistance);
+            if (debugMaterial != null && debugMesh != null)
+            {
+                debugMaterial.SetFloat("_Distance", clampDistance);
+                debugMaterial.SetFloat("_DotMultiplier", dotMultiplier);
+                Graphics.DrawMesh(debugMesh, Matrix4x4.TRS(clampCenterPos - new Vector3(0, 0, clampDistance * 0.5f),
+                    Quaternion.Euler(90, 0, 0), 
+                    Vector3.one * (clampDistance * 2) * (dotMultiplier * 2)),
+                    debugMaterial, 0);
+            }
         }
     }
 }
