@@ -283,6 +283,10 @@ namespace Structures
         
         private void Update()
         {
+            #if UNITY_EDITOR
+            if (Manager.disableOutline) return;
+            #endif
+            
             //TODO: Make this on mouse input instead of every frame?
             if (!Selected || !Manager.State.InGame) return;
 
