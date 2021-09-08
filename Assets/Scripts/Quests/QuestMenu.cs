@@ -1,12 +1,9 @@
 using System;
 using DG.Tweening;
-using Inputs;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using Cinemachine;
 using Structures;
-using UnityEngine.EventSystems;
 using Utilities;
 using static Managers.GameManager;
 
