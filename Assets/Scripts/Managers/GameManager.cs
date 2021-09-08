@@ -7,6 +7,7 @@ using Tooltip;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilities;
+using Achievements;
 using Random = UnityEngine.Random;
 
 namespace Managers
@@ -33,6 +34,7 @@ namespace Managers
         public TooltipDisplay Tooltip { get; private set; }
         public CameraMovement Camera { get; private set; }
         public CursorSelect Cursor { get; private set; }
+        public Achievements.Achievements Achievements { get; private set; }
 
         private void Awake()
         {
@@ -54,6 +56,7 @@ namespace Managers
             Tooltip = FindObjectOfType<TooltipDisplay>();
             Camera = FindObjectOfType<CameraMovement>();
             Cursor = FindObjectOfType<CursorSelect>();
+            Achievements = new Achievements.Achievements();
         }
         #endregion
 
@@ -120,6 +123,12 @@ namespace Managers
         {
             for (int i = 0; i < 10; i++) Adventurers.Add();
             UpdateUi();
+        }
+
+        [Button("Reset Achievements")]
+        public void ResetAchievements()
+        {
+            SteamUserStats.ResetAllStats(true);
         }
 
         

@@ -21,11 +21,11 @@ namespace Achievements
         [TextArea] public string lockedDescription, unlockedDescription;
     }
 
-    public class Achievements : MonoBehaviour
+    public class Achievements
     {
-        [SerializeField] private GameObject achievementDisplayPrefab;
-        [SerializeField] private Transform achievementDisplayContainer;
-        [SerializeField] private List<AchievementConfig> achievementConfigs;
+        // [SerializeField] private GameObject achievementDisplayPrefab;
+        // [SerializeField] private Transform achievementDisplayContainer;
+        // [SerializeField] private List<AchievementConfig> achievementConfigs;
         private List<Achievement> Unlocked { get; set; }
         private SteamAchievementManager steamManager = new SteamAchievementManager();
         
@@ -102,8 +102,7 @@ namespace Achievements
         {
             return new AchievementDetails
             {
-                unlocked = Unlocked,
-                
+                unlocked = Unlocked
             };
         }
 
