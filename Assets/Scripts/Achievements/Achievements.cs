@@ -5,7 +5,6 @@ using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using static Managers.GameManager;
 using Object = System.Object;
 
 namespace Achievements
@@ -21,7 +20,7 @@ namespace Achievements
         [TextArea] public string lockedDescription, unlockedDescription;
     }
 
-    public class Achievements
+    public class Achievements : MonoBehaviour
     {
         // [SerializeField] private GameObject achievementDisplayPrefab;
         // [SerializeField] private Transform achievementDisplayContainer;
@@ -34,16 +33,23 @@ namespace Achievements
         //[SerializeField] private Image villageBadge, cityBadge, kingdomBadge;
         //[SerializeField] private GameObject notification;
 
+        public void Start()
+        {
+            Structures.Structures.OnBuild += structure =>
+            {
+                Unlock(Achievement.BuildOneBuilding);
+            };
+        }
+
         public void Unlock(Achievement achievement)
         {
+            if (Unlocked.Contains(achievement)) return;
             steamManager.SetOneTimeAchievement(achievement);
             steamManager.SubmitStats();
-            
-            //if (Unlocked.Contains(achievement)) return;
             //TODO: Unlock Sound Effect
             //TODO: Save 
         }
-        
+
         /*public void SetCitySize(int count)
         {
             if (count < 15)
