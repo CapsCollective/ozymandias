@@ -2,6 +2,7 @@
 using Events;
 using Inputs;
 using NaughtyAttributes;
+using Structures;
 using Tooltip;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -80,18 +81,47 @@ namespace Managers
         #endregion
 
         #region Debug
-        
-        [Button("Print Save")]
-        public void PrintSave()
+        #if UNITY_EDITOR
+
+        public bool disableOutline;
+        public Blueprint debugBuilding;
+        [Button("Set Building")]
+        public void SetBuilding()
         {
-            Debug.Log(PlayerPrefs.GetString("Save"));
+            Cards.DebugSetCard(debugBuilding);
+        }
+        
+        [Button("Unlock All Cards")]
+        public void UnlockAllCards()
+        {
+            Manager.Cards.UnlockAll();
+        }
+        
+        [Button("Next Turn")]
+        public void NextTurn()
+        {
+            State.EnterState(GameState.NextTurn);
+        }
+
+        [Button("Refresh Cards")]
+        public void RefreshCards()
+        {
+            Cards.NewCards();
         }
         
         [Button("Take Screenshot")]
         public void Screenshot()
         {
-            ScreenCapture.CaptureScreenshot($"FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
+            ScreenCapture.CaptureScreenshot($"Screenshots/FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
         }
+        
+        [Button("Extra Adventurers")]
+        public void ExtraAdventurers()
+        {
+            for (int i = 0; i < 10; i++) Adventurers.Add();
+            UpdateUi();
+        }
+
         
         [Button("Extra Wealth")]
         public void ExtraWealth()
@@ -110,11 +140,13 @@ namespace Managers
             UpdateUi();
         }
 
-        [Button("Unlock All Cards")]
-        public void UnlockAllCards()
+        [Button("Print Save")]
+        public void PrintSave()
         {
-            Manager.Cards.UnlockAll();
+            Debug.Log(PlayerPrefs.GetString("Save"));
         }
+        
+        #endif
         #endregion
     }
 }

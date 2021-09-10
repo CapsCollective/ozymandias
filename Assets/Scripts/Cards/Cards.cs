@@ -99,7 +99,7 @@ namespace Cards
         public void PopCards() => hand.ForEach(card => card.Pop());
         public void DropCards() => hand.ForEach(card => card.Drop());
         private void InitCards() => hand.ForEach(card => card.Blueprint = NewCard());
-        private void NewCards() => hand.ForEach(card => card.Replace());
+        public void NewCards() => hand.ForEach(card => card.Replace());
 
         public Blueprint NewCard()
         {
@@ -199,12 +199,6 @@ namespace Cards
 
         private void Update()
         {
-            #if UNITY_EDITOR
-            if (Keyboard.current.f5Key.wasPressedThisFrame)
-                hand[0].Blueprint = debugBlueprint;
-            #endif
-
-            
             if (!Manager.Cards.SelectedCard || IsOverUi)
             {
                 _hoveredCell = null;
@@ -270,5 +264,13 @@ namespace Cards
             if(Playable == null || Playable.Count == 0) Playable = All.Where(b => b.starter).ToList(); // Set for new game
             Discoverable = cards.discoverable?.Select(Find).ToList() ?? new List<Blueprint>();
         }
+
+        #if UNITY_EDITOR
+        public void DebugSetCard(Blueprint blueprint)
+        {
+            hand[0].Blueprint = blueprint;
+            UpdateUi();
+        }
+        #endif
     }
 }
