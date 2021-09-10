@@ -433,6 +433,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 201326592
   DoFAdjustMultiplier: 20
+  clampCenterPos: {x: 0, y: 0, z: 0}
+  clampDistance: 30
+  pushForce: 250
+  dotMultiplier: 2
+  showDebugSphere: 0
+  debugMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  debugMaterial: {fileID: 2100000, guid: 46a850d021b02bd4db7b5401a937f4a4, type: 2}
 --- !u!114 &1115064009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,7 +499,7 @@ MonoBehaviour:
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles:
-  - assemblyQualifiedName: OutlinePostProcess, Assembly-CSharp, Version=0.0.0.0,
+  - assemblyQualifiedName: Structures.OutlinePostProcess, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_AfterStackBundles: []
 --- !u!114 &340253856
@@ -622,9 +629,9 @@ MonoBehaviour:
   m_BindingMode: 4
   m_SplineCurvature: 0.497
   m_Orbits:
-  - m_Height: 25
+  - m_Height: 15
     m_Radius: 10
-  - m_Height: 10
+  - m_Height: 8
     m_Radius: 10
   - m_Height: 2
     m_Radius: 4
