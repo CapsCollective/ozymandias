@@ -1,4 +1,5 @@
 ﻿using System;
+using Achievements;
 using Events;
 using Inputs;
 using NaughtyAttributes;
@@ -54,6 +55,7 @@ namespace Managers
             Tooltip = FindObjectOfType<TooltipDisplay>();
             Camera = FindObjectOfType<CameraMovement>();
             Cursor = FindObjectOfType<CursorSelect>();
+            gameObject.AddComponent<AchievementManager>();
         }
         #endregion
 
@@ -120,6 +122,12 @@ namespace Managers
         {
             for (int i = 0; i < 10; i++) Adventurers.Add();
             UpdateUi();
+        }
+
+        [Button("Reset Achievements")]
+        public void ResetAchievements()
+        {
+            AchievementManager.ResetAll();
         }
 
         

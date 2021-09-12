@@ -135,9 +135,9 @@
         Right,
         Back
     }
-    
+
     public enum GameState
-    {                      
+    {
         Loading,   // ┌────────────────────────────────┐
         ToIntro,   // │              ┌──►NextTurn───┐  │
         InIntro,   // │ ┌►ToGame─►InGame◄──►InMenu◄─┘  │
@@ -148,11 +148,6 @@
         EndGame,   // │ └►ToCredits─►InCredits─┘ │  ▼  │
         ToCredits, // │                        GameEnd │
         InCredits  // └────────────────────────────────┘
-    }
-
-    public enum Achievement
-    {
-        Test = 0,
     }
 
     public enum UpgradeType
