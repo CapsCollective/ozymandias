@@ -1,3 +1,4 @@
+using System;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,8 @@ namespace WalkingAdventurers
 {
     public class Dog : MonoBehaviour
     {
+        public static Action OnDogPet;
+        
         [SerializeField] private Sprite icon;
         
         private Collider _collider;
@@ -29,9 +32,10 @@ namespace WalkingAdventurers
             Ray ray = _cam.ScreenPointToRay(Manager.Inputs.MousePosition);
 
             if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider) return;
+            OnDogPet?.Invoke();
             _particleSystem.Play();
             Manager.Jukebox.PlayBark();
-            Notification.OnNotification.Invoke("You pat a dog!", icon);
+            Notification.OnNotification.Invoke("You pet a dog!", icon);
         }
     
         private void OnDestroy()
