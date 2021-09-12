@@ -28,7 +28,8 @@ namespace Quests
         public static Action<Quest> OnQuestStarted;
         
         public int adventurers = 2;
-        [Range(0.5f, 3f)] public float costScale = 1.5f; // How many turns worth of gold to send, sets cost when created.
+        [Range(0.5f, 3f)] public float wealthMultiplier = 1.5f; // How many turns worth of gold to send, sets cost when created.
+        [Range(3, 6)] public int baseTurns = 3; // How many turns worth of gold to send, sets cost when created.
 
         [SerializeField] private Location location;
         [SerializeField] private string title;
@@ -41,30 +42,25 @@ namespace Quests
         private readonly List<Adventurer> _assigned = new List<Adventurer>();
 
         public string Title => title;
-        public string Reward => reward;
         public string Description => description;
-        public int Cost { get; private set; }
         public int TurnsLeft { get; private set; }
         public Structure Structure { get; private set; }
         public bool IsActive => TurnsLeft != -1;
-        public bool IsRadiant => QuestLocation is Location.Grid;
-        public int MaxAdventurers => 2 + Structure.SectionCount;
+        public bool IsRadiant => location is Location.Grid;
+        private int BaseCost { get; set; }
+        
+        // Flyer Properties
         public int MinAdventurers => 3;
-        public int MaxCost => (int)(Cost * 1.5);
-        public int MinCost => (int)(Cost * 0.5);
+        public int MaxAdventurers => 2 + Structure.SectionCount;
+        public int ScaledCost(float scale) => (int) (scale * BaseCost);
+        public int ScaledTurns(float scale) => Mathf.RoundToInt(baseTurns / scale);
+        public string ScaledReward(int adventurerCount) => 
+            IsRadiant ? $"{adventurerCount - 2} space{(adventurerCount == 3 ? "" : "s")} cleared" : reward;
         public int AssignedCount => _assigned.Count;
-        public int Turns => 5; // TODO scale turns with cost
-
-        public Location QuestLocation
-        {
-            get => location;
-
-            private set => location = value;
-        }
-
+        
         public void Add()
         {
-            Cost = (int)(Manager.Stats.WealthPerTurn * costScale * (10f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost) / 10f)); 
+            BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (10f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 10f);
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
             State.OnNextTurnEnd += OnNewTurn;
@@ -85,11 +81,10 @@ namespace Quests
             State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
 
-        public void Begin(int adventurersUsed, int cost)
+        public void Begin(float costScale, int adventurersUsed)
         {
-            //if (randomCompleteEvents.Length > 0) completeEvent = randomCompleteEvents[Random.Range(0, randomCompleteEvents.Length)];
-            TurnsLeft = Turns;
-            Manager.Stats.Spend(cost);
+            TurnsLeft = ScaledTurns(costScale);
+            Manager.Stats.Spend(ScaledCost(costScale));
             _assigned.AddRange(Manager.Adventurers.Assign(this, adventurersUsed));
             UpdateUi();
             OnQuestStarted?.Invoke(this);
@@ -163,7 +158,7 @@ namespace Quests
             {
                 name = name,
                 turnsLeft = TurnsLeft,
-                cost = Cost,
+                cost = BaseCost,
                 assigned = _assigned.Select(a => a.name).ToList(),
                 occupied = Structure ? Structure.Occupied.Select(cell => cell.Id).ToList() : null
             };
@@ -172,7 +167,7 @@ namespace Quests
         public void Load(QuestDetails details)
         {
             State.OnNextTurnEnd += OnNewTurn;
-            Cost = details.cost;
+            BaseCost = details.cost;
             TurnsLeft = details.turnsLeft;
             if (location == Location.Grid) CreateBuilding(details.occupied); 
             if (!IsActive) return;

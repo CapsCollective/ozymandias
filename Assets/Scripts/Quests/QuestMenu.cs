@@ -78,9 +78,9 @@ namespace Quests
             {
                 // This is a lambda to the call because we only want
                 // SelectedQuest evaluated at call time, not assignment
-                flyer.OnStartClicked += (adventurers, cost) =>
+                flyer.OnStartClicked += (adventurers, costScale) =>
                 {
-                    SelectedQuest.Begin(adventurers, cost);
+                    SelectedQuest.Begin(costScale, adventurers);
                     flyer.UpdateContent(SelectedQuest);
                 };
 
