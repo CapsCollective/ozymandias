@@ -50,10 +50,12 @@ namespace Quests
         private int BaseCost { get; set; }
         
         // Flyer Properties
-        public int MinAdventurers => 3;
-        public int MaxAdventurers => 2 + Structure.SectionCount;
+        // The base number of adventurers to send on a grid quest before any tiles are cleared
+        private const int BaseAdventurers = 2;
+        public int MinAdventurers => BaseAdventurers + 1;
+        public int MaxAdventurers => BaseAdventurers + Structure.SectionCount;
         public int ScaledCost(float scale) => (int) (scale * BaseCost);
-        public int ScaledTurns(float scale) => Mathf.RoundToInt(baseTurns / scale);
+        public int ScaledTurns(float scale) => Mathf.CeilToInt(baseTurns / scale);
         public string ScaledReward(int adventurerCount) => 
             IsRadiant ? $"{adventurerCount - 2} space{(adventurerCount == 3 ? "" : "s")} cleared" : reward;
         public int AssignedCount => _assigned.Count;
@@ -77,7 +79,6 @@ namespace Quests
         public void Remove()
         {
             if (location == Location.Grid) ClearBuilding();
-            _assigned.Clear();
             State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
 
@@ -90,6 +91,14 @@ namespace Quests
             OnQuestStarted?.Invoke(this);
         }
 
+        public void Complete()
+        {
+            if (!IsRadiant || AssignedCount >= BaseAdventurers + Structure.SectionCount) Manager.Quests.Remove(this);
+            else Structure.Shrink(AssignedCount - BaseAdventurers);
+            _assigned.Clear();
+            TurnsLeft = -1;
+        }
+
         private void CreateBuilding(List<int> occupied)
         {
             Structure = Instantiate(Manager.Structures.StructurePrefab, Manager.Quests.transform).GetComponent<Structure>();
@@ -100,7 +109,7 @@ namespace Quests
         {
             if (Structure == null) return;
             
-            int cellChoiceCount = 4; //TODO: Play around with this to see what feels best
+            const int cellChoiceCount = 4; //TODO: Play around with this to see what feels best
             
             Vector3 target = Manager.Structures.GetClosest(Structure.Occupied[0].WorldSpace).transform.position;
             
@@ -145,7 +154,7 @@ namespace Quests
             else if (
                 location == Location.Grid && 
                 _turnCreated != Manager.Stats.TurnCounter && 
-                Random.Range(0,10) > Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
+                Random.Range(0,10) >= Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
             )
             {
                 GrowBuilding();

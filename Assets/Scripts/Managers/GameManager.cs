@@ -76,13 +76,13 @@ namespace Managers
         public const int RuinsBaseCost = 20;
         public const float RuinsCostScale = 1.10f;
         public const int WealthPerAdventurer = 5;
-        public const int ThreatPerTurn = 2;
 
         #endregion
 
         #region Debug
         #if UNITY_EDITOR
 
+        public bool skipIntro;
         public bool disableOutline;
         public Blueprint debugBuilding;
         [Button("Set Building")]

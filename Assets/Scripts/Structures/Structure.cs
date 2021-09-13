@@ -182,6 +182,19 @@ namespace Structures
             AddSection(newSection, newCell);
         }
 
+        public void Shrink(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                // TODO: This works as the lists always match, but is kinda dodge,
+                // we should look at keeping occupied and _sections better paired
+                Destroy(_sections[SectionCount - 1].gameObject);
+                Occupied[Occupied.Count - 1].Occupant = null;
+                _sections.RemoveAt(SectionCount - 1);
+                Occupied.RemoveAt(Occupied.Count - 1);
+            }
+        }
+        
         private void AddSection(Section section, Cell cell, int i = 0)
         {
             Vector3[] corners = Manager.Map.GetCornerPositions(cell);
