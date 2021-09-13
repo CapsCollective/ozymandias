@@ -188,6 +188,8 @@ namespace Structures
             {
                 // TODO: This works as the lists always match, but is kinda dodge,
                 // we should look at keeping occupied and _sections better paired
+                _sectionRenderers.Remove(_sections[SectionCount - 1].transform.GetComponent<Renderer>());
+
                 Destroy(_sections[SectionCount - 1].gameObject);
                 Occupied[Occupied.Count - 1].Occupant = null;
                 _sections.RemoveAt(SectionCount - 1);
