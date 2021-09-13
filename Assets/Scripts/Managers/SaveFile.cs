@@ -14,7 +14,7 @@ namespace Managers
     [Serializable]
     public struct StatDetails
     {
-        public int wealth, turnCounter, stability, terrainClearCount, ruinsClearCount;
+        public int wealth, turnCounter, stability, baseThreat;
         public Dictionary<Stat, List<Stats.Modifier>> modifiers;
     }
     

@@ -19,6 +19,19 @@ namespace Quests
         
         public int Count => quests.Count;
         
+        public int RadiantQuestCellCount =>
+            quests.Where(quest => quest.IsRadiant).Sum(quest => quest.Structure.SectionCount);
+        
+        // If a location is far enough away from the other quests
+        private const int MinDistance = 3;
+
+        public bool FarEnoughAway(Vector3 position)
+        {
+            return quests
+                .Where(quest => quest.Structure)
+                .All(quest => Vector3.Distance(quest.Structure.transform.position, position) > MinDistance);
+        }
+        
         private void Awake()
         {
             State.OnGameEnd += OnGameEnd;

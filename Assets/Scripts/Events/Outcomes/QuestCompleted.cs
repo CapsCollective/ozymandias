@@ -1,18 +1,20 @@
 ﻿using Quests;
-using static Managers.GameManager;
 
 namespace Events.Outcomes
 {
     public class QuestCompleted : Outcome
     {
         public Quest quest;
-    
+
+        private int _assigned;
         public override bool Execute()
         {
-            return Manager.Quests.Remove(quest);
+            _assigned = quest.AssignedCount;
+            quest.Complete();
+            return true;
         }
 
         public override string Description => "<color=#007000ff>Quest completed: " + quest.Title + ".\n" + 
-                                              quest.adventurers + " Adventurer" + (quest.adventurers > 1 ? "s have" : " has") + " returned.</color>";
+                                              _assigned + " Adventurer" + (_assigned > 1 ? "s have" : " has") + " returned.</color>";
     }
 }

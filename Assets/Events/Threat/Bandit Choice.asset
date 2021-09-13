@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7313867477300710355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Give them gold!
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5545346726731176053}
+  - {fileID: 8378561573087509010}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Bandit Choice
+  m_EditorClassIdentifier: 
+  headline: A Bandit's Choice
+  article: There's bandits waiting outside the town. They demand blood and/or gold.
+    Residents are terrified and want the mayor to help!
+  image: {fileID: 21300000, guid: e7d5437ef76a2734c949ee2be7a59f9f, type: 3}
+  type: 7
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -7313867477300710355}
+  - {fileID: 4640629024430833221}
+  buildingToUnlock: {fileID: 0}
+--- !u!114 &4640629024430833221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Give them blood!
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5528356659286630414}
+  - {fileID: 5287400093947506050}
+--- !u!114 &5287400093947506050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: Remove Adventurers(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 1 Adventurer has been struck down!
+  adventurerNames:
+  - 
+  kill: 1
+--- !u!114 &5528356659286630414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: We sent a champion to fight for us. They threw back the body
+    and went on their merry way.
+--- !u!114 &5545346726731176053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: Flavour Text(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: We've agreed to pay them to keep away.
+--- !u!114 &8378561573087509010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 7
+  amount: -10
+  turns: 3
+  reason: paying off the raiders

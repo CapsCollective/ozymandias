@@ -77,9 +77,9 @@ namespace Managers
 
         public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence);
 
-        // TODO: How do we make a more engaging way to determine threat than just a turn counter?
-        public int Threat => ThreatPerTurn * (TurnCounter-1) + ModifiersTotal[Stat.Threat];
-        
+        public int BaseThreat { get; set; }
+        public int Threat => BaseThreat + ModifiersTotal[Stat.Threat] + Manager.Quests.RadiantQuestCellCount;
+
         public int Stability { get; private set; } // Percentage of how far along the threat is.
 
         public int TurnCounter { get; set; }
@@ -138,6 +138,7 @@ namespace Managers
                 wealth = Wealth,
                 turnCounter = TurnCounter,
                 stability = Stability,
+                baseThreat = BaseThreat,
                 modifiers = Modifiers
             };
         }
@@ -147,7 +148,8 @@ namespace Managers
             TurnCounter = details.turnCounter;
             Wealth = details.wealth;
             Stability = details.stability;
-            
+            BaseThreat = details.baseThreat;
+
             Modifiers = details.modifiers ?? new Dictionary<Stat, List<Modifier>>();
             
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
