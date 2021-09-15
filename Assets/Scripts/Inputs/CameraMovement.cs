@@ -51,10 +51,7 @@ namespace Inputs
         private Vector2[] screenSamplePositions =
         {
             new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.75f),
-            new Vector2(0.25f, 0.1f),
-            new Vector2(0.75f, 0.1f),
-
+            new Vector2(0.5f, 0.25f),
         };
 
         private void Awake()
