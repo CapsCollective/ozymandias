@@ -17,26 +17,18 @@ namespace Quests
     [CreateAssetMenu]
     public class Quest : ScriptableObject
     {
-        public enum Location
-        {
-            Grid,
-            Forest,
-            Mountains,
-            Dock
-        }
-        
         public static Action<Quest> OnQuestStarted;
+        
+        public string title;
+        [TextArea] public string description;
+        public string reward;
+        public Sprite icon;
         
         public int adventurers = 2;
         [Range(0.5f, 3f)] public float wealthMultiplier = 1.5f; // How many turns worth of gold to send, sets cost when created.
         [Range(3, 6)] public int baseTurns = 3; // How many turns worth of gold to send, sets cost when created.
-
-        [SerializeField] private Location location;
-        [SerializeField] private string title;
-        [TextArea] [SerializeField] private string description;
-        [SerializeField] private string reward;
-        [SerializeField] private Event completeEvent; // Keep empty if randomly chosen
-        //[SerializeField] private Event[] randomCompleteEvents; // Keep empty unless the quest can have multiple outcomes
+        public Location location;
+        public Event completeEvent; // Keep empty if randomly chosen
 
         private int _turnCreated; //Prevents quest from immediately growing when created from event
         private readonly List<Adventurer> _assigned = new List<Adventurer>();

@@ -90,7 +90,8 @@
 
     public enum RequestType
     {
-        
+        AttractAdventurers,
+        ConstructBuildingType,
     }
 
     public enum Guild
@@ -200,5 +201,13 @@
         Pointer,
         Build,
         Grab
+    }
+    
+    public enum Location
+    {
+        Grid,
+        Forest,
+        Mountains,
+        Dock
     }
 }

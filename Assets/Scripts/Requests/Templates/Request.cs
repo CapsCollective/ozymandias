@@ -24,9 +24,5 @@ namespace Requests.Templates
         
         public abstract void Start();
         public abstract void Complete();
-
-#if (UNITY_EDITOR)
-        public virtual void Configure(EventCreator.RequestConfig config) {}
-#endif
     }
 }

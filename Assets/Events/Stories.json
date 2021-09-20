@@ -1,37 +1,50 @@
 ﻿[
   {
     "name": "Test 1",
-    "headline": "",
-    "article": "",
+    "headline": "Headline 1",
+    "article": "Article 1",
     "outcomes": [
       {
         "type": "ChainEvent",
-        "config": {
-          "event": {
-            "name": "Test 2",
-            "headline": "",
-            "article": "",
-            "choices": [
-              {
-                "name": "Choice 1",
-                "outcomes": [
-                  {
-                    "type": "ChainEvent",
-                    "nextName": "Test 3"
+        "nextEvent": {
+          "name": "Test 2",
+          "headline": "Headline 2",
+          "article": "Article 2",
+          "choices": [
+            {
+              "name": "Choice 1",
+              "outcomes": [
+                {
+                  "type": "ChainEvent",
+                  "nextName": "Test 3"
+                },
+                {
+                  "type": "QuestAdded",
+                  "questConfig": {
+                    "name": "Test Quest",
+                    "title": "",
+                    "description": "",
+                    "icon": "",
+                    "location": "Grid",
+                    "completedEvent": {
+                      "name": "Test Quest Completed",
+                      "headline": "",
+                      "article": ""
+                    }
                   }
-                ]
-              },
-              {
-                "name": "Choice 2",
-                "outcomes": [
-                  {
-                    "type": "FlavourText",
-                    "customDescription": "Flavour Text!"
-                  }
-                ]
-              }
-            ]
-          }
+                }
+              ]
+            },
+            {
+              "name": "Choice 2",
+              "outcomes": [
+                {
+                  "type": "FlavourText",
+                  "customDescription": "Flavour Text!"
+                }
+              ]
+            }
+          ]
         }
       }
     ]
@@ -39,6 +52,7 @@
   {
     "name": "Test 3",
     "headliner": "",
-    "article": ""
+    "article": "",
+    "image": "cat"
   }
 ]

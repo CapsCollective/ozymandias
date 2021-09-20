@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if (UNITY_EDITOR)
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +16,6 @@ using EventType = Utilities.EventType;
 
 namespace Events
 {
-#if (UNITY_EDITOR)
     public static class EventCreator
     {
         #region Config Structs
@@ -49,7 +50,7 @@ namespace Events
             
             // Quests
             public QuestConfig questConfig;
-            public QuestConfig questName; // Name of the quest to link
+            public Quest questToComplete; // Set programatically
         }
         
         [Serializable] private struct ChoiceConfig
@@ -61,16 +62,12 @@ namespace Events
         
         [Serializable] private struct QuestConfig
         {
-            public string type, customDescription;
+            public string name, title, description, reward;
+            public Location location;
+            public EventConfig completedEvent;
+            public int adventurers, baseTurns;
+            public float wealthMultiplier;
 
-            // Chain Event settings
-            public EventConfig nextEvent; // Event to chain to as a nested config
-            public string nextName; // Name of the event to link, for where you don't want the event as a nested config
-            public bool toFront;
-            
-            // Adventurer add
-            public int count;
-            public Guild guild; //G
         }
         
         [Serializable] private struct ModifierConfig
@@ -80,8 +77,7 @@ namespace Events
             public string reason;
         }
 
-        [Serializable]
-        private struct AdventurerConfig
+        [Serializable] private struct AdventurerConfig
         {
             public string name;
             public Guild guild;
@@ -91,72 +87,121 @@ namespace Events
         [MenuItem("Assets/Events/Create Events From File")]
         public static void CreateEvents()
         {
-            string folder = Selection.activeObject.name;
+            string folder = Selection.activeObject.name; 
             List<EventConfig> configs = JsonConvert.DeserializeObject<List<EventConfig>>(Selection.activeObject.ToString());
-
+            
             //TODO: Keep track of links and apply all at the end after everything is created
             Dictionary<string, Event> createdEvents = new Dictionary<string, Event>();
-            Dictionary<string, Quest> createdQuests = new Dictionary<string, Quest>();
             Dictionary<ChainEvent, string> eventsToLink = new Dictionary<ChainEvent, string>();
-            Dictionary<QuestCompleted, string> questsToLink = new Dictionary<QuestCompleted, string>();
-
-            foreach (EventConfig eventConfig in configs)
-            {
-                CreateEvent(eventConfig);
-            }
             
-            //TODO: Go through each event and recursively configure/ add all events, outcomes, and quests 
-            static Event CreateEvent(EventConfig config)
+            foreach (EventConfig eventConfig in configs) CreateEvent(eventConfig);
+            
+            foreach (KeyValuePair<ChainEvent, string> toLink in eventsToLink)
+            {
+                if(!createdEvents.ContainsKey(toLink.Value)) Debug.LogError($"Cannot Link Event ${toLink.Value}");
+                toLink.Key.next = createdEvents[toLink.Value];
+            }
+
+            AssetDatabase.SaveAssets();
+            
+            Event CreateEvent(EventConfig config)
             {
                 Event root = ScriptableObject.CreateInstance<Event>();
+                root.name = config.name;
                 root.headline = config.headline;
                 root.article = config.article;
                 root.image = LoadSprite(config.image);
-                foreach (ChoiceConfig choiceConfig in config.choices)
-                {
-                    Choice choice = ScriptableObject.CreateInstance<Choice>();
-                    foreach (OutcomeConfig outcomeConfig in choiceConfig.outcomes)
-                    {
-                        // Commented to silence warning
-                        // Outcome outcome;
-                        switch (outcomeConfig.type)
-                        {
-                            case OutcomeType.Debug:
-                                break;
-                            case OutcomeType.FlavourText:
-                                break;
-                            case OutcomeType.ChainEvent:
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                }
+                AssetDatabase.CreateAsset(root, $"Assets/Events/{folder}/{root.name}.asset");
+                
+                root.outcomes = config.outcomes != null ? 
+                    config.outcomes.Select(outcomeConfig => CreateOutcome(outcomeConfig, root)).ToList() : 
+                    new List<Outcome>();
+                root.choices = config.choices != null ? 
+                    config.choices.Select(choiceConfig => CreateChoice(choiceConfig, root)).ToList() : 
+                    new List<Choice>();
+
+                createdEvents.Add(root.name, root);
+
                 return root;
             }
             
-            // Commented to silence warning
-            // static Quest CreateQuest(QuestConfig config)
-            // {
-            //     Quest quest = ScriptableObject.CreateInstance<Quest>();
-            //
-            //     return quest;
-            // }
+            Outcome CreateOutcome(OutcomeConfig config, Event root)
+            {
+                // Commented to silence warning
+                Outcome outcome;
+                switch (config.type)
+                {
+                    case OutcomeType.FlavourText:
+                        Debug.Log("Flavour");
+                        outcome = ScriptableObject.CreateInstance<FlavourText>();
+                        break;
+                    case OutcomeType.ChainEvent:
+                        outcome = ScriptableObject.CreateInstance<ChainEvent>();
+                        if (config.nextName != null) eventsToLink.Add((ChainEvent)outcome, config.nextName);
+                        else ((ChainEvent)outcome).next = CreateEvent(config.nextEvent);
+                        break;
+                    case OutcomeType.QuestAdded:
+                        outcome = ScriptableObject.CreateInstance<QuestAdded>();
+                        ((QuestAdded)outcome).quest = CreateQuest(config.questConfig);
+                        break;
+                    case OutcomeType.QuestCompleted:
+                        outcome = ScriptableObject.CreateInstance<QuestCompleted>();
+                        ((QuestCompleted)outcome).quest = config.questToComplete;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                outcome.name = config.type.ToString();
+                outcome.customDescription = config.customDescription;
+                AssetDatabase.AddObjectToAsset(outcome, root);
+                return outcome;
+            }
+
+            Choice CreateChoice(ChoiceConfig config, Event root)
+            {
+                Choice choice = ScriptableObject.CreateInstance<Choice>();
+                choice.name = config.name;
+                choice.outcomes = config.outcomes.Select(outcomeConfig => CreateOutcome(outcomeConfig, root)).ToList();
+                AssetDatabase.AddObjectToAsset(choice, root);
+                return choice;
+            }
+            
+            Quest CreateQuest(QuestConfig config)
+            {
+                Quest quest = ScriptableObject.CreateInstance<Quest>();
+                quest.name = config.name;
+                quest.title = config.title;
+                quest.description = config.description;
+                quest.adventurers = config.adventurers;
+                quest.location = config.location;
+                config.completedEvent.outcomes ??= new List<OutcomeConfig>(); // Inits if null
+                config.completedEvent.outcomes.Add(new OutcomeConfig
+                {
+                    type = OutcomeType.QuestCompleted,
+                    questToComplete = quest
+                });
+                quest.completeEvent = CreateEvent(config.completedEvent);
+                quest.baseTurns = config.baseTurns;
+                quest.wealthMultiplier = config.wealthMultiplier;
+                AssetDatabase.CreateAsset(quest, $"Assets/Events/{folder}/{quest.name}.asset");
+                return quest;
+            }
         }
         
         #region Requests
         [Serializable] private struct RequestChainConfig
         {
-            public string 
+            public string
                 name,
                 addedHeadline,
                 addedArticle,
                 addedImage,
                 completeHeadline,
                 completeArticle,
-                completeImage,
-                type;
+                completeImage;
 
+            public RequestType type;
             public RequestConfig config;
         }
 
@@ -205,17 +250,17 @@ namespace Events
                     Request request;
                     switch (config.type)
                     {
-                        case "AttractAdventurers":
+                        case RequestType.AttractAdventurers:
                             request = ScriptableObject.CreateInstance<AttractAdventurers>();
                             break;
-                        case "ConstructBuildingType":
+                        case RequestType.ConstructBuildingType:
                             request = ScriptableObject.CreateInstance<ConstructBuildingType>();
+                            ((ConstructBuildingType)request).buildingType = config.config.buildingType;
                             break;
                         default:
                             Debug.LogError("Request type not found: " + config.type);
                             return;
                     }
-                    request.Configure(config.config);
                     request.guild = guild;
                     AssetDatabase.CreateAsset(request, $"Assets/Events/Requests/{guild}/{config.name} Request.asset");
                     addedOutcome.request = request;
@@ -242,7 +287,6 @@ namespace Events
             }
         }
         #endregion
-
         
         #region Export
         [MenuItem("Assets/Events/Convert folder to JSON")]
@@ -293,11 +337,14 @@ namespace Events
         }
         
         #endregion
-        
+
+        #region Utils
         private static Sprite LoadSprite(string name)
         {
             return AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
         }
+        
+        #endregion
     }
-#endif
 }
+#endif
