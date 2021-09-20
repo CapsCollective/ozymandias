@@ -74,20 +74,8 @@ namespace Adventurers
             Adventurer created = New().Create(category);
             OnAdventurerJoin?.Invoke(created);
         }
-
-        public void Add(PremadeAdventurer adventurer)
-        {
-            Adventurer created = New().Load(new AdventurerDetails
-            {
-                name = adventurer.name,
-                type = adventurer.type,
-                isSpecial = adventurer.isSpecial,
-                turnJoined = Manager.Stats.TurnCounter
-            });
-            OnAdventurerJoin?.Invoke(created);
-        }
-
-        private void Add(AdventurerDetails adventurer)
+        
+        public void Add(AdventurerDetails adventurer)
         {
             Adventurer created = New().Load(adventurer);
             if (!Manager.State.Loading) OnAdventurerJoin?.Invoke(created);

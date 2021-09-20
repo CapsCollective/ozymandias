@@ -85,7 +85,8 @@
         QuestAdded,
         QuestCompleted,
         RequestAdded,
-        RequestCompleted
+        RequestCompleted,
+        ThreatAdded
     }
 
     public enum RequestType

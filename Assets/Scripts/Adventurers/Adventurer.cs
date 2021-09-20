@@ -87,7 +87,7 @@ namespace Adventurers
             return new AdventurerDetails
             {
                 name = name,
-                type = guild,
+                guild = guild,
                 isSpecial = isSpecial,
                 turnJoined = turnJoined
             };
@@ -96,7 +96,7 @@ namespace Adventurers
         public Adventurer Load(AdventurerDetails adventurer)
         {
             name = adventurer.name;
-            guild = adventurer.type;
+            guild = adventurer.guild;
             isSpecial = adventurer.isSpecial;
             turnJoined = adventurer.turnJoined;
             return this;

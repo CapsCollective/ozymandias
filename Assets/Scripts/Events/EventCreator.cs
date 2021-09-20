@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Events.Outcomes;
+using Managers;
 using Newtonsoft.Json;
 using Quests;
 using Requests.Templates;
+using Structures;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
@@ -41,16 +43,20 @@ namespace Events
             
             // Adventurers
             // Override if custom adventurers provided, otherwise default to count and guild
-            public List<AdventurerConfig> adventurers;
+            public List<AdventurerDetails> adventurers;
             public Guild guild;
             public bool kill;
 
-            // Card Unlock and Building Damaged
-            public BuildingType buildingType;
+            // Card Unlock blueprint
+            public string blueprint;
             
             // Quests
             public QuestConfig questConfig;
             public Quest questToComplete; // Set programatically
+            
+            // Modifiers
+            public ModifierConfig modifier;
+            public int amount;
         }
         
         [Serializable] private struct ChoiceConfig
@@ -75,12 +81,6 @@ namespace Events
             public Stat toChange;
             public int amount, turns;
             public string reason;
-        }
-
-        [Serializable] private struct AdventurerConfig
-        {
-            public string name;
-            public Guild guild;
         }
         #endregion
 
@@ -147,6 +147,33 @@ namespace Events
                     case OutcomeType.QuestCompleted:
                         outcome = ScriptableObject.CreateInstance<QuestCompleted>();
                         ((QuestCompleted)outcome).quest = config.questToComplete;
+                        break;
+                    case OutcomeType.AdventurersAdded:
+                        outcome = ScriptableObject.CreateInstance<AdventurersAdded>();
+                        ((AdventurersAdded)outcome).adventurers = config.adventurers;
+                        break;
+                    case OutcomeType.AdventurersRemoved:
+                        outcome = ScriptableObject.CreateInstance<AdventurersRemoved>();
+                        ((AdventurersRemoved)outcome).count = config.count;
+                        ((AdventurersRemoved)outcome).kill = config.kill;
+                        break;
+                    case OutcomeType.CardUnlocked:
+                        outcome = ScriptableObject.CreateInstance<CardUnlocked>();
+                        ((CardUnlocked)outcome).blueprint = LoadBlueprint(config.blueprint);
+                        break;
+                    case OutcomeType.GameOver:
+                        outcome = ScriptableObject.CreateInstance<GameOver>();
+                        break;
+                    case OutcomeType.ThreatAdded:
+                        outcome = ScriptableObject.CreateInstance<ThreatAdded>();
+                        ((ThreatAdded)outcome).amount = config.amount;
+                        break;
+                    case OutcomeType.ModifierAdded:
+                        outcome = ScriptableObject.CreateInstance<ModifierAdded>();
+                        ((ModifierAdded)outcome).statToChange = config.modifier.toChange;
+                        ((ModifierAdded)outcome).amount = config.modifier.amount;
+                        ((ModifierAdded)outcome).reason = config.modifier.reason;
+                        ((ModifierAdded)outcome).turns = config.modifier.turns;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -342,6 +369,11 @@ namespace Events
         private static Sprite LoadSprite(string name)
         {
             return AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
+        }
+        
+        private static Blueprint LoadBlueprint(string name)
+        {
+            return AssetDatabase.LoadAssetAtPath<Blueprint>($"Assets/Blueprints/{name}.asset");
         }
         
         #endregion

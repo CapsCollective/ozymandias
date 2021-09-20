@@ -7,19 +7,17 @@ namespace Events.Outcomes
     [CreateAssetMenu(fileName = "Remove Adventurers Outcome", menuName = "Outcomes/Remove Adventurers")]
     public class AdventurersRemoved : Outcome
     {
+        public int count;
         public List<string> adventurerNames;
         // To shreds, you say?
         public bool kill; // If they move to the graveyard or just disappear
         public override bool Execute()
         {
-            if (Manager.Adventurers.Available <= adventurerNames.Count) return false;
-        
-            foreach (string t in adventurerNames)
+            if (Manager.Adventurers.Available <= count) return false;
+
+            for (int i = 0; i < count; i++)
             {
-                if (t != "") {
-                    if (!Manager.Adventurers.Remove(t, kill)) return false;
-                }
-                else if (!Manager.Adventurers.Remove(kill)) return false;
+                if (!Manager.Adventurers.Remove(kill)) return false;
             }
             return true;
         }

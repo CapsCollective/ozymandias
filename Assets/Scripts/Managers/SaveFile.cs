@@ -40,7 +40,7 @@ namespace Managers
     public struct AdventurerDetails
     {
         public string name;
-        public Guild type;
+        public Guild guild;
         public bool isSpecial;
         public int turnJoined;
     }
