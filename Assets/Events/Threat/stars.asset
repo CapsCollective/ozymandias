@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5912554691090250521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,11 +21,11 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: 3256429719580244891}
-  - {fileID: -5912554691090250521}
+  - {fileID: 636954557172728141}
+  - {fileID: 4051131202642503444}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3256429719580244891
+--- !u!114 &636954557172728141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,3 +38,17 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: Just don't look up and you'll be fine...
+--- !u!114 &4051131202642503444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 3

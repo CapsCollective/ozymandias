@@ -93,9 +93,10 @@ namespace Events
             {
                 eventPool.Add(PickRandom(EventType.Threat));
                 
-                // How far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
-                // int lead = Mathf.Min(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, 10);
-                // if (Random.Range(0, 20) < lead) eventPool.Add(PickRandom(EventType.Radiant));
+                // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
+                int lead = Mathf.Min(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, 10);
+                int random = Random.Range(0, 20);
+                if (random == 0 || random < lead) eventPool.Add(PickRandom(EventType.Radiant));
 
                 // 20% chance to start a new story while no other is active
                 /*if (!StoryActive && Random.Range(0, 5) == 0)

@@ -52,7 +52,7 @@ namespace Events
             public string blueprint;
             
             // Quests
-            public QuestConfig questConfig;
+            public QuestConfig quest;
             public Quest questToComplete; // Set programatically
             
             // Modifiers
@@ -145,7 +145,7 @@ namespace Events
                         break;
                     case OutcomeType.QuestAdded:
                         outcome = ScriptableObject.CreateInstance<QuestAdded>();
-                        ((QuestAdded)outcome).quest = CreateQuest(config.questConfig);
+                        ((QuestAdded)outcome).quest = CreateQuest(config.quest);
                         break;
                     case OutcomeType.QuestCompleted:
                         outcome = ScriptableObject.CreateInstance<QuestCompleted>();

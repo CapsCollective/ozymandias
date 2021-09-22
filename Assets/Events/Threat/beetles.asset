@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8825675368927750850
+--- !u!114 &-4623050065831591170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,6 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 3
+--- !u!114 &-1435821475817940893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: We don't know how much longer we can let it be..
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,20 +49,7 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: 5488801805493797891}
-  - {fileID: -8825675368927750850}
+  - {fileID: -1435821475817940893}
+  - {fileID: -4623050065831591170}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &5488801805493797891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: We don't know how much longer we can let it be..

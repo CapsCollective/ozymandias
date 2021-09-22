@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3932423935349654116
+--- !u!114 &-5091039330215045700
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: New Adventurers(Clone)
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  adventurers:
-  - name: Goat Man
-    guild: 1
-    isSpecial: 0
-    turnJoined: 0
+  quest: {fileID: 11400000, guid: dd82f896182648f4f8ced078cfb8cbc0, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,16 +24,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Goat Man
+  m_Name: sentient-campsites
   m_EditorClassIdentifier: 
-  headline: The Grass is Ethereal on the Other Side
-  article: A portal in space opened up today, only for a strange goat-man to fall
-    out. He claims his powers are fuelled by the delicious grass our dimension has.
-    He has agreed to stay and protect our town.
-  image: {fileID: 21300000, guid: 3f9eb22715dcf2d4aa6f486724cb90de, type: 3}
-  type: 4
+  headline: Sentient Campsites
+  article: We scouted enemy camps, turns out they were mimics. write a joke
+  image: {fileID: 0}
+  type: 6
   headliner: 0
   outcomes:
-  - {fileID: -3932423935349654116}
+  - {fileID: -5091039330215045700}
   choices: []
   blueprintToUnlock: {fileID: 0}

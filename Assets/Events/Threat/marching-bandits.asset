@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1291937783708187159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20,11 +34,11 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: 839799845668418747}
-  - {fileID: 9096401392889795767}
+  - {fileID: 3542057959831643745}
+  - {fileID: -1291937783708187159}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &839799845668418747
+--- !u!114 &3542057959831643745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,17 +55,3 @@ MonoBehaviour:
   amount: -10
   turns: 3
   reason: from the Marching Bandits
---- !u!114 &9096401392889795767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 3
