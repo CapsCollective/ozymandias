@@ -41,6 +41,7 @@ namespace Requests
 
         public void Add(Request request)
         {
+            Debug.Log(request.name);
             _requests[request.guild] = request;
             displays[request.guild].Request = request;
             request.Init();

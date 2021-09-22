@@ -18,6 +18,7 @@ namespace Quests
         public readonly List<Quest> quests = new List<Quest>();
         
         public int Count => quests.Count;
+        public int RadiantCount => quests.Count(quest => quest.IsRadiant);
         
         public int RadiantQuestCellCount =>
             quests.Where(quest => quest.IsRadiant).Sum(quest => quest.Structure.SectionCount);

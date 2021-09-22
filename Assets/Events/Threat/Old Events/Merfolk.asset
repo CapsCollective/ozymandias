@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: Merfolk
+  m_EditorClassIdentifier: 
+  headline: Merfolk Raid!
+  article: Out from the oceans, hideous merfolk have started harrasing villagers
+    trying to take walks on the beach.
+  image: {fileID: 21300000, guid: cf8d341020e74d94381e334dec84f23e, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 4172246390618713104}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &4172246390618713104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: Stat Change(Clone)
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 1
+  amount: -5
+  turns: 2
+  reason: 

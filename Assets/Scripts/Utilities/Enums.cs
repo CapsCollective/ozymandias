@@ -61,7 +61,7 @@
         Story = 3,
         AdventurersJoin = 4,
         AdventurersLeave = 5,
-        Chaos = 6,
+        Radiant = 6,
         Threat = 7,
         BrawlerRequest = 8,
         OutriderRequest = 9,
@@ -92,7 +92,16 @@
     public enum RequestType
     {
         AttractAdventurers,
-        ConstructBuildingType,
+        LoseAdventurers,
+        ConstructBuildings,
+        DestroyBuildings,
+        DestroyStructures,
+        PreserveStructures,
+        CompleteQuests,
+        KeepHappy,
+        KeepUnhappy,
+        HoardWealth,
+        AcquireWealth
     }
 
     public enum Guild

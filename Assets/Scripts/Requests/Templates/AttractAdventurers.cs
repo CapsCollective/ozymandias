@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Requests.Templates
 {
-    [CreateAssetMenu(fileName = "Attract Adventurers", menuName = "Requests/Attract Adventurers")]
     public sealed class AttractAdventurers : Request
     {
         public override string Description => $"Attract {Required} {guild}s";

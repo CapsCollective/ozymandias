@@ -8,7 +8,6 @@ namespace Events.Outcomes
     public class AdventurersRemoved : Outcome
     {
         public int count;
-        public List<string> adventurerNames;
         // To shreds, you say?
         public bool kill; // If they move to the graveyard or just disappear
         public override bool Execute()
@@ -27,11 +26,7 @@ namespace Events.Outcomes
             get
             {
                 if (customDescription != "") return "<color=#820000ff>" + customDescription + "</color>";
-                return "<color=#820000ff>" +
-                       adventurerNames.Count +
-                       " adventurer" +
-                       (adventurerNames.Count > 1 ? "s have " : " has ") +
-                       "been lost</color>";
+                return "<color=#820000ff>" + count + " adventurer" + (count > 1 ? "s have " : " has ") + "been lost</color>";
             }
         }
     }

@@ -97,6 +97,7 @@ namespace Managers
         private void OnNewGame()
         {
             TurnCounter = 1;
+            BaseThreat = 0;
             Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
             Wealth = 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
         }

@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6206072422341573931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068e6582b34a4d43a994376b4d046ac8, type: 3}
-  m_Name: Added Outcome
-  m_EditorClassIdentifier: 
-  customDescription: 
-  request: {fileID: 11400000, guid: db1bf8933b3bf1a40ae2a89b073c33c7, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,6 +18,20 @@ MonoBehaviour:
   type: 9
   headliner: 0
   outcomes:
-  - {fileID: -6206072422341573931}
+  - {fileID: 6346932240855093509}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &6346932240855093509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068e6582b34a4d43a994376b4d046ac8, type: 3}
+  m_Name: Added Outcome
+  m_EditorClassIdentifier: 
+  customDescription: 
+  request: {fileID: 11400000, guid: db1bf8933b3bf1a40ae2a89b073c33c7, type: 2}

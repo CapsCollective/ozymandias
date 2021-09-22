@@ -13,6 +13,7 @@ namespace Structures
     public class Structures : MonoBehaviour
     {
         public static Action<Structure> OnBuild;
+        public static Action<Structure> OnCleared;
 
         [Serializable] private struct Location { public int root, rotation; }
         
@@ -127,6 +128,8 @@ namespace Structures
                 Manager.State.EnterState(GameState.NextTurn);
             }
 
+            OnCleared?.Invoke(structure);
+            
             if (structure.IsTerrain) _terrain.Remove(structure);
             else if (structure.IsRuin) _ruins.Remove(structure);
             else _buildings.Remove(structure);

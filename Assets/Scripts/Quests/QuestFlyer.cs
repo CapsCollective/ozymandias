@@ -53,7 +53,7 @@ namespace Quests
         {
             titleText.text = quest.Title;
             descriptionText.text = quest.Description;
-            icon.sprite = quest.icon;
+            icon.sprite = quest.image;
             
             sendButton.gameObject.SetActive(!quest.IsActive);
             costSlider.gameObject.SetActive(!quest.IsActive);

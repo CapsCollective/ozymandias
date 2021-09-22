@@ -13,7 +13,8 @@ namespace Adventurers
     public class Adventurers : MonoBehaviour
     {
         public static Action<Adventurer> OnAdventurerJoin;
-        
+        public static Action<Adventurer, bool> OnAdventurerRemoved;
+
         [SerializeField] private GameObject prefab;
         [SerializeField] private Transform graveyard;
 
@@ -88,6 +89,7 @@ namespace Adventurers
             int randomIndex = Random.Range(0, removable.Count);
             Adventurer toRemove = removable[randomIndex];
 
+            OnAdventurerRemoved?.Invoke(toRemove, kill);
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
             else Destroy(toRemove);

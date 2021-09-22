@@ -24,6 +24,7 @@ namespace Events
         [Serializable] private struct EventConfig
         {
             public string name, headline, article, image;
+            public EventType? type;
             public List<ChoiceConfig> choices;
             public List<OutcomeConfig> outcomes;
         }
@@ -57,6 +58,9 @@ namespace Events
             // Modifiers
             public ModifierConfig modifier;
             public int amount;
+            
+            // Threat
+            public int baseAmount;
         }
         
         [Serializable] private struct ChoiceConfig
@@ -68,7 +72,7 @@ namespace Events
         
         [Serializable] private struct QuestConfig
         {
-            public string name, title, description, reward;
+            public string name, title, description, reward, image;
             public Location location;
             public EventConfig completedEvent;
             public int adventurers, baseTurns;
@@ -90,7 +94,6 @@ namespace Events
             string folder = Selection.activeObject.name; 
             List<EventConfig> configs = JsonConvert.DeserializeObject<List<EventConfig>>(Selection.activeObject.ToString());
             
-            //TODO: Keep track of links and apply all at the end after everything is created
             Dictionary<string, Event> createdEvents = new Dictionary<string, Event>();
             Dictionary<ChainEvent, string> eventsToLink = new Dictionary<ChainEvent, string>();
             
@@ -111,6 +114,7 @@ namespace Events
                 root.headline = config.headline;
                 root.article = config.article;
                 root.image = LoadSprite(config.image);
+                root.type = config.type ?? EventType.Other;
                 AssetDatabase.CreateAsset(root, $"Assets/Events/{folder}/{root.name}.asset");
                 
                 root.outcomes = config.outcomes != null ? 
@@ -132,7 +136,6 @@ namespace Events
                 switch (config.type)
                 {
                     case OutcomeType.FlavourText:
-                        Debug.Log("Flavour");
                         outcome = ScriptableObject.CreateInstance<FlavourText>();
                         break;
                     case OutcomeType.ChainEvent:
@@ -166,7 +169,7 @@ namespace Events
                         break;
                     case OutcomeType.ThreatAdded:
                         outcome = ScriptableObject.CreateInstance<ThreatAdded>();
-                        ((ThreatAdded)outcome).amount = config.amount;
+                        ((ThreatAdded)outcome).baseAmount = config.baseAmount;
                         break;
                     case OutcomeType.ModifierAdded:
                         outcome = ScriptableObject.CreateInstance<ModifierAdded>();
@@ -200,24 +203,27 @@ namespace Events
                 quest.name = config.name;
                 quest.title = config.title;
                 quest.description = config.description;
-                quest.adventurers = config.adventurers;
+                quest.image = LoadSprite(config.image);
                 quest.location = config.location;
+                quest.adventurers = config.adventurers;
+                quest.baseTurns = config.baseTurns;
+                quest.wealthMultiplier = config.wealthMultiplier;
+
                 config.completedEvent.outcomes ??= new List<OutcomeConfig>(); // Inits if null
                 config.completedEvent.outcomes.Add(new OutcomeConfig
                 {
                     type = OutcomeType.QuestCompleted,
                     questToComplete = quest
                 });
+                
                 quest.completeEvent = CreateEvent(config.completedEvent);
-                quest.baseTurns = config.baseTurns;
-                quest.wealthMultiplier = config.wealthMultiplier;
                 AssetDatabase.CreateAsset(quest, $"Assets/Events/{folder}/{quest.name}.asset");
                 return quest;
             }
         }
         
         #region Requests
-        [Serializable] private struct RequestChainConfig
+        [Serializable] private struct RequestConfig
         {
             public string
                 name,
@@ -229,16 +235,13 @@ namespace Events
                 completeImage;
 
             public RequestType type;
-            public RequestConfig config;
-        }
-
-        [Serializable] public struct RequestConfig // All Possible request config fields
-        {
+            
             public BuildingType buildingType;
+            public StructureType structureType;
+            public bool allowAny;
             public Guild targetGuild;
-            public string questName;
         }
-
+        
         [MenuItem("Assets/Events/Create Requests")]
         public static void CreateRequests()
         {
@@ -252,13 +255,13 @@ namespace Events
             };
 
             string requestJson = File.ReadAllText("Assets/Events/Requests.json");
-            Dictionary<Guild, List<RequestChainConfig>> guildRequests = new Dictionary<Guild, List<RequestChainConfig>>();
+            Dictionary<Guild, List<RequestConfig>> guildRequests = new Dictionary<Guild, List<RequestConfig>>();
             JsonConvert.PopulateObject(requestJson, guildRequests);
 
-            foreach (KeyValuePair<Guild, List<RequestChainConfig>> requestsPair in guildRequests)
+            foreach (KeyValuePair<Guild, List<RequestConfig>> requestsPair in guildRequests)
             {
                 Guild guild = requestsPair.Key;
-                foreach (RequestChainConfig config in requestsPair.Value)
+                foreach (RequestConfig config in requestsPair.Value)
                 {
                     // Added Event
                     Event addedEvent = ScriptableObject.CreateInstance<Event>();
@@ -280,10 +283,38 @@ namespace Events
                         case RequestType.AttractAdventurers:
                             request = ScriptableObject.CreateInstance<AttractAdventurers>();
                             break;
-                        case RequestType.ConstructBuildingType:
-                            request = ScriptableObject.CreateInstance<ConstructBuildingType>();
-                            ((ConstructBuildingType)request).buildingType = config.config.buildingType;
+                        case RequestType.LoseAdventurers:
+                            request = ScriptableObject.CreateInstance<LoseAdventurers>();
                             break;
+                        case RequestType.ConstructBuildings:
+                            request = ScriptableObject.CreateInstance<ConstructBuildings>();
+                            ((ConstructBuildings)request).allowAny = config.allowAny;
+                            ((ConstructBuildings)request).buildingType = config.buildingType;
+                            break;
+                        case RequestType.DestroyBuildings:
+                            request = ScriptableObject.CreateInstance<DestroyBuildings>();
+                            break;
+                        case RequestType.DestroyStructures:
+                            request = ScriptableObject.CreateInstance<DestroyStructures>();
+                            break;
+                        /*case RequestType.PreserveStructure:
+                            request = ScriptableObject.CreateInstance<PreserveStructure>();
+                            break;
+                        case RequestType.CompleteQuests:
+                            request = ScriptableObject.CreateInstance<CompleteQuests>();
+                            break;
+                        case RequestType.KeepHappy:
+                            request = ScriptableObject.CreateInstance<KeepHappy>();
+                            break;
+                        case RequestType.KeepUnhappy:
+                            request = ScriptableObject.CreateInstance<KeepUnhappy>();
+                            break;
+                        case RequestType.HoardWealth:
+                            request = ScriptableObject.CreateInstance<HoardWealth>();
+                            break;
+                        case RequestType.AcquireWealth:
+                            request = ScriptableObject.CreateInstance<AcquireWealth>();
+                            break;*/
                         default:
                             Debug.LogError("Request type not found: " + config.type);
                             return;
