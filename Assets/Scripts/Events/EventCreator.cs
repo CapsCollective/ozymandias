@@ -329,6 +329,7 @@ namespace Events
                     completedEvent.type = EventType.Other;
                     AssetDatabase.CreateAsset(completedEvent, $"Assets/Events/Requests/{guild}/{config.name}-completed.asset");
                     request.completedEvent = completedEvent;
+                    EditorUtility.SetDirty(request); // Because this isn't getting saved
                     
                     // Completed Outcome
                     RequestCompleted completedOutcome = ScriptableObject.CreateInstance<RequestCompleted>();

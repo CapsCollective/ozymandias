@@ -1,44 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1291937783708187159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 2
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: marching-bandits
-  m_EditorClassIdentifier: 
-  headline: The Marching Bandits Strike!
-  article: After reports of obnoxious sounds off in the distance draw ever-closer,
-    the odd group of ruffians known to terrorise their victims with terrible music
-    has finally made it here, and have made-off with a king's ransom in loot.
-  image: {fileID: 21300000, guid: af605be53c07edb48a99959855b9c7c9, type: 3}
-  type: 7
-  headliner: 0
-  outcomes:
-  - {fileID: 3542057959831643745}
-  - {fileID: -1291937783708187159}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &3542057959831643745
+--- !u!114 &-501663074755147543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,3 +17,42 @@ MonoBehaviour:
   amount: -10
   turns: 3
   reason: from the Marching Bandits
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: marching-bandits
+  m_EditorClassIdentifier: 
+  headline: The Marching Bandits Strike!
+  article: After receiving reports of obnoxious sounds off in the distance drawing
+    ever-closer, the odd group of ruffians known to terrorise their victims with
+    terrible music has finally made it here, and made-off with a king's ransom in
+    loot.
+  image: {fileID: 21300000, guid: af605be53c07edb48a99959855b9c7c9, type: 3}
+  type: 7
+  headliner: 0
+  outcomes:
+  - {fileID: -501663074755147543}
+  - {fileID: 3300630316081973526}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &3300630316081973526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 2

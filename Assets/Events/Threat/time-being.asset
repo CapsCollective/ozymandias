@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7602292298178718495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: Your townsfolk are fearful of this 'Time Being'
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,18 +13,31 @@ MonoBehaviour:
   m_Name: time-being
   m_EditorClassIdentifier: 
   headline: Tributes to the Time Being
-  article: A local cult has started making offerings to a mysterious creature, in
+  article: A local cult has started making offerings to a mysterious creature in
     exchange for future sight. "We have a busy schedule ahead, so let's just leave
     this for the Time Being" chant the cultists.
   image: {fileID: 21300000, guid: 1b5800a435d77d248ad9fc803c464b09, type: 3}
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: -7602292298178718495}
-  - {fileID: 3257790052333216131}
+  - {fileID: 2142585619372776740}
+  - {fileID: 8450899595834411132}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3257790052333216131
+--- !u!114 &2142585619372776740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: Your townsfolk are fearful of this 'Time Being'
+--- !u!114 &8450899595834411132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
