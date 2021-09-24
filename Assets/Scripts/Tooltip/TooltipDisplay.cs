@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Managers;
 using TMPro;
 using UnityEngine;
 using Utilities;
@@ -151,8 +150,10 @@ namespace Tooltip
                                    $"{FormattedModifierString(Stat.Defence)}";
                     break;
                 case Stat.Threat:
-                    details.text = $"{Manager.Stats.Threat} threat (+3 per turn)\n" +
-                                   $"{FormattedModifierString(Stat.Threat)}";
+                    details.text = $"{Manager.Stats.Threat} threat:\n" +
+                                   $"  ● {Manager.Stats.BaseThreat} from Events\n" +
+                                   (Manager.Quests.RadiantQuestCellCount == 0 ? "" :$"  ● {Manager.Quests.RadiantQuestCellCount} from Enemy Camps\n") +
+                                   $"{FormattedModifierString(Stat.Threat)}\n";
                     break;
                 case Stat.Stability:
                     int change = Manager.Stats.Defence - Manager.Stats.Threat;
@@ -163,15 +164,15 @@ namespace Tooltip
                                    $"{WealthPerAdventurer} per adventurer({Manager.Adventurers.Available}) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} spending modifier.\n" +
                                    $"{FormattedModifierString(Stat.Spending)}";
                     break; 
-                default: // Stat for a class
+                default: // Stat for a guild
                     Guild guild = (Guild) config.Stat.Value;
-                    string className = config.Stat.ToString();
+                    string guildName = config.Stat.ToString();
                     details.text =
-                        $"{Manager.Stats.GetStat(config.Stat.Value)} {className} satisfaction for " +
-                        $"{Manager.Adventurers.GetCount(guild)} {className}s\n" +
+                        $"{Manager.Stats.GetStat(config.Stat.Value)} {guildName} satisfaction for " +
+                        $"{Manager.Adventurers.GetCount(guild)} {guildName}s\n" +
                         $"{FormattedFoodModifierString}" +
                         $"{FormattedModifierString(config.Stat.Value)}" +
-                        $"{Manager.Stats.SpawnChance(guild):n1}% {className} spawn chance per turn";
+                        $"{Manager.Stats.SpawnChance(guild):n1}% {guildName} spawn chance per turn";
                     break;
             }
         }

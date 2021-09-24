@@ -1,12 +1,9 @@
 using System;
 using DG.Tweening;
-using Inputs;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using Cinemachine;
 using Structures;
-using UnityEngine.EventSystems;
 using Utilities;
 using static Managers.GameManager;
 
@@ -72,7 +69,6 @@ namespace Quests
             Select.OnQuestSelected += quest =>
             {
                 SelectedQuest = quest;
-                Debug.Log(SelectedQuest);
                 OpenFlyer.UpdateContent(SelectedQuest);
                 FocusStructure(SelectedQuest.Structure);
                 Open();
@@ -82,9 +78,9 @@ namespace Quests
             {
                 // This is a lambda to the call because we only want
                 // SelectedQuest evaluated at call time, not assignment
-                flyer.OnStartClicked += (adventurers, cost) =>
+                flyer.OnStartClicked += (adventurers, costScale) =>
                 {
-                    SelectedQuest.Begin(adventurers, cost);
+                    SelectedQuest.Begin(costScale, adventurers);
                     flyer.UpdateContent(SelectedQuest);
                 };
 

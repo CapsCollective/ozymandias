@@ -195,6 +195,15 @@ namespace Managers
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
             StartCoroutine(Algorithms.DelayCall(2f, () => Manager.Jukebox.OnStartGame()));
             // Run general menu initialisation
+            
+            #if UNITY_EDITOR
+            if (Manager.skipIntro)
+            {
+                EnterState(GameState.ToGame);
+                return;
+            }
+            #endif
+            
             EnterState(GameState.InIntro);
         }
         
@@ -252,14 +261,24 @@ namespace Managers
         private void ToGameUpdate()
         {
             Manager.Cards.DropCards();
-            var finishedMoving = MoveCam(_startPos, menuTransitionCurve);
-            var finishedFadingMenu = FadeCanvas(menuCanvasGroup, FadeOut);
+            bool finishedMoving = MoveCam(_startPos, menuTransitionCurve);
+            bool finishedFadingMenu = FadeCanvas(menuCanvasGroup, FadeOut);
+            
+            #if UNITY_EDITOR
+            if (Manager.skipIntro)
+            {
+                finishedMoving = true;
+                finishedFadingMenu = true;
+                gameCanvasGroup.alpha = 1.0f;
+            }
+            #endif
+            
             if (finishedFadingMenu)
             {
                 menuCanvasGroup.alpha = 0.0f;
                 menuCanvas.enabled = false;
             }
-            
+
             if (!finishedMoving || !finishedFadingMenu) return;
 
             var finishedFadingGame = FadeCanvas(gameCanvasGroup, FadeIn);

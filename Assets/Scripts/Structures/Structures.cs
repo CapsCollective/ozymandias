@@ -166,6 +166,27 @@ namespace Structures
             structure.ToRuin();
         }
 
+        public int NewQuestSpawn()
+        {
+            List<Structure> furthestBuildings = _buildings
+                .OrderByDescending(building => Vector3.Distance(building.transform.position, TownCentre))
+                .ToList();
+
+            foreach (Structure building in furthestBuildings)
+            {
+                Vector3 position = Vector3.MoveTowards(building.transform.position, TownCentre, -Random.Range(6f, 10f));
+                Cell cell = Manager.Map.GetClosestCell(position);
+                if (cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
+                {
+                    return cell.Id;
+                }
+            }
+
+            Debug.LogError("Couldn't find valid location for quest");
+            //TODO: A backup better than this
+            return Random.Range(200, 1200);
+        }
+        
         private Location NewSpawnLocation() => spawnLocations.SelectRandom();
         
         private void SpawnGuildHall()
