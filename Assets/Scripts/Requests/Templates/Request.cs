@@ -24,5 +24,10 @@ namespace Requests.Templates
         
         public abstract void Start();
         public abstract void Complete();
+        
+        private void OnDisable()
+        {
+            Complete(); // Clear whatever setup the object has on clear
+        }
     }
 }

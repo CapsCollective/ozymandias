@@ -1,27 +1,28 @@
-﻿using Structures;
+﻿using System;
+using Structures;
 using Utilities;
 
 namespace Requests.Templates
 {
     public sealed class DestroyBuildings : Request
     {
-        public BuildingType? buildingType;
-        public override string Description => $"Destroy {Required} {(buildingType != null ? buildingType.ToString() : "building")}s";
+        public BuildingType buildingType;
+        public override string Description => $"Destroy {Required} {buildingType}s";
         protected override int RequiredScaled => 3;
 
         public override void Start()
         {
-            Structures.Structures.OnBuild += CheckBuilt;
+            Select.OnClear += CheckClear;
         }
         
         public override void Complete()
         {
-            Structures.Structures.OnBuild -= CheckBuilt;
+            Select.OnClear -= CheckClear;
         }
 
-        private void CheckBuilt(Structure structure)
+        private void CheckClear(Structure structure)
         {
-            if (structure.Blueprint.type == buildingType) Completed++;
+            if (structure.IsBuilding && structure.Blueprint.type == buildingType) Completed++;
         }
     }
 }

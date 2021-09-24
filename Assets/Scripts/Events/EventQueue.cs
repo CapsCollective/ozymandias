@@ -91,10 +91,12 @@ namespace Events
             // Let them gain some adventurers to start
             if (Manager.Adventurers.Count >= 3)
             {
-                eventPool.Add(PickRandom(EventType.Threat));
+                int lead = Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, -10, 10);
+                
+                // Scale from 100% down to 50% threat spawn if falling behind by up to 10
+                if(Random.Range(0,20) > -lead) eventPool.Add(PickRandom(EventType.Threat));
                 
                 // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
-                int lead = Mathf.Min(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, 10);
                 int random = Random.Range(0, 20);
                 if (random == 0 || random < lead) eventPool.Add(PickRandom(EventType.Radiant));
 
@@ -151,7 +153,6 @@ namespace Events
                 if (toFront) _others.AddFirst(e);
                 else _others.AddLast(e);
             }
-            Debug.Log(_others.Count + " items in queue");
         }
 
         public void AddGameOverEvents()

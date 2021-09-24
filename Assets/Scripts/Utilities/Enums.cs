@@ -99,7 +99,7 @@
         PreserveStructures,
         CompleteQuests,
         KeepHappy,
-        KeepUnhappy,
+        KeepUpset,
         HoardWealth,
         AcquireWealth
     }

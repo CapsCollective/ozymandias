@@ -47,7 +47,7 @@ namespace Managers
             return mod * (Manager.Structures.GetStat(stat) + upgradeMod) + ModifiersTotal[stat] + foodMod;
         }
 
-        private int GetSatisfaction(Guild guild)
+        public int GetSatisfaction(Guild guild)
         {
             return GetStat((Stat)guild) - Manager.Adventurers.GetCount(guild);
         }

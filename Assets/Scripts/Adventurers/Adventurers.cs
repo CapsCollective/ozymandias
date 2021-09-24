@@ -35,7 +35,7 @@ namespace Adventurers
 
         public int GetCount(Guild type)
         {
-            return _adventurers.Count(a => a.guild == type);
+            return _adventurers.Count(a => !a.assignedQuest && a.guild == type);
         }
         
         public Adventurer Assign(Quest quest)

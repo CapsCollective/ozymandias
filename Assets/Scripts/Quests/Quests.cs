@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Managers;
@@ -9,6 +10,8 @@ namespace Quests
 {
     public class Quests : MonoBehaviour
     {
+        public static Action<Quest> OnQuestCompleted;
+        
         [SerializeField] private Transform dock, forestPath, mountainPath;
         [SerializeField] private QuestCounter counter;
         

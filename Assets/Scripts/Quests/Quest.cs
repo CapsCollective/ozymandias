@@ -79,12 +79,13 @@ namespace Quests
             TurnsLeft = ScaledTurns(costScale);
             Manager.Stats.Spend(ScaledCost(costScale));
             _assigned.AddRange(Manager.Adventurers.Assign(this, adventurersUsed));
-            UpdateUi();
             OnQuestStarted?.Invoke(this);
+            UpdateUi();
         }
 
         public void Complete()
         {
+            Quests.OnQuestCompleted?.Invoke(this);
             if (!IsRadiant || AssignedCount >= BaseAdventurers + Structure.SectionCount) Manager.Quests.Remove(this);
             else Structure.Shrink(AssignedCount - BaseAdventurers);
             _assigned.Clear();

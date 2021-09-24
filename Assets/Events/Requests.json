@@ -1,112 +1,211 @@
 {
 	"Brawler": [
 		{
-			"name": "Attract Brawlers",
-			"addedHeadline": "",
-			"addedArticle": "",
+			"name": "attract-brawlers",
+			"addedHeadline": "Meat Shields Wanted!",
+			"addedArticle": "\"The other adventurers keep asking us for more 'meat shields'. I don't know what they mean but maybe if we get some more of us, one of them will know!\"",
 			"addedImage": "Stats/Brawler",
-			"completeHeadline": "",
-			"completeArticle": "",
+			"completeHeadline": "Meat Shield Mystery",
+			"completeArticle": "\"We never learned what the other adventurers meant, but at least they're happy now\" one brawler said while being pushed toward some deadly thing, idk write your own joke.",
 			"completeImage": "Stats/Brawler",
 			"type": "AttractAdventurers"
 		}, {
-			"name": "Build Blacksmiths",
-			"addedHeadline": "",
-			"addedArticle": "",
+			"name": "build-blacksmiths",
+			"addedHeadline": "More Pointy Things!",
+			"addedArticle": "The Brawlers are running on a worryingly low supply of dangerous implements, there just aren't enough Blacksmiths to go around. Let's fix that.",
 			"addedImage": "Buildings/Blacksmith",
-			"completeHeadline": "",
-			"completeArticle": "",
+			"completeHeadline": "Now THIS is a Lot of Pointy Things!",
+			"completeArticle": "The Brawlers are now satisfied with the amount of deadly weapons in their possession. Could always use more, though.",
 			"completeImage": "Buildings/Blacksmith",
 			"type": "ConstructBuildings",
 			"buildingType": "Blacksmith"
+		}, {
+			"name": "destroy-libraries",
+			"addedHeadline": "Death to Books!",
+			"addedArticle": "The brawlers are fighting their greatest enemy, illiteracy, and need your help! \"They say words can't die, but words ain't met me!\" one brawler was heard chanting to no one in particular.",
+			"addedImage": "Buildings/Library",
+			"completeHeadline": "Book Burning Ends in (More) Tragedy",
+			"completeArticle": "Amongst the rubble of the destroyed libraries and lost literature, a Brawler, having learned their lesson, lamented that there's no way they could somehow record their new knowledge for future use.",
+			"completeImage": "Buildings/Library",
+			"type": "DestroyBuildings",
+			"buildingType": "Library"
+		}, {
+			"name": "lose-adventurers",
+			"addedHeadline": "Glorious Combat",
+			"addedArticle": "Brawlers want for more adventurers to die in combat.",
+			"addedImage": "sabre-slash",
+			"completeHeadline": "Onward to Death!",
+			"completeArticle": "The brawlers are really happy, not the ones that died, but they're not here to say otherwise.",
+			"completeImage": "",
+			"type": "LoseAdventurers",
+			"requireKill": true
 		}
 	],
 	"Outrider": [
 		{
-			"name": "Attract Outriders",
-			"addedHeadline": "",
-			"addedArticle": "",
+			"name": "attract-outriders",
+			"addedHeadline": "Heist Tryouts",
+			"addedArticle": "We're putting together a heist and need a crew. Tryouts are soon, and if you do us a favour and get us some candidates, it won't be you we heist!",
 			"addedImage": "",
-			"completeHeadline": "",
-			"completeArticle": "",
+			"completeHeadline": "More Outriders",
+			"completeArticle": "Some joke about how wacky their heist turned out",
 			"completeImage": "",
 			"type": "AttractAdventurers"
 		}, {
-			"name": "Build Herbalists",
-			"addedHeadline": "",
-			"addedArticle": "",
-			"addedImage": "",
-			"completeHeadline": "",
-			"completeArticle": "",
-			"completeImage": "",
+			"name": "build-herbalists",
+			"addedHeadline": "Build Herbalists",
+			"addedArticle": "Some genuine plea about there being an awful scarcity of herbs available",
+			"addedImage": "Buildings/Herbalist",
+			"completeHeadline": "Herb Prices Plummet in Market Crash",
+			"completeArticle": "Some joke about being a pawn influencing the market in their favour",
+			"completeImage": "Buildings/Herbalist",
 			"type": "ConstructBuildings",
 			"buildingType": "Herbalist"
+		}, {
+			"name": "preserve-forest",
+			"addedHeadline": "Nature Appreciation Month Begins!",
+			"addedArticle": "The Outriders are asking that you use the land you've got, and do some development projects in a row without any forestry.",
+			"addedImage": "forest",
+			"completeHeadline": "Nature Appreciation Month is Over!",
+			"completeArticle": "A joke about how it's easier rob people in the forests. \"We can get back to guilt free destroying our environment now, thanks again.\"",
+			"completeImage": "saw",
+			"type": "PreserveStructures",
+			"structureType": "Terrain"
+		}, {
+			"name": "complete-quests",
+			"addedHeadline": "The Explorers Spirit",
+			"addedArticle": "The Outriders are getting sick of being stuck on",
+			"addedImage": "",
+			"completeHeadline": "All Explored Out",
+			"completeArticle": "Wiping the sweat off their forehead \"Phew! We uhhh, we really walked a lot...\"",
+			"completeImage": "",
+			"type": "CompleteQuests"
 		}
 	],
 	"Performer": [
 		{
-			"name": "Attract Performers",
-			"addedHeadline": "",
-			"addedArticle": "",
-			"addedImage": "",
-			"completeHeadline": "",
-			"completeArticle": "",
-			"completeImage": "",
+			"name": "attract-performers",
+			"addedHeadline": "Getting the Bands Back Together",
+			"addedArticle": "The Performers want to put together a big show in your town. \"Yo bro if we get enough buzz going about this thing, your town could light up\"",
+			"addedImage": "music-spell",
+			"completeHeadline": "Battle of the Bards",
+			"completeArticle": "\"Yo bro that was sick\"",
+			"completeImage": "music-spell",
 			"type": "AttractAdventurers"
 		}, {
-			"name": "Build Taverns",
-			"addedHeadline": "",
-			"addedArticle": "",
+			"name": "build-taverns",
+			"addedHeadline": "Bar Hopping",
+			"addedArticle": "We want to put together a sick bar crawl, we just need more taverns to make this thing work",
 			"addedImage": "",
-			"completeHeadline": "",
-			"completeArticle": "",
+			"completeHeadline": "Cross Dimensional Bar Crawl",
+			"completeArticle": "The bar crawl's last stop was through a portal to another dimension. \"I saw things, man... Like 'reconsider your place in the universe' stuff. Honestly, the drinks were just 'meh' though, so might not go back.\"",
 			"completeImage": "",
 			"type": "ConstructBuildings",
 			"buildingType": "Tavern"
+		}, {
+			"name": "upset-arcanists",
+			"addedHeadline": "Hazing Rituals",
+			"addedArticle": "We just want them to loosen up a little, get away from those books and come party with us! And what's a little teasing gonna do, anyway?",
+			"addedImage": "",
+			"completeHeadline": "Prank Gone Too Far?!? (Not Clickbait)",
+			"completeArticle": "Some joke about the arcanists getting back at them with a 'prank' that involves something terrifying or extreme. \"You did your part though brah, good work\"",
+			"completeImage": "",
+			"type": "KeepUpset",
+			"targetGuild": "Arcanist"
+		}, {
+			"name": "clear-terrain",
+			"addedHeadline": "There's Too Much 'Nature' Here!",
+			"addedArticle": "The Performers have grow a distance for having to be around all the beautiful scenery. \"We should be the prettiest thing here, get rid of it!\"",
+			"addedImage": "",
+			"completeHeadline": "Clear Terrain Complete",
+			"completeArticle": "",
+			"completeImage": "",
+			"type": "DestroyStructures",
+			"structureType": "Terrain"
 		}
 	],
 	"Diviner": [
 		{
-			"name": "Attract Diviners",
-			"addedHeadline": "",
-			"addedArticle": "",
+			"name": "attract-diviners",
+			"addedHeadline": "Peaceful Congregation",
+			"addedArticle": "Joke about wanting more open minded and peaceful people in the town",
 			"addedImage": "",
-			"completeHeadline": "",
-			"completeArticle": "",
+			"completeHeadline": "Attract Diviners Complete",
+			"completeArticle": "Punchline about them all arguing and fighting with each other over some insignificant detail",
 			"completeImage": "",
 			"type": "AttractAdventurers"
 		}, {
-			"name": "Build Shrines",
-			"addedHeadline": "More Books Please",
-			"addedArticle": "TODO: Request for more libraries",
+			"name": "build-shrines",
+			"addedHeadline": "More Shrines Please",
+			"addedArticle": "",
 			"addedImage": "",
-			"completeHeadline": "This is a Good Amount of Books",
-			"completeArticle": "TODO: Request complete description",
+			"completeHeadline": "More Shrines Complete",
+			"completeArticle": "",
 			"completeImage": "",
 			"type": "ConstructBuildings",
 			"buildingType": "Shrine"
+		}, {
+			"name": "destroy-taverns",
+			"addedHeadline": "Destroy Taverns",
+			"addedArticle": "We don't like them because of sin and stuff.",
+			"addedImage": "",
+			"completeHeadline": "Taverns Destroyed",
+			"completeArticle": "",
+			"completeImage": "",
+			"type": "DestroyBuildings",
+			"buildingType": "Tavern"
+		}, {
+			"name": "clear-ruins",
+			"addedHeadline": "Clear Ruins",
+			"addedArticle": "The past describes a bunch of stuff we'd rather people forget, no point keeping them around.",
+			"addedImage": "",
+			"completeHeadline": "Ruins Cleared",
+			"completeArticle": "",
+			"completeImage": "",
+			"type": "DestroyStructures",
+			"structureType": "Ruins"
 		}
 	],
 	"Arcanist": [
 		{
-			"name": "Attract Arcanists",
-			"addedHeadline": "",
-			"addedArticle": "",
+			"name": "attract-arcanists",
+			"addedHeadline": "Ritual invites",
+			"addedArticle": "Conducting a big important ritual, need more mages for it",
 			"addedImage": "",
-			"completeHeadline": "",
-			"completeArticle": "",
+			"completeHeadline": "Wizard Tower Sleepover",
+			"completeArticle": "Turns out it was just like a board game night or something.",
 			"completeImage": "",
 			"type": "AttractAdventurers"
 		}, {
-			"name": "Build Libraries",
+			"name": "build-libraries",
 			"addedHeadline": "More Books Please",
-			"addedArticle": "TODO: Request for more libraries",
+			"addedArticle": "This one feels pretty obvious, idk what to do here",
 			"addedImage": "",
 			"completeHeadline": "This is a Good Amount of Books",
-			"completeArticle": "TODO: Request complete description",
+			"completeArticle": "",
 			"completeImage": "",
 			"type": "ConstructBuildings",
 			"buildingType": "Library"
+		}, {
+			"name": "upset-diviners",
+			"addedHeadline": "Upset Diviners",
+			"addedArticle": "",
+			"addedImage": "",
+			"completeHeadline": "Diviners Upset",
+			"completeArticle": "",
+			"completeImage": "",
+			"type": "KeepUpset",
+			"targetGuild": "Diviner"
+		}, {
+			"name": "preserve-ruins",
+			"addedHeadline": "Preserve Ruins",
+			"addedArticle": "Joke about keeping the ruins there to wring out as many research grants as they can",
+			"addedImage": "",
+			"completeHeadline": "Ruins Preserved",
+			"completeArticle": "",
+			"completeImage": "",
+			"type": "PreserveStructures",
+			"structureType": "Ruins"
 		}
 	]
 }

@@ -1,5 +1,4 @@
 ﻿using Structures;
-using UnityEngine;
 using Utilities;
 
 namespace Requests.Templates
@@ -9,7 +8,7 @@ namespace Requests.Templates
         public bool allowAny;
         public BuildingType buildingType;
         public override string Description => $"Build {Required} {(allowAny ? "Building" : buildingType.ToString())}s";
-        protected override int RequiredScaled => 3;
+        protected override int RequiredScaled => allowAny ? 40 : 3;
 
         public override void Start()
         {

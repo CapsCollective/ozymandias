@@ -269,7 +269,7 @@ namespace Events
                     addedEvent.article = config.addedArticle;
                     addedEvent.image = LoadSprite(config.addedImage);
                     addedEvent.type = eventTypes[guild];
-                    AssetDatabase.CreateAsset(addedEvent, $"Assets/Events/Requests/{guild}/{config.name} Added.asset");
+                    AssetDatabase.CreateAsset(addedEvent, $"Assets/Events/Requests/{guild}/{config.name}-added.asset");
 
                     // Added Outcome
                     RequestAdded addedOutcome = ScriptableObject.CreateInstance<RequestAdded>();
@@ -293,12 +293,15 @@ namespace Events
                             break;
                         case RequestType.DestroyBuildings:
                             request = ScriptableObject.CreateInstance<DestroyBuildings>();
+                            ((DestroyBuildings)request).buildingType = config.buildingType;
                             break;
                         case RequestType.DestroyStructures:
                             request = ScriptableObject.CreateInstance<DestroyStructures>();
+                            ((DestroyStructures)request).structureType = config.structureType;
                             break;
-                        /*case RequestType.PreserveStructure:
-                            request = ScriptableObject.CreateInstance<PreserveStructure>();
+                        case RequestType.PreserveStructures:
+                            request = ScriptableObject.CreateInstance<PreserveStructures>();
+                            ((PreserveStructures)request).structureType = config.structureType;
                             break;
                         case RequestType.CompleteQuests:
                             request = ScriptableObject.CreateInstance<CompleteQuests>();
@@ -306,21 +309,16 @@ namespace Events
                         case RequestType.KeepHappy:
                             request = ScriptableObject.CreateInstance<KeepHappy>();
                             break;
-                        case RequestType.KeepUnhappy:
-                            request = ScriptableObject.CreateInstance<KeepUnhappy>();
+                        case RequestType.KeepUpset:
+                            request = ScriptableObject.CreateInstance<KeepUpset>();
+                            ((KeepUpset)request).targetGuild = config.targetGuild;
                             break;
-                        case RequestType.HoardWealth:
-                            request = ScriptableObject.CreateInstance<HoardWealth>();
-                            break;
-                        case RequestType.AcquireWealth:
-                            request = ScriptableObject.CreateInstance<AcquireWealth>();
-                            break;*/
                         default:
                             Debug.LogError("Request type not found: " + config.type);
                             return;
                     }
                     request.guild = guild;
-                    AssetDatabase.CreateAsset(request, $"Assets/Events/Requests/{guild}/{config.name} Request.asset");
+                    AssetDatabase.CreateAsset(request, $"Assets/Events/Requests/{guild}/{config.name}-request.asset");
                     addedOutcome.request = request;
                     
                     // Completed Event
@@ -329,7 +327,7 @@ namespace Events
                     completedEvent.article = config.completeArticle;
                     completedEvent.image = LoadSprite(config.completeImage);
                     completedEvent.type = EventType.Other;
-                    AssetDatabase.CreateAsset(completedEvent, $"Assets/Events/Requests/{guild}/{config.name} Completed.asset");
+                    AssetDatabase.CreateAsset(completedEvent, $"Assets/Events/Requests/{guild}/{config.name}-completed.asset");
                     request.completedEvent = completedEvent;
                     
                     // Completed Outcome
@@ -386,11 +384,12 @@ namespace Events
             };
         }
         
-        private static OutcomeConfig Convert(Outcome choice)
+        private static OutcomeConfig Convert(Outcome outcome)
         {
             return new OutcomeConfig
             {
-                type = (OutcomeType) Enum.Parse(typeof(OutcomeType), choice.GetType().Name)
+                type = (OutcomeType) Enum.Parse(typeof(OutcomeType), outcome.GetType().Name),
+                customDescription = outcome.customDescription
             };
         }
         
