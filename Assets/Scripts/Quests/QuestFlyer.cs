@@ -10,6 +10,7 @@ namespace Quests
     public class QuestFlyer : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI titleText, descriptionText, statsText;
+        [SerializeField] private Image icon;
         [SerializeField] private Button sendButton;
         [SerializeField] private GameObject stamp;
         [SerializeField] private Slider adventurerSlider, costSlider;
@@ -52,6 +53,7 @@ namespace Quests
         {
             titleText.text = quest.Title;
             descriptionText.text = quest.Description;
+            icon.sprite = quest.image;
             
             sendButton.gameObject.SetActive(!quest.IsActive);
             costSlider.gameObject.SetActive(!quest.IsActive);

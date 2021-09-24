@@ -6,14 +6,16 @@ namespace Events.Outcomes
     [CreateAssetMenu(fileName = "Threat Added Outcome", menuName = "Outcomes/Threat Added")]
     public class ThreatAdded : Outcome
     {
-        public int amount;
+        public int baseAmount;
+
+        private int Amount => Mathf.RoundToInt(baseAmount * (1 + Manager.Stats.TurnCounter / ThreatScaling));
     
         public override bool Execute()
         {
-            Manager.Stats.BaseThreat += amount;
+            Manager.Stats.BaseThreat += Amount;
             return true;
         }
     
-        public override string Description => "<color=#820000ff>" + amount + " threat to the town</color>";
+        public override string Description => "<color=#820000ff>" + Amount + " threat to the town</color>";
     }
 }

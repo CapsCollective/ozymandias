@@ -23,7 +23,7 @@ MonoBehaviour:
   - {fileID: 8014143561013620314}
   - {fileID: 8074542242104773330}
   choices: []
-  buildingToUnlock: {fileID: 0}
+  blueprintToUnlock: {fileID: 0}
 --- !u!114 &8014143561013620314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37,8 +37,7 @@ MonoBehaviour:
   m_Name: Remove Adventurers(Clone)
   m_EditorClassIdentifier: 
   customDescription: 
-  adventurerNames:
-  - 
+  count: 1
   kill: 1
 --- !u!114 &8074542242104773330
 MonoBehaviour:
@@ -54,4 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   adventurers:
-  - {fileID: 0}
+  - name: 
+    guild: 0
+    isSpecial: 0
+    turnJoined: 0

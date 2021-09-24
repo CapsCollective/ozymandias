@@ -47,7 +47,7 @@ namespace Managers
             return mod * (Manager.Structures.GetStat(stat) + upgradeMod) + ModifiersTotal[stat] + foodMod;
         }
 
-        private int GetSatisfaction(Guild guild)
+        public int GetSatisfaction(Guild guild)
         {
             return GetStat((Stat)guild) - Manager.Adventurers.GetCount(guild);
         }
@@ -97,6 +97,7 @@ namespace Managers
         private void OnNewGame()
         {
             TurnCounter = 1;
+            BaseThreat = 0;
             Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
             Wealth = 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
         }

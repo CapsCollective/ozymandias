@@ -13,7 +13,8 @@ namespace Adventurers
     public class Adventurers : MonoBehaviour
     {
         public static Action<Adventurer> OnAdventurerJoin;
-        
+        public static Action<Adventurer, bool> OnAdventurerRemoved;
+
         [SerializeField] private GameObject prefab;
         [SerializeField] private Transform graveyard;
 
@@ -34,7 +35,7 @@ namespace Adventurers
 
         public int GetCount(Guild type)
         {
-            return _adventurers.Count(a => a.guild == type);
+            return _adventurers.Count(a => !a.assignedQuest && a.guild == type);
         }
         
         public Adventurer Assign(Quest quest)
@@ -74,20 +75,8 @@ namespace Adventurers
             Adventurer created = New().Create(category);
             OnAdventurerJoin?.Invoke(created);
         }
-
-        public void Add(PremadeAdventurer adventurer)
-        {
-            Adventurer created = New().Load(new AdventurerDetails
-            {
-                name = adventurer.name,
-                type = adventurer.type,
-                isSpecial = adventurer.isSpecial,
-                turnJoined = Manager.Stats.TurnCounter
-            });
-            OnAdventurerJoin?.Invoke(created);
-        }
-
-        private void Add(AdventurerDetails adventurer)
+        
+        public void Add(AdventurerDetails adventurer)
         {
             Adventurer created = New().Load(adventurer);
             if (!Manager.State.Loading) OnAdventurerJoin?.Invoke(created);
@@ -100,6 +89,7 @@ namespace Adventurers
             int randomIndex = Random.Range(0, removable.Count);
             Adventurer toRemove = removable[randomIndex];
 
+            OnAdventurerRemoved?.Invoke(toRemove, kill);
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
             else Destroy(toRemove);

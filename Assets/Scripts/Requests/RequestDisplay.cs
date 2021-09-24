@@ -63,7 +63,7 @@ namespace Requests
                     _notificationDisplay.slider.value = 0;
                 }
                 
-                if (Request.Completed <= _oldCompleted) return;
+                if (Request.Completed == _oldCompleted) return;
                 _oldCompleted = Request.Completed;
                 
                 // Cancel any current tweens in case updates trigger twice in quick succession
