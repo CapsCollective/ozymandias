@@ -4,6 +4,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Cards
@@ -97,6 +98,8 @@ namespace Cards
                 .OnComplete(() =>
                 {
                     Blueprint = Manager.Cards.NewCard();
+                    // 5% for a free card per upgrade level
+                    Blueprint.Free = Random.Range(0, 20) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
                     UpdateUi();
                     _rectTransform
                         .DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase)

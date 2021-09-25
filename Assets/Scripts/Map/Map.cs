@@ -114,12 +114,12 @@ namespace Map
                     .Where(occupant => occupant && occupant != structure) // Exclude null values and self
                 ).Distinct().ToList();
 
-        public Vector3[] GetCornerPositions(Cell cell)
+        public List<Vector3> GetCornerPositions(Cell cell)
         {
-            Vector3[] corners = new Vector3[4];
+            List<Vector3> corners = new List<Vector3>(4);
             for (int i = 0; i < 4; i++)
             {
-                corners[i] = transform.TransformPoint(cell.Vertices[(i + cell.Rotation) % 4]);
+                corners.Add(transform.TransformPoint(cell.Vertices[(i + cell.Rotation) % 4]));
             }
 
             return corners;
