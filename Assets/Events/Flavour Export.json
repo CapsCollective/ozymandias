@@ -107,14 +107,15 @@
   {
     "name": "twin",
     "headline": "Long Lost Twin",
-    "article": "After a battle with a frost troll, we have unfortunately lost an adventurer today. Convieniently, however, their long lost twin has just arrived in town, and has taken up residence.",
+    "article": "After a battle with a frost troll, we have unfortunately lost an adventurer today. Conveniently, however, their long lost twin has just arrived in town, and has taken up residence.",
     "image": "twin",
     "type": "FlavourText",
     "outcomes":
     [
       {
         "type": "AdventurerRemoved",
-        "count": 1
+        "count": 1,
+        "kill": true
       },
       {
         "type": "AdventurerAdded",
@@ -122,7 +123,7 @@
         [
           {
             "name": "Long Lost Twin",
-            ""
+            "guild": "Diviner"
           }
         ]
       }
