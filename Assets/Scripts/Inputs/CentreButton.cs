@@ -9,7 +9,7 @@ namespace Inputs
 {
     public class CentreButton : MonoBehaviour
     {
-        private const float InnerDistance = 40;
+        private const float InnerDistance = 35;
         private const float Text1Distance = 55;
         private const float Text2Distance = 70;
         private const float OuterDistance = 85;
