@@ -1,0 +1,174 @@
+﻿[
+  {
+    "name": "well-eye",
+    "headline": "Well Well Well, Look What Eye Have Here!",
+    "article": "A monstrous eye has been found living at the bottom of our local well. Our on-the-field reporter described peering into the well akin to \"Delving into the abyss itself... Where the true master of our world lies... sorry, what were we talking about?\"",
+    "image": "behold",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Your townsfolk start having the strangest dreams..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
+      }
+    ]
+  },
+  {
+    "name": "time-being",
+    "headline": "Tributes to the Time Being",
+    "article": "A local cult has started making offerings to a mysterious creature in exchange for future sight. \"We have a busy schedule ahead, so let's just leave this for the Time Being\" chant the cultists.",
+    "image": "empty-hourglass",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Your townsfolk are fearful of this 'Time Being'"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "beetles",
+    "headline": "Hello Beetles, Goodbye Beetles",
+    "article": "Giant, monstrous beetles are migrating from the strawberry fields, terrorising the town this morning with loud, melodic buzzing from the rooftops. The town etymologist had hoped they would have moved along yesterday. The blackbird population is reportedly under attack from these creatures. Local blacksmith, Maxwell, claims he has just the right tool for the situation...",
+    "image": "scarab-beetle",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "We don't know how much longer we can let it be.."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "feeding-day",
+    "headline": "Feeding Day is Upon Us!",
+    "article": "As it does every year, town prepares for its annual feeding day, when townsfolk come together to celebrate the sating of the beast. As is tradition, each home leaves a fresh ham upon their doorstep tomorrow night. Residents are being urged to purchase their hams quickly to avoid a long and agonising death for them and their loved ones this holiday season.",
+    "image": "behold",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "The beast will be fed for another year"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 5
+      }
+    ]
+  },
+  {
+    "name": "humming-lights",
+    "headline": "Mysterious Lights won't Stop Humming",
+    "article": "The strange dancing lights off the east side of town have started singing a little tune! Some claim it's cheerful, others ominous. Local residents have reported asking, \"Oh God, oh God why won't they stop? Please, someone, make them stop.\"",
+    "image": "behold",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "The purpose of these lights are still to be determined"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "bandit-raid",
+    "headline": "Bandit Raid Takes its Toll",
+    "article": "Three Adventurers (and 23 villagers) have been struck down protecting our town from a clan of nearby marauders. They didn't even try to steal anything, they're just jerks.",
+    "image": "sabre-slash",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "AdventurersRemoved",
+        "count": 3,
+        "kill": true
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "stars",
+    "headline": "Up to the Stars",
+    "article": "Three extra stars have been discovered last night in the southern sky. They definitely weren't there before, and local cosmic diviners warn against looking at them for too long in case you start seeing things that DEFINITELY AREN'T THERE",
+    "image": "stars-stack",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Just don't look up and you'll be fine..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "marching-bandits",
+    "headline": "The Marching Bandits Strike!",
+    "article": "After receiving reports of obnoxious sounds off in the distance drawing ever-closer, the odd group of ruffians known to terrorise their victims with terrible music has finally made it here, and made-off with a king's ransom in loot.",
+    "image": "music-spell",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Spending",
+          "amount": -10,
+          "turns": 3,
+          "reason": "from the Marching Bandits"
+        }
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "santa",
+    "headline": "Ho Ho Horror!",
+    "article": "An evil wizard dressed all in red with a sleigh and reindeer blazed through town, scaring residents and adventurers alike. The sound of his haunting laugh caused a few of our resident elves to flee in terror at the sound of their former master.",
+    "image": "wizard-face",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "We're all getting coal this year..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "mimic-swords",
+    "headline": "These Mimics are Sharp!",
+    "article": "Local adventurer returns gloriously from defeating a cave of mimics, only for his sword to try and eat him before running off. The whereabouts of this sword are unknown, so keep an eye out for any household items you don't remember buying!",
+    "image": "mimic-chest",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  }
+]

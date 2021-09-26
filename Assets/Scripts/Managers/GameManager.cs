@@ -78,7 +78,9 @@ namespace Managers
         public const int RuinsBaseCost = 20;
         public const float RuinsCostScale = 1.10f;
         public const int WealthPerAdventurer = 5;
-
+        public const float ThreatScaling = 40f; // How many turns to double the base threat from threat added outcomes
+        public const int FoodHousingMultiplier = 5;
+        
         #endregion
 
         #region Debug

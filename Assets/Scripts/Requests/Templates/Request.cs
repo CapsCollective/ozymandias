@@ -24,9 +24,10 @@ namespace Requests.Templates
         
         public abstract void Start();
         public abstract void Complete();
-
-#if (UNITY_EDITOR)
-        public virtual void Configure(EventCreator.RequestConfig config) {}
-#endif
+        
+        private void OnDisable()
+        {
+            Complete(); // Clear whatever setup the object has on clear
+        }
     }
 }

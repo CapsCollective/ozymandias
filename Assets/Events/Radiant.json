@@ -1,0 +1,129 @@
+﻿[
+  {
+    "name": "woodland-creatures",
+    "headline": "",
+    "article": "Yet another escaped princess has befriended woodland creatures, and now is out for revenge",
+    "image": "",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "woodland-creatures-quest",
+          "location": "Grid",
+          "title": "",
+          "description": "",
+          "image": "",
+          "completedEvent": {
+            "name": "woodland-creatures-completed",
+            "headline": "",
+            "article": "",
+            "image": ""
+          },
+          "baseTurns": 3,
+          "wealthMultiplier": 2
+        }
+      }
+    ]
+  },
+  {
+    "name": "dryad-commune",
+    "headline": "Dryad Commune",
+    "article": "A group of nature loving dryads have formed a commune near our industrious town. Rumour has it they have terrible mind controlling powers, spreading troublesome ideas like 'equality', and 'not burning the very world we live in'. Their very existence is a threat to us!",
+    "image": "",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "dryad-commune-quest",
+          "location": "Grid",
+          "title": "Organise a Coup",
+          "description": "",
+          "image": "",
+          "completedEvent": {
+            "name": "dryad-commune-completed",
+            "headline": "Dryad Commune Burned Down",
+            "article": "",
+            "image": ""
+          },
+          "baseTurns": 5,
+          "wealthMultiplier": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "sentient-campsites",
+    "headline": "Sentient Campsites",
+    "article": "We scouted enemy camps, turns out they were mimics. write a joke",
+    "image": "",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "sentient-campsites-quest",
+          "location": "Grid",
+          "title": "Uncover the Mimics",
+          "description": "",
+          "image": "",
+          "completedEvent": {
+            "name": "sentient-campsites-completed",
+            "headline": "",
+            "article": "It turns out the tents themselves were the mimics",
+            "image": ""
+          },
+          "baseTurns": 3,
+          "wealthMultiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "name": "troll-union",
+    "headline": "Trolling for Tariffs",
+    "article": "Amid rising tensions between local merchants and the bridge-troll union, faction official Moh'rgen Mork'hol has threatened to lock down bridges along several strategic trade routes in an effort to raise minimum toll rates for union members.",
+    "image": "",
+    "type": "Radiant",
+    "choice": [
+      {
+        "name": "Accept their terms",
+        "outcomes": [
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Spending",
+              "amount": -10,
+              "turns": -1,
+              "reason": "from the Troll Tolls"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Refuse their demands",
+        "outcomes": [
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "troll-union-quest",
+              "location": "Grid",
+              "title": "",
+              "description": "",
+              "image": "",
+              "completedEvent": {
+                "name": "troll-union-completed",
+                "headline": "",
+                "article": "",
+                "image": ""
+              },
+              "baseTurns": 4,
+              "wealthMultiplier": 1.5
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

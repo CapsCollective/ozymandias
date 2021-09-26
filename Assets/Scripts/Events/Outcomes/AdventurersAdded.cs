@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Adventurers;
+using Managers;
 using UnityEngine;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
@@ -9,13 +10,13 @@ namespace Events.Outcomes
     [CreateAssetMenu(fileName = "New Adventurers Outcome", menuName = "Outcomes/New Adventurers")]
     public class AdventurersAdded : Outcome
     {
-        public List<PremadeAdventurer> adventurers;
+        public List<AdventurerDetails> adventurers;
 
         public override bool Execute()
         {
-            foreach (PremadeAdventurer t in adventurers)
+            foreach (AdventurerDetails details in adventurers)
             {
-                if (t != null) Manager.Adventurers.Add(t);
+                if (details.name != null) Manager.Adventurers.Add(details);
                 else Manager.Adventurers.Add();
             }
 

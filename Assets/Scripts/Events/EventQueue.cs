@@ -37,8 +37,13 @@ namespace Events
         
         private void Awake()
         {
-            State.OnNewGame += () => Add(openingEvent, true);
-            State.OnGameEnd += () => StoryActive = false;
+            State.OnNewGame += () =>
+            {
+                _headliners.Clear();
+                _others.Clear();
+                Add(openingEvent, true);
+                StoryActive = false;
+            };
 
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
             {
@@ -83,12 +88,20 @@ namespace Events
             if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
             else if(Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
-            // TODO: Events that increase threat a fixed amount spawn relative to how far ahead your defence is
-            // Camp quest events spawn relative to turns progressed, to balance fixed/ scaling 
-            /*if (Manager.Stats.TurnCounter >= 5)
+            // Let them gain some adventurers to start
+            if (Manager.Adventurers.Count >= 3)
             {
+                int lead = Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, -10, 10);
+                
+                // Scale from 100% down to 50% threat spawn if falling behind by up to 10
+                if(Random.Range(0,20) > -lead) eventPool.Add(PickRandom(EventType.Threat));
+                
+                // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
+                int random = Random.Range(0, 20);
+                if (random == 0 || random < lead) eventPool.Add(PickRandom(EventType.Radiant));
+
                 // 20% chance to start a new story while no other is active
-                if (!StoryActive && Random.Range(0, 5) == 0)
+                /*if (!StoryActive && Random.Range(0, 5) == 0)
                 {
                     // Pick a story that isn't for an already unlocked/ discoverable building
                     while (true)
@@ -96,25 +109,16 @@ namespace Events
                         Event story = PickRandom(EventType.Story);
                         if (story == null) break; // Catch case for if there are no stories
                         
-                        if (story.blueprintToUnlock == null || !Manager.Cards.IsDiscoverableOrPlayable(story.blueprintToUnlock))
+                        if (story.blueprintToUnlock == null || !Manager.Cards.IsUnlocked(story.blueprintToUnlock))
                         {
                             eventPool.Add(story);
                             break;
                         }
                     }
-                }
-                
-                // 30% flat chance to spawn chaos
-                if (Random.Range(0,10) < 3) eventPool.Add(PickRandom(EventType.Chaos));
-                
-                // Variable rate for > 50, to stir things up if things are going too good
-                if (Random.Range(50,100) < Manager.Stats.Stability) eventPool.Add(PickRandom(EventType.Chaos));
-            
-                // Start spawning threat events at 50, and gets more likely the higher it gets
-                if (Random.Range(0,50) > Manager.Stats.Stability) eventPool.Add(PickRandom(EventType.Threat));
-            }*/
-            
-            while (eventPool.Count <= 3) eventPool.Add(PickRandom(EventType.Flavour)); //Fill remaining event slots
+                }*/
+            }
+
+            while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); //Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
         }
         
