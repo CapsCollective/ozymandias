@@ -41,7 +41,7 @@ namespace Managers
 
         public int GetStat(Stat stat)
         {
-            int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
+            int mod = stat == Stat.Food || stat == Stat.Housing ? FoodHousingMultiplier : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
             int upgradeMod = UpgradeMap.ContainsKey(stat) ? Manager.Upgrades.GetLevel(UpgradeMap[stat]) : 0;
             return mod * (Manager.Structures.GetStat(stat) + upgradeMod) + ModifiersTotal[stat] + foodMod;
