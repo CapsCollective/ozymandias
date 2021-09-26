@@ -15,6 +15,7 @@ namespace UI
         private const float BarLength = 580f;
         private const float Height = 25;
         private int _oldDefence, _oldThreat;
+        private bool _running;
         
         protected override void UpdateUi()
         {
@@ -47,7 +48,11 @@ namespace UI
         
         private void PunchBadge(RectTransform badge)
         {
-            badge.DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f);
+            if (_running) return; 
+            _running = true;
+            badge
+                .DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f)
+                .OnComplete(() => _running = false);
         }
     }
 }

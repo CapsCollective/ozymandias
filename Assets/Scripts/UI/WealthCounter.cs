@@ -17,6 +17,7 @@ namespace UI
         private int _previousWealth = 0;
         private int _targetWealth = 0;
         private int _previousSpending = 0;
+        private bool _running = false;
 
         // Update is called once per frame
         protected override void UpdateUi()
@@ -50,7 +51,11 @@ namespace UI
         
         private void PunchBadge()
         {
-            spendingTag.DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f);
+            if (_running) return; 
+            _running = true;
+            spendingTag
+                .DOPunchScale(new Vector3(0.2f,0.2f,0), 0.5f)
+                .OnComplete(() => _running = false);
         }
     }
 }

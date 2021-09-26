@@ -586,7 +586,7 @@ namespace Map
                         Vector3.back,
                     };
 
-                    int[] triangles = { 0, 1, 2, 3, 1, 2 };
+                    int[] triangles = { 0, 1, 2, 2, 1, 3 };
 
                     Mesh quad = new Mesh {
                         vertices = vertices,

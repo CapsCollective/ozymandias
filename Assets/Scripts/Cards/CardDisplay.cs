@@ -69,7 +69,7 @@ namespace Cards
             // Set card details
             title.text = blueprint.name;
             description.text = blueprint.description;
-            cost.text = blueprint.ScaledCost.ToString();
+            cost.text = blueprint.Free ? "Free" : blueprint.ScaledCost.ToString();
             icon.sprite = blueprint.icon;
 
             if (interactable)
