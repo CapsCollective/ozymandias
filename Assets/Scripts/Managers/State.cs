@@ -310,7 +310,7 @@ namespace Managers
                 timer += Time.deltaTime / sunSetTime;
                 sun.color = sunColorGradient.Evaluate(timer);
                 RenderSettings.ambientLight = ambientGradient.Evaluate(timer);
-                RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
+                RenderSettings.fogColor = ambientGradient.Evaluate(timer);
                 //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
                 skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(timer));
                 skyMaterial.SetColor("_HorizonColor", ambientGradient.Evaluate(timer));
@@ -329,7 +329,7 @@ namespace Managers
         {
             sun.color = sunColorGradient.Evaluate(ToDDebug);
             RenderSettings.ambientLight = ambientGradient.Evaluate(ToDDebug);
-            RenderSettings.fogColor = sunColorGradient.Evaluate(ToDDebug);
+            RenderSettings.fogColor = ambientGradient.Evaluate(ToDDebug);
             //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
             skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(ToDDebug));
             skyMaterial.SetColor("_HorizonColor", horizonColorGradient.Evaluate(ToDDebug));
