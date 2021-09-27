@@ -315,7 +315,6 @@ GameObject:
   - component: {fileID: 3795023321179944333}
   - component: {fileID: 3795023321179944368}
   - component: {fileID: 3795023321179944371}
-  - component: {fileID: 3795023321179944370}
   m_Layer: 5
   m_Name: Quest Counter
   m_TagString: Untagged
@@ -381,22 +380,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
---- !u!114 &3795023321179944370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3795023321179944332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1dff080d54883d418d6addb92b13719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 3795023321794086398}
-  image: {fileID: 3795023321179944371}
-  readColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
-  unreadColor: {r: 0.84705883, g: 0.30980393, b: 0.30980393, a: 1}
 --- !u!1 &3795023321368961669
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +749,7 @@ GameObject:
   - component: {fileID: 3795023322038554276}
   - component: {fileID: 8538249681198540598}
   - component: {fileID: 3448001489619834565}
+  - component: {fileID: 1153806046094864152}
   m_Layer: 5
   m_Name: Open Quests Button
   m_TagString: Untagged
@@ -918,6 +902,22 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
+--- !u!114 &1153806046094864152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795023322038554278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dff080d54883d418d6addb92b13719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 3795023321794086398}
+  image: {fileID: 3795023321179944371}
+  readColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+  unreadColor: {r: 0.84705883, g: 0.30980393, b: 0.30980393, a: 1}
 --- !u!1 &3795023322734049695
 GameObject:
   m_ObjectHideFlags: 0

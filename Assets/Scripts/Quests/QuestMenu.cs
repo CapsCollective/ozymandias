@@ -11,7 +11,7 @@ namespace Quests
 {
     public class QuestMenu : MonoBehaviour
     {
-        [SerializeField] private Button openQuestsButton, closeButton, nextButton, previousButton;
+        [SerializeField] private Button closeButton, nextButton, previousButton;
         [SerializeField] private QuestFlyer[] flyers;
         
         [SerializeField] private float animateAcrossDuration = 0.5f;
@@ -56,19 +56,20 @@ namespace Quests
         private void Start()
         {
             _canvas = GetComponent<Canvas>();
-            openQuestsButton.onClick.AddListener(() =>
-            {
-                if (!SelectedQuest) return;
-                OpenFlyer.UpdateContent(SelectedQuest);
-                FocusStructure(SelectedQuest.Structure);
-                Open();
-            });
             closeButton.onClick.AddListener(Close);
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
             previousButton.onClick.AddListener(() => ChangeQuest(SwapDir.Left));
             Select.OnQuestSelected += quest =>
             {
                 SelectedQuest = quest;
+                OpenFlyer.UpdateContent(SelectedQuest);
+                FocusStructure(SelectedQuest.Structure);
+                Open();
+            };
+
+            QuestButton.OnClicked += () =>
+            {
+                if (!SelectedQuest) return;
                 OpenFlyer.UpdateContent(SelectedQuest);
                 FocusStructure(SelectedQuest.Structure);
                 Open();
