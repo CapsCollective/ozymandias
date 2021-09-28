@@ -1,8 +1,6 @@
 using DG.Tweening;
-using Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static Managers.GameManager;
 
 namespace Utilities
 {
@@ -12,7 +10,7 @@ namespace Utilities
         [SerializeField] private float scaleTarget = 1.2f;
         [SerializeField] private float duration = 0.3f;
         [SerializeField] private GameObject target;
-        private bool _interactable = true;
+        public bool interactable = true;
 
         private void Start()
         {
@@ -20,15 +18,12 @@ namespace Utilities
             {
                 target = gameObject;
             }
-
-            State.OnNextTurnBegin += () => _interactable = false;
-            State.OnNextTurnEnd += () => _interactable = true;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             // Ignore disabled buttons
-            if (!_interactable) return;
+            if (!interactable) return;
 
             // Start the on-hover animation
             target.transform.DOScale(scaleTarget, duration);
