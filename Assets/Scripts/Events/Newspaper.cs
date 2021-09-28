@@ -53,11 +53,21 @@ namespace Events
             _newspaperTitle = GetNewspaperTitle();
             titleText.text = "{ " + _newspaperTitle + " }";
             State.OnNextTurnEnd += NextTurnOpen;
-            openNewspaperButton.onClick.AddListener(Open);
             continueButton.onClick.AddListener(Close);
             Transform t = transform;
             t.position = ClosePos;
             t.eulerAngles = CloseRot;
+            
+            openNewspaperButton.onClick.AddListener(Open);
+            MenuButton menuButton = openNewspaperButton.gameObject.GetComponent<MenuButton>();
+            menuButton.Interactable = false;
+            // Turn off interaction until first OnNextTurn
+            void SetInteractable()
+            {
+                menuButton.Interactable = true;
+                State.OnNextTurnEnd -= SetInteractable;
+            };
+            State.OnNextTurnEnd += SetInteractable;
         }
 
         private void NextTurnOpen()

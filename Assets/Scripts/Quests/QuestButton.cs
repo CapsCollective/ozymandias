@@ -2,29 +2,35 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Quests
 {
     public class QuestButton : MonoBehaviour
     {
-        public static Action OnClicked;
+        public static Action OnClicked
+        {
+            get => _menuButton.OnClicked;
+            set => _menuButton.OnClicked = value;
+        }
+
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private Image image;
         [SerializeField] private Color readColor, unreadColor;
-        private Button _button;
+        private static MenuButton _menuButton;
 
         private void Start()
         {
-            _button = GetComponent<Button>();
-            _button.onClick.AddListener(() =>
+            _menuButton = GetComponent<MenuButton>();
+            OnClicked += () =>
             {
-                Read();
-                OnClicked?.Invoke();
-            });
-            
-            Quests.OnQuestAdded += (quest) => UpdateCounter(true);
-            Quests.OnQuestRemoved += (quest) => UpdateCounter();
+                // Set the badge as read
+                image.color = readColor;
+            };
+
+            Quests.OnQuestAdded += q => UpdateCounter(true);
+            Quests.OnQuestRemoved += q => UpdateCounter();
             
             UpdateCounter();
         }
@@ -32,14 +38,10 @@ namespace Quests
         private void UpdateCounter(bool markUnread = false)
         {
             var count = Manager.Quests.Count;
+            _menuButton.Interactable = count > 0;
             image.gameObject.SetActive(count != 0);
             text.text = count.ToString();
             if (markUnread) image.color = unreadColor;
-        }
-
-        private void Read()
-        {
-            image.color = readColor;
         }
     }
 }
