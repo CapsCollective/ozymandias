@@ -63,7 +63,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 5
+        "baseAmount": 4
       }
     ]
   },
@@ -87,13 +87,13 @@
   {
     "name": "bandit-raid",
     "headline": "Bandit Raid Takes its Toll",
-    "article": "Three Adventurers (and 23 villagers) have been struck down protecting our town from a clan of nearby marauders. They didn't even try to steal anything, they're just jerks.",
+    "article": "Two Adventurers (and 13 villagers) have been struck down protecting our town from a clan of nearby marauders. They didn't even try to steal anything, they're just jerks.",
     "image": "sabre-slash",
     "type": "Threat",
     "outcomes": [
       {
         "type": "AdventurersRemoved",
-        "count": 3,
+        "count": 2,
         "kill": true
       },
       {
@@ -115,7 +115,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 2
       }
     ]
   },
@@ -168,6 +168,63 @@
       {
         "type": "ThreatAdded",
         "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "gargoyles",
+    "headline": "Gargoyles",
+    "article": "Pest control has been called in, as a new pest has infested our town. Gargoyles have taken residence atop our watchtowers where Arcanists often go to study. The gargoyles were reported silent and unremorseful about their actions, remaining stone-faced.",
+    "image": "gargoyle",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Arcanist",
+          "amount": -3,
+          "turns": 3,
+          "reason": "from the Gargoyles"
+        }
+      }
+    ]
+  },
+  {
+    "name": "crypto-miners",
+    "headline": "Crypt-O Miners",
+    "article": "A new alternative currency has taken a hold of the town, along with it a series of grave robberies. Human bones, known to the community 'Crypt-O' is a popular component for many Necromancers, and the sudden uptick in trade has given them an interest in our town...",
+    "image": "cultist",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Spending",
+          "amount": 20,
+          "turns": 3,
+          "reason": "from Crypt-O miners"
+        }
+      }
+    ]
+  },
+  {
+    "name": "bird-size",
+    "headline": "Birds Incite Panic!",
+    "article": "The town erupted into a panic today, when a townsfolk noticed the size disparity between them and the birds flying overhead. \"It's not something you really notice until it's pointed out, but WOW they could just pick one of us up with ease!\"",
+    "image": "bird",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
       }
     ]
   }

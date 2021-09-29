@@ -1,0 +1,45 @@
+﻿[
+  {
+    "name": "sirens",
+    "headline": "",
+    "article": "",
+    "image": "behold",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Introduce a Busking Tax",
+        "outcomes": 
+        [
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 4
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Spending",
+              "amount": 10,
+              "turns": 5,
+              "reason": "from Siren Buskers"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Put a Stop to Them",
+        "outcomes":
+        [
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Spending",
+              "amount": 10,
+              "turns": 5,
+              "reason": "from Siren Buskers"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

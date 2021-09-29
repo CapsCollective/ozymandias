@@ -46,7 +46,7 @@ namespace Events
             // Override if custom adventurers provided, otherwise default to count and guild
             public List<AdventurerDetails> adventurers;
             public Guild guild;
-            public bool kill;
+            public bool anyGuild, kill;
 
             // Card Unlock blueprint
             public string blueprint;
@@ -154,6 +154,9 @@ namespace Events
                     case OutcomeType.AdventurersAdded:
                         outcome = ScriptableObject.CreateInstance<AdventurersAdded>();
                         ((AdventurersAdded)outcome).adventurers = config.adventurers;
+                        ((AdventurersAdded)outcome).count = config.count;
+                        ((AdventurersAdded)outcome).guild = config.guild;
+                        ((AdventurersAdded)outcome).anyGuild = config.anyGuild;
                         break;
                     case OutcomeType.AdventurersRemoved:
                         outcome = ScriptableObject.CreateInstance<AdventurersRemoved>();

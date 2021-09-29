@@ -18,14 +18,6 @@ namespace Requests
 
         private void Awake()
         {
-            State.OnNewGame += () =>
-            {
-                foreach (Request request in _requests.Values.Where(request => request != null))
-                {
-                    request.Start(); // Restart on a new game in case there are any effects that need to trigger
-                }
-            };
-            
             State.OnEnterState += () =>
             {
                 if (!Manager.State.NextTurn) return;

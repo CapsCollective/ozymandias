@@ -1,5 +1,4 @@
 ﻿using Managers;
-using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 
@@ -23,7 +22,6 @@ namespace Requests.Templates
 
         private void CheckUpset()
         {
-            Debug.Log(Manager.Stats.GetSatisfaction(targetGuild));
             if (Manager.Stats.GetSatisfaction(targetGuild) <= -5) Completed++;
             else Completed = 0;
         }

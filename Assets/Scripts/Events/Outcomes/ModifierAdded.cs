@@ -32,16 +32,15 @@ namespace Events.Outcomes
         {
             get
             {
-                string color;
-                if (statToChange == Stat.Threat && amount > 0 || statToChange != Stat.Threat && amount < 0) color = "#820000ff";
-                else color = "#007000ff";
+                string color = amount > 0 ? Colors.GreenText : Colors.RedText;
+                if (customDescription != "") return $"<color={color}>{customDescription}</color>";
                 
-                if (customDescription != "") return "<color="+color+">" + customDescription + "</color>";
-                string desc = "";
-                if (amount > 0) desc += "<color="+color+">" + statToChange + " has increased by " + amount;
-                else desc += "<color="+color+">" + statToChange + " has decreased by " + Mathf.Abs(amount);
+                string desc = "<color="+color+">" + statToChange + ((int)statToChange < 5 ? " Satisfaction" : "");
+                
+                if (amount > 0) desc += " has increased by " + amount;
+                else desc += " has decreased by " + Mathf.Abs(amount);
             
-                if (turns != -1) desc += " for " + turns + " turns.";
+                if (turns != -1) desc += " for " + turns + " turns " + reason + ".";
                 return desc + "</color>";
             }
         }

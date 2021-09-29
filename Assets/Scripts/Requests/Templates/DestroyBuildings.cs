@@ -1,5 +1,4 @@
-﻿using System;
-using Structures;
+﻿using Structures;
 using Utilities;
 
 namespace Requests.Templates
