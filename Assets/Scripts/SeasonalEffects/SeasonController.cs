@@ -33,19 +33,6 @@ namespace SeasonalEffects
         }
 
         /// <summary>
-        /// Set the strength of Spring/Autumn effects.
-        /// </summary>
-        /// <param name="springInterpolation">A value between <c>0.0f</c> and <c>1.0f</c> from Autumn to Spring.</param>
-        public static void SetSpring(float springInterpolation)
-        {
-            if (!current)
-                return;
-            
-            current.spring = Mathf.Clamp01(springInterpolation);
-            Refresh();
-        }
-
-        /// <summary>
         /// Apply seasonal values to materials, etc.
         /// </summary>
         public static void Refresh()
@@ -59,11 +46,8 @@ namespace SeasonalEffects
         private void UpdateSeason()
         {
             int turn = GameManager.Manager.Stats.TurnCounter;
-
             float period = Mathf.PI / seasonTurnDuration;
-
             float t = Mathf.Sin(turn * period);
-
             spring = (t + 1.0f) / 2.0f;
             
             Refresh();
