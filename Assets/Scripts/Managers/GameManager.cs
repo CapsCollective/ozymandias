@@ -80,6 +80,7 @@ namespace Managers
         public const int WealthPerAdventurer = 5;
         public const float ThreatScaling = 50f; // How many turns to double the base threat from threat added outcomes
         public const int FoodHousingMultiplier = 5;
+        public Sprite saveIcon;
         
         #endregion
 

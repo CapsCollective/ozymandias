@@ -11,6 +11,7 @@ namespace Map
     {
         [field: SerializeField] public int Id { get; set; }
         [field: SerializeField] public bool Active { get; set; }
+        [field: SerializeField] public bool WaterFront { get; set; }
         [field: SerializeField] public List<Vertex> Vertices { get; set; }
         public Structure Occupant { get; set; }
         public int Rotation { get; set; }
@@ -19,7 +20,7 @@ namespace Map
         public Vector3 WorldSpace => Quaternion.Euler(90f, 0f, 30f) * Centre;
         public bool Occupied => Occupant;
         
-        public Cell(List<Vertex> vertices, bool active = true, bool safe = false)
+        public Cell(List<Vertex> vertices, bool active = true)
         {
             vertices = vertices.GetRange(0, 4); // Limit to 4 points
             Active = active;

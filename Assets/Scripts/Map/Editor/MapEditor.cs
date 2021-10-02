@@ -14,8 +14,8 @@ namespace Map.Editor
             Ping,
             Add,
             Remove,
-            Safe,
-            Unsafe
+            Water,
+            Unwater,
         }
 
         private ToolState _state;
@@ -45,6 +45,12 @@ namespace Map.Editor
                 case ToolState.Remove:
                     cell.Active = false;
                     break;
+                case ToolState.Water:
+                    cell.WaterFront = true;
+                    break;
+                case ToolState.Unwater:
+                    cell.WaterFront = false;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -54,7 +60,7 @@ namespace Map.Editor
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-            _state = (ToolState)GUILayout.Toolbar((int)_state, new [] { "Ping", "Add", "Remove", "Safe", "Unsafe" });
+            _state = (ToolState)GUILayout.Toolbar((int)_state, new [] { "Ping", "Add", "Remove", "Water", "Unwater" });
             
             if (GUILayout.Button("Generate Mesh"))
                 (target as Map)?.GenerateMesh(true);

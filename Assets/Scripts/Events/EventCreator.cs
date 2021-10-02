@@ -360,10 +360,7 @@ namespace Events
                 Convert(AssetDatabase.LoadAssetAtPath<Event>($"Assets/Events/{folderName}/{file.Name}"))
             ).ToList();
             
-            Debug.Log(JsonConvert.SerializeObject(converted));
             File.WriteAllText($"Assets/Events/{folderName} Export.json", JsonConvert.SerializeObject(converted));
-            //TODO: For each event in folder, convert and add to list, serialize all to json
-            
         }
 
         private static EventConfig Convert(Event e)

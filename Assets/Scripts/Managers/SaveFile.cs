@@ -8,6 +8,7 @@ using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 using EventType = Utilities.EventType;
+using static UI.Notification;
 
 namespace Managers
 {
@@ -107,6 +108,7 @@ namespace Managers
         public UpgradeDetails upgrades;
         public static void SaveState()
         {
+            OnNotification.Invoke("Game Saved", Manager.saveIcon);
             new SaveFile().Save();
         }
         
