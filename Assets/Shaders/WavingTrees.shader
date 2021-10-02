@@ -11,6 +11,25 @@ Shader "Custom/WavingTrees"
         _NoiseTex("Noise Texture", 2D) = "white" {}
         _AlphaDistance("Transparency Distance", Float) = 1.0
         _AlphaFalloff("Transparency Falloff", Float) = 1.0
+        
+        // Seasonal effects
+    	
+    	_LerpTex ("Season Interpolation Texture", 2D) = "white" {}
+    	
+    	_BandTex ("Autumn Texture", 2D) = "white" {}
+    	_NumBands ("Number of Colour Bands", Int) = 3
+    	
+    	_HueShiftTex ("Hue Shift Texture", 2D) = "white" {}
+
+    	//_Spring ("Spring", Range(0.0, 1.0)) = 0.0
+    	    	
+    	_SpringCol1 ("Spring Colour 1", Color) = (1, 1, 1, 1)
+    	_SpringCol2 ("Spring Colour 2", Color) = (1, 1, 1, 1)
+    	_SpringHueInfluence ("Spring Hue Influence", Range(0.0, 1.0)) = 0.3
+        
+    	_AutumnCol1 ("Autumn Colour 1", Color) = (1, 1, 1, 1)
+    	_AutumnCol2 ("Autumn Colour 2", Color) = (1, 1, 1, 1)
+    	_AutumnHueInfluence ("Autumn Hue Influence", Range(0.0, 1.0)) = 0.3
     }
     SubShader
     {
@@ -33,6 +52,8 @@ Shader "Custom/WavingTrees"
             float3 wPos;
             float3 oPos;
             float4 screenPos;
+        	float4 autumn_uv;
+        	float2 lerp_uv;
         };
 
         half _Glossiness;
@@ -40,6 +61,28 @@ Shader "Custom/WavingTrees"
         fixed4 _Color;
         half _AlphaDistance;
         half _AlphaFalloff;
+
+        // Seasonal effects
+
+        sampler2D _LerpTex;
+        float4 _LerpTex_ST;
+        
+		sampler2D _BandTex;
+        float4 _BandTex_ST;
+        float _NumBands;
+        
+        sampler2D _HueShiftTex;
+        float4 _HueShiftTex_ST;
+        
+        uniform float _Spring;
+        
+        float _AutumnHueInfluence;
+        float4 _AutumnCol1;
+        float4 _AutumnCol2;
+
+        float _SpringHueInfluence;
+        float4 _SpringCol1;
+        float4 _SpringCol2;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -104,16 +147,34 @@ Shader "Custom/WavingTrees"
             o.oPos = unity_ObjectToWorld._m03_m13_m23;
             v.vertex.xz += GetMask(vertexWorldSpace.xy) * (snoise(vertexWorldSpace.xz * (_Time.x * _WindSpeed)) * _WindStrength);
             o.screenPos = ComputeScreenPos(UnityObjectToClipPos(v.vertex));
+
+        	// Seasonal effects
+        	const float4 origin_world = mul(unity_ObjectToWorld, float4(0, 0, 0, 1));
+			o.autumn_uv = float4(TRANSFORM_TEX(origin_world.xz, _BandTex), TRANSFORM_TEX(origin_world.xz, _HueShiftTex));
+			o.lerp_uv = float2(TRANSFORM_TEX(origin_world.xz, _LerpTex));
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * ((_Color + snoise(IN.oPos.xy) * 0.25));
-            fixed n = tex2D(_NoiseTex, IN.uv_MainTex).r;
+
+            // Seasonal effects
+            const fixed autumn_samp = round(tex2D(_BandTex, IN.autumn_uv.xy).r * _NumBands) / _NumBands;
+			const fixed hue_samp = tex2D(_HueShiftTex, IN.autumn_uv.zw).r * 2 - 1;
+
+			const fixed lerp_samp = smoothstep(_Spring, _Spring * 1.1, tex2D(_LerpTex, IN.lerp_uv).r);
+			
+			const fixed t = saturate(autumn_samp + hue_samp * lerp(_SpringHueInfluence, _AutumnHueInfluence, _Spring));
+			
+			const fixed3 autumn_c = lerp(_AutumnCol1, _AutumnCol2, t).rgb;
+			const fixed3 spring_c = lerp(_SpringCol1, _SpringCol2, t).rgb;
+
+			o.Albedo = lerp(spring_c, autumn_c, lerp_samp);
+            
             float alpha = saturate(pow(distance(IN.wPos, _WorldSpaceCameraPos) / _AlphaDistance, _AlphaFalloff));
 
-            o.Albedo = c.rgb;
+            //o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
