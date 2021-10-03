@@ -194,6 +194,7 @@ namespace Structures
             newCell.Occupant = this;
             Occupied.Add(newCell);
             _sections.Add(newSection);
+            newSection.SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
             newSection.Init(newCell);
             _sectionRenderers.Add(newSection.GetComponent<Renderer>());
         }
