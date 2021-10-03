@@ -67,10 +67,10 @@ namespace Structures
 
             if (isRuin)
             {
-                MeshFilter.sharedMesh = ruinedModel;
+                ToRuin();
             }
 
-            if (fitToCell)
+            else if (fitToCell)
             {
                 Fit();
             }
@@ -97,6 +97,8 @@ namespace Structures
 
         private void Fit()
         {
+            Debug.Log(FileName);
+
             // Retrieve the section data
             SectionData sectionData = Manager.Structures.BuildingCache[FileName];
 
@@ -165,6 +167,7 @@ namespace Structures
         public void ToRuin()
         {
             MeshFilter.mesh = ruinedModel;
+            GetComponent<MeshRenderer>().material.SetFloat("_Exponent", 1);
             Fit();
         }
 
