@@ -145,13 +145,22 @@ namespace Structures
 
         private void RemoveAll()
         {
+            int count = 0;
             List<Structure> dupList = new List<Structure>(_buildings);
+            dupList.Reverse(); // Reverse processing order so its more likely the furthest out buildings become ruins
             dupList.ForEach(building =>
             {
-                if (building.Blueprint.type != BuildingType.Farm &&
-                    building.Blueprint.type != BuildingType.GuildHall &&
-                    Random.Range(0,_ruins.Count) == 0
-                ) ToRuin(building);
+                if (building.Blueprint.type != BuildingType.GuildHall &&
+                    building.Blueprint.type != BuildingType.Farm &&
+                    building.Blueprint.type != BuildingType.Markets &&
+                    building.Blueprint.type != BuildingType.Plaza &&
+                    building.Blueprint.type != BuildingType.Watchtower &&
+                    Random.Range(0, count) == 0
+                )
+                {
+                    ToRuin(building);
+                    count++;
+                }
                 else building.Destroy();
             });
             _buildings.Clear();

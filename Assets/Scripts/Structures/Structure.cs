@@ -68,6 +68,7 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++)
             {
                 _sections[i].Init(Occupied[i]);
+                _sections[i].SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
                 _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
             }
 
