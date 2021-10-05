@@ -1,6 +1,4 @@
 ﻿using Quests;
-using Structures;
-using Utilities;
 
 namespace Requests.Templates
 {
@@ -16,7 +14,7 @@ namespace Requests.Templates
         
         public override void Complete()
         {
-            Quests.Quests.OnQuestCompleted += CheckCompleted;
+            Quests.Quests.OnQuestCompleted -= CheckCompleted;
         }
 
         private void CheckCompleted(Quest quest)

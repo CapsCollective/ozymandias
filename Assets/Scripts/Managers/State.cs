@@ -93,6 +93,7 @@ namespace Managers
         public static Action OnNewGame;
         public static Action OnLoadingEnd;
         public static Action OnGameEnd;
+        public static Action OnNextTurnBegin;
         public static Action OnNextTurnEnd;
 
         private void Start()
@@ -300,6 +301,7 @@ namespace Managers
 
         private void NextTurnInit()
         {
+            OnNextTurnBegin?.Invoke();
             gameCanvasGroup.interactable = false;
             Manager.Jukebox.StartNightAmbience();
             glowflies.Play();
@@ -318,7 +320,7 @@ namespace Managers
                 Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
 
             }).OnComplete(() => {
-                OnNextTurnEnd.Invoke();
+                OnNextTurnEnd?.Invoke();
                 Manager.EventQueue.Process();
                 gameCanvasGroup.interactable = true;
             });

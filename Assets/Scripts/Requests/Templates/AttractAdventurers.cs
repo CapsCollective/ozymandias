@@ -1,5 +1,4 @@
 ﻿using Adventurers;
-using UnityEngine;
 
 namespace Requests.Templates
 {

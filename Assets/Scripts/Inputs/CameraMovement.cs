@@ -38,7 +38,6 @@ namespace Inputs
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private float DoFAdjustMultiplier = 5f;
         [Header("Clamping")]
         [SerializeField] private Vector3 clampCenterPos;
         [SerializeField] private float clampDistance;

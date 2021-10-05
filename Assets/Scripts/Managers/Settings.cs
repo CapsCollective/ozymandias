@@ -26,7 +26,8 @@ namespace Managers
         public Toggle fullscreenToggle;
         public Toggle shadowToggle;
 
-        private void Awake()
+        // Needs to be Start, not Awake for mixer values to apply - Ben
+        private void Start()
         {
             // Set the version text value
             versionText.text = "Version " + Application.version;
@@ -59,19 +60,16 @@ namespace Managers
 
             // Setup audio sliders
             musicSlider.maxValue = 1f;
-            var val = PlayerPrefs.GetFloat("Music", 1f);
-            musicSlider.value = val;
             musicSlider.onValueChanged.AddListener(SetMusicVolume);
+            musicSlider.value = PlayerPrefs.GetFloat("Music", 1f);
 
             ambienceSlider.maxValue = 1f;
-            val = PlayerPrefs.GetFloat("Ambience", 1f);
-            ambienceSlider.value = val;
             ambienceSlider.onValueChanged.AddListener(SetAmbienceVolume);
+            ambienceSlider.value = PlayerPrefs.GetFloat("Ambience", 1f);
 
             sfxSlider.maxValue = 1f;
-            val = PlayerPrefs.GetFloat("SFX", 1f);
-            sfxSlider.value = val;
             sfxSlider.onValueChanged.AddListener(SetSfxVolume);
+            musicSlider.value = PlayerPrefs.GetFloat("SFX", 1f);
         }
 
         private void SetFullScreen(bool isFullscreen)

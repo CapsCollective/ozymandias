@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,8 +26,9 @@ namespace UI
                 _oldSatisfaction = satisfaction;
             }
             
-            if(satisfaction >= 10) glow.color = new Color(0, 0.7f,0);
-            if(satisfaction <= -10) glow.color = new Color(0.8f, 0,0);
+            Color color = satisfaction > 0 ? Colors.Green : Colors.Red;
+            color.a = (Math.Abs(satisfaction) / 10) / 2f; // Intentional drop of fraction to fix value to 0, 0.5, 1
+            glow.color = color;
         }
         
         private void PunchBadge()

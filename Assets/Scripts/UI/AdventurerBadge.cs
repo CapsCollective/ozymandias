@@ -1,7 +1,7 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -36,10 +36,9 @@ namespace UI
             
             count.text = value.ToString();
             
-            glow.color = Color.clear;
-            
-            if (satisfaction - value >= 5) glow.color = new Color(0, 0.7f,0);
-            if (satisfaction - value <= -5) glow.color = new Color(0.8f, 0,0);
+            Color color = satisfaction - value > 0 ? Colors.Green : Colors.Red;
+            color.a = Math.Abs(satisfaction - value) / 5f;
+            glow.color = color;
         }
 
         private void TriggerTicker(int amount)

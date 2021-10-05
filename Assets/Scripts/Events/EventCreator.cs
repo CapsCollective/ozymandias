@@ -46,7 +46,7 @@ namespace Events
             // Override if custom adventurers provided, otherwise default to count and guild
             public List<AdventurerDetails> adventurers;
             public Guild guild;
-            public bool kill;
+            public bool anyGuild, kill;
 
             // Card Unlock blueprint
             public string blueprint;
@@ -67,7 +67,7 @@ namespace Events
         {
             public string name;
             public List<OutcomeConfig> outcomes;
-            public int cost;
+            public float costScale;
         }
         
         [Serializable] private struct QuestConfig
@@ -154,6 +154,9 @@ namespace Events
                     case OutcomeType.AdventurersAdded:
                         outcome = ScriptableObject.CreateInstance<AdventurersAdded>();
                         ((AdventurersAdded)outcome).adventurers = config.adventurers;
+                        ((AdventurersAdded)outcome).count = config.count;
+                        ((AdventurersAdded)outcome).guild = config.guild;
+                        ((AdventurersAdded)outcome).anyGuild = config.anyGuild;
                         break;
                     case OutcomeType.AdventurersRemoved:
                         outcome = ScriptableObject.CreateInstance<AdventurersRemoved>();
@@ -192,6 +195,7 @@ namespace Events
             {
                 Choice choice = ScriptableObject.CreateInstance<Choice>();
                 choice.name = config.name;
+                choice.costScale = config.costScale;
                 choice.outcomes = config.outcomes.Select(outcomeConfig => CreateOutcome(outcomeConfig, root)).ToList();
                 AssetDatabase.AddObjectToAsset(choice, root);
                 return choice;
@@ -357,10 +361,7 @@ namespace Events
                 Convert(AssetDatabase.LoadAssetAtPath<Event>($"Assets/Events/{folderName}/{file.Name}"))
             ).ToList();
             
-            Debug.Log(JsonConvert.SerializeObject(converted));
             File.WriteAllText($"Assets/Events/{folderName} Export.json", JsonConvert.SerializeObject(converted));
-            //TODO: For each event in folder, convert and add to list, serialize all to json
-            
         }
 
         private static EventConfig Convert(Event e)
