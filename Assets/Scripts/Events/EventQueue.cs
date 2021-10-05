@@ -218,12 +218,14 @@ namespace Events
             foreach (string eventName in details.headliners ?? new List<string>())
             {
                 Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
+                if (e == null) continue;
                 _headliners.AddLast(e);
             }
 
             foreach (string eventName in details.others ?? new List<string>())
             {
                 Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
+                if (e == null) continue;
                 _others.AddLast(e);
             }
         }
