@@ -97,8 +97,6 @@ namespace Structures
 
         private void Fit()
         {
-            Debug.Log(FileName);
-
             // Retrieve the section data
             SectionData sectionData = Manager.Structures.BuildingCache[FileName];
 

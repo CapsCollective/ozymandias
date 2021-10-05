@@ -167,7 +167,7 @@ namespace Tooltip
                 case Stat.Spending:
                     int stat = Manager.Stats.GetStat(Stat.Spending);
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"{WealthPerAdventurer} per adventurer({Manager.Adventurers.Available}) with {100 + stat}% spending\n" +
+                                   $"{WealthPerAdventurer} per adventurer ({Manager.Adventurers.Available}) with {100 + stat}% spending\n" +
                                    $"  ● {100 + Manager.Stats.GetUpgradeMod(config.Stat.Value)}% base\n" +
                                    $"{FormattedBuildingString(Stat.Spending)}" +
                                    $"{FormattedUpgradeString(Stat.Spending)}" +
@@ -193,7 +193,7 @@ namespace Tooltip
 
         private string FormattedBuildingString(Stat stat)
         {
-            int buildingMod = Manager.Structures.GetStat(stat);
+            int buildingMod = Manager.Structures.GetStat(stat) * (stat == Stat.Food || stat == Stat.Housing ? FoodHousingMultiplier : 1);
             return $"  ● {(buildingMod >= 0 ? "+" : "")}{buildingMod}{(stat == Stat.Spending ? "%" : "")} from buildings\n";
         }
 

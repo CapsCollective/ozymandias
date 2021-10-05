@@ -100,14 +100,16 @@ namespace Events
         private void SetChoiceActive(int choice, bool active)
         {
             choiceList[choice].gameObject.SetActive(active);
-            if (active) choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text = 
-                _choiceEvent.choices[choice].name;
+            if (!active) return;
+            
+            int cost = (int)(_choiceEvent.choices[choice].costScale * Manager.Stats.WealthPerTurn);
+            choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text =
+                _choiceEvent.choices[choice].name + (cost != 0 ? $" ({Manager.Stats.Wealth}/{cost} Wealth)" : "");
+            choiceList[choice].GetComponent<Button>().interactable = cost == 0 || Manager.Stats.Wealth >= cost;
 
-            if (choice == 0 && active)
-            {
-                SelectUi(choiceList[choice].gameObject);
-                _choiceSelected = true;
-            };
+            if (choice != 0) return;
+            SelectUi(choiceList[choice].gameObject);
+            _choiceSelected = true;
         }
     
         public void OnChoiceSelected(int choice)

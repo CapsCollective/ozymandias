@@ -67,7 +67,7 @@ namespace Events
         {
             public string name;
             public List<OutcomeConfig> outcomes;
-            public int cost;
+            public float costScale;
         }
         
         [Serializable] private struct QuestConfig
@@ -195,6 +195,7 @@ namespace Events
             {
                 Choice choice = ScriptableObject.CreateInstance<Choice>();
                 choice.name = config.name;
+                choice.costScale = config.costScale;
                 choice.outcomes = config.outcomes.Select(outcomeConfig => CreateOutcome(outcomeConfig, root)).ToList();
                 AssetDatabase.AddObjectToAsset(choice, root);
                 return choice;

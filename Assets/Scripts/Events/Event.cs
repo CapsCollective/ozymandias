@@ -33,6 +33,7 @@ namespace Events
 
         public string MakeChoice(int choice)
         {
+            Manager.Stats.Spend((int)(choices[choice].costScale * Manager.Stats.WealthPerTurn));
             return Outcome.Execute(choices[choice].outcomes);
         }
 

@@ -135,5 +135,34 @@
     "article": "This holy warrior is on a mission, and keeps coming back to life. We don't know why, and at this point, it's becoming a bit of a hassle.",
     "image": "angel-wings",
     "type": "Flavour"
+  },
+  {
+    "name": "time-loop-1",
+    "headline": "Local Reporter Stuck in a Time Loop!",
+    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please report back.",
+    "image": "empty-hourglass",
+    "type": "Flavour",
+    "outcomes": [
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "time-loop-2",
+          "headline": "Local Reporter Stuck in a Time Loop!",
+          "article": "Seriously, it's been three days now, I don't what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
+          "image": "empty-hourglass",
+          "outcomes": [
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "time-loop-3",
+                "headline": "Reporter Doesn't Know How Dates Work",
+                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
+                "image": "empty-hourglass"
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 ]
