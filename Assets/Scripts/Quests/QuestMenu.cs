@@ -66,7 +66,7 @@ namespace Quests
                 FocusStructure(SelectedQuest.Structure);
                 Open();
             };
-
+            
             QuestButton.OnClicked += () =>
             {
                 if (!SelectedQuest) return;

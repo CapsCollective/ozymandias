@@ -10,7 +10,6 @@ namespace Utilities
         [SerializeField] private float scaleTarget = 1.2f;
         [SerializeField] private float duration = 0.3f;
         [SerializeField] private GameObject target;
-        public bool interactable = true;
 
         private void Start()
         {
@@ -21,10 +20,7 @@ namespace Utilities
         }
 
         public void OnPointerEnter(PointerEventData eventData)
-        {
-            // Ignore disabled buttons
-            if (!interactable) return;
-
+        { 
             // Start the on-hover animation
             target.transform.DOScale(scaleTarget, duration);
         }

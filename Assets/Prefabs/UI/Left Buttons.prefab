@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3795023320991676037}
   - component: {fileID: 6125769267517715672}
   - component: {fileID: 6716370206861133710}
-  - component: {fileID: 972096632168755916}
   m_Layer: 5
   m_Name: Open Book Button
   m_TagString: Untagged
@@ -168,19 +167,6 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
-  interactable: 1
---- !u!114 &972096632168755916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3795023320991676039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54e49659ab144b698dd32c1c22ca83a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3795023321161848524
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +389,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3795023321368961674}
+  - component: {fileID: 2508455162930751244}
   m_Layer: 5
   m_Name: Left Buttons
   m_TagString: Untagged
@@ -432,6 +419,22 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: 0}
   m_SizeDelta: {x: 200, y: 600}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2508455162930751244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795023321368961669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e49659ab144b698dd32c1c22ca83a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressButton: {fileID: 3795023320991676042}
+  questButton: {fileID: 3795023322038554277}
+  newspaperButton: {fileID: 3795023321622326119}
+  offsetPos: {x: -20, y: 0, z: 0}
 --- !u!1 &3795023321622326112
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +450,6 @@ GameObject:
   - component: {fileID: 3795023321622326118}
   - component: {fileID: 8015362018738886572}
   - component: {fileID: 2107805937504686602}
-  - component: {fileID: 1440102837182799186}
   m_Layer: 5
   m_Name: Open Newspaper Button
   m_TagString: Untagged
@@ -599,19 +601,6 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
-  interactable: 1
---- !u!114 &1440102837182799186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3795023321622326112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54e49659ab144b698dd32c1c22ca83a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3795023321794086392
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +754,6 @@ GameObject:
   - component: {fileID: 8538249681198540598}
   - component: {fileID: 3448001489619834565}
   - component: {fileID: 1153806046094864152}
-  - component: {fileID: 7816757188505845156}
   m_Layer: 5
   m_Name: Open Quests Button
   m_TagString: Untagged
@@ -918,7 +906,6 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
-  interactable: 1
 --- !u!114 &1153806046094864152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,18 +922,6 @@ MonoBehaviour:
   image: {fileID: 3795023321179944371}
   readColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
   unreadColor: {r: 0.84705883, g: 0.30980393, b: 0.30980393, a: 1}
---- !u!114 &7816757188505845156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3795023322038554278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54e49659ab144b698dd32c1c22ca83a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3795023322734049695
 GameObject:
   m_ObjectHideFlags: 0

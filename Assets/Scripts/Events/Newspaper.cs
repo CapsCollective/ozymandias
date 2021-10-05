@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Inputs;
 using Managers;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -54,20 +52,10 @@ namespace Events
             titleText.text = "{ " + _newspaperTitle + " }";
             State.OnNextTurnEnd += NextTurnOpen;
             continueButton.onClick.AddListener(Close);
+            openNewspaperButton.onClick.AddListener(Open);
             Transform t = transform;
             t.position = ClosePos;
             t.eulerAngles = CloseRot;
-            
-            openNewspaperButton.onClick.AddListener(Open);
-            MenuButton menuButton = openNewspaperButton.gameObject.GetComponent<MenuButton>();
-            menuButton.Interactable = false;
-            // Turn off interaction until first OnNextTurn
-            void SetInteractable()
-            {
-                menuButton.Interactable = true;
-                State.OnNextTurnEnd -= SetInteractable;
-            };
-            State.OnNextTurnEnd += SetInteractable;
         }
 
         private void NextTurnOpen()
