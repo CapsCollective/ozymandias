@@ -89,6 +89,9 @@ namespace Inputs
 
         private void Update()
         {
+            // Depth of Field stuff
+            volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
+            
             if (!Manager.State.InGame) return;
 
             FreeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.OnRotateCamera.ReadValue<float>();
@@ -124,9 +127,6 @@ namespace Inputs
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             FreeLook.m_YAxis.Value += scrollAcceleration;
-
-            // Depth of Field stuff
-            volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
 
             // Bounciness stuff
             bool atLimit = FreeLook.m_YAxis.Value <= 0.01 | FreeLook.m_YAxis.Value >= 0.98;
