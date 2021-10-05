@@ -1,8 +1,8 @@
 ﻿[
   {
     "name": "sirens",
-    "headline": "",
-    "article": "",
+    "headline": "Tourist Death Trap",
+    "article": "A flock of sirens has moved in a nearby cove by our shores, their alluring song luring ",
     "image": "behold",
     "type": "Threat",
     "choices": [
@@ -10,6 +10,10 @@
         "name": "Introduce a Busking Tax",
         "outcomes": 
         [
+          {
+            "type": "FlavourText",
+            "customDescription": "The sirens gladly part with their gold"
+          },
           {
             "type": "ThreatAdded",
             "baseAmount": 4
@@ -30,6 +34,41 @@
         "outcomes":
         [
           {
+            "type": "AdventurersRemoved",
+            "count": 3,
+            "customDescription": "It took 3 adventurers lives to remove"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "item-shop-1",
+    "headline": "Travelling Merchant Comes to Town",
+    "article": "",
+    "image": "old-wagon",
+    "type": "Flavour",
+    "choices": [
+      {
+        "name": "Debt Forgiveness",
+        "costScale": 2.5,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "Due to a 'paperwork error' all the guilds requests have been marked as complete."
+          },
+          {
+            "type": "RequestComplete",
+            "guild": ""
+          }
+        ]
+      },
+      {
+        "name": "Put a Stop to Them",
+        "outcomes":
+        [
+          {
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Spending",
@@ -41,5 +80,5 @@
         ]
       }
     ]
-  }
+  },
 ]

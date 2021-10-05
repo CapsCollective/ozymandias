@@ -42,9 +42,14 @@ namespace Requests
         public void Remove(Guild guild)
         {
             _requests[guild].Complete();
-            Manager.Upgrades.GuildTokens[guild]++;
+            Manager.Upgrades.GuildTokens[guild] += _requests[guild].Tokens;
             _requests[guild] = null;
             displays[guild].Request = null;
+        }
+
+        public int TokenCount(Guild guild)
+        {
+            return _requests[guild].Tokens;
         }
         
         public Dictionary<Guild, RequestDetails> Save()
@@ -55,7 +60,8 @@ namespace Requests
                 {
                     name = request.Value.name, 
                     completed = request.Value.Completed,
-                    required = request.Value.Required
+                    required = request.Value.Required,
+                    tokens = request.Value.Tokens
                 });
         }
 
@@ -70,6 +76,7 @@ namespace Requests
                 _requests[request.Key] = await Addressables.LoadAssetAsync<Request>(request.Value.name).Task;
                 _requests[request.Key].Completed = request.Value.completed;
                 _requests[request.Key].Required = request.Value.required;
+                _requests[request.Key].Tokens = request.Value.tokens;
                 _requests[request.Key].Start();
                 displays[request.Key].Request = _requests[request.Key];
             }

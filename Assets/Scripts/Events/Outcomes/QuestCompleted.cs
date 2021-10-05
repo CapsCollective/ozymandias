@@ -1,4 +1,5 @@
 ﻿using Quests;
+using Utilities;
 
 namespace Events.Outcomes
 {
@@ -7,14 +8,16 @@ namespace Events.Outcomes
         public Quest quest;
 
         private int _assigned;
-        public override bool Execute()
+
+        protected override bool Execute()
         {
             _assigned = quest.AssignedCount;
             quest.Complete();
             return true;
         }
-
-        public override string Description => "<color=#007000ff>Quest completed: " + quest.Title + ".\n" + 
-                                              _assigned + " Adventurer" + (_assigned > 1 ? "s have" : " has") + " returned.</color>";
+        
+        protected override string Description => 
+            $"{Colors.GreenText}Quest completed: {quest.Title}. " +
+            $"{_assigned} Adventurer{(_assigned > 1 ? "s have" : " has")} returned.{Colors.EndText}";
     }
 }

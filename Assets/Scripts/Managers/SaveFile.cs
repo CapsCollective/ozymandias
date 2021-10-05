@@ -84,7 +84,7 @@ namespace Managers
     public struct RequestDetails
     {
         public string name;
-        public int completed, required;
+        public int completed, required, tokens;
     }
     
     [Serializable]

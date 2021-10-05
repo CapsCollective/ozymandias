@@ -215,7 +215,7 @@ namespace Tooltip
                 char foodSign = isFoodInSurplus ? '+' : '-';
                 string textColor = isFoodInSurplus ? Colors.GreenText : Colors.RedText;
 
-                return $"  ● <color={textColor}>{foodSign}{Math.Abs(mod)}</color> from food {foodDescriptor}\n";
+                return $"  ● {textColor}{foodSign}{Math.Abs(mod)}{Colors.EndText} from food {foodDescriptor}\n";
             }
         }
 
@@ -230,7 +230,7 @@ namespace Tooltip
                 string textColor = sign == '+' ? Colors.GreenText : Colors.RedText;
                 string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
                 formattedModifierString += 
-                    $"  ● <color={textColor}>{sign}{Math.Abs(modifier.amount)}{(stat == Stat.Spending ? "%" : "")}</color> " +
+                    $"  ● {textColor}{sign}{Math.Abs(modifier.amount)}{(stat == Stat.Spending ? "%" : "")}{Colors.EndText} " +
                     $"from {modifier.reason} ({modifier.turnsLeft} {turnText} remaining)\n";
             }
             

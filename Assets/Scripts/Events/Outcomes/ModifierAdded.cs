@@ -5,7 +5,6 @@ using static Managers.GameManager;
 
 namespace Events.Outcomes
 {
-    [CreateAssetMenu(fileName = "Stat Change Outcome", menuName = "Outcomes/Stat Change")]
     public class ModifierAdded : Outcome
     {
 
@@ -13,8 +12,8 @@ namespace Events.Outcomes
         public int amount;
         public int turns;
         public string reason;
-    
-        public override bool Execute()
+
+        protected override bool Execute()
         {
             if (!Manager.Stats.Modifiers.ContainsKey(statToChange)) return false;
         
@@ -27,15 +26,15 @@ namespace Events.Outcomes
             Manager.Stats.ModifiersTotal[statToChange] += amount;
             return true;
         }
-    
-        public override string Description
+
+        protected override string Description
         {
             get
             {
                 string color = amount > 0 ? Colors.GreenText : Colors.RedText;
-                if (customDescription != "") return $"<color={color}>{customDescription}</color>";
+                if (customDescription != "") return $"{color}{customDescription}{Colors.EndText}";
                 
-                string desc = "<color="+color+">" + statToChange + ((int)statToChange < 5 ? " Satisfaction" : "");
+                string desc = color + statToChange + ((int)statToChange < 5 ? " Satisfaction" : "");
                 
                 if (amount > 0) desc += " has increased by " + amount;
                 else desc += " has decreased by " + Mathf.Abs(amount);

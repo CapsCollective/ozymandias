@@ -7,10 +7,11 @@ namespace Events.Outcomes
     {
         [TextArea]
         public string customDescription; //An override description for custom outcomes
-        public virtual string Description => customDescription;
+
+        protected virtual string Description => customDescription;
 
         // What happens when this is executed
-        public virtual bool Execute()
+        protected virtual bool Execute()
         {
             return false;
         }
