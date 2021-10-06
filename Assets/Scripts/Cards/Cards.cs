@@ -93,6 +93,7 @@ namespace Cards
             Manager.Inputs.OnDeselectCards.performed += DeselectCards;
             Manager.Inputs.OnNavigateCards.performed += NavigateCards;
             Manager.Inputs.OnSelectCardIndex.performed += SelectCardIndex;
+            State.OnEnterState += () => SelectCard(-1);
         }
         
         #region Card Select
