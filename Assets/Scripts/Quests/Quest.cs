@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
@@ -23,6 +23,7 @@ namespace Quests
         [TextArea] public string description;
         public string reward;
         public Sprite image;
+        public Color colour;
         
         public int adventurers = 2;
         [Range(0.5f, 3f)] public float wealthMultiplier = 1.5f; // How many turns worth of gold to send, sets cost when created.

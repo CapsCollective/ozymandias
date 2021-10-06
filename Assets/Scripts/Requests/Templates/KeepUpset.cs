@@ -8,7 +8,7 @@ namespace Requests.Templates
     {
         public Guild targetGuild;
         public override string Description => $"Keep {targetGuild}s Upset for {Required} Turns";
-        protected override int RequiredScaled => 3 * Tokens;
+        protected override int RequiredScaled => 2 * Tokens;
 
         public override void Start()
         {

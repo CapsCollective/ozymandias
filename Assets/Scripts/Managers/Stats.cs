@@ -38,6 +38,15 @@ namespace Managers
             { Stat.Housing, UpgradeType.Housing},
             { Stat.Food, UpgradeType.Food }
         };
+        
+        private readonly List<Stat> _baseStats = new List<Stat>
+        {
+            Stat.Food,
+            Stat.Housing,
+            Stat.Spending
+        };
+        public int StatMultiplier(Stat stat) => _baseStats.Contains(stat) ? BaseStatMultiplier : 1;
+
 
         public int GetUpgradeMod(Stat stat)
         {
@@ -46,9 +55,8 @@ namespace Managers
         
         public int GetStat(Stat stat)
         {
-            int mod = stat == Stat.Food || stat == Stat.Housing ? FoodHousingMultiplier : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
-            return mod * (Manager.Structures.GetStat(stat) + GetUpgradeMod(stat)) + ModifiersTotal[stat] + foodMod;
+            return StatMultiplier(stat) * (Manager.Structures.GetStat(stat) + GetUpgradeMod(stat)) + ModifiersTotal[stat] + foodMod;
         }
 
         public int GetSatisfaction(Guild guild)
@@ -75,7 +83,7 @@ namespace Managers
         
         public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
 
-        public int WealthPerTurn => (int)(WealthPerAdventurer * (1f + GetStat(Stat.Spending)/100f) * Manager.Adventurers.Available); //5 gold per adventurer times spending
+        public int WealthPerTurn => WealthPerAdventurer * Manager.Adventurers.Available + GetStat(Stat.Spending); //5 gold per adventurer times spending
     
         public int Wealth { get;  set; }
 
@@ -104,6 +112,11 @@ namespace Managers
             BaseThreat = 0;
             Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
             Wealth = 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
+            foreach (Stat stat in Enum.GetValues(typeof(Stat)))
+            {
+                ModifiersTotal[stat] = 0;
+                Modifiers[stat] = new List<Modifier>();
+            }
         }
 
         private void OnNextTurnEnd()

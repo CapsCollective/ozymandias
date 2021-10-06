@@ -68,7 +68,7 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++)
             {
                 _sections[i].Init(Occupied[i]);
-                _sections[i].SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
+                _sections[i].SetRoofColor(quest.colour);
                 _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
             }
 
@@ -194,7 +194,7 @@ namespace Structures
             newCell.Occupant = this;
             Occupied.Add(newCell);
             _sections.Add(newSection);
-            newSection.SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
+            newSection.SetRoofColor(Quest.colour);
             newSection.Init(newCell);
             _sectionRenderers.Add(newSection.GetComponent<Renderer>());
         }

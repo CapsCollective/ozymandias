@@ -72,12 +72,11 @@ namespace Events
         
         [Serializable] private struct QuestConfig
         {
-            public string name, title, description, reward, image;
+            public string name, title, description, reward, image, colour;
             public Location location;
             public EventConfig completedEvent;
             public int adventurers, baseTurns;
             public float wealthMultiplier;
-
         }
         
         [Serializable] private struct ModifierConfig
@@ -212,6 +211,7 @@ namespace Events
                 quest.title = config.title;
                 quest.description = config.description;
                 quest.image = LoadSprite(config.image);
+                quest.colour = ColorUtility.TryParseHtmlString(config.colour, out Color color) ? color : new Color(0.75f, 0.7f, 0.55f);
                 quest.location = config.location;
                 quest.adventurers = config.adventurers;
                 quest.baseTurns = config.baseTurns;
