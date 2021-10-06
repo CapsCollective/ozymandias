@@ -268,5 +268,61 @@
         ]
       }
     ]
+  },
+  {
+    "name": "sirens",
+    "headline": "Tourist Death Trap",
+    "article": "A flock of sirens has moved in a nearby cove by our shores, their alluring song bringing unaware tourists to their nest to be consumed. The performers have been sulking all week, claiming they've been upstaged. While deadly, the beaches have never been more active...",
+    "image": "mermaid",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Introduce a Busking Tax",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The sirens gladly part with the loose gold they've found in the clothes of their prey."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 4
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Spending",
+              "amount": 10,
+              "turns": 5,
+              "reason": "from Siren Buskers"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Put a Stop to Them",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "Clearing their nest was a deadly affair, but the performers are glad they're now the centre of attention again."
+          },
+          {
+            "type": "AdventurersRemoved",
+            "count": 3,
+            "customDescription": "It took 3 adventurers lives to wipe out their nest."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 3,
+              "turns": 5,
+              "reason": "from clearing the Sirens"
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
