@@ -164,6 +164,11 @@ namespace Structures
         [Button("To Ruin")]
         public void ToRuin()
         {
+            if (ruinedModel == null)
+            {
+                Debug.LogError("No ruined model for " + name);
+                return;
+            }
             MeshFilter.mesh = ruinedModel;
             GetComponent<MeshRenderer>().material.SetFloat("_Exponent", 1);
             Fit();

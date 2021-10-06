@@ -51,6 +51,11 @@ namespace Requests
         {
             return _requests[guild].Tokens;
         }
+
+        public bool HasRequest(Guild guild)
+        {
+            return _requests[guild] != null;
+        }
         
         public Dictionary<Guild, RequestDetails> Save()
         {

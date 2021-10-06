@@ -229,9 +229,8 @@ namespace Tooltip
                 char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
                 string textColor = sign == '+' ? Colors.GreenText : Colors.RedText;
                 string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
-                formattedModifierString += 
-                    $"  ● {textColor}{sign}{Math.Abs(modifier.amount)}{(stat == Stat.Spending ? "%" : "")}{Colors.EndText} " +
-                    $"from {modifier.reason} ({modifier.turnsLeft} {turnText} remaining)\n";
+                formattedModifierString += $"  ● {textColor}{sign}{Math.Abs(modifier.amount)}{(stat == Stat.Spending ? "%" : "")}{Colors.EndText} " +
+                                           $"from {modifier.reason} {(modifier.turnsLeft != -1 ? $"{modifier.turnsLeft} {turnText} remaining)": "")}\n";
             }
             
             return formattedModifierString;

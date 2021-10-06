@@ -10,6 +10,7 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
+            if (!Manager.Requests.HasRequest(guild)) return false;
             _tokens = Manager.Requests.TokenCount(guild);
             Manager.Requests.Remove(guild);
             return true;

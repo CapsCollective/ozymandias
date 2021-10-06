@@ -181,6 +181,10 @@ namespace Events
                         ((ModifierAdded)outcome).reason = config.modifier.reason;
                         ((ModifierAdded)outcome).turns = config.modifier.turns;
                         break;
+                    case OutcomeType.RequestCompleted: 
+                        outcome = ScriptableObject.CreateInstance<RequestCompleted>();
+                        ((RequestCompleted)outcome).guild = config.guild;
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
