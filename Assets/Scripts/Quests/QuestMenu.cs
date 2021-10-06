@@ -21,6 +21,7 @@ namespace Quests
         private bool _inAnim;
         private int _openFlyer;
         private int _selectedQuest;
+        private CanvasGroup _closeButtonCanvas;
         private Canvas _canvas;
 
         private readonly Vector3 _offScreenPos = new Vector3(-500, 1500, 0);
@@ -55,6 +56,7 @@ namespace Quests
 
         private void Start()
         {
+            _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             _canvas = GetComponent<Canvas>();
             closeButton.onClick.AddListener(Close);
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
@@ -196,7 +198,7 @@ namespace Quests
         
         private void DisplayCloseButton(bool display)
         {
-            closeButton.image.DOFade(display ? 1.0f : 0.0f, 0.2f);
+            _closeButtonCanvas.DOFade(display ? 1.0f : 0.0f, 0.2f);
         }
     }
 }

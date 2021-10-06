@@ -93,7 +93,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a129af3c3295b40e3bde357d7709242c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openQuestsButton: {fileID: 0}
   closeButton: {fileID: 1594356914259801077}
   nextButton: {fileID: 1106408786512782675}
   previousButton: {fileID: 8616880343992496436}
@@ -415,6 +414,7 @@ GameObject:
   - component: {fileID: 1594356914259801077}
   - component: {fileID: 7652818298950563520}
   - component: {fileID: 8629045411555978945}
+  - component: {fileID: 2835888111760297675}
   m_Layer: 5
   m_Name: Close Button
   m_TagString: Untagged
@@ -551,6 +551,18 @@ MonoBehaviour:
   scaleTarget: 1.1
   duration: 0.3
   target: {fileID: 0}
+--- !u!225 &2835888111760297675
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3824846002162355340}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6933862675715532210
 GameObject:
   m_ObjectHideFlags: 0

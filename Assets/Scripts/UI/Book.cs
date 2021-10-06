@@ -21,7 +21,6 @@ namespace UI
         private static readonly Vector3 PunchScale = Vector3.one * 0.5f;
         
         [SerializeField] private Canvas canvas;
-        [SerializeField] private CanvasGroup closeButtonCanvasGroup;
         [SerializeField] private Button 
             closeButton, 
             quitButton, 
@@ -35,6 +34,7 @@ namespace UI
         [SerializeField] private SerializedDictionary<BookPage, CanvasGroup> pages;
         private GameState _closeState; // The state the book will enter when 
         private bool _isOpen, _transitioning;
+        private CanvasGroup _closeButtonCanvas;
         
         private BookPage _page = BookPage.Settings;
         private BookPage Page
@@ -59,6 +59,7 @@ namespace UI
         
         private void Start()
         {
+            _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             introSettingsButton.onClick.AddListener(Open);
             openBookButton.onClick.AddListener(Open);
             closeButton.onClick.AddListener(Close);
@@ -93,8 +94,8 @@ namespace UI
                 .OnComplete(() =>
                 {
                     closeButton.gameObject.SetActive(true);
-                    closeButtonCanvasGroup.alpha = 0;
-                    closeButtonCanvasGroup.DOFade(1, 0.5f);
+                    _closeButtonCanvas.alpha = 0;
+                    _closeButtonCanvas.DOFade(1, 0.5f);
                     _transitioning = false;
                     _isOpen = true;
                 });
