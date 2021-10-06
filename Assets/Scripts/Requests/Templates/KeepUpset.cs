@@ -8,7 +8,7 @@ namespace Requests.Templates
     {
         public Guild targetGuild;
         public override string Description => $"Keep {targetGuild}s Upset for {Required} Turns";
-        protected override int RequiredScaled => 3;
+        protected override int RequiredScaled => 3 * Tokens;
 
         public override void Start()
         {
@@ -22,7 +22,7 @@ namespace Requests.Templates
 
         private void CheckUpset()
         {
-            if (Manager.Stats.GetSatisfaction(targetGuild) <= -5) Completed++;
+            if (Manager.Stats.GetSatisfaction(targetGuild) < 0) Completed++;
             else Completed = 0;
         }
     }

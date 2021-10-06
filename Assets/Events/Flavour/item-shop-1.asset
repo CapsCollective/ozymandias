@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8523083277238135571
+--- !u!114 &-8858635300862534133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,43 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 5
-  amount: 4
-  turns: -1
-  reason: from the Chest of Hoarding
---- !u!114 &-6914374037166236308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Nothing Today Thanks!
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -5483055096990462634}
-  costScale: 0
---- !u!114 &-5483055096990462634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: '"Alrighty, I''ll come back another time!"'
---- !u!114 &-5479690198583635224
+  guild: 0
+--- !u!114 &-3086867238769911686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,7 +28,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   guild: 1
---- !u!114 &-3440510297195903556
+--- !u!114 &-2375828973546674729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,29 +37,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
-  m_Name: RequestCompleted
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Nothing Today Thanks!
   m_EditorClassIdentifier: 
-  customDescription: 
-  guild: 4
---- !u!114 &-3049458983094301974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 4
-  amount: 4
-  turns: -1
-  reason: from Magic Mushrooms
---- !u!114 &-927342153099983684
+  outcomes:
+  - {fileID: -1448904472019428866}
+  costScale: 0
+--- !u!114 &-1448904472019428866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,8 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: The Arcanists say these glowing fungi helps them see into other
-    dimensions, we assume this helps their magical research.
+  customDescription: '"Alrighty, I''ll come back another time!"'
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,74 +77,12 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 292997888633026791}
-  - {fileID: 8083075721056468201}
-  - {fileID: 5965391017122473943}
-  - {fileID: -6914374037166236308}
+  - {fileID: 4566985463502065062}
+  - {fileID: 5995372529338304631}
+  - {fileID: 2883028130734463633}
+  - {fileID: -2375828973546674729}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &242481659663282379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
-  m_Name: RequestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  guild: 3
---- !u!114 &292997888633026791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Debt Forgiveness
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5240754360437513697}
-  - {fileID: 7396777769824887461}
-  - {fileID: -5479690198583635224}
-  - {fileID: 3384612883084072259}
-  - {fileID: 242481659663282379}
-  - {fileID: -3440510297195903556}
-  costScale: 2.5
---- !u!114 &3384612883084072259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
-  m_Name: RequestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  guild: 2
---- !u!114 &5240754360437513697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: Due to a 'paperwork error' all the guilds requests have been
-    marked as complete.
---- !u!114 &5558936197632587104
+--- !u!114 &25455105060542462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,7 +96,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: The chest contains a massive empty space. Adventurers decide
     to move into the free real-estate.
---- !u!114 &5965391017122473943
+--- !u!114 &302078494811880776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 5
+  amount: 20
+  turns: -1
+  reason: from the Chest of Hoarding
+--- !u!114 &777872283249457637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 4
+  amount: 4
+  turns: -1
+  reason: from Magic Mushrooms
+--- !u!114 &2883028130734463633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,10 +143,10 @@ MonoBehaviour:
   m_Name: Magic Mushrooms
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -927342153099983684}
-  - {fileID: -3049458983094301974}
+  - {fileID: 8333560439822525087}
+  - {fileID: 777872283249457637}
   costScale: 0.75
---- !u!114 &7396777769824887461
+--- !u!114 &4566985463502065062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,12 +155,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
-  m_Name: RequestCompleted
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Debt Forgiveness
   m_EditorClassIdentifier: 
-  customDescription: 
-  guild: 0
---- !u!114 &8083075721056468201
+  outcomes:
+  - {fileID: 8061680643886113705}
+  - {fileID: -8858635300862534133}
+  - {fileID: -3086867238769911686}
+  - {fileID: 6702731735073103743}
+  - {fileID: 6153158501615380742}
+  - {fileID: 8290575371399456227}
+  costScale: 3
+--- !u!114 &5995372529338304631
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,6 +179,76 @@ MonoBehaviour:
   m_Name: Chest of Hoarding
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 5558936197632587104}
-  - {fileID: -8523083277238135571}
+  - {fileID: 25455105060542462}
+  - {fileID: 302078494811880776}
   costScale: 1
+--- !u!114 &6153158501615380742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 3
+--- !u!114 &6702731735073103743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 2
+--- !u!114 &8061680643886113705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: Due to a 'paperwork error' all the guilds requests have been
+    marked as complete.
+--- !u!114 &8290575371399456227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 4
+--- !u!114 &8333560439822525087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The Arcanists say these glowing fungi helps them see into other
+    dimensions, we assume this helps their magical research.

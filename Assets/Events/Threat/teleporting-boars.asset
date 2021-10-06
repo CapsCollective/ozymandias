@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Aliens 1
+  m_Name: teleporting-boars
   m_EditorClassIdentifier: 
-  headline: Mysterious Lights In The Sky?
-  article: Some towns-folk have noticed strange lights in the sky at night. They
-    claim they may be visitors from the heavens spying on the town, judging them
-    from above. Other towns-folk think the town-folk seeing these lights are just
-    paranoid and crazy.
-  image: {fileID: 0}
-  type: 0
+  headline: The War on Boars
+  article: A string of reports have come in of a series of attacks by feral boars
+    from seemingly nowhere. This reporter can only conclude these boars have the
+    ability to teleport, and you should all protect yourself from the upcoming boar
+    invasion.
+  image: {fileID: 21300000, guid: a8cacaa0fad571a4eb66fd8fa3e5a846, type: 3}
+  type: 7
   headliner: 0
   outcomes:
-  - {fileID: 2630256970326687283}
+  - {fileID: 2901331009116599310}
   choices: []
-  buildingToUnlock: {fileID: 0}
---- !u!114 &2630256970326687283
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &2901331009116599310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -33,9 +33,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: Chain Event(Clone)
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  next: {fileID: 11400000, guid: 4bb51b66c76ea314d9f2c02b70aae2da, type: 2}
-  toFront: 0
+  baseAmount: 2
