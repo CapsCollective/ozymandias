@@ -93,6 +93,7 @@ namespace Managers
         public static Action OnNewGame;
         public static Action OnLoadingEnd;
         public static Action OnGameEnd;
+        public static Action OnNextTurnBegin;
         public static Action OnNextTurnEnd;
 
         private void Start()
@@ -300,6 +301,7 @@ namespace Managers
 
         private void NextTurnInit()
         {
+            OnNextTurnBegin?.Invoke();
             gameCanvasGroup.interactable = false;
             Manager.Jukebox.StartNightAmbience();
             glowflies.Play();
@@ -310,7 +312,7 @@ namespace Managers
                 timer += Time.deltaTime / sunSetTime;
                 sun.color = sunColorGradient.Evaluate(timer);
                 RenderSettings.ambientLight = ambientGradient.Evaluate(timer);
-                RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
+                RenderSettings.fogColor = ambientGradient.Evaluate(timer);
                 //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
                 skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(timer));
                 skyMaterial.SetColor("_HorizonColor", ambientGradient.Evaluate(timer));
@@ -318,7 +320,7 @@ namespace Managers
                 Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
 
             }).OnComplete(() => {
-                OnNextTurnEnd.Invoke();
+                OnNextTurnEnd?.Invoke();
                 Manager.EventQueue.Process();
                 gameCanvasGroup.interactable = true;
             });
@@ -329,7 +331,7 @@ namespace Managers
         {
             sun.color = sunColorGradient.Evaluate(ToDDebug);
             RenderSettings.ambientLight = ambientGradient.Evaluate(ToDDebug);
-            RenderSettings.fogColor = sunColorGradient.Evaluate(ToDDebug);
+            RenderSettings.fogColor = ambientGradient.Evaluate(ToDDebug);
             //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
             skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(ToDDebug));
             skyMaterial.SetColor("_HorizonColor", horizonColorGradient.Evaluate(ToDDebug));

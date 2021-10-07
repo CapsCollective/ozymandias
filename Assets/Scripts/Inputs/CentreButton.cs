@@ -9,8 +9,10 @@ namespace Inputs
 {
     public class CentreButton : MonoBehaviour
     {
-        private const float InnerDistance = 50;
-        private const float OuterDistance = 160;
+        private const float InnerDistance = 35;
+        private const float Text1Distance = 55;
+        private const float Text2Distance = 70;
+        private const float OuterDistance = 85;
 
         private bool _isCentering;
         private GameObject _dummyCursor;
@@ -33,10 +35,9 @@ namespace Inputs
 
         private void Update()
         {
-            var cameraPos = Manager.Camera.transform.position;
-            var townDist = Vector3.Magnitude(cameraPos);
-            
-            var isBeyondBounds = townDist > InnerDistance;
+            float townDist = -Manager.Camera.transform.position.z;
+
+            bool isBeyondBounds = townDist > InnerDistance;
             button.gameObject.SetActive(isBeyondBounds);
             
             if (!isBeyondBounds) return;
@@ -47,9 +48,9 @@ namespace Inputs
 
         private static string GetReturnText(float distanceFromTown)
         {
-            if (distanceFromTown < 80) return "Return to Town";
-            if (distanceFromTown < 120) return "Please, Return to Town";
-            return distanceFromTown < 160 ? "There's nothing here" : "Fine, I'll do it myself";
+            if (distanceFromTown < Text1Distance) return "Return to Town";
+            if (distanceFromTown < Text2Distance) return "Please, Return to Town";
+            return distanceFromTown < OuterDistance ? "There's nothing here" : "Fine, I'll do it myself";
         }
 
         private void CenterCamera()

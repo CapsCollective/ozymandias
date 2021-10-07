@@ -1,0 +1,328 @@
+﻿[
+  {
+    "name": "well-eye",
+    "headline": "Well Well Well, Look What Eye Have Here!",
+    "article": "A monstrous eye has been found living at the bottom of our local well. Our on-the-field reporter described peering into the well akin to \"Delving into the abyss itself... Where the true master of our world lies... sorry, what were we talking about?\"",
+    "image": "behold",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Your townsfolk start having the strangest dreams..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
+      }
+    ]
+  },
+  {
+    "name": "time-being",
+    "headline": "Tributes to the Time Being",
+    "article": "A local cult has started making offerings to a mysterious creature in exchange for future sight. \"We have a busy schedule ahead, so let's just leave this for the Time Being\" chant the cultists.",
+    "image": "empty-hourglass",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Your townsfolk are fearful of this 'Time Being'"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "beetles",
+    "headline": "Hello Beetles, Goodbye Beetles",
+    "article": "Giant, monstrous beetles are migrating from the strawberry fields, terrorising the town this morning with loud, melodic buzzing from the rooftops. The town etymologist had hoped they would have moved along yesterday. The blackbird population is reportedly under attack from these creatures. Local blacksmith, Maxwell, claims he has just the right tool for the situation...",
+    "image": "scarab-beetle",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "We don't know how much longer we can let it be.."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "feeding-day",
+    "headline": "Feeding Day is Upon Us!",
+    "article": "As it does every year, town prepares for its annual feeding day, when townsfolk come together to celebrate the sating of the beast. As is tradition, each home leaves a fresh ham upon their doorstep tomorrow night. Residents are being urged to purchase their hams quickly to avoid a long and agonising death for them and their loved ones this holiday season.",
+    "image": "behold",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "The beast will be fed for another year"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
+      }
+    ]
+  },
+  {
+    "name": "humming-lights",
+    "headline": "Mysterious Lights won't Stop Humming",
+    "article": "The strange dancing lights off the east side of town have started singing a little tune! Some claim it's cheerful, others ominous. Local residents have reported asking, \"Oh God, oh God why won't they stop? Please, someone, make them stop.\"",
+    "image": "behold",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "The purpose of these lights are still to be determined"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "bandit-raid",
+    "headline": "Bandit Raid Takes its Toll",
+    "article": "Two Adventurers (and 13 villagers) have been struck down protecting our town from a clan of nearby marauders. They didn't even try to steal anything, they're just jerks.",
+    "image": "sabre-slash",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "AdventurersRemoved",
+        "count": 2,
+        "kill": true
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "stars",
+    "headline": "Up to the Stars",
+    "article": "Three extra stars have been discovered last night in the southern sky. They definitely weren't there before, and local cosmic diviners warn against looking at them for too long in case you start seeing things that DEFINITELY AREN'T THERE",
+    "image": "stars-stack",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Just don't look up and you'll be fine..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "marching-bandits",
+    "headline": "The Marching Bandits Strike!",
+    "article": "After receiving reports of obnoxious sounds off in the distance drawing ever-closer, the odd group of ruffians known to terrorise their victims with terrible music has finally made it here, and made-off with a king's ransom in loot.",
+    "image": "music-spell",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Spending",
+          "amount": -10,
+          "turns": 3,
+          "reason": "from the Marching Bandits"
+        }
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "santa",
+    "headline": "Ho Ho Horror!",
+    "article": "An evil wizard dressed all in red with a sleigh and reindeer blazed through town, scaring residents and adventurers alike. The sound of his haunting laugh caused a few of our resident elves to flee in terror at the sound of their former master.",
+    "image": "wizard-face",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "We're all getting coal this year..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "mimic-swords",
+    "headline": "These Mimics are Sharp!",
+    "article": "Local adventurer returns gloriously from defeating a cave of mimics, only for his sword to try and eat him before running off. The whereabouts of this sword are unknown, so keep an eye out for any household items you don't remember buying!",
+    "image": "mimic-chest",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "gargoyles",
+    "headline": "Gargoyles",
+    "article": "Pest control has been called in, as a new pest has infested our town. Gargoyles have taken residence atop our watchtowers where Arcanists often go to study. The gargoyles were reported silent and unremorseful about their actions, remaining stone-faced.",
+    "image": "gargoyle",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Arcanist",
+          "amount": -3,
+          "turns": 3,
+          "reason": "from the Gargoyles"
+        }
+      }
+    ]
+  },
+  {
+    "name": "crypto-miners",
+    "headline": "Crypt-O Miners",
+    "article": "A new alternative currency has taken a hold of the town, along with it a series of grave robberies. Human bones, known to the community 'Crypt-O' is a popular component for many Necromancers, and the sudden uptick in trade has given them an interest in our town...",
+    "image": "cultist",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Spending",
+          "amount": 20,
+          "turns": 3,
+          "reason": "from Crypt-O miners"
+        }
+      }
+    ]
+  },
+  {
+    "name": "bird-size",
+    "headline": "Birds Incite Panic!",
+    "article": "The town erupted into a panic today, when a townsfolk noticed the size disparity between them and the birds flying overhead. \"It's not something you really notice until it's pointed out, but WOW they could just pick one of us up with ease!\"",
+    "image": "bird",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "rat-shortage",
+    "headline": "Rat Shortage",
+    "article": "Troubles for low level adventures today as queues backing up all the way through the sewer due to a rat shortage. A traveling salesman conveniently is offering to sell the town some rats he found.\"",
+    "image": "rat",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Buy the rats",
+        "costScale": 1.3,
+        "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "The adventurers start griding for experience"
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Defence",
+              "amount": 3,
+              "turns": 3,
+              "reason": "from the Rat XP Boost"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Train up mice to be strong like rats",
+        "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "Oh no, the mice are too strong and escaped! We'll have to hunt them down..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "sirens",
+    "headline": "Tourist Death Trap",
+    "article": "A flock of sirens has moved in a nearby cove by our shores, their alluring song bringing unaware tourists to their nest to be consumed. The performers have been sulking all week, claiming they've been upstaged. While deadly, the beaches have never been more active...",
+    "image": "mermaid",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Introduce a Busking Tax",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The sirens gladly part with the loose gold they've found in the clothes of their prey."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 4
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Spending",
+              "amount": 10,
+              "turns": 5,
+              "reason": "from Siren Buskers"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Put a Stop to Them",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "Clearing their nest was a deadly affair, but the performers are glad they're now the centre of attention again."
+          },
+          {
+            "type": "AdventurersRemoved",
+            "count": 3,
+            "customDescription": "It took 3 adventurers lives to wipe out their nest."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 3,
+              "turns": 5,
+              "reason": "from clearing the Sirens"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

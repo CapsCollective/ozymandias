@@ -126,7 +126,7 @@ namespace Structures
                 Manager.EventQueue.AddGuildHallDestroyedEvents();
                 Manager.State.EnterState(GameState.NextTurn);
             }
-
+            
             if (structure.IsTerrain) _terrain.Remove(structure);
             else if (structure.IsRuin) _ruins.Remove(structure);
             else _buildings.Remove(structure);
@@ -145,13 +145,22 @@ namespace Structures
 
         private void RemoveAll()
         {
+            int count = 0;
             List<Structure> dupList = new List<Structure>(_buildings);
+            dupList.Reverse(); // Reverse processing order so its more likely the furthest out buildings become ruins
             dupList.ForEach(building =>
             {
-                if (building.Blueprint.type != BuildingType.Farm &&
-                    building.Blueprint.type != BuildingType.GuildHall &&
-                    Random.Range(0,_ruins.Count) == 0
-                ) ToRuin(building);
+                if (building.Blueprint.type != BuildingType.GuildHall &&
+                    building.Blueprint.type != BuildingType.Farm &&
+                    building.Blueprint.type != BuildingType.Markets &&
+                    building.Blueprint.type != BuildingType.Plaza &&
+                    building.Blueprint.type != BuildingType.Watchtower &&
+                    Random.Range(0, count) == 0
+                )
+                {
+                    ToRuin(building);
+                    count++;
+                }
                 else building.Destroy();
             });
             _buildings.Clear();
@@ -176,7 +185,7 @@ namespace Structures
             {
                 Vector3 position = Vector3.MoveTowards(building.transform.position, TownCentre, -Random.Range(6f, 10f));
                 Cell cell = Manager.Map.GetClosestCell(position);
-                if (cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
+                if (cell != null  && cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
                 {
                     return cell.Id;
                 }

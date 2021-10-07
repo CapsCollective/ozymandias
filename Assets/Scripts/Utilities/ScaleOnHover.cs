@@ -20,7 +20,7 @@ namespace Utilities
         }
 
         public void OnPointerEnter(PointerEventData eventData)
-        {
+        { 
             // Start the on-hover animation
             target.transform.DOScale(scaleTarget, duration);
         }

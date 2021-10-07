@@ -35,11 +35,11 @@ RectTransform:
   m_Children:
   - {fileID: 3795023322734049666}
   m_Father: {fileID: 3795023321368961674}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 75, y: 335}
+  m_AnchoredPosition: {x: 75, y: 90}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3795023320991676040
@@ -105,7 +105,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  pivot: {x: 0, y: 0}
+  position: {x: 160, y: -300, z: 0}
+  pivot: {x: 0, y: 0.5}
   delay: 0.5
   type: 10
 --- !u!114 &6125769267517715672
@@ -315,7 +315,6 @@ GameObject:
   - component: {fileID: 3795023321179944333}
   - component: {fileID: 3795023321179944368}
   - component: {fileID: 3795023321179944371}
-  - component: {fileID: 3795023321179944370}
   m_Layer: 5
   m_Name: Quest Counter
   m_TagString: Untagged
@@ -381,22 +380,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
---- !u!114 &3795023321179944370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3795023321179944332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1dff080d54883d418d6addb92b13719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 3795023321794086398}
-  image: {fileID: 3795023321179944371}
-  readColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
-  unreadColor: {r: 0.84705883, g: 0.30980393, b: 0.30980393, a: 1}
 --- !u!1 &3795023321368961669
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +389,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3795023321368961674}
+  - component: {fileID: 2508455162930751244}
   m_Layer: 5
   m_Name: Left Buttons
   m_TagString: Untagged
@@ -424,9 +408,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3795023320991676036}
   - {fileID: 3795023321622326113}
   - {fileID: 3795023322038554279}
+  - {fileID: 3795023320991676036}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -435,6 +419,22 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: 0}
   m_SizeDelta: {x: 200, y: 600}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2508455162930751244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795023321368961669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e49659ab144b698dd32c1c22ca83a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressButton: {fileID: 3795023320991676042}
+  questButton: {fileID: 3795023322038554277}
+  newspaperButton: {fileID: 3795023321622326119}
+  offsetPos: {x: -20, y: 0, z: 0}
 --- !u!1 &3795023321622326112
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +450,6 @@ GameObject:
   - component: {fileID: 3795023321622326118}
   - component: {fileID: 8015362018738886572}
   - component: {fileID: 2107805937504686602}
-  - component: {fileID: 8340902572209431562}
   m_Layer: 5
   m_Name: Open Newspaper Button
   m_TagString: Untagged
@@ -470,11 +469,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3795023321368961674}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 75, y: 205}
+  m_AnchoredPosition: {x: 75, y: 335}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3795023321622326117
@@ -540,7 +539,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -571,8 +570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 160, y: -200, z: 0}
-  pivot: {x: 0, y: 0.5}
+  position: {x: 0, y: 0, z: 0}
+  pivot: {x: 0, y: 0}
   delay: 0.5
   type: 9
 --- !u!114 &8015362018738886572
@@ -602,18 +601,6 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
---- !u!114 &8340902572209431562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3795023321622326112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c02743bf70b5869419fc5c0f6c77ff03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3795023321794086392
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +753,7 @@ GameObject:
   - component: {fileID: 3795023322038554276}
   - component: {fileID: 8538249681198540598}
   - component: {fileID: 3448001489619834565}
+  - component: {fileID: 1153806046094864152}
   m_Layer: 5
   m_Name: Open Quests Button
   m_TagString: Untagged
@@ -786,11 +774,11 @@ RectTransform:
   m_Children:
   - {fileID: 3795023321179944333}
   m_Father: {fileID: 3795023321368961674}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 75, y: 75}
+  m_AnchoredPosition: {x: 75, y: 215}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3795023322038554283
@@ -856,7 +844,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -887,7 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 160, y: -300, z: 0}
+  position: {x: 160, y: -180, z: 0}
   pivot: {x: 0, y: 0.5}
   delay: 0.5
   type: 11
@@ -918,6 +906,22 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
+--- !u!114 &1153806046094864152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795023322038554278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dff080d54883d418d6addb92b13719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 3795023321794086398}
+  image: {fileID: 3795023321179944371}
+  readColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+  unreadColor: {r: 0.84705883, g: 0.30980393, b: 0.30980393, a: 1}
 --- !u!1 &3795023322734049695
 GameObject:
   m_ObjectHideFlags: 0

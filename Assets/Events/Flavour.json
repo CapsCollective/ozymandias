@@ -1,8 +1,416 @@
-﻿[
+[
   {
-    "name": "Test 1",
-    "headline": "",
-    "article": "",
-    "image": ""
+    "name": "dnd",
+    "headline": "New Game a 'Hell' of a Time",
+    "article": "Local children have been playing a new game, where they pretend to be adventurers going on quests. Apparently it is so fun that even a group of nearby demons want to join in!",
+    "image": "dice-twenty-faces-twenty",
+    "type": "Flavour"
+  },
+  {
+    "name": "doomsday",
+    "headline": "Doomsday Forecast for Wednesday",
+    "article": "Local doomsayer Preminitia Portent has forecast doomsday for this Wednesday. This is the 4th time this month they've prophesied the end times, but they only needs to be right once!",
+    "image": "cultist",
+    "type": "Flavour"
+  },
+  {
+    "name": "esquilax",
+    "headline": "Fabled Beast Spotted Nearby",
+    "article": "Witnesses claim to have seen the mythical Esquilax!. Based on our readings of \"The Big Book of Beasts\", it has been described as \"A horse, with the head of a rabbit, and the body, of a rabbit\".",
+    "image": "rabbit",
+    "type": "Flavour"
+  },
+  {
+    "name": "floating-rogue",
+    "headline": "Rogue Light?",
+    "article": "Local rogue Elon Stealemlots was seen floating above the town today, after reportedly drinking a potion of levitation. I swear, it's something new with this guy every day.",
+    "image": "potion-ball",
+    "type": "Flavour"
+  },
+  {
+    "name": "gemstones",
+    "headline": "Could Eating Gemstones Give you Magic Powers?",
+    "article": "Local Witchdoctor and magic expert says: \"What? No. Don't do that!\" But you're not fooling me, Mr Magic... Not again. ",
+    "image": "minerals",
+    "type": "Flavour"
+  },
+  {
+    "name": "kitten-inn",
+    "headline": "They're Kitten About Safety Standards!",
+    "article": "A local inn has received scathing reviews over its weekend grand-opening when several high-ranking town gentry in attendance were transformed into house cats upon trying the \"new soup\". The commissioner of the Magical Safety Standard Alliance had this to say about the incident: \"meow? meoooooow\" followed by faint purring.",
+    "image": "cat",
+    "type": "Flavour"
+  },
+  {
+    "name": "magic-dust",
+    "headline": "Magic Dust Bust Plus",
+    "article": "Big victory today for our boys in bronze as the Dust Enforcement Administration bags a massive load from Magic Dust traffickers caught attempting to smuggle 7000 gold pieces of product inside a bag of holding. The traffickers state that they did not pack their bags themselves.",
+    "image": "dust-cloud",
+    "type": "Flavour"
+  },
+  {
+    "name": "malecrax",
+    "headline": "'Tis the Season!",
+    "article": "We spend today, as we do every year, to celebrate the glorious Archmage Malecrax for choosing yet again not to destroy the sun and plunge us all into darkness. Thank you Malecrax!",
+    "image": "overlord-helm",
+    "type": "Flavour"
+  },
+  {
+    "name": "metagaming",
+    "headline": "No Metagaming!",
+    "article": "Local villager wishes she was in a farming sim instead. “In those you just have to wander around and occasionally receive gifts”.  Experts claim they have no idea what she’s on about and that she’s lost her mind.",
+    "image": "dice-twenty-faces-twenty",
+    "type": "Flavour"
+  },
+  {
+    "name": "pocket-pub",
+    "headline": "Patrons Puzzled by Pocket Pub",
+    "article": "Local tavern, The Drowned Pelican, has called for an investigation following a prank that lead to their front door being transmuted into a pocket dimension. While the debacle only lasted for 15 minutes before conduits were able to reverse the spell, the victims had aged more than 15 years inside a hellish nightmare realm where the bard kept playing the same song over again.",
+    "image": "open-gate",
+    "type": "Flavour"
+  },
+  {
+    "name": "potion-buyer",
+    "headline": "Local Adventurer Needs Potions",
+    "article": "He is going into battle and needs the strongest potions available. Will they get them? Is he strong enough? Read more to find out...",
+    "image": "potion-ball",
+    "type": "Flavour"
+  },
+  {
+    "name": "potion-seller",
+    "headline": "Potion Seller Comes to Town",
+    "article": "He was last seen in this town engaged with an argument with a local Outrider on the potency of his potions. Are you strong enough for his potions?",
+    "image": "potion-ball",
+    "type": "Flavour"
+  },
+  {
+    "name": "rat-rave",
+    "headline": "Perplexing Piper Party",
+    "article": "Children have been seen disappearing at night, in a trance. After some exploration, adventurers discovered that they have been attending a nightly rat rave.",
+    "image": "rat",
+    "type": "Flavour"
+  },
+  {
+    "name": "socks",
+    "headline": "Socks Outlawed!",
+    "article": "A group of fanatics have pressured the government to issue a kingdom wide ban on socks, of all things. Starting tomorrow, any citizens caught wearing, distributing, or in possession of fabric footwear will be exiled.",
+    "image": "socks",
+    "type": "Flavour"
+  },
+  {
+    "name": "tooth-fairy",
+    "headline": "The Tooth Hurts",
+    "article": "A warning to any parents out there, urge your children against putting loose teeth under their pillows for the Tooth fairies. While they seem whimsical and wondrous, they are in fact just the larval stage of the far more deadly 'Bone fairy'. Hide your teeth! It's better to starve them before they get too strong.",
+    "image": "fairy",
+    "type": "Flavour"
+  },
+  {
+    "name": "twin",
+    "headline": "Long Lost Twin",
+    "article": "After a battle with a frost troll, we have unfortunately lost an adventurer today. Conveniently, however, their long lost twin has just arrived in town, and has taken up residence.",
+    "image": "twin",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "kill": true
+      },
+      {
+        "type": "AdventurersAdded",
+        "adventurers":
+        [
+          {
+            "name": "Long Lost Twin",
+            "anyGuild": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "undead-diviner",
+    "headline": "Diviner Just Won't Give Up!",
+    "article": "This holy warrior is on a mission, and keeps coming back to life. We don't know why, and at this point, it's becoming a bit of a hassle.",
+    "image": "angel-wings",
+    "type": "Flavour"
+  },
+  {
+    "name": "time-loop-1",
+    "headline": "Local Reporter Stuck in a Time Loop!",
+    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please report back.",
+    "image": "empty-hourglass",
+    "type": "Flavour",
+    "outcomes": [
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "time-loop-2",
+          "headline": "Local Reporter Stuck in a Time Loop!",
+          "article": "Seriously, it's been three days now, I don't what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
+          "image": "empty-hourglass",
+          "outcomes": [
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "time-loop-3",
+                "headline": "Reporter Doesn't Know How Dates Work",
+                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
+                "image": "empty-hourglass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "item-shop-1",
+    "headline": "Travelling Merchant Comes to Town",
+    "article": "An old wagon rolled into town today, containing all manner of mystical items. The equally old owner of the store offers to sell you can item from their selection.",
+    "image": "old-wagon",
+    "type": "Flavour",
+    "choices": [
+      {
+        "name": "Debt Forgiveness",
+        "costScale": 2.5,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "Due to a 'paperwork error' all the guilds requests have been marked as complete."
+          },
+          {
+            "type": "RequestCompleted",
+            "guild": "Brawler"
+          },
+          {
+            "type": "RequestCompleted",
+            "guild": "Outrider"
+          },
+          {
+            "type": "RequestCompleted",
+            "guild": "Performer"
+          },
+          {
+            "type": "RequestCompleted",
+            "guild": "Diviner"
+          },
+          {
+            "type": "RequestCompleted",
+            "guild": "Arcanist"
+          }
+        ]
+      },
+      {
+        "name": "Chest of Hoarding",
+        "costScale": 1,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The chest contains a massive empty space. Adventurers decide to move into the free real-estate."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Housing",
+              "amount": 4,
+              "turns": -1,
+              "reason": "from the Chest of Hoarding"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Magic Mushrooms",
+        "costScale": 0.75,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The Arcanists say these glowing fungi helps them see into other dimensions, we assume this helps their magical research."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Arcanist",
+              "amount": 4,
+              "turns": -1,
+              "reason": "from Magic Mushrooms"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Nothing Today Thanks!",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "\"Alrighty, I'll come back another time!\""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "item-shop-2",
+    "headline": "Travelling Merchant Comes to Town",
+    "article": "An old wagon rolled into town today, containing all manner of mystical items. The equally old owner of the store offers to sell you can item from their selection.",
+    "image": "old-wagon",
+    "type": "Flavour",
+    "choices": [
+      {
+        "name": "Magic Beans",
+        "costScale": 1.3,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "These magic beans energise adventurers when made into a bitter potion. We've been awake for 3 days and never felt better!"
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Defence",
+              "amount": 3,
+              "turns": -1,
+              "reason": "from the Energising Beans"
+            }
+          }
+        ]
+      },
+      {
+        "name": "The Cute Lute",
+        "costScale": 0.75,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "This little lute plays the most adorable songs. The performers love to sing along."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 4,
+              "turns": -1,
+              "reason": "from the Cute Lute"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Orb of Slope Detection",
+        "costScale": 0.75,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "This mystical object shifts itself to the lowest point of any surface. The brawlers are mystified by it's power and play with it endlessly..."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": 4,
+              "turns": -1,
+              "reason": "from Orb of Slope Detection"
+            }
+          }
+        ]
+      },
+      {
+        "name": "I'm Good for Now",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "\"Alrighty, I'll come back another time!\""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "item-shop-3",
+    "headline": "Travelling Merchant Comes to Town",
+    "article": "An old wagon rolled into town today, containing all manner of mystical items. The equally old owner of the store offers to sell you can item from their selection.",
+    "image": "old-wagon",
+    "type": "Flavour",
+    "choices": [
+      {
+        "name": "Rat on a stick",
+        "costScale": 1,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "This 'magical' item points you in the direction of forest cheese, a very real and very tasty thing."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Food",
+              "amount": 3,
+              "turns": -1,
+              "reason": "from the Forest Cheese"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Whip of Penance",
+        "costScale": 0.75,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "This will make the Diviners self-flagellation parties much more exciting."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Diviner",
+              "amount": 4,
+              "turns": -1,
+              "reason": "from the Whip of Penance"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Cloak of Invisibility",
+        "costScale": 0.75,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The Outriders have agreed that it's only fair to take turns using it for their subterfuge."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Outrider",
+              "amount": 4,
+              "turns": -1,
+              "reason": "from the Cloak of Invisibility"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Nah, None for Me",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "\"Alrighty, I'll come back another time!\""
+          }
+        ]
+      }
+    ]
   }
 ]

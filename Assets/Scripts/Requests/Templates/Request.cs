@@ -1,5 +1,4 @@
 ﻿using System;
-using Events;
 using UnityEngine;
 using Utilities;
 using Event = Events.Event;
@@ -11,22 +10,24 @@ namespace Requests.Templates
         public Guild guild;
         public Event completedEvent;
         
-        [NonSerialized] public int Completed, Required;
+        [NonSerialized] public int Completed, Required, Tokens;
         public bool IsCompleted => Completed >= Required;
         public abstract string Description { get; }
         protected abstract int RequiredScaled { get; }
 
         public void Init()
         {
+            Tokens = 1; // TODO: Scale reward amount
             Completed = 0;
             Required = RequiredScaled;
         }
         
         public abstract void Start();
         public abstract void Complete();
-
-#if (UNITY_EDITOR)
-        public virtual void Configure(EventCreator.RequestConfig config) {}
-#endif
+        
+        private void OnDisable()
+        {
+            Complete(); // Clear whatever setup the object has on clear
+        }
     }
 }

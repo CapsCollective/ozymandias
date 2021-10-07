@@ -1,43 +1,42 @@
 ﻿using System.Collections.Generic;
-using Adventurers;
-using UnityEngine;
+using Managers;
+using Utilities;
 using static Managers.GameManager;
-using Random = UnityEngine.Random;
 
 namespace Events.Outcomes
 {
-    [CreateAssetMenu(fileName = "New Adventurers Outcome", menuName = "Outcomes/New Adventurers")]
     public class AdventurersAdded : Outcome
     {
-        public List<PremadeAdventurer> adventurers;
+        // Either create randomly or with a list
+        public List<AdventurerDetails> adventurers;
+        
+        public int count;
+        public Guild guild;
+        public bool anyGuild;
 
-        public override bool Execute()
+        protected override bool Execute()
         {
-            foreach (PremadeAdventurer t in adventurers)
+            for (int i = 0; i < count; i++)
             {
-                if (t != null) Manager.Adventurers.Add(t);
+                Manager.Adventurers.Add(anyGuild ? (Guild?)null : guild);
+            }
+            
+            foreach (AdventurerDetails details in adventurers)
+            {
+                if (details.name != null) Manager.Adventurers.Add(details);
                 else Manager.Adventurers.Add();
             }
 
             return true;
         }
 
-        private static string[] Descriptors = {
+        private static readonly List<string> Descriptors = new List<string> {
             "taken up residence.", "joined the fight!", "found a new home.", "started questing."
         };
-    
-        public override string Description
-        {
-            get
-            {
-                if (customDescription != "") return "<color=#007000ff>" + customDescription + "</color>";
-                return "<color=#007000ff>" +
-                       adventurers.Count + " adventurer" +
-                       (adventurers.Count > 1 ? "s have " : " has ") +
-                       Descriptors[Random.Range(0, Descriptors.Length)]+
-                       "</color>";
-            }
-        }
-    
+
+        protected override string Description => customDescription != "" ?
+            $"{Colors.GreenText}{customDescription}{Colors.EndText}" :
+            $"{Colors.GreenText}{adventurers.Count + count} adventurer{(adventurers.Count > 1 ? "s have " : " has ")}" +
+            $"{Descriptors.SelectRandom()}{Colors.EndText}";
     }
 }

@@ -39,15 +39,19 @@ namespace Managers
             { Stat.Food, UpgradeType.Food }
         };
 
+        public int GetUpgradeMod(Stat stat)
+        {
+            return UpgradeMap.ContainsKey(stat) ? Manager.Upgrades.GetLevel(UpgradeMap[stat]) : 0;
+        }
+        
         public int GetStat(Stat stat)
         {
-            int mod = stat == Stat.Food || stat == Stat.Housing ? 4 : 1;
+            int mod = stat == Stat.Food || stat == Stat.Housing ? FoodHousingMultiplier : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
-            int upgradeMod = UpgradeMap.ContainsKey(stat) ? Manager.Upgrades.GetLevel(UpgradeMap[stat]) : 0;
-            return mod * (Manager.Structures.GetStat(stat) + upgradeMod) + ModifiersTotal[stat] + foodMod;
+            return mod * (Manager.Structures.GetStat(stat) + GetUpgradeMod(stat)) + ModifiersTotal[stat] + foodMod;
         }
 
-        private int GetSatisfaction(Guild guild)
+        public int GetSatisfaction(Guild guild)
         {
             return GetStat((Stat)guild) - Manager.Adventurers.GetCount(guild);
         }
@@ -59,10 +63,10 @@ namespace Managers
             return GetStat(stat) - Manager.Adventurers.Count;
         }
 
-        public float SpawnChance(Guild guild)
+        public int SpawnChance(Guild guild)
         {
             return Mathf.Clamp(
-                (GetSatisfaction(guild) + 10) * 2.5f, 
+                (GetSatisfaction(guild) + 5) * 5, 
                 0, 50 + 10 * Manager.Upgrades.GetLevel(UpgradeType.MaxAdventurerSpawn)
             );
         }
@@ -97,6 +101,7 @@ namespace Managers
         private void OnNewGame()
         {
             TurnCounter = 1;
+            BaseThreat = 0;
             Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
             Wealth = 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
         }

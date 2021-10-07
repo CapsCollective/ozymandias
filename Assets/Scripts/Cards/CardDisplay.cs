@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using static Managers.GameManager;
 
 namespace Cards
 {
@@ -68,7 +69,7 @@ namespace Cards
             // Set card details
             title.text = blueprint.name;
             description.text = blueprint.description;
-            cost.text = blueprint.ScaledCost.ToString();
+            cost.text = blueprint.Free ? "Free" : blueprint.ScaledCost.ToString();
             icon.sprite = blueprint.icon;
 
             if (interactable)
@@ -108,8 +109,10 @@ namespace Cards
                 badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
                 
-                badges[i].badge.Description = $"{(effects[i].Value > 0 ? "+" : "")}{effects[i].Value} " +
-                                              $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
+                badges[i].badge.Description = 
+                    $"{(effects[i].Value > 0 ? "+" : "")}" +
+                    $"{effects[i].Value * (effects[i].Key == Stat.Food || effects[i].Key == Stat.Housing ? FoodHousingMultiplier : 1)} " +
+                    $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
             }
         }
     }

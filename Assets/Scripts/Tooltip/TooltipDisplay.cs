@@ -132,27 +132,32 @@ namespace Tooltip
                 case null: break;
                 case Stat.Housing:
                     int spawnRate = Manager.Stats.RandomSpawnChance;
-                    string descriptive = HousingDescriptor(spawnRate);
                     string spawnText = spawnRate == -1
                         ? "Adventurers will start to flee"
                         : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
                     details.text = $"{Manager.Stats.GetStat(Stat.Housing)} housing for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{FormattedBuildingString(Stat.Housing)}" +
+                                   $"{FormattedUpgradeString(Stat.Housing)}" +
                                    $"{FormattedModifierString(Stat.Housing)}" +
-                                   $"{descriptive} ({spawnText})";
+                                   $"{HousingDescriptor(spawnRate)} ({spawnText})";
                     break;
                 case Stat.Food:
                     details.text = $"{Manager.Stats.GetStat(Stat.Food)} food for {Manager.Adventurers.Available} total adventurers\n" +
+                                   $"{FormattedBuildingString(Stat.Food)}" +
+                                   $"{FormattedUpgradeString(Stat.Food)}" +
                                    $"{FormattedModifierString(Stat.Food)}" +
                                    $"{FoodDescriptor(Manager.Stats.FoodModifier)}";
                     break;
                 case Stat.Defence:
-                    details.text = $"{Manager.Stats.Defence} defence from total adventurers and defensive buildings\n" +
+                    details.text = $"{Manager.Stats.Defence} defence\n" +
+                                   $"  ● +{Manager.Adventurers.Available} from total adventurers\n" +
+                                   $"{FormattedBuildingString(Stat.Defence)}" +
                                    $"{FormattedModifierString(Stat.Defence)}";
                     break;
                 case Stat.Threat:
-                    details.text = $"{Manager.Stats.Threat} threat:\n" +
-                                   $"  ● {Manager.Stats.BaseThreat} from Events\n" +
-                                   (Manager.Quests.RadiantQuestCellCount == 0 ? "" :$"  ● {Manager.Quests.RadiantQuestCellCount} from Enemy Camps\n") +
+                    details.text = $"{Manager.Stats.Threat} threat\n" +
+                                   $"  ● +{Manager.Stats.BaseThreat} from events\n" +
+                                   (Manager.Quests.RadiantQuestCellCount == 0 ? "" :$"  ● +{Manager.Quests.RadiantQuestCellCount} from enemy camps\n") +
                                    $"{FormattedModifierString(Stat.Threat)}\n";
                     break;
                 case Stat.Stability:
@@ -160,21 +165,42 @@ namespace Tooltip
                     details.text = $"{Manager.Stats.Stability}/100 town stability ({(change > 0 ? "+" : "") + change} next turn)";
                     break;
                 case Stat.Spending:
+                    int stat = Manager.Stats.GetStat(Stat.Spending);
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"{WealthPerAdventurer} per adventurer({Manager.Adventurers.Available}) times {(100 + Manager.Stats.GetStat(Stat.Spending))/100f} spending modifier.\n" +
+                                   $"{WealthPerAdventurer} per adventurer ({Manager.Adventurers.Available}) with {100 + stat}% spending\n" +
+                                   $"  ● {100 + Manager.Stats.GetUpgradeMod(config.Stat.Value)}% base\n" +
+                                   $"{FormattedBuildingString(Stat.Spending)}" +
+                                   $"{FormattedUpgradeString(Stat.Spending)}" +
                                    $"{FormattedModifierString(Stat.Spending)}";
                     break; 
                 default: // Stat for a guild
                     Guild guild = (Guild) config.Stat.Value;
-                    string guildName = config.Stat.ToString();
+                    string guildName = config.Stat.ToString().ToLower();
+                    int total = Manager.Stats.GetStat(config.Stat.Value);
+                    int count = Manager.Adventurers.GetCount(guild);
+                    int spawnChance = Manager.Stats.SpawnChance(guild);
+                    
                     details.text =
-                        $"{Manager.Stats.GetStat(config.Stat.Value)} {guildName} satisfaction for " +
-                        $"{Manager.Adventurers.GetCount(guild)} {guildName}s\n" +
+                        $"{total} satisfaction for {count} {guildName}s ({(total - count > 0 ? "+" : "")}{total - count})\n" +
+                        $"{FormattedBuildingString(config.Stat.Value)}" +
+                        $"{FormattedUpgradeString(config.Stat.Value)}" +
                         $"{FormattedFoodModifierString}" +
                         $"{FormattedModifierString(config.Stat.Value)}" +
-                        $"{Manager.Stats.SpawnChance(guild):n1}% {guildName} spawn chance per turn";
+                        $"{spawnChance}% {guildName} spawn chance per turn";
                     break;
             }
+        }
+
+        private string FormattedBuildingString(Stat stat)
+        {
+            int buildingMod = Manager.Structures.GetStat(stat) * (stat == Stat.Food || stat == Stat.Housing ? FoodHousingMultiplier : 1);
+            return $"  ● {(buildingMod >= 0 ? "+" : "")}{buildingMod}{(stat == Stat.Spending ? "%" : "")} from buildings\n";
+        }
+
+        private string FormattedUpgradeString(Stat stat)
+        {
+            int upgradeMod = Manager.Stats.GetUpgradeMod(stat);
+            return upgradeMod == 0 ? "" : $"  ● +{upgradeMod}{(stat == Stat.Spending ? "%" : "")} from upgrades\n";
         }
 
         // Formatted string for food modifiers (specifically for adventurer)
@@ -187,10 +213,9 @@ namespace Tooltip
                 bool isFoodInSurplus = Math.Sign(mod) == 1;
                 string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
                 char foodSign = isFoodInSurplus ? '+' : '-';
-                string textColor = isFoodInSurplus ? PositiveHexColor : NegativeHexColor;
+                string textColor = isFoodInSurplus ? Colors.GreenText : Colors.RedText;
 
-                return $"  ● <color={textColor}>{foodSign}{Math.Abs(mod)}</color>" +
-                       $" from food {foodDescriptor}\n";
+                return $"  ● {textColor}{foodSign}{Math.Abs(mod)}{Colors.EndText} from food {foodDescriptor}\n";
             }
         }
 
@@ -202,19 +227,14 @@ namespace Tooltip
             foreach (var modifier in Manager.Stats.Modifiers[stat])
             {
                 char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
-                string textColor = sign == '+' ? PositiveHexColor : NegativeHexColor;
+                string textColor = sign == '+' ? Colors.GreenText : Colors.RedText;
                 string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
-                formattedModifierString += 
-                    $"  ● <color={textColor}>{sign}{Math.Abs(modifier.amount)}</color> " +
-                    $"from {modifier.reason} ({modifier.turnsLeft} {turnText} remaining)\n";
+                formattedModifierString += $"  ● {textColor}{sign}{Math.Abs(modifier.amount)}{(stat == Stat.Spending ? "%" : "")}{Colors.EndText} " +
+                                           $"from {modifier.reason} {(modifier.turnsLeft != -1 ? $"{modifier.turnsLeft} {turnText} remaining)": "")}\n";
             }
             
             return formattedModifierString;
         }
-
-        private string PositiveHexColor => "#1bfc30";
-        
-        private string NegativeHexColor => "#FF0000";
 
         private string HousingDescriptor(int spawnRate)
         {
@@ -222,7 +242,7 @@ namespace Tooltip
             {
                 3 => "They're practically giving houses away",
                 2 => "There is room to spare",
-                1 => "It's a bit cramped",
+                1 => "There's just enough space",
                 0 => "There are adventurers on the street",
                 -1 => "Adventurers are looking to get out of here",
                 _ => ""

@@ -1,0 +1,129 @@
+﻿[
+  {
+    "name": "woodland-creatures",
+    "headline": "Princess Out for Revenge",
+    "article": "A captured princess, tired of waiting for rescue, broke free, has befriended nearby woodland creatures, and has trained them into a deadly army. Now, she's out for revenge against the town for forgetting about her. Guild Co. correspondent reports \"We think her ransom note got caught in our spam filter.\"",
+    "image": "rabbit",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "woodland-creatures-quest",
+          "location": "Grid",
+          "title": "Defeat the Escaped Princess",
+          "description": "The princesses' army of woodland creatures must be stopped",
+          "image": "rabbit",
+          "completedEvent": {
+            "name": "woodland-creatures-completed",
+            "headline": "Princess Re-captured",
+            "article": "A joke about sending her away to the asylum all the other princesses end up.",
+            "image": "rabbit"
+          },
+          "baseTurns": 3,
+          "wealthMultiplier": 1.7
+        }
+      }
+    ]
+  },
+  {
+    "name": "dryad-commune",
+    "headline": "Dryad Commune",
+    "article": "A group of nature loving dryads have formed a commune near our industrious town. Rumour has it they have terrible mind controlling powers, spreading troublesome ideas like 'equality', and 'not burning the very world we live in'. Their very existence is a threat to us!",
+    "image": "flowers",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "dryad-commune-quest",
+          "location": "Grid",
+          "title": "Organise a Coup",
+          "description": "Bring 'Peace and Order' to these dangerous Dryads",
+          "image": "flowers",
+          "completedEvent": {
+            "name": "dryad-commune-completed",
+            "headline": "Dryad Commune Burned Down",
+            "article": "Evidence strongly supports they were going to destroy our way of life any day now.",
+            "image": "flowers"
+          },
+          "baseTurns": 5,
+          "wealthMultiplier": 0.8
+        }
+      }
+    ]
+  },
+  {
+    "name": "sentient-campsites",
+    "headline": "Mimics",
+    "article": "We've heard of some mimics closing in on our town, they seem to be setting up a campsite nearby. Knowing mimics, they could be hiding anywhere in the camp, so we must tread carefully.",
+    "image": "mimic-chest",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "sentient-campsites-quest",
+          "location": "Grid",
+          "title": "Uncover the Mimics",
+          "description": "Investigate these camps and find the mimics hiding within",
+          "image": "mimic-chest",
+          "completedEvent": {
+            "name": "sentient-campsites-completed",
+            "headline": "Sentient Campsites",
+            "article": "Our adventurers barely made it out of the mimic camps, as they were investigating the content of a tent, teeth appeared around the opening, trapping the adventurer in the tent's maw. It was only the quick reflexes of a fellow adventurer poking at it with a stick that freed them to fight another day.",
+            "image": "mimic-chest"
+          },
+          "baseTurns": 3,
+          "wealthMultiplier": 1.3
+        }
+      }
+    ]
+  },
+  {
+    "name": "troll-union",
+    "headline": "Trolling for Tariffs",
+    "article": "Amid rising tensions between local merchants and the bridge-troll union, faction official Moh'rgen Mork'hol has threatened to lock down bridges along several strategic trade routes in an effort to raise minimum toll rates for union members. Refusing of these tolls may lead to a strike.",
+    "image": "troll",
+    "type": "Radiant",
+    "choices": [
+      {
+        "name": "Accept their terms",
+        "outcomes": [
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Spending",
+              "amount": -10,
+              "turns": -1,
+              "reason": "from the Troll Tolls"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Refuse their demands",
+        "outcomes": [
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "troll-union-quest",
+              "location": "Grid",
+              "title": "Bust the Troll Strike",
+              "description": "The Troll Union has gone on strike!",
+              "image": "troll",
+              "completedEvent": {
+                "name": "troll-union-completed",
+                "headline": "Troll Strike Busted!",
+                "article": "Some joke about their demands actually being quite reasonable",
+                "image": "troll"
+              },
+              "baseTurns": 4,
+              "wealthMultiplier": 1.5
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

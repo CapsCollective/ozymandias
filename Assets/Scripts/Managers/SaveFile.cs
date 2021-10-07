@@ -8,6 +8,7 @@ using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 using EventType = Utilities.EventType;
+using static UI.Notification;
 
 namespace Managers
 {
@@ -40,7 +41,7 @@ namespace Managers
     public struct AdventurerDetails
     {
         public string name;
-        public Guild type;
+        public Guild guild;
         public bool isSpecial;
         public int turnJoined;
     }
@@ -83,7 +84,7 @@ namespace Managers
     public struct RequestDetails
     {
         public string name;
-        public int completed, required;
+        public int completed, required, tokens;
     }
     
     [Serializable]
@@ -107,6 +108,7 @@ namespace Managers
         public UpgradeDetails upgrades;
         public static void SaveState()
         {
+            OnNotification.Invoke("Game Saved", Manager.saveIcon);
             new SaveFile().Save();
         }
         
@@ -157,13 +159,13 @@ namespace Managers
                 JsonConvert.PopulateObject(File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"), this);
             }
 
+            Manager.Upgrades.Load(upgrades);
+            Manager.Cards.Load(cards);
             Manager.Stats.Load(stats);
             Manager.Structures.Load(structures);
             if(Manager.Structures.Count == 0) Manager.Map.FillGrid();
-            Manager.Cards.Load(cards);
             await Manager.EventQueue.Load(eventQueue);
             await Manager.Requests.Load(requests);
-            Manager.Upgrades.Load(upgrades);
 
             if (Manager.Stats.TurnCounter != 0) // Only for continuing a game
             {

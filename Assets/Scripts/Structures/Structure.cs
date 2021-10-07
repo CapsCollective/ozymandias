@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using DG.Tweening;
 using Managers;
 using Map;
@@ -24,10 +25,8 @@ namespace Structures
         public bool IsQuest => StructureType == StructureType.Quest;
         public bool IsBuildingType(BuildingType type) => Blueprint && Blueprint.type == type;
         public int SectionCount => _sections.Count;
-
         public Stat? Bonus { get; private set; }
 
-        // Clear cost calculations TODO: make this based on distance to guild hall instead
         public int TerrainClearCost => 
             (int)(TerrainBaseCost * SectionCount * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
                   Mathf.Pow(TerrainCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre)));
@@ -66,7 +65,12 @@ namespace Structures
             // Same section for each quest cell
             _sections = Enumerable.Range(0, Occupied.Count).Select(_ => 
                 Instantiate(Manager.Quests.SectionPrefab, transform).GetComponent<Section>()).ToList();
-            for (int i = 0; i < _sections.Count; i++) AddSection(_sections[i], Occupied[i], i);
+            for (int i = 0; i < _sections.Count; i++)
+            {
+                _sections[i].Init(Occupied[i]);
+                _sections[i].SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
+                _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
+            }
 
             if (!Manager.State.Loading) AnimateCreate();
         }
@@ -117,7 +121,12 @@ namespace Structures
                     Manager.Structures.TreeSection,
                     transform)
                 .GetComponent<Section>()).ToList();
-            for (int i = 0; i < _sections.Count; i++) AddSection(_sections[i], Occupied[i], i);
+            for (int i = 0; i < _sections.Count; i++) 
+            {
+                _sections[i].Init(Occupied[i]);
+                _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
+            }
+
             if (!Manager.State.Loading) AnimateCreate(); // TODO: Animate check (just not during loading???)
         }
         
@@ -152,9 +161,15 @@ namespace Structures
                 .Take(Occupied.Count)
                 .Select(section => Instantiate(section.prefab, transform).GetComponent<Section>())
                 .ToList();
-            
-            for (int i = 0; i < _sections.Count; i++) AddSection(_sections[i], Occupied[i], i);
-            
+
+            for (int i = 0; i < _sections.Count; i++)
+            {
+                _sections[i].Init(Occupied[i], true, isRuin, Blueprint.sections[i].clockwiseRotations);
+                _sections[i].SetRoofColor(Blueprint.roofColor);
+                // Add the renderer for all sections to a list for outline highlighting
+                _sectionRenderers.Add(_sections[i].transform.GetComponent<Renderer>());
+            }
+
             if (!Manager.State.Loading) AnimateCreate();
             Bonus = AdjacencyBonus();
             return true;
@@ -179,15 +194,15 @@ namespace Structures
             newCell.Occupant = this;
             Occupied.Add(newCell);
             _sections.Add(newSection);
-            AddSection(newSection, newCell);
+            newSection.SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
+            newSection.Init(newCell);
+            _sectionRenderers.Add(newSection.GetComponent<Renderer>());
         }
 
         public void Shrink(int count)
         {
             for (int i = 0; i < count; i++)
             {
-                // TODO: This works as the lists always match, but is kinda dodge,
-                // we should look at keeping occupied and _sections better paired
                 _sectionRenderers.Remove(_sections[SectionCount - 1].transform.GetComponent<Renderer>());
 
                 Destroy(_sections[SectionCount - 1].gameObject);
@@ -195,32 +210,6 @@ namespace Structures
                 _sections.RemoveAt(SectionCount - 1);
                 Occupied.RemoveAt(Occupied.Count - 1);
             }
-        }
-        
-        private void AddSection(Section section, Cell cell, int i = 0)
-        {
-            Vector3[] corners = Manager.Map.GetCornerPositions(cell);
-            
-            if (IsTerrain || IsQuest)
-            {
-                Vector3 v = new Vector3 (
-                    corners.Average(x => x.x), 0,
-                    corners.Average(x => x.z)
-                );
-
-                Transform t = section.transform;
-                t.position = v;
-                t.eulerAngles = new Vector3(0, Random.value * 360, 0);
-                t.localScale *= Random.Range(0.8f, 1.2f);         
-            } 
-            else 
-            {
-                section.Fit(corners, Blueprint ? Blueprint.sections[i].clockwiseRotations : 0);
-                section.SetRoofColor(IsRuin ? new Color(0,0,0) : Blueprint.roofColor);
-            }
-            
-            // Add the renderer for all sections to a list for outline highlighting
-            _sectionRenderers.Add(section.transform.GetComponent<Renderer>());
         }
 
         private void AnimateCreate()
@@ -233,11 +222,10 @@ namespace Structures
         
         public void ToRuin()
         {
-            // TODO: Iterate through sections and replace with ruin
             StructureType = StructureType.Ruins;
             foreach (Section section in _sections)
             {
-                section.SetRoofColor(new Color(0,0,0));
+                section.ToRuin();
             }
         }
         

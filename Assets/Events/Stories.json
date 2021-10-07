@@ -1,44 +1,58 @@
 ﻿[
   {
-    "name": "Test 1",
-    "headline": "",
-    "article": "",
+    "name": "bakery-1",
+    "headline": "Scarecrows!",
+    "article": "Scarecrows have become sentient, and are attacking our townsfolk",
+    "type": "Story",
     "outcomes": [
       {
+        "type": "SetFlag",
+        "state": "Scarecrows",
+        "value": true
+      },
+      {
+        "type": "SetFlag",
+        "state": "StoryActive",
+        "value": true
+      },
+      {
         "type": "ChainEvent",
-        "config": {
-          "event": {
-            "name": "Test 2",
-            "headline": "",
-            "article": "",
-            "choices": [
-              {
-                "name": "Choice 1",
-                "outcomes": [
-                  {
-                    "type": "ChainEvent",
-                    "nextName": "Test 3"
-                  }
-                ]
-              },
-              {
-                "name": "Choice 2",
-                "outcomes": [
-                  {
-                    "type": "FlavourText",
-                    "customDescription": "Flavour Text!"
-                  }
-                ]
+        "nextEvent": {
+          "name": "bakery-2",
+          "headline": "",
+          "article": "",
+          "outcomes": 
+          [
+            {
+              "type": "QuestAdded",
+              "questConfig": {
+                "name": "bakery-quest",
+                "title": "Find the Flower Fields",
+                "description": "",
+                "icon": "",
+                "location": "Grid",
+                "completedEvent": {
+                  "name": "bakery-3",
+                  "headline": "The Flour Fields",
+                  "article": "",
+                  "outcomes":
+                  [
+                    {
+                      "type": "CardUnlocked",
+                      "blueprint": "Bakery"
+                    },
+                    {
+                      "type": "SetFlag",
+                      "state": "StoryActive",
+                      "value": false
+                    }
+                  ]
+                }
               }
-            ]
-          }
+            }
+          ]
         }
       }
     ]
-  },
-  {
-    "name": "Test 3",
-    "headliner": "",
-    "article": ""
   }
 ]

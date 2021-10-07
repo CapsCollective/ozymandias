@@ -38,7 +38,6 @@ namespace Inputs
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private float DoFAdjustMultiplier = 5f;
         [Header("Clamping")]
         [SerializeField] private Vector3 clampCenterPos;
         [SerializeField] private float clampDistance;
@@ -47,15 +46,6 @@ namespace Inputs
         [SerializeField] private bool showDebugSphere = false;
         [SerializeField] private Mesh debugMesh;
         [SerializeField] private Material debugMaterial;
-
-        private Vector2[] screenSamplePositions =
-        {
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.75f),
-            new Vector2(0.25f, 0.1f),
-            new Vector2(0.75f, 0.1f),
-
-        };
 
         private void Awake()
         {
@@ -99,6 +89,9 @@ namespace Inputs
 
         private void Update()
         {
+            // Depth of Field stuff
+            volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
+            
             if (!Manager.State.InGame) return;
 
             FreeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.OnRotateCamera.ReadValue<float>();
@@ -134,20 +127,6 @@ namespace Inputs
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             FreeLook.m_YAxis.Value += scrollAcceleration;
-
-            // Depth of Field stuff
-            volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
-            float avgHitDist = 0;
-            for (int i = 0; i < screenSamplePositions.Length; i++)
-            {
-                var DoFRay = _cam.ViewportPointToRay(screenSamplePositions[i]);
-                if (Physics.Raycast(DoFRay, out var hit, 100f, layerMask))
-                {
-                    avgHitDist += hit.distance;
-                }
-            }
-            avgHitDist /= screenSamplePositions.Length;
-             _depthOfField.focusDistance.value = Mathf.MoveTowards(_depthOfField.focusDistance.value, avgHitDist, Time.deltaTime * DoFAdjustMultiplier);
 
             // Bounciness stuff
             bool atLimit = FreeLook.m_YAxis.Value <= 0.01 | FreeLook.m_YAxis.Value >= 0.98;

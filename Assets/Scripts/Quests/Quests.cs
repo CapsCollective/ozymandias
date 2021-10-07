@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Managers;
@@ -9,15 +10,19 @@ namespace Quests
 {
     public class Quests : MonoBehaviour
     {
-        [SerializeField] private Transform dock, forestPath, mountainPath;
-        [SerializeField] private QuestCounter counter;
+        public static Action<Quest> OnQuestCompleted;
+        public static Action<Quest> OnQuestAdded;
+        public static Action<Quest> OnQuestRemoved;
         
+        [SerializeField] private Transform dock, forestPath, mountainPath;
+
         [SerializeField] private GameObject sectionPrefab;
         public GameObject SectionPrefab => sectionPrefab;
 
         public readonly List<Quest> quests = new List<Quest>();
         
         public int Count => quests.Count;
+        public int RadiantCount => quests.Count(quest => quest.IsRadiant);
         
         public int RadiantQuestCellCount =>
             quests.Where(quest => quest.IsRadiant).Sum(quest => quest.Structure.SectionCount);
@@ -42,6 +47,7 @@ namespace Quests
             if (quests.Contains(q)) return false;
             quests.Add(q);
             q.Add();
+            OnQuestAdded?.Invoke(q);
             return true;
         }
 
@@ -50,6 +56,7 @@ namespace Quests
             if (!quests.Contains(q)) return false;
             quests.Remove(q);
             q.Remove();
+            OnQuestRemoved?.Invoke(q);
             return true;
         }
 
