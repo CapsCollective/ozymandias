@@ -10,6 +10,7 @@ namespace Managers
 {
     public class Stats : MonoBehaviour
     {
+        #region PrimaryStats
         [Serializable]
         public class Modifier
         {
@@ -21,12 +22,6 @@ namespace Managers
         public Dictionary<Stat, List<Modifier>> Modifiers = new Dictionary<Stat, List<Modifier>>();
         public readonly Dictionary<Stat, int> ModifiersTotal = new Dictionary<Stat, int>();
         
-        private void Start()
-        {
-            State.OnNewGame += OnNewGame;
-            State.OnNextTurnEnd += OnNextTurnEnd;
-        }
-
         private static readonly Dictionary<Stat, UpgradeType> UpgradeMap = new Dictionary<Stat, UpgradeType>
         {
             { Stat.Brawler, UpgradeType.Brawler },
@@ -90,7 +85,7 @@ namespace Managers
         public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence);
 
         public int BaseThreat { get; set; }
-        public int Threat => BaseThreat + ModifiersTotal[Stat.Threat] + Manager.Quests.RadiantQuestCellCount;
+        public int Threat => BaseThreat + ModifiersTotal[Stat.Threat] + Manager.Quests.RadiantQuestCellCount + ScarecrowThreat;
 
         public int Stability { get; private set; } // Percentage of how far along the threat is.
 
@@ -104,7 +99,16 @@ namespace Managers
             return true;
         }
 
+        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 3 : 0;
+        
+        #endregion
+
         #region State Callbacks
+        private void Start()
+        {
+            State.OnNewGame += OnNewGame;
+            State.OnNextTurnEnd += OnNextTurnEnd;
+        }
 
         private void OnNewGame()
         {
@@ -149,6 +153,7 @@ namespace Managers
         
         #endregion
 
+        #region Serialisation
         public StatDetails Save()
         {
             return new StatDetails
@@ -180,5 +185,6 @@ namespace Managers
             foreach (var metricPair in Modifiers)
                 ModifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
         }
+        #endregion
     }
 }

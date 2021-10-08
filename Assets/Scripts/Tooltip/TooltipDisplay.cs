@@ -75,8 +75,7 @@ namespace Tooltip
             {TooltipType.Wealth, new TooltipConfig {
                 Title = "Wealth",
                 Description = "Wealth is the currency you spend on performing in game actions, like building, " +
-                              "clearing, and questing. Wealth gained per turn is based on your number of adventurers " +
-                              "multiplied by your towns spending.",
+                              "clearing, and questing.",
                 Stat = Stat.Spending
             }},
             {TooltipType.Stability, new TooltipConfig {
@@ -87,12 +86,12 @@ namespace Tooltip
             }},
             {TooltipType.Threat, new TooltipConfig {
                 Title = "Threat",
-                Description = "The ever growing dangers from the surrounding wilderness.",
+                Description = "Lowers your town's stability, gained through events and enemy camps (which can be cleared via quests).",
                 Stat = Stat.Threat
             }},
             {TooltipType.Defence, new TooltipConfig {
                 Title = "Defence",
-                Description = "The total protection your town has against Threat.",
+                Description = "Increases your town's stability, equals your total adventurers plus any bonuses from buildings or events.",
                 Stat = Stat.Defence
             }},
             {TooltipType.Newspaper, new TooltipConfig {
@@ -136,7 +135,6 @@ namespace Tooltip
             {
                 case Stat.Housing:
                     int spawnRate = Manager.Stats.RandomSpawnChance;
-                    
                     string spawnText = spawnRate == -1
                         ? "Adventurers will start to flee"
                         : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
@@ -162,12 +160,14 @@ namespace Tooltip
                 case Stat.Threat:
                     details.text = $"{Manager.Stats.Threat} threat\n" +
                                    $"  ● +{Manager.Stats.BaseThreat} from events\n" +
-                                   (Manager.Quests.RadiantQuestCellCount == 0 ? "" :$"  ● +{Manager.Quests.RadiantQuestCellCount} from enemy camps\n") +
+                                   (Manager.Quests.RadiantQuestCellCount != 0 ? $"  ● +{Manager.Quests.RadiantQuestCellCount} from enemy camps\n" : "") +
+                                   (Manager.Stats.ScarecrowThreat != 0 ? $"  ● +{Manager.Stats.ScarecrowThreat} from farms due to scarecrows\n" : "") +
                                    $"{FormattedModifierString(Stat.Threat)}\n";
                     break;
                 case Stat.Stability:
                     int change = Manager.Stats.Defence - Manager.Stats.Threat;
-                    details.text = $"{Manager.Stats.Stability}/100 town stability ({(change > 0 ? "+" : "") + change} next turn)";
+                    details.text = $"{Manager.Stats.Stability}/100 town stability\n" +
+                                   $"{(change > 0 ? "+" : "") + change} next turn ({Manager.Stats.Defence} defence - {Manager.Stats.Threat} threat)";
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +

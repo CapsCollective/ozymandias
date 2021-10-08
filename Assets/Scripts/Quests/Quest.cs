@@ -50,7 +50,7 @@ namespace Quests
         public int ScaledCost(float scale) => (int) (scale * BaseCost);
         public int ScaledTurns(float scale) => Mathf.CeilToInt(baseTurns / scale);
         public string ScaledReward(int adventurerCount) => 
-            IsRadiant ? $"{adventurerCount - 2} space{(adventurerCount == 3 ? "" : "s")} cleared" : reward;
+            IsRadiant ? $"{(adventurerCount == MaxAdventurers ? "All": (adventurerCount - BaseAdventurers).ToString())} space{(adventurerCount == 3 ? "" : "s")} cleared" : reward;
         public int AssignedCount => _assigned.Count;
         
         public void Add()
@@ -59,20 +59,27 @@ namespace Quests
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
             State.OnNextTurnEnd += OnNewTurn;
-            if (location == Location.Grid)
-            {
-                CreateBuilding(new List<int>{Manager.Structures.NewQuestSpawn()});
-            }
-            else
-            {
-                // TODO: Spawn in other locations
-            }
+            if (location == Location.Grid) CreateBuilding(new List<int>{Manager.Structures.NewQuestSpawn()});
+            else SetLocation();
         }
 
         public void Remove()
         {
             if (location == Location.Grid) ClearBuilding();
+            else ResetLocation();
             State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
+            
+        }
+        
+        private void SetLocation()
+        {
+            Structure = Manager.Quests.locations[location];
+            Structure.Quest = this;
+        }
+        private void ResetLocation()
+        {
+            Structure.Quest = null;
+            Structure = null;
         }
 
         public void Begin(float costScale, int adventurersUsed)
@@ -163,7 +170,7 @@ namespace Quests
                 turnsLeft = TurnsLeft,
                 cost = BaseCost,
                 assigned = _assigned.Select(a => a.name).ToList(),
-                occupied = Structure ? Structure.Occupied.Select(cell => cell.Id).ToList() : null
+                occupied = Structure && !Structure.IsFixed ? Structure.Occupied.Select(cell => cell.Id).ToList() : null
             };
         }
 
@@ -172,7 +179,10 @@ namespace Quests
             State.OnNextTurnEnd += OnNewTurn;
             BaseCost = details.cost;
             TurnsLeft = details.turnsLeft;
-            if (location == Location.Grid) CreateBuilding(details.occupied); 
+
+            if (location == Location.Grid) CreateBuilding(details.occupied);
+            else SetLocation();
+            
             if (!IsActive) return;
             foreach (string adventurerName in details.assigned) 
                 _assigned.Add(Manager.Adventurers.Assign(this, adventurerName));

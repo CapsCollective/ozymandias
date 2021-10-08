@@ -86,7 +86,8 @@
         QuestCompleted,
         RequestAdded,
         RequestCompleted,
-        ThreatAdded
+        ThreatAdded,
+        SetFlag
     }
 
     public enum RequestType
@@ -219,5 +220,11 @@
         Forest,
         Mountains,
         Dock
+    }
+
+    public enum Flag
+    {
+        StoryActive,
+        Scarecrows
     }
 }

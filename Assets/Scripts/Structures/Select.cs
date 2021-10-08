@@ -24,31 +24,6 @@ namespace Structures
             public Image background, icon, chevron;
         }
         
-        private enum SelectionType
-        {
-            Clear,
-            Refund,
-            Quest
-        }
-                
-        private class SelectionConfig
-        {
-            public readonly string Title;
-            public readonly int Cost;
-            public readonly SelectionType Type;
-            
-            public SelectionConfig(string title, SelectionType type, int cost = 0)
-            {
-                Title = title;
-                Type = type;
-                Cost = cost;
-            }
-            
-            public bool IsRefund => Type == SelectionType.Refund;
-            
-            public bool IsQuest => Type == SelectionType.Quest;
-        }
-        
         [SerializeField] private int yOffset;
         [SerializeField] private Image buttonImage;
         [SerializeField] private TextMeshProUGUI nameText, costText, questTitleText;
@@ -72,7 +47,6 @@ namespace Structures
         private Camera _cam;
         private OutlinePostProcess _outline;
         private Structure _hoveredStructure, _selectedStructure;
-        private SelectionConfig _config;
         private float _timeSinceRaycast;
 
         public static Action<Structure> OnClear;
@@ -121,28 +95,34 @@ namespace Structures
                 // Find building position and reposition clearButton to overlay on top of it.  
                 RepositionButton();
                 
-                // Get UI config information
-                _config = GetButtonConfiguration();
-                
-                // Set title text values
-                nameText.text = _config.IsQuest ? "" : _config.Title;
-                questTitleText.text = _config.IsQuest ? _config.Title : "";
-                
                 // Set button image values
                 DOTween.Kill(buttonCanvasGroup);
                 buttonCanvasGroup.alpha = 0;
-                buttonCanvasGroup.DOFade(_config.IsRefund || Manager.Stats.Wealth >= _config.Cost ? 1f : 0.7f, 0.5f);
-                buttonImage.sprite = _config.IsQuest ? questButtonBacking : buildingButtonBacking;
+                buttonImage.sprite = SelectedStructure.IsQuest ? questButtonBacking : buildingButtonBacking;
                 
-                // Set Cost text values
-                if (_config.IsQuest) costText.text = "";
-                else if (_config.Title == "Guild Hall") costText.text = "Cost: Everything";
-                else costText.text = (_config.IsRefund ? "Refund: " : "Cost: ") + _config.Cost;
-
-                badges.ForEach(badge => badge.canvasGroup.alpha = 0);
-                bonusBadge.canvasGroup.alpha = 0;
-                // Fade in building effects
-                if (_config.IsRefund) DisplayEffects();
+                switch (SelectedStructure.StructureType)
+                {
+                    case StructureType.Quest:
+                        nameText.text = "";
+                        costText.text = "";
+                        questTitleText.text = SelectedStructure.Quest ? SelectedStructure.Quest.Title : "No Quests Here";
+                        buttonCanvasGroup.DOFade(SelectedStructure.Quest ? 1 : 0.7f, 0.5f);
+                        break;
+                    case StructureType.Building:
+                        questTitleText.text = "";
+                        nameText.text = SelectedStructure.name;
+                        costText.text = SelectedStructure.Blueprint.type == BuildingType.GuildHall ? "Destroy" : $"Refund: {SelectedStructure.Blueprint.Refund}";
+                        buttonCanvasGroup.DOFade(1, 0.5f);
+                        DisplayEffects();
+                        break;
+                    default:
+                        questTitleText.text = "";
+                        nameText.text = SelectedStructure.IsRuin ? "Ruins" : "Forest";
+                        int cost = SelectedStructure.ClearCost;
+                        costText.text = $"Cost: {SelectedStructure.ClearCost}";
+                        buttonCanvasGroup.DOFade(Manager.Stats.Wealth >= cost ? 1 : 0.7f, 0.5f);
+                        break;
+                }
             }
         }
         
@@ -199,7 +179,6 @@ namespace Structures
             Ray ray = _cam.ScreenPointToRay(
                 new Vector3(Manager.Inputs.MousePosition.x, Manager.Inputs.MousePosition.y, _cam.nearClipPlane));
             Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
-
             return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
         }
         
@@ -226,24 +205,11 @@ namespace Structures
         {
             return Manager.Cards.SelectedCard || IsOverUi || Manager.Cards.PlacingBuilding;
         }
-        
-        private SelectionConfig GetButtonConfiguration()
-        {
-            switch (SelectedStructure.StructureType)
-            {
-                case StructureType.Building:
-                    return new SelectionConfig(SelectedStructure.name, SelectionType.Refund, SelectedStructure.Blueprint.Refund); 
-                case StructureType.Ruins:
-                    return new SelectionConfig("Ruins", SelectionType.Clear, SelectedStructure.RuinsClearCost);
-                case StructureType.Terrain:
-                    return new SelectionConfig("Forest", SelectionType.Clear, SelectedStructure.TerrainClearCost);
-                default: // Quest
-                    return new SelectionConfig(SelectedStructure.Quest.Title, SelectionType.Quest);
-            }
-        }
 
         private void DisplayEffects()
         {
+            badges.ForEach(badge => badge.canvasGroup.alpha = 0);
+            bonusBadge.canvasGroup.alpha = 0;
             var effects = SelectedStructure.Stats.OrderByDescending(x => x.Value).ToList();
 
             for (int i = 0; i < badges.Count; i++)
@@ -310,24 +276,30 @@ namespace Structures
         private void Interact()
         {
             if (!SelectedStructure) return;
-            // Switch on config type
-            switch (_config.Type)
+            
+            if (SelectedStructure.IsQuest)
             {
-                case SelectionType.Quest:
-                    OnQuestSelected?.Invoke(SelectedStructure.Quest);
-                    break;
-                case SelectionType.Refund:
-                case SelectionType.Clear:
-                {
-                    if (!SelectedStructure || !Manager.Stats.Spend(_config.Cost * (_config.IsRefund ? -1 : 1))) return;
+                if(SelectedStructure.Quest) OnQuestSelected?.Invoke(SelectedStructure.Quest);
+            } 
+            else
+            {
+                int price = 0;
 
-                    OnClear.Invoke(SelectedStructure);
-                    Manager.Structures.Remove(SelectedStructure);
-                    Deselect();
-                    break;
+                switch (SelectedStructure.StructureType)
+                {
+                    case StructureType.Building:
+                        price = -SelectedStructure.Blueprint.Refund;
+                        break;
+                    case StructureType.Ruins:
+                        break;
+                    case StructureType.Terrain:
+                        break;
                 }
-                default:
-                    throw new ArgumentOutOfRangeException();
+                
+                if (!Manager.Stats.Spend(price)) return;
+                
+                OnClear.Invoke(SelectedStructure);
+                Manager.Structures.Remove(SelectedStructure);
             }
             Deselect();
         }

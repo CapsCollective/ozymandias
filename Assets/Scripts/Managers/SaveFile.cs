@@ -35,6 +35,7 @@ namespace Managers
         public bool storyActive;
         public List<string> headliners, others;
         public Dictionary<EventType, List<string>> used;
+        public Dictionary<Flag, bool> flags;
     }
     
     [Serializable]

@@ -61,6 +61,10 @@ namespace Events
             
             // Threat
             public int baseAmount;
+            
+            // Flags
+            public Flag flag;
+            public bool value;
         }
         
         [Serializable] private struct ChoiceConfig
@@ -184,6 +188,11 @@ namespace Events
                         outcome = ScriptableObject.CreateInstance<RequestCompleted>();
                         ((RequestCompleted)outcome).guild = config.guild;
                         break;
+                    case OutcomeType.SetFlag:
+                        outcome = ScriptableObject.CreateInstance<SetFlag>();
+                        ((SetFlag)outcome).flag = config.flag;
+                        ((SetFlag)outcome).value = config.value;
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -216,6 +225,7 @@ namespace Events
                 quest.adventurers = config.adventurers;
                 quest.baseTurns = config.baseTurns;
                 quest.wealthMultiplier = config.wealthMultiplier;
+                quest.reward = config.reward;
 
                 config.completedEvent.outcomes ??= new List<OutcomeConfig>(); // Inits if null
                 config.completedEvent.outcomes.Add(new OutcomeConfig
