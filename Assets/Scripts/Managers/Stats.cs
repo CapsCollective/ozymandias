@@ -10,6 +10,7 @@ namespace Managers
 {
     public class Stats : MonoBehaviour
     {
+        #region PrimaryStats
         [Serializable]
         public class Modifier
         {
@@ -21,12 +22,6 @@ namespace Managers
         public Dictionary<Stat, List<Modifier>> Modifiers = new Dictionary<Stat, List<Modifier>>();
         public readonly Dictionary<Stat, int> ModifiersTotal = new Dictionary<Stat, int>();
         
-        private void Start()
-        {
-            State.OnNewGame += OnNewGame;
-            State.OnNextTurnEnd += OnNextTurnEnd;
-        }
-
         private static readonly Dictionary<Stat, UpgradeType> UpgradeMap = new Dictionary<Stat, UpgradeType>
         {
             { Stat.Brawler, UpgradeType.Brawler },
@@ -38,6 +33,15 @@ namespace Managers
             { Stat.Housing, UpgradeType.Housing},
             { Stat.Food, UpgradeType.Food }
         };
+        
+        private readonly List<Stat> _baseStats = new List<Stat>
+        {
+            Stat.Food,
+            Stat.Housing,
+            Stat.Spending
+        };
+        public int StatMultiplier(Stat stat) => _baseStats.Contains(stat) ? BaseStatMultiplier : 1;
+
 
         public int GetUpgradeMod(Stat stat)
         {
@@ -46,9 +50,8 @@ namespace Managers
         
         public int GetStat(Stat stat)
         {
-            int mod = stat == Stat.Food || stat == Stat.Housing ? FoodHousingMultiplier : 1;
             int foodMod = (int) stat < 5 ? FoodModifier : 0;
-            return mod * (Manager.Structures.GetStat(stat) + GetUpgradeMod(stat)) + ModifiersTotal[stat] + foodMod;
+            return StatMultiplier(stat) * (Manager.Structures.GetStat(stat) + GetUpgradeMod(stat)) + ModifiersTotal[stat] + foodMod;
         }
 
         public int GetSatisfaction(Guild guild)
@@ -75,14 +78,14 @@ namespace Managers
         
         public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
 
-        public int WealthPerTurn => (int)(WealthPerAdventurer * (1f + GetStat(Stat.Spending)/100f) * Manager.Adventurers.Available); //5 gold per adventurer times spending
+        public int WealthPerTurn => WealthPerAdventurer * Manager.Adventurers.Available + GetStat(Stat.Spending); //5 gold per adventurer times spending
     
         public int Wealth { get;  set; }
 
         public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence);
 
         public int BaseThreat { get; set; }
-        public int Threat => BaseThreat + ModifiersTotal[Stat.Threat] + Manager.Quests.RadiantQuestCellCount;
+        public int Threat => BaseThreat + ModifiersTotal[Stat.Threat] + Manager.Quests.RadiantQuestCellCount + ScarecrowThreat;
 
         public int Stability { get; private set; } // Percentage of how far along the threat is.
 
@@ -96,7 +99,16 @@ namespace Managers
             return true;
         }
 
+        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 3 : 0;
+        
+        #endregion
+
         #region State Callbacks
+        private void Start()
+        {
+            State.OnNewGame += OnNewGame;
+            State.OnNextTurnEnd += OnNextTurnEnd;
+        }
 
         private void OnNewGame()
         {
@@ -104,6 +116,11 @@ namespace Managers
             BaseThreat = 0;
             Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
             Wealth = 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
+            foreach (Stat stat in Enum.GetValues(typeof(Stat)))
+            {
+                ModifiersTotal[stat] = 0;
+                Modifiers[stat] = new List<Modifier>();
+            }
         }
 
         private void OnNextTurnEnd()
@@ -136,6 +153,7 @@ namespace Managers
         
         #endregion
 
+        #region Serialisation
         public StatDetails Save()
         {
             return new StatDetails
@@ -167,5 +185,6 @@ namespace Managers
             foreach (var metricPair in Modifiers)
                 ModifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
         }
+        #endregion
     }
 }

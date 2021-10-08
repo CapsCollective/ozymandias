@@ -2,6 +2,7 @@
 using UnityEngine;
 using Utilities;
 using Event = Events.Event;
+using Random = UnityEngine.Random;
 
 namespace Requests.Templates
 {
@@ -17,7 +18,7 @@ namespace Requests.Templates
 
         public void Init()
         {
-            Tokens = 1; // TODO: Scale reward amount
+            Tokens = Random.Range(1,4);
             Completed = 0;
             Required = RequiredScaled;
         }

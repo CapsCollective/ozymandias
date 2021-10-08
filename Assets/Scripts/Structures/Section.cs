@@ -4,6 +4,7 @@ using System.Linq;
 using Map;
 using NaughtyAttributes;
 using UnityEngine;
+using Utilities;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
@@ -31,6 +32,8 @@ namespace Structures
         public bool randomRotations;
         public Vector2 randomScale = Vector2.one;
         public bool hasGrass = true;
+
+        [SerializeField] private List<Mesh> meshVariants; 
         
         private List<Vector3> _cellCorners;
         private ComputeShader _meshCompute;
@@ -55,6 +58,12 @@ namespace Structures
 
         public void Init(Cell cell, bool fitToCell = false, bool isRuin = false, int clockwiseRotations = 0)
         {
+            if (meshVariants.Count > 0)
+            {
+                Random.InitState(cell.Id);
+                MeshFilter.sharedMesh = meshVariants.SelectRandom();
+            }
+            
             _cellCorners = Manager.Map.GetCornerPositions(cell);
 
             // Offset corners

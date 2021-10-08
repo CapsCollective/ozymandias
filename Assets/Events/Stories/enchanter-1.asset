@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: enchanter-1
+  m_EditorClassIdentifier: 
+  headline: Traveling Merchant Inbound
+  article: 'Our scouts have reported to us that the traveling merchant has picked
+    up an intriguing new item, and is on the way to our town now. '
+  image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
+  type: 3
+  headliner: 0
+  outcomes:
+  - {fileID: 902874479205181803}
+  - {fileID: 1763400175748449642}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &902874479205181803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: You should start saving up...
+  flag: 0
+  value: 1
+--- !u!114 &1763400175748449642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: cb2117ffaef206141953f8a5ca1629bd, type: 2}
+  toFront: 0

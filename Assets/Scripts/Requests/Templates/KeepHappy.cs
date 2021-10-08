@@ -6,7 +6,7 @@ namespace Requests.Templates
     public sealed class KeepHappy : Request
     {
         public override string Description => $"Keep {guild}s Happy for {Required} Turns";
-        protected override int RequiredScaled => 3;
+        protected override int RequiredScaled => 3 * Tokens;
 
         public override void Start()
         {
@@ -20,7 +20,7 @@ namespace Requests.Templates
 
         private void CheckHappy()
         {
-            if (Manager.Stats.GetSatisfaction(guild) >= 5) Completed++;
+            if (Manager.Stats.GetSatisfaction(guild) > 0) Completed++;
             else Completed = 0;
         }
     }

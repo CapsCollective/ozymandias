@@ -1,4 +1,5 @@
 ﻿using System;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,8 +28,7 @@ namespace Quests
 
             Quests.OnQuestAdded += q => UpdateCounter(true);
             Quests.OnQuestRemoved += q => UpdateCounter();
-            
-            UpdateCounter();
+            State.OnLoadingEnd += () => UpdateCounter(true);
         }
 
         private void UpdateCounter(bool markUnread = false)

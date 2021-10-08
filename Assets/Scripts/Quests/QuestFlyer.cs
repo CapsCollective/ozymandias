@@ -84,9 +84,13 @@ namespace Quests
                 if (!valueChange)
                 {
                     // Set default values for sliders
-                    adventurerSlider.minValue = quest.MinAdventurers;
-                    adventurerSlider.maxValue = quest.MaxAdventurers;
-                    adventurerSlider.value = quest.adventurers;
+                    adventurerSlider.gameObject.SetActive(quest.IsRadiant);
+                    if (quest.IsRadiant)
+                    {
+                        adventurerSlider.minValue = quest.MinAdventurers;
+                        adventurerSlider.maxValue = quest.MaxAdventurers;
+                        adventurerSlider.value = quest.MaxAdventurers;
+                    }
                     
                     costSlider.minValue = CostScaleMin;
                     costSlider.maxValue = CostScaleMax;
@@ -94,7 +98,7 @@ namespace Quests
                 }
 
                 // Use slider assigned values
-                int adventurers = (int) adventurerSlider.value;
+                int adventurers = quest.IsRadiant ? (int) adventurerSlider.value : quest.adventurers;
                 int cost = quest.ScaledCost(costSlider.value);
 
                 bool enoughAdventurers = Manager.Adventurers.Removable > adventurers;

@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6745613629643972891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
+--- !u!114 &-1505745085739675445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
+--- !u!114 &-861964511401498828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: We've decided to grind up all this grain to make bread.
+  flag: 0
+  value: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: bakery-4
+  m_EditorClassIdentifier: 
+  headline: The Flour Fields
+  article: Our adventurers returned from their quest to rid us of the scarecrow plague,
+    but with bundles of grain, not miracle flowers, in hand. The scent of the delicious
+    grain has calmed the scarecrows, and they agree to go back to their homeland
+    and leave us be. As a parting gift, they left 'these weird stuffed dolls on sticks'
+    in their place.
+  image: {fileID: 21300000, guid: 5e297a6d605b174458fe492cd99a5acf, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 1531892558061167993}
+  - {fileID: -861964511401498828}
+  - {fileID: -6745613629643972891}
+  - {fileID: -1505745085739675445}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &1531892558061167993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: <color=#007000ff>Farms no longer increase threat!</color>
+  flag: 1
+  value: 0

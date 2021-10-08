@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: mirror-mirror-2
+  m_EditorClassIdentifier: 
+  headline: The Pauper is a Princess!
+  article: We received an envoy from a far away kingdom today, with the good news
+    that the commoner who recently vanished by a trickster merchant was in fact turned
+    into a princess! She's sent a generous offer in exchange for us sending us all
+    her stuff.
+  image: {fileID: 21300000, guid: f1f255b0367a85d4f8fe728a9c9179ab, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 4279707730595239342}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &4279707730595239342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 7
+  amount: 15
+  turns: 5
+  reason: from the Magic Mirror

@@ -1,0 +1,198 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6952819651217338486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: These books will keep the arcanists busy for a few days (+3
+    satisfaction for 5 turns)
+  statToChange: 4
+  amount: 3
+  turns: 5
+  reason: the mirror world books
+--- !u!114 &-4806872992142792569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse the offer
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -973878632702153230}
+  costScale: 0
+--- !u!114 &-3920581220707178928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: c4ffc0850152b3c498c7345b2dfa311b, type: 2}
+  toFront: 0
+--- !u!114 &-2776988863319324444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: They are adored by their fellow brawlers (+3 satisfaction for
+    5 turns)
+  statToChange: 0
+  amount: 3
+  turns: 5
+  reason: from the magic mirror
+--- !u!114 &-973878632702153230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The merchant shrugs, walks right into the mirror, and both of
+    them blink away in a puff of smoke.
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: mirror-mirror
+  m_EditorClassIdentifier: 
+  headline: Mirror Mirror
+  article: A magic mirror has been brought in by a travelling merchant, its powers
+    unknown, and purpose dubious. The merchant says anyone may step forward to harness
+    its effects (for a fee, of course).
+  image: {fileID: 21300000, guid: c605ffc0efec57a489f06585e8924bc9, type: 3}
+  type: 2
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: 931296393461459963}
+  - {fileID: 2939131758991513468}
+  - {fileID: 6800893096845703372}
+  - {fileID: -4806872992142792569}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &719317255076964696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The scraggly brawler looks in the mirror to see a dashing hero.
+    Before your eyes they transform!
+--- !u!114 &931296393461459963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send a brawler
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 719317255076964696}
+  - {fileID: -2776988863319324444}
+  costScale: 0.6
+--- !u!114 &2939131758991513468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send an arcanist
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 6207955822253038707}
+  - {fileID: -6952819651217338486}
+  costScale: 0.6
+--- !u!114 &3854797289909241178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: A commoner steps forward, and stares in the mirror to see a
+    princess, only to blink away a moment later.
+--- !u!114 &6207955822253038707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The Arcanist studies the mirror, before seeing stacks of books
+    start to pour out of the mirror in front of them.
+--- !u!114 &6800893096845703372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send a villager
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 3854797289909241178}
+  - {fileID: -3920581220707178928}
+  costScale: 0.4

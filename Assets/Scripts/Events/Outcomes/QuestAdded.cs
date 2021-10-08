@@ -1,6 +1,7 @@
-﻿using NaughtyAttributes;
+﻿using System.Collections.Generic;
+using NaughtyAttributes;
 using Quests;
-using UnityEngine;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Events.Outcomes
@@ -15,6 +16,14 @@ namespace Events.Outcomes
             return Manager.Quests.Add(quest);
         }
 
-        protected override string Description => customDescription != "" ? customDescription : $"New quest added: {quest.Title}.";
+        private static readonly Dictionary<Location, string> LocationDescriptors = new Dictionary<Location, string>
+        {
+            { Location.Grid, "near your town" },
+            { Location.Dock, "by the docks" },
+            { Location.Forest, "by the forest path" },
+            { Location.Mountains, "through the mountains" },
+        };
+
+        protected override string Description => customDescription != "" ? customDescription : $"New quest added {LocationDescriptors[quest.location]}: {quest.Title}.";
     }
 }

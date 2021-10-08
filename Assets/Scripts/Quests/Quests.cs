@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Managers;
+using Structures;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Utilities;
 
 namespace Quests
 {
@@ -13,26 +15,25 @@ namespace Quests
         public static Action<Quest> OnQuestCompleted;
         public static Action<Quest> OnQuestAdded;
         public static Action<Quest> OnQuestRemoved;
-        
-        [SerializeField] private Transform dock, forestPath, mountainPath;
+
+        public SerializedDictionary<Location, Structure> locations;
 
         [SerializeField] private GameObject sectionPrefab;
         public GameObject SectionPrefab => sectionPrefab;
 
-        public readonly List<Quest> quests = new List<Quest>();
-        
-        public int Count => quests.Count;
-        public int RadiantCount => quests.Count(quest => quest.IsRadiant);
+        public readonly List<Quest> Current = new List<Quest>();
+        public int Count => Current.Count;
+        public int RadiantCount => Current.Count(quest => quest.IsRadiant);
         
         public int RadiantQuestCellCount =>
-            quests.Where(quest => quest.IsRadiant).Sum(quest => quest.Structure.SectionCount);
+            Current.Where(quest => quest.IsRadiant).Sum(quest => quest.Structure.SectionCount);
         
         // If a location is far enough away from the other quests
         private const int MinDistance = 3;
 
         public bool FarEnoughAway(Vector3 position)
         {
-            return quests
+            return Current
                 .Where(quest => quest.Structure)
                 .All(quest => Vector3.Distance(quest.Structure.transform.position, position) > MinDistance);
         }
@@ -44,8 +45,8 @@ namespace Quests
         
         public bool Add(Quest q)
         {
-            if (quests.Contains(q)) return false;
-            quests.Add(q);
+            if (Current.Contains(q)) return false;
+            Current.Add(q);
             q.Add();
             OnQuestAdded?.Invoke(q);
             return true;
@@ -53,8 +54,8 @@ namespace Quests
 
         public bool Remove(Quest q)
         {
-            if (!quests.Contains(q)) return false;
-            quests.Remove(q);
+            if (!Current.Contains(q)) return false;
+            Current.Remove(q);
             q.Remove();
             OnQuestRemoved?.Invoke(q);
             return true;
@@ -62,7 +63,7 @@ namespace Quests
 
         public List<QuestDetails> Save()
         {
-            return quests.Select(x => x.Save()).ToList();
+            return Current.Select(x => x.Save()).ToList();
         }
         
         public async Task Load(List<QuestDetails> quests)
@@ -70,14 +71,14 @@ namespace Quests
             foreach (QuestDetails details in quests)
             {
                 Quest q = await Addressables.LoadAssetAsync<Quest>(details.name).Task;
-                this.quests.Add(q);
+                this.Current.Add(q);
                 q.Load(details);
             }
         }
 
         private void OnGameEnd()
         {
-            for (int i = quests.Count - 1 ; i >= 0 ; i--) Remove(quests[i]);
+            for (int i = Current.Count - 1 ; i >= 0 ; i--) Remove(Current[i]);
         }
     }
 }

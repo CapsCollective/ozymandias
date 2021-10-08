@@ -5,7 +5,7 @@ namespace Requests.Templates
     public sealed class CompleteQuests : Request
     {
         public override string Description => $"Complete {Required} Quests";
-        protected override int RequiredScaled => 2;
+        protected override int RequiredScaled => 1 * Tokens;
 
         public override void Start()
         {

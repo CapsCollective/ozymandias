@@ -50,7 +50,8 @@ namespace UI
             };
             
             State.OnGameEnd += () => _newspaperClosed = false;
-            UpdateDisplay();
+            
+            State.OnLoadingEnd += UpdateDisplay;
         }
 
         private void UpdateDisplay()
