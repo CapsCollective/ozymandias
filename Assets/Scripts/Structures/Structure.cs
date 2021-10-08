@@ -45,14 +45,14 @@ namespace Structures
         private ParticleSystem ParticleSystem => _particleSystem
             ? _particleSystem
             : _particleSystem = GetComponentInChildren<ParticleSystem>();
-        private readonly List<Renderer> _sectionRenderers = new List<Renderer>();
+        private List<Renderer> _sectionRenderers = new List<Renderer>();
         [SerializeField] private bool fixedPosition;
         
         private void Awake()
         {
             if (!fixedPosition) return;
             StructureType = StructureType.Quest;
-            _sectionRenderers.Add(GetComponent<Renderer>());
+            _sectionRenderers = GetComponentsInChildren<Renderer>().ToList();
         }
 
         public void CreateQuest(List<int> occupied, Quest quest) // Creation for quests

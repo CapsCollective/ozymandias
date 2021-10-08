@@ -4890,7 +4890,7 @@ GameObject:
   - component: {fileID: 1526948172312000387}
   - component: {fileID: 1526948172312000396}
   - component: {fileID: 1526948172312000385}
-  - component: {fileID: 1526948172312000384}
+  - component: {fileID: 2764146883787254340}
   m_Layer: 0
   m_Name: Fishing Spot
   m_TagString: Untagged
@@ -9702,8 +9702,8 @@ MonoBehaviour:
   fisher: {fileID: 103795685758630857}
   particles: {fileID: 1526948172312000387}
   splashParticles: {fileID: 7598539086099109150}
---- !u!135 &1526948172312000384
-SphereCollider:
+--- !u!65 &2764146883787254340
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9713,8 +9713,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6, y: 15, z: 6}
+  m_Center: {x: 0, y: 7.5000005, z: 0}
 --- !u!1 &1526948172822331151
 GameObject:
   m_ObjectHideFlags: 0
