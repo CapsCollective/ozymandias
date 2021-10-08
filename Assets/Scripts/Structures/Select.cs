@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cards;
 using DG.Tweening;
 using Inputs;
 using Managers;
@@ -22,6 +23,7 @@ namespace Structures
             public RectTransform transform;
             public CanvasGroup canvasGroup;
             public Image background, icon, chevron;
+            public CardBadge badge;
         }
         
         [SerializeField] private int yOffset;
@@ -238,11 +240,19 @@ namespace Structures
                 // Set the badge values
                 badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
+                
+                badges[i].badge.Description = 
+                    $"{(effects[i].Value > 0 ? "+" : "")}" +
+                    $"{effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key)} " +
+                    $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
             }
             
             if (!SelectedStructure.Bonus.HasValue) return;
+            bonusBadge.badge.Description = 
+                $"+{Manager.Stats.StatMultiplier(SelectedStructure.Bonus.Value)} {SelectedStructure.Bonus.ToString()}{((int)SelectedStructure.Bonus < 5 ? " Satisfaction" : "")}";
+            
             bonusBadge.transform.localPosition = new Vector2(0, -320);
-
+            
             const float delay = 0.5f;
             bonusBadge.canvasGroup.DOFade(1, 1f).SetDelay(delay);
             bonusBadge.transform
