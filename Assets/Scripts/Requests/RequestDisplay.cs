@@ -13,7 +13,7 @@ namespace Requests
         [Serializable]
         private struct Display {
             public Slider slider;
-            public TextMeshProUGUI description, count;
+            public TextMeshProUGUI description, count, tokens;
         }
 
         [SerializeField] private GameObject notification;
@@ -31,6 +31,7 @@ namespace Requests
                 slider = GetComponentInChildren<Slider>(),
                 description = transform.Find("Description").GetComponent<TextMeshProUGUI>(),
                 count = transform.Find("Count").GetComponent<TextMeshProUGUI>(),
+                tokens = transform.Find("Tokens").GetComponent<TextMeshProUGUI>()
             };
             
             _notificationDisplay = new Display
@@ -49,12 +50,14 @@ namespace Requests
             {
                 _bookDisplay.description.text = "Nothings here yet!";
                 _bookDisplay.count.text = "";
+                _bookDisplay.tokens.text = "x0";
                 _bookDisplay.slider.gameObject.SetActive(false);
             }
             else
             {
                 _bookDisplay.description.text = Request.Description;
                 _bookDisplay.count.text = Request.Completed + "/" + Request.Required;
+                _bookDisplay.tokens.text = "x" + Request.Tokens;
                 _bookDisplay.slider.gameObject.SetActive(true);
                 _bookDisplay.slider.value = (float)Request.Completed / Request.Required;
 

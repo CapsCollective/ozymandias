@@ -21,6 +21,7 @@ namespace Quests
         private bool _inAnim;
         private int _openFlyer;
         private int _selectedQuest;
+        private CanvasGroup _closeButtonCanvas;
         private Canvas _canvas;
 
         private readonly Vector3 _offScreenPos = new Vector3(-500, 1500, 0);
@@ -36,13 +37,13 @@ namespace Quests
 
         private Quest SelectedQuest
         {
-            get => Quests.Count > 0 ? Quests[_selectedQuest] : null;
+            get => Current.Count > 0 ? Current[_selectedQuest] : null;
 
             set
             {
-                for (var i = 0; i < Quests.Count; i++)
+                for (var i = 0; i < Current.Count; i++)
                 {
-                    if (Quests[i] != value) continue;
+                    if (Current[i] != value) continue;
                     _selectedQuest = i;
                     break;
                 }
@@ -51,10 +52,11 @@ namespace Quests
 
         private QuestFlyer OpenFlyer => flyers[_openFlyer];
         private QuestFlyer ClosedFlyer => flyers[_openFlyer == 0 ? 1 : 0];
-        private static List<Quest> Quests => Manager.Quests.quests;
+        private static List<Quest> Current => Manager.Quests.Current;
 
         private void Start()
         {
+            _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             _canvas = GetComponent<Canvas>();
             closeButton.onClick.AddListener(Close);
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
@@ -113,7 +115,7 @@ namespace Quests
         {
             if (_inAnim) return;
             _inAnim = true;
-            _selectedQuest = CycleIdx(_selectedQuest, Quests.Count, dir);
+            _selectedQuest = CycleIdx(_selectedQuest, Current.Count, dir);
             DisplayMoveButtons(false);
             SwapFlyers(dir, SelectedQuest);
             Manager.Jukebox.PlayScrunch();
@@ -159,7 +161,7 @@ namespace Quests
             DisplayMoveButtons(false);
             Manager.State.EnterState(GameState.InMenu);
             Manager.Jukebox.PlayScrunch();
-            var hasSingleQuest = Quests.Count == 1;
+            var hasSingleQuest = Current.Count == 1;
             nextButton.gameObject.SetActive(!hasSingleQuest);
             previousButton.gameObject.SetActive(!hasSingleQuest);
             _canvas.enabled = true;
@@ -196,7 +198,7 @@ namespace Quests
         
         private void DisplayCloseButton(bool display)
         {
-            closeButton.image.DOFade(display ? 1.0f : 0.0f, 0.2f);
+            _closeButtonCanvas.DOFade(display ? 1.0f : 0.0f, 0.2f);
         }
     }
 }

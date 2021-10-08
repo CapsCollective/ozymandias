@@ -111,7 +111,7 @@ namespace Cards
                 
                 badges[i].badge.Description = 
                     $"{(effects[i].Value > 0 ? "+" : "")}" +
-                    $"{effects[i].Value * (effects[i].Key == Stat.Food || effects[i].Key == Stat.Housing ? FoodHousingMultiplier : 1)} " +
+                    $"{effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key)} " +
                     $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
             }
         }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using NaughtyAttributes;
+using UI;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -9,9 +10,11 @@ namespace WalkingAdventurers
     public class Waterfall : MonoBehaviour
     {
         public Transform left, right;
+        [SerializeField] private Sprite icon;
         private Collider _collider;
         private Camera _cam;
         private bool _open;
+        
         private void Start()
         {
             _cam = Camera.main;
@@ -30,7 +33,8 @@ namespace WalkingAdventurers
         {
             if (_open) return;
             _open = true;
-            
+            Notification.OnNotification.Invoke("What's behind that waterfall?", icon);
+
             left.DOLocalMoveX(1f, 1f);
             right.DOLocalMoveX(-1f, 1f);
 

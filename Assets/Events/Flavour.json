@@ -174,7 +174,7 @@
     "choices": [
       {
         "name": "Debt Forgiveness",
-        "costScale": 2.5,
+        "costScale": 3,
         "outcomes":
         [
           {
@@ -216,7 +216,7 @@
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Housing",
-              "amount": 4,
+              "amount": 20,
               "turns": -1,
               "reason": "from the Chest of Hoarding"
             }
@@ -354,7 +354,7 @@
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Food",
-              "amount": 3,
+              "amount": 20,
               "turns": -1,
               "reason": "from the Forest Cheese"
             }
@@ -410,6 +410,117 @@
             "customDescription": "\"Alrighty, I'll come back another time!\""
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "mirror-mirror",
+    "headline": "Mirror Mirror",
+    "article": "A magic mirror has been brought in by a travelling merchant, its powers unknown, and purpose dubious. The merchant says anyone may step forward to harness its effects (for a fee, of course).",
+    "image": "mirror-mirror",
+    "type": "Flavour",
+    "choices": [
+      {
+        "name": "Send a brawler",
+        "costScale": 0.6,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The scraggly brawler looks in the mirror to see a dashing hero. Before your eyes they transform!"
+          },
+          {
+            "type": "ModifierAdded",
+            "customDescription": "They are adored by their fellow brawlers (+3 satisfaction for 5 turns)",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": 3,
+              "turns": 5,
+              "reason": "from the magic mirror"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Send an arcanist",
+        "costScale": 0.6,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The Arcanist studies the mirror, before seeing stacks of books start to pour out of the mirror in front of them."
+          },
+          {
+            "type": "ModifierAdded",
+            "customDescription": "These books will keep the arcanists busy for a few days (+3 satisfaction for 5 turns)",
+            "modifier": {
+              "toChange": "Arcanist",
+              "amount": 3,
+              "turns": 5,
+              "reason": "the mirror world books"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Send a villager",
+        "costScale": 0.4,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "A commoner steps forward, and stares in the mirror to see a princess, only to blink away a moment later."
+          },
+          {
+            "type": "ChainEvent",
+            "nextEvent": {
+              "name": "mirror-mirror-2",
+              "headline": "The Pauper is a Princess!",
+              "article": "We received an envoy from a far away kingdom today, with the good news that the commoner who recently vanished by a trickster merchant was in fact turned into a princess! She's sent a generous offer in exchange for us sending us all her stuff.",
+              "image": "tiara",
+              "outcomes": [
+                {
+                  "type": "ModifierAdded",
+                  "modifier": {
+                    "toChange": "Spending",
+                    "amount": 15,
+                    "turns": 5,
+                    "reason": "from the Magic Mirror"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Refuse the offer",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The merchant shrugs, walks right into the mirror, and both of them blink away in a puff of smoke."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bucket-head",
+    "headline": "Robbery 'Pails' in Comparison",
+    "article": "A series of robberies have left shop owners with buckets on heads and their stores robbed! How the bucket appeared on their head, and why they didn't think to take it off remains a mystery, but when it was finally removed by a kindly adventurer, the store was stripped bare. Luckily for the owners (and unluckily for the treasury), the shop was completely insured.",
+    "image": "twin",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Spending",
+          "amount": -5,
+          "turns": 3,
+          "reason": "from bucket head robberies"
+        }
       }
     ]
   }

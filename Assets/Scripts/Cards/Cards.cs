@@ -4,6 +4,7 @@ using System.Linq;
 using Managers;
 using Map;
 using Structures;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ namespace Cards
         [SerializeField] private Blueprint guildHall;
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private List<Card> hand;
-        [SerializeField] private Blueprint debugBlueprint;
+        [SerializeField] private Sprite notificationIcon;
 
         private Camera _cam;
         private int _prevRotation, _rotation;
@@ -60,6 +61,7 @@ namespace Cards
         private List<Blueprint> Playable { get; set; } // Currently playable (both starter and unlocked/ discovered)
         private List<Blueprint> Discoverable { get; set; } // Cards discoverable in ruins
         public bool IsUnlocked(Blueprint blueprint) => Unlocked.Contains(blueprint);
+        public bool IsDiscoverable(Blueprint blueprint) => Discoverable.Contains(blueprint);
         public Blueprint Find(BuildingType type) => type == BuildingType.GuildHall ? GuildHall : All.Find(blueprint => blueprint.type == type);
         #endregion
         
@@ -71,8 +73,11 @@ namespace Cards
             Select.OnClear += structure =>
             {
                 // Gets more likely to discover buildings as ruins get cleared until non remain
-                if (Discoverable.Count != 0 && structure.IsRuin && Random.Range(0, Manager.Structures.Ruins) <= Discoverable.Count)
-                    Unlock(Discoverable.PopRandom(), true);
+                if (Discoverable.Count == 0 || !structure.IsRuin ||
+                    Random.Range(0, Manager.Structures.Ruins) > Discoverable.Count) return;
+                
+                Unlock(Discoverable.PopRandom(), true);
+                Notification.OnNotification.Invoke($"Card rediscovered from ruins! ({Discoverable.Count} remaining)", notificationIcon);
             };
             State.OnNewGame += () =>
             {
@@ -93,6 +98,7 @@ namespace Cards
             Manager.Inputs.OnDeselectCards.performed += DeselectCards;
             Manager.Inputs.OnNavigateCards.performed += NavigateCards;
             Manager.Inputs.OnSelectCardIndex.performed += SelectCardIndex;
+            State.OnEnterState += () => SelectCard(-1);
         }
         
         #region Card Select

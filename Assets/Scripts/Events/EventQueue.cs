@@ -33,8 +33,8 @@ namespace Events
         private readonly List<Event> _current = new List<Event>(4);
         private readonly List<string> _outcomeDescriptions = new List<string>(4);
 
-        private bool StoryActive { get; set; }
-        
+        public Dictionary<Flag, bool> Flags = new Dictionary<Flag, bool>();
+
         private void Awake()
         {
             State.OnNewGame += () =>
@@ -42,7 +42,11 @@ namespace Events
                 _headliners.Clear();
                 _others.Clear();
                 Add(openingEvent, true);
-                StoryActive = false;
+            };
+            
+            State.OnGameEnd += () =>
+            {
+                foreach (Flag flag in Enum.GetValues(typeof(Flag))) Flags[flag] = false;
             };
 
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
@@ -101,24 +105,27 @@ namespace Events
                 if (random == 0 || random < lead) eventPool.Add(PickRandom(EventType.Radiant));
 
                 // 20% chance to start a new story while no other is active
-                /*if (!StoryActive && Random.Range(0, 5) == 0)
+                if (!Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
                 {
+                    Flags[Flag.StoryActive] = true;
                     // Pick a story that isn't for an already unlocked/ discoverable building
                     while (true)
                     {
                         Event story = PickRandom(EventType.Story);
                         if (story == null) break; // Catch case for if there are no stories
                         
-                        if (story.blueprintToUnlock == null || !Manager.Cards.IsUnlocked(story.blueprintToUnlock))
+                        if (story.blueprintToUnlock == null || !Manager.Cards.IsDiscoverable(story.blueprintToUnlock))
                         {
                             eventPool.Add(story);
+                            Debug.Log($"Story chosen: {story}");
                             break;
                         }
+                        Debug.Log($"Story invalid: {story}, picking another");
                     }
-                }*/
+                }
             }
 
-            while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); //Fill remaining event slots
+            while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
         }
         
@@ -193,19 +200,17 @@ namespace Events
         {
             return new EventQueueDetails
             {
-                storyActive = StoryActive,
                 headliners = _headliners.Select(e => e.name).ToList(),
                 others = _others.Select(e => e.name).ToList(),
                 used = _usedPools
                     .Select(pair => new KeyValuePair<EventType, List<string>>(pair.Key, pair.Value.Select(e => e.name).ToList()))
                     .ToDictionary(t => t.Key, t => t.Value),
+                flags = Flags
             };
         }
         
         public async Task Load(EventQueueDetails details)
         {
-            StoryActive = true;
-            
             List<Event> allEvents = (await Addressables.LoadAssetsAsync<Event>(label, null).Task).ToList();
             foreach (Event e in allEvents)
             {
@@ -227,6 +232,12 @@ namespace Events
                 Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
                 if (e == null) continue;
                 _others.AddLast(e);
+            }
+            
+            Flags = details.flags ?? new Dictionary<Flag, bool>();
+            foreach (Flag flag in Enum.GetValues(typeof(Flag)))
+            {
+                if (!Flags.ContainsKey(flag)) Flags.Add(flag, false);
             }
         }
     }

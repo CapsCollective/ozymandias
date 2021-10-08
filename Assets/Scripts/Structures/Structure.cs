@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using DG.Tweening;
@@ -16,23 +17,23 @@ namespace Structures
     {
         public Blueprint Blueprint { get; private set; } // Left Blank for terrain and quest structures
         public StructureType StructureType { get; private set; }
-        public Quest Quest { get; private set; }
+        public Quest Quest { get; set; }
         public List<Cell> Occupied { get; private set; }
         public bool Selected { get; set; }
         public bool IsBuilding => StructureType == StructureType.Building;
         public bool IsRuin => StructureType == StructureType.Ruins;
         public bool IsTerrain => StructureType == StructureType.Terrain;
         public bool IsQuest => StructureType == StructureType.Quest;
+        public bool IsFixed => fixedPosition;
         public bool IsBuildingType(BuildingType type) => Blueprint && Blueprint.type == type;
         public int SectionCount => _sections.Count;
         public Stat? Bonus { get; private set; }
-
-        public int TerrainClearCost => 
+        
+        public int ClearCost => IsRuin ? 
+            (int)(RuinsBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
+                  Mathf.Pow(RuinsCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre))) :
             (int)(TerrainBaseCost * SectionCount * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
                   Mathf.Pow(TerrainCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre)));
-        public int RuinsClearCost =>
-            (int)(RuinsBaseCost * (10f - Manager.Upgrades.GetLevel(UpgradeType.Terrain)) / 10f *
-                  Mathf.Pow(RuinsCostScale, Vector3.Distance(transform.position, Manager.Structures.TownCentre)));
         
         // Stored here as well as blueprints so the stats can be modified by adjacency bonuses
         public Dictionary<Stat, int> Stats { get; private set; }
@@ -44,8 +45,16 @@ namespace Structures
         private ParticleSystem ParticleSystem => _particleSystem
             ? _particleSystem
             : _particleSystem = GetComponentInChildren<ParticleSystem>();
-        private readonly List<Renderer> _sectionRenderers = new List<Renderer>();
+        private List<Renderer> _sectionRenderers = new List<Renderer>();
+        [SerializeField] private bool fixedPosition;
         
+        private void Awake()
+        {
+            if (!fixedPosition) return;
+            StructureType = StructureType.Quest;
+            _sectionRenderers = GetComponentsInChildren<Renderer>().ToList();
+        }
+
         public void CreateQuest(List<int> occupied, Quest quest) // Creation for quests
         {
             name = quest.name;
@@ -68,7 +77,7 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++)
             {
                 _sections[i].Init(Occupied[i]);
-                _sections[i].SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
+                _sections[i].SetRoofColor(quest.colour);
                 _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
             }
 
@@ -194,7 +203,7 @@ namespace Structures
             newCell.Occupant = this;
             Occupied.Add(newCell);
             _sections.Add(newSection);
-            newSection.SetRoofColor(new Color(0.75f, 0.7f, 0.55f));
+            newSection.SetRoofColor(Quest.colour);
             newSection.Init(newCell);
             _sectionRenderers.Add(newSection.GetComponent<Renderer>());
         }
