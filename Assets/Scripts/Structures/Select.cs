@@ -300,9 +300,9 @@ namespace Structures
                     case StructureType.Building:
                         price = -SelectedStructure.Blueprint.Refund;
                         break;
-                    case StructureType.Ruins:
-                        break;
                     case StructureType.Terrain:
+                    case StructureType.Ruins:
+                        price = SelectedStructure.ClearCost;
                         break;
                 }
                 
