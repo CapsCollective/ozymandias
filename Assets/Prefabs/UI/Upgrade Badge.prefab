@@ -63,13 +63,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c3cb7b729b4cceb1953509ac1e9f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   title: 
   description: 
-  maxLevel: 1
-  children: []
+  effect: 
   costs:
     list: []
     keyCollision: 0
+  maxLevel: 1
+  percentage: 0
+  multiplier: 0
+  baseEffect: 0
+  children: []
   connections: []
   level: 0
   background: {fileID: 9136468553756307153}
@@ -414,7 +419,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_SizeDelta: {x: 39, y: 39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8040989562645321404
 CanvasRenderer:

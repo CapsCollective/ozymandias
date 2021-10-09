@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: bucket-head
+  m_EditorClassIdentifier: 
+  headline: Robbery 'Pails' in Comparison
+  article: A series of robberies have left shop owners with buckets on heads and
+    their stores robbed! How the bucket appeared on their head, and why they didn't
+    think to take it off remains a mystery, but when it was finally removed by a
+    kindly adventurer, the store was stripped bare. Luckily for the owners (and unluckily
+    for the treasury), the shop was completely insured.
+  image: {fileID: 0}
+  type: 2
+  headliner: 0
+  outcomes:
+  - {fileID: 6839866118918791373}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &6839866118918791373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 7
+  amount: -5
+  turns: 3
+  reason: from bucket head robberies

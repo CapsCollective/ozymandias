@@ -4,8 +4,8 @@ namespace Requests.Templates
 {
     public sealed class AttractAdventurers : Request
     {
-        public override string Description => $"Attract {Required} {guild}s";
-        protected override int RequiredScaled => 5;
+        public override string Description => $"Attract {Required} new {guild}s";
+        protected override int RequiredScaled => 4 * Tokens;
 
         public override void Start()
         {
