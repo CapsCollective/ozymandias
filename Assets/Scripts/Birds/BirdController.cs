@@ -7,6 +7,7 @@ public class BirdController : MonoBehaviour
     [SerializeField] private int _numOfBirds;
     [SerializeField] private float _radius;
     [SerializeField] private float _speed = 3;
+    [SerializeField] private AnimationCurve _ditherCurve;
 
     private float _timer = 0;
     Vector3 _startPos, _midPos, _endPos;
@@ -34,8 +35,10 @@ public class BirdController : MonoBehaviour
             SetupPositions();
             _timer = 0;
         }
+        
         transform.position = Curve(_startPos, _midPos, _endPos, _timer);
         transform.forward = Curve(_startPos, _midPos, _endPos, _timer + Time.deltaTime) - transform.position;
+        Shader.SetGlobalFloat("BirdDither", _ditherCurve.Evaluate(_timer));
     }
 
     Vector3 GetPointOnCircle(float y)
