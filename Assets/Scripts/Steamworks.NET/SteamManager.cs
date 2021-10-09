@@ -5,14 +5,16 @@
 //
 // Version: 1.0.12
 
+// Disable Steamworks when running from the editor
+#if UNITY_EDITOR
+#define DISABLESTEAMWORKS
+#endif
+
 #if !(UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX || UNITY_STANDALONE_OSX || STEAMWORKS_WIN || STEAMWORKS_LIN_OSX)
 #define DISABLESTEAMWORKS
 #endif
 
 using UnityEngine;
-#if !DISABLESTEAMWORKS
-
-#endif
 
 //
 // The SteamManager provides a base implementation of Steamworks.NET on which you can build upon.
