@@ -148,9 +148,7 @@ namespace Managers
             try
             {
                 string saveJson = File.ReadAllText(Application.persistentDataPath + "/Save.json");
-                Debug.Log(saveJson);
                 JsonConvert.PopulateObject(saveJson, this);
-                Debug.Log("Load Successful");
             }
             catch (Exception e)
             {
