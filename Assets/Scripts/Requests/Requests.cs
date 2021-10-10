@@ -11,6 +11,8 @@ namespace Requests
 {
     public class Requests: MonoBehaviour
     {
+        public static Action<Guild> OnRequestCompleted;
+        
         [SerializeField] private SerializedDictionary<Guild, RequestDisplay> displays;
         private readonly Dictionary<Guild, Request> _requests = new Dictionary<Guild, Request>();
 
@@ -43,6 +45,7 @@ namespace Requests
             Manager.Upgrades.GuildTokens[guild] += _requests[guild].Tokens;
             _requests[guild] = null;
             displays[guild].Request = null;
+            OnRequestCompleted.Invoke(guild);
         }
 
         public int TokenCount(Guild guild)

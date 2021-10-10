@@ -3,12 +3,13 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
     public class Notification : MonoBehaviour
     {
-        public static Action<string, Sprite> OnNotification;
+        public static Action<string, Sprite, float> OnNotification;
 
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private Image icon;
@@ -16,12 +17,12 @@ namespace UI
         
         private void Awake()
         {
-            OnNotification += (description, sprite) =>
+            OnNotification += (description, sprite, delay) =>
             {
                 text.text = description;
                 icon.sprite = sprite;
                 canvasGroup.alpha = 1;
-                canvasGroup.DOFade(0, 2f);
+                StartCoroutine(Algorithms.DelayCall(delay, () => canvasGroup.DOFade(0, 2f)));
             };
         }
     }

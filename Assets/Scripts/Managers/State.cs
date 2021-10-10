@@ -196,8 +196,9 @@ namespace Managers
             // Fade in music
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
             StartCoroutine(Algorithms.DelayCall(2f, () => Manager.Jukebox.OnStartGame()));
-            // Run general menu initialisation
-            
+
+            UpdateUi();
+
             #if UNITY_EDITOR
             if (Manager.skipIntro)
             {

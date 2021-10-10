@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3795023320991676037}
   - component: {fileID: 6125769267517715672}
   - component: {fileID: 6716370206861133710}
+  - component: {fileID: 3424319441902593884}
   m_Layer: 5
   m_Name: Open Book Button
   m_TagString: Untagged
@@ -167,6 +168,19 @@ MonoBehaviour:
   scaleTarget: 1.2
   duration: 0.3
   target: {fileID: 0}
+--- !u!114 &3424319441902593884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795023320991676039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96977f818f047d43b23dc646375e49c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notification: {fileID: 3795023322734049695}
 --- !u!1 &3795023321161848524
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -37.099983, y: -29.199997}
+  m_AnchoredPosition: {x: -24.8, y: -22.8}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3795023321179944368
@@ -363,7 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+  m_Color: {r: 0.84705883, g: 0.30980393, b: 0.30980393, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -431,10 +445,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e49659ab144b698dd32c1c22ca83a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressButton: {fileID: 3795023320991676042}
+  duration: 0.5
   questButton: {fileID: 3795023322038554277}
   newspaperButton: {fileID: 3795023321622326119}
-  offsetPos: {x: -20, y: 0, z: 0}
 --- !u!1 &3795023321622326112
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,9 +932,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3795023321794086398}
-  image: {fileID: 3795023321179944371}
-  readColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
-  unreadColor: {r: 0.84705883, g: 0.30980393, b: 0.30980393, a: 1}
 --- !u!1 &3795023322734049695
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +967,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -37.1, y: -29.2}
+  m_AnchoredPosition: {x: -27.4, y: -22.8}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3795023322734049693

@@ -35,7 +35,7 @@ namespace WalkingAdventurers
             OnDogPet?.Invoke();
             _particleSystem.Play();
             Manager.Jukebox.PlayBark();
-            Notification.OnNotification.Invoke("You pet a dog!", icon);
+            Notification.OnNotification.Invoke("You pet a dog!", icon, 0);
         }
     
         private void OnDestroy()

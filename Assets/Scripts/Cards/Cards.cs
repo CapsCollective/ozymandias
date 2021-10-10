@@ -77,7 +77,7 @@ namespace Cards
                     Random.Range(0, Manager.Structures.Ruins) > Discoverable.Count) return;
                 
                 Unlock(Discoverable.PopRandom(), true);
-                Notification.OnNotification.Invoke($"Card rediscovered from ruins! ({Discoverable.Count} remaining)", notificationIcon);
+                Notification.OnNotification.Invoke($"Card rediscovered from ruins! ({Discoverable.Count} remaining)", notificationIcon, 3);
             };
             State.OnNewGame += () =>
             {

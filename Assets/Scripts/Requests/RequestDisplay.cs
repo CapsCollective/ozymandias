@@ -5,11 +5,14 @@ using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace Requests
 {
     public class RequestDisplay : UiUpdater
     {
+        public static Action OnNotificationClicked;
+        
         [Serializable]
         private struct Display {
             public Slider slider;
@@ -40,6 +43,7 @@ namespace Requests
                 description = notification.transform.Find("Description").GetComponent<TextMeshProUGUI>(),
                 count = notification.transform.Find("Count").GetComponent<TextMeshProUGUI>(),
             };
+            notification.GetComponent<Button>().onClick.AddListener(() => OnNotificationClicked?.Invoke());
             
             _notificationCanvasGroup = notification.GetComponent<CanvasGroup>();
         }
@@ -83,8 +87,11 @@ namespace Requests
                     .DOValue((float)Request.Completed / Request.Required, 0.5f)
                     .OnComplete(() =>
                     {
-                        _notificationCanvasGroup.DOFade(0, 2f)
-                            .OnComplete(() => notification.SetActive(false));
+                        StartCoroutine(Algorithms.DelayCall(2f, () => 
+                            _notificationCanvasGroup
+                                .DOFade(0, 2f)
+                                .OnComplete(() => notification.SetActive(false))
+                        ));
                     });
             }
         }

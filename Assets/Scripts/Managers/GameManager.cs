@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Achievements;
 using Events;
@@ -72,7 +73,7 @@ namespace Managers
         public List<Events.Event> AllEvents => allEvents;
         public List<Quest> AllQuests => allQuests;
         public List<Request> AllRequests => allRequests;
-        public Sprite saveIcon;
+        public Sprite saveIcon, questIcon;
         
         #endregion
 
@@ -166,6 +167,12 @@ namespace Managers
         public void ResetAchievements()
         {
             AchievementManager.ResetAll();
+        }
+        
+        [Button("Reset Save File")]
+        public void ResetSave()
+        {
+            File.Delete(Application.persistentDataPath + "/Save.json");
         }
         
         [Button("Load All Assets")]

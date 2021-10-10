@@ -43,7 +43,7 @@ namespace WalkingAdventurers
             {
                 if (_fishCaught)
                 {
-                    Notification.OnNotification.Invoke("You caught a fish!", icon);
+                    Notification.OnNotification.Invoke("You caught a fish!", icon, 0);
                     Manager.Stats.Wealth += 1;
                     UpdateUi();
                 }

@@ -108,7 +108,7 @@ namespace Managers
         public UpgradeDetails upgrades;
         public static void SaveState()
         {
-            OnNotification.Invoke("Game Saved", Manager.saveIcon);
+            OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
             new SaveFile().Save();
         }
         

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using DG.Tweening;
 using Managers;
 using Map;
 using Quests;
+using UI;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -206,6 +205,8 @@ namespace Structures
             newSection.SetRoofColor(Quest.colour);
             newSection.Init(newCell);
             _sectionRenderers.Add(newSection.GetComponent<Renderer>());
+            
+            if (Occupied.Count == 4) Notification.OnNotification.Invoke("A camp is growing dangerously large!", Manager.questIcon, 3); 
         }
 
         public void Shrink(int count)
