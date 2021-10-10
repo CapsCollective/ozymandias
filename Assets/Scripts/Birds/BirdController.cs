@@ -20,6 +20,9 @@ public class BirdController : MonoBehaviour
     [SerializeField] private List<Bird> _birds = new List<Bird>();
 
     private float _timer = 0;
+    private bool _disabled;
+    private float _disableTimer = 0;
+    private float _disableDuration = 0;
     private int[] _birdCount = { 1, 3, 5, 7 };
     Vector3 _startPos, _midPos, _endPos;
 
@@ -68,11 +71,23 @@ public class BirdController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _timer += Time.deltaTime * _speed;
-        if(_timer >= 1)
+        if (_disabled)
         {
-            SetupPositions();
+            _disableTimer += Time.deltaTime;
+            if(_disableTimer >= _disableDuration)
+            {
+                _disabled = false;
+                _disableTimer = 0;
+                SetupPositions();
+            }
+        }
+
+        if(!_disabled) _timer += Time.deltaTime * _speed;
+        if(_timer >= 1 && !_disabled)
+        {
             _timer = 0;
+            _disabled = true;
+            _disableDuration = Random.value * 10;
         }
 
         foreach(Bird b in _birds)
