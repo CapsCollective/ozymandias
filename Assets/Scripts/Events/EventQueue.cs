@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Managers;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
@@ -18,7 +16,6 @@ namespace Events
         
         [SerializeField] private Event openingEvent;
         [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents;
-        [SerializeField] private AssetLabelReference label;
         
         private Newspaper _newspaper;
         
@@ -209,10 +206,9 @@ namespace Events
             };
         }
         
-        public async Task Load(EventQueueDetails details)
+        public void Load(EventQueueDetails details)
         {
-            List<Event> allEvents = (await Addressables.LoadAssetsAsync<Event>(label, null).Task).ToList();
-            foreach (Event e in allEvents)
+            foreach (Event e in Manager.AllEvents)
             {
                 if (details.used != null && details.used.ContainsKey(e.type) && details.used[e.type].Contains(e.name))
                     _usedPools[e.type].Add(e);
@@ -222,15 +218,23 @@ namespace Events
             
             foreach (string eventName in details.headliners ?? new List<string>())
             {
-                Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
-                if (e == null) continue;
+                Event e = Manager.AllEvents.Find(match => eventName == match.name);
+                if (e == null)
+                {
+                    Debug.LogWarning("Event Not Found: " + eventName);
+                    continue;
+                }
                 _headliners.AddLast(e);
             }
 
             foreach (string eventName in details.others ?? new List<string>())
             {
-                Event e = await Addressables.LoadAssetAsync<Event>(eventName).Task;
-                if (e == null) continue;
+                Event e = Manager.AllEvents.Find(match => eventName == match.name);
+                if (e == null)
+                {
+                    Debug.LogWarning("Event Not Found: " + eventName);
+                    continue;
+                }
                 _others.AddLast(e);
             }
             

@@ -171,7 +171,8 @@ namespace Tooltip
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"  ● +{WealthPerAdventurer * adventurers} from {adventurers} adventurers ({WealthPerAdventurer} per adventurer)\n" +
+                                   $"  ● +{WealthPerAdventurer * adventurers} from {adventurers} total adventurers\n" +
+                                   $"  ● +{StartingSalary} starting salary\n" +
                                    $"{FormattedBuildingString(Stat.Spending)}" +
                                    $"{FormattedUpgradeString(Stat.Spending)}" +
                                    $"{FormattedModifierString(Stat.Spending)}";

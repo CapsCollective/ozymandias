@@ -132,7 +132,7 @@ namespace Structures
             else _buildings.Remove(structure);
             
             structure.Destroy();
-            UpdateUi();
+            if(!Manager.State.Loading) UpdateUi();
         }
 
         public string Remove(BuildingType type)
@@ -215,10 +215,10 @@ namespace Structures
 
         public void Load(StructureDetails details)
         {
-            foreach (BuildingDetails building in details.buildings)
+            foreach (BuildingDetails building in details.buildings ?? new List<BuildingDetails>())
                 AddBuilding(Manager.Cards.Find(building.type), building.rootId, building.rotation, building.isRuin);
             
-            foreach (TerrainDetails terrain in details.terrain)
+            foreach (TerrainDetails terrain in details.terrain ?? new List<TerrainDetails>())
                 AddTerrain(terrain.rootId, terrain.sectionCount);
             Structure guildHall = _buildings.Find(structure => structure.Blueprint.type == BuildingType.GuildHall);
             if (guildHall)

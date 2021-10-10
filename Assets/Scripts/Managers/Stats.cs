@@ -78,7 +78,7 @@ namespace Managers
         
         public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
 
-        public int WealthPerTurn => WealthPerAdventurer * Manager.Adventurers.Available + GetStat(Stat.Spending); //5 gold per adventurer times spending
+        public int WealthPerTurn => WealthPerAdventurer * Manager.Adventurers.Available + GetStat(Stat.Spending) + StartingSalary; // 5 gold per adventurer plus spending
     
         public int Wealth { get;  set; }
 

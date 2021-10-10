@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Managers;
 using Requests.Templates;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Utilities;
 using static Managers.GameManager;
 
@@ -70,15 +68,21 @@ namespace Requests
                 });
         }
 
-        public async Task Load(Dictionary<Guild, RequestDetails> requests)
+        public void Load(Dictionary<Guild, RequestDetails> requests)
         {
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
                 _requests.Add(guild, null);
             }
-            foreach (KeyValuePair<Guild, RequestDetails> request in requests)
+            foreach (KeyValuePair<Guild, RequestDetails> request in requests ?? new Dictionary<Guild, RequestDetails>())
             {
-                _requests[request.Key] = await Addressables.LoadAssetAsync<Request>(request.Value.name).Task;
+                _requests[request.Key] = Manager.AllRequests.Find(match => request.Value.name == match.name);
+                if (_requests[request.Key]  == null)
+                {
+                    Debug.LogWarning("Request Not Found: " + request.Value.name);
+                    continue;
+                }
+                
                 _requests[request.Key].Completed = request.Value.completed;
                 _requests[request.Key].Required = request.Value.required;
                 _requests[request.Key].Tokens = request.Value.tokens;

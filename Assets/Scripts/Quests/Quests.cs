@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Managers;
 using Structures;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Utilities;
+using static Managers.GameManager;
 
 namespace Quests
 {
@@ -66,12 +65,17 @@ namespace Quests
             return Current.Select(x => x.Save()).ToList();
         }
         
-        public async Task Load(List<QuestDetails> quests)
+        public void Load(List<QuestDetails> quests)
         {
-            foreach (QuestDetails details in quests)
+            foreach (QuestDetails details in quests ?? new List<QuestDetails>())
             {
-                Quest q = await Addressables.LoadAssetAsync<Quest>(details.name).Task;
-                this.Current.Add(q);
+                Quest q = Manager.AllQuests.Find(match => details.name == match.name);
+                if (q == null)
+                {
+                    Debug.LogWarning("Quest Not Found: " + details.name);
+                    continue;
+                }
+                Current.Add(q);
                 q.Load(details);
             }
         }

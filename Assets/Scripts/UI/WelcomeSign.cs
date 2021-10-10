@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using static Managers.GameManager;
 
@@ -11,6 +12,7 @@ namespace UI
         private void Start()
         {
             _textMesh = GetComponent<TextMesh>();
+            State.OnLoadingEnd += UpdateUi;
         }
 
         protected override void UpdateUi()

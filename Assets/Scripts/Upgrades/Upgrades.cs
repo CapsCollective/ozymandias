@@ -128,7 +128,8 @@ namespace Upgrades
             {
                 if (!GuildTokens.ContainsKey(guild)) GuildTokens.Add(guild, 0);
             }
-            foreach (KeyValuePair<UpgradeType,int> upgradeLevel in details.upgradeLevels)
+            
+            foreach (KeyValuePair<UpgradeType,int> upgradeLevel in details.upgradeLevels ?? new Dictionary<UpgradeType, int>())
             {
                 if(_upgrades.ContainsKey(upgradeLevel.Key))
                     _upgrades[upgradeLevel.Key].level = upgradeLevel.Value;

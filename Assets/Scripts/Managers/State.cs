@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
@@ -170,7 +171,7 @@ namespace Managers
             }
         }
         
-        private async void LoadingInit()
+        private void LoadingInit()
         {
             loadingCanvas.enabled = true;
             gameCanvasGroup.interactable = false;
@@ -185,7 +186,7 @@ namespace Managers
             freeLook.Follow.position = MenuPos.Position;
             freeLook.m_Orbits[1].m_Height = MenuPos.OrbitHeight;
 
-            await SaveFile.LoadState();
+            SaveFile.LoadState();
             
             OnLoadingEnd.Invoke();
             
@@ -231,7 +232,7 @@ namespace Managers
             
             if (!finishedMoving || !finishedFadingGame) return;
 
-            var finishedFadingMenu = FadeCanvas(menuCanvasGroup, FadeIn);
+            bool finishedFadingMenu = FadeCanvas(menuCanvasGroup, FadeIn);
             if (finishedFadingMenu) EnterState(GameState.InIntro);
         }
 
@@ -246,6 +247,7 @@ namespace Managers
         
         private void ToGameInit()
         {
+            UpdateUi();
             // Find the starting position for the town
             _startPos.Position = Manager.Structures.TownCentre;
             

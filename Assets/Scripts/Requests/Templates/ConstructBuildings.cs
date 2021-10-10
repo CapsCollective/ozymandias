@@ -8,7 +8,7 @@ namespace Requests.Templates
         public bool allowAny;
         public BuildingType buildingType;
         public override string Description => $"Build {Required} {(allowAny ? "Building" : buildingType.ToString())}s";
-        protected override int RequiredScaled => (allowAny ? 25 : 3) * Tokens;
+        protected override int RequiredScaled => (allowAny ? 20 : 2) * Tokens;
 
         public override void Start()
         {

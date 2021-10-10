@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Achievements;
 using Events;
 using Inputs;
 using NaughtyAttributes;
+using Quests;
+using Requests.Templates;
 using Structures;
 using Tooltip;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilities;
@@ -58,6 +63,18 @@ namespace Managers
             gameObject.AddComponent<AchievementManager>();
         }
         #endregion
+        
+        #region Asset Repository
+
+        [SerializeField] private List<Events.Event> allEvents;
+        [SerializeField] private List<Quest> allQuests;
+        [SerializeField] private List<Request> allRequests;
+        public List<Events.Event> AllEvents => allEvents;
+        public List<Quest> AllQuests => allQuests;
+        public List<Request> AllRequests => allRequests;
+        public Sprite saveIcon;
+        
+        #endregion
 
         #region State & UI
         public void Start()
@@ -80,7 +97,7 @@ namespace Managers
         public const int WealthPerAdventurer = 5;
         public const float ThreatScaling = 50f; // How many turns to double the base threat from threat added outcomes
         public const int BaseStatMultiplier = 5;
-        public Sprite saveIcon;
+        public const int StartingSalary = 10;
         
         #endregion
 
@@ -102,24 +119,13 @@ namespace Managers
             Manager.Cards.UnlockAll();
         }
         
-        [Button("Next Turn")]
-        public void NextTurn()
-        {
-            State.EnterState(GameState.NextTurn);
-        }
 
         [Button("Refresh Cards")]
         public void RefreshCards()
         {
             Cards.NewCards();
         }
-        
-        [Button("Take Screenshot")]
-        public void Screenshot()
-        {
-            ScreenCapture.CaptureScreenshot($"Screenshots/FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
-        }
-        
+
         [Button("Extra Adventurers")]
         public void ExtraAdventurers()
         {
@@ -127,13 +133,6 @@ namespace Managers
             UpdateUi();
         }
 
-        [Button("Reset Achievements")]
-        public void ResetAchievements()
-        {
-            AchievementManager.ResetAll();
-        }
-
-        
         [Button("Extra Wealth")]
         public void ExtraWealth()
         {
@@ -150,13 +149,35 @@ namespace Managers
             }
             UpdateUi();
         }
-
-        [Button("Print Save")]
-        public void PrintSave()
+        
+        [Button("Next Turn")]
+        public void NextTurn()
         {
-            Debug.Log(PlayerPrefs.GetString("Save"));
+            State.EnterState(GameState.NextTurn);
         }
         
+        [Button("Take Screenshot")]
+        public void Screenshot()
+        {
+            ScreenCapture.CaptureScreenshot($"Screenshots/FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
+        }
+        
+        [Button("Reset Achievements")]
+        public void ResetAchievements()
+        {
+            AchievementManager.ResetAll();
+        }
+        
+        [Button("Load All Assets")]
+        public void LoadAssets()
+        {
+            allEvents = AssetDatabase.FindAssets("t:event").Select(guid => 
+                AssetDatabase.LoadAssetAtPath<Events.Event>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+            allQuests = AssetDatabase.FindAssets("t:quest").Select(guid => 
+                AssetDatabase.LoadAssetAtPath<Quest>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+            allRequests = AssetDatabase.FindAssets("t:request").Select(guid => 
+                AssetDatabase.LoadAssetAtPath<Request>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+        }
         #endif
         #endregion
     }
