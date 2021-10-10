@@ -154,7 +154,6 @@ namespace Structures
                     building.Blueprint.type != BuildingType.Farm &&
                     building.Blueprint.type != BuildingType.Markets &&
                     building.Blueprint.type != BuildingType.Plaza &&
-                    building.Blueprint.type != BuildingType.Watchtower &&
                     Random.Range(0, count) == 0
                 )
                 {
