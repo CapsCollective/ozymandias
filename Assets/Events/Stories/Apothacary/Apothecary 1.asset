@@ -46,7 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Dr. Soansew sets up shop. (+1 Adventurer)
   adventurers:
-  - {fileID: 11400000, guid: 978ebac93fd7d7845ac6980080f64da6, type: 2}
+  - name: 
+    guild: 0
+    isSpecial: 0
+    turnJoined: 0
+  count: 0
+  guild: 0
+  anyGuild: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,12 +71,11 @@ MonoBehaviour:
     and magics. He claims to be a Diviner who 'worships the coin and the coin alone'.
     He seems proficient in the art of debt collection at the very least.
   image: {fileID: 21300000, guid: d6698d3a82060034e80d17911beacdeb, type: 3}
-  type: 3
+  type: 0
   headliner: 1
   outcomes:
   - {fileID: -4202548657869890182}
   - {fileID: -1220522842446470365}
   - {fileID: -3133865784971274578}
   choices: []
-  buildingToUnlock: {fileID: 2190574654203646117, guid: 438523d1fcea0034aaca7f932e353cd7,
-    type: 3}
+  blueprintToUnlock: {fileID: 0}

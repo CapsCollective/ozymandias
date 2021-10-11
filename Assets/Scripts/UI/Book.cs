@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Inputs;
+using Requests;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,8 +25,7 @@ namespace UI
         [SerializeField] private Button 
             closeButton, 
             quitButton, 
-            introSettingsButton, 
-            openBookButton, 
+            introSettingsButton,
             settingsRibbon,
             progressRibbon,
             unlocksRibbon;
@@ -61,7 +61,6 @@ namespace UI
         {
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             introSettingsButton.onClick.AddListener(Open);
-            openBookButton.onClick.AddListener(Open);
             closeButton.onClick.AddListener(Close);
             quitButton.onClick.AddListener(() =>
             {
@@ -72,6 +71,19 @@ namespace UI
             settingsRibbon.onClick.AddListener(() => Page = BookPage.Settings);
             unlocksRibbon.onClick.AddListener(() => Page = BookPage.Unlocks);
             progressRibbon.onClick.AddListener(() => Page = BookPage.Progress);
+
+            BookButton.OnClicked += (toUnlocks) =>
+            {
+                if (toUnlocks) Page = BookPage.Unlocks;
+                Open();
+            };
+            
+            RequestDisplay.OnNotificationClicked += () =>
+            {
+                if (!Manager.State.InGame) return;
+                Page = BookPage.Progress;
+                Open();
+            };
 
             Manager.Inputs.OnToggleBook.performed += _ =>
             {

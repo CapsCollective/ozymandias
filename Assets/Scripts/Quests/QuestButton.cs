@@ -12,8 +12,6 @@ namespace Quests
         public static Action OnClicked;
 
         [SerializeField] private TextMeshProUGUI text;
-        [SerializeField] private Image image;
-        [SerializeField] private Color readColor, unreadColor;
         private static Button _button;
 
         private void Start()
@@ -21,23 +19,17 @@ namespace Quests
             _button = GetComponent<Button>();
             _button.onClick.AddListener(() =>
             {
-                // Set the badge as read
-                image.color = readColor;
                 OnClicked?.Invoke();
             });
 
-            Quests.OnQuestAdded += q => UpdateCounter(true);
+            Quests.OnQuestAdded += q => UpdateCounter();
             Quests.OnQuestRemoved += q => UpdateCounter();
-            State.OnLoadingEnd += () => UpdateCounter(true);
+            State.OnLoadingEnd += UpdateCounter;
         }
 
-        private void UpdateCounter(bool markUnread = false)
+        private void UpdateCounter()
         {
-            var count = Manager.Quests.Count;
-            _button.enabled = count > 0;
-            image.gameObject.SetActive(count != 0);
-            text.text = count.ToString();
-            if (markUnread) image.color = unreadColor;
+            text.text = Manager.Quests.Count.ToString();
         }
     }
 }

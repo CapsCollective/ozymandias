@@ -71,7 +71,11 @@ namespace Quests
             
             QuestButton.OnClicked += () =>
             {
-                if (!SelectedQuest) return;
+                if (!SelectedQuest)
+                {
+                    if (Manager.Quests.Count == 0) return;
+                    SelectedQuest = Manager.Quests.Current[0];
+                }
                 OpenFlyer.UpdateContent(SelectedQuest);
                 FocusStructure(SelectedQuest.Structure);
                 Open();

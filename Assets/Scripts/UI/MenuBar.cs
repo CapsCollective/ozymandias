@@ -49,7 +49,11 @@ namespace UI
                 UpdateDisplay();
             };
             
-            State.OnGameEnd += () => _newspaperClosed = false;
+            State.OnNewGame += () => 
+            {
+                _newspaperClosed = false;
+                UpdateDisplay();
+            };
             
             State.OnLoadingEnd += UpdateDisplay;
         }

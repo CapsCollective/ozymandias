@@ -212,6 +212,7 @@ namespace Structures
         {
             badges.ForEach(badge => badge.canvasGroup.alpha = 0);
             bonusBadge.canvasGroup.alpha = 0;
+            bonusBadge.canvasGroup.gameObject.SetActive(SelectedStructure.Bonus.HasValue);
             var effects = SelectedStructure.Stats.OrderByDescending(x => x.Value).ToList();
 
             for (int i = 0; i < badges.Count; i++)
@@ -246,6 +247,7 @@ namespace Structures
                     $"{effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key)} " +
                     $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
             }
+            
             
             if (!SelectedStructure.Bonus.HasValue) return;
             bonusBadge.badge.Description = 

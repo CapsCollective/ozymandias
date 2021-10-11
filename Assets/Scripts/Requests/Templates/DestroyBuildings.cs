@@ -7,7 +7,7 @@ namespace Requests.Templates
     {
         public BuildingType buildingType;
         public override string Description => $"Destroy {Required} {buildingType}s";
-        protected override int RequiredScaled => 2 * Tokens;
+        protected override int RequiredScaled => Tokens;
 
         public override void Start()
         {

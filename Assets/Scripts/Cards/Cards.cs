@@ -77,7 +77,7 @@ namespace Cards
                     Random.Range(0, Manager.Structures.Ruins) > Discoverable.Count) return;
                 
                 Unlock(Discoverable.PopRandom(), true);
-                Notification.OnNotification.Invoke($"Card rediscovered from ruins! ({Discoverable.Count} remaining)", notificationIcon);
+                Notification.OnNotification.Invoke($"Card rediscovered from ruins! ({Discoverable.Count} remaining)", notificationIcon, 3);
             };
             State.OnNewGame += () =>
             {
@@ -266,7 +266,7 @@ namespace Cards
         {
             Deck = cards.deck?.Select(Find).ToList() ?? new List<Blueprint>();
             Unlocked = cards.unlocked?.Select(Find).ToList() ?? new List<Blueprint>();
-            Playable = cards.playable?.Select(Find).ToList();
+            Playable = cards.playable?.Select(Find).ToList() ?? new List<Blueprint>();
             if(Playable == null || Playable.Count == 0) Playable = All.Where(b => b.starter).ToList(); // Set for new game
             Discoverable = cards.discoverable?.Select(Find).ToList() ?? new List<Blueprint>();
         }

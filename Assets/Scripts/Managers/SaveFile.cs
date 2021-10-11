@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Achievements;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -109,13 +108,13 @@ namespace Managers
         public UpgradeDetails upgrades;
         public static void SaveState()
         {
-            OnNotification.Invoke("Game Saved", Manager.saveIcon);
+            OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
             new SaveFile().Save();
         }
         
-        public static async Task LoadState()
+        public static void LoadState()
         {
-            await new SaveFile().Load();
+            new SaveFile().Load();
         }
 
         public void Save()
@@ -141,23 +140,19 @@ namespace Managers
             //achievements = Manager.Achievements.Save();
             requests = Manager.Requests.Save();
             upgrades = Manager.Upgrades.Save();
-            
-            PlayerPrefs.SetString("Save", JsonConvert.SerializeObject(this));
+            File.WriteAllText(Application.persistentDataPath + "/Save.json", JsonConvert.SerializeObject(this));
         }
 
-        public async Task Load()
+        public void Load()
         {
-            string saveJson = PlayerPrefs.GetString("Save", File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"));
             try
             {
+                string saveJson = File.ReadAllText(Application.persistentDataPath + "/Save.json");
                 JsonConvert.PopulateObject(saveJson, this);
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
-                //TODO: Need a proper migration procedure for if we every change the save files
-                //Try again with a clear save
-                JsonConvert.PopulateObject(File.ReadAllText(Application.streamingAssetsPath + "/StartingLayout.json"), this);
+                Debug.LogWarning($"Save.json read failed, expected on initial play {e}");
             }
 
             Manager.Upgrades.Load(upgrades);
@@ -165,17 +160,14 @@ namespace Managers
             Manager.Stats.Load(stats);
             Manager.Structures.Load(structures);
             if(Manager.Structures.Count == 0) Manager.Map.FillGrid();
-            await Manager.EventQueue.Load(eventQueue);
-            await Manager.Requests.Load(requests);
+            Manager.EventQueue.Load(eventQueue);
+            Manager.Requests.Load(requests);
 
             if (Manager.Stats.TurnCounter != 0) // Only for continuing a game
             {
                 Manager.Adventurers.Load(adventurers);
-                await Manager.Quests.Load(quests);
+                Manager.Quests.Load(quests);
             }
-
-            UpdateUi();
         }
     }
-    
 }
