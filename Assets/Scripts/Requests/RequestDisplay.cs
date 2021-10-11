@@ -87,11 +87,9 @@ namespace Requests
                     .DOValue((float)Request.Completed / Request.Required, 0.5f)
                     .OnComplete(() =>
                     {
-                        StartCoroutine(Algorithms.DelayCall(2f, () => 
-                            _notificationCanvasGroup
-                                .DOFade(0, 2f)
-                                .OnComplete(() => notification.SetActive(false))
-                        ));
+                        _notificationCanvasGroup
+                            .DOFade(0, 2f)
+                            .OnComplete(() => notification.SetActive(false)).SetDelay(2f);
                     });
             }
         }

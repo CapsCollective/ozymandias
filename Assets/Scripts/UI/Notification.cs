@@ -22,7 +22,7 @@ namespace UI
                 text.text = description;
                 icon.sprite = sprite;
                 canvasGroup.alpha = 1;
-                StartCoroutine(Algorithms.DelayCall(delay, () => canvasGroup.DOFade(0, 2f)));
+                canvasGroup.DOFade(0, 2f).SetDelay(delay);
             };
         }
     }
