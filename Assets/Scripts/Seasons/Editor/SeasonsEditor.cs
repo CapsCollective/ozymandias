@@ -1,10 +1,10 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace SeasonalEffects.Editor
+namespace Seasons.Editor
 {
-    [CustomEditor(typeof(SeasonController))]
-    public class SeasonControllerEditor : UnityEditor.Editor
+    [CustomEditor(typeof(Seasons))]
+    public class SeasonsEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
@@ -12,7 +12,7 @@ namespace SeasonalEffects.Editor
 
             GUI.enabled = Application.isPlaying;
             if (GUILayout.Button("Refresh"))
-                SeasonController.Refresh();
+                Seasons.Refresh();
             GUI.enabled = true;
         }
     }

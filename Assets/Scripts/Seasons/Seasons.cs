@@ -1,9 +1,9 @@
 using Managers;
 using UnityEngine;
 
-namespace SeasonalEffects
+namespace Seasons
 {
-    public class SeasonController : MonoBehaviour
+    public class Seasons : MonoBehaviour
     {
         [SerializeField, Range(0.0f, 1.0f)] private float spring;
         [SerializeField] private int seasonTurnDuration;
