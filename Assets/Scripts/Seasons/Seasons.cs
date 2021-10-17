@@ -19,7 +19,7 @@ namespace Seasons
         [Range(0.0f, 1.0f)] public float seasonDepth;
         public int debugTurn = 0;
 
-        private static readonly int ShaderIdSpring = Shader.PropertyToID("_Spring");
+        private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
         private static readonly int SeasonCount = Enum.GetValues(typeof(Season)).Length;
         private const float SeasonPeriod = Mathf.PI / SeasonLength;
         private const int SeasonLength = 15;
@@ -69,16 +69,16 @@ namespace Seasons
             switch (currentSeason)
             {
                 case Season.Spring:
-                    Shader.SetGlobalFloat(ShaderIdSpring, depth);
+                    Shader.SetGlobalFloat(ShaderIdAutumn, 0.0f);
                     break;
                 case Season.Summer:
-                    Shader.SetGlobalFloat(ShaderIdSpring, 0.0f);
+                    Shader.SetGlobalFloat(ShaderIdAutumn, 0.0f);
                     break;
                 case Season.Autumn:
-                    Shader.SetGlobalFloat(ShaderIdSpring, 0.0f);
+                    Shader.SetGlobalFloat(ShaderIdAutumn, depth);
                     break;
                 case Season.Winter:
-                    Shader.SetGlobalFloat(ShaderIdSpring, 0.0f);
+                    Shader.SetGlobalFloat(ShaderIdAutumn, 0.0f);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

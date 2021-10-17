@@ -74,7 +74,7 @@ Shader "Custom/WavingTrees"
         sampler2D _HueShiftTex;
         float4 _HueShiftTex_ST;
         
-        uniform float _Spring;
+        uniform float _Autumn;
         
         float _AutumnHueInfluence;
         float4 _AutumnCol1;
@@ -163,9 +163,11 @@ Shader "Custom/WavingTrees"
             const fixed autumn_samp = round(tex2D(_BandTex, IN.autumn_uv.xy).r * _NumBands) / _NumBands;
 			const fixed hue_samp = tex2D(_HueShiftTex, IN.autumn_uv.zw).r * 2 - 1;
 
-			const fixed lerp_samp = smoothstep(_Spring, _Spring * 1.1, tex2D(_LerpTex, IN.lerp_uv).r);
+            const float spring = 1 - _Autumn; // Inversion of autumn percentage
+
+			const fixed lerp_samp = smoothstep(spring, spring * 1.1, tex2D(_LerpTex, IN.lerp_uv).r);
 			
-			const fixed t = saturate(autumn_samp + hue_samp * lerp(_SpringHueInfluence, _AutumnHueInfluence, _Spring));
+			const fixed t = saturate(autumn_samp + hue_samp * lerp(_SpringHueInfluence, _AutumnHueInfluence, spring));
 			
 			const fixed3 autumn_c = lerp(_AutumnCol1, _AutumnCol2, t).rgb;
 			const fixed3 spring_c = lerp(_SpringCol1, _SpringCol2, t).rgb;
@@ -174,7 +176,6 @@ Shader "Custom/WavingTrees"
             
             float alpha = saturate(pow(distance(IN.wPos, _WorldSpaceCameraPos) / _AlphaDistance, _AlphaFalloff));
 
-            //o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
