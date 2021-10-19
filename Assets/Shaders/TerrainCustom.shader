@@ -20,8 +20,8 @@ Shader "Custom/Terrain Custom"
 
             CGPROGRAM
             #pragma surface surf Standard vertex:vert addshadow fullforwardshadows
+            #pragma multi_compile_instancing
             #pragma instancing_options assumeuniformscaling nomatrices nolightprobe nolightmap forwardadd
-            #pragma multi_compile_fog // needed because finalcolor oppresses fog code generation.
             #pragma target 4.0
             #include "UnityPBSLighting.cginc"
 
@@ -44,6 +44,7 @@ Shader "Custom/Terrain Custom"
             half _Height;
             half3 _Sand;
             half3 _Grass;
+            half _Snow;
 
             inline float4 TriplanarSampling(sampler2D topTexMap, float3 worldPos, float3 worldNormal, float falloff, float2 tiling, float3 normalScale, float3 index)
             {
@@ -74,7 +75,7 @@ Shader "Custom/Terrain Custom"
 
                 float noise = TriplanarSampling(_NoiseTexture, IN.wPos, IN.wNormal, 1.0, float2(0.03, 0.03), 1.0, 0).r;
                 float height = saturate(smoothstep(0.5, 0.5, noise + (IN.wPos.y - _Height)));
-                float3 color = lerp(_Sand, _Grass, height);
+                float3 color = lerp(_Sand, lerp(_Grass, float3(1,1,1), _Snow), height);
 
                 o.Albedo = color;//mixedDiffuse.rgb;
                 //o.Alpha = weight;
