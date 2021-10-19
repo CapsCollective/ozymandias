@@ -17,9 +17,10 @@ namespace Seasons
         }
         
         [Range(0.0f, 1.0f)] public float seasonDepth;
-        public int debugTurn = 0;
+        public int debugTurn;
 
         private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
+        private static readonly int ShaderIdSnow = Shader.PropertyToID("_Snow");
         private static readonly int SeasonCount = Enum.GetValues(typeof(Season)).Length;
         private const float SeasonPeriod = Mathf.PI / SeasonLength;
         private const int SeasonLength = 15;
@@ -60,7 +61,7 @@ namespace Seasons
             _currentSeason = latestSeason;
 
             // Update the visual elements of the season
-            RefreshVisuals(_currentSeason, 0.0f);
+            RefreshVisuals(_currentSeason, 1.0f);
         }
 
         private static void RefreshVisuals(Season currentSeason, float depth)
@@ -69,22 +70,36 @@ namespace Seasons
             switch (currentSeason)
             {
                 case Season.Spring:
-                    Shader.SetGlobalFloat(ShaderIdAutumn, 0.0f);
+                    SetAutumn();
+                    SetSnow();
                     break;
                 case Season.Summer:
-                    Shader.SetGlobalFloat(ShaderIdAutumn, 0.0f);
+                    SetAutumn();
+                    SetSnow();
                     break;
                 case Season.Autumn:
-                    Shader.SetGlobalFloat(ShaderIdAutumn, depth);
+                    SetAutumn(depth);
+                    SetSnow();
                     break;
                 case Season.Winter:
-                    Shader.SetGlobalFloat(ShaderIdAutumn, 0.0f);
+                    SetAutumn();
+                    SetSnow(depth);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        private static void SetAutumn(float depth = 0.0f)
+        {
+            Shader.SetGlobalFloat(ShaderIdAutumn, depth);
+        }
         
+        private static void SetSnow(float depth = 0.0f)
+        {
+            Shader.SetGlobalFloat(ShaderIdSnow, depth);
+        }
+
         [Button("Refresh Debug")]
         public static void DebugRefresh()
         {

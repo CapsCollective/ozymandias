@@ -59,6 +59,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: ea0286e6eed566042be2862481a3191f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 2800000, guid: f310bc72d4393fd489d2166423b1b401, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -66,6 +70,14 @@ Material:
     - _NoiseTex:
         m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
         m_Scale: {x: 0.1, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex1:
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex2:
+        m_Texture: {fileID: 2800000, guid: b9cb4384db173ab46a731371cc9f0625, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal_Map:
         m_Texture: {fileID: 0}
@@ -100,6 +112,7 @@ Material:
     - _AlphaFalloff: 5
     - _AutumnHueInfluence: 0.35
     - _BumpScale: 1
+    - _ColVariance: 0.15
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DistanceScale: 20
@@ -121,6 +134,7 @@ Material:
     - _RimPower: 0
     - _ShadowOffsetFloat: 0.5
     - _SmoothnessTextureChannel: 0
+    - _Snow: 0
     - _SpecLerpAmount: 0
     - _SpecularGloss: 0.2
     - _SpecularHighlights: 1
@@ -138,14 +152,15 @@ Material:
     - _max: 1.12
     - _min: 1.1
     m_Colors:
-    - _AutumnCol1: {r: 0.54901963, g: 0.23529413, b: 0.16862746, a: 1}
-    - _AutumnCol2: {r: 0.9607844, g: 0.7058824, b: 0.28627452, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _AutumnCol1: {r: 0.4811321, g: 0.11988525, b: 0.043120317, a: 1}
+    - _AutumnCol2: {r: 0.7264151, g: 0.5261532, b: 0.18845676, a: 1}
+    - _Color: {r: 0.22208786, g: 0.42999998, b: 0.25043952, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
     - _RimTint: {r: 0.0036044938, g: 0.5902472, b: 0.764151, a: 0}
     - _Spec_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _SpringCol1: {r: 0.07450981, g: 0.24705884, b: 0, a: 1}
-    - _SpringCol2: {r: 0.04705883, g: 0.7372549, b: 0, a: 1}
+    - _SpringCol1: {r: 0.09104524, g: 0.3018868, b: 0, a: 1}
+    - _SpringCol2: {r: 0.03321823, g: 0.4716981, b: 0, a: 1}
     - _Tint: {r: 0.62264144, g: 0.62264144, b: 0.62264144, a: 0}
+    - _TrunkCol: {r: 0.2830189, g: 0.09478463, b: 0.09478463, a: 1}
   m_BuildTextureStacks: []
