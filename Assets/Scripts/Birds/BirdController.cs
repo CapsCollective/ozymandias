@@ -97,7 +97,7 @@ public class BirdController : MonoBehaviour
 
         transform.position = Curve(_startPos, _midPos, _endPos, _timer);
         transform.forward = Curve(_startPos, _midPos, _endPos, _timer + Time.deltaTime) - transform.position;
-        Shader.SetGlobalFloat("BirdDither", _ditherCurve.Evaluate(_timer));
+        Shader.SetGlobalFloat("CharacterDither", _ditherCurve.Evaluate(_timer));
     }
 
     Vector3 GetPointOnCircle(float y)
