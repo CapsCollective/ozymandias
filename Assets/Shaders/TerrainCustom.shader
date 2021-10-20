@@ -48,7 +48,7 @@ Shader "Custom/Terrain Custom"
             half3 _Grass;
             half3 _SnowColor;
             half3 _AutumnColor;
-            half _Snow;
+            half _Winter;
             half _Autumn;
 
             inline float4 TriplanarSampling(sampler2D topTexMap, float3 worldPos, float3 worldNormal, float falloff, float2 tiling, float3 normalScale, float3 index)
@@ -81,7 +81,7 @@ Shader "Custom/Terrain Custom"
                 float noise = TriplanarSampling(_NoiseTexture, IN.wPos, IN.wNormal, 1.0, float2(0.03, 0.03), 1.0, 0).r;
                 float height = saturate(smoothstep(0.5, 0.5, noise + (IN.wPos.y - _Height)));
 
-                float3 color = lerp(lerp(_Grass, _SnowColor, _Snow), _AutumnColor, _Autumn);
+                float3 color = lerp(lerp(_Grass, _SnowColor, _Winter), _AutumnColor, _Autumn);
                 color = lerp(_Sand, color, height);
 
                 o.Albedo = color;//mixedDiffuse.rgb;

@@ -60,7 +60,7 @@ Shader "Custom/WavingTrees"
         float4 _TrunkCol;
 
         uniform float _Autumn;
-        half _Snow;
+        half _Winter;
         
         float4 _AutumnCol1;
         float4 _AutumnCol2;
@@ -152,15 +152,15 @@ Shader "Custom/WavingTrees"
 
             const half autumn_depth = step(saturate(0.99 * nO2), _Autumn);
             _Autumn = step(saturate(0.99 * nO2), autumn_depth);
-            const half snow_depth = step(saturate(0.99 * nO2), _Snow);
-            _Snow = lerp(0, 0.15, snow_depth);
+            const half snow_depth = step(saturate(0.99 * nO2), _Winter);
+            _Winter = lerp(0, 0.15, snow_depth);
             
         	const float4 season_colour1 = lerp(_SpringCol1, _AutumnCol1, _Autumn);
         	const float4 season_colour2 = lerp(_SpringCol2, _AutumnCol2, _Autumn);
 
             const float4 leaf_col = lerp(lerp(season_colour1, season_colour2, nO1) *
             	saturate(nO1 + 0.7), fixed4(1,1,1,1),
-            	step(0.15, 1 - pow(mask, _Snow * saturate(nW + 0.5))));
+            	step(0.15, 1 - pow(mask, _Winter * saturate(nW + 0.5))));
         	c = lerp(_TrunkCol, leaf_col, c >= 1);
 
         	o.Albedo = c.rgb;

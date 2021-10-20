@@ -22,7 +22,7 @@ namespace Seasons
         public float transitionTime = 2f;
 
         private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
-        private static readonly int ShaderIdSnow = Shader.PropertyToID("_Snow");
+        private static readonly int ShaderIdWinter = Shader.PropertyToID("_Winter");
         private static readonly int SeasonCount = Enum.GetValues(typeof(Season)).Length;
         private const int SeasonLength = 15;
         private Season _currentSeason = Season.Winter;
@@ -70,7 +70,7 @@ namespace Seasons
             
             // Get current effect values
             var autumnValue = Shader.GetGlobalFloat(ShaderIdAutumn);
-            var snowValue = Shader.GetGlobalFloat(ShaderIdSnow);
+            var snowValue = Shader.GetGlobalFloat(ShaderIdWinter);
             
             // Set effect target values
             float autumnTarget = 0;
@@ -104,7 +104,7 @@ namespace Seasons
                 
                 // Set effect values for time-step
                 LerpShaderValue(ShaderIdAutumn, autumnValue, autumnTarget, currentTime);
-                LerpShaderValue(ShaderIdSnow, snowValue, snowTarget, currentTime);
+                LerpShaderValue(ShaderIdWinter, snowValue, snowTarget, currentTime);
                 
                 yield return null;
             }
