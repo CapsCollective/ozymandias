@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Managers;
 using NaughtyAttributes;
 using UnityEngine;
@@ -18,11 +19,11 @@ namespace Seasons
         
         [Range(0.0f, 1.0f)] public float seasonDepth;
         public int debugTurn;
+        public float transitionTime = 2f;
 
         private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
         private static readonly int ShaderIdSnow = Shader.PropertyToID("_Snow");
         private static readonly int SeasonCount = Enum.GetValues(typeof(Season)).Length;
-        private const float SeasonPeriod = Mathf.PI / SeasonLength;
         private const int SeasonLength = 15;
         private Season _currentSeason = Season.Winter;
 
@@ -39,11 +40,6 @@ namespace Seasons
             if (turn == 0) return Season.Spring;
             return (Season) (Math.Floor((float) (turn / SeasonLength)) % SeasonCount);
         }
-        
-        private static float GetSeasonDepth(int turn)
-        {
-            return (Mathf.Sin(turn * SeasonPeriod) + 1.0f) / 2.0f;
-        }
 
         private void Start()
         {
@@ -54,7 +50,6 @@ namespace Seasons
         {
             var turn = Manager.Stats.TurnCounter;
             Season latestSeason = GetSeason(turn);
-            seasonDepth = GetSeasonDepth(turn);
             
             // Do nothing if the season has not changed
             if (latestSeason == _currentSeason) return;
@@ -64,46 +59,61 @@ namespace Seasons
             RefreshVisuals(_currentSeason, 1.0f);
         }
 
-        private static void RefreshVisuals(Season currentSeason, float depth)
+        private void RefreshVisuals(Season currentSeason, float depth)
         {
-            // Apply values to materials, etc.
-            switch (currentSeason)
+            StartCoroutine(FadeToSeason(currentSeason, depth));
+        }
+
+        private IEnumerator FadeToSeason(Season season, float targetDepth = 1.0f)
+        {
+            float currentTime = 0;
+            
+            // Get current effect values
+            var autumnValue = Shader.GetGlobalFloat(ShaderIdAutumn);
+            var snowValue = Shader.GetGlobalFloat(ShaderIdSnow);
+            
+            // Set effect target values
+            float autumnTarget = 0;
+            float snowTarget = 0;
+            switch (season)
             {
                 case Season.Spring:
-                    SetAutumn();
-                    SetSnow();
                     break;
                 case Season.Summer:
-                    SetAutumn();
-                    SetSnow();
                     break;
                 case Season.Autumn:
-                    SetAutumn(depth);
-                    SetSnow();
+                    autumnTarget = targetDepth;
                     break;
                 case Season.Winter:
-                    SetAutumn();
-                    SetSnow(depth);
+                    snowTarget = targetDepth;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        private static void SetAutumn(float depth = 0.0f)
-        {
-            Shader.SetGlobalFloat(ShaderIdAutumn, depth);
-        }
-        
-        private static void SetSnow(float depth = 0.0f)
-        {
-            Shader.SetGlobalFloat(ShaderIdSnow, depth);
+            
+            // Function to handle lerping and setting shader values
+            void LerpShaderValue(int id, float value, float target, float time)
+            {
+                value = Mathf.Lerp(value, target, time/transitionTime);
+                Shader.SetGlobalFloat(id, value);
+            }
+            
+            while (currentTime <= transitionTime)
+            {
+                currentTime += Time.deltaTime;
+                
+                // Set effect values for time-step
+                LerpShaderValue(ShaderIdAutumn, autumnValue, autumnTarget, currentTime);
+                LerpShaderValue(ShaderIdSnow, snowValue, snowTarget, currentTime);
+                
+                yield return null;
+            }
         }
 
         [Button("Refresh Debug")]
         public static void DebugRefresh()
         {
-            RefreshVisuals(GetSeason(Instance.debugTurn), Instance.seasonDepth);
+            Instance.RefreshVisuals(GetSeason(Instance.debugTurn), Instance.seasonDepth);
         }
     }
 }
