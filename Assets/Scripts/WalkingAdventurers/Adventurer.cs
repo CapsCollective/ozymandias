@@ -7,7 +7,7 @@ namespace WalkingAdventurers
     {
         [SerializeField] private Renderer[] renderers;
         private MaterialPropertyBlock[] _propertyBlocks;
-        private static readonly int Color = Shader.PropertyToID("_Color");
+        private static readonly int Dither = Shader.PropertyToID("_CharacterDither");
 
         private void Awake()
         {
@@ -21,10 +21,10 @@ namespace WalkingAdventurers
             for (var i = 0; i < renderers.Length; i++)
             {
                 renderers[i].GetPropertyBlock(_propertyBlocks[i]);
-                var currentColour = _propertyBlocks[i].GetColor(Color);
-                var newColour = currentColour;
-                newColour.a = alpha;
-                _propertyBlocks[i].SetColor(Color, newColour);
+                var currentDither = _propertyBlocks[i].GetFloat(Dither);
+                var newDither = currentDither;
+                newDither = alpha;
+                _propertyBlocks[i].SetFloat(Dither, newDither);
                 renderers[i].SetPropertyBlock(_propertyBlocks[i]);
             }
         }
