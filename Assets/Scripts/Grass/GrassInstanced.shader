@@ -1,7 +1,9 @@
 Shader "Instanced/InstancedSurfaceShader" {
     Properties{
         _MainTex("Albedo (RGB)", 2D) = "white" {}
-        _Color("Color", Color) = (1,1,1,1)
+        _SpringColor("Spring Color", Color) = (1,1,1,1)
+        _WinterColor("Winter Color", Color) = (1,1,1,1)
+        _AutumnColor("Autumn Color", Color) = (1,1,1,1)
         _TipColor("Tip Color", Color) = (1,1,1,1)
         _Glossiness("Smoothness", Range(0,1)) = 0.5
         _Metallic("Metallic", Range(0,1)) = 0.0
@@ -112,7 +114,9 @@ Shader "Instanced/InstancedSurfaceShader" {
 
             half _Glossiness;
             half _Metallic;
-            fixed4 _Color;
+            fixed4 _SpringColor;
+            fixed4 _AutumnColor;
+            fixed4 _WinterColor;
             fixed4 _TipColor;
             half _MaskPower;
             half _MaskSub;
@@ -120,6 +124,8 @@ Shader "Instanced/InstancedSurfaceShader" {
             half _WindSpeed;
             sampler2D _MaskTex;
             float4 _MaskTex_ST;
+            half _Winter;
+            half _Autumn;
 
             float3 _RTPosition;
             half _RTSize;
@@ -153,7 +159,9 @@ Shader "Instanced/InstancedSurfaceShader" {
                 float3 mask = tex2Dlod(_MaskTex, float4(RTToWorld, 0, 0));
                 //v.vertex.y -= (mask.r + mask.g) * 10;
 
-                fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+                fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
+                float3 color = lerp(lerp(_SpringColor, _WinterColor, _Winter), _AutumnColor, _Autumn);
+                c *= float4(color,1);
                 float3 cMask = saturate(c.rgb + (_TipColor.rgb * GetMask(IN.uv_MainTex)));
                 o.Albedo = cMask;
                 o.Metallic = _Metallic;
