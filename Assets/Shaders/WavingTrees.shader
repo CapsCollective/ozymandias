@@ -14,7 +14,7 @@ Shader "Custom/WavingTrees"
         _AlphaFalloff("Transparency Falloff", Float) = 1.0
         
         // Seasonal effects
-        
+        _SnowColor ("Snow Color", Color) = (1,1,1,1)
     	_TrunkCol ("Trunk Colour", Color) = (1, 1, 1, 1)
     	    	
     	_SpringCol1 ("Spring Colour 1", Color) = (1, 1, 1, 1)
@@ -61,6 +61,8 @@ Shader "Custom/WavingTrees"
 
         uniform float _Autumn;
         half _Winter;
+
+        float4 _SnowColor;
         
         float4 _AutumnCol1;
         float4 _AutumnCol2;
@@ -159,7 +161,7 @@ Shader "Custom/WavingTrees"
         	const float4 season_colour2 = lerp(_SpringCol2, _AutumnCol2, _Autumn);
 
             const float4 leaf_col = lerp(lerp(season_colour1, season_colour2, nO1) *
-            	saturate(nO1 + 0.7), fixed4(1,1,1,1),
+            	saturate(nO1 + 0.7), _SnowColor,
             	step(0.15, 1 - pow(mask, _Winter * saturate(nW + 0.5))));
         	c = lerp(_TrunkCol, leaf_col, c >= 1);
 

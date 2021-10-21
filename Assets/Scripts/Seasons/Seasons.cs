@@ -17,7 +17,7 @@ namespace Seasons
             Winter = 3
         }
         
-        [Range(0.0f, 1.0f)] public float seasonDepth;
+        [Range(0.0f, 1.0f)] public float depthOfSeason = 1.0f;
         public int debugTurn;
         public float transitionTime = 2f;
 
@@ -113,7 +113,7 @@ namespace Seasons
         [Button("Refresh Debug")]
         public static void DebugRefresh()
         {
-            Instance.RefreshVisuals(GetSeason(Instance.debugTurn), Instance.seasonDepth);
+            Instance.RefreshVisuals(GetSeason(Instance.debugTurn), Instance.depthOfSeason);
         }
     }
 }
