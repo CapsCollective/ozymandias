@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.99215686, g: 1, b: 0.80784315, a: 1}
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.001
   m_LinearFogStart: 30
@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2736866
+  m_Name: pb_Mesh-2084
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5370,7 +5370,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2736454
+  m_Name: pb_Mesh-1544
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5922,7 +5922,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2736526
+  m_Name: pb_Mesh-1672
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6086,7 +6086,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2740660
+  m_Name: pb_Mesh-6318
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6262,7 +6262,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2736412
+  m_Name: pb_Mesh-1498
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6595,7 +6595,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.99215686, g: 1, b: 0.80784315, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -6819,7 +6819,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2740042
+  m_Name: pb_Mesh-5652
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7124,7 +7124,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2739544
+  m_Name: pb_Mesh-5114
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7294,6 +7294,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seasons
       objectReference: {fileID: 0}
+    - target: {fileID: 7578117743110319768, guid: b79c615db427a184ea2d576ac3a60ca2,
+        type: 3}
+      propertyPath: sun
+      value: 
+      objectReference: {fileID: 938970612}
+    - target: {fileID: 7578117743110319768, guid: b79c615db427a184ea2d576ac3a60ca2,
+        type: 3}
+      propertyPath: skyMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: de0da697f8d34f04785714316d7db321, type: 2}
+    - target: {fileID: 7578117743110319768, guid: b79c615db427a184ea2d576ac3a60ca2,
+        type: 3}
+      propertyPath: sunTransform
+      value: 
+      objectReference: {fileID: 938970613}
     - target: {fileID: 7578117743110319769, guid: b79c615db427a184ea2d576ac3a60ca2,
         type: 3}
       propertyPath: m_RootOrder
@@ -7778,7 +7793,7 @@ PrefabInstance:
     - target: {fileID: 793420195877318428, guid: f499c8abfdae2a941a61a736ec8d8a0b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 830
+      value: -0.00048828125
       objectReference: {fileID: 0}
     - target: {fileID: 883400524747450198, guid: f499c8abfdae2a941a61a736ec8d8a0b,
         type: 3}
@@ -12299,6 +12314,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1535391564055948333}
     - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.keyCollision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Key
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
       propertyPath: creditsWaypoints.Array.data[0].panel
       value: 
       objectReference: {fileID: 1309178664}
@@ -12338,6 +12373,1094 @@ PrefabInstance:
       propertyPath: creditsWaypoints.Array.data[4].location
       value: 
       objectReference: {fileID: 1309178665}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key1.b
+      value: 0.3490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key1.g
+      value: 0.24857347
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key1.r
+      value: 0.16300283
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key1.b
+      value: 0.3490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key1.g
+      value: 0.24857347
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key1.r
+      value: 0.16300283
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key1.b
+      value: 0.3490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key1.g
+      value: 0.24857347
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key1.r
+      value: 0.16300283
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key1.b
+      value: 0.3490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key1.g
+      value: 0.24857347
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key1.r
+      value: 0.16300283
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key0.g
+      value: 0.47969294
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key1.b
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key1.g
+      value: 0.24705882
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key1.r
+      value: 0.16470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.key2.g
+      value: 0.47843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.ctime1
+      value: 13107
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.ctime2
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.ctime3
+      value: 52428
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.ctime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key0.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key0.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key1.g
+      value: 0.5952402
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key2.b
+      value: 0.2735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key2.g
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key2.r
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key3.g
+      value: 0.59607846
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key3.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key4.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key4.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.key4.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key0.g
+      value: 0.47969294
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key1.b
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key1.g
+      value: 0.24705882
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key1.r
+      value: 0.16470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.key2.g
+      value: 0.47843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.ctime1
+      value: 13107
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.ctime2
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.ctime3
+      value: 52428
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.ctime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key0.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key0.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key1.g
+      value: 0.5952402
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key2.b
+      value: 0.2735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key2.g
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key2.r
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key3.g
+      value: 0.59607846
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key3.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key4.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key4.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.key4.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key0.g
+      value: 0.47969294
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key1.b
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key1.g
+      value: 0.24705882
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key1.r
+      value: 0.16470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.key2.g
+      value: 0.47843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.ctime1
+      value: 13107
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.ctime2
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.ctime3
+      value: 52428
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.ctime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key0.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key0.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key1.g
+      value: 0.5952402
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key2.b
+      value: 0.2735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key2.g
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key2.r
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key3.g
+      value: 0.59607846
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key3.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key4.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key4.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.key4.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key0.g
+      value: 0.47969294
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key1.b
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key1.g
+      value: 0.24705882
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key1.r
+      value: 0.16470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.key2.g
+      value: 0.47843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.ctime1
+      value: 13107
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.ctime2
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.ctime3
+      value: 52428
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.ctime4
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key0.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key0.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key1.g
+      value: 0.5952402
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key2.b
+      value: 0.2735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key2.g
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key2.r
+      value: 0.040005337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key3.g
+      value: 0.59607846
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key3.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key4.b
+      value: 0.80784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key4.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.key4.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key1.b
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key1.g
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key1.r
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key1.b
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key1.g
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key1.r
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key1.b
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key1.g
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key1.r
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.ctime1
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key1.b
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key1.g
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key1.r
+      value: 0.3962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key2.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.ambientGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.ambientGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.ambientGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.ambientGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.skyColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.sunColorGradient.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.skyColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.sunColorGradient.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.skyColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.sunColorGradient.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.skyColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.sunColorGradient.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[0].Value.horizonColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[1].Value.horizonColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[2].Value.horizonColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1625381311, guid: 6cbf8a301e74a2349997841783cb8cc3, type: 3}
+      propertyPath: weathers.list.Array.data[3].Value.horizonColorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6483597526983510937, guid: 6cbf8a301e74a2349997841783cb8cc3,
         type: 3}
       propertyPath: m_Name
