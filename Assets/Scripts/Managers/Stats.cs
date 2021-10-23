@@ -63,7 +63,7 @@ namespace Managers
         {
             if ((int) stat < 5) // If the stat is for an adventuring category
                 return GetSatisfaction((Guild)stat);
-            return GetStat(stat) - Manager.Adventurers.Count;
+            return GetStat(stat) - Manager.Adventurers.Available;
         }
 
         public int SpawnChance(Guild guild)

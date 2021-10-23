@@ -13,6 +13,8 @@ namespace Inputs
 {
     public class CameraMovement : MonoBehaviour
     {
+        public static Action OnPan, OnRotate, OnZoom;
+        
         public static bool IsMoving;
         public CinemachineFreeLook FreeLook { get; private set; }
         
@@ -94,7 +96,9 @@ namespace Inputs
             
             if (!Manager.State.InGame) return;
 
-            FreeLook.m_XAxis.m_InputAxisValue = -Manager.Inputs.OnRotateCamera.ReadValue<float>();
+            float rotation = -Manager.Inputs.OnRotateCamera.ReadValue<float>();
+            if(rotation != 0) OnRotate?.Invoke();
+            FreeLook.m_XAxis.m_InputAxisValue = rotation;
 
             if (leftClick)
             {
@@ -103,6 +107,7 @@ namespace Inputs
                 {
                     StartCursorGrab();
                     _dragging = true;
+                    OnPan?.Invoke();
                 }
 
                 if (_dragging)
@@ -124,6 +129,7 @@ namespace Inputs
 
             // Scrolling
             float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>();
+            if(scroll != 0) OnZoom?.Invoke();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
             FreeLook.m_YAxis.Value += scrollAcceleration;

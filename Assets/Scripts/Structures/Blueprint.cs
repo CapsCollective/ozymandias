@@ -52,7 +52,7 @@ namespace Structures
         public AdjacencyConfiguration adjacencyConfig;
 
         public bool Free { get; set; }
-        private const float BuildingCostScale = 1.3f;
+        private const float BuildingCostScale = 1.35f;
         private const float BaseRefundPercentage = 5f; // Representing 50%
         
         public int ScaledCost => Free ? 0 :
@@ -60,7 +60,5 @@ namespace Structures
         public int Refund =>
             (int)(baseCost * Mathf.Pow(BuildingCostScale, (Manager.Structures.GetCount(type) - 1) * 4 / (float)scaleSpeed) *
                 (BaseRefundPercentage + Manager.Upgrades.GetLevel(UpgradeType.Refund)) / 10f);
-       
-        
     }
 }

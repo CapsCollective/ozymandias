@@ -37,7 +37,7 @@ namespace Quests
 
         private Quest SelectedQuest
         {
-            get => Current.Count > 0 ? Current[_selectedQuest] : null;
+            get => Current.Count > 0 ? Current[_selectedQuest % Current.Count] : null;
 
             set
             {

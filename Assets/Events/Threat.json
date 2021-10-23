@@ -337,5 +337,61 @@
         "baseAmount": 2
       }
     ]
+  },
+  {
+    "name": "alcohol-shortage",
+    "headline": "Alcohol Shortage Causes Riots",
+    "article": "Sobriety rates have never been higher, as a recent hops shortage has dried up our taverns. \"There's too much blood in our alcohol stream!\" groans local adventurers who can't fight due to the collective hangovers.",
+    "image": "",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Use Fruits to Make Wine",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "It's not as good as bear, but it'll do."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 4
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Spending",
+              "amount": 10,
+              "turns": 5,
+              "reason": "from Siren Buskers"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Order a Shipment from Far Off",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "Clearing their nest was a deadly affair, but the performers are glad they're now the centre of attention again."
+          },
+          {
+            "type": "AdventurersRemoved",
+            "count": 3,
+            "customDescription": "It took 3 adventurers lives to wipe out their nest."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 3,
+              "turns": 5,
+              "reason": "from clearing the Sirens"
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -147,8 +147,6 @@ namespace Managers
                 case GameState.InCredits:
                     InCreditsInit();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
         

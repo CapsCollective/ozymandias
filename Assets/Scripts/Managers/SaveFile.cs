@@ -108,6 +108,7 @@ namespace Managers
         public UpgradeDetails upgrades;
         public static void SaveState()
         {
+            if (Tutorial.Tutorial.Active) return; // No saving during tutorial
             OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
             new SaveFile().Save();
         }

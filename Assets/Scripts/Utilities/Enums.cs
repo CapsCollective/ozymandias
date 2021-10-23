@@ -159,7 +159,8 @@
         InMenu,    // │ ├─InIntro◄─┴──ToIntro◄─┤─┐  │  │
         EndGame,   // │ └►ToCredits─►InCredits─┘ │  ▼  │
         ToCredits, // │                        GameEnd │
-        InCredits  // └────────────────────────────────┘
+        InCredits, // └────────────────────────────────┘
+        InDialogue
     }
 
     public enum UpgradeType
