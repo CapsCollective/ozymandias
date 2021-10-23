@@ -46,8 +46,8 @@ namespace Seasons
         
         private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
         private static readonly int ShaderIdWinter = Shader.PropertyToID("_Winter");
-        
-        private static readonly int SeasonCount = Enum.GetValues(typeof(Season)).Length;
+
+        private const int SeasonCount = 4;
         private const int SeasonLength = 15;
         private Season _currentSeason = Season.Unset;
 
@@ -132,24 +132,9 @@ namespace Seasons
             var snowValue = Shader.GetGlobalFloat(ShaderIdWinter);
             
             // Set effect target values
-            float autumnTarget = 0;
-            float snowTarget = 0;
-            switch (season)
-            {
-                case Season.Spring:
-                    break;
-                case Season.Summer:
-                    break;
-                case Season.Autumn:
-                    autumnTarget = targetDepth;
-                    break;
-                case Season.Winter:
-                    snowTarget = targetDepth;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
+            var autumnTarget = season == Season.Autumn ? targetDepth : 0;
+            var snowTarget = season == Season.Winter ? targetDepth : 0;
+
             // Get current whether values
             Color sunColorValue = sun.color;
             Color ambientLightValue = RenderSettings.ambientLight;
@@ -166,26 +151,27 @@ namespace Seasons
             Color horizonColorTarget = weather.horizonColorGradient.Evaluate(0);
             
             // Function to handle lerping and setting shader values
-            void LerpShaderValue(int id, float value, float target, float time)
+            void LerpShaderValue(int id, float value, float target, float complete)
             {
-                value = Mathf.Lerp(value, target, time/transitionTime);
+                value = Mathf.Lerp(value, target, complete);
                 Shader.SetGlobalFloat(id, value);
             }
 
             while (currentTime <= transitionTime)
             {
                 currentTime += Time.deltaTime;
+                var completedPercent = currentTime / transitionTime;
 
                 // Set effect values for time-step
                 SetWeatherValues(
-                    Color.Lerp(sunColorValue, sunColorTarget, currentTime),
-                    Color.Lerp(ambientLightValue, ambientLightTarget, currentTime),
-                    Color.Lerp(fogColorValue, fogColorTarget, currentTime),
-                    Color.Lerp(skyColorValue, skyColorTarget, currentTime),
-                    Color.Lerp(horizonColorValue, horizonColorTarget, currentTime),
+                    Color.Lerp(sunColorValue, sunColorTarget, completedPercent),
+                    Color.Lerp(ambientLightValue, ambientLightTarget, completedPercent),
+                    Color.Lerp(fogColorValue, fogColorTarget, completedPercent),
+                    Color.Lerp(skyColorValue, skyColorTarget, completedPercent),
+                    Color.Lerp(horizonColorValue, horizonColorTarget, completedPercent),
                     0.0f);
-                LerpShaderValue(ShaderIdAutumn, autumnValue, autumnTarget, currentTime);
-                LerpShaderValue(ShaderIdWinter, snowValue, snowTarget, currentTime);
+                LerpShaderValue(ShaderIdAutumn, autumnValue, autumnTarget, completedPercent);
+                LerpShaderValue(ShaderIdWinter, snowValue, snowTarget, completedPercent);
                 
                 yield return null;
             }
