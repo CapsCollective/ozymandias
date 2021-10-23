@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using NaughtyAttributes;
 using static Managers.GameManager;
 
 namespace Managers
@@ -33,13 +31,6 @@ namespace Managers
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
         [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
-        [SerializeField] private Light sun;
-        [SerializeField] private ParticleSystem glowflies;
-        [SerializeField] private Gradient ambientGradient;   
-        [SerializeField] private Gradient sunColorGradient;
-        [SerializeField] private Gradient skyColorGradient;
-        [SerializeField] private Gradient horizonColorGradient;
-        [SerializeField] private Material skyMaterial;
         [SerializeField] [Range(0, 1)] private float ToDDebug;
 
         private struct CameraMove
@@ -308,10 +299,10 @@ namespace Managers
             OnNextTurnBegin?.Invoke();
             gameCanvasGroup.interactable = false;
             Manager.Jukebox.StartNightAmbience();
-            glowflies.Play();
 
             float timer = 0;
-            DOTween.To(() => timer, x => timer = x, TurnTransitionTime, TurnTransitionTime).OnComplete(() =>
+            DOTween.To(() => timer, x => timer = x, 
+                    TurnTransitionTime, TurnTransitionTime).OnComplete(() =>
             {
                 OnNextTurnEnd?.Invoke();
                 Manager.EventQueue.Process();
@@ -417,8 +408,8 @@ namespace Managers
             var lerpTime = curve.Evaluate(_moveAnimTime * multiplier);
 
             // Lerp follow position
-            var followPos = freeLook.Follow.position;
-            var horizontalPos = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
+            Vector3 followPos = freeLook.Follow.position;
+            Vector3 horizontalPos = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
             followPos = Vector3.Lerp(followPos, horizontalPos, lerpTime);
             freeLook.Follow.position = followPos;
                 

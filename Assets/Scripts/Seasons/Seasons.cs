@@ -37,9 +37,9 @@ namespace Seasons
         public SerializedDictionary<Season, Weather> weathers = new SerializedDictionary<Season, Weather>();
 
         [SerializeField] private Transform sunTransform;
-        [SerializeField] private Light sun;
         [SerializeField] private Material skyMaterial;
-
+        [SerializeField] private Light sun;
+        [SerializeField] private ParticleSystem glowflies;
         private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
         private static readonly int ShaderIdWinter = Shader.PropertyToID("_Winter");
         private static readonly int SeasonCount = Enum.GetValues(typeof(Season)).Length;
@@ -72,6 +72,7 @@ namespace Seasons
         private void TurnTransition()
         {
             if (weathers.TryGetValue(_currentSeason, out var currentWeather))
+            if (_currentSeason == Season.Summer) glowflies.Play();
             {
                 float timer = 0;
                 sunTransform.DORotate(sunTransform.eulerAngles + new Vector3(360, 0, 0), State.TurnTransitionTime, RotateMode.FastBeyond360).OnUpdate(() =>
