@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Managers;
 using NaughtyAttributes;
 using UnityEngine;
@@ -11,7 +10,7 @@ using static Managers.GameManager;
 
 namespace Seasons
 {
-    [System.Serializable]
+    [Serializable]
     public class Weather
     {
         public Gradient ambientGradient;
@@ -40,68 +39,70 @@ namespace Seasons
         [SerializeField] private Material skyMaterial;
         [SerializeField] private Light sun;
         [SerializeField] private ParticleSystem glowflies;
+        
+        private static readonly int MaterialIdHorizonColor = Shader.PropertyToID("_HorizonColor");
+        private static readonly int MaterialIdWindowEmission = Shader.PropertyToID("_WindowEmissionIntensity");
+        private static readonly int MaterialIdSkyColor = Shader.PropertyToID("_SkyColor");
+        
         private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
         private static readonly int ShaderIdWinter = Shader.PropertyToID("_Winter");
+        
         private static readonly int SeasonCount = Enum.GetValues(typeof(Season)).Length;
         private const int SeasonLength = 15;
         private Season _currentSeason = Season.Unset;
 
-        public static Seasons Instance { get; set; }
-        public static Season CurrentSeason { get => Instance._currentSeason; }
+        private static Seasons Instance { get; set; }
 
         private void Awake()
         {
             Instance = this;
         }
 
-        public static Season GetSeason(int turn)
+        private static Season GetSeason(int turn)
         {
             // Calculate the season by current turn value
             if (turn == 0) return Season.Spring;
             return (Season) (Math.Floor((float) (turn / SeasonLength)) % SeasonCount);
         }
+        
+        private static Weather GetWeather(Season season)
+        {
+            // Calculate the season by current turn value
+            return Instance.weathers.TryGetValue(season, out Weather currentWeather) 
+                ? currentWeather : Instance.weathers[Season.Spring];
+        }
 
         private void Start()
         {
             State.OnLoadingEnd += UpdateSeason;
-            State.OnLoadingEnd += () => WeatherUpdate(GetSeason(Manager.Stats.TurnCounter));
             Newspaper.OnClosed += UpdateSeason;
             State.OnNextTurnBegin += TurnTransition;
         }
 
         private void TurnTransition()
         {
-            if (weathers.TryGetValue(_currentSeason, out var currentWeather))
+            float timer = 0;
+            Vector3 target = sunTransform.eulerAngles + new Vector3(360, 0, 0);
             if (_currentSeason == Season.Summer) glowflies.Play();
+            sunTransform.DORotate(target, State.TurnTransitionTime, RotateMode.FastBeyond360).OnUpdate(() =>
             {
-                float timer = 0;
-                sunTransform.DORotate(sunTransform.eulerAngles + new Vector3(360, 0, 0), State.TurnTransitionTime, RotateMode.FastBeyond360).OnUpdate(() =>
-                {
-                    timer += Time.deltaTime / State.TurnTransitionTime;
-                    sun.color = currentWeather.sunColorGradient.Evaluate(timer);
-                    RenderSettings.ambientLight = currentWeather.ambientGradient.Evaluate(timer);
-                    RenderSettings.fogColor = currentWeather.ambientGradient.Evaluate(timer);
-                    skyMaterial.SetColor("_SkyColor", currentWeather.skyColorGradient.Evaluate(timer));
-                    skyMaterial.SetColor("_HorizonColor", currentWeather.horizonColorGradient.Evaluate(timer));
-                    float windowIntensity = (0.5f - Mathf.Abs(timer % (2 * 0.5f) - 0.5f)) * 2;
-                    Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
-                });
-            }
+                timer += Time.deltaTime / State.TurnTransitionTime;
+                Weather weather = GetWeather(_currentSeason);
+                CycleWeather(weather, timer);
+            });
         }
-
-        private void WeatherUpdate(Season season, float amount = 0)
+        
+        private void CycleWeather(Weather weather, float amount = 0)
         {
-            Debug.Log(season);
-            if (weathers.TryGetValue(season, out var currentWeather))
-            {
-                sun.color = currentWeather.sunColorGradient.Evaluate(amount);
-                RenderSettings.ambientLight = currentWeather.ambientGradient.Evaluate(amount);
-                RenderSettings.fogColor = currentWeather.ambientGradient.Evaluate(amount);
-                skyMaterial.SetColor("_SkyColor", currentWeather.skyColorGradient.Evaluate(amount));
-                skyMaterial.SetColor("_HorizonColor", currentWeather.horizonColorGradient.Evaluate(amount));
-                float windowIntensity = (0.5f - Mathf.Abs(amount % (2 * 0.5f) - 0.5f)) * 2;
-                Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
-            }
+            var windowIntensity = (0.5f - Mathf.Abs(amount % (2 * 0.5f) - 0.5f)) * 2;
+            Color ambientColor = weather.ambientGradient.Evaluate(amount);
+            SetWeatherValues(
+                weather.sunColorGradient.Evaluate(amount),
+                ambientColor,
+                ambientColor,
+                weather.skyColorGradient.Evaluate(amount),
+                weather.horizonColorGradient.Evaluate(amount),
+                windowIntensity);
         }
 
         private void UpdateSeason()
@@ -114,15 +115,15 @@ namespace Seasons
             _currentSeason = latestSeason;
 
             // Update the visual elements of the season
-            RefreshVisuals(_currentSeason, 1.0f);
+            RefreshVisuals(_currentSeason);
         }
 
-        private void RefreshVisuals(Season currentSeason, float depth)
+        private void RefreshVisuals(Season currentSeason, float depth = 1.0f)
         {
             StartCoroutine(FadeToSeason(currentSeason, depth));
         }
 
-        private IEnumerator FadeToSeason(Season season, float targetDepth = 1.0f)
+        private IEnumerator FadeToSeason(Season season, float targetDepth)
         {
             float currentTime = 0;
             
@@ -149,18 +150,40 @@ namespace Seasons
                     throw new ArgumentOutOfRangeException();
             }
             
+            // Get current whether values
+            Color sunColorValue = sun.color;
+            Color ambientLightValue = RenderSettings.ambientLight;
+            Color fogColorValue = RenderSettings.fogColor;
+            Color skyColorValue = skyMaterial.GetColor(MaterialIdSkyColor);
+            Color horizonColorValue = skyMaterial.GetColor(MaterialIdHorizonColor);
+            
+            // Set effect target values
+            Weather weather = GetWeather(season);
+            Color sunColorTarget = weather.sunColorGradient.Evaluate(0);
+            Color ambientLightTarget = weather.ambientGradient.Evaluate(0);
+            Color fogColorTarget = weather.ambientGradient.Evaluate(0);
+            Color skyColorTarget = weather.skyColorGradient.Evaluate(0);
+            Color horizonColorTarget = weather.horizonColorGradient.Evaluate(0);
+            
             // Function to handle lerping and setting shader values
             void LerpShaderValue(int id, float value, float target, float time)
             {
                 value = Mathf.Lerp(value, target, time/transitionTime);
                 Shader.SetGlobalFloat(id, value);
             }
-            
+
             while (currentTime <= transitionTime)
             {
                 currentTime += Time.deltaTime;
-                
+
                 // Set effect values for time-step
+                SetWeatherValues(
+                    Color.Lerp(sunColorValue, sunColorTarget, currentTime),
+                    Color.Lerp(ambientLightValue, ambientLightTarget, currentTime),
+                    Color.Lerp(fogColorValue, fogColorTarget, currentTime),
+                    Color.Lerp(skyColorValue, skyColorTarget, currentTime),
+                    Color.Lerp(horizonColorValue, horizonColorTarget, currentTime),
+                    0.0f);
                 LerpShaderValue(ShaderIdAutumn, autumnValue, autumnTarget, currentTime);
                 LerpShaderValue(ShaderIdWinter, snowValue, snowTarget, currentTime);
                 
@@ -168,10 +191,22 @@ namespace Seasons
             }
         }
 
+        private void SetWeatherValues(Color sunColor, Color ambientLight, Color fogColor,
+            Color skyColorGradient, Color horizonColorGradient, float windowIntensity)
+        {
+            sun.color = sunColor;
+            RenderSettings.ambientLight = ambientLight;
+            RenderSettings.fogColor = fogColor;
+            skyMaterial.SetColor(MaterialIdSkyColor, skyColorGradient);
+            skyMaterial.SetColor(MaterialIdHorizonColor, horizonColorGradient);
+            Shader.SetGlobalFloat(MaterialIdWindowEmission, windowIntensity);
+        }
+
         [Button("Refresh Debug")]
         public static void DebugRefresh()
         {
-            Instance.RefreshVisuals(GetSeason(Instance.debugTurn), Instance.depthOfSeason);
+            Season season = GetSeason(Instance.debugTurn);
+            Instance.RefreshVisuals(season, Instance.depthOfSeason);
         }
     }
 }
