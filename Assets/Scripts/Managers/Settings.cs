@@ -32,6 +32,10 @@ namespace Managers
             // Set the version text value
             versionText.text = "Version " + Application.version;
             
+            // Set the target framerate
+            QualitySettings.vSyncCount = 1;
+            Application.targetFrameRate = 65;
+            
             // Generate a list of available resolutions
             _resolutions = Screen.resolutions;
             resolutionDropdown.ClearOptions();
