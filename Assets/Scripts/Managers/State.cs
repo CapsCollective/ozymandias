@@ -50,7 +50,7 @@ namespace Managers
         }
 
         private GameState _state;
-        
+        private bool _alreadySkippedIntro;
         private static CameraMovement.CameraMove _startPos;
 
         public static Action OnEnterState;
@@ -143,13 +143,13 @@ namespace Managers
 
             UpdateUi();
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (Manager.skipIntro)
             {
                 EnterState(GameState.ToGame);
                 return;
             }
-            #endif
+#endif
             
             EnterState(GameState.InIntro);
         }
@@ -219,43 +219,52 @@ namespace Managers
         private IEnumerator ToGameUpdate()
         {
             Manager.Cards.DropCards();
-            
-            #if UNITY_EDITOR
-            if (Manager.skipIntro)
+
+            void SetupGame()
             {
-                finishedMoving = true;
-                finishedFadingMenu = true;
                 gameCanvasGroup.alpha = 1.0f;
+                menuCanvasGroup.interactable = false;
+                menuCanvasGroup.blocksRaycasts = false;
+                gameCanvasGroup.interactable = true;
+                gameCanvasGroup.blocksRaycasts = true;
+                Manager.Inputs.TogglePlayerInput(true);
+                if (Manager.Stats.TurnCounter == 0) OnNewGame.Invoke();
+                Manager.Cards.PopCards();
+                UpdateUi();
             }
-            #endif
-            menuCanvasGroup.DOFade(0.0f, 2.0f)
-                .OnComplete(() =>
-                {
-                    menuCanvas.enabled = false;
-                });
-            
-            var finishedMoving = false;
-            while (!finishedMoving)
+
+#if UNITY_EDITOR
+            if (Manager.skipIntro && !_alreadySkippedIntro)
             {
-                finishedMoving = Manager.Camera.MoveCamRig(_startPos, menuTransitionCurve);
-                yield return null;
+                gameCanvasGroup.alpha = 1.0f;
+                SetupGame();
+                EnterState(GameState.InGame);
+                Manager.Camera.SetCamRig(_startPos);
+                _alreadySkippedIntro = true;
             }
+            else
+#endif
+            {
+                menuCanvasGroup.DOFade(0.0f, 2.0f)
+                    .OnComplete(() =>
+                    {
+                        menuCanvas.enabled = false;
+                    });
             
-            
-            gameCanvasGroup.DOFade(1.0f, 2.0f)
-                .OnComplete(() =>
+                var finishedMoving = false;
+                while (!finishedMoving)
                 {
-                    gameCanvasGroup.alpha = 1.0f;
-                    menuCanvasGroup.interactable = false;
-                    menuCanvasGroup.blocksRaycasts = false;
-                    gameCanvasGroup.interactable = true;
-                    gameCanvasGroup.blocksRaycasts = true;
-                    Manager.Inputs.TogglePlayerInput(true);
-                    if (Manager.Stats.TurnCounter == 0) OnNewGame.Invoke();
-                    Manager.Cards.PopCards();
-                    UpdateUi();
-                    EnterState(GameState.InGame);
-                });
+                    finishedMoving = Manager.Camera.MoveCamRig(_startPos, menuTransitionCurve);
+                    yield return null;
+                }
+
+                gameCanvasGroup.DOFade(1.0f, 2.0f)
+                    .OnComplete(() =>
+                    {
+                        SetupGame();
+                        EnterState(GameState.InGame);
+                    });
+            }
         }
 
         private void InGameInit() { }
@@ -310,12 +319,6 @@ namespace Managers
         }
 
         private Coroutine _creditsCoroutine;
-        
-        private CanvasGroup _previousPanel;
-        private CanvasGroup _currentPanel;
-        
-        private TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> _previousPanelTween;
-        private TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> _currentPanelTween;
 
         private void InCreditsInit()
         {
@@ -325,11 +328,14 @@ namespace Managers
         private IEnumerator InCreditsUpdate()
         {
             var visitedTown = false;
+            
+            CanvasGroup previousPanel;
+            CanvasGroup currentPanel = null;
             foreach (CreditsWaypoint waypoint in creditsWaypoints)
             {
                 Transform currentTransform = waypoint.location;
-                _previousPanel = _currentPanel;
-                _currentPanel = waypoint.panel;
+                previousPanel = currentPanel;
+                currentPanel = waypoint.panel;
 
                 // Build a camera move object for the waypoint
                 Vector3 pos;
@@ -348,20 +354,20 @@ namespace Managers
                 );
                 
                 // Fade out previous panel if it exists
-                if (_previousPanel)
+                if (previousPanel)
                 {
-                    _previousPanelTween = _previousPanel.DOFade(0.0f, 1.0f)
+                    previousPanel.DOFade(0.0f, 1.0f)
                         .OnComplete(() =>
                         {
-                            _previousPanel.alpha = 0.0f;
+                            previousPanel.alpha = 0.0f;
                         });
                 }
                 
                 // Fade in current panel
-                _currentPanelTween = _currentPanel.DOFade(1.0f, 2.0f)
+                currentPanel.DOFade(1.0f, 2.0f)
                     .OnComplete(() =>
                     {
-                        _currentPanel.alpha = 1.0f;
+                        currentPanel.alpha = 1.0f;
                     });
                 
                 // Run the move

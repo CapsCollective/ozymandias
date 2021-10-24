@@ -221,6 +221,14 @@ namespace Inputs
             _startMoveTime = 0;
         }
 
+        public void SetCamRig(CameraMove cameraMove)
+        {
+            FreeLook.Follow.position = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
+            FreeLook.m_Orbits[1].m_Height = cameraMove.OrbitHeight;
+            FreeLook.m_XAxis.Value = cameraMove.XAxisValue;
+            FreeLook.m_YAxis.Value = cameraMove.YAxisValue;
+        }
+
         private void StartCursorGrab()
         {
             Manager.Cursor.Current = CursorType.Grab;
