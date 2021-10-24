@@ -1,4 +1,3 @@
-using System;
 using Cinemachine;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -150,6 +149,76 @@ namespace Inputs
         public TweenerCore<Vector3,Vector3,VectorOptions> MoveTo(Vector3 pos, float duration = 0.5f)
         {
             return FreeLook.Follow.transform.DOMove(pos, duration);
+        }
+        
+        public struct CameraMove
+        {
+            public Vector3 Position;
+            public float OrbitHeight;
+            public float XAxisValue;
+            public float YAxisValue;
+
+            public CameraMove(Vector3 pos, float orbitHeight, float xVal, float yVal)
+            {
+                Position = pos;
+                OrbitHeight = orbitHeight;
+                XAxisValue = xVal;
+                YAxisValue = yVal;
+            }
+        }
+        
+        private const float MoveEpsilon = 0.05f;
+        private static float _startMoveTime;
+        private static CameraMove _startRig;
+
+        public bool MoveCamRig(CameraMove cameraMove, AnimationCurve curve, float length = 3.0f)
+        {
+            // Set these values on first run
+            if (Mathf.Approximately(_startMoveTime, 0))
+            {
+                _startMoveTime = Time.time;
+                
+                // Store the initial rig position values
+                Vector3 followPos = FreeLook.Follow.position;
+                _startRig.Position = new Vector3(followPos.x, followPos.y, followPos.z);
+                _startRig.OrbitHeight = FreeLook.m_Orbits[1].m_Height;
+                _startRig.XAxisValue = FreeLook.m_XAxis.Value;
+                _startRig.YAxisValue = FreeLook.m_YAxis.Value;
+            }
+
+            var elapsedTime = Time.time - _startMoveTime;
+            var time = elapsedTime / length;
+            time = curve.Evaluate(time);
+
+            // Lerp follow position
+            Vector3 horizontalPos = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
+            FreeLook.Follow.position = Vector3.Lerp(
+                _startRig.Position, horizontalPos, time);
+
+            // Lerp camera orbit
+            FreeLook.m_Orbits[1].m_Height = Mathf.Lerp(
+                _startRig.OrbitHeight, cameraMove.OrbitHeight, time);
+            
+            // Lerp camera X axis
+            FreeLook.m_XAxis.Value =  Mathf.Lerp(
+                _startRig.XAxisValue, cameraMove.XAxisValue, time);
+            
+            // Lerp camera Y axis
+            FreeLook.m_YAxis.Value =  Mathf.Lerp(
+                _startRig.YAxisValue, cameraMove.YAxisValue, time);
+            
+            if ((horizontalPos - FreeLook.Follow.position).magnitude >= MoveEpsilon) return false;
+            FreeLook.Follow.position = horizontalPos;
+            FreeLook.m_Orbits[1].m_Height = cameraMove.OrbitHeight;
+            FreeLook.m_XAxis.Value = cameraMove.XAxisValue;
+            FreeLook.m_YAxis.Value = cameraMove.YAxisValue;
+            MoveCamRigCancel();
+            return true;
+        }
+
+        public void MoveCamRigCancel()
+        {
+            _startMoveTime = 0;
         }
 
         private void StartCursorGrab()
