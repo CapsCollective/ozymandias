@@ -37,7 +37,7 @@
         Watchtower,
         Markets,
         Tannery,
-        FightingPit,
+        FightingRing,
         Enchanter,
         Plaza,
         BathHouse,

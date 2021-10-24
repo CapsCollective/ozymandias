@@ -57,6 +57,11 @@ namespace Structures
             return _buildings.Count(x => x.Blueprint.type == type);
         }
         
+        public Structure GetRandom(BuildingType type)
+        {
+            return _buildings.Where(x => x.Blueprint.type == type).ToList().SelectRandom();
+        }
+        
         public float GetClosestDistance(Vector3 position)
         {
             // Find distance of closest building to the camera

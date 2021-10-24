@@ -1,4 +1,6 @@
-﻿using Utilities;
+﻿using Inputs;
+using Structures;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Events.Outcomes
@@ -11,8 +13,17 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            buildingName = Manager.Structures.Remove(type);
-            return buildingName != null;
+            if (Manager.Structures.GetCount(type) == 0) return false;
+            Newspaper.OnClosed += DestroyBuilding;
+            return true;
+        }
+
+        private void DestroyBuilding()
+        {
+            Structure building = Manager.Structures.GetRandom(type);
+            Manager.Camera.MoveTo(building.transform.position);
+            buildingName = Manager.Structures.Remove(type); 
+            Newspaper.OnClosed += DestroyBuilding;
         }
 
         protected override string Description => customDescription != "" ?
