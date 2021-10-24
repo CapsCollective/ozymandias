@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using NaughtyAttributes;
 using static Managers.GameManager;
 
 namespace Managers
 {
     public class State : MonoBehaviour
     {
+        public const float TurnTransitionTime = 2f;
+
         public bool Loading => _state == GameState.Loading;
         public bool ToIntro => _state == GameState.ToIntro;
         public bool InIntro => _state == GameState.InIntro;
@@ -31,14 +31,6 @@ namespace Managers
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
         [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
-        [SerializeField] private Light sun;
-        [SerializeField] private float sunSetTime = 2f;
-        [SerializeField] private ParticleSystem glowflies;
-        [SerializeField] private Gradient ambientGradient;   
-        [SerializeField] private Gradient sunColorGradient;
-        [SerializeField] private Gradient skyColorGradient;
-        [SerializeField] private Gradient horizonColorGradient;
-        [SerializeField] private Material skyMaterial;
         [SerializeField] [Range(0, 1)] private float ToDDebug;
 
         private struct CameraMove
@@ -307,39 +299,15 @@ namespace Managers
             OnNextTurnBegin?.Invoke();
             gameCanvasGroup.interactable = false;
             Manager.Jukebox.StartNightAmbience();
-            glowflies.Play();
-            float timer = 0;
-            Transform t = sun.transform;
-            t.DORotate(t.eulerAngles + new Vector3(360,0,0), sunSetTime, RotateMode.FastBeyond360).OnUpdate(() =>
-            {
-                timer += Time.deltaTime / sunSetTime;
-                sun.color = sunColorGradient.Evaluate(timer);
-                RenderSettings.ambientLight = ambientGradient.Evaluate(timer);
-                RenderSettings.fogColor = ambientGradient.Evaluate(timer);
-                //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
-                skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(timer));
-                skyMaterial.SetColor("_HorizonColor", ambientGradient.Evaluate(timer));
-                float windowIntensity = (0.5f - Mathf.Abs(timer % (2 * 0.5f) - 0.5f)) * 2;
-                Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
 
-            }).OnComplete(() => {
+            float timer = 0;
+            DOTween.To(() => timer, x => timer = x, 
+                    TurnTransitionTime, TurnTransitionTime).OnComplete(() =>
+            {
                 OnNextTurnEnd?.Invoke();
                 Manager.EventQueue.Process();
                 gameCanvasGroup.interactable = true;
             });
-        }
-        
-        [Button]
-        private void SetTime()
-        {
-            sun.color = sunColorGradient.Evaluate(ToDDebug);
-            RenderSettings.ambientLight = ambientGradient.Evaluate(ToDDebug);
-            RenderSettings.fogColor = ambientGradient.Evaluate(ToDDebug);
-            //RenderSettings.fogColor = sunColorGradient.Evaluate(timer);
-            skyMaterial.SetColor("_SkyColor", skyColorGradient.Evaluate(ToDDebug));
-            skyMaterial.SetColor("_HorizonColor", horizonColorGradient.Evaluate(ToDDebug));
-            float windowIntensity = (0.5f - Mathf.Abs(ToDDebug % (2*0.5f) - 0.5f)) * 2;
-            Shader.SetGlobalFloat("_WindowEmissionIntensity", windowIntensity);
         }
 
         private void InMenuInit() {}
@@ -440,8 +408,8 @@ namespace Managers
             var lerpTime = curve.Evaluate(_moveAnimTime * multiplier);
 
             // Lerp follow position
-            var followPos = freeLook.Follow.position;
-            var horizontalPos = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
+            Vector3 followPos = freeLook.Follow.position;
+            Vector3 horizontalPos = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
             followPos = Vector3.Lerp(followPos, horizontalPos, lerpTime);
             freeLook.Follow.position = followPos;
                 
