@@ -36,7 +36,7 @@ namespace Quests
             {
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();
-                OnStartClicked?.Invoke((int) adventurerSlider.value, costSlider.value);
+                OnStartClicked?.Invoke((int)adventurerSlider.value, costSlider.value);
             });
         }
 
@@ -91,6 +91,11 @@ namespace Quests
                         adventurerSlider.maxValue = quest.MaxAdventurers;
                         adventurerSlider.value = quest.MaxAdventurers;
                     }
+                    else
+                    {
+                        adventurerSlider.maxValue = quest.adventurers;
+                        adventurerSlider.value = quest.adventurers;
+                    }
                     
                     costSlider.minValue = CostScaleMin;
                     costSlider.maxValue = CostScaleMax;
@@ -98,7 +103,7 @@ namespace Quests
                 }
 
                 // Use slider assigned values
-                int adventurers = quest.IsRadiant ? (int) adventurerSlider.value : quest.adventurers;
+                int adventurers = (int)adventurerSlider.value;
                 int cost = quest.ScaledCost(costSlider.value);
 
                 bool enoughAdventurers = Manager.Adventurers.Removable > adventurers;
