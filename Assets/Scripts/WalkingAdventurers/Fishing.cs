@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using UI;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace WalkingAdventurers
         private Collider _collider;
         private Camera _cam;
         private bool _fishing, _fishCaught;
+        private MaterialPropertyBlock _materialProperty;
+        private static readonly int CharacterDither = Shader.PropertyToID("_CharacterDither");
 
         private void Start()
         {
@@ -36,6 +39,7 @@ namespace WalkingAdventurers
 
         private void OnEnable()
         {
+            _materialProperty = new MaterialPropertyBlock();
             particles.Play(false);
         }
 
@@ -60,6 +64,9 @@ namespace WalkingAdventurers
                 _fishCaught = false;
                 particles.Stop();
                 fisher.SetActive(true);
+                _materialProperty.SetFloat(CharacterDither, 1);
+                var body = GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in body) r.SetPropertyBlock(_materialProperty);
                 StartCoroutine(Algorithms.DelayCall(Random.Range(0.6f, 3f), FishCaught));
             }
         }
