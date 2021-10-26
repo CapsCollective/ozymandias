@@ -10,6 +10,8 @@ namespace WalkingAdventurers
 {
     public class Fishing : MonoBehaviour
     {
+        public static Action OnFishCaught;
+        
         [SerializeField] private Sprite icon;
         [SerializeField] private GameObject fisher;
         [SerializeField] private ParticleSystem particles, splashParticles;
@@ -43,6 +45,7 @@ namespace WalkingAdventurers
             {
                 if (_fishCaught)
                 {
+                    OnFishCaught?.Invoke();
                     Notification.OnNotification.Invoke("You caught a fish!", icon, 0);
                     Manager.Stats.Wealth += 1;
                     UpdateUi();

@@ -63,6 +63,7 @@ namespace Cards
         public bool IsUnlocked(Blueprint blueprint) => Unlocked.Contains(blueprint);
         public bool IsDiscoverable(Blueprint blueprint) => Discoverable.Contains(blueprint);
         public Blueprint Find(BuildingType type) => type == BuildingType.GuildHall ? GuildHall : All.Find(blueprint => blueprint.type == type);
+        public int UnlockedCards => Unlocked.Count;
         #endregion
         
         private void Awake()
