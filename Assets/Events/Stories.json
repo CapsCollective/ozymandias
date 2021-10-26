@@ -238,6 +238,7 @@
     "name": "monastery-1",
     "headline": "Traveling Merchant Inbound",
     "article": "Our scouts have reported to us that the traveling merchant has picked up an intriguing new item, and is on the way to our town now. ",
+    "image": "old-wagon",
     "type": "Story",
     "outcomes": [
       {
@@ -252,7 +253,7 @@
           "name": "monastery-2",
           "headline": "Merchant Real Close Now",
           "article": "Our scouts keep hyping up, whatever it is, must be worth it.",
-          "type": "Story",
+          "image": "old-wagon",
           "outcomes": [
             {
               "type": "FlavourText",
@@ -264,6 +265,7 @@
                 "name": "monastery-3",
                 "headline": "Travelling Merchant Comes to Town",
                 "article": "After days of anticipation, the merchant has finally arrived. \"I've just got the one item on me today, but it's a good find!\"",
+                "image": "old-wagon",
                 "outcomes": [
                   {
                     "type": "SetFlag",
@@ -654,6 +656,68 @@
                     }
                   }
                 ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks-1",
+    "headline": "Commoners Ceramics Cause Complaints!",
+    "article": "For the third time this week, our townsfolk have submitted a formal complaint of adventurers coming into their stores and destroying their precious pots and vases in the pursuit of hidden treasure. \"We've had enough! We're forming our own guild!\" the newly formed league of 'Normal Folk' declared to no one in particular.",
+    "type": "Story",
+    "image": "broken-pottery",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true,
+        "customDescription": "They're just commoners, what trouble could they really cause?"
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "barracks-2",
+          "headline": "Lack of Leadership Loses Lives",
+          "article": "A member from the commoners guild managed to get an entire adventuring party killed earlier today, when their attempt at a heroic charge while yelling their name at full volume gave away their position. \"If you're gonna be getting in our way, least we can do is find you some training!\" We've heard of a retired general not too far from here that might be willing to get them started.",
+          "image": "shouting",
+          "outcomes": [
+            {
+              "type": "AdventurersRemoved",
+              "count": 3,
+              "kill": true
+            },
+            {
+              "type": "QuestAdded",
+              "quest": {
+                "name": "barracks-quest",
+                "title": "Find a General",
+                "description": "The commoners need some leadership if they're going to be any help",
+                "image": "wisdom",
+                "location": "Dock",
+                "adventurers": 4,
+                "baseTurns": 6,
+                "wealthMultiplier": 1.7,
+                "reward": "Better Trained Commoners",
+                "completedEvent": {
+                  "name": "barracks-3",
+                  "headline": "Barracking for the Normal Folks!",
+                  "article": "The questing party has returned with the former General, who, while in no fighting shape, immediately started criticising the towns \"pathetic excuse for a town guard\", and barking orders. His first request is establishing some barracks for training. Adventurers are happily going along with this charade, at least it'll give them some slightly sturdier cannon fodder.",
+                  "image": "wisdom",
+                  "outcomes": [
+                    {
+                      "type": "SetFlag",
+                      "flag": "StoryActive",
+                      "value": false
+                    },
+                    {
+                      "type": "CardUnlocked",
+                      "blueprint": "Barracks"
+                    }
+                  ]
+                }
               }
             }
           ]
