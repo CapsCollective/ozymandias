@@ -226,6 +226,8 @@
     public enum Flag
     {
         StoryActive,
-        Scarecrows
+        Scarecrows,
+        Cosmetics,
+        MineStrike
     }
 }

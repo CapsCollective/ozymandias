@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5446497054727812451
+--- !u!114 &-5451636712669218859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: Our scarecrow dilemma may finally be over...
+  customDescription: Hope you've been hoarding that wealth...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23,22 +23,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: bakery-3
+  m_Name: monastery-2
   m_EditorClassIdentifier: 
-  headline: The Flower Fields
-  article: A beacon of hope for our farmers has come today, as we have retrieved
-    an ancient map that looks to mark the distant homeland of these hazardous scarecrows.
-    While the translation is unclear, it goes on to describe a 'field of flowers',
-    which could be a cure to this curse!
-  image: {fileID: 21300000, guid: 4add54d72c462bf42a06b72699287c84, type: 3}
-  type: 0
+  headline: Merchant Real Close Now
+  article: Our scouts keep hyping up, whatever it is, must be worth it.
+  image: {fileID: 0}
+  type: 3
   headliner: 0
   outcomes:
-  - {fileID: -5446497054727812451}
-  - {fileID: 3851611795169454798}
+  - {fileID: -5451636712669218859}
+  - {fileID: 946600710069652553}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3851611795169454798
+--- !u!114 &946600710069652553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,8 +44,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
+  next: {fileID: 11400000, guid: 937b7b5646107ef4ab4c2246b30b0927, type: 2}
+  toFront: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5860391339527300779
+--- !u!114 &-4549008683077775582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Let her in
+  m_Name: Ancient Blueprint
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 2354692520125936715}
-  - {fileID: 3049922727091942945}
-  - {fileID: 3330003641093660799}
-  costScale: 0
---- !u!114 &-743247320979725704
+  - {fileID: 6839943220621764576}
+  - {fileID: -165680205269575518}
+  costScale: 2
+--- !u!114 &-2832175420704583356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,12 +25,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Politely Decline
   m_EditorClassIdentifier: 
-  customDescription: '"I hope you all starve!" the woman shrieks as she bursts into
-    a pile of rotten, inedible, cake.'
---- !u!114 &-440139314227016586
+  outcomes:
+  - {fileID: 2457307841653605185}
+  costScale: 0
+--- !u!114 &-165680205269575518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,12 +40,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
   customDescription: 
-  next: {fileID: 11400000, guid: abdf78be0bb67e84c9dcc67d69a260e2, type: 2}
-  toFront: 0
+  blueprint: {fileID: 11400000, guid: 1e49bdfd9848d18478bde803ac073dcf, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,21 +55,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: bakery-2
+  m_Name: monastery-3
   m_EditorClassIdentifier: 
-  headline: Let Them Eat Cake
-  article: A kindly old woman appears "I heard you're needing food darling, I offer
-    you this delicious cake, if you just let me in."
-  image: {fileID: 21300000, guid: f2f3dc184dcde0c4297894c2506424d4, type: 3}
+  headline: Travelling Merchant Comes to Town
+  article: After days of anticipation, the merchant has finally arrived. "I've just
+    got the one item on me today, but it's a good find!"
+  image: {fileID: 0}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -440139314227016586}
+  - {fileID: 8598531962038085489}
   choices:
-  - {fileID: -5860391339527300779}
-  - {fileID: 4446605543041980738}
+  - {fileID: -4549008683077775582}
+  - {fileID: -2832175420704583356}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2354692520125936715
+--- !u!114 &2457307841653605185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,9 +81,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: '"I''m glad you are so welcoming, I hope to see you all soon..."
-    the woman exclaims before bursting into a pile of delicious cakes.'
---- !u!114 &3049922727091942945
+  customDescription: '"Ahh what a shame, I was looking forward to this payday."'
+--- !u!114 &6839943220621764576
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,40 +91,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: '"The blueprints look to be for an impressive monastery."'
+--- !u!114 &8598531962038085489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
   customDescription: 
-  baseAmount: 5
---- !u!114 &3330003641093660799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 6
-  amount: 50
-  turns: 5
-  reason: from the the witches cakes
---- !u!114 &4446605543041980738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Turn her away
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -743247320979725704}
-  costScale: 0
+  flag: 0
+  value: 0

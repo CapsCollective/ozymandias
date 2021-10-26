@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6904328190809099863
+--- !u!114 &-4570248533298659166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChainEvent
   m_EditorClassIdentifier: 
   customDescription: 
-  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
+  next: {fileID: 11400000, guid: c010f9b7901e895439277d46c607c382, type: 2}
   toFront: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -25,23 +25,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: bakery-1
+  m_Name: tailor-1
   m_EditorClassIdentifier: 
-  headline: Scarecrows!
-  article: Farmers have awoken to a shock, as their scarecrows have up and started
-    walking about! They have become territorial of their fields to anyone trying
-    to harvest the produce. Local monster experts recommend "Burning it all down
-    first chance you get."
-  image: {fileID: 21300000, guid: 5e297a6d605b174458fe492cd99a5acf, type: 3}
+  headline: A Tailor of Two Cities
+  article: Visitors from a nearby settlement have come by, wearing flashy clothes
+    and hats. We've learned that a tailor has been designing unique clothes
+  image: {fileID: 21300000, guid: 2c5b363d495c0fd4c9eb5ce98859614b, type: 3}
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 2008586187499011265}
-  - {fileID: 5745093176204468762}
-  - {fileID: -6904328190809099863}
+  - {fileID: 1460246336252847546}
+  - {fileID: -4570248533298659166}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2008586187499011265
+--- !u!114 &1460246336252847546
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,21 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>5 Threat per farm until this is resolved</color>
-  flag: 1
-  value: 1
---- !u!114 &5745093176204468762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: 
+  customDescription: We should keep an eye on this growing trend...
   flag: 0
   value: 1

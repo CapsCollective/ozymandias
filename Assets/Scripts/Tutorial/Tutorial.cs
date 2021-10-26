@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Inputs;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using NaughtyAttributes;
 using Utilities;
 using static Managers.GameManager;
 
@@ -89,7 +89,6 @@ namespace Tutorial
             {
                 Text = t,
                 Toggle = objective.GetComponentInChildren<Toggle>(),
-                Completed = false
             };
         }
 
@@ -206,7 +205,6 @@ namespace Tutorial
         {
             public TextMeshProUGUI Text;
             public Toggle Toggle;
-            public bool Completed;
         }
     }
 

@@ -52,7 +52,7 @@ namespace Structures
         public AdjacencyConfiguration adjacencyConfig;
 
         public bool Free { get; set; }
-        private const float BuildingCostScale = 1.35f;
+        private const float BuildingCostScale = 1.5f;
         private const float BaseRefundPercentage = 5f; // Representing 50%
         
         public int ScaledCost => Free ? 0 :

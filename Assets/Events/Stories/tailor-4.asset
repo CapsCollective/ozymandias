@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6904328190809099863
+--- !u!114 &-5000866077512347912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
   customDescription: 
-  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
-  toFront: 0
+  blueprint: {fileID: 11400000, guid: 45371a86b03af9745a511db33d6725fc, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25,23 +24,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: bakery-1
+  m_Name: tailor-4
   m_EditorClassIdentifier: 
-  headline: Scarecrows!
-  article: Farmers have awoken to a shock, as their scarecrows have up and started
-    walking about! They have become territorial of their fields to anyone trying
-    to harvest the produce. Local monster experts recommend "Burning it all down
-    first chance you get."
+  headline: 
+  article: Our heroic party has 'retrieved' the tailor from our neighbours, who has
+    agreed to produce clothes for us. However, this has come just as the trend has
+    died down. No longer do they care about clothes, "It's all about those dances,
+    now!", an adventurer yelled at our reporter while performing a copyright free
+    dance move.
   image: {fileID: 21300000, guid: 5e297a6d605b174458fe492cd99a5acf, type: 3}
-  type: 3
+  type: 0
   headliner: 0
   outcomes:
-  - {fileID: 2008586187499011265}
-  - {fileID: 5745093176204468762}
-  - {fileID: -6904328190809099863}
+  - {fileID: 2732136756088271458}
+  - {fileID: 5004555814121008000}
+  - {fileID: -5000866077512347912}
+  - {fileID: 7684213558924242482}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2008586187499011265
+--- !u!114 &2732136756088271458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,10 +54,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>5 Threat per farm until this is resolved</color>
-  flag: 1
-  value: 1
---- !u!114 &5745093176204468762
+  customDescription: <color=#007000ff>Adventurers are now fully spending in our town
+    again!</color>
+  flag: 2
+  value: 0
+--- !u!114 &5004555814121008000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,4 +72,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   flag: 0
-  value: 1
+  value: 0
+--- !u!114 &7684213558924242482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 13ab3f39d09cab547b83e408e02485af, type: 2}

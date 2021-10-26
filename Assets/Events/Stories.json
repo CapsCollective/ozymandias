@@ -1,5 +1,34 @@
 ﻿[
   {
+    "name": "time-loop-1",
+    "headline": "Local Reporter Stuck in a Time Loop!",
+    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please report back.",
+    "image": "empty-hourglass",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "time-loop-2",
+          "headline": "Local Reporter Stuck in a Time Loop!",
+          "article": "Seriously, it's been three days now, I don't what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
+          "image": "empty-hourglass",
+          "outcomes": [
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "time-loop-3",
+                "headline": "Reporter Doesn't Know How Dates Work",
+                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
+                "image": "empty-hourglass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
     "name": "bakery-1",
     "headline": "Scarecrows!",
     "article": "Farmers have awoken to a shock, as their scarecrows have up and started walking about! They have become territorial of their fields to anyone trying to harvest the produce. Local monster experts recommend \"Burning it all down first chance you get.\"",
@@ -120,48 +149,89 @@
   },
   {
     "name": "plaza-1",
-    "headline": "Mime Requests Rescue",
-    "article": "A silent stranger walked into the guild hall today with a request. After a long drawn out game of charades with the mime it was understood that he is part of a circus troupe of street performers. However, his entire troupe has been kidnapped, with only him escaping... silently. Rescue the troupe and we may have a performance in town!",
+    "headline": "Performance With an Edge!",
+    "article": "A controversial new performer, Gol Brojan has joined the town today. He's stirred up the other performers, claiming their 'too safe', with his act involving dangerous stunts, giving the audience knives to throw at him during his routine. The influence he has on our town remains to be seen.",
     "type": "Story",
     "image": "drama-masks",
     "outcomes": [
       {
         "type": "SetFlag",
         "flag": "StoryActive",
-        "value": true
+        "value": true,
+        "customDescription": "We should keep an eye on this one..."
       },
       {
-        "type": "QuestAdded",
-        "quest": {
-          "name": "plaza-quest",
-          "title": "Rescue the Circus",
-          "description": "The troupe has been kidnapped by raiders!",
-          "image": "drama-masks",
-          "location": "Dock",
-          "adventurers": 3,
-          "baseTurns": 3,
-          "wealthMultiplier": 1.5,
-          "reward": "A new performance space",
-          "completedEvent": {
-            "name": "plaza-2",
-            "headline": "The Day the Circus Came to Town",
-            "article": "Adventures returned after a circus rescue with their cart, but what looked like no performers. This was until one by one, and improbable amount stepped out, and rejoined the grateful mime. The circus likes to perform on the streets and requests building public areas.",
-            "image": "human-pyramid",
-            "outcomes": [
-              {
-                "type": "SetFlag",
-                "flag": "StoryActive",
-                "value": false,
-                "customDescription": "They've given us some designs for a public performance space."
-              },
-              {
-                "type": "CardUnlocked",
-                "blueprint": "Plaza"
-              }
-            ]
+        "type": "AdventurersAdded",
+        "adventurers": [
+          {
+            "name": "Gol Brojan",
+            "guild": "Outrider"
           }
+        ],
+        "customDescription": "Gol Brojan has started performing (+1 Performer)"
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "plaza-2",
+          "headline": "Adventurer Tragically Deplatformed",
+          "article": "In an attempt to catch the growing trend of death defying acts, a performer was killed today when the hastily made stage of swords collapsed beneath them. The blame has turned to Gol Brojan, the influential figure at the forefront of this movement. \"You squares just don't understand REAL art!\" he was quoted saying, before leaving the town to form the competing Cirque Du Slay.",
+          "image": "human-pyramid",
+          "outcomes": [
+            {
+              "type": "AdventurersRemoved",
+              "count": 1,
+              "guild": "Performer",
+              "kill": true
+            },
+            {
+              "type": "AdventurersRemoved",
+              "count": 3,
+              "guild": "Performer",
+              "customDescription": "Gol and his supporters leave the town to form their own troupe (-3 Performers)."
+            },
+            {
+              "type": "QuestAdded",
+              "quest": {
+                "name": "plaza-quest",
+                "title": "Cirque Du Slay",
+                "description": "Gol Brogan and his canceled crew have to be dealt with.",
+                "image": "drama-masks",
+                "location": "Dock",
+                "adventurers": 4,
+                "wealthMultiplier": 1.5,
+                "baseTurns": 3,
+                "reward": "A new performance space",
+                "completedEvent": {
+                  "name": "plaza-3",
+                  "headline": "Pay Day for Cirque Du Slay",
+                  "article": "A resolution has been struck with the Cirque Du Slay, with Gol and co agreeing to return, as long as we construct new 'safe spaces' for them to perform their acts. With the correct precautions in place, they will be able to juggle all the fireballs they desire, providing entertainment to the town.",
+                  "image": "human-pyramid",
+                  "outcomes": [
+                    {
+                      "type": "AdventurersAdded",
+                      "count": 3,
+                      "guild": "Performer",
+                      "customDescription": "Gol and his supporters rejoin the town (+3 Performers)."
+                    },
+                    {
+                      "type": "SetFlag",
+                      "flag": "StoryActive",
+                      "value": false,
+                      "customDescription": "They've given us some designs for a public performance space."
+                    },
+                    {
+                      "type": "CardUnlocked",
+                      "blueprint": "Plaza"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
+      
     ]
   },
   {
@@ -204,7 +274,7 @@
                 "choices": [
                   {
                     "name": "Ancient Blueprint",
-                    "costScale": 3.5,
+                    "costScale": 2,
                     "outcomes": [
                       {
                         "type": "FlavourText",
@@ -352,7 +422,7 @@
     "article": "Reports have come in that the dwarves in the nearby mountains have been working their children in the mines. Their leader sent out a memo explaining \"They're so tiny, they can fit in the little gaps where all the good stuff is.\" Guild Co upper management have forbid us from trading with them if this continues.",
     "type": "Story",
     "image": "war-pick",
-    "choice": [
+    "choices": [
       {
         "name": "Impose Child Labour Laws",
         "outcomes": [
@@ -550,6 +620,7 @@
                 "name": "armoury-3",
                 "headline": "Aware(wolf) of the Dangers",
                 "article": "Shocking revelations this morning as newly introduced member to our town (who you may remember mysteriously stumbling out of the woods) 'Red' has confessed to being the werewolf behind the recent attack! Coming to her defence, Mr. Woodsman pleads that to cure her we must defeat the grand-matriarch werewolf (known as 'Granny').",
+                "image": "werewolf",
                 "outcomes": [
                   {
                     "type": "QuestAdded",
@@ -559,15 +630,15 @@
                       "description": "Break the curse by defeating the grand-matriarch werewolf.",
                       "image": "werewolf",
                       "location": "Dock",
-                      "adventurers": 8,
+                      "adventurers": 7,
                       "baseTurns": 5,
-                      "wealthMultiplier": 3,
+                      "wealthMultiplier": 2,
                       "reward": "Retrieve our Silver Supply",
                       "completedEvent": {
                         "name": "armoury-4",
                         "headline": "What Crushed Face You Have!",
                         "article": "Our adventurers tracked down the grand-matriarch werewolf to a little cottage. Upon advice from Red, they lured her out with a basket of baked goods before crushing her face with a mace. It was a smashing success! In her shack, there was a plethora of stolen weapons, so much so we could build a whole armoury!",
-                        "image": "Buildings/Jeweller",
+                        "image": "wood-club",
                         "outcomes": [
                           {
                             "type": "SetFlag",
