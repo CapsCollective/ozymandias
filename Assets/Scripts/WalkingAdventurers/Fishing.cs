@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using UI;
 using UnityEngine;
@@ -10,12 +11,16 @@ namespace WalkingAdventurers
 {
     public class Fishing : MonoBehaviour
     {
+        public static Action OnFishCaught;
+        
         [SerializeField] private Sprite icon;
         [SerializeField] private GameObject fisher;
         [SerializeField] private ParticleSystem particles, splashParticles;
         private Collider _collider;
         private Camera _cam;
         private bool _fishing, _fishCaught;
+        private MaterialPropertyBlock _materialProperty;
+        private static readonly int CharacterDither = Shader.PropertyToID("_CharacterDither");
 
         private void Start()
         {
@@ -34,6 +39,7 @@ namespace WalkingAdventurers
 
         private void OnEnable()
         {
+            _materialProperty = new MaterialPropertyBlock();
             particles.Play(false);
         }
 
@@ -43,6 +49,7 @@ namespace WalkingAdventurers
             {
                 if (_fishCaught)
                 {
+                    OnFishCaught?.Invoke();
                     Notification.OnNotification.Invoke("You caught a fish!", icon, 0);
                     Manager.Stats.Wealth += 1;
                     UpdateUi();
@@ -57,6 +64,9 @@ namespace WalkingAdventurers
                 _fishCaught = false;
                 particles.Stop();
                 fisher.SetActive(true);
+                _materialProperty.SetFloat(CharacterDither, 1);
+                var body = GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in body) r.SetPropertyBlock(_materialProperty);
                 StartCoroutine(Algorithms.DelayCall(Random.Range(0.6f, 3f), FishCaught));
             }
         }

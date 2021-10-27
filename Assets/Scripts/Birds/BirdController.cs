@@ -10,6 +10,8 @@ public class BirdController : MonoBehaviour
     {
         public GameObject bird;
         public float flapOffset = 0;
+        public Animator birdAnimator;
+        public Renderer birdRenderer;
     }
 
     [SerializeField] private int _numOfBirds;
@@ -24,11 +26,14 @@ public class BirdController : MonoBehaviour
     private float _disableTimer = 0;
     private float _disableDuration = 0;
     private int[] _birdCount = { 1, 3, 5, 7 };
+    private MaterialPropertyBlock _materialProperty;
     Vector3 _startPos, _midPos, _endPos;
 
     private void OnEnable()
     {
         _timer = 0;
+
+        _materialProperty = new MaterialPropertyBlock();
 
         foreach(Bird b in _birds)
         {
@@ -90,14 +95,16 @@ public class BirdController : MonoBehaviour
             _disableDuration = Random.value * 10;
         }
 
+        _materialProperty.SetFloat("_CharacterDither", _ditherCurve.Evaluate(_timer));
+
         foreach(Bird b in _birds)
         {
-            b.bird.GetComponent<Animator>().SetFloat("Glide", _flapCurve.Evaluate(Mathf.Sin(b.flapOffset + Time.time)));
+            b.birdAnimator.SetFloat("Glide", _flapCurve.Evaluate(Mathf.Sin(b.flapOffset + Time.time)));
+            b.birdRenderer.SetPropertyBlock(_materialProperty);
         }
 
         transform.position = Curve(_startPos, _midPos, _endPos, _timer);
         transform.forward = Curve(_startPos, _midPos, _endPos, _timer + Time.deltaTime) - transform.position;
-        Shader.SetGlobalFloat("BirdDither", _ditherCurve.Evaluate(_timer));
     }
 
     Vector3 GetPointOnCircle(float y)
@@ -125,7 +132,7 @@ public class BirdController : MonoBehaviour
         _birds.Clear();
         foreach(Transform t in transform)
         {
-            _birds.Add(new Bird() { bird = t.gameObject });
+            _birds.Add(new Bird() { bird = t.gameObject, birdAnimator = t.GetComponent<Animator>(), birdRenderer = t.GetComponentInChildren<Renderer>() });
         }
     }
 

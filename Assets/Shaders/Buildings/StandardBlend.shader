@@ -21,6 +21,9 @@
         _EmissionIntensity("Intensity (R)", Float) = 0.0
         _NoiseTex("Noise Texture", 2D) = "white" {}
         _NoiseScale("Noise Scale ", Float) = 0.0
+        
+        _AutumnColor ("Autumn Color", Color) = (1,1,1,1)
+        _SnowColor ("Snow Color", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -69,6 +72,12 @@
         float _Scale;
         float _Stretch;
 
+        float4 _AutumnColor;
+        float4 _SnowColor;
+
+        half _Winter;
+        half _Autumn;
+
         void vert(inout appdata_full v, out Input o) 
         {
             UNITY_INITIALIZE_OUTPUT(Input, o);
@@ -83,9 +92,9 @@
             float blendSamp = tex2D(_BlendTex, float2(IN.wPos.x, IN.wPos.z) / _Scale).r;
             half blendStrength = lerp(0, pow(saturate(_Height - IN.wPos.y), _Exponent) * saturate(blendSamp + .5) * (1 - saturate(IN.blendDot)), _HasGrass);
 
-            fixed4 c = 0;
+            float4 c = 0;
             if (blendStrength > 0.45)
-                c = _Ground;
+                c = lerp(lerp(_Ground, _SnowColor, _Winter), _AutumnColor, _Autumn);
             else
                 c = tex2D(_MainTex, IN.uv_MainTex);
 

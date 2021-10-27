@@ -12,16 +12,29 @@ namespace Achievements
             new Dictionary<GameStat, string>
             {
                 {GameStat.Population, "GREATEST_POPULATION"},
-                {GameStat.Turn, "GREATEST_TURN"}
+                {GameStat.Turn, "GREATEST_TURN"},
+                {GameStat.Cards, "UNLOCKED_CARDS"}
             };
 
         private static readonly Dictionary<Achievement, string> AchievementIDs = 
             new Dictionary<Achievement, string>
             {
-                {Achievement.PetDog, "PET_THE_DOG"},
+                {Achievement.TurnWeek, "TURN_WEEK"},
                 {Achievement.BuildOneBuilding, "BUILD_FIRST_BUILDING"},
+                
+                {Achievement.PetDog, "PET_THE_DOG"},
+                {Achievement.CaughtFish, "GONE_FISHING"},
+                {Achievement.FoundWaterfall, "FIND_WATERFALL"},
+                
+                {Achievement.PopulationHamlet, "POPULATION_HAMLET"},
                 {Achievement.PopulationVillage, "POPULATION_VILLAGE"},
-                {Achievement.TurnMonth, "TURN_MONTH"}
+                {Achievement.PopulationCity, "POPULATION_CITY"},
+                {Achievement.PopulationKingdom, "POPULATION_KINGDOM"},
+                
+                {Achievement.SeasonSummer, "SEASON_SUMMER"},
+                {Achievement.SeasonAutumn, "SEASON_AUTUMN"},
+                {Achievement.SeasonWinter, "SEASON_WINTER"},
+                {Achievement.SeasonSpring, "SEASON_SPRING"},
             };
 
         public static void Unlock(Achievement achievement)
