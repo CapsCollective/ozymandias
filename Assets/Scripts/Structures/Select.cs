@@ -113,16 +113,34 @@ namespace Structures
                     case StructureType.Building:
                         questTitleText.text = "";
                         nameText.text = SelectedStructure.name;
-                        costText.text = SelectedStructure.Blueprint.type == BuildingType.GuildHall ? "Destroy" : $"Refund: {SelectedStructure.Blueprint.Refund}";
-                        buttonCanvasGroup.DOFade(1, 0.5f);
+                        if (SelectedStructure.Blueprint.type == BuildingType.GuildHall)
+                        {
+                            costText.text = Tutorial.Tutorial.Active ? "Disabled" : "Destroy?";
+                            buttonCanvasGroup.DOFade(Tutorial.Tutorial.Active ? 0.7f : 1, 0.5f);
+                        }
+                        else
+                        {
+                            costText.text = $"Refund: {SelectedStructure.Blueprint.Refund}";
+                            buttonCanvasGroup.DOFade(1, 0.5f);
+                        }
                         DisplayEffects();
                         break;
-                    default:
+                    default: // Terrain and Ruins
                         questTitleText.text = "";
                         nameText.text = SelectedStructure.IsRuin ? "Ruins" : "Forest";
                         int cost = SelectedStructure.ClearCost;
-                        costText.text = $"Cost: {SelectedStructure.ClearCost}";
-                        buttonCanvasGroup.DOFade(Manager.Stats.Wealth >= cost ? 1 : 0.7f, 0.5f);
+                        float alpha;
+                        if (Tutorial.Tutorial.Active)
+                        {
+                            costText.text = SelectedStructure.IsRuin ? "Clear" : "Disabled";
+                            alpha = SelectedStructure.IsRuin ? 1 : 0.7f;
+                        }
+                        else
+                        {
+                            costText.text = $"Cost: {SelectedStructure.ClearCost}";
+                            alpha = Manager.Stats.Wealth >= cost ? 1 : 0.7f;
+                        }
+                        buttonCanvasGroup.DOFade(alpha, 0.5f);
                         break;
                 }
             }
@@ -154,7 +172,7 @@ namespace Structures
         private void Update()
         {
             // Don't hover new buildings while a building or card is selected, the camera is moving, or in the UI
-            if (SelectedStructure || CameraMovement.IsMoving || IsSelectionDisabled())
+            if (SelectedStructure || CameraMovement.IsMoving || IsSelectionDisabled() || Tutorial.Tutorial.DisableSelect)
             {
                 HoveredStructure = null;
                 return;
@@ -187,7 +205,7 @@ namespace Structures
         private void ToggleSelect()
         {
             // Make sure that we don't bring up the button if we click on a UI element. 
-            if (IsSelectionDisabled()) return;
+            if (IsSelectionDisabled() || Tutorial.Tutorial.DisableSelect) return;
             
             if (SelectedStructure) // Deselect current building if already selected
             {
@@ -304,13 +322,18 @@ namespace Structures
                         break;
                     case StructureType.Terrain:
                     case StructureType.Ruins:
+                        if (Tutorial.Tutorial.Active)
+                        {
+                            if (SelectedStructure.IsTerrain) return;
+                            break;
+                        }
                         price = SelectedStructure.ClearCost;
                         break;
                 }
                 
                 if (!Manager.Stats.Spend(price)) return;
                 
-                OnClear.Invoke(SelectedStructure);
+                OnClear?.Invoke(SelectedStructure);
                 Manager.Structures.Remove(SelectedStructure);
             }
             Deselect();

@@ -724,5 +724,50 @@
         }
       }
     ]
-  }
+  },
+  {
+    "name": "enchanter-1",
+    "headline": "Wait, Which Witch?",
+    "article": "Rumours there is a witch in the outskirts that is cursing our town. One adventurer claims the Witch made his sword fragile and blunt, another has been given a terrible hangover absolutely unrelated to a night of heavy drinking. These angry adventurers wish to bring the Witch to trial, but we want to hear her side first...",
+    "type": "Story",
+    "image": "uprising",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "enchanter-quest",
+          "title": "Do a Witch Hunt",
+          "description": "Look, I don't like it any more than you, but she might be a help",
+          "image": "witch-face",
+          "location": "Dock",
+          "adventurers": 5,
+          "baseTurns": 4,
+          "wealthMultiplier": 1.6,
+          "reward": "A Witches Magic",
+          "completedEvent": {
+            "name": "enchanter-2",
+            "headline": "No Peace for the Wiccan",
+            "article": "The mob found the evil witch, and accused her of misdeeds. As it turns out, quite the opposite has been happening, and she's been protecting us this whole time. \"But if you want me to stop and for the storm clouds to obliterate you, I can surely do that\". The adventurers quickly backed off. \"Good good, now here's some enchantments, go make your weapons nice and strong and leave me be\" the witch was quoted as the mob started nervously backing off.",
+            "image": "wisdom",
+            "outcomes": [
+              {
+                "type": "SetFlag",
+                "flag": "StoryActive",
+                "value": false
+              },
+              {
+                "type": "CardUnlocked",
+                "blueprint": "Enchanter"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
 ]

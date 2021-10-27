@@ -145,6 +145,11 @@ namespace Structures
             name = blueprint.name; // TODO: We could randomly pick building names?
             StructureType = isRuin ? StructureType.Ruins : StructureType.Building;
             Occupied = Manager.Map.GetCells(blueprint.sections, rootId, rotation);
+            //
+            // Occupied.ForEach(o =>
+            // {
+            //     if (o.Occupied) Manager.Structures.Remove(o.Occupant);
+            // });
 
             // Get the centre and count of all valid cells
             Vector3 centre = new Vector3();

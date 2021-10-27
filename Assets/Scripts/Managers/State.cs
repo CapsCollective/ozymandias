@@ -186,7 +186,7 @@ namespace Managers
 
             SaveFile.LoadState();
             
-            OnLoadingEnd.Invoke();
+            OnLoadingEnd?.Invoke();
             
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 1.0f).OnComplete(() => loadingCanvas.enabled = false);
@@ -292,10 +292,10 @@ namespace Managers
             gameCanvasGroup.interactable = true;
             gameCanvasGroup.blocksRaycasts = true;
             Manager.Inputs.TogglePlayerInput(true);
-            if (Manager.Stats.TurnCounter == 0) OnNewGame.Invoke();
+            if (Manager.Stats.TurnCounter == 0) OnNewGame?.Invoke();
             Manager.Cards.PopCards();
             UpdateUi();
-            EnterState(GameState.InGame);
+            if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
         }
 
         private void InGameInit() { }
@@ -344,7 +344,7 @@ namespace Managers
         
         private void EndGameInit()
         {
-            OnGameEnd.Invoke();
+            OnGameEnd?.Invoke();
             Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;

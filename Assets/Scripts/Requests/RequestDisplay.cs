@@ -50,7 +50,14 @@ namespace Requests
         
         protected override void UpdateUi()
         {
-            if (Request == null)
+            if (Tutorial.Tutorial.Active)
+            {
+                _bookDisplay.description.text = "Complete Tutorial";
+                _bookDisplay.count.text = "";
+                _bookDisplay.tokens.text = "x1";
+                _bookDisplay.slider.gameObject.SetActive(false);
+            }
+            else if (Request == null)
             {
                 _bookDisplay.description.text = "Nothings here yet!";
                 _bookDisplay.count.text = "";

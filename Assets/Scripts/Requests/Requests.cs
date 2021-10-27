@@ -45,7 +45,7 @@ namespace Requests
             Manager.Upgrades.GuildTokens[guild] += _requests[guild].Tokens;
             _requests[guild] = null;
             displays[guild].Request = null;
-            OnRequestCompleted.Invoke(guild);
+            OnRequestCompleted?.Invoke(guild);
         }
 
         public int TokenCount(Guild guild)

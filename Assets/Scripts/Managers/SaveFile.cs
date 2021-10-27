@@ -151,9 +151,13 @@ namespace Managers
                 string saveJson = File.ReadAllText(Application.persistentDataPath + "/Save.json");
                 JsonConvert.PopulateObject(saveJson, this);
             }
-            catch (Exception e)
+            catch
             {
-                Debug.LogWarning($"Save.json read failed, expected on initial play {e}");
+                Debug.LogWarning("Save.json not found, starting tutorial");
+                Tutorial.Tutorial.Active = true;
+                Tutorial.Tutorial.DisableSelect = true;
+
+                Manager.Structures.SpawnTutorialRuins();
             }
 
             Manager.Upgrades.Load(upgrades);
