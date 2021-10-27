@@ -4,6 +4,7 @@ using System.Linq;
 using Adventurers;
 using CielaSpike;
 using DG.Tweening;
+using Events;
 using Inputs;
 using Managers;
 using NaughtyAttributes;
@@ -270,7 +271,7 @@ namespace Tutorial
                 new Line("Now every adventuring town's lifeblood is the Guild Hall. I'll pop one in now, will even clear some space for you, you can thank me later.", onNext: Manager.Structures.SpawnGuildHall),
                 new Line("Pop! I always love doing that.", GuidePose.FingerGuns, ShowGameUi),
                 new Line("TODO: A Bunch of description about the UI and Stats", GuidePose.PointingUp),
-                new Line("Attract some ad", onNext: StartAdventurerObjectives)
+                new Line("Attract some adventurers", onNext: StartAdventurerObjectives)
             });
         }
 
@@ -307,12 +308,19 @@ namespace Tutorial
 
         private void EndTutorialDialogue()
         {
-            ShowDialogue(new List<Line> {
-                new Line("Well, that's all for now!", GuidePose.Neutral),
-                new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over."),
-                new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
-                new Line("Good Luck!", GuidePose.FingerGuns, () => Active = false)
-            });
+            void ShowEndTutorialDialogue()
+            {
+                ShowDialogue(new List<Line> {
+                    new Line("Well, that's all for now!", GuidePose.Neutral),
+                    new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over."),
+                    new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
+                    new Line("Good Luck!", GuidePose.FingerGuns, () => Active = false)
+                });
+                Newspaper.OnClosed -= ShowEndTutorialDialogue;
+            }
+            
+            // Make it only display once the newspaper has been closed
+            Newspaper.OnClosed += ShowEndTutorialDialogue;
         }
 
         #endregion
