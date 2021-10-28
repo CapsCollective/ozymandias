@@ -36,7 +36,7 @@ namespace Tutorial
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private RectTransform dialogue, objectives, topBar, leftButtons, rightButtons, cards, objectiveContainer;
         [SerializeField] private GameObject objectivePrefab, blocker;
-        //[SerializeField] private Button next;
+        [SerializeField] private Button next;
         
         private List<Line> _currentSection;
         private List<Objective> _currentObjectives;
@@ -46,8 +46,7 @@ namespace Tutorial
         private void Start()
         {
             Manager.Inputs.OnDialogueNext.performed += _ => NextLine();
-            Manager.Inputs.OnLeftMouse.performed += _ => NextLine();
-            //next.onClick.AddListener(NextLine);
+            next.onClick.AddListener(NextLine);
                 
             State.OnLoadingEnd += HideGameUi;
             State.OnNewGame += StartTutorial;
