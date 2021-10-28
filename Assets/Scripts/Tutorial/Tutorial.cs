@@ -286,9 +286,18 @@ namespace Tutorial
 
         private void StartAdventurerDialogue()
         {
+            void SpawnGuildHall()
+            {
+                Manager.Camera.MoveTo(Manager.Structures.TownCentre)
+                    .OnComplete(() =>
+                    {
+                        Manager.Structures.SpawnGuildHall();
+                    });
+            }
+
             ShowDialogue(new List<Line> {
                 new Line("Nice! That'll hopefully set us up for some success.", GuidePose.Neutral),
-                new Line("Now every adventuring town's lifeblood is the Guild Hall. I'll pop one in now, will even clear some space for you, you can thank me later.", onNext: Manager.Structures.SpawnGuildHall),
+                new Line("Now every adventuring town's lifeblood is the Guild Hall. I'll pop one in now, will even clear some space for you, you can thank me later.", onNext: SpawnGuildHall),
                 new Line("Pop! I always love doing that.", GuidePose.FingerGuns, ShowGameUi),
                 new Line("This next part's gonna be a bit wordy, so buckle up:\nSee all those badges up there? That's your towns stats...", GuidePose.PointingUp),
                 new Line("There are 5 adventuring guilds, each with their own needs. The happier they are, the more likely an adventurer from that guild will join each turn."),
@@ -353,7 +362,7 @@ namespace Tutorial
                     new Line("Well, that's all for now!", GuidePose.Neutral),
                     new Line("Wait, I totally forgot to mention how the last town got overrun, huh?", GuidePose.Embarrassed),
                     new Line("That bar up the top there is your towns stability, it hits 0, well you can probably guess...", GuidePose.PointingUp),
-                    new Line("You want your defence (total adventurers + defencive buildings) to be larger than threat, which grows over time."),
+                    new Line("You want your defence (total adventurers + defensive buildings) to be larger than threat, which grows over time."),
                     new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over.", GuidePose.Neutral),
                     new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
                     new Line("Good Luck!", GuidePose.FingerGuns, EndTutorial)
