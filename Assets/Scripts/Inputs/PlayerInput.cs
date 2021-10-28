@@ -179,6 +179,14 @@ namespace Inputs
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Dialogue Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""93f5370f-21ac-4d13-9ca7-8da09db794b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -698,6 +706,28 @@ namespace Inputs
                     ""action"": ""Navigate Bookmarks"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fa2d1b9-9baf-47b3-b528-eee9ad2458b9"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Dialogue Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fcd4368-51f4-4c47-8e15-4ee192c4d6c4"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Dialogue Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1117,6 +1147,7 @@ namespace Inputs
             m_Player_SelectCardIndex = m_Player.FindAction("Select Card Index", throwIfNotFound: true);
             m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
             m_Player_NavigateBookmarks = m_Player.FindAction("Navigate Bookmarks", throwIfNotFound: true);
+            m_Player_DialogueNext = m_Player.FindAction("Dialogue Next", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1198,6 +1229,7 @@ namespace Inputs
         private readonly InputAction m_Player_SelectCardIndex;
         private readonly InputAction m_Player_Screenshot;
         private readonly InputAction m_Player_NavigateBookmarks;
+        private readonly InputAction m_Player_DialogueNext;
         public struct PlayerActions
         {
             private @PlayerInput m_Wrapper;
@@ -1222,6 +1254,7 @@ namespace Inputs
             public InputAction @SelectCardIndex => m_Wrapper.m_Player_SelectCardIndex;
             public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
             public InputAction @NavigateBookmarks => m_Wrapper.m_Player_NavigateBookmarks;
+            public InputAction @DialogueNext => m_Wrapper.m_Player_DialogueNext;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1291,6 +1324,9 @@ namespace Inputs
                     @NavigateBookmarks.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
                     @NavigateBookmarks.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
                     @NavigateBookmarks.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
+                    @DialogueNext.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
+                    @DialogueNext.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
+                    @DialogueNext.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1355,6 +1391,9 @@ namespace Inputs
                     @NavigateBookmarks.started += instance.OnNavigateBookmarks;
                     @NavigateBookmarks.performed += instance.OnNavigateBookmarks;
                     @NavigateBookmarks.canceled += instance.OnNavigateBookmarks;
+                    @DialogueNext.started += instance.OnDialogueNext;
+                    @DialogueNext.performed += instance.OnDialogueNext;
+                    @DialogueNext.canceled += instance.OnDialogueNext;
                 }
             }
         }
@@ -1504,6 +1543,7 @@ namespace Inputs
             void OnSelectCardIndex(InputAction.CallbackContext context);
             void OnScreenshot(InputAction.CallbackContext context);
             void OnNavigateBookmarks(InputAction.CallbackContext context);
+            void OnDialogueNext(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
