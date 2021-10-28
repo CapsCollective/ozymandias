@@ -236,7 +236,7 @@ namespace Managers
             {
                 gameCanvasGroup.alpha = 1.0f;
                 SetupGame();
-                f (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
+                if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
                 Manager.Camera.SetCamRig(_startPos);
                 _alreadySkippedIntro = true;
             }

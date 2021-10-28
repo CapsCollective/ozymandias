@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
@@ -61,8 +62,11 @@ namespace Tutorial
             leftButtons.DOAnchorPosX(-150,0.5f);
 
             text.text = lines[0].Dialogue;
+            text.maxVisibleCharacters = lines[0].Dialogue.Length;
             if (lines[0].Pose != null) guide.sprite = poses[lines[0].Pose.Value];
             blocker.SetActive(true);
+            
+            Manager.Jukebox.PlayScrunch();
         }
 
         private void HideDialogue()
@@ -86,8 +90,23 @@ namespace Tutorial
             {
                 Line line = _currentSection[_sectionLine];
                 text.text = line.Dialogue;
+                StopAllCoroutines();
+                StartCoroutine(WriteText(line.Dialogue.Length));
                 if (line.Pose != null) guide.sprite = poses[line.Pose.Value];
             }
+            Manager.Jukebox.PlayClick();
+        }
+
+        private IEnumerator WriteText(int characters)
+        {
+            float time = 0;
+            while (time < 1f)
+            {
+                time += Time.deltaTime;
+                text.maxVisibleCharacters = (int)(characters * time);
+                yield return null;
+            }
+            text.maxVisibleCharacters = characters;
         }
 
         #region Objectives
@@ -156,6 +175,7 @@ namespace Tutorial
         #region Section Callbacks
         private void HideGameUi()
         {
+            if (!Active) return;
             topBar.anchoredPosition = new Vector2(0,200);
             leftButtons.anchoredPosition = new Vector2(-150,0);
             rightButtons.anchoredPosition = new Vector2(0,-230);
@@ -217,7 +237,7 @@ namespace Tutorial
             ShowDialogue(new List<Line> {
                 new Line("Ok, now that's out of the way let's get this show on the road!", GuidePose.Neutral),
                 new Line("There's a few ruins that you can clear to make some space for some new buildings."),
-                new Line("You can do it by selecting the building and the clear button. Then, you can select a card, and place it in the spot!"),
+                new Line("You can do it by selecting the ruin, and then the clear button. Then, you can select a card, and place it in the spot!"),
                 new Line("Space can be tight when building in the forest, so right click to rotate the buildings to fit everything in.", onNext: StartBuildingObjectives)
             });
         }
@@ -270,8 +290,11 @@ namespace Tutorial
                 new Line("Nice! That'll hopefully set us up for some success.", GuidePose.Neutral),
                 new Line("Now every adventuring town's lifeblood is the Guild Hall. I'll pop one in now, will even clear some space for you, you can thank me later.", onNext: Manager.Structures.SpawnGuildHall),
                 new Line("Pop! I always love doing that.", GuidePose.FingerGuns, ShowGameUi),
-                new Line("TODO: A Bunch of description about the UI and Stats", GuidePose.PointingUp),
-                new Line("Attract some adventurers", onNext: StartAdventurerObjectives)
+                new Line("This next part's gonna be a bit wordy, so buckle up:\nSee all those badges up there? That's your towns stats...", GuidePose.PointingUp),
+                new Line("There are 5 adventuring guilds, each with their own needs. The happier they are, the more likely an adventurer from that guild will join each turn."),
+                new Line("Your town also needs housing, which gives a chance to spawn random adventurers, and food, which gives a modifier to all guilds satisfaction."),
+                new Line("As your population grows, you'll need to keep building to keep everyone happy."),
+                new Line("Try attracting some adventurers now!", onNext: StartAdventurerObjectives)
             });
         }
 
@@ -291,18 +314,34 @@ namespace Tutorial
             ClearObjectives();
             _currentObjectives = new List<Objective>
             {
+                CreateObjective("Go To Next Turn"),
+                CreateObjective("Read The News"),
                 CreateObjective("Attract Adventurers", 5),
             };
             _onObjectivesComplete = EndTutorialDialogue;
             ShowObjectives();
 
             Adventurers.Adventurers.OnAdventurerJoin += AdventurerJoin;
+            State.OnNextTurnBegin += NextTurn;
+            Newspaper.OnClosed += ReadNews;
 
+            void NextTurn()
+            {
+                State.OnNextTurnBegin -= NextTurn;
+                CompleteObjective(_currentObjectives[0]);
+            }
+            
+            void ReadNews()
+            {
+                Newspaper.OnClosed -= ReadNews;
+                CompleteObjective(_currentObjectives[1]);
+            }
+            
             void AdventurerJoin(Adventurer adventurer)
             {
-                if (!_currentObjectives[0].Increment()) return;
+                if (!_currentObjectives[2].Increment()) return;
                 Adventurers.Adventurers.OnAdventurerJoin -= AdventurerJoin;
-                CompleteObjective(_currentObjectives[0]);
+                CompleteObjective(_currentObjectives[2]);
             }
         }
 
@@ -312,15 +351,27 @@ namespace Tutorial
             {
                 ShowDialogue(new List<Line> {
                     new Line("Well, that's all for now!", GuidePose.Neutral),
-                    new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over."),
+                    new Line("Wait, I totally forgot to mention how the last town got overrun, huh?", GuidePose.Embarrassed),
+                    new Line("That bar up the top there is your towns stability, it hits 0, well you can probably guess...", GuidePose.PointingUp),
+                    new Line("You want your defence (total adventurers + defencive buildings) to be larger than threat, which grows over time."),
+                    new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over.", GuidePose.Neutral),
                     new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
-                    new Line("Good Luck!", GuidePose.FingerGuns, () => Active = false)
+                    new Line("Good Luck!", GuidePose.FingerGuns, EndTutorial)
                 });
                 Newspaper.OnClosed -= ShowEndTutorialDialogue;
             }
             
             // Make it only display once the newspaper has been closed
             Newspaper.OnClosed += ShowEndTutorialDialogue;
+        }
+
+        private void EndTutorial()
+        {
+            Active = false;
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
+            {
+                ++Manager.Upgrades.GuildTokens[guild];
+            }
         }
 
         #endregion
