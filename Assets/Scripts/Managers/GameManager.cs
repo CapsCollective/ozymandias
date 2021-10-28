@@ -172,7 +172,7 @@ namespace Managers
         [Button("Reset Save File")]
         public void ResetSave()
         {
-            File.Delete(Application.persistentDataPath + "/Save.json");
+            SaveFile.Delete();
         }
         
         [Button("Load All Assets")]
