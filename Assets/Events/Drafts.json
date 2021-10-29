@@ -1,71 +1,28 @@
 ﻿[
-	{
-		"name": "monastery-1",
-		"headline": "Traveling Merchant Inbound",
-		"article": "Our scouts have reported to us that the traveling merchant has picked up an intriguing new item, and is on the way to our town now. ",
-		"type": "Story",
-		"outcomes": [
-			{
-				"type": "SetFlag",
-				"state": "StoryActive",
-				"value": true,
-				"customDescription": "You should start saving up..."
-			},
-			{
-				"type": "ChainEvent",
-				"nextEvent": {
-					"name": "monastery-2",
-					"headline": "Merchant Real Close Now",
-					"article": "Our scouts keep hyping up, whatever it is, must be worth it.",
-					"type": "Story",
-					"outcomes": [
-						{
-							"type": "FlavourText",
-							"customDescription": "Hope you've been hoarding that wealth..."
-						},
-						{
-							"type": "ChainEvent",
-							"nextEvent": {
-								"name": "monastery-3",
-								"headline": "Travelling Merchant Comes to Town",
-								"article": "After days of anticipation, the merchant has finally arrived. \"I've just got the one item on me today, but it's a good find!\"",
-								"outcomes": [
-									{
-										"type": "SetFlag",
-										"state": "StoryActive",
-										"value": false
-									}
-								],
-								"choices": [
-									{
-										"name": "Ancient Blueprint",
-										"costScale": 3.5,
-										"outcomes": [
-											{
-												"type": "FlavourText",
-												"customDescription": "\"The blueprints look to be for an impressive monastery.\""
-											},
-											{
-												"type": "CardUnlocked",
-												"blueprint": "Monastery"
-											}
-										]
-									},
-									{
-										"name": "Politely Decline",
-										"outcomes": [
-											{
-												"type": "FlavourText",
-												"customDescription": "\"Ahh what a shame, I was looking forward to this payday.\""
-											}
-										]
-									}
-								]
-							}
-						}
-					]
-				}
-			}
-		]
-	}
+  {
+    "name": "alcohol-shortage",
+    "headline": "Alcohol Shortage Causes Riots",
+    "article": "Sobriety rates have never been higher, as a recent hops shortage has dried up our taverns. \"There's too much blood in our alcohol stream!\" groans local adventurers who can't fight due to the collective hangovers.",
+    "image": "",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Use Fruits to Make Wine",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "It's not as good as beer, but it'll do."
+          }
+        ]
+      },
+      {
+        "name": "Order a Shipment from Far Off",
+        "outcomes":
+        [
+          
+        ]
+      }
+    ]
+  }
 ]

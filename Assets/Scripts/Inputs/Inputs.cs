@@ -43,6 +43,7 @@ namespace Inputs
         public InputAction OnNavigateCards { get; }
         public InputAction OnSelectCardIndex { get; }
         
+        public InputAction OnDialogueNext{ get; }
 
         public Inputs()
         {
@@ -70,6 +71,9 @@ namespace Inputs
             OnDeselectCards = PlayerInput.Player.DeselectCards;
             OnNavigateCards = PlayerInput.Player.NavigateCards;
             OnSelectCardIndex = PlayerInput.Player.SelectCardIndex;
+            
+            // Dialogue
+            OnDialogueNext = PlayerInput.Player.DialogueNext;
 
             PlayerInput.UI.Enable();
             PlayerInput.Player.Enable();

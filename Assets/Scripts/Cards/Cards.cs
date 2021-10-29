@@ -19,6 +19,7 @@ namespace Cards
         public static Action<Card> OnCardSelected;
         public static Action<Blueprint> OnUnlock;
         public static Action OnDiscoverRuin;
+        public static Action OnBuildingRotate;
 
         [SerializeField] private List<Blueprint> all;
         [SerializeField] private Blueprint guildHall;
@@ -110,11 +111,26 @@ namespace Cards
 
         public Blueprint NewCard()
         {
-            // Reshuffle cards back in, leaving out the ones already in the hand 
-            if (Deck.Count == 0)
-                Deck = Playable.Where(blueprint => !hand.Select(card => card.Blueprint).Contains(blueprint)).ToList();
-            return Deck.PopRandom();
+            // Reshuffle cards back in, leaving out the ones already in the hand
+            while (true)
+            {
+                if (Deck.Count == 0) Deck = new List<Blueprint>(Playable);
+                Blueprint card = Deck.PopRandom();
+                if (!hand.Select(c => c.Blueprint).Contains(card)) return card;
+            }
         }
+
+        public void SetTutorialCards()
+        {
+            hand[0].Blueprint = Find(BuildingType.Herbalist);
+            hand[0].Blueprint.Free = true;
+            hand[1].Blueprint = Find(BuildingType.Watchtower);
+            hand[1].Blueprint.Free = true;
+            hand[2].Blueprint = Find(BuildingType.Inn);
+            hand[2].Blueprint.Free = true;
+            UpdateUi();
+        }
+        
         #endregion
         
         #region Input Management
@@ -138,6 +154,7 @@ namespace Cards
         private void RotateBuilding(InputAction.CallbackContext obj)
         {
             if (!Manager.Cards.SelectedCard) return;
+            OnBuildingRotate?.Invoke();
             _rotation = (_rotation + (int)Mathf.Sign(obj.ReadValue<float>()) + 4) % 4; // + 4 to offset negatives
         }
         

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Managers;
 using Map;
+using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -37,7 +38,7 @@ namespace Structures
         
         private void Awake()
         {
-            State.OnNewGame += SpawnGuildHall;
+            State.OnNewGame += () => { if (!Tutorial.Tutorial.Active) SpawnGuildHall(); };
             State.OnGameEnd += RemoveAll;
             
             object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
@@ -55,6 +56,11 @@ namespace Structures
         public int GetCount(BuildingType type)
         {
             return _buildings.Count(x => x.Blueprint.type == type);
+        }
+        
+        public Structure GetRandom(BuildingType type)
+        {
+            return _buildings.Where(x => x.Blueprint.type == type).ToList().SelectRandom();
         }
         
         public float GetClosestDistance(Vector3 position)
@@ -90,7 +96,7 @@ namespace Structures
         public bool AddBuilding(Blueprint blueprint, int rootId, int rotation = 0, bool isRuin = false)
         {
             Structure structure = Instantiate(structurePrefab, transform).GetComponent<Structure>();
-            // Quests are handled by the quest manager
+            
             if (!structure.CreateBuilding(blueprint, rootId, rotation, isRuin))
             {
                 Destroy(structure.gameObject);
@@ -197,10 +203,18 @@ namespace Structures
         
         private Location NewSpawnLocation() => spawnLocations.SelectRandom();
         
-        private void SpawnGuildHall()
+        [Button("Guild Hall")]
+        public void SpawnGuildHall()
         {
-            foreach (Cell cell in Manager.Map.GetCells(TownCentre, 4).Where(cell => cell.Occupied)) Remove(cell.Occupant);
+            foreach (Cell cell in Manager.Map.GetCells(TownCentre, 4).Where(cell => cell.Occupied && cell.Occupant.IsTerrain)) Remove(cell.Occupant);
             Manager.Structures.AddBuilding(Manager.Cards.GuildHall, SpawnLocation.root, SpawnLocation.rotation);
+        }
+
+        public void SpawnTutorialRuins()
+        {
+            AddBuilding(Manager.Cards.Find(BuildingType.Herbalist), 158, 1, true);
+            AddBuilding(Manager.Cards.Find(BuildingType.Herbalist), 225, 3, true);
+            AddBuilding(Manager.Cards.Find(BuildingType.Herbalist), 445, 2, true);
         }
 
         public StructureDetails Save()
@@ -224,7 +238,7 @@ namespace Structures
                 TownCentre = guildHall.Occupied[0].WorldSpace;
             else
             {
-                SpawnLocation = NewSpawnLocation();
+                SpawnLocation = Tutorial.Tutorial.Active ? spawnLocations[0] : NewSpawnLocation();
                 TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
             }
         }

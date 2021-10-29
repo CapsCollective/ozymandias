@@ -97,7 +97,7 @@ namespace UI
         {
             _transitioning = true;
             _closeState = Manager.State.Current;
-            quitButton.gameObject.SetActive(Manager.State.InGame);
+            quitButton.gameObject.SetActive(Manager.State.InGame && !Tutorial.Tutorial.Active);
             Manager.State.EnterState(GameState.InMenu);
             //Manager.Jukebox.PlayScrunch(); TODO: book sound
             canvas.enabled = true;

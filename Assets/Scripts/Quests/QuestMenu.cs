@@ -37,7 +37,7 @@ namespace Quests
 
         private Quest SelectedQuest
         {
-            get => Current.Count > 0 ? Current[_selectedQuest] : null;
+            get => Current.Count > 0 ? Current[_selectedQuest % Current.Count] : null;
 
             set
             {
@@ -112,7 +112,7 @@ namespace Quests
 
         private static int CycleIdx(int idx, int collectionLength, SwapDir dir)
         {
-            return Math.Abs(idx + (int) dir) % collectionLength;
+            return (idx + (int)dir + collectionLength) % collectionLength; // Loop on positive or negative overflow
         }
 
         private void ChangeQuest(SwapDir dir)

@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7264877564254577713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: e9d53400032eda542af87c48e3e562bd, type: 2}
-  toFront: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,17 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: enchanter-2
   m_EditorClassIdentifier: 
-  headline: Merchant Real Close Now
-  article: Our scouts keep hyping up, whatever it is, must be worth it.
-  image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
+  headline: No Peace for the Wiccan
+  article: The mob found the evil witch, and accused her of misdeeds. As it turns
+    out, quite the opposite has been happening, and she's been protecting us this
+    whole time. "But if you want me to stop and for the storm clouds to obliterate
+    you, I can surely do that". The adventurers quickly backed off. "Good good, now
+    here's some enchantments, go make your weapons nice and strong and leave me be"
+    the witch was quoted as the mob started nervously backing off.
+  image: {fileID: 21300000, guid: b4f126b026aabf846980238feea3a505, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 9091912285156113351}
-  - {fileID: -7264877564254577713}
+  - {fileID: 4054918465809463366}
+  - {fileID: 1509561405311574191}
+  - {fileID: 1536691047120949480}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &9091912285156113351
+--- !u!114 &1509561405311574191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +37,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
-  customDescription: Hope you've been hoarding that wealth...
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: 0a34f29438590124498e039055016f0c, type: 2}
+--- !u!114 &1536691047120949480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 2da3aa6eacf9d3f428d11d05a0da0767, type: 2}
+--- !u!114 &4054918465809463366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 0

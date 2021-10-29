@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6745613629643972891
+--- !u!114 &-7817179293453962464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,26 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
---- !u!114 &-1505745085739675445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
---- !u!114 &-861964511401498828
+  customDescription: <color=#007000ff>Farms no longer increase threat!</color>
+  flag: 1
+  value: 0
+--- !u!114 &-5096217649235280355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,13 +52,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 1531892558061167993}
-  - {fileID: -861964511401498828}
-  - {fileID: -6745613629643972891}
-  - {fileID: -1505745085739675445}
+  - {fileID: -7817179293453962464}
+  - {fileID: -5096217649235280355}
+  - {fileID: 8829326497920030576}
+  - {fileID: 7877022322874386825}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1531892558061167993
+--- !u!114 &7877022322874386825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,9 +67,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
   m_EditorClassIdentifier: 
-  customDescription: <color=#007000ff>Farms no longer increase threat!</color>
-  flag: 1
-  value: 0
+  customDescription: 
+  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
+--- !u!114 &8829326497920030576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}

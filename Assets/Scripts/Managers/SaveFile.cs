@@ -106,8 +106,12 @@ namespace Managers
         public AchievementDetails achievements;
         public Dictionary<Guild, RequestDetails> requests;
         public UpgradeDetails upgrades;
+
+        private static readonly string SaveFilePath = Application.persistentDataPath + "/Save.json";
+
         public static void SaveState()
         {
+            if (Tutorial.Tutorial.Active) return; // No saving during tutorial
             OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
             new SaveFile().Save();
         }
@@ -115,6 +119,11 @@ namespace Managers
         public static void LoadState()
         {
             new SaveFile().Load();
+        }
+
+        public static void Delete()
+        {
+            File.Delete(SaveFilePath);
         }
 
         public void Save()
@@ -140,19 +149,23 @@ namespace Managers
             //achievements = Manager.Achievements.Save();
             requests = Manager.Requests.Save();
             upgrades = Manager.Upgrades.Save();
-            File.WriteAllText(Application.persistentDataPath + "/Save.json", JsonConvert.SerializeObject(this));
+            File.WriteAllText(SaveFilePath, JsonConvert.SerializeObject(this));
         }
 
         public void Load()
         {
             try
             {
-                string saveJson = File.ReadAllText(Application.persistentDataPath + "/Save.json");
+                string saveJson = File.ReadAllText(SaveFilePath);
                 JsonConvert.PopulateObject(saveJson, this);
             }
-            catch (Exception e)
+            catch
             {
-                Debug.LogWarning($"Save.json read failed, expected on initial play {e}");
+                Debug.LogWarning("Save.json not found, starting tutorial");
+                Tutorial.Tutorial.Active = true;
+                Tutorial.Tutorial.DisableSelect = true;
+
+                Manager.Structures.SpawnTutorialRuins();
             }
 
             Manager.Upgrades.Load(upgrades);
@@ -162,12 +175,11 @@ namespace Managers
             if(Manager.Structures.Count == 0) Manager.Map.FillGrid();
             Manager.EventQueue.Load(eventQueue);
             Manager.Requests.Load(requests);
-
-            if (Manager.Stats.TurnCounter != 0) // Only for continuing a game
-            {
-                Manager.Adventurers.Load(adventurers);
-                Manager.Quests.Load(quests);
-            }
+            
+            // If continuing a game
+            if (Manager.Stats.TurnCounter == 0) return;
+            Manager.Adventurers.Load(adventurers);
+            Manager.Quests.Load(quests);
         }
     }
 }

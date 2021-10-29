@@ -1,97 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8162163937007332813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Orb of Slope Detection
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 3161607848186397305}
-  - {fileID: -6994236966411194575}
-  costScale: 0.75
---- !u!114 &-6994236966411194575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 0
-  amount: 4
-  turns: -1
-  reason: from Orb of Slope Detection
---- !u!114 &-5027242805715774939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 2
-  amount: 4
-  turns: -1
-  reason: from the Cute Lute
---- !u!114 &-297086339334634764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: I'm Good for Now
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 9162949457532770951}
-  costScale: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: item-shop-2
-  m_EditorClassIdentifier: 
-  headline: Travelling Merchant Comes to Town
-  article: An old wagon rolled into town today, containing all manner of mystical
-    items. The equally old owner of the store offers to sell you can item from their
-    selection.
-  image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
-  type: 2
-  headliner: 0
-  outcomes: []
-  choices:
-  - {fileID: 6185759199776478073}
-  - {fileID: 6517115052237256485}
-  - {fileID: -8162163937007332813}
-  - {fileID: -297086339334634764}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &1980265347535690772
+--- !u!114 &-8384372373874739662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,23 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: This little lute plays the most adorable songs. The performers
-    love to sing along.
---- !u!114 &3161607848186397305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: This mystical object shifts itself to the lowest point of any
-    surface. The brawlers are mystified by it's power and play with it endlessly...
---- !u!114 &4598104503365501104
+  customDescription: '"Alrighty, I''ll come back another time!"'
+--- !u!114 &-5004775167216168647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,39 +30,7 @@ MonoBehaviour:
   amount: 3
   turns: -1
   reason: from the Energising Beans
---- !u!114 &6185759199776478073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Magic Beans
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 7343656116856620750}
-  - {fileID: 4598104503365501104}
-  costScale: 1.3
---- !u!114 &6517115052237256485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: The Cute Lute
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 1980265347535690772}
-  - {fileID: -5027242805715774939}
-  costScale: 0.75
---- !u!114 &7343656116856620750
+--- !u!114 &-3570252080701312948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,7 +44,97 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: These magic beans energise adventurers when made into a bitter
     potion. We've been awake for 3 days and never felt better!
---- !u!114 &9162949457532770951
+--- !u!114 &-3192081323908912885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Magic Beans
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -3570252080701312948}
+  - {fileID: -5004775167216168647}
+  costScale: 1.3
+--- !u!114 &-3072085562672295577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: I'm Good for Now
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -8384372373874739662}
+  costScale: 0
+--- !u!114 &-2822644521122019938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 0
+  amount: 4
+  turns: -1
+  reason: from Orb of Slope Detection
+--- !u!114 &-2619046149265521788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: The Cute Lute
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 1013931496726771476}
+  - {fileID: 2129676192604912641}
+  costScale: 0.75
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: item-shop-2
+  m_EditorClassIdentifier: 
+  headline: Travelling Merchant Comes to Town
+  article: An old wagon rolled into town today, containing all manner of mystical
+    items. The equally old owner of the store offers to sell you an item from their
+    selection.
+  image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
+  type: 2
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -3192081323908912885}
+  - {fileID: -2619046149265521788}
+  - {fileID: 7534988302387056213}
+  - {fileID: -3072085562672295577}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &1013931496726771476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,4 +146,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: '"Alrighty, I''ll come back another time!"'
+  customDescription: This little lute plays the most adorable songs. The performers
+    love to sing along.
+--- !u!114 &2129676192604912641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 2
+  amount: 4
+  turns: -1
+  reason: from the Cute Lute
+--- !u!114 &3337545105765775942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: This mystical object shifts itself to the lowest point of any
+    surface. The brawlers are mystified by it's power and play with it endlessly...
+--- !u!114 &7534988302387056213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Orb of Slope Detection
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 3337545105765775942}
+  - {fileID: -2822644521122019938}
+  costScale: 0.75

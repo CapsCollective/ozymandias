@@ -48,6 +48,9 @@ namespace Events
             public Guild guild;
             public bool anyGuild, kill;
 
+            // Building Damaged
+            public BuildingType buildingType;
+            
             // Card Unlock blueprint
             public string blueprint;
             
@@ -165,6 +168,10 @@ namespace Events
                         outcome = ScriptableObject.CreateInstance<AdventurersRemoved>();
                         ((AdventurersRemoved)outcome).count = config.count;
                         ((AdventurersRemoved)outcome).kill = config.kill;
+                        break;
+                    case OutcomeType.BuildingDamaged:
+                        outcome = ScriptableObject.CreateInstance<BuildingDamaged>();
+                        ((BuildingDamaged)outcome).type = config.buildingType;
                         break;
                     case OutcomeType.CardUnlocked:
                         outcome = ScriptableObject.CreateInstance<CardUnlocked>();

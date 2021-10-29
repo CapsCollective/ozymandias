@@ -63,7 +63,7 @@ namespace Managers
         {
             if ((int) stat < 5) // If the stat is for an adventuring category
                 return GetSatisfaction((Guild)stat);
-            return GetStat(stat) - Manager.Adventurers.Count;
+            return GetStat(stat) - Manager.Adventurers.Available;
         }
 
         public int SpawnChance(Guild guild)
@@ -115,7 +115,7 @@ namespace Managers
             TurnCounter = 1;
             BaseThreat = 0;
             Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
-            Wealth = 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
+            Wealth = Tutorial.Tutorial.Active ? 0 : 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
             {
                 ModifiersTotal[stat] = 0;

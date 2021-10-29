@@ -37,7 +37,7 @@
         Watchtower,
         Markets,
         Tannery,
-        FightingPit,
+        FightingRing,
         Enchanter,
         Plaza,
         BathHouse,
@@ -159,7 +159,8 @@
         InMenu,    // │ ├─InIntro◄─┴──ToIntro◄─┤─┐  │  │
         EndGame,   // │ └►ToCredits─►InCredits─┘ │  ▼  │
         ToCredits, // │                        GameEnd │
-        InCredits  // └────────────────────────────────┘
+        InCredits, // └────────────────────────────────┘
+        InDialogue
     }
 
     public enum UpgradeType
@@ -225,6 +226,8 @@
     public enum Flag
     {
         StoryActive,
-        Scarecrows
+        Scarecrows,
+        Cosmetics,
+        MineStrike
     }
 }

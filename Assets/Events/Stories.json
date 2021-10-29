@@ -1,5 +1,34 @@
 ﻿[
   {
+    "name": "time-loop-1",
+    "headline": "Local Reporter Stuck in a Time Loop!",
+    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please report back.",
+    "image": "empty-hourglass",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "time-loop-2",
+          "headline": "Local Reporter Stuck in a Time Loop!",
+          "article": "Seriously, it's been three days now, I don't what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
+          "image": "empty-hourglass",
+          "outcomes": [
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "time-loop-3",
+                "headline": "Reporter Doesn't Know How Dates Work",
+                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
+                "image": "empty-hourglass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
     "name": "bakery-1",
     "headline": "Scarecrows!",
     "article": "Farmers have awoken to a shock, as their scarecrows have up and started walking about! They have become territorial of their fields to anyone trying to harvest the produce. Local monster experts recommend \"Burning it all down first chance you get.\"",
@@ -24,6 +53,40 @@
           "headline": "Let Them Eat Cake",
           "article": "A kindly old woman appears \"I heard you're needing food darling, I offer you this delicious cake, if you just let me in.\"",
           "image": "witch-face",
+          "choices":
+          [
+            {
+              "name": "Let her in",
+              "outcomes": [
+                {
+                  "type": "FlavourText",
+                  "customDescription": "\"I'm glad you are so welcoming, I hope to see you all soon...\" the woman exclaims before bursting into a pile of delicious cakes."
+                },
+                {
+                  "type": "ThreatAdded",
+                  "baseAmount": 5
+                },
+                {
+                  "type": "ModifierAdded",
+                  "modifier": {
+                    "toChange": "Food",
+                    "amount": 50,
+                    "turns": 5,
+                    "reason": "from the the witches cakes"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Turn her away",
+              "outcomes": [
+                {
+                  "type": "FlavourText",
+                  "customDescription": "\"I hope you all starve!\" the woman shrieks as she bursts into a pile of rotten, inedible, cake."
+                }
+              ]
+            }
+          ],
           "outcomes": 
           [
             {
@@ -46,8 +109,8 @@
                       "description": "The scarecrows homeland  are the only thing stopping us from ",
                       "image": "flowers",
                       "location": "Dock",
-                      "adventurers": 3,
-                      "baseTurns": 3,
+                      "adventurers": 5,
+                      "baseTurns": 4,
                       "wealthMultiplier": 1.5,
                       "reward": "A new food source",
                       "completedEvent": {
@@ -79,62 +142,115 @@
                 ]
               }
             }
-          ],
-          "choices":
-          [
-            {
-              "name": "Let her in",
-              "outcomes": [
-                {
-                  "type": "FlavourText",
-                  "customDescription": "\"I'm glad you are so welcoming, I hope to see you all soon...\" the woman exclaims before bursting into a pile of delicious cakes."
-                },
-                {
-                  "type": "ThreatAdded",
-                  "baseAmount": 5
-                },
-                {
-                  "type": "ModifierAdded",
-                  "modifier": {
-                    "toChange": "Food",
-                    "amount": 20,
-                    "turns": 5,
-                    "reason": "from the the witches cakes"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Turn her away",
-              "outcomes": [
-                {
-                  "type": "FlavourText",
-                  "customDescription": "\"I hope you all starve!\" the woman shrieks as she bursts into a pile of rotten, inedible, cake."
-                }
-              ]
-            }
           ]
         }
       }
     ]
   },
   {
-    "name": "enchanter-1",
-    "headline": "Traveling Merchant Inbound",
-    "article": "Our scouts have reported to us that the traveling merchant has picked up an intriguing new item, and is on the way to our town now. ",
+    "name": "plaza-1",
+    "headline": "Performance With an Edge!",
+    "article": "A controversial new performer, Gol Brojan has joined the town today. He's stirred up the other performers, claiming they're 'too safe', with his act involving dangerous stunts, giving the audience knives to throw at him during his routine. The influence he has on our town remains to be seen.",
     "type": "Story",
-    "image": "old-wagon",
+    "image": "drama-masks",
     "outcomes": [
       {
         "type": "SetFlag",
         "flag": "StoryActive",
+        "value": true,
+        "customDescription": "We should keep an eye on this one..."
+      },
+      {
+        "type": "AdventurersAdded",
+        "adventurers": [
+          {
+            "name": "Gol Brojan",
+            "guild": "Outrider"
+          }
+        ],
+        "customDescription": "Gol Brojan has started performing (+1 Performer)"
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "plaza-2",
+          "headline": "Performer Tragically Deplatformed",
+          "article": "In a growing hunger for death-defying acts, a performer has tragically fallen to their death as the audience literally ripped the stage out from under them. The blame has turned to Gol Brojan, the influential figure at the forefront of this \"edgy entertainment\" movement. 'You squares just don't understand REAL art!' he remarked before leaving the town to form a new enterprise, Cirque Du Slay.",
+          "image": "human-pyramid",
+          "outcomes": [
+            {
+              "type": "AdventurersRemoved",
+              "count": 1,
+              "guild": "Performer",
+              "kill": true
+            },
+            {
+              "type": "AdventurersRemoved",
+              "count": 3,
+              "guild": "Performer",
+              "customDescription": "Gol and his supporters leave the town to form their own troupe (-3 Performers)."
+            },
+            {
+              "type": "QuestAdded",
+              "quest": {
+                "name": "plaza-quest",
+                "title": "Cirque Du Slay",
+                "description": "Gol Brogan and his canceled crew have to be dealt with.",
+                "image": "drama-masks",
+                "location": "Dock",
+                "adventurers": 4,
+                "wealthMultiplier": 1.5,
+                "baseTurns": 3,
+                "reward": "A new performance space",
+                "completedEvent": {
+                  "name": "plaza-3",
+                  "headline": "Pay Day for Cirque Du Slay",
+                  "article": "A resolution has been struck with the Cirque Du Slay, with Gol and co agreeing to return, as long as we construct new 'safe spaces' for them to perform their acts. With the correct precautions in place, they will be able to juggle all the fireballs they desire, providing entertainment to the town.",
+                  "image": "human-pyramid",
+                  "outcomes": [
+                    {
+                      "type": "AdventurersAdded",
+                      "count": 3,
+                      "guild": "Performer",
+                      "customDescription": "Gol and his supporters rejoin the town (+3 Performers)."
+                    },
+                    {
+                      "type": "SetFlag",
+                      "flag": "StoryActive",
+                      "value": false,
+                      "customDescription": "They've given us some designs for a public performance space."
+                    },
+                    {
+                      "type": "CardUnlocked",
+                      "blueprint": "Plaza"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+      
+    ]
+  },
+  {
+    "name": "monastery-1",
+    "headline": "Traveling Merchant Inbound",
+    "article": "Our scouts have reported to us that the traveling merchant has picked up an intriguing new item, and is on the way to our town now. ",
+    "image": "old-wagon",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "state": "StoryActive",
         "value": true,
         "customDescription": "You should start saving up..."
       },
       {
         "type": "ChainEvent",
         "nextEvent": {
-          "name": "enchanter-2",
+          "name": "monastery-2",
           "headline": "Merchant Real Close Now",
           "article": "Our scouts keep hyping up, whatever it is, must be worth it.",
           "image": "old-wagon",
@@ -146,29 +262,29 @@
             {
               "type": "ChainEvent",
               "nextEvent": {
-                "name": "enchanter-3",
+                "name": "monastery-3",
                 "headline": "Travelling Merchant Comes to Town",
                 "article": "After days of anticipation, the merchant has finally arrived. \"I've just got the one item on me today, but it's a good find!\"",
                 "image": "old-wagon",
                 "outcomes": [
                   {
                     "type": "SetFlag",
-                    "flag": "StoryActive",
+                    "state": "StoryActive",
                     "value": false
                   }
                 ],
                 "choices": [
                   {
-                    "name": "Ancient Scrolls",
+                    "name": "Ancient Blueprint",
                     "costScale": 2,
                     "outcomes": [
                       {
                         "type": "FlavourText",
-                        "customDescription": "\"Deciphering the scrolls revealed them to be .\""
+                        "customDescription": "\"The blueprints look to be for an impressive monastery.\""
                       },
                       {
                         "type": "CardUnlocked",
-                        "blueprint": "Enchanter"
+                        "blueprint": "Monastery"
                       }
                     ]
                   },
@@ -190,11 +306,431 @@
     ]
   },
   {
-    "name": "plaza-1",
-    "headline": "Mime Requests Rescue",
-    "article": "A silent stranger walked into the guild hall today with a request. After a long drawn out game of charades with the mime it was understood that he is part of a circus troupe of street performers. However, his entire troupe has been kidnapped, with only him escaping... silently. Rescue the troupe and we may have a performance in town!",
+    "name": "tailor-1",
+    "headline": "A Tailor of Two Cities",
+    "article": "Visitors from a nearby settlement have come by, wearing flashy clothes and hats. We've learned that a tailor has been designing unique clothes",
     "type": "Story",
-    "image": "drama-masks",
+    "image": "top-hat",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true,
+        "customDescription": "We should keep an eye on this growing trend..."
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "tailor-2",
+          "headline": "Foolish Fashion Fixation!",
+          "article": "Adventurers are spending exorbitant amounts on vanity items, but not with us! \"What's the purpose of life if I can't wear a cool hat?\", an adventurer yelled whilst showing off their exclusive unicorn skin fedora. If we don't start making clothes soon, our town will go bankrupt!",
+          "image": "top-hat",
+          "outcomes":
+          [
+            {
+              "type": "SetFlag",
+              "flag": "Cosmetics",
+              "value": true,
+              "customDescription": "<color=#820000ff>-2 spending per adventurer until this is resolved.</color>"
+            },
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "tailor-3",
+                "headline": "Loot Boxes",
+                "article": "Someone has come around and is offering a potential solution to our lack of vanity items, loot boxes. \"I mean, I literally fill these boxes with garbage, but there's a surprise in every one!\" The ethics are questionable, but lucrative.",
+                "image": "locked-box",
+                "choices": [
+                  {
+                    "name": "Sell the loot boxes",
+                    "outcomes": [
+                      {
+                        "type": "FlavourText",
+                        "customDescription": "It turns out the 'surprise' was explosives."
+                      },
+                      {
+                        "type": "ThreatAdded",
+                        "baseAmount": 5
+                      },
+                      {
+                        "type": "ModifierAdded",
+                        "modifier": {
+                          "toChange": "Spending",
+                          "amount": 50,
+                          "turns": 5,
+                          "reason": "from Loot Boxes"
+                        },
+                        "customDescription": "Somehow, they're still selling like wildfire (+50 spending for 5 turns)."
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Refuse the offer",
+                    "outcomes": [
+                      {
+                        "type": "FlavourText",
+                        "customDescription": "Oh well you're no fun!"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "QuestAdded",
+              "quest": {
+                "name": "tailor-quest",
+                "title": "Find the Tailor",
+                "description": "I'm sure our neighbours won't mind if we 'borrow' them for a while.",
+                "image": "Buildings/Tailor",
+                "location": "Dock",
+                "adventurers": 6,
+                "baseTurns": 5,
+                "wealthMultiplier": 2,
+                "reward": "Clothes and Hats for the Town",
+                "completedEvent": {
+                  "name": "tailor-4",
+                  "headline": "",
+                  "article": "Our heroic party has 'retrieved' the tailor from our neighbours, who has agreed to produce clothes for us. However, this has come just as the trend has died down. No longer do they care about clothes, \"It's all about those dances, now!\", an adventurer yelled at our reporter while performing a copyright free dance move.",
+                  "image": "scarecrow",
+                  "outcomes": [
+                    {
+                      "type": "SetFlag",
+                      "flag": "Cosmetics",
+                      "value": false,
+                      "customDescription": "<color=#007000ff>Adventurers are now fully spending in our town again!</color>"
+                    },
+                    {
+                      "type": "SetFlag",
+                      "flag": "StoryActive",
+                      "value": false
+                    },
+                    {
+                      "type": "CardUnlocked",
+                      "blueprint": "Tailor"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "jeweller-1",
+    "headline": "Dwarven Minors",
+    "article": "Reports have come in that the dwarves in the nearby mountains have been working their children in the mines. Their leader sent out a memo explaining \"They're so tiny, they can fit in the little gaps where all the good stuff is.\" Guild Co's PR department have forbid us from trading with them if this continues.",
+    "type": "Story",
+    "image": "war-pick",
+    "choices": [
+      {
+        "name": "Impose Child Labour Laws",
+        "outcomes": [
+          {
+            "type": "SetFlag",
+            "flag": "StoryActive",
+            "value": true,
+            "customDescription": "We'll have to see how they respond..."
+          },
+          {
+            "type": "ChainEvent",
+            "nextEvent": {
+              "name": "jeweller-2",
+              "headline": "A Strike in the Mines!",
+              "article": "The Dwarves are up in arms about the newly imposed child labour laws. \"It's all well and good for YOUR children to not work, but it takes us 50 years to grow up! We're made from birth to be workers!\" the miners representative said, right before proclaiming a halt to all trade with us.",
+              "image": "gold-mine",
+              "outcomes":
+              [
+                {
+                  "type": "SetFlag",
+                  "flag": "MineStrike",
+                  "value": true,
+                  "customDescription": "<color=#820000ff>The lack of minerals has caused a weapons shortage. (-5 defence until this is resolved).</color>"
+                },
+                {
+                  "type": "ChainEvent",
+                  "nextEvent": {
+                    "name": "jeweller-3",
+                    "headline": "Crossing the Picket Line",
+                    "article": "In an attempt to offset the Dwarven Strike, we've scouted out some alternatives to work the mines in the meantime. A Dwarven representative chuckled \"You send anyone else in those mines, you'll learn the true meaning of 'crunch'.\"",
+                    "image": "uprising",
+                    "choices": [
+                      {
+                        "name": "Send in Adventurers",
+                        "outcomes": [
+                          {
+                            "type": "FlavourText",
+                            "customDescription": "Our inexperienced townsfolk only worked for a day until a lethal cave-in caused them to flee."
+                          },
+                          {
+                            "type": "AdventurersRemoved",
+                            "kill": true,
+                            "count": 3
+                          },
+                          {
+                            "type": "ModifierAdded",
+                            "modifier": {
+                              "toChange": "Defence",
+                              "amount": 4,
+                              "turns": 3,
+                              "reason": "from Adventurer Scabs"
+                            },
+                            "customDescription": "We still managed to get some metals out (+4 defence for 3 turns)."
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Send in Gnomes",
+                        "outcomes": [
+                          {
+                            "type": "FlavourText",
+                            "customDescription": "We could only find garden gnomes, who promptly caused a cave-in to a valuable gold vein."
+                          },
+                          {
+                            "type": "ModifierAdded",
+                            "modifier": {
+                              "toChange": "Spending",
+                              "amount": -15,
+                              "turns": -1,
+                              "reason": "from Mine Cave-in"
+                            }
+                          },
+                          {
+                            "type": "ModifierAdded",
+                            "modifier": {
+                              "toChange": "Defence",
+                              "amount": 4,
+                              "turns": 3,
+                              "reason": "from Gnome Scabs"
+                            },
+                            "customDescription": "We still managed to get some metals out (+4 defence for 3 turns)"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Don't Send Anyone",
+                        "outcomes": [
+                          {
+                            "type": "FlavourText",
+                            "customDescription": "The Dwarves gloat, knowing you couldn't find anyone better."
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "QuestAdded",
+                  "quest": {
+                    "name": "jeweller-quest",
+                    "title": "Resolve the Dwarven Strike",
+                    "description": "I'm sure there's something we can do to get them working again.",
+                    "image": "gold-mine",
+                    "location": "Dock",
+                    "adventurers": 4,
+                    "baseTurns": 6,
+                    "wealthMultiplier": 1.3,
+                    "reward": "Access to Minerals",
+                    "completedEvent": {
+                      "name": "jeweller-4",
+                      "headline": "The Dwarven Family Jewels",
+                      "article": "A deal has been struck to get the Dwarves back working in the mines. They have agreed to allow their children to partake in a jeweller apprenticeship in our town (unpaid, of course). \"Their tiny little hands make excellent Jewellery, they can do that until they come of age.\"",
+                      "image": "Buildings/Jeweller",
+                      "outcomes": [
+                        {
+                          "type": "SetFlag",
+                          "flag": "StoryActive",
+                          "value": false
+                        },
+                        {
+                          "type": "CardUnlocked",
+                          "blueprint": "Jeweller"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Let Them Continue",
+        "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "Without their mineral supply, we'll have to substitute our weapons with wood."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Defence",
+              "amount": -5,
+              "turns": -1,
+              "reason": "from the Wooden Weapons"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "armoury-1",
+    "headline": "Starry Eyed and Bushy Tailed",
+    "article": "A pair of adventurers have stumbled out of the forest in the early hours of the morning, calling themselves 'Red' and 'Mr. Woodsman'. They claim not to know how they got here, but have vague memories of being chased by a hideous hairy beast.",
+    "type": "Story",
+    "image": "hooded-figure",
+    "outcomes": [
+      {
+        "type": "AdventurersAdded",
+        "adventurers": [
+          {
+            "name": "Red",
+            "guild": "Outrider"
+          },
+          {
+            "name": "Mr. Woodsman",
+            "guild": "Brawler"
+          }
+        ],
+        "customDescription": "Red and Mr. Woodsman find a home in town"
+      },
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true,
+        "customDescription": "There's just something in their eyes..."
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "armoury-2",
+          "headline": "Howler of a Night",
+          "article": "Last night there was an attack, causing the destruction of one of our blacksmiths. Witnesses claim howling could be heard from the location, and glimpses of a hideous hairy beast could be seen running away, illuminated by the full moon. Why \"Silvia and Sons Silver Swordery\" was specifically targeted remains a mystery to all.",
+          "image": "wolf-howl",
+          "outcomes": [
+            {
+              "type": "BuildingDamaged",
+              "buildingType": "Blacksmith"
+            },
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "armoury-3",
+                "headline": "Aware(wolf) of the Dangers",
+                "article": "Shocking revelations this morning as newly introduced member to our town (who you may remember mysteriously stumbling out of the woods) 'Red' has confessed to being the werewolf behind the recent attack! Coming to her defence, Mr. Woodsman pleads that to cure her we must defeat the grand-matriarch werewolf (known as 'Granny').",
+                "image": "werewolf",
+                "outcomes": [
+                  {
+                    "type": "QuestAdded",
+                    "quest": {
+                      "name": "armoury-quest",
+                      "title": "Hunt Granny Werewolf",
+                      "description": "Break the curse by defeating the grand-matriarch werewolf.",
+                      "image": "werewolf",
+                      "location": "Dock",
+                      "adventurers": 7,
+                      "baseTurns": 5,
+                      "wealthMultiplier": 2,
+                      "reward": "Retrieve our Silver Supply",
+                      "completedEvent": {
+                        "name": "armoury-4",
+                        "headline": "What Crushed Face You Have!",
+                        "article": "Our adventurers tracked down the grand-matriarch werewolf to a little cottage. Upon advice from Red, they lured her out with a basket of baked goods before crushing her face with a mace. It was a smashing success! In her shack, there was a plethora of stolen weapons, so much so we could build a whole armoury!",
+                        "image": "wood-club",
+                        "outcomes": [
+                          {
+                            "type": "SetFlag",
+                            "flag": "StoryActive",
+                            "value": false
+                          },
+                          {
+                            "type": "CardUnlocked",
+                            "blueprint": "Armoury"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "barracks-1",
+    "headline": "Commoners Ceramics Cause Complaints!",
+    "article": "For the third time this week, our townsfolk have submitted a formal complaint of adventurers coming into their stores and destroying their precious pots and vases in the pursuit of hidden treasure. \"We've had enough! We're forming our own guild!\" the newly formed league of 'Normal Folk' declared to no one in particular.",
+    "type": "Story",
+    "image": "broken-pottery",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true,
+        "customDescription": "They're just commoners, what trouble could they really cause?"
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "barracks-2",
+          "headline": "Lack of Leadership Loses Lives",
+          "article": "A member from the commoners guild managed to get an entire adventuring party killed earlier today, when their attempt at a heroic charge while yelling their name at full volume gave away their position. \"If you're gonna be getting in our way, least we can do is find you some training!\" We've heard of a retired general not too far from here that might be willing to get them started.",
+          "image": "shouting",
+          "outcomes": [
+            {
+              "type": "AdventurersRemoved",
+              "count": 3,
+              "kill": true
+            },
+            {
+              "type": "QuestAdded",
+              "quest": {
+                "name": "barracks-quest",
+                "title": "Find a General",
+                "description": "The commoners need some leadership if they're going to be any help",
+                "image": "wisdom",
+                "location": "Dock",
+                "adventurers": 4,
+                "baseTurns": 6,
+                "wealthMultiplier": 1.7,
+                "reward": "Better Trained Commoners",
+                "completedEvent": {
+                  "name": "barracks-3",
+                  "headline": "Barracking for the Normal Folks!",
+                  "article": "The questing party has returned with the former General, who, while in no fighting shape, immediately started criticising the towns \"pathetic excuse for a town guard\", and barking orders. His first request is establishing some barracks for training. Adventurers are happily going along with this charade, at least it'll give them some slightly sturdier cannon fodder.",
+                  "image": "wisdom",
+                  "outcomes": [
+                    {
+                      "type": "SetFlag",
+                      "flag": "StoryActive",
+                      "value": false
+                    },
+                    {
+                      "type": "CardUnlocked",
+                      "blueprint": "Barracks"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "enchanter-1",
+    "headline": "Wait, Which Witch?",
+    "article": "Rumours there is a witch in the outskirts that is cursing our town. One adventurer claims the Witch made his sword fragile and blunt, another has been given a terrible hangover absolutely unrelated to a night of heavy drinking. These angry adventurers wish to bring the Witch to trial, but we want to hear her side first...",
+    "type": "Story",
+    "image": "uprising",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -204,35 +740,34 @@
       {
         "type": "QuestAdded",
         "quest": {
-          "name": "plaza-quest",
-          "title": "Rescue the Circus",
-          "description": "The troupe has been kidnapped by raiders!",
-          "image": "drama-masks",
+          "name": "enchanter-quest",
+          "title": "Do a Witch Hunt",
+          "description": "Look, I don't like it any more than you, but she might be a help",
+          "image": "witch-face",
           "location": "Dock",
-          "adventurers": 3,
-          "baseTurns": 3,
-          "wealthMultiplier": 1.5,
-          "reward": "A new performance space",
+          "adventurers": 5,
+          "baseTurns": 4,
+          "wealthMultiplier": 1.6,
+          "reward": "A Witches Magic",
           "completedEvent": {
-            "name": "plaza-2",
-            "headline": "The Day the Circus Came to Town",
-            "article": "Adventures returned after a circus rescue with their cart, but what looked like no performers. This was until one by one, and improbable amount stepped out, and rejoined the grateful mime. The circus likes to perform on the streets and requests building public areas.",
-            "image": "human-pyramid",
+            "name": "enchanter-2",
+            "headline": "No Peace for the Wiccan",
+            "article": "The mob found the evil witch, and accused her of misdeeds. As it turns out, quite the opposite has been happening, and she's been protecting us this whole time. \"But if you want me to stop and for the storm clouds to obliterate you, I can surely do that\". The adventurers quickly backed off. \"Good good, now here's some enchantments, go make your weapons nice and strong and leave me be\" the witch was quoted as the mob started nervously backing off.",
+            "image": "wisdom",
             "outcomes": [
               {
                 "type": "SetFlag",
                 "flag": "StoryActive",
-                "value": false,
-                "customDescription": "They've given us some designs for a public performance space."
+                "value": false
               },
               {
                 "type": "CardUnlocked",
-                "blueprint": "Plaza"
+                "blueprint": "Enchanter"
               }
             ]
           }
         }
       }
     ]
-  }
+  },
 ]

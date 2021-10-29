@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7513891368929949306
+--- !u!114 &-7844961922919502418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
   customDescription: 
-  blueprint: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
---- !u!114 &-1498243527398397339
+  count: 1
+  kill: 1
+--- !u!114 &-5599369821964336771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23,26 +24,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: d860dd06eda3a2f43beca7e50efa1cf9, type: 2}
---- !u!114 &-399426839667385288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: They've given us some designs for a public performance space.
-  flag: 0
-  value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,17 +41,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
   m_Name: plaza-2
   m_EditorClassIdentifier: 
-  headline: The Day the Circus Came to Town
-  article: Adventures returned after a circus rescue with their cart, but what looked
-    like no performers. This was until one by one, and improbable amount stepped
-    out, and rejoined the grateful mime. The circus likes to perform on the streets
-    and requests building public areas.
+  headline: Adventurer Tragically Deplatformed
+  article: In an attempt to catch the growing trend of death defying acts, a performer
+    was killed today when the hastily made stage of swords collapsed beneath them.
+    The blame has turned to Gol Brojan, the influential figure at the forefront of
+    this movement. "You squares just don't understand REAL art!" he was quoted saying,
+    before leaving the town to form the competing Cirque Du Slay.
   image: {fileID: 21300000, guid: 90e21c5bcf2bbd943ba5d924814e5b96, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -399426839667385288}
-  - {fileID: -7513891368929949306}
-  - {fileID: -1498243527398397339}
+  - {fileID: -7844961922919502418}
+  - {fileID: 8391054091001042936}
+  - {fileID: -5599369821964336771}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &8391054091001042936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: Gol and his supporters leave the town to form their own troupe
+    (-3 Performers).
+  count: 3
+  kill: 0

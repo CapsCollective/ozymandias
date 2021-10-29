@@ -110,8 +110,6 @@ namespace Managers
                 case GameState.InCredits:
                     InCreditsInit();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -132,7 +130,7 @@ namespace Managers
 
             SaveFile.LoadState();
             
-            OnLoadingEnd.Invoke();
+            OnLoadingEnd?.Invoke();
             
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 1.0f).OnComplete(() => loadingCanvas.enabled = false);
@@ -238,7 +236,7 @@ namespace Managers
             {
                 gameCanvasGroup.alpha = 1.0f;
                 SetupGame();
-                EnterState(GameState.InGame);
+                if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
                 Manager.Camera.SetCamRig(_startPos);
                 _alreadySkippedIntro = true;
             }
@@ -262,7 +260,7 @@ namespace Managers
                     .OnComplete(() =>
                     {
                         SetupGame();
-                        EnterState(GameState.InGame);
+                        if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
                     });
             }
         }
@@ -289,7 +287,7 @@ namespace Managers
         
         private void EndGameInit()
         {
-            OnGameEnd.Invoke();
+            OnGameEnd?.Invoke();
             Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
