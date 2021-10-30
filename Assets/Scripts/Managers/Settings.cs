@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace Managers
 {
@@ -23,6 +24,9 @@ namespace Managers
 
         // Fullscreen
         [SerializeField] private Toggle fullscreenToggle, shadowToggle, grassToggle, dofToggle, vsyncToggle, aoToggle;
+
+        // Post Processing
+        [SerializeField] private PostProcessProfile dofProfile, postProcess;
 
         // Needs to be Start, not Awake for mixer values to apply - Ben
         private void Start()
@@ -112,7 +116,7 @@ namespace Managers
         
         private void ToggleGrass(bool toggle)
         {
-            //TODO
+            Grass.DrawGrassInstanced.GrassOn = toggle;
             PlayerPrefs.SetInt("grass", Convert.ToInt32(toggle));
         }
 
@@ -125,13 +129,15 @@ namespace Managers
 
         private void ToggleDoF(bool toggle)
         {
-            //TODO
+            dofProfile.TryGetSettings<DepthOfField>(out var dof);
+            dof.active = toggle;
             PlayerPrefs.SetInt("dof", Convert.ToInt32(toggle));
         }
 
         private void ToggleAO(bool toggle)
         {
-            //TODO
+            postProcess.TryGetSettings<AmbientOcclusion>(out var ao);
+            ao.active = toggle;
             PlayerPrefs.SetInt("ao", Convert.ToInt32(toggle));
         }
         #endregion
