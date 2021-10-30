@@ -229,8 +229,16 @@ namespace Structures
         public void Load(StructureDetails details)
         {
             foreach (BuildingDetails building in details.buildings ?? new List<BuildingDetails>())
-                AddBuilding(Manager.Cards.Find(building.type), building.rootId, building.rotation, building.isRuin);
-            
+            {
+                Blueprint blueprint = Manager.Cards.Find(building.type);
+                if (!blueprint) Debug.LogError(
+                    "Blueprint of type \"" + building.type + "\" could not be found." + 
+                    "It may not yet be available to the player.");
+                AddBuilding(
+                    blueprint, 
+                    building.rootId, building.rotation, building.isRuin);
+            }
+
             foreach (TerrainDetails terrain in details.terrain ?? new List<TerrainDetails>())
                 AddTerrain(terrain.rootId, terrain.sectionCount);
             Structure guildHall = _buildings.Find(structure => structure.Blueprint.type == BuildingType.GuildHall);
