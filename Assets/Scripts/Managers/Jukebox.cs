@@ -45,6 +45,7 @@ namespace Managers
         [SerializeField] private AudioClip barkClip;
         [SerializeField] private AudioClip fishCaughtClip;
         [SerializeField] private AudioClip keyboardClip;
+        [SerializeField] private AudioClip pageTurnClip;
         
         [SerializeField] private AudioClip menuTrack;
         [SerializeField] private AudioClip creditsTrack;
@@ -259,6 +260,11 @@ namespace Managers
         public void PlayKeystrokes()
         {
             PlaySfx(keyboardClip, 0.3f);
+        }
+        
+        public void PlayPageTurn()
+        {
+            PlaySfx(pageTurnClip, 0.6f);
         }
     }
 }
