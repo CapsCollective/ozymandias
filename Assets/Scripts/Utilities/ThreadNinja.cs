@@ -1,14 +1,28 @@
-using UnityEngine;
 using System.Collections;
 using System.Threading;
+using UnityEngine;
 
-namespace CielaSpike
+namespace Utilities
 {
-    /// <summary>
-    /// Represents an async task.
-    /// </summary>
+    public enum TaskState
+    {
+        Init,
+        Running,
+        Done
+    }
+    
     public class Task : IEnumerator
     {
+        private static readonly object JumpToUnity = new object();
+        private static readonly object JumpBack = new object();
+        
+        public static Task StartCoroutineAsync(MonoBehaviour script, IEnumerator routine)
+        {
+            Task task = new Task(routine);
+            script.StartCoroutine(task);
+            return task;
+        }
+
         // implements IEnumerator to make it usable by StartCoroutine;
         #region IEnumerator Interface
         /// <summary>
@@ -41,9 +55,7 @@ namespace CielaSpike
             PendingYield,
             ToBackground,
             RunningSync,
-            CancellationRequested,
-            Done,
-            Error
+            Done
         }
 
         // routine user want to run;
@@ -56,51 +68,25 @@ namespace CielaSpike
         // temporary stores current yield return value
         // until we think Unity coroutine engine is OK to get it;
         private object _pendingCurrent;
-
-        /// <summary>
-        /// Gets state of the task.
-        /// </summary>
-        public TaskState State
+        
+        private TaskState State
         {
             get
             {
-                switch (_state)
+                return _state switch
                 {
-                    case RunningState.CancellationRequested:
-                        return TaskState.Cancelled;
-                    case RunningState.Done:
-                        return TaskState.Done;
-                    case RunningState.Error:
-                        return TaskState.Error;
-                    case RunningState.Init:
-                        return TaskState.Init;
-                    default:
-                        return TaskState.Running;
-                }
+                    RunningState.Done => TaskState.Done,
+                    RunningState.Init => TaskState.Init,
+                    _ => TaskState.Running
+                };
             }
         }
-
-        /// <summary>
-        /// Gets exception during running.
-        /// </summary>
-        public System.Exception Exception { get; private set; }
 
         public Task(IEnumerator routine)
         {
             _innerRoutine = routine;
             // runs into background first;
             _state = RunningState.Init;
-        }
-
-        /// <summary>
-        /// Cancel the task till next iteration;
-        /// </summary>
-        public void Cancel()
-        {
-            if (State == TaskState.Running)
-            {
-                GotoState(RunningState.CancellationRequested);
-            }
         }
 
         /// <summary>
@@ -172,12 +158,12 @@ namespace CielaSpike
 
                     // something was yield returned;
                     case RunningState.PendingYield:
-                        if (_pendingCurrent == Ninja.JumpBack)
+                        if (_pendingCurrent == JumpBack)
                         {
                             // do not break the loop, switch to background;
                             GotoState(RunningState.ToBackground);
                         }
-                        else if (_pendingCurrent == Ninja.JumpToUnity)
+                        else if (_pendingCurrent == JumpToUnity)
                         {
                             // do not break the loop, switch to main thread;
                             GotoState(RunningState.RunningSync);
@@ -193,12 +179,12 @@ namespace CielaSpike
                             {
                                 // if from background thread, 
                                 // go back into background in the next loop;
-                                _pendingCurrent = Ninja.JumpBack;
+                                _pendingCurrent = JumpBack;
                             }
                             else
                             {
                                 // otherwise go back to main thread the next loop;
-                                _pendingCurrent = Ninja.JumpToUnity;
+                                _pendingCurrent = JumpToUnity;
                             }
 
                             // end this iteration and Unity get noticed;
@@ -207,8 +193,6 @@ namespace CielaSpike
                         break;
 
                     // done running, pass false to Unity;
-                    case RunningState.Done:
-                    case RunningState.CancellationRequested:
                     default:
                         return false;
                 }
@@ -218,8 +202,7 @@ namespace CielaSpike
         // background thread launcher;
         private void MoveNextAsync()
         {
-            ThreadPool.QueueUserWorkItem(
-                new WaitCallback(BackgroundRunner));
+            ThreadPool.QueueUserWorkItem(BackgroundRunner);
         }
 
         // background thread function;
@@ -251,11 +234,7 @@ namespace CielaSpike
             }
             catch (System.Exception ex)
             {
-                // exception handling, save & log it;
-                this.Exception = ex;
-                Debug.LogError(string.Format("{0}\n{1}", ex.Message, ex.StackTrace));
-                // then terminates the task;
-                GotoState(RunningState.Error);
+                UnityEngine.Debug.LogError(string.Format("{0}\n{1}", ex.Message, ex.StackTrace));
             }
         }
     }
