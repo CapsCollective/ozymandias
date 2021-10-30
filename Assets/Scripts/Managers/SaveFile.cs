@@ -107,7 +107,7 @@ namespace Managers
         public Dictionary<Guild, RequestDetails> requests;
         public UpgradeDetails upgrades;
 
-        private static readonly string SaveFilePath = Application.persistentDataPath + "/Save.json";
+        private static readonly string SaveFilePath = Application.persistentDataPath + "/save.json";
 
         public static void SaveState()
         {
