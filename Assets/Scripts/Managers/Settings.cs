@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -18,13 +19,10 @@ namespace Managers
 
         // Audio
         public AudioMixer audioMixer;
-        public Slider musicSlider;
-        public Slider ambienceSlider;
-        public Slider sfxSlider;
+        [SerializeField] private Slider musicSlider,ambienceSlider, sfxSlider;
 
         // Fullscreen
-        public Toggle fullscreenToggle;
-        public Toggle shadowToggle;
+        [SerializeField] private Toggle fullscreenToggle, shadowToggle, grassToggle, dofToggle, vsyncToggle, aoToggle;
 
         // Needs to be Start, not Awake for mixer values to apply - Ben
         private void Start()
@@ -32,92 +30,130 @@ namespace Managers
             // Set the version text value
             versionText.text = "Version " + Application.version;
             
-            // Set the target framerate
-            QualitySettings.vSyncCount = 1;
-            Application.targetFrameRate = 65;
-            
             // Generate a list of available resolutions
             _resolutions = Screen.resolutions;
             resolutionDropdown.ClearOptions();
-            var options = _resolutions
+            List<string> options = _resolutions
                 .Select(t => t.width + " x " + t.height + " " + t.refreshRate + "Hz").ToList();
             resolutionDropdown.AddOptions(options);
 
-            // Setup fullscreen toggle
-            var isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
-            SetFullScreen(isFullscreen);
-            fullscreenToggle.isOn = isFullscreen;
-            fullscreenToggle.onValueChanged.AddListener(SetFullScreen);
-            
-            // Setup shadow toggle
-            var getShadowToggle = Convert.ToBoolean(PlayerPrefs.GetInt("Shadows", 1));
-            ToggleShadows(getShadowToggle);
-            shadowToggle.isOn = getShadowToggle;
-            shadowToggle.onValueChanged.AddListener(ToggleShadows);
-
             // Setup resolution dropdown (default to max res)
-            var res = PlayerPrefs.GetInt("Resolution", _resolutions.Length - 1);
+            int res = PlayerPrefs.GetInt("resolution", _resolutions.Length - 1);
             SetResolution(res);
             resolutionDropdown.value = res;
             resolutionDropdown.RefreshShownValue();
             resolutionDropdown.onValueChanged.AddListener(SetResolution);
-
+            
+            bool getFullscreen = Convert.ToBoolean(PlayerPrefs.GetInt("fullscreen", 1));
+            ToggleFullScreen(getFullscreen);
+            fullscreenToggle.isOn = getFullscreen;
+            fullscreenToggle.onValueChanged.AddListener(ToggleFullScreen);
+            
+            bool getShadowToggle = Convert.ToBoolean(PlayerPrefs.GetInt("shadows", 1));
+            ToggleShadows(getShadowToggle);
+            shadowToggle.isOn = getShadowToggle;
+            shadowToggle.onValueChanged.AddListener(ToggleShadows);
+            
+            bool getGrassToggle = Convert.ToBoolean(PlayerPrefs.GetInt("grass", 1));
+            ToggleGrass(getGrassToggle);
+            grassToggle.isOn = getGrassToggle;
+            grassToggle.onValueChanged.AddListener(ToggleGrass);
+            
+            bool getVsyncToggle = Convert.ToBoolean(PlayerPrefs.GetInt("vsync", 1));
+            ToggleVsync(getVsyncToggle);
+            dofToggle.isOn = getVsyncToggle;
+            dofToggle.onValueChanged.AddListener(ToggleVsync);
+            
+            bool getDoFToggle = Convert.ToBoolean(PlayerPrefs.GetInt("dof", 1));
+            ToggleDoF(getDoFToggle);
+            dofToggle.isOn = getDoFToggle;
+            dofToggle.onValueChanged.AddListener(ToggleDoF);
+            
+            bool getAOToggle = Convert.ToBoolean(PlayerPrefs.GetInt("ao", 1));
+            ToggleAO(getAOToggle);
+            dofToggle.isOn = getAOToggle;
+            dofToggle.onValueChanged.AddListener(ToggleAO);
+            
             // Setup audio sliders
             musicSlider.maxValue = 1f;
             musicSlider.onValueChanged.AddListener(SetMusicVolume);
-            musicSlider.value = PlayerPrefs.GetFloat("Music", 1f);
+            musicSlider.value = PlayerPrefs.GetFloat("music", 1f);
 
             ambienceSlider.maxValue = 1f;
             ambienceSlider.onValueChanged.AddListener(SetAmbienceVolume);
-            ambienceSlider.value = PlayerPrefs.GetFloat("Ambience", 1f);
+            ambienceSlider.value = PlayerPrefs.GetFloat("ambience", 1f);
 
             sfxSlider.maxValue = 1f;
             sfxSlider.onValueChanged.AddListener(SetSfxVolume);
-            musicSlider.value = PlayerPrefs.GetFloat("SFX", 1f);
+            musicSlider.value = PlayerPrefs.GetFloat("sfx", 1f);
         }
 
-        private void SetFullScreen(bool isFullscreen)
-        {
-            Screen.fullScreen = isFullscreen;
-            PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
-        }
-
+        #region Display
         private void SetResolution(int resolutionIndex)
         {
             if (resolutionIndex >= _resolutions.Length) return;
             Resolution resolution = _resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-            PlayerPrefs.SetInt("Resolution", resolutionIndex);
+            PlayerPrefs.SetInt("resolution", resolutionIndex);
+        }
+        
+        private void ToggleFullScreen(bool toggle)
+        {
+            Screen.fullScreen = toggle;
+            PlayerPrefs.SetInt("fullscreen", toggle ? 1 : 0);
         }
 
+        public void ToggleShadows(bool toggle)
+        {
+            int distance = toggle ? 50 : 0;
+            QualitySettings.shadowDistance = distance;
+            PlayerPrefs.SetInt("shadows", Convert.ToInt32(toggle));
+        }
+        
+        private void ToggleGrass(bool toggle)
+        {
+            //TODO
+            PlayerPrefs.SetInt("grass", Convert.ToInt32(toggle));
+        }
+
+        private void ToggleVsync(bool toggle)
+        {
+            //TODO
+            QualitySettings.vSyncCount = toggle ? 1 : 0;
+            PlayerPrefs.SetInt("vsync", Convert.ToInt32(toggle));
+        }
+
+        private void ToggleDoF(bool toggle)
+        {
+            //TODO
+            PlayerPrefs.SetInt("dof", Convert.ToInt32(toggle));
+        }
+
+        private void ToggleAO(bool toggle)
+        {
+            //TODO
+            PlayerPrefs.SetInt("ao", Convert.ToInt32(toggle));
+        }
+        #endregion
+        
+        #region Volume
         private void SetMusicVolume(float volume)
         {
             audioMixer.SetFloat("musicSettingVolume", 20 * Mathf.Log10(volume));
-            PlayerPrefs.SetFloat("Music", volume);
+            PlayerPrefs.SetFloat("music", volume);
         }
 
         private void SetAmbienceVolume(float volume)
         {
             audioMixer.SetFloat("ambianceSettingVolume", 20 * Mathf.Log10(volume));
-            PlayerPrefs.SetFloat("Ambience", volume);
+            PlayerPrefs.SetFloat("ambience", volume);
         }
 
         private void SetSfxVolume(float volume)
         {
             audioMixer.SetFloat("sfxVolumeSetting", 20 * Mathf.Log10(volume));
-            PlayerPrefs.SetFloat("SFX", volume);
+            PlayerPrefs.SetFloat("sfx", volume);
         }
-
-        public void ToggleShadows(bool toggle)
-        {
-            var distance = toggle ? 50 : 0;
-            QualitySettings.shadowDistance = distance;
-            PlayerPrefs.SetInt("Shadows", Convert.ToInt32(toggle));
-        }
-
-        public void ClearSave()
-        {
-            PlayerPrefs.DeleteKey("Save");
-        }
+        #endregion
     }
 }

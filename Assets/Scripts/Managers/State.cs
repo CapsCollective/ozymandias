@@ -216,8 +216,6 @@ namespace Managers
 
         private IEnumerator ToGameUpdate()
         {
-            Manager.Cards.DropCards();
-
             void SetupGame()
             {
                 gameCanvasGroup.alpha = 1.0f;
@@ -227,7 +225,6 @@ namespace Managers
                 gameCanvasGroup.blocksRaycasts = true;
                 Manager.Inputs.TogglePlayerInput(true);
                 if (Manager.Stats.TurnCounter == 0) OnNewGame.Invoke();
-                Manager.Cards.PopCards();
                 UpdateUi();
             }
 
