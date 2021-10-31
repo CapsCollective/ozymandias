@@ -24,6 +24,8 @@ namespace Grass
             Low = 32,
         }
 
+        public static bool GrassOn;
+
         public int Population;
         [SerializeField] private float boundsRange;
         [SerializeField] private bool showBounds;
@@ -103,6 +105,8 @@ namespace Grass
         // Update is called once per frame
         void Update()
         {
+            if (!GrassOn) return;
+
             if(GrassCount > 0)
                 Graphics.DrawMeshInstancedProcedural(mesh, 0, mat, bounds, dupMatrixCount, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);
         }

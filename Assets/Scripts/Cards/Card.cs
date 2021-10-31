@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Managers;
 using Structures;
 using UI;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Cards
         [SerializeField] private int popupMultiplier = 60;
         [SerializeField] private int highlightMultiplier = 20;
 
-        private Vector3 _initialPosition;
+        private Vector3 _initialPosition, _dropPosition;
         private RectTransform _rectTransform;
         public bool IsReplacing { get; private set; }
         
@@ -28,6 +29,7 @@ namespace Cards
             Toggle = GetComponent<Toggle>();
             _rectTransform = GetComponent<RectTransform>();
             _initialPosition = _rectTransform.localPosition;
+            _dropPosition = _initialPosition - _rectTransform.transform.up * 250;
         }
 
         protected override void UpdateUi()
@@ -78,7 +80,8 @@ namespace Cards
         
         public void Drop()
         {
-            _rectTransform.localPosition = _initialPosition - _rectTransform.transform.up * 250;
+            if(_rectTransform.localPosition != _dropPosition)
+                _rectTransform.DOLocalMove(_dropPosition, 0.5f).SetEase(tweenEase);
         }
         
         public void Pop()
@@ -101,6 +104,11 @@ namespace Cards
                     // 5% for a free card per upgrade level
                     Blueprint.Free = Random.Range(0, 20) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
                     UpdateUi();
+                    if (!Manager.State.InGame)
+                    {
+                        IsReplacing = false;
+                        return;
+                    }
                     _rectTransform
                         .DOLocalMove(_initialPosition, 0.5f).SetEase(tweenEase)
                         .OnComplete(() => { IsReplacing = false; });

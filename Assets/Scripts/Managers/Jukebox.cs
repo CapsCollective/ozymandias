@@ -259,7 +259,7 @@ namespace Managers
         
         public void PlayKeystrokes()
         {
-            PlaySfx(keyboardClip, 0.3f);
+            PlaySfx(keyboardClip, 0.1f);
         }
         
         public void PlayPageTurn()

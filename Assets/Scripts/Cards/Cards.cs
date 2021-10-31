@@ -100,7 +100,12 @@ namespace Cards
             Manager.Inputs.OnDeselectCards.performed += DeselectCards;
             Manager.Inputs.OnNavigateCards.performed += NavigateCards;
             Manager.Inputs.OnSelectCardIndex.performed += SelectCardIndex;
-            State.OnEnterState += () => SelectCard(-1);
+            State.OnEnterState += () =>
+            {
+                SelectCard(-1);
+                if (Manager.State.InGame) PopCards();
+                else DropCards();
+            };
         }
         
         #region Card Select
