@@ -65,8 +65,8 @@ namespace Managers
             
             bool getVsyncToggle = Convert.ToBoolean(PlayerPrefs.GetInt("vsync", 1));
             ToggleVsync(getVsyncToggle);
-            dofToggle.isOn = getVsyncToggle;
-            dofToggle.onValueChanged.AddListener(ToggleVsync);
+            vsyncToggle.isOn = getVsyncToggle;
+            vsyncToggle.onValueChanged.AddListener(ToggleVsync);
             
             bool getDoFToggle = Convert.ToBoolean(PlayerPrefs.GetInt("dof", 1));
             ToggleDoF(getDoFToggle);
@@ -75,8 +75,8 @@ namespace Managers
             
             bool getAOToggle = Convert.ToBoolean(PlayerPrefs.GetInt("ao", 1));
             ToggleAO(getAOToggle);
-            dofToggle.isOn = getAOToggle;
-            dofToggle.onValueChanged.AddListener(ToggleAO);
+            aoToggle.isOn = getAOToggle;
+            aoToggle.onValueChanged.AddListener(ToggleAO);
             
             // Setup audio sliders
             musicSlider.maxValue = 1f;
@@ -89,7 +89,7 @@ namespace Managers
 
             sfxSlider.maxValue = 1f;
             sfxSlider.onValueChanged.AddListener(SetSfxVolume);
-            musicSlider.value = PlayerPrefs.GetFloat("sfx", 1f);
+            sfxSlider.value = PlayerPrefs.GetFloat("sfx", 1f);
         }
 
         #region Display
@@ -161,5 +161,10 @@ namespace Managers
             PlayerPrefs.SetFloat("sfx", volume);
         }
         #endregion
+
+        private void OnApplicationQuit()
+        {
+            PlayerPrefs.Save();
+        }
     }
 }
