@@ -9,14 +9,6 @@ namespace Utilities
 {
     public class Algorithms : MonoBehaviour
     {
-        public static Algorithms Runner;
-
-        private void Awake()
-        {
-            if(Runner == null)
-                Runner = this;
-        }
-
         public static IEnumerator ConvexHullAsync(List<Vertex> included, Graph<Vertex> graph, Action<List<Vertex>> callback)
         {
             List<Vertex> path = new List<Vertex>();

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CielaSpike;
 using NaughtyAttributes;
 using Structures;
 using UnityEngine;
@@ -467,9 +466,12 @@ namespace Map
             }
 
             // Create a perimeter path around the included vertices
-            List<Vertex> perimeter = new List<Vertex>();
-            Algorithms.Runner.StartCoroutineAsync(Algorithms.ConvexHullAsync(vertices, VertexGraph, e => perimeter = e), out Task task);
-            yield return Algorithms.Runner.StartCoroutine(task.Wait());
+            var perimeter = new List<Vertex>();
+            
+            Task task = Task.StartCoroutineAsync(Manager,
+                Algorithms.ConvexHullAsync(vertices, VertexGraph, e => perimeter = e));
+            
+            yield return Manager.StartCoroutine(task.Wait());
 
             // Create a road linking the perimeter to the existing road graph
             if (RoadGraph.Count > 0 && perimeter.Count > 0)

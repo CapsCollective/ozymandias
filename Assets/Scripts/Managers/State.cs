@@ -30,7 +30,8 @@ namespace Managers
         public GameState Current => _state;
         
         [SerializeField] private Canvas loadingCanvas, menuCanvas, gameCanvas;
-        [SerializeField] private CanvasGroup loadingCanvasGroup, menuCanvasGroup, gameCanvasGroup;
+        [SerializeField] private CanvasGroup 
+            loadingCanvasGroup, loadingShadeCanvasGroup, menuCanvasGroup, gameCanvasGroup;
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
         [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
@@ -127,13 +128,30 @@ namespace Managers
 
             freeLook.Follow.position = MenuPos.Position;
             freeLook.m_Orbits[1].m_Height = MenuPos.OrbitHeight;
-
-            SaveFile.LoadState();
             
+            // Reveal the CC logo screen
+            loadingShadeCanvasGroup.DOFade(0.0f, 0.5f).SetDelay(0.5f)
+                .OnComplete(() =>
+                {
+                    StartCoroutine(LoadGame());
+                });
+        }
+
+        private IEnumerator LoadGame()
+        {
+            // Play the sound title
+            StartCoroutine(Algorithms.DelayCall(1.0f, () => Manager.Jukebox.PlayKeystrokes()));
+            
+            var loadTime = Time.time;
+            SaveFile.LoadState();
             OnLoadingEnd?.Invoke();
             
+            // Hold the loading screen open for a minimum of 4 seconds
+            loadTime = 4 - (Time.time - loadTime);
+            if (loadTime > 0) yield return new WaitForSeconds(loadTime);
+            
             // Fade out loading screen
-            loadingCanvasGroup.DOFade(0.0f, 1.0f).OnComplete(() => loadingCanvas.enabled = false);
+            loadingCanvasGroup.DOFade(0.0f, 0.5f).OnComplete(() => loadingCanvas.enabled = false);
             
             // Fade in music
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
@@ -145,13 +163,14 @@ namespace Managers
             if (Manager.skipIntro)
             {
                 EnterState(GameState.ToGame);
-                return;
             }
+            else
 #endif
-            
-            EnterState(GameState.InIntro);
+            {
+                EnterState(GameState.InIntro);
+            }
         }
-        
+
         private void ToIntroInit()
         {
             menuCanvasGroup.alpha = 0.0f;
