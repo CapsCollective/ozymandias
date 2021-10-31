@@ -140,7 +140,7 @@ namespace Managers
         private IEnumerator LoadGame()
         {
             // Play the sound title
-            StartCoroutine(Algorithms.DelayCall(1.0f, () => Manager.Jukebox.PlayKeystrokes()));
+            Manager.Jukebox.PlayKeystrokes();
             
             var loadTime = Time.time;
             SaveFile.LoadState();
