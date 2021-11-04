@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Achievements;
 using Events;
@@ -10,6 +9,7 @@ using Quests;
 using Requests.Templates;
 using Structures;
 using Tooltip;
+using UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -40,6 +40,8 @@ namespace Managers
         public TooltipDisplay Tooltip { get; private set; }
         public CameraMovement Camera { get; private set; }
         public CursorSelect Cursor { get; private set; }
+        public GameHud GameHud { get; private set; }
+        public IntroHud IntroHud { get; private set; }
 
         private void Awake()
         {
@@ -61,6 +63,8 @@ namespace Managers
             Tooltip = FindObjectOfType<TooltipDisplay>();
             Camera = FindObjectOfType<CameraMovement>();
             Cursor = FindObjectOfType<CursorSelect>();
+            GameHud = FindObjectOfType<GameHud>();
+            IntroHud = FindObjectOfType<IntroHud>();
             gameObject.AddComponent<AchievementManager>();
         }
         #endregion

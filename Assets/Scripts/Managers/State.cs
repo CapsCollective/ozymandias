@@ -28,10 +28,10 @@ namespace Managers
         public bool InCredits => _state == GameState.InCredits;
         public bool IsGameOver { get; set; }
         public GameState Current => _state;
-        
+
         [SerializeField] private Canvas loadingCanvas, menuCanvas, gameCanvas;
         [SerializeField] private CanvasGroup 
-            loadingCanvasGroup, loadingShadeCanvasGroup, menuCanvasGroup, gameCanvasGroup;
+            loadingCanvasGroup, loadingShadeCanvasGroup;
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
         [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
@@ -117,7 +117,6 @@ namespace Managers
         private void LoadingInit()
         {
             loadingCanvas.enabled = true;
-            gameCanvasGroup.interactable = false;
             Manager.Inputs.TogglePlayerInput(false);
             CinemachineFreeLook freeLook = Manager.Camera.FreeLook;
             
@@ -129,6 +128,12 @@ namespace Managers
             freeLook.Follow.position = MenuPos.Position;
             freeLook.m_Orbits[1].m_Height = MenuPos.OrbitHeight;
             
+            // Hide the game HUD UI
+            Manager.GameHud.Hide(false);
+            Manager.IntroHud.Hide(false);
+            menuCanvas.enabled = false;
+            gameCanvas.enabled = false;
+
             // Reveal the CC logo screen
             loadingShadeCanvasGroup.DOFade(0.0f, 0.5f).SetDelay(0.5f)
                 .OnComplete(() =>
@@ -149,7 +154,7 @@ namespace Managers
             // Hold the loading screen open for a minimum of 4 seconds
             loadTime = 4 - (Time.time - loadTime);
             if (loadTime > 0) yield return new WaitForSeconds(loadTime);
-            
+
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 0.5f).OnComplete(() => loadingCanvas.enabled = false);
             
@@ -173,12 +178,10 @@ namespace Managers
 
         private void ToIntroInit()
         {
-            menuCanvasGroup.alpha = 0.0f;
-            menuCanvasGroup.blocksRaycasts = true;
-            gameCanvasGroup.interactable = false;
-            gameCanvasGroup.blocksRaycasts = false;
+            // Hide the game UI
+            Manager.GameHud.Hide();
+            
             Manager.Inputs.TogglePlayerInput(false);
-            menuCanvas.enabled = true;
             Manager.Jukebox.OnEnterMenu();
 
             StartCoroutine(ToIntroUpdate());
@@ -186,33 +189,20 @@ namespace Managers
         
         private IEnumerator ToIntroUpdate()
         {
-            gameCanvasGroup.DOFade(0.0f, 2.0f)
-                .OnComplete(() =>
-                {
-                    gameCanvas.enabled = false;
-                });
-            
             var finishedMoving = false;
             while (!finishedMoving)
             {
                 finishedMoving = Manager.Camera.MoveCamRig(MenuPos, menuTransitionCurve);
                 yield return null;
             }
-            
-            menuCanvasGroup.DOFade(1.0f, 2.0f)
-                .OnComplete(() =>
-                {
-                    EnterState(GameState.InIntro);
-                });
+            EnterState(GameState.InIntro);
         }
 
         private void InIntroInit()
         {
-            menuCanvasGroup.alpha = 1.0f;
-            menuCanvas.enabled = true;
             gameCanvas.enabled = false;
-            menuCanvasGroup.interactable = true;
-            menuCanvasGroup.blocksRaycasts = true;
+            menuCanvas.enabled = true;
+            Manager.IntroHud.Show();
         }
         
         private void ToGameInit()
@@ -221,10 +211,7 @@ namespace Managers
             // Find the starting position for the town
             _startPos.Position = Manager.Structures.TownCentre;
             
-            gameCanvasGroup.alpha = 0.0f;
-            gameCanvas.enabled = true;
-            menuCanvasGroup.interactable = false;
-            menuCanvasGroup.blocksRaycasts = false;
+            Manager.IntroHud.Hide();
 
             // TODO add some kind of juicy on-play sound here
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 5f));
@@ -237,11 +224,6 @@ namespace Managers
         {
             void SetupGame()
             {
-                gameCanvasGroup.alpha = 1.0f;
-                menuCanvasGroup.interactable = false;
-                menuCanvasGroup.blocksRaycasts = false;
-                gameCanvasGroup.interactable = true;
-                gameCanvasGroup.blocksRaycasts = true;
                 Manager.Inputs.TogglePlayerInput(true);
                 if (Manager.Stats.TurnCounter == 0) OnNewGame.Invoke();
                 UpdateUi();
@@ -250,7 +232,6 @@ namespace Managers
 #if UNITY_EDITOR
             if (Manager.skipIntro && !_alreadySkippedIntro)
             {
-                gameCanvasGroup.alpha = 1.0f;
                 SetupGame();
                 if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
                 Manager.Camera.SetCamRig(_startPos);
@@ -259,12 +240,6 @@ namespace Managers
             else
 #endif
             {
-                menuCanvasGroup.DOFade(0.0f, 2.0f)
-                    .OnComplete(() =>
-                    {
-                        menuCanvas.enabled = false;
-                    });
-            
                 var finishedMoving = false;
                 while (!finishedMoving)
                 {
@@ -272,21 +247,22 @@ namespace Managers
                     yield return null;
                 }
 
-                gameCanvasGroup.DOFade(1.0f, 2.0f)
-                    .OnComplete(() =>
-                    {
-                        SetupGame();
-                        if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
-                    });
+                SetupGame();
+                if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
             }
         }
 
-        private void InGameInit() { }
+        private void InGameInit()
+        {
+            menuCanvas.enabled = false;
+            gameCanvas.enabled = true; 
+            if (Tutorial.Tutorial.Active) return;
+            Manager.GameHud.Show();
+        }
 
         private void NextTurnInit()
         {
             OnNextTurnBegin?.Invoke();
-            gameCanvasGroup.interactable = false;
             Manager.Jukebox.StartNightAmbience();
 
             float timer = 0;
@@ -295,7 +271,6 @@ namespace Managers
             {
                 OnNextTurnEnd?.Invoke();
                 Manager.EventQueue.Process();
-                gameCanvasGroup.interactable = true;
             });
         }
 
@@ -315,21 +290,14 @@ namespace Managers
         
         private void ToCreditsInit()
         {
-            menuCanvasGroup.interactable = false;
-            menuCanvasGroup.blocksRaycasts = false;
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 4f));
             StartCoroutine(Algorithms.DelayCall(3f, () => {
                 Manager.Jukebox.OnStartCredits();
                 StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 5f));
             }));
 
-            menuCanvasGroup.DOFade(0.0f, 1.0f)
-                .OnComplete(() =>
-                {
-                    menuCanvasGroup.alpha = 0.0f;
-                    menuCanvas.enabled = false;
-                    EnterState(GameState.InCredits);
-                });
+            Manager.IntroHud.Hide();
+            EnterState(GameState.InCredits);
         }
 
         private Coroutine _creditsCoroutine;
