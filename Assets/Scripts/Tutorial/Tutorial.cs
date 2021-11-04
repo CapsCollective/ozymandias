@@ -10,6 +10,7 @@ using Managers;
 using NaughtyAttributes;
 using Structures;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -25,7 +26,7 @@ namespace Tutorial
         FingerGuns,
         PointingUp
     }
-    
+
     public class Tutorial : MonoBehaviour
     {
         public static bool Active, DisableSelect;
@@ -34,7 +35,7 @@ namespace Tutorial
         
         [SerializeField] private Image guide;
         [SerializeField] private TextMeshProUGUI text;
-        [SerializeField] private RectTransform dialogue, objectives, topBar, leftButtons, rightButtons, cards, objectiveContainer;
+        [SerializeField] private RectTransform dialogue, objectives, objectiveContainer;
         [SerializeField] private GameObject objectivePrefab, blocker;
         [SerializeField] private Button next;
         
@@ -47,10 +48,8 @@ namespace Tutorial
         {
             Manager.Inputs.OnDialogueNext.performed += _ => NextLine();
             next.onClick.AddListener(NextLine);
-                
-            State.OnLoadingEnd += HideGameUi;
+            
             State.OnNewGame += StartTutorial;
-
         }
 
         private void ShowDialogue(List<Line> lines)
@@ -60,7 +59,7 @@ namespace Tutorial
             _sectionLine = 0;
             guide.GetComponent<RectTransform>().DOAnchorPosX(0, 0.5f);
             dialogue.DOAnchorPosY(230, 0.5f);
-            leftButtons.DOAnchorPosX(-150,0.5f);
+            Manager.GameHud.Hide(GameHud.HudObject.LeftButtons);
 
             text.text = lines[0].Dialogue;
             text.maxVisibleCharacters = lines[0].Dialogue.Length;
@@ -75,7 +74,7 @@ namespace Tutorial
             _currentSection = null;
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
-            leftButtons.DOAnchorPosX(10,0.5f);
+            Manager.GameHud.Show(GameHud.HudObject.LeftButtons);
             Manager.State.EnterState(GameState.InGame);
             blocker.SetActive(false);
         }
@@ -174,15 +173,7 @@ namespace Tutorial
         #endregion
 
         #region Section Callbacks
-        private void HideGameUi()
-        {
-            if (!Active) return;
-            topBar.anchoredPosition = new Vector2(0,200);
-            leftButtons.anchoredPosition = new Vector2(-150,0);
-            rightButtons.anchoredPosition = new Vector2(0,-230);
-            cards.anchoredPosition = new Vector2(0,-390);
-        }
-        
+
         [Button("Start Tutorial")]
         private void StartTutorial()
         {
@@ -262,7 +253,7 @@ namespace Tutorial
             Structures.Structures.OnBuild += Build;
             Cards.Cards.OnBuildingRotate += RotateBuilding;
             Manager.Cards.SetTutorialCards();
-            cards.DOAnchorPosY(-155,0.5f);
+            Manager.GameHud.Show(GameHud.HudObject.Cards);
 
             void ClearRuin(Structure structure)
             {
@@ -296,6 +287,16 @@ namespace Tutorial
                     });
             }
 
+            void ShowGameUi()
+            {
+                Manager.Stats.Wealth = 100;
+                Manager.GameHud.Show(new List<GameHud.HudObject>()
+                {
+                    GameHud.HudObject.TopBar,
+                    GameHud.HudObject.RightButtons
+                });
+            }
+
             ShowDialogue(new List<Line> {
                 new Line("Nice! That'll hopefully set us up for some success.", GuidePose.Neutral),
                 new Line("Now every adventuring town's lifeblood is the Guild Hall. I'll pop one in now, will even clear some space for you, you can thank me later.", onNext: SpawnGuildHall),
@@ -306,14 +307,6 @@ namespace Tutorial
                 new Line("As your population grows, you'll need to keep building to keep everyone happy."),
                 new Line("Try attracting some adventurers now!", onNext: StartAdventurerObjectives)
             });
-        }
-
-        private void ShowGameUi()
-        {
-            Manager.Stats.Wealth = 100;
-            topBar.DOAnchorPosY(0,0.5f);
-            rightButtons.DOAnchorPosY(0,0.5f);
-            UpdateUi();
         }
         
         private void StartAdventurerObjectives()
