@@ -40,6 +40,9 @@ namespace Managers
             Stat.Housing,
             Stat.Spending
         };
+
+        [SerializeField] private SerializedDictionary<Guild, Events.Event> excessEvents;
+
         public int StatMultiplier(Stat stat) => _baseStats.Contains(stat) ? BaseStatMultiplier : 1;
 
 
@@ -131,9 +134,10 @@ namespace Managers
             TurnCounter++;
 
             // Spawn adventurers based on satisfaction
-            foreach (Guild category in Enum.GetValues(typeof(Guild)))
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
-                if (Random.Range(0, 100) < SpawnChance(category)) Manager.Adventurers.Add(category);
+                if (Random.Range(0, 100) < SpawnChance(guild)) Manager.Adventurers.Add(guild);
+                if (GetSatisfaction(guild) >= 10) Manager.EventQueue.Add(excessEvents[guild], true);
             }
 
             if (Stability <= 0) Manager.EventQueue.AddGameOverEvents();
