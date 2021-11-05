@@ -162,6 +162,9 @@ namespace Structures
                     building.Blueprint.type != BuildingType.Plaza &&
                     building.Blueprint.type != BuildingType.Barracks &&
                     building.Blueprint.type != BuildingType.Armoury &&
+                    building.Blueprint.type != BuildingType.BathHouse &&
+                    building.Blueprint.type != BuildingType.Monastery &&
+                    building.Blueprint.type != BuildingType.FightingRing &&
                     Random.Range(0, count) == 0
                 )
                 {
