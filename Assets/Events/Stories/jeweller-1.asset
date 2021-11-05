@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3845174561133870350
+--- !u!114 &-9116583689171234464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Impose Child Labour Laws
+  m_Name: Let Them Continue
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -1829338265721673292}
-  - {fileID: 8318798269706886509}
+  - {fileID: 1289720524160819298}
+  - {fileID: -1669642192542812088}
   costScale: 0
---- !u!114 &-1829338265721673292
+--- !u!114 &-2390363673370779091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,32 +31,7 @@ MonoBehaviour:
   customDescription: We'll have to see how they respond...
   flag: 0
   value: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: jeweller-1
-  m_EditorClassIdentifier: 
-  headline: Dwarven Minors
-  article: Reports have come in that the dwarves in the nearby mountains have been
-    working their children in the mines. Their leader sent out a memo explaining
-    "They're so tiny, they can fit in the little gaps where all the good stuff is."
-    Guild Co upper management have forbid us from trading with them if this continues.
-  image: {fileID: 21300000, guid: 43a05df69ee8da049a40f0a110a1ece0, type: 3}
-  type: 3
-  headliner: 0
-  outcomes: []
-  choices:
-  - {fileID: -3845174561133870350}
-  - {fileID: 749805176479596095}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &210151617821732877
+--- !u!114 &-1669642192542812088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +48,7 @@ MonoBehaviour:
   amount: -5
   turns: -1
   reason: from the Wooden Weapons
---- !u!114 &749805176479596095
+--- !u!114 &-945397892239621499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,13 +58,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Let Them Continue
+  m_Name: Impose Child Labour Laws
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 7387946193408803836}
-  - {fileID: 210151617821732877}
+  - {fileID: -2390363673370779091}
+  - {fileID: 2884993201757798535}
   costScale: 0
---- !u!114 &7387946193408803836
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: jeweller-1
+  m_EditorClassIdentifier: 
+  headline: Dwarven Minors
+  article: Reports have come in that the dwarves in the nearby mountains have been
+    working their children in the mines. Their leader sent out a memo explaining
+    "They're so tiny, they can fit in the little gaps where all the good stuff is."
+    Guild Co's PR department have forbid us from trading with them if this continues.
+  image: {fileID: 21300000, guid: 43a05df69ee8da049a40f0a110a1ece0, type: 3}
+  type: 3
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -945397892239621499}
+  - {fileID: -9116583689171234464}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &1289720524160819298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Without their mineral supply, we'll have to substitute our weapons
     with wood.
---- !u!114 &8318798269706886509
+--- !u!114 &2884993201757798535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

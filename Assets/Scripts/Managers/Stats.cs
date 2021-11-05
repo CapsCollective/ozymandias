@@ -40,6 +40,9 @@ namespace Managers
             Stat.Housing,
             Stat.Spending
         };
+
+        [SerializeField] private SerializedDictionary<Guild, Events.Event> excessEvents;
+
         public int StatMultiplier(Stat stat) => _baseStats.Contains(stat) ? BaseStatMultiplier : 1;
 
 
@@ -78,11 +81,12 @@ namespace Managers
         
         public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
 
-        public int WealthPerTurn => WealthPerAdventurer * Manager.Adventurers.Available + GetStat(Stat.Spending) + StartingSalary; // 5 gold per adventurer plus spending
+        public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) *
+            Manager.Adventurers.Available + GetStat(Stat.Spending) + StartingSalary; // 5 gold per adventurer plus spending, 3 if in tailor story
     
         public int Wealth { get;  set; }
 
-        public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence);
+        public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence) + MineStrikePenalty;
 
         public int BaseThreat { get; set; }
         public int Threat => BaseThreat + ModifiersTotal[Stat.Threat] + Manager.Quests.RadiantQuestCellCount + ScarecrowThreat;
@@ -99,7 +103,9 @@ namespace Managers
             return true;
         }
 
-        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 3 : 0;
+        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 2 : 0;
+        public int MineStrikePenalty => Manager.EventQueue.Flags[Flag.MineStrike] ? -5 : 0;
+
         
         #endregion
 
@@ -131,9 +137,10 @@ namespace Managers
             TurnCounter++;
 
             // Spawn adventurers based on satisfaction
-            foreach (Guild category in Enum.GetValues(typeof(Guild)))
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
-                if (Random.Range(0, 100) < SpawnChance(category)) Manager.Adventurers.Add(category);
+                if (Random.Range(0, 100) < SpawnChance(guild)) Manager.Adventurers.Add(guild);
+                if (GetSatisfaction(guild) >= 10) Manager.EventQueue.Add(excessEvents[guild], true);
             }
 
             if (Stability <= 0) Manager.EventQueue.AddGameOverEvents();

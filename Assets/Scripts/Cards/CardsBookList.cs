@@ -25,7 +25,7 @@ namespace Cards
                 card.UpdateDetails(isUnlocked || blueprint.starter ? blueprint : null);
                 
                 // Update list on card unlock
-                if(isUnlocked) Cards.OnUnlock += (unlocked) =>
+                if(!isUnlocked) Cards.OnUnlock += (unlocked) =>
                 {
                     if (unlocked.type == blueprint.type) card.UpdateDetails(blueprint);
                 };

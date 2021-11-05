@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5215986154021074273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Issue stimulus
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -321445601843773467}
+  costScale: 0.8
+--- !u!114 &-982810479906026676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: 3 Adventurers have fallen to the illness from their desire to
+    loot.
+  count: 3
+  kill: 1
+--- !u!114 &-321445601843773467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: '"I GUESS this counts as looting, but its just not the same",
+    an adventurer mopes while being handed a bag of gold.'
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: apothecary-2
+  m_EditorClassIdentifier: 
+  headline: Adventuring Bailouts Needed!
+  article: With the plague requiring businesses to temporarily close, unable to feed
+    their families, we look to the Adventurers, who are sad to have to stay home.
+    We should really give them more money to keep them from going out and causing
+    more infections.
+  image: {fileID: 21300000, guid: 59fe18cf41a57cc4ea5fa3878b5cee81, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 6709713531755254126}
+  choices:
+  - {fileID: -5215986154021074273}
+  - {fileID: 6804372584050529791}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &6709713531755254126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 95c23dc5eb320204d8aa282ec77f9343, type: 2}
+  toFront: 0
+--- !u!114 &6804372584050529791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse bailouts
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -982810479906026676}
+  costScale: 0

@@ -39,7 +39,7 @@
         "type": "SetFlag",
         "flag": "Scarecrows",
         "value": true,
-        "customDescription": "<color=#820000ff>5 Threat per farm until this is resolved</color>"
+        "customDescription": "<color=#820000ff>2 Threat per farm until this is resolved</color>"
       },
       {
         "type": "SetFlag",
@@ -390,9 +390,9 @@
                 "reward": "Clothes and Hats for the Town",
                 "completedEvent": {
                   "name": "tailor-4",
-                  "headline": "",
+                  "headline": "\"It's all about those dances, now!\"",
                   "article": "Our heroic party has 'retrieved' the tailor from our neighbours, who has agreed to produce clothes for us. However, this has come just as the trend has died down. No longer do they care about clothes, \"It's all about those dances, now!\", an adventurer yelled at our reporter while performing a copyright free dance move.",
-                  "image": "scarecrow",
+                  "image": "Buildings/Tailor",
                   "outcomes": [
                     {
                       "type": "SetFlag",
@@ -543,6 +543,12 @@
                           "type": "SetFlag",
                           "flag": "StoryActive",
                           "value": false
+                        },
+                        {
+                          "type": "SetFlag",
+                          "flag": "MineStrike",
+                          "value": false,
+                          "customDescription": "Our weapons can use actual metals again! (+5 defence)"
                         },
                         {
                           "type": "CardUnlocked",
@@ -770,4 +776,454 @@
       }
     ]
   },
+  {
+    "name": "tannery-1",
+    "headline": "The Undead Are Dead!",
+    "article": "Tragedy unfolded at a local inn last night, as regional vampire cosplay and literature organisation, The Undead Poets Society, held their annual gala dinner, only to be brutally slain by a leather-clad, rag-tag team of vampire hunters who embarrassingly mistook them for the real deal.",
+    "type": "Story",
+    "image": "resting-vampire",
+    "outcomes": [
+      {
+        "type": "AdventurersRemoved",
+        "count": 2,
+        "kill": true,
+        "customDescription": "Two adventurers were amongst the casualties."
+      },
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true,
+        "customDescription": "The vampire hunters stay to continue their 'audit'..."
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "tannery-2",
+          "headline": "The Fangs Are Out!",
+          "article": "The vampire hunters, thoroughly embarrassed by their blunder upon arriving in town, have today stumbled upon a vampire enclave! \"It's like a nest in there! I've never seen so many Draculas!\". The discovery has quickly sparked an all-out war, threatening to spill blood all over our streets - a fine waste.",
+          "image": "resting-vampire",
+          "outcomes": [
+            {
+              "type": "ThreatAdded",
+              "amount": 3
+            },
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "tannery-3",
+                "headline": "Tight Leather Supply Spurs Shortage",
+                "article": "As tensions continue to rise amidst the civil war breaking out between vampires and their slayers, demand for leather goods has soared, leading to mass shortages on jackets, capes, and whips. The townsfolk have set about organising a hunting party in search of hides from creatures big and small (sorry gnomes).",
+                "image": "werewolf",
+                "outcomes": [
+                  {
+                    "type": "QuestAdded",
+                    "quest": {
+                      "name": "tannery-quest",
+                      "title": "Hunt for Hides",
+                      "description": "The vampire war has caused a shortage in leatherware!",
+                      "image": "Buildings/Tannery",
+                      "location": "Dock",
+                      "adventurers": 7,
+                      "baseTurns": 5,
+                      "wealthMultiplier": 2,
+                      "reward": "End the leather shortage",
+                      "completedEvent": {
+                        "name": "tannery-4",
+                        "headline": "Former Foes Now Skin-Tight",
+                        "article": "An emotional day for many as vampires and vampire hunters finally called a truce to the ongoing bloodbath, in order to peruse the latest shipment of leather goods. \"We're not so different, you and I.\" one vampire mused, to which a hunter replied \"eh, I s'pose you're right; you like your steak rare, I like it wooden\". The once immortal enemies, now sworn allies bonded in leather.",
+                        "image": "leather-armor",
+                        "outcomes": [
+                          {
+                            "type": "SetFlag",
+                            "flag": "StoryActive",
+                            "value": false
+                          },
+                          {
+                            "type": "CardUnlocked",
+                            "blueprint": "Tannery"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "apothecary-1",
+    "headline": "These Rats are Revolting!",
+    "article": "Up from the under-city, the rats have risen up, and with them a deadly disease! \"Ve have been downtrodden, but non more! Ve shall unite as one voice!\" They may infect the whole town if we're not careful, we need to lock down right away!",
+    "type": "Story",
+    "image": "rat",
+    "choices": [
+      {
+        "name": "Enforce lockdowns",
+        "outcomes": [
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Housing",
+              "amount": -15,
+              "turns": 4,
+              "reason": "from the Lockdown Orders"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Allow free reign",
+        "outcomes": [
+          {
+            "type": "AdventurersRemoved",
+            "count": 3,
+            "anyGuild": true,
+            "kill": true,
+            "customDescription": "3 Adventurers have fallen to the illness"
+          }
+        ]
+      }
+    ],
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "apothecary-2",
+          "headline": "Adventuring Bailouts Needed!",
+          "article": "With the plague requiring businesses to temporarily close, unable to feed their families, we look to the Adventurers, who are sad to have to stay home. We should really give them more money to keep them from going out and causing more infections.",
+          "image": "treasure-chest",
+          "choices": [
+            {
+              "name": "Issue stimulus",
+              "costScale": 0.8,
+              "outcomes": [
+                {
+                  "type": "FlavourText",
+                  "customDescription": "\"I GUESS this counts as looting, but its just not the same\", an adventurer mopes while being handed a bag of gold."
+                }
+              ]
+            },
+            {
+              "name": "Refuse bailouts",
+              "outcomes": [
+                {
+                  "type": "AdventurersRemoved",
+                  "count": 3,
+                  "anyGuild": true,
+                  "kill": true,
+                  "customDescription": "3 Adventurers have fallen to the illness from their desire to loot."
+                }
+              ]
+            }
+          ],
+          "outcomes": [
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "apothecary-3",
+                "headline": "Rats All Night",
+                "article": "While we're still in the search of a cure to this horrible illness, the rats have been organising something at night, scouts claiming to spot 'multiple rats singing about their dreams while joined at the tail'. Whatever is going on there we should probably avoid, lest we fall ill. Although a curfew may leave our town vulnerable at night.",
+                "image": "night-sky",
+                "choices": [
+                  {
+                    "name": "Enforce curfews",
+                    "outcomes": [
+                      {
+                        "type": "ModifierAdded",
+                        "modifier": {
+                          "toChange": "Defence",
+                          "amount": -3,
+                          "turns": 2,
+                          "reason": "from the curfew orders"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Refuse curfews",
+                    "outcomes": [
+                      {
+                        "type": "AdventurersRemoved",
+                        "count": 3,
+                        "anyGuild": true,
+                        "kill": true,
+                        "customDescription": "3 Adventurers have fallen to the illness by wandering at night."
+                      }
+                    ]
+                  }
+                ],
+                "outcomes": [
+                  {
+                    "type": "ChainEvent",
+                    "nextEvent": {
+                      "name": "apothecary-4",
+                      "headline": "Every Rat a King",
+                      "article": "In a final act of unity, the Rats shockingly all joined together in a giant ball?!? \"At las'! We 'ave achieved unity!\" It promptly rolled off into the unknown, good for them... I think? In the now empty undercity, our adventurers found an enormous stash of glass bottles labeled \"Rat Juice\". An adventurous brawler took it without reading the label, and discovered it cured their illness!",
+                      "image": "potion-ball",
+                      "outcomes": [
+                        {
+                          "type": "SetFlag",
+                          "flag": "StoryActive",
+                          "value": false,
+                          "customDescription": "We've started distributing the bottles to a new store..."
+                        },
+                        {
+                          "type": "CardUnlocked",
+                          "blueprint": "Apothecary"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "cartographer-1",
+    "headline": "Mysterious Map: Marvelous or Mischievous?",
+    "article": "A strange map was found pinned to the town notice board this morning, with a note attached. \"This map will set you on a journey, leading to untold riches!\" The legitimacy of this claim is yet to be proven, and nobody has come forward as the source of this quest, but we can probably check it out.",
+    "type": "Story",
+    "image": "map",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "cartographer-quest-1",
+          "title": "Follow the Map",
+          "description": "It has to lead somewhere...",
+          "image": "map",
+          "location": "Dock",
+          "adventurers": 2,
+          "baseTurns": 3,
+          "wealthMultiplier": 0.7,
+          "reward": "Untold riches, apparently?",
+          "completedEvent": {
+            "name": "cartographer-2",
+            "headline": "Detour Ahead!",
+            "article": "Our adventurers have returned from their investigation into the mysterious map left on our towns noticeboard, with yet ANOTHER map in hand. Along with it, another note, \"You have progressed on your quest, but the location of these riches is still to be found. Follow the trail, and I promise you'll be rewarded.\" ",
+            "image": "map",
+            "outcomes": [
+              {
+                "type": "QuestAdded",
+                "quest": {
+                  "name": "cartographer-quest-2",
+                  "title": "Follow the Map, Again",
+                  "description": "This is starting to feel suspect.",
+                  "image": "map",
+                  "location": "Dock",
+                  "adventurers": 2,
+                  "baseTurns": 2,
+                  "wealthMultiplier": 0.6,
+                  "reward": "Hopefully actual treasure this time...",
+                  "completedEvent": {
+                    "name": "cartographer-3",
+                    "headline": "When Will This Torture End?!",
+                    "article": "Yet again, our adventurers have returned with a new map and not a treasure in hand. \"Not much further now! What lies at the end of this trail is worth it.\" I swear, if this one doesn't have a good payoff, I'm quitting.",
+                    "image": "map",
+                    "outcomes": [
+                      {
+                        "type": "QuestAdded",
+                        "quest": {
+                          "name": "cartographer-quest-3",
+                          "title": "Follow THIS Map, I Guess",
+                          "description": "This is the one, I can feel it...",
+                          "image": "map",
+                          "location": "Dock",
+                          "adventurers": 2,
+                          "baseTurns": 3,
+                          "wealthMultiplier": 0.5,
+                          "reward": "It's gotta lead to something!",
+                          "completedEvent": {
+                            "name": "cartographer-4",
+                            "headline": "\"This Is Just Too Many Maps!\"",
+                            "article": "Our adventurers have returned, this time not with a single map, but hundreds! At the location specified, there was a huge stash of maps, each with the note \"Nah, really, THIS one is the real one. You gotta believe me.\" Frankly, we've had enough, it wasn't even a 'friends along the way' deal! We gotta get rid of all these maps somehow...",
+                            "image": "map",
+                            "outcomes": [
+                              {
+                                "type": "SetFlag",
+                                "flag": "StoryActive",
+                                "value": false,
+                                "customDescription": "Now, how do we recoup the losses of chasing after all these maps?"
+                              },
+                              {
+                                "type": "CardUnlocked",
+                                "blueprint": "Cartographer"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "water-purity-1",
+    "headline": "Well Wastage Causes Wicked Water",
+    "article": "A batch of expired potions has been illegally dumped into our well, resulting in tainted water! We need to search for a solution, quick!\n<b>Diviners: </b>Our scriptures tell of a sacred site, the 'Fountain of Purity', a single drop from it may solve our problems.\n<b>Performers: </b>Orrrr, we could 'borrow' some brewing supplies from the orcs. It's a win win! We get to purified water, and everyone gets a little buzzed!",
+    "type": "Story",
+    "image": "well",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      }
+    ],
+    "choices": [
+      {
+        "name": "Search for the Fountain of Purity",
+        "outcomes": [
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "water-bathhouse-quest",
+              "title": "Find the Fountain of Purity",
+              "description": "This should cure our tainted water.",
+              "image": "waterfall",
+              "location": "Dock",
+              "adventurers": 5,
+              "baseTurns": 4,
+              "wealthMultiplier": 1.6,
+              "reward": "Purified water",
+              "completedEvent": {
+                "name": "water-bathhouse-completed",
+                "headline": "\"I've Never Felt so Clean\"",
+                "article": "Our adventurers have returned, vials of crystal clear water in hand. While a single drop was enough to cure our water supply, bathing in the mixture results in a relaxation beyond compare!",
+                "image": "Buildings/Bath House",
+                "outcomes": [
+                  {
+                    "type": "SetFlag",
+                    "flag": "StoryActive",
+                    "value": false,
+                    "customDescription": "We can finally bathe again!"
+                  },
+                  {
+                    "type": "CardUnlocked",
+                    "blueprint": "Bath House"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Search for the Brewing Supplies",
+        "outcomes": [
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "water-brewery-quest",
+              "title": "Retrieve Brewing Supplies",
+              "description": "We can probably get some from the orc camp.",
+              "image": "hops",
+              "location": "Dock",
+              "adventurers": 5,
+              "baseTurns": 4,
+              "wealthMultiplier": 1.6,
+              "reward": "'Purified' water",
+              "completedEvent": {
+                "name": "water-brewery-completed",
+                "headline": "Hops to it, Then!",
+                "article": "Returning from the orc camp, the adventurers recount that all seemed lost when they were caught and the Orcs started to descend on them. However, once they explained they were looking for beer, all hostilities dropped, and the chieftain was more than happy to hand over his personal starter kit and send them on their way. They may be bloodthirsty monsters who have waged a ceaseless war on us, but they DO respect the art of brewing!",
+                "image": "hops",
+                "outcomes": [
+                  {
+                    "type": "SetFlag",
+                    "flag": "StoryActive",
+                    "value": false,
+                    "customDescription": "It's more drinkable than that well water, for sure."
+                  },
+                  {
+                    "type": "CardUnlocked",
+                    "blueprint": "Brewery"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "fights-1",
+    "headline": "Fighting Fiasco!",
+    "article": "A huge bar fight broke out today that was so action packed it completely demolished the tavern it took place in! The fight seemed have started out as a competition between the Brawlers and Outriders over who was the toughest, a childish argument, but what could we expect?",
+    "type": "Story",
+    "image": "punch-blast",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true,
+        "customDescription": "We need to think of how to channel this aggression..."
+      },
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Tavern"
+      },
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "fights-2",
+          "headline": "A Fix to the Fighting",
+          "article": "In response to our growing rage issues bubbling though the town, we've had two proposals:\n<b>Performer: </b>\"Fighting Rings! Not only will they be punching each other and not your buildings, but we get to watch them do it!\"\n<b>Outrider: </b>\"Maybe, if we started a little club, get them to hunt things. They probably won't catch anything larger than a jackalope, but it'll make them feel big and tough.\"",
+          "image": "punch-blast",
+          "outcomes": [
+            {
+              "type": "SetFlag",
+              "flag": "StoryActive",
+              "value": false
+            }
+          ],
+          "choices": [
+            {
+              "name": "Build the Fighting Rings",
+              "outcomes": [
+                {
+                  "type": "CardUnlocked",
+                  "blueprint": "FightingRing"
+                }
+              ]
+            },
+            {
+              "name": "Build the Hunting Lodges",
+              "outcomes": [
+                {
+                  "type": "CardUnlocked",
+                  "blueprint": "HuntingLodge"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
 ]

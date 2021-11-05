@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8053443392907653235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Build the Fighting Rings
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 7357061279375910378}
+  costScale: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: fights-2
+  m_EditorClassIdentifier: 
+  headline: A Fix to the Fighting
+  article: 'In response to our growing rage issues bubbling though the town, we''ve
+    had two proposals:
+
+    <b>Performer: </b>"Fighting Rings! Not only will they
+    be punching each other and not your buildings, but we get to watch them do it!"
+
+    <b>Outrider:
+    </b>"Maybe, if we started a little club, get them to hunt things. They probably
+    won''t catch anything larger than a jackalope, but it''ll make them feel big
+    and tough."'
+  image: {fileID: 21300000, guid: 53c675f8073548741bf78b452517ab0f, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 2282241588153090999}
+  choices:
+  - {fileID: -8053443392907653235}
+  - {fileID: 6566788402040433349}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &2282241588153090999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 0
+--- !u!114 &3085041782796249401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked 2
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 0}
+--- !u!114 &6566788402040433349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Build the Hunting Lodges
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 3085041782796249401}
+  costScale: 0
+--- !u!114 &7357061279375910378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked 1
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 0}

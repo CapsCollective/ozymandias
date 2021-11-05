@@ -1,62 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7844961922919502418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: 
-  count: 1
-  kill: 1
---- !u!114 &-5599369821964336771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: d860dd06eda3a2f43beca7e50efa1cf9, type: 2}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: plaza-2
-  m_EditorClassIdentifier: 
-  headline: Adventurer Tragically Deplatformed
-  article: In an attempt to catch the growing trend of death defying acts, a performer
-    was killed today when the hastily made stage of swords collapsed beneath them.
-    The blame has turned to Gol Brojan, the influential figure at the forefront of
-    this movement. "You squares just don't understand REAL art!" he was quoted saying,
-    before leaving the town to form the competing Cirque Du Slay.
-  image: {fileID: 21300000, guid: 90e21c5bcf2bbd943ba5d924814e5b96, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -7844961922919502418}
-  - {fileID: 8391054091001042936}
-  - {fileID: -5599369821964336771}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &8391054091001042936
+--- !u!114 &-5857839877119549164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,3 +16,60 @@ MonoBehaviour:
     (-3 Performers).
   count: 3
   kill: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: plaza-2
+  m_EditorClassIdentifier: 
+  headline: Performer Tragically Deplatformed
+  article: In a growing hunger for death-defying acts, a performer has tragically
+    fallen to their death as the audience literally ripped the stage out from under
+    them. The blame has turned to Gol Brojan, the influential figure at the forefront
+    of this "edgy entertainment" movement. 'You squares just don't understand REAL
+    art!' he remarked before leaving the town to form a new enterprise, Cirque Du
+    Slay.
+  image: {fileID: 21300000, guid: 90e21c5bcf2bbd943ba5d924814e5b96, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 6622251836772110495}
+  - {fileID: -5857839877119549164}
+  - {fileID: 5374071834702120567}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &5374071834702120567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: d860dd06eda3a2f43beca7e50efa1cf9, type: 2}
+--- !u!114 &6622251836772110495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: 
+  count: 1
+  kill: 1

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7808576960943932225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 0d8e2b38730ac5b42b0e50aafa3f390a, type: 2}
+  toFront: 0
+--- !u!114 &-855097389181482815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: There's just something in their eyes...
+  flag: 0
+  value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21,27 +51,12 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 1111300880856489925}
-  - {fileID: 987537429552603174}
-  - {fileID: 4841953899993666611}
+  - {fileID: 6776812598258860449}
+  - {fileID: -855097389181482815}
+  - {fileID: -7808576960943932225}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &987537429552603174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: There's just something in their eyes...
-  flag: 0
-  value: 1
---- !u!114 &1111300880856489925
+--- !u!114 &6776812598258860449
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,18 +81,3 @@ MonoBehaviour:
   count: 0
   guild: 0
   anyGuild: 0
---- !u!114 &4841953899993666611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 0d8e2b38730ac5b42b0e50aafa3f390a, type: 2}
-  toFront: 0

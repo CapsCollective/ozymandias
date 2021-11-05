@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6455772422024691103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: We've started distributing the bottles to a new store...
+  flag: 0
+  value: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: apothecary-4
+  m_EditorClassIdentifier: 
+  headline: Every Rat a King
+  article: In a final act of unity, the Rats shockingly all joined together in a
+    giant ball?!? "At las'! We 'ave achieved unity!" It promptly rolled off into
+    the unknown, good for them... I think? In the now empty undercity, our adventurers
+    found an enormous stash of glass bottles labeled "Rat Juice". An adventurous
+    brawler took it without reading the label, and discovered it cured their illness!
+  image: {fileID: 21300000, guid: 9a88963d67150134ba60953254b8e407, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -6455772422024691103}
+  - {fileID: 1175270204828549554}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &1175270204828549554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: f615080d3cd449e4b8959e1aed05f9fd, type: 2}
