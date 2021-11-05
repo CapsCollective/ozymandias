@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2845029902103028406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22,12 +37,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 1989527345902638222}
-  - {fileID: 7506881646104869029}
-  - {fileID: 476039794219788860}
+  - {fileID: -2845029902103028406}
+  - {fileID: 5401763768805269296}
+  - {fileID: 1819664973330064895}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &476039794219788860
+--- !u!114 &1819664973330064895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,22 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 1f66b978e5eee814fb42daee85a2b7f6, type: 2}
---- !u!114 &1989527345902638222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: 
-  flag: 0
-  value: 0
---- !u!114 &7506881646104869029
+--- !u!114 &5401763768805269296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

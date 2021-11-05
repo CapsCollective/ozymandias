@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5512247506795384921
+--- !u!114 &-3993852512600693315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,6 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   type: 2
+--- !u!114 &-1272980558325271730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: We need to think of how to channel this aggression...
+  flag: 0
+  value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,27 +50,12 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 574713744407968724}
-  - {fileID: -5512247506795384921}
-  - {fileID: 2021217566469390595}
+  - {fileID: -1272980558325271730}
+  - {fileID: -3993852512600693315}
+  - {fileID: 6961228548484103403}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &574713744407968724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: We need to think of how to channel this aggression...
-  flag: 0
-  value: 1
---- !u!114 &2021217566469390595
+--- !u!114 &6961228548484103403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

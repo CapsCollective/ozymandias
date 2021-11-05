@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6202097959713515313
+--- !u!114 &-5929214565009936992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  customDescription: It turns out the 'surprise' was explosives.
---- !u!114 &-4316632510594544370
+  customDescription: 
+  baseAmount: 5
+--- !u!114 &-2045500873227984958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,28 +23,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse the offer
   m_EditorClassIdentifier: 
-  customDescription: Somehow, they're still selling like wildfire (+50 spending for
-    5 turns).
-  statToChange: 7
-  amount: 50
-  turns: 5
-  reason: from Loot Boxes
---- !u!114 &-3789635778997937902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: Oh well you're no fun!
+  outcomes:
+  - {fileID: 481498481761552393}
+  costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,10 +50,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 4577232710504272809}
-  - {fileID: 3952216594027637022}
+  - {fileID: 4950642771484354770}
+  - {fileID: -2045500873227984958}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2529487967854044784
+--- !u!114 &481498481761552393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,12 +62,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 5
---- !u!114 &3952216594027637022
+  customDescription: Oh well you're no fun!
+--- !u!114 &1893634923070896609
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,13 +75,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse the offer
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -3789635778997937902}
-  costScale: 0
---- !u!114 &4577232710504272809
+  customDescription: Somehow, they're still selling like wildfire (+50 spending for
+    5 turns).
+  statToChange: 7
+  amount: 50
+  turns: 5
+  reason: from Loot Boxes
+--- !u!114 &2308922698623940415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: It turns out the 'surprise' was explosives.
+--- !u!114 &4950642771484354770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: Sell the loot boxes
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -6202097959713515313}
-  - {fileID: 2529487967854044784}
-  - {fileID: -4316632510594544370}
+  - {fileID: 2308922698623940415}
+  - {fileID: -5929214565009936992}
+  - {fileID: 1893634923070896609}
   costScale: 0

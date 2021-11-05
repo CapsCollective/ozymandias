@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7624992786845655320
+--- !u!114 &-4389695229420785839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,7 +15,7 @@ MonoBehaviour:
   customDescription: The vampire hunters stay to continue their 'audit'...
   flag: 0
   value: 1
---- !u!114 &-2883248839786775908
+--- !u!114 &-3428265743440361257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,12 +24,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 45a1d671e33a3154a8b316666c50bb75, type: 2}
-  toFront: 0
+  customDescription: Two adventurers were amongst the casualties.
+  count: 2
+  kill: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,17 +46,17 @@ MonoBehaviour:
   article: Tragedy unfolded at a local inn last night, as regional vampire cosplay
     and literature organisation, The Undead Poets Society, held their annual gala
     dinner, only to be brutally slain by a leather-clad, rag-tag team of vampire
-    hunters who embarrassingly mistook them for real the real deal.
+    hunters who embarrassingly mistook them for the real deal.
   image: {fileID: 21300000, guid: abae7aaa39a40324e96def6de040fcab, type: 3}
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 6472227602644791650}
-  - {fileID: -7624992786845655320}
-  - {fileID: -2883248839786775908}
+  - {fileID: -3428265743440361257}
+  - {fileID: -4389695229420785839}
+  - {fileID: 1773036896354963583}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &6472227602644791650
+--- !u!114 &1773036896354963583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,9 +65,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
   m_EditorClassIdentifier: 
-  customDescription: Two adventurers were amongst the casualties.
-  count: 2
-  kill: 1
+  customDescription: 
+  next: {fileID: 11400000, guid: 45a1d671e33a3154a8b316666c50bb75, type: 2}
+  toFront: 0

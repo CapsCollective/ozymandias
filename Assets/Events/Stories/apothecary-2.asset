@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7691183583908694301
+--- !u!114 &-5215986154021074273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,24 +13,9 @@ MonoBehaviour:
   m_Name: Issue stimulus
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -5437061412221955425}
+  - {fileID: -321445601843773467}
   costScale: 0.8
---- !u!114 &-7451340416882923685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse bailouts
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -5437138401800960734}
-  costScale: 0
---- !u!114 &-5437138401800960734
+--- !u!114 &-982810479906026676
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +31,7 @@ MonoBehaviour:
     loot.
   count: 3
   kill: 1
---- !u!114 &-5437061412221955425
+--- !u!114 &-321445601843773467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,21 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: '"I GUESS this counts as looting, but its just not the same",
     an adventurer mopes while being handed a bag of gold.'
---- !u!114 &-2989617477061305224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 95c23dc5eb320204d8aa282ec77f9343, type: 2}
-  toFront: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,8 +66,38 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -2989617477061305224}
+  - {fileID: 6709713531755254126}
   choices:
-  - {fileID: -7691183583908694301}
-  - {fileID: -7451340416882923685}
+  - {fileID: -5215986154021074273}
+  - {fileID: 6804372584050529791}
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &6709713531755254126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 95c23dc5eb320204d8aa282ec77f9343, type: 2}
+  toFront: 0
+--- !u!114 &6804372584050529791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse bailouts
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -982810479906026676}
+  costScale: 0

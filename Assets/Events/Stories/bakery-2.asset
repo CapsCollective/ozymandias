@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7076613119315548217
+--- !u!114 &-4261777006328623271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,22 +17,7 @@ MonoBehaviour:
   amount: 50
   turns: 5
   reason: from the the witches cakes
---- !u!114 &-7042430373681818204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: abdf78be0bb67e84c9dcc67d69a260e2, type: 2}
-  toFront: 0
---- !u!114 &-1875063335649308080
+--- !u!114 &-2679371915993485997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,8 +29,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: '"I hope you all starve!" the woman shrieks as she bursts into
-    a pile of rotten, inedible, cake.'
+  customDescription: '"I''m glad you are so welcoming, I hope to see you all soon..."
+    the woman exclaims before bursting into a pile of delicious cakes.'
+--- !u!114 &-651302176821033845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Turn her away
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 4495265806543456131}
+  costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,12 +65,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -7042430373681818204}
+  - {fileID: 9204426049641320639}
   choices:
-  - {fileID: 4305035776119516643}
-  - {fileID: 5198176874562749159}
+  - {fileID: 3970731276767732588}
+  - {fileID: -651302176821033845}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1831545746550959472
+--- !u!114 &2041990376717565614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 5
---- !u!114 &4305035776119516643
+--- !u!114 &3970731276767732588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,26 +97,11 @@ MonoBehaviour:
   m_Name: Let her in
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 9049731611126247300}
-  - {fileID: 1831545746550959472}
-  - {fileID: -7076613119315548217}
+  - {fileID: -2679371915993485997}
+  - {fileID: 2041990376717565614}
+  - {fileID: -4261777006328623271}
   costScale: 0
---- !u!114 &5198176874562749159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Turn her away
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -1875063335649308080}
-  costScale: 0
---- !u!114 &9049731611126247300
+--- !u!114 &4495265806543456131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,5 +113,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: '"I''m glad you are so welcoming, I hope to see you all soon..."
-    the woman exclaims before bursting into a pile of delicious cakes.'
+  customDescription: '"I hope you all starve!" the woman shrieks as she bursts into
+    a pile of rotten, inedible, cake.'
+--- !u!114 &9204426049641320639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: abdf78be0bb67e84c9dcc67d69a260e2, type: 2}
+  toFront: 0

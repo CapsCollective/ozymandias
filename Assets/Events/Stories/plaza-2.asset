@@ -1,20 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6683038225746259800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: d860dd06eda3a2f43beca7e50efa1cf9, type: 2}
---- !u!114 &-5864142581354739796
+--- !u!114 &-5857839877119549164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
   m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: 
-  count: 1
-  kill: 1
+  customDescription: Gol and his supporters leave the town to form their own troupe
+    (-3 Performers).
+  count: 3
+  kill: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,12 +39,26 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -5864142581354739796}
-  - {fileID: 7211636629101100333}
-  - {fileID: -6683038225746259800}
+  - {fileID: 6622251836772110495}
+  - {fileID: -5857839877119549164}
+  - {fileID: 5374071834702120567}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &7211636629101100333
+--- !u!114 &5374071834702120567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: d860dd06eda3a2f43beca7e50efa1cf9, type: 2}
+--- !u!114 &6622251836772110495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,7 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
   m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: Gol and his supporters leave the town to form their own troupe
-    (-3 Performers).
-  count: 3
-  kill: 0
+  customDescription: 
+  count: 1
+  kill: 1

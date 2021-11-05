@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4495421262053966389
+--- !u!114 &-7169136187501864783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
   m_EditorClassIdentifier: 
   customDescription: 
-  blueprint: {fileID: 11400000, guid: 0a34f29438590124498e039055016f0c, type: 2}
---- !u!114 &-1796545642652818563
+  quest: {fileID: 11400000, guid: 2da3aa6eacf9d3f428d11d05a0da0767, type: 2}
+--- !u!114 &-6836328306941503530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,12 +52,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -1796545642652818563}
-  - {fileID: -4495421262053966389}
-  - {fileID: 9136732714365234436}
+  - {fileID: -6836328306941503530}
+  - {fileID: 87782189333271536}
+  - {fileID: -7169136187501864783}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &9136732714365234436
+--- !u!114 &87782189333271536
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,8 +66,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: 2da3aa6eacf9d3f428d11d05a0da0767, type: 2}
+  blueprint: {fileID: 11400000, guid: 0a34f29438590124498e039055016f0c, type: 2}

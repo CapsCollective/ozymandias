@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7101159426761456826
+--- !u!114 &-9116583689171234464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Impose Child Labour Laws
+  m_Name: Let Them Continue
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -3466899905182939831}
-  - {fileID: -255601610974029384}
+  - {fileID: 1289720524160819298}
+  - {fileID: -1669642192542812088}
   costScale: 0
---- !u!114 &-3466899905182939831
+--- !u!114 &-2390363673370779091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,7 +31,7 @@ MonoBehaviour:
   customDescription: We'll have to see how they respond...
   flag: 0
   value: 1
---- !u!114 &-3006143203876214868
+--- !u!114 &-1669642192542812088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   amount: -5
   turns: -1
   reason: from the Wooden Weapons
---- !u!114 &-255601610974029384
+--- !u!114 &-945397892239621499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,12 +57,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Impose Child Labour Laws
   m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
-  toFront: 0
+  outcomes:
+  - {fileID: -2390363673370779091}
+  - {fileID: 2884993201757798535}
+  costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,26 +86,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -7101159426761456826}
-  - {fileID: 4077263623913129564}
+  - {fileID: -945397892239621499}
+  - {fileID: -9116583689171234464}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &4077263623913129564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Let Them Continue
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 6667870468853477975}
-  - {fileID: -3006143203876214868}
-  costScale: 0
---- !u!114 &6667870468853477975
+--- !u!114 &1289720524160819298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,3 +103,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Without their mineral supply, we'll have to substitute our weapons
     with wood.
+--- !u!114 &2884993201757798535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
+  toFront: 0
