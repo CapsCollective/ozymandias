@@ -779,7 +779,7 @@
   {
     "name": "tannery-1",
     "headline": "The Undead Are Dead!",
-    "article": "Tragedy unfolded at a local inn last night, as regional vampire cosplay and literature organisation, The Undead Poets Society, held their annual gala dinner, only to be brutally slain by a leather-clad, rag-tag team of vampire hunters who embarrassingly mistook them for real the real deal.",
+    "article": "Tragedy unfolded at a local inn last night, as regional vampire cosplay and literature organisation, The Undead Poets Society, held their annual gala dinner, only to be brutally slain by a leather-clad, rag-tag team of vampire hunters who embarrassingly mistook them for the real deal.",
     "type": "Story",
     "image": "resting-vampire",
     "outcomes": [
@@ -800,7 +800,7 @@
         "nextEvent": {
           "name": "tannery-2",
           "headline": "The Fangs Are Out!",
-          "article": "The vampire hunting team, thoroughly embarrassed by their blunder upon arriving in town, has today stumbled upon a vampire enclave! \"It's like a nest in there! I've never seen so many Draculas!\". The discovery has quickly sparked an all-out war, threatening to spill blood all over our streets - a fine waste.",
+          "article": "The vampire hunters, thoroughly embarrassed by their blunder upon arriving in town, have today stumbled upon a vampire enclave! \"It's like a nest in there! I've never seen so many Draculas!\". The discovery has quickly sparked an all-out war, threatening to spill blood all over our streets - a fine waste.",
           "image": "resting-vampire",
           "outcomes": [
             {
@@ -931,7 +931,7 @@
               "nextEvent": {
                 "name": "apothecary-3",
                 "headline": "Rats All Night",
-                "article": "While we're still in the search of a cure to this horrible illness, the rats have been organising something at night, scouts claiming to spot 'multiple rats signing about their dreams while joined at the tail'. Whatever is going on there we should probably avoid, lest we fall ill. Although a curfew may lead our town vulnerable at night.",
+                "article": "While we're still in the search of a cure to this horrible illness, the rats have been organising something at night, scouts claiming to spot 'multiple rats singing about their dreams while joined at the tail'. Whatever is going on there we should probably avoid, lest we fall ill. Although a curfew may leave our town vulnerable at night.",
                 "image": "night-sky",
                 "choices": [
                   {
@@ -994,7 +994,7 @@
   {
     "name": "cartographer-1",
     "headline": "Mysterious Map: Marvelous or Mischievous?",
-    "article": "A strange map was found pinned to the town notice board this morning, with a note attached. \"This map leads to will set you on a journey, leading to untold riches!\" The legitimacy of this claim is yet to be proven, and nobody has come forward to the ownership of this quest, but we can probably check it out.",
+    "article": "A strange map was found pinned to the town notice board this morning, with a note attached. \"This map will set you on a journey, leading to untold riches!\" The legitimacy of this claim is yet to be proven, and nobody has come forward as the source of this quest, but we can probably check it out.",
     "type": "Story",
     "image": "map",
     "outcomes": [
@@ -1017,7 +1017,7 @@
           "reward": "Untold riches, apparently?",
           "completedEvent": {
             "name": "cartographer-2",
-            "headline": "Mapception",
+            "headline": "Detour Ahead!",
             "article": "Our adventurers have returned from their investigation into the mysterious map left on our towns noticeboard, with yet ANOTHER map in hand. Along with it, another note, \"You have progressed on your quest, but the location of these riches is still to be found. Follow the trail, and I promise you'll be rewarded.\" ",
             "image": "map",
             "outcomes": [
@@ -1035,8 +1035,8 @@
                   "reward": "Hopefully actual treasure this time...",
                   "completedEvent": {
                     "name": "cartographer-3",
-                    "headline": "How Many More Maps?",
-                    "article": "Yet again, our adventurers have returned with a new map and not in hand. \"Not much further now! What lies at the end of this trail is worth.\" I swear, if this one doesn't lead to something cool, I'm quitting.",
+                    "headline": "When Will This Torture End?!",
+                    "article": "Yet again, our adventurers have returned with a new map and not a treasure in hand. \"Not much further now! What lies at the end of this trail is worth it.\" I swear, if this one doesn't have a good payoff, I'm quitting.",
                     "image": "map",
                     "outcomes": [
                       {
@@ -1054,14 +1054,14 @@
                           "completedEvent": {
                             "name": "cartographer-4",
                             "headline": "\"This Is Just Too Many Maps!\"",
-                            "article": "Our adventurers have returned, this time not with a single map, but hundreds! At the location specified, there was a huge stash of maps, each with the note \"Nah, really, THIS one is the real one. You gotta believe me, untold riches, magic powers, that kinda stuff.\" Frankly, we've had enough, it wasn't even a 'the real treasure was the friends we made' deal! Now need to work out what to do with all these maps.",
+                            "article": "Our adventurers have returned, this time not with a single map, but hundreds! At the location specified, there was a huge stash of maps, each with the note \"Nah, really, THIS one is the real one. You gotta believe me.\" Frankly, we've had enough, it wasn't even a 'friends along the way' deal! We gotta get rid of all these maps somehow...",
                             "image": "map",
                             "outcomes": [
                               {
                                 "type": "SetFlag",
                                 "flag": "StoryActive",
                                 "value": false,
-                                "customDescription": "Maybe if we just sell these maps off, some other adventurers can make use of them."
+                                "customDescription": "Now, how do we recoup the losses of chasing after all these maps?"
                               },
                               {
                                 "type": "CardUnlocked",
@@ -1083,8 +1083,8 @@
   },
   {
     "name": "water-purity-1",
-    "headline": "Wastage in Well causes Wicked Water",
-    "article": "An batch of expired potions has been illegally dumped into our well, resulting in tainted water! We need to search for a solution, quick!\n<b>Diviners: </b>Our scriptures tell of a sacred site, the 'Fountain of Purity', a single drop from it may solve our problems.\n<b>Performers: </b>Orrrr, we could 'borrow' some of the brewing supplies from the orcs. It's a win win! We get to purified water, and everyone gets a little buzzed!",
+    "headline": "Well Wastage Causes Wicked Water",
+    "article": "A batch of expired potions has been illegally dumped into our well, resulting in tainted water! We need to search for a solution, quick!\n<b>Diviners: </b>Our scriptures tell of a sacred site, the 'Fountain of Purity', a single drop from it may solve our problems.\n<b>Performers: </b>Orrrr, we could 'borrow' some brewing supplies from the orcs. It's a win win! We get to purified water, and everyone gets a little buzzed!",
     "type": "Story",
     "image": "well",
     "outcomes": [
@@ -1113,14 +1113,14 @@
               "completedEvent": {
                 "name": "water-bathhouse-completed",
                 "headline": "\"I've Never Felt so Clean\"",
-                "article": "Our adventurers have returned, vials of crystal clear water in hand. While a single drop was enough to cure our water supply, bathing in a mixture results in a relaxation beyond compare!",
+                "article": "Our adventurers have returned, vials of crystal clear water in hand. While a single drop was enough to cure our water supply, bathing in the mixture results in a relaxation beyond compare!",
                 "image": "Buildings/Bath House",
                 "outcomes": [
                   {
                     "type": "SetFlag",
                     "flag": "StoryActive",
                     "value": false,
-                    "customDescription": "We can finally bath again!"
+                    "customDescription": "We can finally bathe again!"
                   },
                   {
                     "type": "CardUnlocked",
@@ -1150,7 +1150,7 @@
               "completedEvent": {
                 "name": "water-brewery-completed",
                 "headline": "Hops to it, Then!",
-                "article": "Returning from the orc camp, the adventurers recount that all seemed lost when they were caught and the Orcs started to descend on them. However, once they explained they were looking for beer, all hostilities dropped, and the Chieftain was more than happy to hand over his personal starter kit and send them on their way. They may be bloodthirsty monsters who have waged a ceaseless war on us, but they DO respect the art of brewing!",
+                "article": "Returning from the orc camp, the adventurers recount that all seemed lost when they were caught and the Orcs started to descend on them. However, once they explained they were looking for beer, all hostilities dropped, and the chieftain was more than happy to hand over his personal starter kit and send them on their way. They may be bloodthirsty monsters who have waged a ceaseless war on us, but they DO respect the art of brewing!",
                 "image": "hops",
                 "outcomes": [
                   {
@@ -1193,7 +1193,7 @@
         "nextEvent": {
           "name": "fights-2",
           "headline": "A Fix to the Fighting",
-          "article": "In response to our growing rage issues bubbling though the town, we've had two proposals:\n<b>Performer: </b>\"Fighting Rings! Not only will they be punching each other and not your buildings, but we get to watch them do it!\"\n<b>Outrider: </b>\"Maybe, if we started a little club, get them to hunt things. They probably won't catch anything larger than a Jackalope, but it'll make them feed big and tough.\"",
+          "article": "In response to our growing rage issues bubbling though the town, we've had two proposals:\n<b>Performer: </b>\"Fighting Rings! Not only will they be punching each other and not your buildings, but we get to watch them do it!\"\n<b>Outrider: </b>\"Maybe, if we started a little club, get them to hunt things. They probably won't catch anything larger than a jackalope, but it'll make them feel big and tough.\"",
           "image": "punch-blast",
           "outcomes": [
             {
