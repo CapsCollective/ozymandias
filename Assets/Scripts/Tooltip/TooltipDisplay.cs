@@ -155,6 +155,7 @@ namespace Tooltip
                     details.text = $"{Manager.Stats.Defence} defence\n" +
                                    $"  ● +{adventurers} from total adventurers\n" +
                                    $"{FormattedBuildingString(Stat.Defence)}" +
+                                   (Manager.Stats.MineStrikePenalty != 0 ? $"  ● {Manager.Stats.MineStrikePenalty} from the miners strike\n" : "") +
                                    $"{FormattedModifierString(Stat.Defence)}";
                     break;
                 case Stat.Threat:
@@ -171,7 +172,8 @@ namespace Tooltip
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"  ● +{WealthPerAdventurer * adventurers} from {adventurers} total adventurers\n" +
+                                   $"  ● +{(Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) * adventurers} from {adventurers} total adventurers" +
+                                   $"{(Manager.EventQueue.Flags[Flag.Cosmetics] ? " (-2 spending per adventurers due to cosmetics)" : "")}\n" +
                                    $"  ● +{StartingSalary} starting salary\n" +
                                    $"{FormattedBuildingString(Stat.Spending)}" +
                                    $"{FormattedUpgradeString(Stat.Spending)}" +

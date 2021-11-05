@@ -75,9 +75,8 @@ namespace Cards
             Select.OnClear += structure =>
             {
                 // Gets more likely to discover buildings as ruins get cleared until non remain
-                if (Discoverable.Count == 0 || !structure.IsRuin ||
-                    Random.Range(0, Manager.Structures.Ruins) > Discoverable.Count) return;
-                
+                if (Discoverable.Count == 0 || !structure.IsRuin /*|| Random.Range(0, Manager.Structures.Ruins) > Discoverable.Count*/) return;
+
                 Unlock(Discoverable.PopRandom(), true);
                 Notification.OnNotification.Invoke($"Card rediscovered from ruins! ({Discoverable.Count} remaining)", notificationIcon, 3);
             };

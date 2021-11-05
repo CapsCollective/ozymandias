@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5402883461890198997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 1
+--- !u!114 &-3958797720473667771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 9578e165128e4434294471903c2775d2, type: 2}
+--- !u!114 &-578691695558730955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Search for the Fountain of Purity
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -3958797720473667771}
+  costScale: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: water-purity-1
+  m_EditorClassIdentifier: 
+  headline: Wastage in Well causes Wicked Water
+  article: 'An batch of expired potions has been illegally dumped into our well,
+    resulting in tainted water! We need to search for a solution, quick!
+
+    <b>Diviners:
+    </b>Our scriptures tell of a sacred site, the ''Fountain of Purity'', a single
+    drop from it may solve our problems.
+
+    <b>Performers: </b>Orrrr, we could
+    ''borrow'' some of the brewing supplies from the orcs. It''s a win win! We get
+    to purified water, and everyone gets a little buzzed!'
+  image: {fileID: 21300000, guid: 06c659ae245428e4f9cd840839dc6de2, type: 3}
+  type: 3
+  headliner: 0
+  outcomes:
+  - {fileID: -5402883461890198997}
+  choices:
+  - {fileID: -578691695558730955}
+  - {fileID: 10040812773354920}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &10040812773354920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Search for the Brewing Supplies
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 2671513855750093496}
+  costScale: 0
+--- !u!114 &2671513855750093496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}

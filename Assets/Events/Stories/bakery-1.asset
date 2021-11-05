@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6904328190809099863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
-  toFront: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,12 +21,12 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 2008586187499011265}
-  - {fileID: 5745093176204468762}
-  - {fileID: -6904328190809099863}
+  - {fileID: 2621074074844790512}
+  - {fileID: 804036872153029131}
+  - {fileID: 83650051942593530}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2008586187499011265
+--- !u!114 &83650051942593530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,13 +35,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
   m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>5 Threat per farm until this is resolved</color>
-  flag: 1
-  value: 1
---- !u!114 &5745093176204468762
+  customDescription: 
+  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
+  toFront: 0
+--- !u!114 &804036872153029131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,4 +55,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   flag: 0
+  value: 1
+--- !u!114 &2621074074844790512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: <color=#820000ff>2 Threat per farm until this is resolved</color>
+  flag: 1
   value: 1

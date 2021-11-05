@@ -1,33 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9156709705345540992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}
---- !u!114 &-2425860888751114860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 2790ba994bd69c54e853cff79c45c625, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,12 +21,42 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 5815032602123225585}
-  - {fileID: -9156709705345540992}
-  - {fileID: -2425860888751114860}
+  - {fileID: 2887357559617915528}
+  - {fileID: 2370446440580295457}
+  - {fileID: 5634035013423407786}
+  - {fileID: 1020959018639944416}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &5815032602123225585
+--- !u!114 &1020959018639944416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 2790ba994bd69c54e853cff79c45c625, type: 2}
+--- !u!114 &2370446440580295457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: Our weapons can use actual metals again! (+5 defence)
+  flag: 3
+  value: 0
+--- !u!114 &2887357559617915528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,3 +71,17 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 0
+--- !u!114 &5634035013423407786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}

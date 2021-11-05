@@ -39,7 +39,7 @@
         "type": "SetFlag",
         "flag": "Scarecrows",
         "value": true,
-        "customDescription": "<color=#820000ff>5 Threat per farm until this is resolved</color>"
+        "customDescription": "<color=#820000ff>2 Threat per farm until this is resolved</color>"
       },
       {
         "type": "SetFlag",
@@ -390,9 +390,9 @@
                 "reward": "Clothes and Hats for the Town",
                 "completedEvent": {
                   "name": "tailor-4",
-                  "headline": "",
+                  "headline": "\"It's all about those dances, now!\"",
                   "article": "Our heroic party has 'retrieved' the tailor from our neighbours, who has agreed to produce clothes for us. However, this has come just as the trend has died down. No longer do they care about clothes, \"It's all about those dances, now!\", an adventurer yelled at our reporter while performing a copyright free dance move.",
-                  "image": "scarecrow",
+                  "image": "Buildings/Tailor",
                   "outcomes": [
                     {
                       "type": "SetFlag",
@@ -543,6 +543,12 @@
                           "type": "SetFlag",
                           "flag": "StoryActive",
                           "value": false
+                        },
+                        {
+                          "type": "SetFlag",
+                          "flag": "MineStrike",
+                          "value": false,
+                          "customDescription": "Our weapons can use actual metals again! (+5 defence)"
                         },
                         {
                           "type": "CardUnlocked",
@@ -825,7 +831,7 @@
                         "name": "tannery-4",
                         "headline": "Former Foes Now Skin-Tight",
                         "article": "An emotional day for many as vampires and vampire hunters finally called a truce to the ongoing bloodbath, in order to peruse the latest shipment of leather goods. \"We're not so different, you and I.\" one vampire mused, to which a hunter replied \"eh, I s'pose you're right; you like your steak rare, I like it wooden\". The once immortal enemies, now sworn allies bonded in leather.",
-                        "image": "leather-armour",
+                        "image": "leather-armor",
                         "outcomes": [
                           {
                             "type": "SetFlag",
@@ -851,7 +857,7 @@
   {
     "name": "apothecary-1",
     "headline": "These Rats are Revolting!",
-    "article": "Up from the under-city, the rats have risen up, and with them a deadly disease! \"Ve have beén downtrodden, but non more! Ve sháll unite as one voice!\" They may infect the whole town if we're not careful, we need to lock down right away!",
+    "article": "Up from the under-city, the rats have risen up, and with them a deadly disease! \"Ve have been downtrodden, but non more! Ve shall unite as one voice!\" They may infect the whole town if we're not careful, we need to lock down right away!",
     "type": "Story",
     "image": "rat",
     "choices": [
@@ -925,7 +931,7 @@
               "nextEvent": {
                 "name": "apothecary-3",
                 "headline": "Rats All Night",
-                "article": "While we're still in the search of a cure to this horrible illness, the rats have been organising something at night, scouts claiming to spot 'multiple rats signing about their dreams while joined at the tail'. Whatever's going on there we should probably avoid, lest we fall ill. Although a curfew may lead our town vulnerable at night.",
+                "article": "While we're still in the search of a cure to this horrible illness, the rats have been organising something at night, scouts claiming to spot 'multiple rats signing about their dreams while joined at the tail'. Whatever is going on there we should probably avoid, lest we fall ill. Although a curfew may lead our town vulnerable at night.",
                 "image": "night-sky",
                 "choices": [
                   {
@@ -958,10 +964,10 @@
                 "outcomes": [
                   {
                     "type": "ChainEvent",
-                    "completedEvent": {
+                    "nextEvent": {
                       "name": "apothecary-4",
                       "headline": "Every Rat a King",
-                      "article": "In a final act of unity, the Rats shockingly all joined together in a giant ball?!? \"At las'! We 'ave achievéd unité!\" It prompty rolled off into the unknown, good for them... I think? In the now empty undercity, our adventurers found an enormous stash of glass bottles labeled \"Rat Juice\". An adventurous brawler took it without reading the label, and discovered it cured their illness!",
+                      "article": "In a final act of unity, the Rats shockingly all joined together in a giant ball?!? \"At las'! We 'ave achieved unity!\" It promptly rolled off into the unknown, good for them... I think? In the now empty undercity, our adventurers found an enormous stash of glass bottles labeled \"Rat Juice\". An adventurous brawler took it without reading the label, and discovered it cured their illness!",
                       "image": "potion-ball",
                       "outcomes": [
                         {
@@ -987,10 +993,10 @@
   },
   {
     "name": "cartographer-1",
-    "headline": "!",
-    "article": "A mysterious map was found on the town notice board.",
+    "headline": "Mysterious Map: Marvelous or Mischievous?",
+    "article": "A strange map was found pinned to the town notice board this morning, with a note attached. \"This map leads to will set you on a journey, leading to untold riches!\" The legitimacy of this claim is yet to be proven, and nobody has come forward to the ownership of this quest, but we can probably check it out.",
     "type": "Story",
-    "image": "",
+    "image": "map",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -1001,60 +1007,61 @@
         "type": "QuestAdded",
         "quest": {
           "name": "cartographer-quest-1",
-          "title": "",
-          "description": "",
-          "image": "",
+          "title": "Follow the Map",
+          "description": "It has to lead somewhere...",
+          "image": "map",
           "location": "Dock",
-          "adventurers": 5,
-          "baseTurns": 4,
-          "wealthMultiplier": 1.6,
-          "reward": "",
+          "adventurers": 2,
+          "baseTurns": 3,
+          "wealthMultiplier": 0.7,
+          "reward": "Untold riches, apparently?",
           "completedEvent": {
             "name": "cartographer-2",
-            "headline": "",
-            "article": "",
-            "image": "",
+            "headline": "Mapception",
+            "article": "Our adventurers have returned from their investigation into the mysterious map left on our towns noticeboard, with yet ANOTHER map in hand. Along with it, another note, \"You have progressed on your quest, but the location of these riches is still to be found. Follow the trail, and I promise you'll be rewarded.\" ",
+            "image": "map",
             "outcomes": [
               {
                 "type": "QuestAdded",
                 "quest": {
                   "name": "cartographer-quest-2",
-                  "title": "",
-                  "description": "",
-                  "image": "",
+                  "title": "Follow the Map, Again",
+                  "description": "This is starting to feel suspect.",
+                  "image": "map",
                   "location": "Dock",
-                  "adventurers": 5,
-                  "baseTurns": 4,
-                  "wealthMultiplier": 1.6,
-                  "reward": "",
+                  "adventurers": 2,
+                  "baseTurns": 2,
+                  "wealthMultiplier": 0.6,
+                  "reward": "Hopefully actual treasure this time...",
                   "completedEvent": {
                     "name": "cartographer-3",
-                    "headline": "",
-                    "article": "",
-                    "image": "",
+                    "headline": "How Many More Maps?",
+                    "article": "Yet again, our adventurers have returned with a new map and not in hand. \"Not much further now! What lies at the end of this trail is worth.\" I swear, if this one doesn't lead to something cool, I'm quitting.",
+                    "image": "map",
                     "outcomes": [
                       {
                         "type": "QuestAdded",
                         "quest": {
                           "name": "cartographer-quest-3",
-                          "title": "",
-                          "description": "",
-                          "image": "",
+                          "title": "Follow THIS Map, I Guess",
+                          "description": "This is the one, I can feel it...",
+                          "image": "map",
                           "location": "Dock",
-                          "adventurers": 5,
-                          "baseTurns": 4,
-                          "wealthMultiplier": 1.6,
-                          "reward": "",
+                          "adventurers": 2,
+                          "baseTurns": 3,
+                          "wealthMultiplier": 0.5,
+                          "reward": "It's gotta lead to something!",
                           "completedEvent": {
                             "name": "cartographer-4",
-                            "headline": "",
-                            "article": "",
-                            "image": "",
+                            "headline": "\"This Is Just Too Many Maps!\"",
+                            "article": "Our adventurers have returned, this time not with a single map, but hundreds! At the location specified, there was a huge stash of maps, each with the note \"Nah, really, THIS one is the real one. You gotta believe me, untold riches, magic powers, that kinda stuff.\" Frankly, we've had enough, it wasn't even a 'the real treasure was the friends we made' deal! Now need to work out what to do with all these maps.",
+                            "image": "map",
                             "outcomes": [
                               {
                                 "type": "SetFlag",
                                 "flag": "StoryActive",
-                                "value": false
+                                "value": false,
+                                "customDescription": "Maybe if we just sell these maps off, some other adventurers can make use of them."
                               },
                               {
                                 "type": "CardUnlocked",
@@ -1076,10 +1083,17 @@
   },
   {
     "name": "water-purity-1",
-    "headline": "",
-    "article": "",
+    "headline": "Wastage in Well causes Wicked Water",
+    "article": "An batch of expired potions has been illegally dumped into our well, resulting in tainted water! We need to search for a solution, quick!\n<b>Diviners: </b>Our scriptures tell of a sacred site, the 'Fountain of Purity', a single drop from it may solve our problems.\n<b>Performers: </b>Orrrr, we could 'borrow' some of the brewing supplies from the orcs. It's a win win! We get to purified water, and everyone gets a little buzzed!",
     "type": "Story",
-    "image": "",
+    "image": "well",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      }
+    ],
     "choices": [
       {
         "name": "Search for the Fountain of Purity",
@@ -1089,7 +1103,7 @@
             "quest": {
               "name": "water-bathhouse-quest",
               "title": "Find the Fountain of Purity",
-              "description": "",
+              "description": "This should cure our tainted water.",
               "image": "waterfall",
               "location": "Dock",
               "adventurers": 5,
@@ -1099,13 +1113,14 @@
               "completedEvent": {
                 "name": "water-bathhouse-completed",
                 "headline": "\"I've Never Felt so Clean\"",
-                "article": "Our adventurers have returns from high up in the mountains, looking absolutely spotless. They have found a hot spring, and while it's unknown if this water is 'actually' magical, considering how content the returning adventurers are, there has been a movement to source the water and build bathhouses here in town.",
+                "article": "Our adventurers have returned, vials of crystal clear water in hand. While a single drop was enough to cure our water supply, bathing in a mixture results in a relaxation beyond compare!",
                 "image": "Buildings/Bath House",
                 "outcomes": [
                   {
                     "type": "SetFlag",
                     "flag": "StoryActive",
-                    "value": false
+                    "value": false,
+                    "customDescription": "We can finally bath again!"
                   },
                   {
                     "type": "CardUnlocked",
@@ -1141,7 +1156,8 @@
                   {
                     "type": "SetFlag",
                     "flag": "StoryActive",
-                    "value": false
+                    "value": false,
+                    "customDescription": "It's more drinkable than that well water, for sure."
                   },
                   {
                     "type": "CardUnlocked",
@@ -1153,21 +1169,14 @@
           }
         ]
       }
-    ],
-    "outcomes": [
-      {
-        "type": "SetFlag",
-        "flag": "StoryActive",
-        "value": true
-      }
     ]
   },
   {
     "name": "fights-1",
     "headline": "Fighting Fiasco!",
-    "article": "A huge fight broke out in a local tavern today that was so action packed it completely .",
+    "article": "A huge bar fight broke out today that was so action packed it completely demolished the tavern it took place in! The fight seemed have started out as a competition between the Brawlers and Outriders over who was the toughest, a childish argument, but what could we expect?",
     "type": "Story",
-    "image": "",
+    "image": "punch-blast",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -1176,12 +1185,16 @@
         "customDescription": "We need to think of how to channel this aggression..."
       },
       {
+        "type": "BuildingDamaged",
+        "buildingType": "Tavern"
+      },
+      {
         "type": "ChainEvent",
         "nextEvent": {
           "name": "fights-2",
-          "headline": "",
+          "headline": "A Fix to the Fighting",
           "article": "In response to our growing rage issues bubbling though the town, we've had two proposals:\n<b>Performer: </b>\"Fighting Rings! Not only will they be punching each other and not your buildings, but we get to watch them do it!\"\n<b>Outrider: </b>\"Maybe, if we started a little club, get them to hunt things. They probably won't catch anything larger than a Jackalope, but it'll make them feed big and tough.\"",
-          "image": "",
+          "image": "punch-blast",
           "outcomes": [
             {
               "type": "SetFlag",

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5512247506795384921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
+  m_Name: BuildingDamaged
+  m_EditorClassIdentifier: 
+  customDescription: 
+  type: 2
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: fights-1
+  m_EditorClassIdentifier: 
+  headline: Fighting Fiasco!
+  article: A huge bar fight broke out today that was so action packed it completely
+    demolished the tavern it took place in! The fight seemed have started out as
+    a competition between the Brawlers and Outriders over who was the toughest, a
+    childish argument, but what could we expect?
+  image: {fileID: 21300000, guid: 53c675f8073548741bf78b452517ab0f, type: 3}
+  type: 3
+  headliner: 0
+  outcomes:
+  - {fileID: 574713744407968724}
+  - {fileID: -5512247506795384921}
+  - {fileID: 2021217566469390595}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &574713744407968724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: We need to think of how to channel this aggression...
+  flag: 0
+  value: 1
+--- !u!114 &2021217566469390595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 6655627dc14411149942a5c249cf5967, type: 2}
+  toFront: 0

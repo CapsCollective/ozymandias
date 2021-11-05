@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3845174561133870350
+--- !u!114 &-7101159426761456826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Impose Child Labour Laws
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -1829338265721673292}
-  - {fileID: 8318798269706886509}
+  - {fileID: -3466899905182939831}
+  - {fileID: -255601610974029384}
   costScale: 0
---- !u!114 &-1829338265721673292
+--- !u!114 &-3466899905182939831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,32 +31,7 @@ MonoBehaviour:
   customDescription: We'll have to see how they respond...
   flag: 0
   value: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: jeweller-1
-  m_EditorClassIdentifier: 
-  headline: Dwarven Minors
-  article: Reports have come in that the dwarves in the nearby mountains have been
-    working their children in the mines. Their leader sent out a memo explaining
-    "They're so tiny, they can fit in the little gaps where all the good stuff is."
-    Guild Co upper management have forbid us from trading with them if this continues.
-  image: {fileID: 21300000, guid: 43a05df69ee8da049a40f0a110a1ece0, type: 3}
-  type: 3
-  headliner: 0
-  outcomes: []
-  choices:
-  - {fileID: -3845174561133870350}
-  - {fileID: 749805176479596095}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &210151617821732877
+--- !u!114 &-3006143203876214868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,37 +48,7 @@ MonoBehaviour:
   amount: -5
   turns: -1
   reason: from the Wooden Weapons
---- !u!114 &749805176479596095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Let Them Continue
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 7387946193408803836}
-  - {fileID: 210151617821732877}
-  costScale: 0
---- !u!114 &7387946193408803836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: Without their mineral supply, we'll have to substitute our weapons
-    with wood.
---- !u!114 &8318798269706886509
+--- !u!114 &-255601610974029384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,3 +63,58 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
   toFront: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: jeweller-1
+  m_EditorClassIdentifier: 
+  headline: Dwarven Minors
+  article: Reports have come in that the dwarves in the nearby mountains have been
+    working their children in the mines. Their leader sent out a memo explaining
+    "They're so tiny, they can fit in the little gaps where all the good stuff is."
+    Guild Co's PR department have forbid us from trading with them if this continues.
+  image: {fileID: 21300000, guid: 43a05df69ee8da049a40f0a110a1ece0, type: 3}
+  type: 3
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -7101159426761456826}
+  - {fileID: 4077263623913129564}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &4077263623913129564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Let Them Continue
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 6667870468853477975}
+  - {fileID: -3006143203876214868}
+  costScale: 0
+--- !u!114 &6667870468853477975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: Without their mineral supply, we'll have to substitute our weapons
+    with wood.

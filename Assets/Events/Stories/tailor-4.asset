@@ -1,48 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5000866077512347912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: 45371a86b03af9745a511db33d6725fc, type: 2}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: tailor-4
-  m_EditorClassIdentifier: 
-  headline: 
-  article: Our heroic party has 'retrieved' the tailor from our neighbours, who has
-    agreed to produce clothes for us. However, this has come just as the trend has
-    died down. No longer do they care about clothes, "It's all about those dances,
-    now!", an adventurer yelled at our reporter while performing a copyright free
-    dance move.
-  image: {fileID: 21300000, guid: 5e297a6d605b174458fe492cd99a5acf, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 2732136756088271458}
-  - {fileID: 5004555814121008000}
-  - {fileID: -5000866077512347912}
-  - {fileID: 7684213558924242482}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &2732136756088271458
+--- !u!114 &-4124278473072660791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,7 +16,21 @@ MonoBehaviour:
     again!</color>
   flag: 2
   value: 0
---- !u!114 &5004555814121008000
+--- !u!114 &-2978787620687432353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: 45371a86b03af9745a511db33d6725fc, type: 2}
+--- !u!114 &-1538777996390148908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +45,35 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 0
---- !u!114 &7684213558924242482
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: tailor-4
+  m_EditorClassIdentifier: 
+  headline: '"It''s all about those dances, now!"'
+  article: Our heroic party has 'retrieved' the tailor from our neighbours, who has
+    agreed to produce clothes for us. However, this has come just as the trend has
+    died down. No longer do they care about clothes, "It's all about those dances,
+    now!", an adventurer yelled at our reporter while performing a copyright free
+    dance move.
+  image: {fileID: 21300000, guid: a2c7d35719fa2a741a90a8f2842c8c9e, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -4124278473072660791}
+  - {fileID: -1538777996390148908}
+  - {fileID: -2978787620687432353}
+  - {fileID: 5297751734593981856}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &5297751734593981856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -333,8 +333,9 @@ namespace Structures
                 
                 if (!Manager.Stats.Spend(price)) return;
                 
+                Structure structure = SelectedStructure; // Cache because invoke can deselect
                 OnClear?.Invoke(SelectedStructure);
-                Manager.Structures.Remove(SelectedStructure);
+                Manager.Structures.Remove(structure);
             }
             Deselect();
         }

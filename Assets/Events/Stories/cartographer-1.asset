@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-404173384747433125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 1c6e9280aa970c3409b27b69b3bf9599, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: cartographer-1
+  m_EditorClassIdentifier: 
+  headline: 'Mysterious Map: Marvelous or Mischievous?'
+  article: A strange map was found pinned to the town notice board this morning,
+    with a note attached. "This map leads to will set you on a journey, leading to
+    untold riches!" The legitimacy of this claim is yet to be proven, and nobody
+    has come forward to the ownership of this quest, but we can probably check it
+    out.
+  image: {fileID: 21300000, guid: 3e19425fad5adeb49bd88c50e1eecf75, type: 3}
+  type: 3
+  headliner: 0
+  outcomes:
+  - {fileID: 6555265007471796233}
+  - {fileID: -404173384747433125}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &6555265007471796233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 1
