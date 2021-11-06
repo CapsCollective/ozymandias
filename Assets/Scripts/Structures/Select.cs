@@ -313,6 +313,10 @@ namespace Structures
             } 
             else
             {
+                // Guard against destroying terrain and guild hall in tutorial
+                if (Tutorial.Tutorial.Active && 
+                    (SelectedStructure.IsTerrain || SelectedStructure.IsGuildHall)) return;
+                
                 int price = 0;
 
                 switch (SelectedStructure.StructureType)
@@ -322,11 +326,7 @@ namespace Structures
                         break;
                     case StructureType.Terrain:
                     case StructureType.Ruins:
-                        if (Tutorial.Tutorial.Active)
-                        {
-                            if (SelectedStructure.IsTerrain) return;
-                            break;
-                        }
+                        if (Tutorial.Tutorial.Active) break;
                         price = SelectedStructure.ClearCost;
                         break;
                 }
