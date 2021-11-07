@@ -197,7 +197,8 @@ namespace Structures
             ParticleSystem.Play();
             transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Destroy(gameObject));
             
-            if(Manager.State.InGame) Manager.Jukebox.PlayDestroy();
+            // Play the destroy sound when in game or during turn transition (e.g. guild hall)
+            if(Manager.State.InGame || Manager.State.NextTurn) Manager.Jukebox.PlayDestroy();
             Manager.Map.GetNeighbours(this).ForEach(neighbour => neighbour.Bonus = neighbour.AdjacencyBonus());
         }
         
