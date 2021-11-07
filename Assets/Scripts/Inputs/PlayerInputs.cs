@@ -8,10 +8,10 @@ using UnityEngine.InputSystem.Utilities;
 
 namespace Inputs
 {
-    public class @PlayerInput : IInputActionCollection, IDisposable
+    public class @PlayerInputs : IInputActionCollection, IDisposable
     {
         public InputActionAsset asset { get; }
-        public @PlayerInput()
+        public @PlayerInputs()
         {
             asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerControls"",
@@ -294,7 +294,7 @@ namespace Inputs
                     ""id"": ""164e5272-5227-42e7-a733-bd672b23aa9d"",
                     ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",
-                    ""processors"": ""Scale(factor=0.25)"",
+                    ""processors"": ""Scale"",
                     ""groups"": ""Controller"",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
@@ -345,23 +345,23 @@ namespace Inputs
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""positive"",
                     ""id"": ""e8ca6346-9311-4186-b1a5-cdf51dd87043"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""negative"",
                     ""id"": ""587e54d4-52b4-4958-ab91-0b67c4529916"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -1232,8 +1232,8 @@ namespace Inputs
         private readonly InputAction m_Player_DialogueNext;
         public struct PlayerActions
         {
-            private @PlayerInput m_Wrapper;
-            public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+            private @PlayerInputs m_Wrapper;
+            public PlayerActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
             public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
             public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
@@ -1414,8 +1414,8 @@ namespace Inputs
         private readonly InputAction m_UI_TrackedDeviceOrientation;
         public struct UIActions
         {
-            private @PlayerInput m_Wrapper;
-            public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+            private @PlayerInputs m_Wrapper;
+            public UIActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
             public InputAction @Submit => m_Wrapper.m_UI_Submit;
             public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
