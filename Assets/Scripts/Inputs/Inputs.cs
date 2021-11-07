@@ -19,12 +19,12 @@ namespace Inputs
             }
         }
 
-        public Action<InputControlScheme> OnControlChange;
+        public static Action<InputControlScheme> OnControlChange;
 
-        public InputControlScheme ControlScheme;
+        public static InputControlScheme ControlScheme;
 
         // Player Input
-        public PlayerInput PlayerInput { get; }
+        public PlayerInputs PlayerInput { get; }
         
         public InputAction OnLeftMouse { get; }
         public InputAction OnLeftClick { get; }
@@ -47,7 +47,7 @@ namespace Inputs
 
         public Inputs()
         {
-            PlayerInput = new PlayerInput();
+            PlayerInput = new PlayerInputs();
 
             OnMousePosition = PlayerInput.Player.MousePosition;
             OnLeftMouse = PlayerInput.Player.LeftMouse;
@@ -79,6 +79,8 @@ namespace Inputs
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;
+            ControlScheme = PlayerInput.controlSchemes[0];
+            PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
         }
 
         public void TogglePlayerInput(bool toggle)
@@ -93,6 +95,7 @@ namespace Inputs
             {
                 Debug.Log($"Input Changed: {arg1.controlScheme.Value.name}");
                 ControlScheme = arg1.controlScheme.Value;
+                PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
                 OnControlChange?.Invoke(arg1.controlScheme.Value);
             }
         }

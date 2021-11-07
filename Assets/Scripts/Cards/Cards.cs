@@ -34,6 +34,7 @@ namespace Cards
         private Cell _hoveredCell; // Used to only trigger calculations on cell changing
         private int _prevCardIndex = 1, _selectedCardIndex = -1;
         private Card _selectedCard;
+
         private ToggleGroup _toggleGroup;
         public  Card SelectedCard
         {
@@ -188,7 +189,7 @@ namespace Cards
             SelectCard(_selectedCardIndex == index ? -1 : index);
         }
         
-        private void SelectCard(int cardIndex)
+        public void SelectCard(int cardIndex)
         {
             if (cardIndex == _selectedCardIndex) return;
             

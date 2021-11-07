@@ -23,6 +23,7 @@ namespace Structures
         public bool IsRuin => StructureType == StructureType.Ruins;
         public bool IsTerrain => StructureType == StructureType.Terrain;
         public bool IsQuest => StructureType == StructureType.Quest;
+        public bool IsGuildHall => Blueprint.type == BuildingType.GuildHall;
         public bool IsFixed => fixedPosition;
         public bool IsBuildingType(BuildingType type) => Blueprint && Blueprint.type == type;
         public int SectionCount => _sections.Count;
@@ -135,7 +136,7 @@ namespace Structures
                 _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
             }
 
-            if (!Manager.State.Loading) AnimateCreate(); // TODO: Animate check (just not during loading???)
+            if (!Manager.State.Loading) AnimateCreate(false); // TODO: Animate check (just not during loading???)
         }
         
         public bool CreateBuilding(Blueprint blueprint, int rootId, int rotation = 0, bool isRuin = false)
@@ -196,7 +197,8 @@ namespace Structures
             ParticleSystem.Play();
             transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Destroy(gameObject));
             
-            if(Manager.State.InGame) Manager.Jukebox.PlayDestroy();
+            // Play the destroy sound when in game or during turn transition (e.g. guild hall)
+            if(Manager.State.InGame || Manager.State.NextTurn) Manager.Jukebox.PlayDestroy();
             Manager.Map.GetNeighbours(this).ForEach(neighbour => neighbour.Bonus = neighbour.AdjacencyBonus());
         }
         
@@ -227,12 +229,12 @@ namespace Structures
             }
         }
 
-        private void AnimateCreate()
+        private void AnimateCreate(bool playSound = true)
         {
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
             ParticleSystem.Play();
-            Manager.Jukebox.PlayBuild(); // Only play sound if animated
+            if (playSound) Manager.Jukebox.PlayBuild();
         }
         
         public void ToRuin()

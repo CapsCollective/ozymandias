@@ -108,7 +108,7 @@ namespace Quests
 
         private void GrowBuilding()
         {
-            if (Structure == null) return;
+            if (Structure == null || Manager.Structures.Count <= 0) return;
             
             const int cellChoiceCount = 4; //TODO: Play around with this to see what feels best
             

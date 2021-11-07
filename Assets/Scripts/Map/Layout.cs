@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Managers;
 using NaughtyAttributes;
 using Structures;
 using UnityEngine;
@@ -34,6 +35,9 @@ namespace Map
             //TODO: Pick a spawn cell from a list of 'safe' placements, avoid building trees in cell within a distance of the hall, Store the cell 
             foreach (Cell cell in CellGraph.Data.Where(cell => !cell.Occupied && cell.Active))
                 Manager.Structures.AddTerrain(cell.Id);
+            
+            // Play a single build sound for all terrain to avoid "pop"
+            if (!Manager.State.Loading) Manager.Jukebox.PlayBuild();
         }
     
         #region Querying

@@ -173,6 +173,7 @@ namespace Managers
 #endif
             {
                 EnterState(GameState.InIntro);
+                InputHelper.EventSystem.SetSelectedGameObject(playButton.gameObject);
             }
         }
 
@@ -249,6 +250,7 @@ namespace Managers
 
                 SetupGame();
                 if (!Tutorial.Tutorial.Active) EnterState(GameState.InGame);
+                InputHelper.EventSystem.SetSelectedGameObject(null);
             }
         }
 

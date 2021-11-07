@@ -27,7 +27,7 @@ namespace Utilities
         
         private static void OnClick()
         {
-            Manager.Jukebox.PlayClick();
+            if (!Manager.State.Loading) Manager.Jukebox.PlayClick();
             OnUIClick?.Invoke();
         }
     }

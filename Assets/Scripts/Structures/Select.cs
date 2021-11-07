@@ -28,6 +28,7 @@ namespace Structures
         
         [SerializeField] private int yOffset;
         [SerializeField] private Image buttonImage;
+        [SerializeField] private Image maskImage;
         [SerializeField] private TextMeshProUGUI nameText, costText, questTitleText;
         [SerializeField] private Sprite buildingButtonBacking, questButtonBacking;
         [SerializeField] private CanvasGroup buttonCanvasGroup;
@@ -50,10 +51,14 @@ namespace Structures
         private OutlinePostProcess _outline;
         private Structure _hoveredStructure, _selectedStructure;
         private float _timeSinceRaycast;
+        private float _interactTimer;
+        private bool _interactStarted;
 
         public static Action<Structure> OnClear;
         public static Action<Quest> OnQuestSelected;
-        
+
+        public static Select Instance { get; private set; }
+
         private Structure HoveredStructure
         {
             set {
@@ -72,7 +77,7 @@ namespace Structures
             }
         }
         
-        private Structure SelectedStructure
+        public Structure SelectedStructure
         {
             get => _selectedStructure;
             set
@@ -150,7 +155,12 @@ namespace Structures
         {
             if(SelectedStructure) SelectedStructure = null;
         }
-        
+
+        private void Awake()
+        {
+            Instance = this;   
+        }
+
         private void Start()
         {
             _canvas = GetComponent<Canvas>();
@@ -161,6 +171,11 @@ namespace Structures
             Manager.Inputs.OnLeftClick.performed += _ => ToggleSelect();
             Manager.Inputs.OnRightClick.performed += _ => Deselect();
             Manager.Inputs.OnConfirmSelectedStructure.performed += _ => Interact();
+            Manager.Inputs.OnConfirmSelectedStructure.canceled += _ => 
+            {
+                _interactTimer = 0;
+                maskImage.fillAmount = 0;
+            };
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
             State.OnEnterState += () =>
             {
@@ -175,6 +190,10 @@ namespace Structures
             if (SelectedStructure || CameraMovement.IsMoving || IsSelectionDisabled() || Tutorial.Tutorial.DisableSelect)
             {
                 HoveredStructure = null;
+                if (Manager.Inputs.OnConfirmSelectedStructure.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+                {
+                    maskImage.fillAmount = Mathf.InverseLerp(0, 0.4f, _interactTimer += Time.deltaTime);
+                }
                 return;
             }
 
@@ -313,6 +332,10 @@ namespace Structures
             } 
             else
             {
+                // Guard against destroying terrain and guild hall in tutorial
+                if (Tutorial.Tutorial.Active && 
+                    (SelectedStructure.IsTerrain || SelectedStructure.IsGuildHall)) return;
+                
                 int price = 0;
 
                 switch (SelectedStructure.StructureType)
@@ -322,11 +345,7 @@ namespace Structures
                         break;
                     case StructureType.Terrain:
                     case StructureType.Ruins:
-                        if (Tutorial.Tutorial.Active)
-                        {
-                            if (SelectedStructure.IsTerrain) return;
-                            break;
-                        }
+                        if (Tutorial.Tutorial.Active) break;
                         price = SelectedStructure.ClearCost;
                         break;
                 }
@@ -338,6 +357,8 @@ namespace Structures
                 Manager.Structures.Remove(structure);
             }
             Deselect();
+            maskImage.fillAmount = 0;
+            _interactTimer = 0;
         }
     }
 }
