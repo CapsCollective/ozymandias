@@ -136,7 +136,7 @@ namespace Structures
                 _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
             }
 
-            if (!Manager.State.Loading) AnimateCreate(); // TODO: Animate check (just not during loading???)
+            if (!Manager.State.Loading) AnimateCreate(false); // TODO: Animate check (just not during loading???)
         }
         
         public bool CreateBuilding(Blueprint blueprint, int rootId, int rotation = 0, bool isRuin = false)
@@ -229,12 +229,12 @@ namespace Structures
             }
         }
 
-        private void AnimateCreate()
+        private void AnimateCreate(bool playSound = true)
         {
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
             ParticleSystem.Play();
-            Manager.Jukebox.PlayBuild(); // Only play sound if animated
+            if (playSound) Manager.Jukebox.PlayBuild();
         }
         
         public void ToRuin()
