@@ -79,6 +79,8 @@ namespace Inputs
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;
+            ControlScheme = PlayerInput.controlSchemes[0];
+            PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
         }
 
         public void TogglePlayerInput(bool toggle)
@@ -93,7 +95,7 @@ namespace Inputs
             {
                 Debug.Log($"Input Changed: {arg1.controlScheme.Value.name}");
                 ControlScheme = arg1.controlScheme.Value;
-                PlayerInput.bindingMask = InputBinding.MaskByGroup(Inputs.ControlScheme.bindingGroup);
+                PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
                 OnControlChange?.Invoke(arg1.controlScheme.Value);
             }
         }
