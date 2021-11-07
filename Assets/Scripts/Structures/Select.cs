@@ -56,7 +56,9 @@ namespace Structures
 
         public static Action<Structure> OnClear;
         public static Action<Quest> OnQuestSelected;
-        
+
+        public static Select Instance { get; private set; }
+
         private Structure HoveredStructure
         {
             set {
@@ -75,7 +77,7 @@ namespace Structures
             }
         }
         
-        private Structure SelectedStructure
+        public Structure SelectedStructure
         {
             get => _selectedStructure;
             set
@@ -153,7 +155,12 @@ namespace Structures
         {
             if(SelectedStructure) SelectedStructure = null;
         }
-        
+
+        private void Awake()
+        {
+            Instance = this;   
+        }
+
         private void Start()
         {
             _canvas = GetComponent<Canvas>();

@@ -87,7 +87,12 @@ namespace UI
 
             Manager.Inputs.OnToggleBook.performed += _ =>
             {
-                if(Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
+                if (Manager.Cards.SelectedCard != null)
+                {
+                    Manager.Cards.SelectCard(-1);
+                }
+                else if (Structures.Select.Instance.SelectedStructure != null) Structures.Select.Instance.SelectedStructure = null;
+                else if (Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
             };
             
             transform.localPosition = ClosePos;
