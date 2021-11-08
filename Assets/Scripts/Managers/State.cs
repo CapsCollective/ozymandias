@@ -30,7 +30,8 @@ namespace Managers
         public GameState Current => _state;
 
         [SerializeField] private Canvas loadingCanvas, menuCanvas, gameCanvas;
-        [SerializeField] private CanvasGroup 
+        [SerializeField]
+        private CanvasGroup
             loadingCanvasGroup, loadingShadeCanvasGroup;
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
@@ -257,7 +258,8 @@ namespace Managers
         private void InGameInit()
         {
             menuCanvas.enabled = false;
-            gameCanvas.enabled = true; 
+            gameCanvas.enabled = true;
+
             if (Tutorial.Tutorial.Active) return;
             Manager.GameHud.Show();
         }
@@ -276,7 +278,10 @@ namespace Managers
             });
         }
 
-        private void InMenuInit() {}
+        private void InMenuInit() 
+        {
+            
+        }
         
         private void EndGameInit()
         {

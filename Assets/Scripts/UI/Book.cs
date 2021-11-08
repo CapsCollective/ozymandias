@@ -121,10 +121,8 @@ namespace UI
         private void Close()
         {
             _transitioning = true;
-            Manager.State.EnterState(_closeState);
             closeButton.gameObject.SetActive(false);
-            SelectUi(null);
-            
+            SelectUi(null);          
             transform.DOPunchScale(PunchScale, animateOutDuration, 0, 0);
             transform.DOLocalMove(ClosePos, animateOutDuration)
                 .OnComplete(() =>
@@ -132,6 +130,7 @@ namespace UI
                     canvas.enabled = false;
                     _transitioning = false;
                     _isOpen = false;
+                    Manager.State.EnterState(_closeState);
                 });
         }
 
