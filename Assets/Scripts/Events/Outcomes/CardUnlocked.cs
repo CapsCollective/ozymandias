@@ -15,6 +15,8 @@ namespace Events.Outcomes
             return blueprint && Manager.Cards.Unlock(blueprint);
         }
 
-        protected override string Description => $"{Colors.GreenText}{blueprint.name}s have been unlocked.{Colors.EndText}";
+        protected override string Description => $"{Colors.GreenText}" +
+                                                 $"{String.Pluralise(blueprint.name)}" +
+                                                 $" have been unlocked.{Colors.EndText}";
     }
 }

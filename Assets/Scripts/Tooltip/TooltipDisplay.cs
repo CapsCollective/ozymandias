@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
+using String = Utilities.String;
 
 namespace Tooltip
 {
@@ -186,7 +187,8 @@ namespace Tooltip
                     int spawnChance = Manager.Stats.SpawnChance(guild);
                     
                     details.text =
-                        $"{stat} satisfaction for {count} {guildName}s ({(stat - count > 0 ? "+" : "")}{stat - count})\n" +
+                        $"{stat} satisfaction for {count} {String.Pluralise(guildName)} " +
+                        $"({(stat - count > 0 ? "+" : "")}{stat - count})\n" +
                         $"{FormattedBuildingString(config.Stat.Value)}" +
                         $"{FormattedUpgradeString(config.Stat.Value)}" +
                         $"{FormattedFoodModifierString}" +
