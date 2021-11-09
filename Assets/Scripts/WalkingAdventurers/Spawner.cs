@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,17 +84,22 @@ namespace WalkingAdventurers
             // Get closest vert to town centre
             Vertex startVert = Manager.Map.GetClosestCell(Manager.Structures.TownCentre).Vertices[0];
 
-            Vertex endVert;
+            // Get closest vert to quest location
+            int cellIdx;
+            Vector3 questPos;
             if (quest.IsRadiant)
             {
-                // Get closest vert to radiant quest location
-                endVert = Manager.Map.GetClosestCell(quest.Structure.transform.position).Vertices[0];
+                cellIdx = 0;
+                questPos = quest.Structure.transform.position;
             }
             else
             {
-                throw new NotImplementedException();
+                cellIdx = 1;
+                questPos = Manager.Structures.Dock;
             }
-            
+
+            Vertex endVert = Manager.Map.GetClosestCell(questPos).Vertices[cellIdx];
+
             // Generate path regardless of roads
             var naivePath = Utilities.Algorithms.AStar(
                 Manager.Map.Layout.VertexGraph, startVert, endVert);

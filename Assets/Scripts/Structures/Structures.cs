@@ -7,6 +7,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Structures
@@ -19,7 +20,8 @@ namespace Structures
         
         [SerializeField] private GameObject rockSection, treeSection, structurePrefab;
         [SerializeField] private Material outlineMaterial;
-        [SerializeField] private List<Location> spawnLocations; // TODO: Pick new spawn point from random if no guild hall exists 
+        [SerializeField] private Location dockLocation;
+        [SerializeField] private List<Location> spawnLocations; // TODO: Pick new spawn point from random if no guild hall exists
 
         private readonly List<Structure> _buildings = new List<Structure>();
         private readonly List<Structure> _terrain = new List<Structure>();
@@ -35,15 +37,17 @@ namespace Structures
         
         private Location SpawnLocation { get; set; }
         public Vector3 TownCentre { get; private set; }
+        public Vector3 Dock => Manager.Map.GetCell(dockLocation.root).WorldSpace;
         
         private void Awake()
         {
             State.OnNewGame += () => { if (!Tutorial.Tutorial.Active) SpawnGuildHall(); };
             State.OnGameEnd += RemoveAll;
             
-            object[] buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
-            foreach(TextAsset o in buildingsText)
+            var buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
+            foreach(Object o1 in buildingsText)
             {
+                TextAsset o = (TextAsset) o1; // Explicit cast to avoid cast from Object to object above
                 BuildingCache.Add(o.name, JsonUtility.FromJson<Section.SectionData>(o.text));
             }
         }
@@ -127,8 +131,6 @@ namespace Structures
         {
             if (structure.Blueprint && structure.Blueprint.type == BuildingType.GuildHall)
             {
-                //TODO: Add an 'are you sure?' dialogue
-                //Manager.Achievements.Unlock("Now Why Would You Do That?");
                 Manager.EventQueue.AddGuildHallDestroyedEvents();
                 Manager.State.EnterState(GameState.NextTurn);
             }
