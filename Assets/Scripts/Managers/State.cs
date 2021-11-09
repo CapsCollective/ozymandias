@@ -55,7 +55,7 @@ namespace Managers
         private bool _alreadySkippedIntro;
         private static CameraMovement.CameraMove _startPos;
 
-        public static Action OnEnterState;
+        public static Action<GameState> OnEnterState;
         public static Action OnNewGame;
         public static Action OnLoadingEnd;
         public static Action OnGameEnd;
@@ -79,7 +79,7 @@ namespace Managers
         public void EnterState(GameState state)
         {
             _state = state;
-            OnEnterState?.Invoke();
+            OnEnterState?.Invoke(_state);
             switch (_state)
             {
                 case GameState.Loading:

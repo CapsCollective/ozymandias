@@ -177,7 +177,7 @@ namespace Structures
                 maskImage.fillAmount = 0;
             };
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
-            State.OnEnterState += () =>
+            State.OnEnterState += (_) =>
             {
                 SelectedStructure = null;
                 HoveredStructure = null;

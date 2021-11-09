@@ -89,7 +89,7 @@ namespace Cards
                 InitCards();
             };
             State.OnLoadingEnd += InitCards;
-            State.OnEnterState += () => { if(Manager.State.NextTurn) NewCards(); };
+            State.OnEnterState += (state) => { if(Manager.State.NextTurn) NewCards(); };
         }
 
         private void Start()
@@ -100,7 +100,7 @@ namespace Cards
             Manager.Inputs.OnDeselectCards.performed += DeselectCards;
             Manager.Inputs.OnNavigateCards.performed += NavigateCards;
             Manager.Inputs.OnSelectCardIndex.performed += SelectCardIndex;
-            State.OnEnterState += () =>
+            State.OnEnterState += (_) =>
             {
                 SelectCard(-1);
                 if (Manager.State.InGame) PopCards();

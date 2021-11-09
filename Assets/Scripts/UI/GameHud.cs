@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Managers;
+using Utilities;
 using static Managers.GameManager;
 using static UI.GameHud.HudObject;
 using System;
@@ -52,19 +53,19 @@ namespace UI
             State.OnEnterState += OnNewState;
         }
 
-        private void OnNewState()
+        private void OnNewState(GameState state)
         {
-            switch (Manager.State.Current)
+            switch (state)
             {
-                case Utilities.GameState.InGame:
+                case GameState.InGame:
                     leftGameGroup.interactable = true;
                     rightGameGroup.interactable = true;
                     break;
-                case Utilities.GameState.InMenu:
+                case GameState.InMenu:
                     leftGameGroup.interactable = false;
                     rightGameGroup.interactable = false;
                     break;
-                case Utilities.GameState.NextTurn:
+                case GameState.NextTurn:
                     leftGameGroup.interactable = false;
                     rightGameGroup.interactable = false;
                     break;
