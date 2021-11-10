@@ -36,7 +36,9 @@ namespace Events.Outcomes
 
         protected override string Description => customDescription != "" ?
             $"{Colors.GreenText}{customDescription}{Colors.EndText}" :
-            $"{Colors.GreenText}{adventurers.Count + count} adventurer{(adventurers.Count > 1 ? "s have " : " has ")}" +
+            $"{Colors.GreenText}{adventurers.Count + count} "+
+            $"{String.Pluralise("adventurer", adventurers.Count)} " +
+            $"{(adventurers.Count == 1 ? "has" : "have")} " +
             $"{Descriptors.SelectRandom()}{Colors.EndText}";
     }
 }

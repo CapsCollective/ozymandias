@@ -16,7 +16,7 @@ namespace UI
         {
             _image = GetComponent<Image>();
             gameObject.SetActive(false);
-            OnEnterState += () => SetDisplay(Manager.State.InMenu);
+            OnEnterState += (_) => SetDisplay(Manager.State.InMenu);
         }
 
         private void SetDisplay(bool display)

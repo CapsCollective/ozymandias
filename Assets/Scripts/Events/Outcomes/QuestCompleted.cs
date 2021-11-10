@@ -17,7 +17,9 @@ namespace Events.Outcomes
         }
         
         protected override string Description => 
-            $"{Colors.GreenText}Quest completed: {quest.Title}. " +
-            $"{_assigned} Adventurer{(_assigned > 1 ? "s have" : " has")} returned.{Colors.EndText}";
+            $"{Colors.GreenText}Quest completed: {quest.Title}. {_assigned} " +
+            $"{String.Pluralise("Adventurer", _assigned)} " +
+            $"{(_assigned == 1 ? "has" : "have")} " +
+            $"returned.{Colors.EndText}";
     }
 }

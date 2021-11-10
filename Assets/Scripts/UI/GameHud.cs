@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
+using Managers;
+using Utilities;
 using static Managers.GameManager;
 using static UI.GameHud.HudObject;
+using System;
 
 namespace UI
 {
@@ -10,6 +14,7 @@ namespace UI
     {
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform topBar, leftButtons, rightButtons, cards;
+        [SerializeField] private CanvasGroup leftGameGroup, rightGameGroup;
 
         public enum HudObject
         {
@@ -44,8 +49,29 @@ namespace UI
                 {RightButtons, new HudObjectValues(rightButtons, Vector2.zero, new Vector2(0,-230))},
                 {HudObject.Cards, new HudObjectValues(cards, new Vector2(0,-155), new Vector2(0,-390))},
             };
+
+            State.OnEnterState += OnNewState;
         }
-        
+
+        private void OnNewState(GameState state)
+        {
+            switch (state)
+            {
+                case GameState.InGame:
+                    leftGameGroup.interactable = true;
+                    rightGameGroup.interactable = true;
+                    break;
+                case GameState.InMenu:
+                    leftGameGroup.interactable = false;
+                    rightGameGroup.interactable = false;
+                    break;
+                case GameState.NextTurn:
+                    leftGameGroup.interactable = false;
+                    rightGameGroup.interactable = false;
+                    break;
+            }
+        }
+
         public void Hide(bool animate = true)
         {
             Hide(new List<HudObject>(_hudValuesMap.Keys), animate);

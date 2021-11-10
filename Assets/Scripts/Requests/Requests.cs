@@ -18,7 +18,7 @@ namespace Requests
 
         private void Awake()
         {
-            State.OnEnterState += () =>
+            State.OnEnterState += (_) =>
             {
                 if (!Manager.State.NextTurn) return;
                 foreach (KeyValuePair<Guild, Request> request in _requests)
