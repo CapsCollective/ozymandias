@@ -1,10 +1,11 @@
 ﻿using Adventurers;
+using Utilities;
 
 namespace Requests.Templates
 {
     public sealed class AttractAdventurers : Request
     {
-        public override string Description => $"Attract {Required} new {guild}s";
+        public override string Description => $"Attract {Required} new {String.Pluralise(guild.ToString())}";
         protected override int RequiredScaled => 4 * Tokens;
 
         public override void Start()

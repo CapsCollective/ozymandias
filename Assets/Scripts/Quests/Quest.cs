@@ -11,6 +11,7 @@ using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
 using Random = UnityEngine.Random;
+using String = Utilities.String;
 
 namespace Quests
 {
@@ -49,8 +50,7 @@ namespace Quests
         public int MaxAdventurers => BaseAdventurers + Structure.SectionCount;
         public int ScaledCost(float scale) => (int) (scale * BaseCost);
         public int ScaledTurns(float scale) => Mathf.CeilToInt(baseTurns / scale);
-        public string ScaledReward(int adventurerCount) => 
-            IsRadiant ? $"{(adventurerCount == MaxAdventurers ? "All": (adventurerCount - BaseAdventurers).ToString())} space{(adventurerCount == 3 ? "" : "s")} cleared" : reward;
+        public string ScaledReward(int adventurerCount) => IsRadiant ? $"{(adventurerCount == MaxAdventurers ? "All": (adventurerCount - BaseAdventurers).ToString())} {(adventurerCount > 3 ? String.Pluralise("space") : "space")} cleared" : reward;
         public int AssignedCount => _assigned.Count;
         
         public void Add()

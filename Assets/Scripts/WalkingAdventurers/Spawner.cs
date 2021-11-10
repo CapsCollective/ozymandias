@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Map;
+using NaughtyAttributes;
 using Quests;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,6 +18,8 @@ namespace WalkingAdventurers
         [SerializeField] private float partyScatter = .5f;
         [SerializeField] private float fadeDuration = 1f;
         
+        [SerializeField] private Quest debugQuest;
+        
         private readonly Dictionary<GameObject, List<Vector3>> _activeAdventurers = 
             new Dictionary<GameObject, List<Vector3>>();
 
@@ -25,10 +27,7 @@ namespace WalkingAdventurers
 
         private void Start()
         {
-            Quest.OnQuestStarted += quest =>
-            {
-                StartCoroutine(SpawnQuestingAdventurers(quest));
-            };
+            Quest.OnQuestStarted += SpawnQuestingAdventurers;
         }
 
         private void Update()
@@ -40,13 +39,13 @@ namespace WalkingAdventurers
                 _wanderUpdateTime = 0.0f;
             }
 
-            List<GameObject> adventurersToRemove = new List<GameObject>();
+            var adventurersToRemove = new List<GameObject>();
             foreach (var adventurerPath in _activeAdventurers)
             {
                 GameObject adventurer = adventurerPath.Key;
                 if (adventurerPath.Value.Count > 0)
                 {
-                    List<Vector3> path = adventurerPath.Value;
+                    var path = adventurerPath.Value;
                     adventurer.transform.LookAt(path[0]);
                     adventurer.transform.position = Vector3.MoveTowards(
                         adventurer.transform.position, path[0], 
@@ -80,62 +79,73 @@ namespace WalkingAdventurers
             _activeAdventurers.Add(CreateAdventurer(path[0]), path);
         }
 
-        private IEnumerator SpawnQuestingAdventurers(Quest quest)
+        private void SpawnQuestingAdventurers(Quest quest)
         {
             // Get closest vert to town centre
-            Vertex start = Manager.Map.GetClosestCell(Manager.Structures.TownCentre).Vertices[0];
-            List<Vector3> finalPath;
-            
+            Vertex startVert = Manager.Map.GetClosestCell(Manager.Structures.TownCentre).Vertices[0];
+
+            // Get closest vert to quest location
+            int cellIdx;
+            Vector3 questPos;
             if (quest.IsRadiant)
             {
-                // Get closest vert to radiant quest location
-                Vertex end = Manager.Map.GetClosestCell(quest.Structure.transform.position).Vertices[0];
-
-                // Generate path regardless of roads
-                var naivePath = Utilities.Algorithms.AStar(
-                    Manager.Map.Layout.VertexGraph, 
-                    start, end);
-                
-                // Iterate backwards through the path until finding a vertex in
-                // the road graph to break off from and reverse it on completion
-                Vertex lastVert = null;
-                var forestPath = new List<Vertex>();
-                for (var i = naivePath.Count - 1; i >= 0; i--)
-                {
-                    lastVert = naivePath[i];
-                    if (Manager.Map.Layout.RoadGraph.Contains(lastVert)) break;
-                    forestPath.Add(lastVert);
-                }
-                forestPath.Reverse();
-                
-                // Generate path from start to end of road
-                var roadPath = Utilities.Algorithms.AStar(
-                    Manager.Map.Layout.RoadGraph, 
-                    start, lastVert);
-                
-                // Concat the forest path to the road path and normalise positions
-                finalPath = roadPath.Concat(forestPath)
-                    .Select(vertex => Manager.Map.transform.TransformPoint(vertex))
-                    .ToList();
+                cellIdx = 0;
+                questPos = quest.Structure.transform.position;
             }
             else
             {
-                throw new NotImplementedException();
+                cellIdx = 1;
+                questPos = Manager.Structures.Dock;
             }
+
+            Vertex endVert = Manager.Map.GetClosestCell(questPos).Vertices[cellIdx];
+
+            // Generate path regardless of roads
+            var naivePath = Utilities.Algorithms.AStar(
+                Manager.Map.Layout.VertexGraph, startVert, endVert);
+                
+            // Iterate backwards through the path until finding a vertex in
+            // the road graph to break off from and reverse it on completion
+            Vertex lastVert = null;
+            var forestPath = new List<Vertex>();
+            for (var i = naivePath.Count - 1; i >= 0; i--)
+            {
+                lastVert = naivePath[i];
+                if (Manager.Map.Layout.RoadGraph.Contains(lastVert)) break;
+                forestPath.Add(lastVert);
+            }
+            forestPath.Reverse();
+                
+            // Generate path from start to end of road
+            var roadPath = Utilities.Algorithms.AStar(
+                Manager.Map.Layout.RoadGraph, 
+                startVert, lastVert);
+                
+            // Concat the forest path to the road path and normalise positions
+            var finalPath = roadPath.Concat(forestPath)
+                .Select(vertex => Manager.Map.transform.TransformPoint(vertex))
+                .ToList();
             
+            // Spawn party members offset by a set timing
+            StartCoroutine(SpawnParty(quest, finalPath));
+        }
+        
+        private IEnumerator SpawnParty(Quest quest, IReadOnlyList<Vector3> path)
+        {
             // Spawn party members offset by a set timing
             for (var i = 0; i < quest.AssignedCount; i++)
             {
                 // The path is copied here to avoid grouping behaviour from a shared list
-                _activeAdventurers.Add(CreateAdventurer(start), new List<Vector3>(finalPath));
+                _activeAdventurers.Add(CreateAdventurer(path[0]), new List<Vector3>(path));
                 yield return new WaitForSeconds(partyScatter);
             }
         }
 
         private GameObject CreateAdventurer(Vector3 start)
         {
-            // 10% chance to spawn dog
-            GameObject newAdventurer = Instantiate(Random.Range(0, 10) == 0 ? dogModel : adventurerModel, start, Quaternion.identity);
+            // 5% chance to spawn dog
+            GameObject model = Random.Range(0, 20) == 0 ? dogModel : adventurerModel;
+            GameObject newAdventurer = Instantiate(model, start, Quaternion.identity);
             newAdventurer.transform.parent = transform;
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
             StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));
@@ -145,9 +155,9 @@ namespace WalkingAdventurers
         private IEnumerator FadeAdventurer(GameObject adventurer, float from, float to, bool destroy = false)
         {
             Adventurer adventurerManager = adventurer.GetComponent<Adventurer>();
-            float current = from;
+            var current = from;
             adventurerManager.SetAlphaTo(from);
-            float time = 0f;
+            var time = 0f;
             while (time < fadeDuration)
             {
                 current = Mathf.Lerp(current, to, time);
@@ -156,8 +166,13 @@ namespace WalkingAdventurers
                 yield return null;
             }
             adventurerManager.SetAlphaTo(to);
-            if (destroy)
-                Destroy(adventurer);
+            if (destroy) Destroy(adventurer);
+        }
+        
+        [Button("Debug Quest")]
+        public void DebugQuest()
+        {
+            if (debugQuest) SpawnQuestingAdventurers(debugQuest);
         }
     }
 }

@@ -11,9 +11,8 @@ namespace Requests.Templates
         {
             get
             {
-                var buildingName = allowAny ? "Building" : $"{buildingType}s";
-                if (buildingType == BuildingType.Library) buildingName = "Libraries";
-                return $"Build {Required} {buildingName}";
+                var buildingName = allowAny ? "Building" : buildingType.ToString();
+                return $"Build {Required} {String.Pluralise(buildingName)}";
             }
         }
 

@@ -37,7 +37,7 @@ namespace Upgrades
 
         private void Awake()
         {
-            State.OnEnterState += Deselect;
+            State.OnEnterState += (_) => Deselect();
 
             purchaseBox.purchaseButton.onClick.AddListener(Purchase);
             purchaseBox.deselectButton.onClick.AddListener(Deselect);
