@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2823509548589811657
+--- !u!114 &-1319189571673623849
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,41 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse their demands
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -1563748293025030794}
-  costScale: 0
---- !u!114 &-1563748293025030794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: feaa160205c0a9e40983076f308890f7, type: 2}
---- !u!114 &-1441726619516835231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Accept their terms
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 2021376822340462666}
-  costScale: 0
+  statToChange: 7
+  amount: -10
+  turns: -1
+  reason: from the Troll Tolls
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,10 +39,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -1441726619516835231}
-  - {fileID: -2823509548589811657}
+  - {fileID: 3786432004286810036}
+  - {fileID: 9004198238162734405}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2021376822340462666
+--- !u!114 &3786432004286810036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,11 +51,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Accept their terms
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -1319189571673623849}
+  costScale: 0
+--- !u!114 &5875539164191265910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 7
-  amount: -10
-  turns: -1
-  reason: from the Troll Tolls
+  quest: {fileID: 11400000, guid: feaa160205c0a9e40983076f308890f7, type: 2}
+--- !u!114 &9004198238162734405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse their demands
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5875539164191265910}
+  costScale: 0
