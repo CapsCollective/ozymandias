@@ -49,6 +49,11 @@ namespace Utilities
             {"(us)$", "$1es"},
             {"([^s]+)$", "$1s"},
         };
+        
+        public static string Pluralise(string word, int count)
+        {
+            return count == 1 ? word : Pluralise(word);
+        }
 
         public static string Pluralise(string word)
         {
