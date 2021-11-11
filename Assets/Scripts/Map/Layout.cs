@@ -446,6 +446,21 @@ namespace Map
                 triangles = triangles.ToArray()
             };
         }
+
+        [Button("Set Active Vertices")]
+        public void SetVerticesActive()
+        {
+            VertexGraph.Data.ForEach(vertex => vertex.Active = false);
+            CellGraph.Data.ForEach(cell =>
+            {
+                if (!cell.Active) return;
+                cell.Vertices.ForEach(vertex =>
+                {
+                    vertex.Active = true;
+                    VertexGraph.GetData(vertex.Id).Active = true;
+                });
+            });
+        }
         
         #endregion 
         #region Roads

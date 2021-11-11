@@ -10,6 +10,7 @@ namespace Map
         [field: SerializeField] public Vector3 Position { get; set; }
         [field: SerializeField] public bool Split { get; private set; }
         [field: SerializeField] public bool Boundary { get; private set; }
+        [field: SerializeField] public bool Active { get; set; }
 
         public Vertex(Vector3 position, bool split, bool boundary)
         {
