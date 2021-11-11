@@ -13,8 +13,7 @@ namespace Upgrades
     public class Upgrades: MonoBehaviour
     {
         public Dictionary<Guild, int> GuildTokens { get; private set; }
-
-
+        
         [SerializeField] private Upgrade root;
         
         [Serializable]
@@ -54,6 +53,7 @@ namespace Upgrades
             _selected.level++;
             _selected.Display(true);
             DisplayDetails(_selected);
+            Manager.Structures.CheckAdjacencyBonuses();
             UpdateUi();
         }
 
