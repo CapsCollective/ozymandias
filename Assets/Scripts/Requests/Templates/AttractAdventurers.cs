@@ -5,7 +5,7 @@ namespace Requests.Templates
 {
     public sealed class AttractAdventurers : Request
     {
-        public override string Description => $"Attract {Required} new {String.Pluralise(guild.ToString())}";
+        public override string Description => $"Attract {Required} New {String.Pluralise(guild.ToString(), Required)}";
         protected override int RequiredScaled => 4 * Tokens;
 
         public override void Start()

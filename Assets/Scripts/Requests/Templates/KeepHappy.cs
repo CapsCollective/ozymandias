@@ -6,8 +6,8 @@ namespace Requests.Templates
 {
     public sealed class KeepHappy : Request
     {
-        public override string Description => $"Keep {String.Pluralise(guild.ToString())}" +
-                                              $" Happy for {Required} Turns";
+        public override string Description => 
+            $"Keep {String.Pluralise(guild.ToString())} Happy for {Required} Turns";
         protected override int RequiredScaled => 2 * Tokens;
 
         public override void Start()

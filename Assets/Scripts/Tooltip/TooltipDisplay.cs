@@ -33,9 +33,9 @@ namespace Tooltip
             }},
             {TooltipType.Outrider, new TooltipConfig {
                 Title = "Outriders",
-                Description = "As shady as they are charming, an outrider thrives of exploring the unknown, spending " +
+                Description = "As shady as they are charming, an outrider thrives in exploring the unknown, spending " +
                               "their days scouting the forests, or lurking in the streets. Be warned, when left " +
-                              "unchecked, thing's might start to go missing.",
+                              "unchecked, things might start to go missing.",
                 Stat = Stat.Outrider
             }},
             {TooltipType.Performer, new TooltipConfig {

@@ -29,8 +29,7 @@ namespace Utilities
                 Vertex q = s[0];
                 foreach (Vertex n in s)
                 {
-                    if (n == p)
-                        continue;
+                    if (n == p) continue;
                     bool isNext = true;
                     foreach (Vertex r in s)
                     {
@@ -107,6 +106,8 @@ namespace Utilities
 
                 foreach (Vertex neighbour in set.GetAdjacentData(current.Id))
                 {
+                    if (!neighbour.Active) continue;
+
                     float gCost = Vector3.Distance(neighbour, root);
                     float hCost = Vector3.Distance(neighbour, target);
                     float fCost = gCost + hCost;
@@ -126,7 +127,6 @@ namespace Utilities
                         open.Add(neighbour);
                 }
             }
-
             return path;
         }
 

@@ -113,6 +113,7 @@ namespace Structures
 
             if (!Manager.State.Loading)
             {
+                CheckAdjacencyBonuses();
                 OnBuild?.Invoke(structure);
                 UpdateUi();
             }
@@ -140,6 +141,7 @@ namespace Structures
             else _buildings.Remove(structure);
             
             structure.Destroy();
+            CheckAdjacencyBonuses();
             if(!Manager.State.Loading) UpdateUi();
         }
 
@@ -149,6 +151,11 @@ namespace Structures
             if (structure == null) return null;
             Remove(structure);
             return structure.name;
+        }
+
+        public void CheckAdjacencyBonuses()
+        {
+            _buildings.ForEach(building => building.CheckAdjacencyBonus());
         }
 
         private void RemoveAll()
@@ -256,6 +263,8 @@ namespace Structures
                 SpawnLocation = Tutorial.Tutorial.Active ? spawnLocations[0] : NewSpawnLocation();
                 TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
             }
+            
+            CheckAdjacencyBonuses(); // Checks at end of load so it doesn't repeat
         }
     }
 }

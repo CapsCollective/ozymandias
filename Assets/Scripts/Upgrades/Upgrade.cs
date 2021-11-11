@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,8 @@ namespace Upgrades
         public string title;
         [SerializeField] [TextArea] private string description;
         [SerializeField] private string effect;
-        public SerializedDictionary<Guild, int> costs;
+        [SerializeField] private SerializedDictionary<Guild, int> costs;
+        [SerializeField] private  SerializedDictionary<Guild, float> levelScale;
         [SerializeField] private int maxLevel; // -1 for infinite
         [SerializeField] private bool percentage;
         [SerializeField] private int multiplier, baseEffect;
@@ -29,7 +31,13 @@ namespace Upgrades
         [ReadOnly] public int level;
         [SerializeField] private Image background;
         [SerializeField] private Sprite halfConnection, fullConnection;
+        [SerializeField] private GameObject availableIcon;
         
+        public Dictionary<Guild, int> Costs => costs
+            .Select(cost => new KeyValuePair<Guild, int>(cost.Key, 
+                cost.Value + (levelScale.ContainsKey(cost.Key) ? Mathf.RoundToInt(level * levelScale[cost.Key]) : 0)
+            ))
+            .ToDictionary(x => x.Key, x => x.Value); 
         public bool HasLevelCap => maxLevel != -1;
         public bool LevelMaxed => HasLevelCap && level >= maxLevel;
         public bool Unlocked => level > 0;
@@ -38,7 +46,9 @@ namespace Upgrades
         public string Description => 
             $"{description}\n\n" + LevelText + EffectText;
         private string LevelText => SingleUnlock ? (level == 0 ? "Locked: " : "Unlocked: ") : $"Level: {level}{ (HasLevelCap ? $"/{maxLevel}" : "") }\n";
-        private string EffectText => (SingleUnlock ? "" : $"{baseEffect + level * multiplier}{(percentage ? "%" : "")}{(level < maxLevel || maxLevel == -1 ? $"→{baseEffect + (level + 1) * multiplier}{(percentage ? "%": "")}" : "")} ") + effect;
+        private string EffectText => (SingleUnlock ? "" : 
+            $"{baseEffect + level * multiplier}{(percentage ? "%" : "")}" +
+            $"{(level < maxLevel || maxLevel == -1 ? $"→{baseEffect + (level + 1) * multiplier}{(percentage ? "%": "")}" : "")} ") + effect;
 
         private void Awake()
         {
@@ -50,6 +60,8 @@ namespace Upgrades
             gameObject.SetActive(visible);
             children.ForEach(upgrade => upgrade.Display(Unlocked));
             if (!visible) return;
+            
+            availableIcon.SetActive(!LevelMaxed && Manager.Upgrades.Affordable(Costs));
             
             connections.ForEach(connection => connection.sprite = Unlocked ? fullConnection : halfConnection);
             

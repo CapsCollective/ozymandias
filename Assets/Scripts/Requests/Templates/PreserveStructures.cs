@@ -6,7 +6,9 @@ namespace Requests.Templates
     public sealed class PreserveStructures : Request
     {
         public StructureType structureType;
-        public override string Description => $"Build {Required} Buildings Without Clearing {(structureType == StructureType.Terrain ? "Forest" : "Ruins")}";
+        public override string Description => 
+            $"Build {Required} {String.Pluralise("Building", Required)} " +
+            $"Without Clearing {(structureType == StructureType.Terrain ? "Forest" : "Ruins")}";
         protected override int RequiredScaled => (structureType == StructureType.Terrain ? 10 : 20) * Tokens;
 
         public override void Start()

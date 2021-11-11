@@ -185,7 +185,6 @@ namespace Structures
             }
 
             if (!Manager.State.Loading) AnimateCreate();
-            Bonus = AdjacencyBonus();
             return true;
         }
 
@@ -199,7 +198,6 @@ namespace Structures
             
             // Play the destroy sound when in game or during turn transition (e.g. guild hall)
             if(Manager.State.InGame || Manager.State.NextTurn) Manager.Jukebox.PlayDestroy();
-            Manager.Map.GetNeighbours(this).ForEach(neighbour => neighbour.Bonus = neighbour.AdjacencyBonus());
         }
         
         public void Grow(Cell newCell)
@@ -246,32 +244,46 @@ namespace Structures
             }
         }
         
-        private Stat? AdjacencyBonus(bool propagate = true)
+        public void CheckAdjacencyBonus()
         {
             // Only applies to buildings with unlocked bonuses
-            if (!IsBuilding || !Blueprint.adjacencyConfig.hasBonus || !Manager.Upgrades.IsUnlocked(Blueprint.adjacencyConfig.upgrade)) return null;
-            
+            if (!IsBuilding || !Blueprint.adjacencyConfig.hasBonus || !Manager.Upgrades.IsUnlocked(Blueprint.adjacencyConfig.upgrade)) return;
+
             AdjacencyConfiguration config = Blueprint.adjacencyConfig;
+            
+            if (Blueprint.type == BuildingType.BathHouse && Occupied.Any(cell => cell.WaterFront))
+            {
+                Bonus = config.stat;
+                return;
+            }
+            
             int farmCount = 0;
             bool noAdjacentBuildings = true;
             bool hasBonus = false;
             
             foreach (Structure neighbour in Manager.Map.GetNeighbours(this))
             {
-                if (propagate) neighbour.Bonus = neighbour.AdjacencyBonus(false); // Recheck neighbours too
                 // Checking for Terrain and Ruin bonuses
-                if (config.structureType != StructureType.Building && neighbour.StructureType == config.structureType) hasBonus = true;
+                if (config.structureType != StructureType.Building && neighbour.StructureType == config.structureType)
+                {
+                    hasBonus = true;
+                    break;
+                }
                 if (neighbour.StructureType != StructureType.Building) continue; 
                 noAdjacentBuildings = false;
                 if (neighbour.IsBuildingType(BuildingType.Farm)) farmCount++;
-                else if (!config.specialCheck && neighbour.IsBuildingType(config.neighbourType)) hasBonus = true;
+                else if (!config.specialCheck && neighbour.IsBuildingType(config.neighbourType))
+                {
+                    hasBonus = true;
+                    break;
+                }
             }
 
             // Special adjacency rules
             if (farmCount >= 2 && IsBuildingType(BuildingType.Farm)) hasBonus = true;
             if (noAdjacentBuildings && (IsBuildingType(BuildingType.Watchtower) || IsBuildingType(BuildingType.Monastery))) hasBonus = true;
             
-            return hasBonus ? config.stat : (Stat?)null; 
+            Bonus = hasBonus ? config.stat : (Stat?)null;
         }
         
         public BuildingDetails SaveBuilding()
