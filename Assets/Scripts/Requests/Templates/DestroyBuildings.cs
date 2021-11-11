@@ -6,7 +6,7 @@ namespace Requests.Templates
     public sealed class DestroyBuildings : Request
     {
         public BuildingType buildingType;
-        public override string Description => $"Destroy {Required} {String.Pluralise(buildingType.ToString())}";
+        public override string Description => $"Destroy {Required} {String.Pluralise(buildingType.ToString(), Required)}";
         protected override int RequiredScaled => Tokens;
 
         public override void Start()

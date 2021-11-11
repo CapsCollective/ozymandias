@@ -7,14 +7,8 @@ namespace Requests.Templates
     {
         public bool allowAny;
         public BuildingType buildingType;
-        public override string Description
-        {
-            get
-            {
-                var buildingName = allowAny ? "Building" : buildingType.ToString();
-                return $"Build {Required} {String.Pluralise(buildingName)}";
-            }
-        }
+        public override string Description => 
+            $"Build {Required} {String.Pluralise(allowAny ? "Building" : buildingType.ToString(), Required)}";
 
         protected override int RequiredScaled => (allowAny ? 20 : 2) * Tokens;
 

@@ -1,10 +1,11 @@
 ﻿using Quests;
+using Utilities;
 
 namespace Requests.Templates
 {
     public sealed class CompleteQuests : Request
     {
-        public override string Description => $"Complete {Required} Quests";
+        public override string Description => $"Complete {Required} {String.Pluralise("Quest", Required)}";
         protected override int RequiredScaled => Tokens;
 
         public override void Start()
