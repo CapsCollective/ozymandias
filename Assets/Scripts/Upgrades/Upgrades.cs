@@ -45,7 +45,7 @@ namespace Upgrades
 
         private void Purchase()
         {
-            foreach (KeyValuePair<Guild, int> cost in _selected.costs)
+            foreach (KeyValuePair<Guild, int> cost in _selected.Costs)
             {
                 GuildTokens[cost.Key] -= cost.Value;
             }
@@ -80,16 +80,16 @@ namespace Upgrades
 
             purchaseBox.purchaseButton.gameObject.SetActive(!upgrade.LevelMaxed);
             purchaseBox.costBox.gameObject.SetActive(!upgrade.LevelMaxed);
-            purchaseBox.purchaseButton.interactable = Affordable(upgrade.costs);
+            purchaseBox.purchaseButton.interactable = Affordable(upgrade.Costs);
 
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
-                if (upgrade.costs.ContainsKey(guild))
+                if (upgrade.Costs.ContainsKey(guild))
                 {
                     purchaseBox.costs[guild].SetActive(true);
                     TextMeshProUGUI text = purchaseBox.costs[guild].GetComponentInChildren<TextMeshProUGUI>();
-                    text.text = upgrade.costs[guild].ToString();
-                    text.color = GuildTokens[guild] >= upgrade.costs[guild] ? Colors.CardLight : Colors.Red;
+                    text.text = upgrade.Costs[guild].ToString();
+                    text.color = GuildTokens[guild] >= upgrade.Costs[guild] ? Colors.CardLight : Colors.Red;
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace Upgrades
             purchaseBox.canvas.enabled = false;
         }
 
-        private bool Affordable(Dictionary<Guild, int> costs)
+        public bool Affordable(Dictionary<Guild, int> costs)
         {
             return  costs.All(cost => GuildTokens[cost.Key] >= cost.Value);
         }
