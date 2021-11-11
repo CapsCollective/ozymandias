@@ -248,8 +248,15 @@ namespace Structures
         {
             // Only applies to buildings with unlocked bonuses
             if (!IsBuilding || !Blueprint.adjacencyConfig.hasBonus || !Manager.Upgrades.IsUnlocked(Blueprint.adjacencyConfig.upgrade)) return;
-            
+
             AdjacencyConfiguration config = Blueprint.adjacencyConfig;
+            
+            if (Blueprint.type == BuildingType.BathHouse && Occupied.Any(cell => cell.WaterFront))
+            {
+                Bonus = config.stat;
+                return;
+            }
+            
             int farmCount = 0;
             bool noAdjacentBuildings = true;
             bool hasBonus = false;

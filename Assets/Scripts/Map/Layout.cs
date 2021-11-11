@@ -427,7 +427,7 @@ namespace Map
                 for (int i = 0; i < 4; i++)
                 {
                     vertices.Add(cell.Vertices[i] + (cell.Centre - cell.Vertices[i]).normalized * lineWeight / 100f);
-                    uv.Add(Vector2.zero); // Set to base or invalid if a 'safe' cell
+                    uv.Add(debug && cell.WaterFront ? new Vector2(1, 0) : Vector2.zero); // Set to base or invalid if a 'safe' cell
                 }
                 UVMap.Add(cell, Enumerable.Range( vertices.Count - 4, 4).ToList());
 
