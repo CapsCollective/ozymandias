@@ -46,9 +46,10 @@ namespace UI
                 quitButton.gameObject.SetActive(
                     _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings);
                 
-                 //TODO: Page turn sound effect
                 if (_page == value) return;
                 
+                Manager.Jukebox.PlayPageTurn();
+
                 pages[_page].interactable = false;
                 pages[_page].blocksRaycasts = false;
                 pages[_page].DOFade(0, 0.2f).OnComplete(() =>
