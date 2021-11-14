@@ -110,7 +110,6 @@ namespace UI
             _fromGame = Manager.State.InGame;
             Page = _page; // Update the current page settings
             Manager.State.EnterState(GameState.InMenu);
-            //Manager.Jukebox.PlayScrunch(); TODO: book sound
             canvas.enabled = true;
             transform.DOPunchScale(PunchScale, animateInDuration, 0, 0);
             transform.DOLocalMove(Vector3.zero, animateInDuration)
@@ -121,6 +120,7 @@ namespace UI
                     _closeButtonCanvas.DOFade(1, 0.5f);
                     _transitioning = false;
                     _isOpen = true;
+                    Manager.Jukebox.PlayBookThump();
                 });
         }
 
