@@ -54,11 +54,14 @@ namespace Quests
         private QuestFlyer ClosedFlyer => flyers[_openFlyer == 0 ? 1 : 0];
         private static List<Quest> Current => Manager.Quests.Current;
 
+        private bool _opened;
+
         private void Start()
         {
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             _canvas = GetComponent<Canvas>();
             closeButton.onClick.AddListener(Close);
+            Manager.Inputs.OnToggleBook.performed += _ => { Close(); };
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
             previousButton.onClick.AddListener(() => ChangeQuest(SwapDir.Left));
             Select.OnQuestSelected += quest =>
@@ -161,6 +164,8 @@ namespace Quests
 
         private void Open()
         {
+            if (_opened) return;
+            _opened = true;
             DisplayCloseButton(false);
             DisplayMoveButtons(false);
             Manager.State.EnterState(GameState.InMenu);
@@ -183,13 +188,18 @@ namespace Quests
         
         private void Close()
         {
+            if (!_opened) return;
             DisplayCloseButton(false);
             DisplayMoveButtons(false);
             Manager.State.EnterState(GameState.InGame);
             OpenFlyer.transform.DOLocalMove(_offScreenPos, animateOutDuration);
             OpenFlyer.transform
                 .DOLocalRotate(_offScreenRot, animateOutDuration)
-                .OnComplete(() => { _canvas.enabled = false; });
+                .OnComplete(() =>
+                {
+                    _canvas.enabled = false;
+                    _opened = false;
+                });
             SelectUi(null);
         }
 
