@@ -297,6 +297,7 @@ namespace Managers
         
         private void ToCreditsInit()
         {
+            StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.AmbienceVolume, 0.2f, 4f));
             StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 4f));
             StartCoroutine(Algorithms.DelayCall(3f, () => {
                 Manager.Jukebox.OnStartCredits();
@@ -384,6 +385,7 @@ namespace Managers
             {
                 waypoint.panel.alpha = 0.0f;
             }
+            StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.AmbienceVolume, Jukebox.FullVolume, 5f));
 
             EnterState(GameState.ToIntro);
         }

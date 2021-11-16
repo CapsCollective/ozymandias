@@ -17,7 +17,7 @@ namespace Managers
         public const float LowestVolume = 0.0001f;
 
         public const string MusicVolume = "musicVolume";
-        private const string AmbienceVolume = "ambienceVolume";
+        public const string AmbienceVolume = "ambienceVolume";
 
         private const string DayAmbienceVolume = "dayAmbienceVolume";
         private const string NightAmbienceVolume = "nightAmbienceVolume";
