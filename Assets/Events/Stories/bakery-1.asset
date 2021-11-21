@@ -1,21 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7360873030938496104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
-  toFront: 0
---- !u!114 &-2778268968429612516
+--- !u!114 &-465491529878050105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>2 Threat per farm until this is resolved</color>
-  flag: 1
+  customDescription: 
+  flag: 0
   value: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -51,12 +36,12 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: -2778268968429612516}
-  - {fileID: 2403326768704903184}
-  - {fileID: -7360873030938496104}
+  - {fileID: 1716925798374470240}
+  - {fileID: -465491529878050105}
+  - {fileID: 4342163961415091363}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2403326768704903184
+--- !u!114 &1716925798374470240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,6 +53,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: 
-  flag: 0
+  customDescription: <color=#820000ff>2 Threat per farm until this is resolved</color>
+  flag: 1
   value: 1
+--- !u!114 &4342163961415091363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
+  toFront: 0

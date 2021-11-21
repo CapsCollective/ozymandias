@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
@@ -17,7 +20,7 @@ namespace Managers
         public const float LowestVolume = 0.0001f;
 
         public const string MusicVolume = "musicVolume";
-        private const string AmbienceVolume = "ambienceVolume";
+        public const string AmbienceVolume = "ambienceVolume";
 
         private const string DayAmbienceVolume = "dayAmbienceVolume";
         private const string NightAmbienceVolume = "nightAmbienceVolume";
@@ -46,6 +49,7 @@ namespace Managers
         [SerializeField] private AudioClip fishCaughtClip;
         [SerializeField] private AudioClip keyboardClip;
         [SerializeField] private AudioClip pageTurnClip;
+        [SerializeField] private AudioClip bookThumpClip;
         
         [SerializeField] private AudioClip menuTrack;
         [SerializeField] private AudioClip creditsTrack;
@@ -58,7 +62,8 @@ namespace Managers
         private List<AudioClip> _playlist = new List<AudioClip>();
         private float _closestBuildingDistance;
         private bool _isAboveLand = true;
-        private readonly List<IEnumerator> _ambienceCoroutines = new List<IEnumerator>();
+        private readonly List<TweenerCore<float, float, FloatOptions>> _ambienceTweens = 
+            new List<TweenerCore<float, float, FloatOptions>>();
         private Camera _cam;
         private float _timeWaited;
 
@@ -93,31 +98,28 @@ namespace Managers
             _isAboveLand = !_isAboveLand;
             
             // Stop all running ambience-related coroutines
-            foreach (var routine in _ambienceCoroutines)
-                StopCoroutine(routine);
-            _ambienceCoroutines.Clear();
+            foreach (var tween in _ambienceTweens) tween.Kill();
+            _ambienceTweens.Clear();
             
             // Fade between nature and water mixer groups and save the running coroutines
-            _ambienceCoroutines.Add(FadeTo(_getNatureAmbience(_isAboveLand), FullVolume, 3f));
-            _ambienceCoroutines.Add(FadeTo(_getNatureAmbience(!_isAboveLand), 
+            _ambienceTweens.Add(FadeTo(_getNatureAmbience(_isAboveLand), FullVolume, 3f));
+            _ambienceTweens.Add(FadeTo(_getNatureAmbience(!_isAboveLand), 
                 _isAboveLand ? LowestVolume : 0.01f, 5f));
-            foreach (var routine in _ambienceCoroutines)
-                StartCoroutine(routine);
         }
 
         public void StartNightAmbience()
         {
             // Fade from day to night ambience mixer groups
-            StartCoroutine(FadeTo(NightAmbienceVolume, FullVolume, .5f));
-            StartCoroutine(FadeTo(DayAmbienceVolume, LowestVolume, 1f));
+            FadeTo(NightAmbienceVolume, FullVolume, .5f);
+            FadeTo(DayAmbienceVolume, LowestVolume, 1f);
             StartCoroutine(Algorithms.DelayCall(2f, EndNightAmbience));
         }
         
         private void EndNightAmbience()
         {
             // Fade from night to day ambience mixer groups
-            StartCoroutine(FadeTo(NightAmbienceVolume, LowestVolume, .5f));
-            StartCoroutine(FadeTo(DayAmbienceVolume, FullVolume, 3f));
+            FadeTo(NightAmbienceVolume, LowestVolume, .5f);
+            FadeTo(DayAmbienceVolume, FullVolume, 3f);
         }
 
         private void OnAmbianceEnded()
@@ -129,17 +131,17 @@ namespace Managers
             musicPlayer.clip = _playlist.PopRandom();
             musicPlayer.Play();
             // Fade from ambience to music mixer groups
-            StartCoroutine(FadeTo(AmbienceVolume, 0.2f, 5f));
-            StartCoroutine(FadeTo(MusicVolume, FullVolume, 5f));
+            FadeTo(AmbienceVolume, 0.2f, 5f);
+            FadeTo(MusicVolume, FullVolume, 5f);
             StartCoroutine(Algorithms.DelayCall(musicPlayer.clip.length - trackCutoff, OnTrackEnded));
         }
         
         private void OnTrackEnded()
         {
             // Fade from music to ambience mixer groups and stop music
-            StartCoroutine(FadeTo(MusicVolume, LowestVolume, trackCutoff));
-            StartCoroutine(FadeTo(AmbienceVolume, FullVolume, 5f));
-            StartCoroutine(Algorithms.DelayCall(trackCutoff, () => {musicPlayer.Stop();}));
+            FadeTo(MusicVolume, LowestVolume, trackCutoff);
+            FadeTo(AmbienceVolume, FullVolume, 5f);
+            StartCoroutine(Algorithms.DelayCall(trackCutoff, musicPlayer.Stop));
             StartCoroutine(Algorithms.DelayCall(ambienceSpacing, OnAmbianceEnded));
         }
 
@@ -165,18 +167,11 @@ namespace Managers
             musicPlayer.Play();
         }
 
-        public IEnumerator FadeTo(string mixerName, float targetVolume, float fadeTime)
+        public TweenerCore<float, float, FloatOptions> FadeTo(string mixerName, float targetVolume, float fadeTime)
         {
             // Lerp to target volume for mixer group
-            var currentTime = 0.0f;
             targetVolume = 20 * Mathf.Log10(targetVolume);
-            while (currentTime <= fadeTime)
-            {
-                currentTime += Time.deltaTime;
-                mixer.GetFloat(mixerName, out var currentVolume1);
-                mixer.SetFloat(mixerName, Mathf.Lerp(currentVolume1, targetVolume, currentTime/fadeTime));
-                yield return null;
-            }
+            return mixer.DOSetFloat(mixerName, targetVolume, fadeTime);
         }
         
         
@@ -193,8 +188,8 @@ namespace Managers
         public void OnEnterMenu()
         {
             StopAllCoroutines();
-            StartCoroutine(FadeTo(MusicVolume, LowestVolume, trackCutoff));
-            StartCoroutine(FadeTo(AmbienceVolume, FullVolume, 5f));
+            FadeTo(MusicVolume, LowestVolume, trackCutoff);
+            FadeTo(AmbienceVolume, FullVolume, 5f);
             StartCoroutine(Algorithms.DelayCall(trackCutoff, () => {musicPlayer.Stop();}));
         }
         
@@ -210,8 +205,8 @@ namespace Managers
         
         public void OnStartPlay()
         {
-            StartCoroutine(FadeTo(MusicVolume, LowestVolume, trackCutoff));
-            StartCoroutine(FadeTo(AmbienceVolume, FullVolume, 5f));
+            FadeTo(MusicVolume, LowestVolume, trackCutoff);
+            FadeTo(AmbienceVolume, FullVolume, 5f);
             StartCoroutine(Algorithms.DelayCall(trackCutoff, () => {musicPlayer.Stop();}));
             OnTrackEnded();
         }
@@ -265,6 +260,11 @@ namespace Managers
         public void PlayPageTurn()
         {
             PlaySfx(pageTurnClip, 0.6f);
+        }
+
+        public void PlayBookThump()
+        {
+            PlaySfx(bookThumpClip, 0.2f);
         }
     }
 }

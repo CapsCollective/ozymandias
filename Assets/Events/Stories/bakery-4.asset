@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2493608571756481821
+--- !u!114 &-6662815161917818205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,6 +15,20 @@ MonoBehaviour:
   customDescription: <color=#007000ff>Farms no longer increase threat!</color>
   flag: 1
   value: 0
+--- !u!114 &-4779352107045895232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37,27 +51,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -2493608571756481821}
-  - {fileID: 7876278222824965113}
-  - {fileID: 475324874848275632}
-  - {fileID: 8975190778441364652}
+  - {fileID: -6662815161917818205}
+  - {fileID: 8594417843952292305}
+  - {fileID: -4779352107045895232}
+  - {fileID: 8862853820453048344}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &475324874848275632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
---- !u!114 &7876278222824965113
+--- !u!114 &8594417843952292305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
   customDescription: We've decided to grind up all this grain to make bread.
   flag: 0
   value: 0
---- !u!114 &8975190778441364652
+--- !u!114 &8862853820453048344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

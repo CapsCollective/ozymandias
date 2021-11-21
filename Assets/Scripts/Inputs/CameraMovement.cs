@@ -39,7 +39,6 @@ namespace Inputs
         [SerializeField] private float bounceTime = 0.1f;
         [SerializeField] private PostProcessProfile profile;
         [SerializeField] private PostProcessVolume volume;
-        [SerializeField] private LayerMask layerMask;
         [Header("Clamping")]
         [SerializeField] private Vector3 clampCenterPos;
         [SerializeField] private float clampDistance;
@@ -198,9 +197,9 @@ namespace Inputs
             time = curve.Evaluate(time);
 
             // Lerp follow position
-            Vector3 horizontalPos = new Vector3(cameraMove.Position.x, 1, cameraMove.Position.z);
+            cameraMove.Position.y = 1;
             FreeLook.Follow.position = Vector3.Lerp(
-                _startRig.Position, horizontalPos, time);
+                _startRig.Position, cameraMove.Position, time);
 
             // Lerp camera orbit
             FreeLook.m_Orbits[1].m_Height = Mathf.Lerp(
@@ -214,8 +213,8 @@ namespace Inputs
             FreeLook.m_YAxis.Value =  Mathf.Lerp(
                 _startRig.YAxisValue, cameraMove.YAxisValue, time);
             
-            if ((horizontalPos - FreeLook.Follow.position).magnitude >= MoveEpsilon) return false;
-            FreeLook.Follow.position = horizontalPos;
+            if ((cameraMove.Position - FreeLook.Follow.position).magnitude >= MoveEpsilon) return false;
+            FreeLook.Follow.position = cameraMove.Position;
             FreeLook.m_Orbits[1].m_Height = cameraMove.OrbitHeight;
             FreeLook.m_XAxis.Value = cameraMove.XAxisValue;
             FreeLook.m_YAxis.Value = cameraMove.YAxisValue;

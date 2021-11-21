@@ -1,6 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5390196543170274149
+--- !u!114 &-6289704243422396402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}
+--- !u!114 &-5035975746575459972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,8 +26,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: 
-  flag: 0
+  customDescription: Our weapons can use actual metals again! (+5 defence)
+  flag: 3
   value: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -36,13 +50,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -5390196543170274149}
-  - {fileID: 7134808938918012318}
-  - {fileID: 4023542894314846651}
-  - {fileID: 4281983391697950250}
+  - {fileID: 7146028492864728865}
+  - {fileID: -5035975746575459972}
+  - {fileID: -6289704243422396402}
+  - {fileID: 8655502655490241532}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &4023542894314846651
+--- !u!114 &7146028492864728865
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,12 +65,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
   customDescription: 
-  blueprint: {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}
---- !u!114 &4281983391697950250
+  flag: 0
+  value: 0
+--- !u!114 &8655502655490241532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,18 +85,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 2790ba994bd69c54e853cff79c45c625, type: 2}
---- !u!114 &7134808938918012318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: Our weapons can use actual metals again! (+5 defence)
-  flag: 3
-  value: 0

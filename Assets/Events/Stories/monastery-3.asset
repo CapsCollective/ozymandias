@@ -1,6 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6295544017534629773
+--- !u!114 &-8044032959734065818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: 1e49bdfd9848d18478bde803ac073dcf, type: 2}
+--- !u!114 &-4823671763080424713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,13 +24,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Ancient Blueprint
+  m_Name: Politely Decline
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 2844234602567583481}
-  - {fileID: -5466268430991266229}
-  costScale: 2
---- !u!114 &-5632759467715147306
+  - {fileID: 2362969348003235963}
+  costScale: 0
+--- !u!114 &-2850389877414750368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,35 +44,6 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 0
---- !u!114 &-5466268430991266229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: 1e49bdfd9848d18478bde803ac073dcf, type: 2}
---- !u!114 &-2196023339571258208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Politely Decline
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5239187632661213267}
-  costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,25 +63,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -5632759467715147306}
+  - {fileID: -2850389877414750368}
   choices:
-  - {fileID: -6295544017534629773}
-  - {fileID: -2196023339571258208}
+  - {fileID: 4306188443282620693}
+  - {fileID: -4823671763080424713}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2844234602567583481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: '"The blueprints look to be for an impressive monastery."'
---- !u!114 &5239187632661213267
+--- !u!114 &2362969348003235963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,3 +81,32 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: '"Ahh what a shame, I was looking forward to this payday."'
+--- !u!114 &3407579642180633292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: '"The blueprints look to be for an impressive monastery."'
+--- !u!114 &4306188443282620693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Ancient Blueprint
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 3407579642180633292}
+  - {fileID: -8044032959734065818}
+  costScale: 2

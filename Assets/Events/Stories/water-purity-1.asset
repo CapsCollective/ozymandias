@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8424457414749594414
+--- !u!114 &-5588821901401930067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,7 +15,7 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 1
---- !u!114 &-8227791496974461498
+--- !u!114 &-4440099598891967623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,7 +29,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 9578e165128e4434294471903c2775d2, type: 2}
---- !u!114 &-7946460410818082606
+--- !u!114 &-1286771564419505751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,11 +39,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Search for the Brewing Supplies
+  m_Name: Search for the Fountain of Purity
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 1319953382285051332}
+  - {fileID: -4440099598891967623}
   costScale: 0
+--- !u!114 &-1135079920645997126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,12 +85,12 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: -8424457414749594414}
+  - {fileID: -5588821901401930067}
   choices:
-  - {fileID: 69911073373312076}
-  - {fileID: -7946460410818082606}
+  - {fileID: -1286771564419505751}
+  - {fileID: 256699590961950880}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &69911073373312076
+--- !u!114 &256699590961950880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,22 +100,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Search for the Fountain of Purity
+  m_Name: Search for the Brewing Supplies
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -8227791496974461498}
+  - {fileID: -1135079920645997126}
   costScale: 0
---- !u!114 &1319953382285051332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}

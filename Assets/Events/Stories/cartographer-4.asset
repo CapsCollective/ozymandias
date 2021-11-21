@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3110965652476180976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: Now, how do we recoup the losses of chasing after all these
+    maps?
+  flag: 0
+  value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22,28 +38,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 6929194671368192328}
-  - {fileID: 6988053324443466139}
-  - {fileID: 8590699060411671813}
+  - {fileID: -3110965652476180976}
+  - {fileID: 4483085361832057053}
+  - {fileID: 5268711958881438622}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &6929194671368192328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: Now, how do we recoup the losses of chasing after all these
-    maps?
-  flag: 0
-  value: 0
---- !u!114 &6988053324443466139
+--- !u!114 &4483085361832057053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   blueprint: {fileID: 11400000, guid: e7491c9e0d87f0c4dbbaabfed3cc0d21, type: 2}
---- !u!114 &8590699060411671813
+--- !u!114 &5268711958881438622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

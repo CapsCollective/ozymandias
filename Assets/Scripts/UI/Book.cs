@@ -1,8 +1,6 @@
 using DG.Tweening;
-using Inputs;
 using Requests;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -34,6 +32,7 @@ namespace UI
         [SerializeField] private SerializedDictionary<BookPage, CanvasGroup> pages;
         private GameState _closeState; // The state the book will enter when 
         private bool _isOpen, _transitioning;
+        private bool _fromGame; // TODO this state cache must be removed, please do not use it
         private CanvasGroup _closeButtonCanvas;
         
         private BookPage _page = BookPage.Settings;
@@ -41,10 +40,16 @@ namespace UI
         {
             set
             {
-                 if (_page == value) return;
+                // Enable or disable the quit to menu button to avoid the raycaster affecting
+                // other pages in the book
+                // TODO this needs a second menu state available for in-menu/game vs in-menu/intro
+                quitButton.gameObject.SetActive(
+                    _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings);
                 
-                 //TODO: Page turn sound effect
+                if (_page == value) return;
                 
+                Manager.Jukebox.PlayPageTurn();
+
                 pages[_page].interactable = false;
                 pages[_page].blocksRaycasts = false;
                 pages[_page].DOFade(0, 0.2f).OnComplete(() =>
@@ -102,9 +107,9 @@ namespace UI
         {
             _transitioning = true;
             _closeState = Manager.State.Current;
-            quitButton.gameObject.SetActive(Manager.State.InGame && !Tutorial.Tutorial.Active);
+            _fromGame = Manager.State.InGame;
+            Page = _page; // Update the current page settings
             Manager.State.EnterState(GameState.InMenu);
-            //Manager.Jukebox.PlayScrunch(); TODO: book sound
             canvas.enabled = true;
             transform.DOPunchScale(PunchScale, animateInDuration, 0, 0);
             transform.DOLocalMove(Vector3.zero, animateInDuration)
@@ -115,6 +120,7 @@ namespace UI
                     _closeButtonCanvas.DOFade(1, 0.5f);
                     _transitioning = false;
                     _isOpen = true;
+                    Manager.Jukebox.PlayBookThump();
                 });
         }
 

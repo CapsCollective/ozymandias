@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5829526262222221193
+--- !u!114 &-7868819100642576798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: 13ab3f39d09cab547b83e408e02485af, type: 2}
---- !u!114 &-2679320841705280770
+  flag: 0
+  value: 0
+--- !u!114 &-608167533556570041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23,11 +24,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: 45371a86b03af9745a511db33d6725fc, type: 2}
+  customDescription: <color=#007000ff>Adventurers are now fully spending in our town
+    again!</color>
+  flag: 2
+  value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,13 +53,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 306005188626421354}
-  - {fileID: 6237609110249193811}
-  - {fileID: -2679320841705280770}
-  - {fileID: -5829526262222221193}
+  - {fileID: -608167533556570041}
+  - {fileID: -7868819100642576798}
+  - {fileID: 6305394573688546731}
+  - {fileID: 8296410569250499023}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &306005188626421354
+--- !u!114 &6305394573688546731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,25 +68,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: <color=#007000ff>Adventurers are now fully spending in our town
-    again!</color>
-  flag: 2
-  value: 0
---- !u!114 &6237609110249193811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
   customDescription: 
-  flag: 0
-  value: 0
+  blueprint: {fileID: 11400000, guid: 45371a86b03af9745a511db33d6725fc, type: 2}
+--- !u!114 &8296410569250499023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 13ab3f39d09cab547b83e408e02485af, type: 2}

@@ -160,7 +160,7 @@ namespace Managers
             loadingCanvasGroup.DOFade(0.0f, 0.5f).OnComplete(() => loadingCanvas.enabled = false);
             
             // Fade in music
-            StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f));
+            Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 3f);
             StartCoroutine(Algorithms.DelayCall(2f, () => Manager.Jukebox.OnStartGame()));
 
             UpdateUi();
@@ -216,7 +216,7 @@ namespace Managers
             Manager.IntroHud.Hide();
 
             // TODO add some kind of juicy on-play sound here
-            StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 5f));
+            Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 5f);
             StartCoroutine(Algorithms.DelayCall(6f,() => Manager.Jukebox.OnStartPlay()));
             
             StartCoroutine(ToGameUpdate());
@@ -297,10 +297,11 @@ namespace Managers
         
         private void ToCreditsInit()
         {
-            StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 4f));
-            StartCoroutine(Algorithms.DelayCall(3f, () => {
+            Manager.Jukebox.FadeTo(Jukebox.AmbienceVolume, 0.2f, 3f);
+            Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 1f);
+            StartCoroutine(Algorithms.DelayCall(1f, () => {
                 Manager.Jukebox.OnStartCredits();
-                StartCoroutine(Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 5f));
+                Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 2f);
             }));
 
             Manager.IntroHud.Hide();
@@ -384,6 +385,7 @@ namespace Managers
             {
                 waypoint.panel.alpha = 0.0f;
             }
+            Manager.Jukebox.FadeTo(Jukebox.AmbienceVolume, Jukebox.FullVolume, 5f);
 
             EnterState(GameState.ToIntro);
         }
