@@ -297,11 +297,11 @@ namespace Managers
         
         private void ToCreditsInit()
         {
-            Manager.Jukebox.FadeTo(Jukebox.AmbienceVolume, 0.2f, 4f);
-            Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 4f);
-            StartCoroutine(Algorithms.DelayCall(3f, () => {
+            Manager.Jukebox.FadeTo(Jukebox.AmbienceVolume, 0.2f, 3f);
+            Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 1f);
+            StartCoroutine(Algorithms.DelayCall(1f, () => {
                 Manager.Jukebox.OnStartCredits();
-                Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 5f);
+                Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.FullVolume, 2f);
             }));
 
             Manager.IntroHud.Hide();
