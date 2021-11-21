@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5099903205557987555
+--- !u!114 &-9049213828851153903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,6 +13,20 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: Our scarecrow dilemma may finally be over...
+--- !u!114 &-8823144661290229841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,21 +48,7 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -5099903205557987555}
-  - {fileID: 6576675718954633818}
+  - {fileID: -9049213828851153903}
+  - {fileID: -8823144661290229841}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &6576675718954633818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}

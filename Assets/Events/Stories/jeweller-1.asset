@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9116583689171234464
+--- !u!114 &-7636538193942076571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Let Them Continue
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 1289720524160819298}
-  - {fileID: -1669642192542812088}
-  costScale: 0
---- !u!114 &-2390363673370779091
+  customDescription: Without their mineral supply, we'll have to substitute our weapons
+    with wood.
+--- !u!114 &-4376330657797478729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -25,30 +23,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: We'll have to see how they respond...
-  flag: 0
-  value: 1
---- !u!114 &-1669642192542812088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 8
-  amount: -5
-  turns: -1
-  reason: from the Wooden Weapons
---- !u!114 &-945397892239621499
+  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
+  toFront: 0
+--- !u!114 &-2664347756009125487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,8 +42,8 @@ MonoBehaviour:
   m_Name: Impose Child Labour Laws
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -2390363673370779091}
-  - {fileID: 2884993201757798535}
+  - {fileID: 4111013199188709072}
+  - {fileID: -4376330657797478729}
   costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -80,16 +61,16 @@ MonoBehaviour:
   article: Reports have come in that the dwarves in the nearby mountains have been
     working their children in the mines. Their leader sent out a memo explaining
     "They're so tiny, they can fit in the little gaps where all the good stuff is."
-    Guild Co's PR department have forbid us from trading with them if this continues.
+    GuildCo's PR department have forbid us from trading with them if this continues.
   image: {fileID: 21300000, guid: 43a05df69ee8da049a40f0a110a1ece0, type: 3}
   type: 3
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -945397892239621499}
-  - {fileID: -9116583689171234464}
+  - {fileID: -2664347756009125487}
+  - {fileID: 4190421209651907111}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1289720524160819298
+--- !u!114 &4111013199188709072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,12 +79,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: Without their mineral supply, we'll have to substitute our weapons
-    with wood.
---- !u!114 &2884993201757798535
+  customDescription: We'll have to see how they respond...
+  flag: 0
+  value: 1
+--- !u!114 &4190421209651907111
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,9 +94,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Let Them Continue
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -7636538193942076571}
+  - {fileID: 9040888334635306556}
+  costScale: 0
+--- !u!114 &9040888334635306556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
-  toFront: 0
+  statToChange: 8
+  amount: -5
+  turns: -1
+  reason: from the Wooden Weapons

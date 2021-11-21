@@ -1,35 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7510602418449216009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: Our inexperienced townsfolk only worked for a day until a lethal
-    cave-in caused them to flee.
---- !u!114 &-5625837294697065142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: 
-  count: 3
-  kill: 1
---- !u!114 &-5313791763375491361
+--- !u!114 &-9007058075185573858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: We still managed to get some metals out (+4 defence for 3 turns)
+  customDescription: We still managed to get some metals out (+4 defence for 3 turns).
   statToChange: 8
   amount: 4
   turns: 3
-  reason: from Gnome Scabs
---- !u!114 &-3301837641652557649
+  reason: from Adventurer Scabs
+--- !u!114 &-8796703985593791891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,12 +27,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Don't Send Anyone
+  m_Name: Send in Adventurers
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 3791209312983073311}
+  - {fileID: 236925946179410797}
+  - {fileID: -2429497229909890867}
+  - {fileID: -9007058075185573858}
   costScale: 0
---- !u!114 &-541707134945143852
+--- !u!114 &-8356176257114630108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send in Gnomes
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -1349507905969607413}
+  - {fileID: -3133186883244317263}
+  - {fileID: 23246437587615081}
+  costScale: 0
+--- !u!114 &-3133186883244317263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,6 +68,48 @@ MonoBehaviour:
   amount: -15
   turns: -1
   reason: from Mine Cave-in
+--- !u!114 &-2564568999460282476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The Dwarves gloat, knowing you couldn't find anyone better.
+--- !u!114 &-2429497229909890867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: 
+  count: 3
+  kill: 1
+--- !u!114 &-1349507905969607413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: We could only find garden gnomes, who promptly caused a cave-in
+    to a valuable gold vein.
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,55 +131,11 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 7052612456281059320}
-  - {fileID: 4769234497799754829}
-  - {fileID: -3301837641652557649}
+  - {fileID: -8796703985593791891}
+  - {fileID: -8356176257114630108}
+  - {fileID: 7769357139848114367}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &284695227012403546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: We could only find garden gnomes, who promptly caused a cave-in
-    to a valuable gold vein.
---- !u!114 &3791209312983073311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The Dwarves gloat, knowing you couldn't find anyone better.
---- !u!114 &4769234497799754829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send in Gnomes
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 284695227012403546}
-  - {fileID: -541707134945143852}
-  - {fileID: -5313791763375491361}
-  costScale: 0
---- !u!114 &6147864398550932600
+--- !u!114 &23246437587615081
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,12 +147,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: We still managed to get some metals out (+4 defence for 3 turns).
+  customDescription: We still managed to get some metals out (+4 defence for 3 turns)
   statToChange: 8
   amount: 4
   turns: 3
-  reason: from Adventurer Scabs
---- !u!114 &7052612456281059320
+  reason: from Gnome Scabs
+--- !u!114 &236925946179410797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: Our inexperienced townsfolk only worked for a day until a lethal
+    cave-in caused them to flee.
+--- !u!114 &7769357139848114367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,10 +176,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send in Adventurers
+  m_Name: Don't Send Anyone
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -7510602418449216009}
-  - {fileID: -5625837294697065142}
-  - {fileID: 6147864398550932600}
+  - {fileID: -2564568999460282476}
   costScale: 0

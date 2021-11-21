@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2977828421513506839
+--- !u!114 &-8715076428678136768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,6 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   type: 1
+--- !u!114 &-2655462342355141442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: bd1473a661e51954a8ac72e4ef9d0410, type: 2}
+  toFront: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,22 +51,7 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -2977828421513506839}
-  - {fileID: 2397164448692406022}
+  - {fileID: -8715076428678136768}
+  - {fileID: -2655462342355141442}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2397164448692406022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: bd1473a661e51954a8ac72e4ef9d0410, type: 2}
-  toFront: 0

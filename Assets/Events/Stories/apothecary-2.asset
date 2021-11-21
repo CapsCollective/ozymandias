@@ -1,21 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5215986154021074273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Issue stimulus
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -321445601843773467}
-  costScale: 0.8
---- !u!114 &-982810479906026676
+--- !u!114 &-8088642466845834622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,7 +16,22 @@ MonoBehaviour:
     loot.
   count: 3
   kill: 1
---- !u!114 &-321445601843773467
+--- !u!114 &-7818131278149755830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse bailouts
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -8088642466845834622}
+  costScale: 0
+--- !u!114 &-5542770959411590874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,12 +66,27 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 6709713531755254126}
+  - {fileID: 8187145550072173583}
   choices:
-  - {fileID: -5215986154021074273}
-  - {fileID: 6804372584050529791}
+  - {fileID: 7813684860870610418}
+  - {fileID: -7818131278149755830}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &6709713531755254126
+--- !u!114 &7813684860870610418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Issue stimulus
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -5542770959411590874}
+  costScale: 0.8
+--- !u!114 &8187145550072173583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,18 +101,3 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: 95c23dc5eb320204d8aa282ec77f9343, type: 2}
   toFront: 0
---- !u!114 &6804372584050529791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse bailouts
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -982810479906026676}
-  costScale: 0

@@ -1,37 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6013365621498396091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 2
---- !u!114 &-5715637779160226540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 8
-  amount: 3
-  turns: 3
-  reason: from the Rat XP Boost
---- !u!114 &-1363753747071175536
+--- !u!114 &-605652176776767428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,8 +13,8 @@ MonoBehaviour:
   m_Name: Train up mice to be strong like rats
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 3934398709336250644}
-  - {fileID: -6013365621498396091}
+  - {fileID: 5485084725468289587}
+  - {fileID: 7908669020754659840}
   costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -68,10 +37,40 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 8108559248087120948}
-  - {fileID: -1363753747071175536}
+  - {fileID: 9216037997541142030}
+  - {fileID: -605652176776767428}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3934398709336250644
+--- !u!114 &3967484199083163572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 8
+  amount: 3
+  turns: 3
+  reason: from the Rat XP Boost
+--- !u!114 &4363397455850472838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The adventurers start griding for experience
+--- !u!114 &5485084725468289587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Oh no, the mice are too strong and escaped! We'll have to hunt
     them down...
---- !u!114 &4624589081212922655
+--- !u!114 &7908669020754659840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,11 +93,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  customDescription: The adventurers start griding for experience
---- !u!114 &8108559248087120948
+  customDescription: 
+  baseAmount: 2
+--- !u!114 &9216037997541142030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,9 +108,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Buy the rats from the shady salesman
+  m_Name: Buy the rats
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 4624589081212922655}
-  - {fileID: -5715637779160226540}
+  - {fileID: 4363397455850472838}
+  - {fileID: 3967484199083163572}
   costScale: 0.8

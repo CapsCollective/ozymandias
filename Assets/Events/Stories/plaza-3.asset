@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4756226841921329278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: Gol and his supporters rejoin the town (+3 Performers).
+  adventurers: []
+  count: 3
+  guild: 2
+  anyGuild: 0
+--- !u!114 &-2821571890466611417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21,30 +52,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 2788345582729015886}
-  - {fileID: 3025821757431315153}
-  - {fileID: 4757251614740368969}
-  - {fileID: 6932586754404236854}
+  - {fileID: -4756226841921329278}
+  - {fileID: 448246881506749920}
+  - {fileID: -2821571890466611417}
+  - {fileID: 1081444410342170134}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2788345582729015886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: AdventurersAdded
-  m_EditorClassIdentifier: 
-  customDescription: Gol and his supporters rejoin the town (+3 Performers).
-  adventurers: []
-  count: 3
-  guild: 2
-  anyGuild: 0
---- !u!114 &3025821757431315153
+--- !u!114 &448246881506749920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,21 +73,7 @@ MonoBehaviour:
   customDescription: They've given us some designs for a public performance space.
   flag: 0
   value: 0
---- !u!114 &4757251614740368969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
---- !u!114 &6932586754404236854
+--- !u!114 &1081444410342170134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
