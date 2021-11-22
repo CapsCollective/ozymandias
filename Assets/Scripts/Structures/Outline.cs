@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using System.Collections.Generic;
 
 namespace Structures
 {
@@ -23,7 +24,7 @@ namespace Structures
         private void Update()
         {
             OutlineBuffer.Clear();
-            OutlineBuffer.GetTemporaryRT(_bufferName, -1, -1, 32, FilterMode.Point, RenderTextureFormat.RFloat);
+            OutlineBuffer.GetTemporaryRT(_bufferName, -1, -1, 32, FilterMode.Point, RenderTextureFormat.RGFloat);
             OutlineBuffer.SetGlobalTexture("_OutlineRT", _bufferName);
             OutlineBuffer.SetRenderTarget(_bufferName);
 

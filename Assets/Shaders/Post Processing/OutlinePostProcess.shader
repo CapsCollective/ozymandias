@@ -13,11 +13,13 @@ Shader "Hidden/Custom/Post Process Outline"
     float _Threshold;
     float _Scale;
     float _Opacity;
+    int _Debug;
 
     float4 Frag(VaryingsDefault i) : SV_Target
     {
         float4 main = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.texcoord);
         float4 color = SAMPLE_TEXTURE2D(_OutlineRT, sampler_OutlineRT, i.texcoord);
+
 
         float halfScaleFloor = floor(_Scale * 0.5);
         float halfScaleCeil = ceil(_Scale * 0.5);
@@ -33,6 +35,8 @@ Shader "Hidden/Custom/Post Process Outline"
         float3 c1 = SAMPLE_TEXTURE2D(_OutlineRT, sampler_OutlineRT, uv1).rgb;
         float3 c2 = SAMPLE_TEXTURE2D(_OutlineRT, sampler_OutlineRT, uv2).rgb;
         float3 c3 = SAMPLE_TEXTURE2D(_OutlineRT, sampler_OutlineRT, uv3).rgb;
+
+        if (_Debug == 1) return float4(c0.rgb, 1);
 
         //float d0 = SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, uv0).r;
         //float d1 = SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, uv1).r;
@@ -53,6 +57,8 @@ Shader "Hidden/Custom/Post Process Outline"
         edge = saturate((edge - _Threshold) * 0.5);
         float3 c = lerp(main, _Color, step(0.01, edge));
         float3 cAll = float3(c0.r * 0.1,0,0) * _Color;
+
+        c = lerp(c, main, _Opacity);
 
         return float4(c, edge);
     }

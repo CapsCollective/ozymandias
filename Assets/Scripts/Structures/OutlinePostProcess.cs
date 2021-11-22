@@ -12,6 +12,7 @@ namespace Structures
         public FloatParameter threshold = new FloatParameter() { value = 0.5f };
         public IntParameter scale = new IntParameter() { value = 1 };
         public FloatParameter opacity = new FloatParameter() { value = 1 };
+        public BoolParameter debug = new BoolParameter() { value = false };
     }
 
     public sealed class OutlineRenderer : PostProcessEffectRenderer<OutlinePostProcess>
@@ -23,6 +24,7 @@ namespace Structures
             sheet.properties.SetFloat("_Threshold", settings.threshold);
             sheet.properties.SetFloat("_Scale", settings.scale);
             sheet.properties.SetFloat("_Opacity", settings.opacity);
+            sheet.properties.SetInt("_Debug", settings.debug ? 1 : 0);
             context.command.BlitFullscreenTriangle(context.source, context.destination, sheet, 0);
         }
     }

@@ -228,7 +228,7 @@ namespace Inputs
                     ""id"": ""1c0022d7-0321-4991-a467-463415c025c0"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=5,y=5),StickDeadzone"",
+                    ""processors"": ""StickDeadzone,ScaleVector2(x=5,y=5)"",
                     ""groups"": ""Controller"",
                     ""action"": ""Move Camera"",
                     ""isComposite"": false,
