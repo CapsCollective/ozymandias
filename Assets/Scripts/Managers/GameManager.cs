@@ -112,6 +112,7 @@ namespace Managers
         public bool skipIntro;
         public bool disableOutline;
         public Blueprint debugBuilding;
+        public int debugFramerate = 30;
         [Button("Set Building")]
         public void SetBuilding()
         {
@@ -188,6 +189,12 @@ namespace Managers
                 AssetDatabase.LoadAssetAtPath<Quest>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
             allRequests = AssetDatabase.FindAssets("t:request").Select(guid => 
                 AssetDatabase.LoadAssetAtPath<Request>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+        }
+
+        [Button("Set Framerate")]
+        public void SetFramerate()
+        {
+            Application.targetFrameRate = debugFramerate;
         }
         #endif
         #endregion
