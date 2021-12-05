@@ -8,7 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
-namespace WalkingAdventurers
+namespace Characters
 {
     public class Spawner : MonoBehaviour
     {

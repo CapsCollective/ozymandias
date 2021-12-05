@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace WalkingAdventurers
+namespace Characters
 {
     public class Adventurer : MonoBehaviour
     {

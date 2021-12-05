@@ -7,7 +7,7 @@ using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
-namespace WalkingAdventurers
+namespace Characters
 {
     public class Fishing : MonoBehaviour
     {

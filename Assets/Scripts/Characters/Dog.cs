@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static Managers.GameManager;
 
-namespace WalkingAdventurers
+namespace Characters
 {
     public class Dog : MonoBehaviour
     {

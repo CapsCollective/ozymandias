@@ -6,7 +6,7 @@ using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 
-namespace WalkingAdventurers
+namespace Characters
 {
     public class Waterfall : MonoBehaviour
     {
