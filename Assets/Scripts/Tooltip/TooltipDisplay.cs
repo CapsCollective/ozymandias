@@ -63,14 +63,14 @@ namespace Tooltip
             }},
             {TooltipType.Housing, new TooltipConfig {
                 Title = "Housing",
-                Description = "Adventures need a place to stay and stash their loot in between adventurers. Plus if " +
+                Description = "Adventures need a place to stay and stash their loot in between adventures. Plus if " +
                               "we have extra vacancies we might attract some passers by.",
                 Stat = Stat.Housing
             }},
             {TooltipType.Food, new TooltipConfig {
                 Title = "Food",
                 Description = "The only thing adventurers love more than loot is food, so keep supply in plenty and " +
-                              "you won't have any problems (more than the usual).",
+                              "you won't have any problems (any more than the usual).",
                 Stat = Stat.Food
             }},
             {TooltipType.Wealth, new TooltipConfig {
