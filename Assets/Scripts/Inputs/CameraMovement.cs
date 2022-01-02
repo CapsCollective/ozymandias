@@ -96,8 +96,12 @@ namespace Inputs
             if (!Manager.State.InGame) return;
 
             float rotation = Manager.Inputs.OnRotateCamera.ReadValue<float>();
-            if(rotation != 0) OnRotate?.Invoke();
-            FreeLook.m_XAxis.Value += rotation * Time.deltaTime;
+            if (rotation != 0)
+            {
+                OnRotate?.Invoke();
+                var keyboardOrMouse = Inputs.DeviceIsKeyboard(Manager.Inputs.OnRotateCamera) ? Time.deltaTime : .5f;
+                FreeLook.m_XAxis.Value += rotation * keyboardOrMouse;
+            }
 
             if (leftClick)
             {
