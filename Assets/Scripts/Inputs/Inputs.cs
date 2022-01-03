@@ -99,5 +99,14 @@ namespace Inputs
                 OnControlChange?.Invoke(arg1.controlScheme.Value);
             }
         }
+
+        public static bool DeviceIsKeyboard(InputAction action)
+        {
+            if (action.activeControl.device.displayName.Contains("Keyboard") ||
+                action.activeControl.device.displayName.Contains("Controller"))
+                return true;
+
+            return false;
+        }
     }
 }

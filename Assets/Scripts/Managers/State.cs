@@ -113,6 +113,7 @@ namespace Managers
                     InCreditsInit();
                     break;
             }
+            Debug.Log(_state);
         }
 
         private void LoadingInit()

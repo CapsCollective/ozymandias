@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Characters;
 using Events;
 using UnityEngine;
 using Utilities;
-using WalkingAdventurers;
 using Steam = Achievements.SteamAchievementManager;
 using static Managers.GameManager;
 

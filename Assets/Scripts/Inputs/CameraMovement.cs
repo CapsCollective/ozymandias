@@ -95,9 +95,13 @@ namespace Inputs
             
             if (!Manager.State.InGame) return;
 
-            float rotation = -Manager.Inputs.OnRotateCamera.ReadValue<float>();
-            if(rotation != 0) OnRotate?.Invoke();
-            FreeLook.m_XAxis.m_InputAxisValue = rotation;
+            float rotation = Manager.Inputs.OnRotateCamera.ReadValue<float>();
+            if (rotation != 0)
+            {
+                OnRotate?.Invoke();
+                var keyboardOrMouse = Inputs.DeviceIsKeyboard(Manager.Inputs.OnRotateCamera) ? Time.deltaTime : .5f;
+                FreeLook.m_XAxis.Value += rotation * keyboardOrMouse;
+            }
 
             if (leftClick)
             {
@@ -121,13 +125,14 @@ namespace Inputs
                 dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
             }
 
-            Vector2 inputDir = Manager.Inputs.OnMoveCamera.ReadValue<Vector2>() + dragDir;
+            Vector2 inputDir = Manager.Inputs.OnMoveCamera.ReadValue<Vector2>() * Time.deltaTime;
+            inputDir += dragDir;
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
-            FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)) * 0.01f);
+            FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)));
 
             // Scrolling
-            float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>();
+            float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>() * Time.deltaTime;
             if(scroll != 0) OnZoom?.Invoke();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
