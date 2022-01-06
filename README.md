@@ -1,6 +1,6 @@
 # Fantasy Town Regional Manager
 
-[Fantasy Town Regional Manager](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) from [Caps Collective](https://caps-collective.itch.io) is a **roguelite, fantasy town builder and collectible card game** about the chaos of living in a world filled with monsters, and even more worryingly, adventurers.
+[Fantasy Town Regional Manager](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) from [Caps Collective](https://capscollective.com) is a **roguelite, fantasy town builder and collectible card game** about the chaos of living in a world filled with monsters, and even more worryingly, adventurers.
 
 #### _"Run a fantasy town for adventurers. Save it from monsters. Save it from itself. Watch it crumble to dust. Do it all again."_
 
