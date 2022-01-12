@@ -430,9 +430,6 @@ MonoBehaviour:
   bounceTime: 0.1
   profile: {fileID: 11400000, guid: 08abc5f6c7c957f459d6ed1b8eeda8cc, type: 2}
   volume: {fileID: 1851331017}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 201326592
   clampCenterPos: {x: 0, y: 0, z: 0}
   clampDistance: 30
   pushForce: 250
@@ -683,6 +680,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6148e430152863944874a3a7fbaea957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstSelections:
+    list:
+    - Key: 2
+      Value: {fileID: 0}
+    keyCollision: 0
 --- !u!1 &5542565069444483710
 GameObject:
   m_ObjectHideFlags: 0

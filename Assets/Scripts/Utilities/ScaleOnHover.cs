@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Inputs;
 
 namespace Utilities
 {
@@ -17,6 +18,7 @@ namespace Utilities
             {
                 target = gameObject;
             }
+            InputHelper.OnNewSelection += DoScaling;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -35,6 +37,20 @@ namespace Utilities
         {
             // End the on-hover animation if the target gets disabled
             if (target) target.transform.localScale = Vector3.one;
+        }
+
+        public void DoScaling(GameObject go)
+        {
+            if(go == gameObject)
+            {
+                // Start the on-hover animation
+                target.transform.DOScale(scaleTarget, duration);
+            }
+            else
+            {
+                // End the on-hover animation
+                target.transform.DOScale(1.0f, duration);
+            }
         }
     }
 }
