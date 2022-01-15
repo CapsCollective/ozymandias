@@ -16,13 +16,13 @@ Unknown riches and perils await your townsfolk, so your town will require a stea
 
 A **turn-based roguelite city builder**, where as your city grows, it attracts more adventurers! Chaos will inevitably ensue, so be ready to face all that running an adventuring town brings.
 
-### Features
-- Construct buildings!
-- Attract adventurers!
-- Read the news!
-- Collect new buildings!
-- Go on quests!
-- Fend off your inevitable demise...
+#### Your responsibilities as regional manager may include:
+- Constructing buildings!
+- Attracting the greatest adventurers!
+- Reading the some very odd news?
+- Discovering all the blueprints!
+- Sending adventurers on arduous quests!
+- Fending off your inevitable demise...
 
 ## BEFORE READING
 
