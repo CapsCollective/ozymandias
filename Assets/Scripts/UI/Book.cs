@@ -43,8 +43,10 @@ namespace UI
                 // Enable or disable the quit to menu button to avoid the raycaster affecting
                 // other pages in the book
                 // TODO this needs a second menu state available for in-menu/game vs in-menu/intro
-                quitButton.gameObject.SetActive(
-                    _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings);
+                var enableQuit = _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings;
+                quitButton.gameObject.SetActive(enableQuit);
+                quitButton.interactable = enableQuit;
+                quitButton.enabled = enableQuit;
                 
                 if (_page == value) return;
                 

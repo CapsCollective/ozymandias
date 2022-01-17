@@ -57,23 +57,15 @@
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            fixed4 frag (const v2f i) : SV_Target
             {
                 fixed4 mask = tex2D(_Mask, i.uv);
-				
-				float4 col;
+            	const float4 col = lerp(lerp(_Invalid, _Inactive, mask.r > 0.5), _Active, mask.g > 0.5);
 
-				if (mask.r > 0.5)
-					col = _Inactive;
-				else if (mask.g > 0.5)
-					col = _Active;
-				else
-					col = _Invalid;
-
-				float dist = distance(i.worldPos, _Origin);
-				float effect = pow(saturate(dist / _Radius), _Exponent);
+                const float dist = distance(i.worldPos, _Origin);
+                const float effect = pow(saturate(dist / _Radius), _Exponent);
 				
-                return lerp(col, (0,0,0,0), effect);
+                return lerp(col, float4(0,0,0,0), effect);
             }
             ENDCG
         }

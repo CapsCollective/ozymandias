@@ -1,6 +1,6 @@
 # Fantasy Town Regional Manager
 
-[Fantasy Town Regional Manager](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) from [Caps Collective](https://caps-collective.itch.io) is a **roguelite, fantasy town builder and collectible card game** about the chaos of living in a world filled with monsters, and even more worryingly, adventurers.
+[Fantasy Town Regional Manager](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) from [Caps Collective](https://capscollective.com) is a **roguelite, fantasy town builder and collectible card game** about the chaos of living in a world filled with monsters, and even more worryingly, adventurers.
 
 #### _"Run a fantasy town for adventurers. Save it from monsters. Save it from itself. Watch it crumble to dust. Do it all again."_
 
@@ -16,13 +16,13 @@ Unknown riches and perils await your townsfolk, so your town will require a stea
 
 A **turn-based roguelite city builder**, where as your city grows, it attracts more adventurers! Chaos will inevitably ensue, so be ready to face all that running an adventuring town brings.
 
-### Features
-- Construct buildings!
-- Attract adventurers!
-- Read the news!
-- Collect new buildings!
-- Go on quests!
-- Fend off your inevitable demise...
+#### Your responsibilities as regional manager may include:
+- Constructing buildings!
+- Attracting the greatest adventurers!
+- Reading the some very odd news?
+- Discovering all the blueprints!
+- Sending adventurers on arduous quests!
+- Fending off your inevitable demise...
 
 ## BEFORE READING
 
