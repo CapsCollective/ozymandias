@@ -16,8 +16,7 @@ namespace Upgrades
         
         [SerializeField] private Upgrade root;
         
-        [Serializable]
-        private struct PurchaseBox
+        [Serializable] private struct PurchaseBox
         {
             public RectTransform transform;
             public Canvas canvas;

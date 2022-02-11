@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Achievements;
 using Newtonsoft.Json;
+using Reports;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -14,7 +14,8 @@ namespace Managers
     [Serializable]
     public struct StatDetails
     {
-        public int wealth, turnCounter, stability, baseThreat;
+        public int wealth, turnCounter, stability, baseThreat, longestRun, maxAdventurers, campsCleared, townsDestroyed, buildingsBuilt, ruinsDemolished;
+        public HashSet<Secret> secrets;
         public Dictionary<Stat, List<Stats.Modifier>> modifiers;
     }
     
@@ -62,6 +63,7 @@ namespace Managers
         public bool isRuin;
     }
     
+    [Serializable]
     public struct TerrainDetails
     {
         public int rootId;
@@ -77,7 +79,8 @@ namespace Managers
     [Serializable]
     public struct AchievementDetails
     {
-        public List<Achievement> unlocked;
+        public HashSet<Achievement> unlocked;
+        public Dictionary<Milestone, int> milestones;
     }
     
     [Serializable]
@@ -106,6 +109,7 @@ namespace Managers
         public AchievementDetails achievements;
         public Dictionary<Guild, RequestDetails> requests;
         public UpgradeDetails upgrades;
+        public string version;
 
         private static readonly string SaveFilePath = Application.persistentDataPath + "/save.json";
 
@@ -128,8 +132,10 @@ namespace Managers
 
         public void Save()
         {
+            version = Application.version;
             structures = Manager.Structures.Save();
             cards = Manager.Cards.Save();
+            achievements = Manager.Achievements.Save();
             
             if (Manager.State.IsGameOver)
             {
@@ -167,7 +173,8 @@ namespace Managers
 
                 Manager.Structures.SpawnTutorialRuins();
             }
-
+            
+            Manager.Achievements.Load(achievements);
             Manager.Upgrades.Load(upgrades);
             Manager.Cards.Load(cards);
             Manager.Stats.Load(stats);

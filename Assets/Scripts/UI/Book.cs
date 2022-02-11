@@ -12,8 +12,8 @@ namespace UI
         private enum BookPage
         {
             Settings,
-            Progress,
-            Unlocks
+            Reports,
+            Upgrades
         }
 
         private static readonly Vector3 ClosePos = new Vector3(0, -1000, 0);
@@ -25,8 +25,8 @@ namespace UI
             quitButton, 
             introSettingsButton,
             settingsRibbon,
-            progressRibbon,
-            unlocksRibbon;
+            reportsRibbon,
+            upgradesRibbon;
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
         [SerializeField] private SerializedDictionary<BookPage, CanvasGroup> pages;
@@ -76,19 +76,25 @@ namespace UI
             });
             
             settingsRibbon.onClick.AddListener(() => Page = BookPage.Settings);
-            unlocksRibbon.onClick.AddListener(() => Page = BookPage.Unlocks);
-            progressRibbon.onClick.AddListener(() => Page = BookPage.Progress);
+            reportsRibbon.onClick.AddListener(() => Page = BookPage.Reports);
+            upgradesRibbon.onClick.AddListener(() => Page = BookPage.Upgrades);
 
             BookButton.OnClicked += (toUnlocks) =>
             {
-                if (toUnlocks) Page = BookPage.Unlocks;
+                if (toUnlocks) Page = BookPage.Upgrades;
                 Open();
             };
             
             RequestDisplay.OnNotificationClicked += () =>
             {
                 if (!Manager.State.InGame) return;
-                Page = BookPage.Progress;
+                Page = BookPage.Upgrades;
+                Open();
+            };
+
+            Tutorial.Tutorial.ShowBook += () =>
+            {
+                Page = BookPage.Upgrades;
                 Open();
             };
 

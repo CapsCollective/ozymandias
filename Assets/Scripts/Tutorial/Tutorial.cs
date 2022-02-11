@@ -8,6 +8,8 @@ using Events;
 using Inputs;
 using Managers;
 using NaughtyAttributes;
+using Quests;
+using Reports;
 using Structures;
 using TMPro;
 using UI;
@@ -30,6 +32,9 @@ namespace Tutorial
     public class Tutorial : MonoBehaviour
     {
         public static bool Active, DisableSelect;
+
+        // (Ben) I Don't love this architecture, but not sure a better way without making book public
+        public static Action ShowBook;
         
         [SerializeField] private SerializedDictionary<GuidePose, Sprite> poses;
         
@@ -44,12 +49,31 @@ namespace Tutorial
         private int _sectionLine;
         private Action _onObjectivesComplete;
         
+        #region Dialogue
+        
+        private struct Line
+        {
+            public Line(string dialogue, GuidePose? pose = null, Action onNext = null)
+            {
+                Dialogue = dialogue;
+                Pose = pose;
+                OnNext = onNext;
+            }
+        
+            public readonly string Dialogue;
+            public GuidePose? Pose;
+            public readonly Action OnNext;
+        }
+        
         private void Start()
         {
             Manager.Inputs.OnDialogueNext.performed += _ => NextLine();
             next.onClick.AddListener(NextLine);
             
             State.OnNewGame += StartTutorial;
+            State.OnGameEnd += StartUpgradesDescription;
+            Cards.Cards.OnUnlock += StartUnlockDescription;
+            Quests.Quests.OnQuestAdded += StartCampsDescription;
         }
 
         private void ShowDialogue(List<Line> lines)
@@ -108,7 +132,8 @@ namespace Tutorial
             }
             text.maxVisibleCharacters = characters;
         }
-
+        #endregion
+        
         #region Objectives
         private class Objective
         {
@@ -243,7 +268,7 @@ namespace Tutorial
             _currentObjectives = new List<Objective>
             {
                 CreateObjective("Clear Ruins", 3),
-                CreateObjective("Place Buildings", 3),
+                CreateObjective("Place Buildings in Cleared Space", 3),
                 CreateObjective("Rotate to Fit\n(Right Click)")
             };
             _onObjectivesComplete = StartAdventurerDialogue;
@@ -378,24 +403,49 @@ namespace Tutorial
             SaveFile.SaveState();
         }
 
-        #endregion
-
-        private struct Line
+        private void StartCampsDescription(Quest quest)
         {
-            public Line(string dialogue, GuidePose? pose = null, Action onNext = null)
-            {
-                Dialogue = dialogue;
-                Pose = pose;
-                OnNext = onNext;
-            }
-        
-            public readonly string Dialogue;
-            public GuidePose? Pose;
-            public readonly Action OnNext;
+            if (Manager.Achievements.Milestones[Milestone.CampsCleared] > 0 || !quest.IsRadiant || Manager.Quests.RadiantCount > 1) return;
+            
+            //TODO: Write Proper dialogue
+            ShowDialogue(new List<Line> {
+                new Line("Camp here!", GuidePose.Neutral),
+                new Line("They don't look too threatening right now, but give them a few days to grow and they could become a real problem"),
+                new Line("Consider sending a few adventurers to deal with them. Just be warned, while they're out on quests, they won't be providing defence to your town"),
+                new Line("How much you spend to gear up your adventurers will influence how long a quest will take"),
+            });
         }
-
-       
+        
+        private void StartUnlockDescription(Blueprint card)
+        {
+            if (Manager.Cards.UnlockedCards != 1) return;
+            
+            //TODO: Write Proper dialogue
+            ShowDialogue(new List<Line> {
+                new Line("You've just unlocked a blueprint for a new building!", GuidePose.Neutral),
+                new Line("You'll unlock more by completing stories"),
+                new Line("Unlocked cards"),
+            });
+        }
+        
+        private void StartUpgradesDescription()
+        {
+            if (Manager.Upgrades.GetLevel(UpgradeType.Discoveries) > 0) return;
+            
+            //TODO: Write Proper dialogue
+            ShowDialogue(new List<Line> {
+                new Line("Camp gone! It's all ruins now", GuidePose.Neutral),
+                new Line("Cards gone too!"),
+                new Line("Here upgrades!", GuidePose.PointingUp, ShowBook.Invoke),
+                new Line("Let me give you points", GuidePose.Neutral, AddTokens),
+            });
+            
+            void AddTokens()
+            {
+                foreach (Guild guild in Enum.GetValues(typeof(Guild))) Manager.Upgrades.GuildTokens[guild]++;
+            }
+        }
+        
+        #endregion
     }
-
-    
 }

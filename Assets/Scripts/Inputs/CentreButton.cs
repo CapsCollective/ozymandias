@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
@@ -9,6 +10,8 @@ namespace Inputs
 {
     public class CentreButton : MonoBehaviour
     {
+        public static Action OnWorldEdge;
+        
         private const float InnerDistance = 35;
         private const float Text1Distance = 55;
         private const float Text2Distance = 70;
@@ -89,6 +92,7 @@ namespace Inputs
                 yield return null;
             }
         
+            OnWorldEdge?.Invoke();
             Manager.Jukebox.PlayClick();
             CenterCamera();
             _dummyCursor.SetActive(false);

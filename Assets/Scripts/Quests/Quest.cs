@@ -68,7 +68,6 @@ namespace Quests
             if (location == Location.Grid) ClearBuilding();
             else ResetLocation();
             State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
-            
         }
         
         private void SetLocation()
@@ -76,6 +75,7 @@ namespace Quests
             Structure = Manager.Quests.locations[location];
             Structure.Quest = this;
         }
+        
         private void ResetLocation()
         {
             Structure.Quest = null;

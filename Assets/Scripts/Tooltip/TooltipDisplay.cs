@@ -112,7 +112,12 @@ namespace Tooltip
                 Title = "Next Turn",
                 Description = "Jump forward to the next day, collect your income, get new a new set of building, and " +
                               "see what awaits.",
-            }}
+            }},
+            {TooltipType.GuildTokens, new TooltipConfig {
+                Title = "Guild Tokens",
+                Description = "Earn tokens from each guild by completing their requests. Tokens can be used to purchase " +
+                              "upgrades for your towns.",
+            }},
         };
         
         private void Awake()

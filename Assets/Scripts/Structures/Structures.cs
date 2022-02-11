@@ -15,6 +15,7 @@ namespace Structures
     public class Structures : MonoBehaviour
     {
         public static Action<Structure> OnBuild;
+        public static Action OnGuildHallDemolished;
 
         [Serializable] private struct Location { public int root, rotation; }
         
@@ -112,7 +113,7 @@ namespace Structures
             else _buildings.Add(structure);
 
             if (!Manager.State.Loading)
-            {
+            { 
                 CheckAdjacencyBonuses();
                 OnBuild?.Invoke(structure);
                 UpdateUi();
@@ -134,6 +135,7 @@ namespace Structures
             {
                 Manager.EventQueue.AddGuildHallDestroyedEvents();
                 Manager.State.EnterState(GameState.NextTurn);
+                OnGuildHallDemolished?.Invoke();
             }
             
             if (structure.IsTerrain) _terrain.Remove(structure);

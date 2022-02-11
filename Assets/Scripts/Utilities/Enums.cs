@@ -130,7 +130,8 @@
         Quests,
         NextTurn,
         Threat,
-        Defence
+        Defence,
+        GuildTokens
     }
     
     public enum HighlightState
@@ -229,5 +230,14 @@
         Scarecrows,
         Cosmetics,
         MineStrike
+    }
+
+    public enum Secret
+    {
+        Dog,
+        Fishing,
+        Waterfall,
+        WorldEdge,
+        GuildHall
     }
 }
