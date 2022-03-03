@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Quests
 {
-    public class QuestFlyer : MonoBehaviour
+    public class QuestFlyer : UIController
     {
         [SerializeField] private TextMeshProUGUI titleText, descriptionText, statsText;
         [SerializeField] private Image icon;

@@ -17,8 +17,8 @@ namespace Inputs
         public static EventSystem EventSystem;
         public static Action<GameObject> OnNewSelection;
 
-        [SerializeField] private SerializedDictionary<GameState, GameObject> firstSelections = new SerializedDictionary<GameState, GameObject>();
-        
+        [SerializeField] private RectTransform selectionHelper;
+
         private GameObject lastSelectedGameObject;
         private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
 
@@ -31,6 +31,10 @@ namespace Inputs
             State.OnEnterState += AutoSelect;
             Inputs.OnControlChange += AutoSelectControl;
             OnNewSelection += NewSelection;
+            UIController.OnUIOpen += (g) =>
+            {
+                EventSystem.SetSelectedGameObject(g);
+            };
         }
 
 
@@ -46,18 +50,22 @@ namespace Inputs
 
         private void NewSelection(GameObject obj)
         {
-            if(Manager.Inputs.UsingController)
-                previousSelections[Manager.State.Current] = obj;   
+            if (Manager.Inputs.UsingController && EventSystem.currentSelectedGameObject != null)
+            {
+                previousSelections[Manager.State.Current] = obj;
+                var rt = obj.transform as RectTransform;
+                selectionHelper.anchoredPosition = rt.transform.position;
+            }
         }
 
         private void AutoSelectControl(InputControlScheme obj)
         {
-            if (previousSelections[Manager.State.Current] == null)
-                AutoSelect(Manager.State.Current);
-            else
-            {
-                EventSystem.SetSelectedGameObject(previousSelections[Manager.State.Current]);
-            }
+            //if (previousSelections[Manager.State.Current] == null)
+            //    AutoSelect(Manager.State.Current);
+            //else
+            //{
+            //    EventSystem.SetSelectedGameObject(previousSelections[Manager.State.Current]);
+            //}
         }
 
         public void ResetSelection(GameState state)
@@ -76,7 +84,6 @@ namespace Inputs
                         EventSystem.SetSelectedGameObject(null);
                         break;
                     case GameState.InIntro:
-                        EventSystem.SetSelectedGameObject(firstSelections[state]);
                         break;
                     case GameState.ToCredits:
                         EventSystem.SetSelectedGameObject(null);
@@ -86,6 +93,7 @@ namespace Inputs
                     case GameState.ToIntro:
                         break;
                     case GameState.ToGame:
+                        EventSystem.SetSelectedGameObject(null);
                         break;
                     case GameState.InGame:
                         break;

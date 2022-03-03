@@ -9,12 +9,22 @@ namespace UI
 {
     public class Book : MonoBehaviour
     {
+        [System.Serializable]
+        private class BookGroup
+        {
+            public CanvasGroup canvasGroup;
+            public Button bookRibbon;
+        }
+
         private enum BookPage
         {
             Settings,
             Progress,
             Unlocks
         }
+
+        const float DEFAULT_RIBBON_HEIGHT = 160f;
+        const float EXPANDED_RIBBON_HEIGHT = 200f;
 
         private static readonly Vector3 ClosePos = new Vector3(0, -1000, 0);
         private static readonly Vector3 PunchScale = Vector3.one * 0.5f;
@@ -29,7 +39,7 @@ namespace UI
             unlocksRibbon;
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
-        [SerializeField] private SerializedDictionary<BookPage, CanvasGroup> pages;
+        [SerializeField] private SerializedDictionary<BookPage, BookGroup> pages;
         private GameState _closeState; // The state the book will enter when 
         private bool _isOpen, _transitioning;
         private bool _fromGame; // TODO this state cache must be removed, please do not use it
@@ -52,14 +62,19 @@ namespace UI
                 
                 Manager.Jukebox.PlayPageTurn();
 
-                pages[_page].interactable = false;
-                pages[_page].blocksRaycasts = false;
-                pages[_page].DOFade(0, 0.2f).OnComplete(() =>
+                pages[_page].canvasGroup.interactable = false;
+                pages[_page].canvasGroup.blocksRaycasts = false;
+                var rt = pages[_page].bookRibbon.transform as RectTransform;
+                rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, DEFAULT_RIBBON_HEIGHT), 0.15f);
+                pages[_page].canvasGroup.DOFade(0, 0.2f).OnComplete(() =>
                 {
                     _page = value;
-                    pages[_page].DOFade(1f, 0.2f);
-                    pages[_page].interactable = true;
-                    pages[_page].blocksRaycasts = true;
+                    pages[_page].canvasGroup.DOFade(1f, 0.2f);
+                    pages[_page].canvasGroup.interactable = true;
+                    pages[_page].canvasGroup.blocksRaycasts = true;
+                    pages[_page].canvasGroup.GetComponent<UIController>()?.OnOpen();
+                    var rt = pages[_page].bookRibbon.transform as RectTransform;
+                    rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT), 0.15f);
                 });
             }
         }
@@ -123,6 +138,7 @@ namespace UI
                     _transitioning = false;
                     _isOpen = true;
                     Manager.Jukebox.PlayBookThump();
+                    pages[_page].canvasGroup.GetComponent<UIController>().OnOpen();
                 });
         }
 

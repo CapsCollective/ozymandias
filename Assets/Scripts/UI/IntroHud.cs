@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class IntroHud : MonoBehaviour
+    public class IntroHud : UIController
     {
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform title, buttons, socials;

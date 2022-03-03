@@ -68,6 +68,7 @@ namespace Quests
             {
                 SelectedQuest = quest;
                 OpenFlyer.UpdateContent(SelectedQuest);
+                OpenFlyer.OnOpen();
                 FocusStructure(SelectedQuest.Structure);
                 Open();
             };
