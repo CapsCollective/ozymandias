@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Achievements;
 using Newtonsoft.Json;
+using Platform;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -107,7 +108,7 @@ namespace Managers
         public Dictionary<Guild, RequestDetails> requests;
         public UpgradeDetails upgrades;
 
-        private static readonly string SaveFilePath = Application.persistentDataPath + "/save.json";
+        private static readonly string SaveFilePath = PlatformManager.Instance.FileSystem.GetSaveFilePath();
 
         public static void SaveState()
         {

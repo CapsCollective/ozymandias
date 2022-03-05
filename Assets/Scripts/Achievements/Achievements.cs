@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Characters;
 using Events;
+using Platform;
 using UnityEngine;
 using Utilities;
-using Steam = Achievements.SteamAchievementManager;
 using static Managers.GameManager;
 
 namespace Achievements
@@ -43,12 +42,11 @@ namespace Achievements
 
     public class AchievementManager : MonoBehaviour
     {
-        private List<Achievement> Unlocked { get; } = new List<Achievement>();
+        public static List<Achievement> Unlocked { get; } = new List<Achievement>();
 
         public void Start()
         {
-            // Log Steam connectivity - running this check performs initialisation
-            Debug.Log($"Steamworks initialised: {Steam.Initialised}");
+            PlatformManager.Instance.Achievements.Initialise();
             
             Dog.OnDogPet += () =>
             {
@@ -111,22 +109,22 @@ namespace Achievements
             Unlocked.Add(achievement);
             
             // Handle Steam unlock if Steam API is active
-            Steam.Unlock(achievement);
+            PlatformManager.Instance.Achievements.UnlockAchievement(achievement);
         }
         
         private static void UpdateStat(GameStat stat, int value)
         {
-            Steam.Update(stat, value);
+            PlatformManager.Instance.Achievements.UpdateStat(stat, value);
         }
         
         private static void UpdateProgress(GameStat stat, Achievement achievement, int value)
         {
-            Steam.UpdateProgress(stat, achievement, value);
+            PlatformManager.Instance.Achievements.UpdateProgress(stat, achievement, value);
         }
         
         public static void ResetAll()
         {
-            Steam.ResetAll();
+            PlatformManager.Instance.Achievements.ResetAll();
         }
     }
 }

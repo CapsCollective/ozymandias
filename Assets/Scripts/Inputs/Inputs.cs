@@ -1,6 +1,6 @@
 using System;
+using Platform;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 
@@ -79,7 +79,7 @@ namespace Inputs
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;
-            ControlScheme = PlayerInput.controlSchemes[0];
+            ControlScheme =  PlatformManager.Instance.Input.GetDefaultControlScheme(PlayerInput);
             PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
         }
 
