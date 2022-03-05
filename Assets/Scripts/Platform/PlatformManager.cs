@@ -9,6 +9,10 @@ namespace Platform
 
         private PlatformManager()
         {
+            // Register Steam delegates
+            Achievements = new SteamAchievementsDelegate();
+            Input = new InputDelegate();
+            FileSystem = new FileSystemDelegate();
         }
     }
 }
