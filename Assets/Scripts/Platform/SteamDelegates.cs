@@ -1,13 +1,18 @@
 using System.Collections.Generic;
+using Achievements;
 using Steamworks;
 using Steamworks.NET;
+using UnityEngine;
 
-namespace Achievements
+namespace Platform
 {
-    public static class SteamAchievementManager
+    public class SteamAchievementsDelegate : AchievementsDelegate
     {
-        public static bool Initialised => SteamManager.Initialized;
-
+        protected override PlatformID GetPlatformId()
+        {
+            return PlatformID.Steam;
+        }
+        
         private static readonly Dictionary<GameStat, string> StatIDs = 
             new Dictionary<GameStat, string>
             {
@@ -37,23 +42,33 @@ namespace Achievements
                 {Achievement.SeasonSpring, "SEASON_SPRING"},
             };
 
-        public static void Unlock(Achievement achievement)
+        public override void Initialise()
         {
-            if (!Initialised) return;
+            // Log Steam connectivity - running this check performs initialisation
+            Debug.Log($"Steamworks initialised: {SteamManager.Initialized}");
+        }
+        
+        public override void UnlockAchievement(Achievement achievement)
+        {
+            if (AchievementManager.Unlocked.Contains(achievement)) return;
+            AchievementManager.Unlocked.Add(achievement);
+            
+            // Handle Steam unlock if Steam API is active
+            if (!SteamManager.Initialized) return;
             SteamUserStats.SetAchievement(AchievementIDs[achievement]);
             SteamUserStats.StoreStats();
         }
         
-        public static void Update(GameStat stat, int value)
+        public override void UpdateStat(GameStat stat, int value)
         {
-            if (!Initialised) return; 
+            if (!SteamManager.Initialized) return; 
             SteamUserStats.SetStat(StatIDs[stat], value);
             SteamUserStats.StoreStats();
         }
         
-        public static void UpdateProgress(GameStat stat, Achievement achievement, int value)
+        public override void UpdateProgress(GameStat stat, Achievement achievement, int value)
         {
-            if (!Initialised) return;
+            // if (!Initialised) return;
             // var achievementID = AchievementIDs[achievement];
             
             // TODO  ISteamUserStats_GetAchievementProgressLimitsInt32 fails... why??
@@ -64,10 +79,10 @@ namespace Achievements
             // if (value < upstreamStat || value >= max) return;
             // SteamUserStats.IndicateAchievementProgress(achievementID, (uint) value, (uint) max);
         }
-
-        public static void ResetAll()
+        
+        public override void ResetAll()
         {
-            if (!Initialised) return;
+            if (!SteamManager.Initialized) return;
             SteamUserStats.ResetAllStats(true);
             SteamUserStats.StoreStats();
         }
