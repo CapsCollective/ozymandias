@@ -55,9 +55,9 @@ namespace Platform
     
     public class InputDelegate : PlatformDelegate
     {
-        public virtual InputControlScheme GetDefaultControlScheme(PlayerInputs playerInputs)
+        public virtual int GetDefaultControlScheme()
         {
-            return playerInputs.controlSchemes[0];
+            return 0;
         }
     }
     

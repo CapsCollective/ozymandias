@@ -79,7 +79,7 @@ namespace Inputs
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;
-            ControlScheme =  PlatformManager.Instance.Input.GetDefaultControlScheme(PlayerInput);
+            ControlScheme =  PlayerInput.controlSchemes[PlatformManager.Instance.Input.GetDefaultControlScheme()];
             PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
         }
 
