@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Characters;
 using Events;
 using Inputs;
 using Managers;
-using Structures;
+using Platform;
 using UnityEngine;
 using Utilities;
-using Steam = Reports.SteamAchievementManager;
 using static Managers.GameManager;
 
 namespace Reports
@@ -57,8 +56,7 @@ namespace Reports
 
         public void Start()
         {
-            // Log Steam connectivity - running this check performs initialisation
-            Debug.Log($"Steamworks initialised: {Steam.Initialised}");
+            PlatformManager.Instance.Achievements.Initialise();
             
             Dog.OnDogPet += () => UnlockAchievement(Achievement.PetDog);
             Fishing.OnFishCaught += () => UnlockAchievement(Achievement.CaughtFish);
@@ -70,22 +68,16 @@ namespace Reports
             
             Structures.Structures.OnBuild += structure =>
             {
-                Debug.Log(Milestones[Milestone.BuildingsBuilt]);
                 // Ignore terrain, quests, ruins and guild halls
                 if (structure.IsBuildingType(BuildingType.GuildHall) || !structure.IsBuilding) return;
                 UpdateStat(Milestone.BuildingsBuilt, Milestones[Milestone.BuildingsBuilt] + 1);
                 UnlockAchievement(Achievement.BuildOneBuilding);
             };
 
-            Select.OnClear += structure =>
-            {
-                if (structure.IsRuin) Milestones[Milestone.RuinsDemolished]++;
-            };
-            
             Cards.Cards.OnUnlock += _ =>
             {
                 // Card-based progress achievements 
-                int currentCards = Manager.Cards.UnlockedCards;
+                var currentCards = Manager.Cards.UnlockedCards;
                 UpdateStat(Milestone.Cards, currentCards);
                 UpdateProgress(Milestone.Cards, Achievement.Card1, currentCards);
                 UpdateProgress(Milestone.Cards, Achievement.Card5, currentCards);
@@ -125,23 +117,22 @@ namespace Reports
             Unlocked.Add(achievement);
             
             // Handle Steam unlock if Steam API is active
-            Steam.Unlock(achievement);
+            PlatformManager.Instance.Achievements.UnlockAchievement(achievement);
         }
         
         private void UpdateStat(Milestone stat, int value)
         {
-            Milestones[Milestone.Cards] = value;
-            Steam.Update(stat, value);
+            PlatformManager.Instance.Achievements.UpdateStat(stat, value);
         }
         
         private static void UpdateProgress(Milestone stat, Achievement achievement, int value)
         {
-            Steam.UpdateProgress(stat, achievement, value);
+            PlatformManager.Instance.Achievements.UpdateProgress(stat, achievement, value);
         }
         
         public static void ResetAll()
         {
-            Steam.ResetAll();
+            PlatformManager.Instance.Achievements.ResetAll();
         }
 
         public AchievementDetails Save()

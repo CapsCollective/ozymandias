@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Platform;
 using Reports;
 using UnityEngine;
 using Utilities;
@@ -111,7 +112,7 @@ namespace Managers
         public UpgradeDetails upgrades;
         public string version;
 
-        private static readonly string SaveFilePath = Application.persistentDataPath + "/save.json";
+        private static readonly string SaveFilePath = PlatformManager.Instance.FileSystem.GetSaveFilePath();
 
         public static void SaveState()
         {
