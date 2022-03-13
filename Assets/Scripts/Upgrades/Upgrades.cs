@@ -12,6 +12,8 @@ namespace Upgrades
 {
     public class Upgrades: MonoBehaviour
     {
+        public static Action<UpgradeType> OnUpgradePurchased;
+
         public Dictionary<Guild, int> GuildTokens { get; private set; }
         
         [SerializeField] private Upgrade root;
@@ -33,6 +35,9 @@ namespace Upgrades
         public int GetLevel(UpgradeType type) => _upgrades[type].level;
         public bool IsUnlocked(UpgradeType type) => _upgrades[type].level > 0;
 
+        public int UpgradesPurchased => _upgrades.Count(upgrade => upgrade.Value.level != 0);
+        public int TotalUpgrades => _upgrades.Count;
+
         private void Awake()
         {
             State.OnEnterState += (_) => Deselect();
@@ -53,6 +58,7 @@ namespace Upgrades
             _selected.Display(true);
             DisplayDetails(_selected);
             Manager.Structures.CheckAdjacencyBonuses();
+            OnUpgradePurchased?.Invoke(_selected.type);
             UpdateUi();
         }
 

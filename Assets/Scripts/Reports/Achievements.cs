@@ -5,6 +5,7 @@ using Events;
 using Inputs;
 using Managers;
 using Platform;
+using Structures;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -20,6 +21,7 @@ namespace Reports
         TownsDestroyed = 4,
         BuildingsBuilt = 5,
         RuinsDemolished = 6,
+        UpgradesPurchased = 7,
     }
     
     public enum Achievement
@@ -47,6 +49,9 @@ namespace Reports
         Card5 = 14,
         Card10 = 15,
         Card15 = 16,
+        
+        PurchaseOneUpgrade = 19,
+        PurchaseAllUpgrades = 20,
     }
 
     public class Achievements : MonoBehaviour
@@ -73,11 +78,22 @@ namespace Reports
                 UpdateStat(Milestone.BuildingsBuilt, Milestones[Milestone.BuildingsBuilt] + 1);
                 UnlockAchievement(Achievement.BuildOneBuilding);
             };
+            
+            Select.OnClear += structure =>
+            {
+                if (structure.IsRuin) UpdateStat(Milestone.RuinsDemolished, Milestones[Milestone.RuinsDemolished] + 1);
+            };
+            
+            Quests.Quests.OnQuestRemoved += quest =>
+            {
+                if (quest.IsRadiant) UpdateStat(Milestone.CampsCleared, Milestones[Milestone.CampsCleared] + 1);
+            };
 
             Cards.Cards.OnUnlock += _ =>
             {
                 // Card-based progress achievements 
-                var currentCards = Manager.Cards.UnlockedCards;
+                int currentCards = Manager.Cards.UnlockedCards;
+                if (currentCards <= Milestones[Milestone.Cards]) return;
                 UpdateStat(Milestone.Cards, currentCards);
                 UpdateProgress(Milestone.Cards, Achievement.Card1, currentCards);
                 UpdateProgress(Milestone.Cards, Achievement.Card5, currentCards);
@@ -103,11 +119,21 @@ namespace Reports
                 int currentPopulation = Manager.Adventurers.Count;
                 if (currentPopulation > Milestones[Milestone.Population]) 
                 {
+                    UpdateStat(Milestone.Population, currentPopulation);
                     UpdateProgress(Milestone.Population, Achievement.PopulationHamlet, currentPopulation);
                     UpdateProgress(Milestone.Population, Achievement.PopulationVillage, currentPopulation);
                     UpdateProgress(Milestone.Population, Achievement.PopulationCity, currentPopulation);
                     UpdateProgress(Milestone.Population, Achievement.PopulationKingdom, currentPopulation);
                 }
+            };
+
+            Upgrades.Upgrades.OnUpgradePurchased += _ =>
+            {
+                int upgradesPurchased = Manager.Upgrades.UpgradesPurchased;
+                
+                UpdateStat(Milestone.UpgradesPurchased, upgradesPurchased);
+                UnlockAchievement(Achievement.PurchaseOneUpgrade);
+                if (upgradesPurchased == Manager.Upgrades.TotalUpgrades) UnlockAchievement(Achievement.PurchaseAllUpgrades);
             };
         }
 
@@ -122,6 +148,7 @@ namespace Reports
         
         private void UpdateStat(Milestone stat, int value)
         {
+            Milestones[stat] = value;
             PlatformManager.Instance.Achievements.UpdateStat(stat, value);
         }
         

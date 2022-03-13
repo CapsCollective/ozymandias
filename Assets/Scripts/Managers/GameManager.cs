@@ -67,7 +67,6 @@ namespace Managers
             Cursor = FindObjectOfType<CursorSelect>();
             GameHud = FindObjectOfType<GameHud>();
             IntroHud = FindObjectOfType<IntroHud>();
-            gameObject.AddComponent<Achievements>();
         }
         #endregion
         

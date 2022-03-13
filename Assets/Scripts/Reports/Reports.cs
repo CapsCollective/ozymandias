@@ -16,11 +16,11 @@ namespace Reports
             cardUnlocks.text = $"{Manager.Cards.UnlockedCards}/15 Cards unlocked ({Manager.Upgrades.GetLevel(UpgradeType.Discoveries)} discoverable from ruins)"; 
             
             longestRun.text = "Longest Run\n" + Manager.Achievements.Milestones[Milestone.Turn] + " Turns";
-            greatestPopulation.text = "Greatest Population\n" + Manager.Achievements.Milestones[Milestone.Turn] + " Adventurers";
-            campsCleared.text = "Enemy Camps Cleared\n" + Manager.Achievements.Milestones[Milestone.Turn] + " Camps";
+            greatestPopulation.text = "Greatest Population\n" + Manager.Achievements.Milestones[Milestone.Population] + " Adventurers";
+            campsCleared.text = "Enemy Camps Cleared\n" + Manager.Achievements.Milestones[Milestone.CampsCleared] + " Camps";
             townsDestroyed.text = "Towns Destroyed\n" + Manager.Achievements.Milestones[Milestone.TownsDestroyed] + " Towns";
-            ruinsDemolished.text = "Ruins Demolished\n" + Manager.Achievements.Milestones[Milestone.Turn] + " Ruins";
-            buildingsBuilt.text = "Buildings Built\n" + Manager.Achievements.Milestones[Milestone.Turn] + " Buildings";
+            ruinsDemolished.text = "Ruins Demolished\n" + Manager.Achievements.Milestones[Milestone.RuinsDemolished] + " Ruins";
+            buildingsBuilt.text = "Buildings Built\n" + Manager.Achievements.Milestones[Milestone.BuildingsBuilt] + " Buildings";
 
             petDog.text = Manager.Achievements.Unlocked.Contains(Achievement.PetDog) ? "You Can Pet the Dog" : "???";
             fishingSimulator.text = Manager.Achievements.Unlocked.Contains(Achievement.CaughtFish) ? "Fishing Simulator" : "???";

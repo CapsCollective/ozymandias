@@ -159,7 +159,7 @@ namespace Tooltip
                     break;
                 case Stat.Defence:
                     details.text = $"{Manager.Stats.Defence} defence\n" +
-                                   $"  ● +{adventurers} from total adventurers\n" +
+                                   $"  ● +{adventurers} from total adventurers in town\n" +
                                    $"{FormattedBuildingString(Stat.Defence)}" +
                                    (Manager.Stats.MineStrikePenalty != 0 ? $"  ● {Manager.Stats.MineStrikePenalty} from the miners strike\n" : "") +
                                    $"{FormattedModifierString(Stat.Defence)}";

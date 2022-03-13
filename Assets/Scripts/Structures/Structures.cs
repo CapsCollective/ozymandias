@@ -113,7 +113,7 @@ namespace Structures
             else _buildings.Add(structure);
 
             if (!Manager.State.Loading)
-            { 
+            {
                 CheckAdjacencyBonuses();
                 OnBuild?.Invoke(structure);
                 UpdateUi();
