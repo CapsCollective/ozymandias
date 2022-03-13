@@ -110,7 +110,6 @@ namespace Inputs
                 {
                     StartCursorGrab();
                     _dragging = true;
-                    OnPan?.Invoke();
                 }
 
                 if (_dragging)
@@ -127,6 +126,10 @@ namespace Inputs
 
             Vector2 inputDir = Manager.Inputs.OnMoveCamera.ReadValue<Vector2>() * Time.deltaTime;
             inputDir += dragDir;
+            if (inputDir.sqrMagnitude > 0.0002f)
+            {
+                OnPan?.Invoke();
+            }
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
             FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)));

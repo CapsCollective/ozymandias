@@ -29,11 +29,12 @@ namespace Inputs
             PlayerInput = GetComponent<PlayerInput>();
 
             State.OnEnterState += AutoSelect;
-            Inputs.OnControlChange += AutoSelectControl;
+            Inputs.OnControlChange += OnControlChanged;
             OnNewSelection += NewSelection;
-            UIController.OnUIOpen += (g) =>
+            UIController.OnUIOpen += (g, b) =>
             {
                 EventSystem.SetSelectedGameObject(g);
+                selectionHelper.gameObject.SetActive(b);
             };
         }
 
@@ -58,14 +59,11 @@ namespace Inputs
             }
         }
 
-        private void AutoSelectControl(InputControlScheme obj)
+        private void OnControlChanged(InputControlScheme obj)
         {
-            //if (previousSelections[Manager.State.Current] == null)
-            //    AutoSelect(Manager.State.Current);
-            //else
-            //{
-            //    EventSystem.SetSelectedGameObject(previousSelections[Manager.State.Current]);
-            //}
+            bool isController = Manager.Inputs.UsingController;
+            selectionHelper.gameObject.SetActive(isController);
+            Cursor.visible = !isController;
         }
 
         public void ResetSelection(GameState state)

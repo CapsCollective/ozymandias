@@ -34,6 +34,7 @@ namespace UI
 
         private void Start()
         {
+            OnOpen();
             _hudValuesMap = new Dictionary<HudObject, HudObjectValues>
             {
                 {HudObject.Title, new HudObjectValues(title, new Vector2(600,320), new Vector2(600,700))},
@@ -44,6 +45,7 @@ namespace UI
         
         public void Hide(bool animate = true)
         {
+            OnClose();
             Hide(new List<HudObject>(_hudValuesMap.Keys), animate);
         }
 
@@ -61,6 +63,7 @@ namespace UI
         
         public void Show(bool animate = true)
         {
+            OnOpen();
             Show(new List<HudObject>(_hudValuesMap.Keys), animate);
         }
         
