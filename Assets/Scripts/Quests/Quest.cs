@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
+using DG.Tweening;
 using Managers;
 using Map;
 using NaughtyAttributes;
@@ -59,8 +60,19 @@ namespace Quests
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
             State.OnNextTurnEnd += OnNewTurn;
-            if (location == Location.Grid) CreateBuilding(new List<int>{Manager.Structures.NewQuestSpawn()});
-            else SetLocation();
+
+            if (location == Location.Grid)
+            {
+                int spawn = Manager.Structures.NewQuestSpawn();
+                Manager.Camera
+                    .MoveTo(Manager.Map.GetCell(spawn).Centre)
+                    .OnComplete(() => CreateBuilding(new List<int>{spawn}));
+            }
+            else
+            {
+                SetLocation();
+                Manager.Camera.MoveTo(Structure.transform.position);
+            }
         }
 
         public void Remove()
@@ -150,11 +162,11 @@ namespace Quests
                     else Debug.LogError("Quest was completed with no event.");
                 }
                 Debug.Log($"Quest in progress: {title}. {TurnsLeft} turns remaining.");
-                TurnsLeft--;                
+                TurnsLeft--;
             }
             else if (
-                location == Location.Grid && 
-                _turnCreated != Manager.Stats.TurnCounter && 
+                IsRadiant &&
+                _turnCreated != Manager.Stats.TurnCounter &&
                 Random.Range(0,10) >= Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
             )
             {
