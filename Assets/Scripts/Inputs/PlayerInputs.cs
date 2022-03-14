@@ -187,6 +187,22 @@ namespace Inputs
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Open Quests"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b1ac4ed-a3ef-464a-a3a5-d1155e3eac19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Open Newspaper"",
+                    ""type"": ""Button"",
+                    ""id"": ""de39b2e8-0d6a-4bac-aeba-f3fab0734340"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -445,17 +461,6 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
-                    ""id"": ""048798e2-bacf-4c0d-bb66-ced35fe06f18"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Select Cards"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""8a4805b4-d333-4691-86a6-9a5cc8c59f70"",
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
@@ -467,19 +472,52 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9adc02fc-ee2b-4aa8-9c39-374503459508"",
-                    ""path"": ""<Gamepad>/dpad"",
+                    ""id"": ""10cb5e04-bfbe-418b-bdff-abf1b8ed6d02"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Deselect Cards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Triggers"",
+                    ""id"": ""f0871e63-89da-4c0a-8586-805fddb0554e"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate Cards"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""be93001a-1e37-499c-9c00-c7ab81cb315c"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate Cards"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""d1c822c8-a6b3-40a8-9c1e-e0a9ed141c4f"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Navigate Cards"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
                     ""id"": ""f98e91fb-106b-4dc1-8adb-a58b3c6ea0d8"",
-                    ""path"": ""<Gamepad>/select"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -501,7 +539,7 @@ namespace Inputs
                 {
                     ""name"": """",
                     ""id"": ""5c32499e-11c4-47eb-8a32-e112a9763e3b"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -512,7 +550,7 @@ namespace Inputs
                 {
                     ""name"": """",
                     ""id"": ""3392453a-a4ab-48d5-abac-119e7b4455be"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -654,6 +692,39 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a69c4451-3dd7-45e9-844e-665523ce4edf"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Select Card Index"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ef65c54-05de-4319-9773-04b03716ee47"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Select Card Index"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b65f256-4c08-41d7-bc7b-a10335d3ee66"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Select Card Index"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""56d3c50c-aa05-4202-8b91-e7fdb6918d84"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -726,6 +797,28 @@ namespace Inputs
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Dialogue Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91c3013d-b8d3-4242-af40-90b410536afb"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Open Quests"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c32228f2-eaa9-4472-9700-f9d58feb27fb"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Newspaper"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1148,6 +1241,8 @@ namespace Inputs
             m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
             m_Player_NavigateBookmarks = m_Player.FindAction("Navigate Bookmarks", throwIfNotFound: true);
             m_Player_DialogueNext = m_Player.FindAction("Dialogue Next", throwIfNotFound: true);
+            m_Player_OpenQuests = m_Player.FindAction("Open Quests", throwIfNotFound: true);
+            m_Player_OpenNewspaper = m_Player.FindAction("Open Newspaper", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1230,6 +1325,8 @@ namespace Inputs
         private readonly InputAction m_Player_Screenshot;
         private readonly InputAction m_Player_NavigateBookmarks;
         private readonly InputAction m_Player_DialogueNext;
+        private readonly InputAction m_Player_OpenQuests;
+        private readonly InputAction m_Player_OpenNewspaper;
         public struct PlayerActions
         {
             private @PlayerInputs m_Wrapper;
@@ -1255,6 +1352,8 @@ namespace Inputs
             public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
             public InputAction @NavigateBookmarks => m_Wrapper.m_Player_NavigateBookmarks;
             public InputAction @DialogueNext => m_Wrapper.m_Player_DialogueNext;
+            public InputAction @OpenQuests => m_Wrapper.m_Player_OpenQuests;
+            public InputAction @OpenNewspaper => m_Wrapper.m_Player_OpenNewspaper;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1327,6 +1426,12 @@ namespace Inputs
                     @DialogueNext.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
                     @DialogueNext.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
                     @DialogueNext.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
+                    @OpenQuests.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenQuests;
+                    @OpenQuests.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenQuests;
+                    @OpenQuests.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenQuests;
+                    @OpenNewspaper.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
+                    @OpenNewspaper.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
+                    @OpenNewspaper.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1394,6 +1499,12 @@ namespace Inputs
                     @DialogueNext.started += instance.OnDialogueNext;
                     @DialogueNext.performed += instance.OnDialogueNext;
                     @DialogueNext.canceled += instance.OnDialogueNext;
+                    @OpenQuests.started += instance.OnOpenQuests;
+                    @OpenQuests.performed += instance.OnOpenQuests;
+                    @OpenQuests.canceled += instance.OnOpenQuests;
+                    @OpenNewspaper.started += instance.OnOpenNewspaper;
+                    @OpenNewspaper.performed += instance.OnOpenNewspaper;
+                    @OpenNewspaper.canceled += instance.OnOpenNewspaper;
                 }
             }
         }
@@ -1544,6 +1655,8 @@ namespace Inputs
             void OnScreenshot(InputAction.CallbackContext context);
             void OnNavigateBookmarks(InputAction.CallbackContext context);
             void OnDialogueNext(InputAction.CallbackContext context);
+            void OnOpenQuests(InputAction.CallbackContext context);
+            void OnOpenNewspaper(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

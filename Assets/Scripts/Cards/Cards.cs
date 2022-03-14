@@ -145,7 +145,7 @@ namespace Cards
             if (!SelectedCard || !_cellsValid || IsOverUi) return;
             PlacingBuilding = true;
             Blueprint blueprint = SelectedCard.Blueprint;
-            if(hand[_selectedCardIndex].Toggle.IsInteractable()) SelectedCard.Replace();
+            if (hand[_selectedCardIndex].Toggle.IsInteractable()) SelectedCard.Replace();
             if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
             SelectedCard = null;
         }
@@ -178,7 +178,7 @@ namespace Cards
         private void NavigateCards(InputAction.CallbackContext obj)
         {
             if (!Manager.State.InGame || _selectedCardIndex == -1) return;
-            SelectCard((_selectedCardIndex + (int)obj.ReadValue<Vector2>().x + hand.Count) % hand.Count);
+            SelectCard((_selectedCardIndex + (int)obj.ReadValue<float>() + hand.Count) % hand.Count);
         }
 
         private void SelectCardIndex(InputAction.CallbackContext obj)

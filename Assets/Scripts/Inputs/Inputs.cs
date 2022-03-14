@@ -44,8 +44,8 @@ namespace Inputs
         public InputAction OnDeselectCards { get; }
         public InputAction OnNavigateCards { get; }
         public InputAction OnSelectCardIndex { get; }
-        
         public InputAction OnDialogueNext{ get; }
+        public InputAction OpenQuests{ get; }
 
         public Inputs()
         {
@@ -76,6 +76,9 @@ namespace Inputs
             
             // Dialogue
             OnDialogueNext = PlayerInput.Player.DialogueNext;
+
+            // Quests
+            OpenQuests = PlayerInput.Player.OpenQuests;
 
             PlayerInput.UI.Enable();
             PlayerInput.Player.Enable();

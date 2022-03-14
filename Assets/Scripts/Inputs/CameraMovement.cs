@@ -133,6 +133,7 @@ namespace Inputs
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
             FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)));
+            FreeLook.Follow.GetChild(0).forward = crossFwd;
 
             // Scrolling
             float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>() * Time.deltaTime;
