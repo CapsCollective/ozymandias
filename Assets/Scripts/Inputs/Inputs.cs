@@ -19,6 +19,8 @@ namespace Inputs
             }
         }
 
+        public Transform WorldSpaceCursor;
+
         public static Action<InputControlScheme> OnControlChange;
 
         public static InputControlScheme ControlScheme;
@@ -107,6 +109,16 @@ namespace Inputs
                 return true;
 
             return false;
+        }
+
+        public Ray GetMouseRay(Camera cam)
+        {
+            if (!UsingController)
+            {
+                return cam.ScreenPointToRay(
+                    new Vector3(MousePosition.x, MousePosition.y, cam.nearClipPlane));
+            }
+            return new Ray(WorldSpaceCursor.position + new Vector3(0, 10, 0), Vector3.down);
         }
     }
 }

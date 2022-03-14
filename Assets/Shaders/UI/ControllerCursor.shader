@@ -3,7 +3,8 @@ Shader "Unlit/ControllerCursor"
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
-        _Clip ("Float", Float) = 0.0
+        _Clip("Clip", Float) = 0.0
+        _Thickness ("Thickness", Range(0.0, 1.0)) = 0.0
     }
     SubShader
     {
@@ -36,6 +37,7 @@ Shader "Unlit/ControllerCursor"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             float _Clip;
+            float _Thickness;
 
             v2f vert (appdata v)
             {
@@ -46,16 +48,23 @@ Shader "Unlit/ControllerCursor"
                 return o;
             }
 
+            float InverseLerp(float a, float b, float t)
+            {
+                return (t - a) / (b - a);
+            }
+
             fixed4 frag(v2f i) : SV_Target
             {
                 // sample the texture
                 fixed4 col = float4(1,1,1,1);
                 i.uv -= float2(0.5, 0.5);
-                float x = abs(sin(distance(i.uv, 0) - 0.49));
+                float x = step(distance(i.uv, 0) - 0.5, 0);
+                float x2 = step(distance(i.uv, 0) - lerp(0, 0.5, _Thickness), 0);
+                float d = x - x2;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
-                clip(_Clip - x);
-                return col;
+                clip(_Clip - (1 - d));
+                return 1;
             }
             ENDCG
         }

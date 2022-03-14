@@ -57,8 +57,7 @@ namespace Map
 
         private void UpdateEffectOrigin()
         {
-            Ray ray = _cam.ScreenPointToRay(new Vector3(Manager.Inputs.MousePosition.x, Manager.Inputs.MousePosition.y,
-                _cam.nearClipPlane));
+            var ray = Manager.Inputs.GetMouseRay(_cam);
             Physics.Raycast(ray, out RaycastHit hit);
 
             _meshRenderer.material.SetVector(Origin, hit.point);

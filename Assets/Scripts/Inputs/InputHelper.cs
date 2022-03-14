@@ -19,16 +19,17 @@ namespace Inputs
 
         [SerializeField] private RectTransform selectionHelper;
 
+        private GameObject worldSpaceCursor;
         private GameObject lastSelectedGameObject;
         private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
 
         // Start is called before the first frame update
-        void Awake()
+        void Start()
         {
             EventSystem = FindObjectOfType<EventSystem>();
             PlayerInput = GetComponent<PlayerInput>();
 
-            State.OnEnterState += AutoSelect;
+            State.OnEnterState += StateChecks;
             Inputs.OnControlChange += OnControlChanged;
             OnNewSelection += NewSelection;
             UIController.OnUIOpen += (g, b) =>
@@ -36,8 +37,11 @@ namespace Inputs
                 EventSystem.SetSelectedGameObject(g);
                 selectionHelper.gameObject.SetActive(b);
             };
-        }
 
+            worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
+            Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
+            worldSpaceCursor.SetActive(false);
+        }
 
         private void Update()
         {
@@ -62,8 +66,13 @@ namespace Inputs
         private void OnControlChanged(InputControlScheme obj)
         {
             bool isController = Manager.Inputs.UsingController;
-            selectionHelper.gameObject.SetActive(isController);
-            Cursor.visible = !isController;
+            if(Manager.State.Current == GameState.InGame)
+                worldSpaceCursor.gameObject.SetActive(isController);
+            if (Manager.State.Current == GameState.InMenu)
+            {
+                selectionHelper.gameObject.SetActive(isController);
+                Cursor.visible = !isController;
+            }
         }
 
         public void ResetSelection(GameState state)
@@ -72,7 +81,7 @@ namespace Inputs
         }
 
         // I'll fill this up with stuff when I can.
-        private void AutoSelect(GameState state)
+        private void StateChecks(GameState state)
         {
             if (Manager.Inputs.UsingController)
             {
@@ -94,6 +103,7 @@ namespace Inputs
                         EventSystem.SetSelectedGameObject(null);
                         break;
                     case GameState.InGame:
+                        if(Manager.Inputs.UsingController) worldSpaceCursor.gameObject.SetActive(true);
                         break;
                     case GameState.NextTurn:
                         break;

@@ -215,8 +215,7 @@ namespace Structures
         // Returns the building the cursor is hovering over if exists
         private Structure Hovered()
         {
-            Ray ray = _cam.ScreenPointToRay(
-                new Vector3(Manager.Inputs.MousePosition.x, Manager.Inputs.MousePosition.y, _cam.nearClipPlane));
+            Ray ray = Manager.Inputs.GetMouseRay(_cam);
             Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
             return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
         }

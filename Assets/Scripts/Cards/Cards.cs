@@ -41,11 +41,11 @@ namespace Cards
             get => _selectedCard;
             set
             {
-                _prevCardIndex = _selectedCardIndex;
+                if (_selectedCardIndex >= 0) _prevCardIndex = _selectedCardIndex;
                 _selectedCardIndex = hand.FindIndex(card => card == value);
                 
                 _selectedCard = value;
-                if(_selectedCard) Manager.Map.Flood();
+                if(_selectedCard && _selectedCard.Toggle.IsInteractable()) Manager.Map.Flood();
                 else Manager.Map.Drain();
                 
                 Manager.Cursor.Current = _selectedCard ? CursorType.Build : CursorType.Pointer;
@@ -145,7 +145,7 @@ namespace Cards
             if (!SelectedCard || !_cellsValid || IsOverUi) return;
             PlacingBuilding = true;
             Blueprint blueprint = SelectedCard.Blueprint;
-            SelectedCard.Replace();
+            if(hand[_selectedCardIndex].Toggle.IsInteractable()) SelectedCard.Replace();
             if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
             SelectedCard = null;
         }
@@ -196,17 +196,17 @@ namespace Cards
             if (cardIndex >= 0)
             {
                 if (hand[cardIndex].IsReplacing) return;
-                int originalIndex = cardIndex;
-                do // Attempt to find a valid card
-                {
-                    if (hand[cardIndex].Toggle.interactable)
-                    {
-                        hand[cardIndex].Toggle.isOn = true;
-                        hand[cardIndex].OnPointerEnter(null);
-                        break;
-                    }    
-                    cardIndex = (cardIndex + 1) % hand.Count;
-                } while (originalIndex != cardIndex);
+                hand[cardIndex].OnPointerEnter(null);
+                hand[cardIndex].Toggle.isOn = true;
+                //int originalindex = cardIndex;
+                //do // attempt to find a valid card
+                //{
+                //    if (hand[cardIndex].Toggle.interactable)
+                //    {
+                //        break;
+                //    }
+                //    cardIndex = (cardIndex + 1) % hand.Count;
+                //} while (originalindex != cardIndex);
             }
             else _toggleGroup.SetAllTogglesOff();
         }
@@ -218,9 +218,7 @@ namespace Cards
         {
             get
             {
-                Ray ray = _cam.ScreenPointToRay(new Vector3(Manager.Inputs.MousePosition.x,
-                    Manager.Inputs.MousePosition.y,
-                    _cam.nearClipPlane));
+                Ray ray = Manager.Inputs.GetMouseRay(_cam);
                 Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
                 return Manager.Map.GetClosestCell(hit.point);
             }
