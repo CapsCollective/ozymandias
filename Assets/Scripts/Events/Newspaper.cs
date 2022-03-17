@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Events
 {
-    public class Newspaper : MonoBehaviour
+    public class Newspaper : UIController
     {
         // Constants
         private static readonly Vector3 ClosePos = new Vector3(2000, 800, 0);
@@ -139,11 +139,11 @@ namespace Events
             _canvas.enabled = true;
             transform.DOLocalMove(Vector3.zero, animateInDuration);
             transform.DOLocalRotate(Vector3.zero, animateInDuration);
+            if(!_choiceSelected) OnOpen();
         }
 
         private void Close()
         {
-            Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
             transform.DOLocalMove(ClosePos, animateOutDuration);
             transform.DOLocalRotate(CloseRot, animateOutDuration)
                 .OnComplete(() =>
@@ -151,8 +151,9 @@ namespace Events
                     OnClosed?.Invoke();
                     SaveFile.SaveState(); // Save here so state only locks in after paper is closed
                     _canvas.enabled = false;
+                    Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
+                    OnClose();
                 });
-            SelectUi(null);
         }
     }
 }

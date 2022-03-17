@@ -173,14 +173,6 @@ namespace Inputs
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Navigate Bookmarks"",
-                    ""type"": ""Button"",
-                    ""id"": ""9282166e-cc5f-499a-b853-720b0b7bd76e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Dialogue Next"",
                     ""type"": ""Button"",
                     ""id"": ""93f5370f-21ac-4d13-9ca7-8da09db794b7"",
@@ -746,39 +738,6 @@ namespace Inputs
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Shoulder Buttons"",
-                    ""id"": ""edc09bf7-f22d-4717-ac78-07f1802b87ef"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Navigate Bookmarks"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""5a1ce9b9-7dcd-4c00-a72f-7f3a4401cc1c"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Navigate Bookmarks"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""9204114e-4eac-43ec-a3d7-b8000350d3cf"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Navigate Bookmarks"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""3fa2d1b9-9baf-47b3-b528-eee9ad2458b9"",
                     ""path"": ""<Keyboard>/space"",
@@ -817,7 +776,7 @@ namespace Inputs
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Open Newspaper"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -905,6 +864,22 @@ namespace Inputs
                     ""type"": ""PassThrough"",
                     ""id"": ""f343d9c8-4719-4eca-a21b-a43bcb75be2d"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Navigate Bookmarks"",
+                    ""type"": ""Button"",
+                    ""id"": ""92691a12-eced-4fe7-af78-5cc1701e980c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Toggle Book"",
+                    ""type"": ""Button"",
+                    ""id"": ""112e0fa7-f219-4ec3-8209-c9b1e3e0ed93"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -1184,6 +1159,61 @@ namespace Inputs
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Shoulder Buttons"",
+                    ""id"": ""7b3107ba-fe2d-426a-bac9-3fbef15409d8"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate Bookmarks"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""549f38a7-82ce-4b2b-993e-f5acc9c2c12d"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Bookmarks"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""9d85a038-01d9-43b7-8cd3-1187e7a2dbc0"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Bookmarks"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df5dbf80-e43a-4f12-8925-13854f1c5528"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Toggle Book"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6830b028-39b5-469b-9b1b-2ace0320efcf"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Toggle Book"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1239,7 +1269,6 @@ namespace Inputs
             m_Player_NavigateCards = m_Player.FindAction("Navigate Cards", throwIfNotFound: true);
             m_Player_SelectCardIndex = m_Player.FindAction("Select Card Index", throwIfNotFound: true);
             m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
-            m_Player_NavigateBookmarks = m_Player.FindAction("Navigate Bookmarks", throwIfNotFound: true);
             m_Player_DialogueNext = m_Player.FindAction("Dialogue Next", throwIfNotFound: true);
             m_Player_OpenQuests = m_Player.FindAction("Open Quests", throwIfNotFound: true);
             m_Player_OpenNewspaper = m_Player.FindAction("Open Newspaper", throwIfNotFound: true);
@@ -1255,6 +1284,8 @@ namespace Inputs
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+            m_UI_NavigateBookmarks = m_UI.FindAction("Navigate Bookmarks", throwIfNotFound: true);
+            m_UI_ToggleBook = m_UI.FindAction("Toggle Book", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1323,7 +1354,6 @@ namespace Inputs
         private readonly InputAction m_Player_NavigateCards;
         private readonly InputAction m_Player_SelectCardIndex;
         private readonly InputAction m_Player_Screenshot;
-        private readonly InputAction m_Player_NavigateBookmarks;
         private readonly InputAction m_Player_DialogueNext;
         private readonly InputAction m_Player_OpenQuests;
         private readonly InputAction m_Player_OpenNewspaper;
@@ -1350,7 +1380,6 @@ namespace Inputs
             public InputAction @NavigateCards => m_Wrapper.m_Player_NavigateCards;
             public InputAction @SelectCardIndex => m_Wrapper.m_Player_SelectCardIndex;
             public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
-            public InputAction @NavigateBookmarks => m_Wrapper.m_Player_NavigateBookmarks;
             public InputAction @DialogueNext => m_Wrapper.m_Player_DialogueNext;
             public InputAction @OpenQuests => m_Wrapper.m_Player_OpenQuests;
             public InputAction @OpenNewspaper => m_Wrapper.m_Player_OpenNewspaper;
@@ -1420,9 +1449,6 @@ namespace Inputs
                     @Screenshot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
                     @Screenshot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
                     @Screenshot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
-                    @NavigateBookmarks.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
-                    @NavigateBookmarks.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
-                    @NavigateBookmarks.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateBookmarks;
                     @DialogueNext.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
                     @DialogueNext.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
                     @DialogueNext.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
@@ -1493,9 +1519,6 @@ namespace Inputs
                     @Screenshot.started += instance.OnScreenshot;
                     @Screenshot.performed += instance.OnScreenshot;
                     @Screenshot.canceled += instance.OnScreenshot;
-                    @NavigateBookmarks.started += instance.OnNavigateBookmarks;
-                    @NavigateBookmarks.performed += instance.OnNavigateBookmarks;
-                    @NavigateBookmarks.canceled += instance.OnNavigateBookmarks;
                     @DialogueNext.started += instance.OnDialogueNext;
                     @DialogueNext.performed += instance.OnDialogueNext;
                     @DialogueNext.canceled += instance.OnDialogueNext;
@@ -1523,6 +1546,8 @@ namespace Inputs
         private readonly InputAction m_UI_RightClick;
         private readonly InputAction m_UI_TrackedDevicePosition;
         private readonly InputAction m_UI_TrackedDeviceOrientation;
+        private readonly InputAction m_UI_NavigateBookmarks;
+        private readonly InputAction m_UI_ToggleBook;
         public struct UIActions
         {
             private @PlayerInputs m_Wrapper;
@@ -1537,6 +1562,8 @@ namespace Inputs
             public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
             public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
             public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+            public InputAction @NavigateBookmarks => m_Wrapper.m_UI_NavigateBookmarks;
+            public InputAction @ToggleBook => m_Wrapper.m_UI_ToggleBook;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1576,6 +1603,12 @@ namespace Inputs
                     @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
+                    @NavigateBookmarks.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigateBookmarks;
+                    @NavigateBookmarks.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigateBookmarks;
+                    @NavigateBookmarks.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigateBookmarks;
+                    @ToggleBook.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleBook;
+                    @ToggleBook.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleBook;
+                    @ToggleBook.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleBook;
                 }
                 m_Wrapper.m_UIActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1610,6 +1643,12 @@ namespace Inputs
                     @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                     @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+                    @NavigateBookmarks.started += instance.OnNavigateBookmarks;
+                    @NavigateBookmarks.performed += instance.OnNavigateBookmarks;
+                    @NavigateBookmarks.canceled += instance.OnNavigateBookmarks;
+                    @ToggleBook.started += instance.OnToggleBook;
+                    @ToggleBook.performed += instance.OnToggleBook;
+                    @ToggleBook.canceled += instance.OnToggleBook;
                 }
             }
         }
@@ -1653,7 +1692,6 @@ namespace Inputs
             void OnNavigateCards(InputAction.CallbackContext context);
             void OnSelectCardIndex(InputAction.CallbackContext context);
             void OnScreenshot(InputAction.CallbackContext context);
-            void OnNavigateBookmarks(InputAction.CallbackContext context);
             void OnDialogueNext(InputAction.CallbackContext context);
             void OnOpenQuests(InputAction.CallbackContext context);
             void OnOpenNewspaper(InputAction.CallbackContext context);
@@ -1670,6 +1708,8 @@ namespace Inputs
             void OnRightClick(InputAction.CallbackContext context);
             void OnTrackedDevicePosition(InputAction.CallbackContext context);
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+            void OnNavigateBookmarks(InputAction.CallbackContext context);
+            void OnToggleBook(InputAction.CallbackContext context);
         }
     }
 }

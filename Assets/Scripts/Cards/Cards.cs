@@ -198,15 +198,6 @@ namespace Cards
                 if (hand[cardIndex].IsReplacing) return;
                 hand[cardIndex].OnPointerEnter(null);
                 hand[cardIndex].Toggle.isOn = true;
-                //int originalindex = cardIndex;
-                //do // attempt to find a valid card
-                //{
-                //    if (hand[cardIndex].Toggle.interactable)
-                //    {
-                //        break;
-                //    }
-                //    cardIndex = (cardIndex + 1) % hand.Count;
-                //} while (originalindex != cardIndex);
             }
             else _toggleGroup.SetAllTogglesOff();
         }

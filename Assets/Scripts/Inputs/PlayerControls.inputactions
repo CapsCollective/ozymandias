@@ -158,14 +158,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Navigate Bookmarks",
-                    "type": "Button",
-                    "id": "9282166e-cc5f-499a-b853-720b0b7bd76e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Dialogue Next",
                     "type": "Button",
                     "id": "93f5370f-21ac-4d13-9ca7-8da09db794b7",
@@ -731,39 +723,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Shoulder Buttons",
-                    "id": "edc09bf7-f22d-4717-ac78-07f1802b87ef",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Navigate Bookmarks",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "5a1ce9b9-7dcd-4c00-a72f-7f3a4401cc1c",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Navigate Bookmarks",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "9204114e-4eac-43ec-a3d7-b8000350d3cf",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Navigate Bookmarks",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "3fa2d1b9-9baf-47b3-b528-eee9ad2458b9",
                     "path": "<Keyboard>/space",
@@ -802,7 +761,7 @@
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "Open Newspaper",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -890,6 +849,22 @@
                     "type": "PassThrough",
                     "id": "f343d9c8-4719-4eca-a21b-a43bcb75be2d",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Navigate Bookmarks",
+                    "type": "Button",
+                    "id": "92691a12-eced-4fe7-af78-5cc1701e980c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Toggle Book",
+                    "type": "Button",
+                    "id": "112e0fa7-f219-4ec3-8209-c9b1e3e0ed93",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -1167,6 +1142,61 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Shoulder Buttons",
+                    "id": "7b3107ba-fe2d-426a-bac9-3fbef15409d8",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate Bookmarks",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "549f38a7-82ce-4b2b-993e-f5acc9c2c12d",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Bookmarks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "9d85a038-01d9-43b7-8cd3-1187e7a2dbc0",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Bookmarks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "df5dbf80-e43a-4f12-8925-13854f1c5528",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Toggle Book",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6830b028-39b5-469b-9b1b-2ace0320efcf",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Toggle Book",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -43,9 +43,11 @@ namespace Inputs
         public InputAction OnSelectCards { get; }
         public InputAction OnDeselectCards { get; }
         public InputAction OnNavigateCards { get; }
+        public InputAction OnNavigateBookmark { get; }
         public InputAction OnSelectCardIndex { get; }
         public InputAction OnDialogueNext{ get; }
         public InputAction OpenQuests{ get; }
+        public InputAction OpenNewspaper{ get; }
 
         public Inputs()
         {
@@ -65,9 +67,12 @@ namespace Inputs
             // UI Navigation
             OnConfirmSelectedStructure = PlayerInput.Player.ConfirmSelectedStructure;
             OnNextTurn = PlayerInput.Player.NextTurn;
-            OnToggleBook = PlayerInput.Player.ToggleBook;
+            OnToggleBook = PlayerInput.UI.ToggleBook;
             OnRotateBuilding = PlayerInput.Player.RotateBuilding;
-            
+            OnNavigateBookmark = PlayerInput.UI.NavigateBookmarks;
+            OpenQuests = PlayerInput.Player.OpenQuests;
+            OpenNewspaper = PlayerInput.Player.OpenNewspaper;
+
             // Cards
             OnSelectCards = PlayerInput.Player.SelectCards;
             OnDeselectCards = PlayerInput.Player.DeselectCards;

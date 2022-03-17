@@ -56,6 +56,8 @@ namespace Quests
 
         private bool _opened;
 
+        EventHandler handler;
+
         private void Start()
         {
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
@@ -64,11 +66,11 @@ namespace Quests
             Manager.Inputs.OnToggleBook.performed += _ => { Close(); };
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
             previousButton.onClick.AddListener(() => ChangeQuest(SwapDir.Left));
+            EventHandler handler = (s, e) => Close();
             Select.OnQuestSelected += quest =>
             {
                 SelectedQuest = quest;
                 OpenFlyer.UpdateContent(SelectedQuest);
-                OpenFlyer.OnOpen();
                 FocusStructure(SelectedQuest.Structure);
                 Open();
             };
@@ -151,7 +153,8 @@ namespace Quests
             nextFlyer.transform.localPosition = new Vector3(nextStartX, 0, 0);
             nextFlyer.transform
                 .DOLocalMove(Vector3.zero, animateAcrossDuration)
-                .OnStart(() => nextFlyer.gameObject.SetActive(true));
+                .OnStart(() => nextFlyer.gameObject.SetActive(true))
+                .OnComplete(() => nextFlyer.OnOpen());
 
             _openFlyer = CycleIdx(_openFlyer, FlyerCount, dir);
         }
@@ -181,18 +184,23 @@ namespace Quests
                 .OnStart(() => OpenFlyer.gameObject.SetActive(true))
                 .OnComplete(() =>
                 {
+                    OpenFlyer.OnOpen();
                     DisplayMoveButtons(true);
                     DisplayCloseButton(true);
+                    Manager.Inputs.OpenQuests.performed += OpenQuests_performed;
+                    if(Current.Count > 1) Manager.Inputs.OnNavigateBookmark.performed += NavigateFlyers;
                 });
             OpenFlyer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
+            Debug.Log(OpenFlyer.gameObject.name);
         }
-        
+
         private void Close()
         {
             if (!_opened) return;
+            Manager.Inputs.OpenQuests.performed -= OpenQuests_performed;
+            if (Current.Count > 1) Manager.Inputs.OnNavigateBookmark.performed -= NavigateFlyers;
             DisplayCloseButton(false);
             DisplayMoveButtons(false);
-            Manager.State.EnterState(GameState.InGame);
             OpenFlyer.transform.DOLocalMove(_offScreenPos, animateOutDuration);
             OpenFlyer.transform
                 .DOLocalRotate(_offScreenRot, animateOutDuration)
@@ -200,8 +208,9 @@ namespace Quests
                 {
                     _canvas.enabled = false;
                     _opened = false;
+                    Manager.State.EnterState(GameState.InGame);
+                    OpenFlyer.OnClose();
                 });
-            SelectUi(null);
         }
 
         private void DisplayMoveButtons(bool display)
@@ -214,6 +223,17 @@ namespace Quests
         private void DisplayCloseButton(bool display)
         {
             _closeButtonCanvas.DOFade(display ? 1.0f : 0.0f, 0.2f);
+        }
+
+        private void OpenQuests_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            Close();
+        }
+
+        private void NavigateFlyers(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            SwapDir dir = (SwapDir)obj.ReadValue<float>();
+            ChangeQuest(dir);
         }
     }
 }

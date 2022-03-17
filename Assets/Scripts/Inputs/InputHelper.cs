@@ -41,6 +41,7 @@ namespace Inputs
             worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.SetActive(false);
+            selectionHelper.gameObject.SetActive(false);
         }
 
         private void Update()
@@ -101,9 +102,14 @@ namespace Inputs
                         break;
                     case GameState.ToGame:
                         EventSystem.SetSelectedGameObject(null);
+                        selectionHelper.gameObject.SetActive(false);
                         break;
                     case GameState.InGame:
-                        if(Manager.Inputs.UsingController) worldSpaceCursor.gameObject.SetActive(true);
+                        if (Manager.Inputs.UsingController)
+                        {
+                            worldSpaceCursor.gameObject.SetActive(true);
+                            selectionHelper.gameObject.SetActive(false);
+                        }
                         break;
                     case GameState.NextTurn:
                         break;
