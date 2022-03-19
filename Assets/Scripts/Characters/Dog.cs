@@ -29,9 +29,8 @@ namespace Characters
 
         private void PatCheck(InputAction.CallbackContext obj)
         {
-            Ray ray = _cam.ScreenPointToRay(Manager.Inputs.MousePosition);
-
-            if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider) return;
+            var hit = Manager.Inputs.GetRaycast(_cam, 1000, 1);
+            if (hit.collider != _collider) return;
             OnDogPet?.Invoke();
             _particleSystem.Play();
             Manager.Jukebox.PlayBark();

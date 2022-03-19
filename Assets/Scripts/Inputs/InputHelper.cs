@@ -16,6 +16,7 @@ namespace Inputs
         public static PlayerInput PlayerInput;
         public static EventSystem EventSystem;
         public static Action<GameObject> OnNewSelection;
+        public static Dictionary<GameObject, Vector2> CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
 
         [SerializeField] private RectTransform selectionHelper;
 
@@ -42,6 +43,7 @@ namespace Inputs
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.SetActive(false);
             selectionHelper.gameObject.SetActive(false);
+
         }
 
         private void Update()
@@ -60,7 +62,10 @@ namespace Inputs
             {
                 previousSelections[Manager.State.Current] = obj;
                 var rt = obj.transform as RectTransform;
-                selectionHelper.anchoredPosition = rt.transform.position;
+                var pos = rt.transform.position;
+                if(CursorOffsetOverrides.ContainsKey(obj))
+                    pos += (Vector3)CursorOffsetOverrides[obj];
+                selectionHelper.anchoredPosition = pos;
             }
         }
 

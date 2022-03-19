@@ -180,6 +180,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Return To Town",
+                    "type": "Button",
+                    "id": "86e37355-2fc2-470e-99a9-3027ecd2a912",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -763,6 +771,17 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Open Newspaper",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d549c6e-d9c6-42bb-8a9c-6e02e39354a1",
+                    "path": "<Gamepad>/start",
+                    "interactions": "Hold(duration=1)",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Return To Town",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

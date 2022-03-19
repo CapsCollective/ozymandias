@@ -8,6 +8,8 @@ namespace Inputs
 {
     public class Inputs
     {
+        const float SPHERECAST_RADIUS = 0.5f;
+
         public bool UsingController => ControlScheme == PlayerInput.ControllerScheme;
         public Vector2 MousePosition 
         {
@@ -48,6 +50,7 @@ namespace Inputs
         public InputAction OnDialogueNext{ get; }
         public InputAction OpenQuests{ get; }
         public InputAction OpenNewspaper{ get; }
+        public InputAction UIClose{ get; }
 
         public Inputs()
         {
@@ -72,6 +75,7 @@ namespace Inputs
             OnNavigateBookmark = PlayerInput.UI.NavigateBookmarks;
             OpenQuests = PlayerInput.Player.OpenQuests;
             OpenNewspaper = PlayerInput.Player.OpenNewspaper;
+            UIClose = PlayerInput.UI.Cancel;
 
             // Cards
             OnSelectCards = PlayerInput.Player.SelectCards;
@@ -127,6 +131,18 @@ namespace Inputs
                     new Vector3(MousePosition.x, MousePosition.y, cam.nearClipPlane));
             }
             return new Ray(WorldSpaceCursor.position + new Vector3(0, 10, 0), Vector3.down);
+        }
+
+        public RaycastHit GetRaycast(Camera cam, float distance, int layerMask)
+        {
+            Ray ray = GetMouseRay(cam);
+            RaycastHit hit;
+            if (!UsingController)
+                Physics.Raycast(ray, out hit, distance, layerMask);
+            else
+                Physics.SphereCast(ray, SPHERECAST_RADIUS, out hit, distance, layerMask);
+
+            return hit;
         }
     }
 }

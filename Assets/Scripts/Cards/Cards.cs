@@ -209,8 +209,9 @@ namespace Cards
         {
             get
             {
-                Ray ray = Manager.Inputs.GetMouseRay(_cam);
-                Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
+                //Ray ray = Manager.Inputs.GetMouseRay(_cam);
+                //Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
+                var hit = Manager.Inputs.GetRaycast(_cam, 200f, layerMask);
                 return Manager.Map.GetClosestCell(hit.point);
             }
         }

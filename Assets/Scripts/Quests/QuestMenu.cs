@@ -188,7 +188,8 @@ namespace Quests
                     DisplayMoveButtons(true);
                     DisplayCloseButton(true);
                     Manager.Inputs.OpenQuests.performed += OpenQuests_performed;
-                    if(Current.Count > 1) Manager.Inputs.OnNavigateBookmark.performed += NavigateFlyers;
+                    Manager.Inputs.UIClose.performed += OpenQuests_performed;
+                    if (Current.Count > 1) Manager.Inputs.OnNavigateBookmark.performed += NavigateFlyers;
                 });
             OpenFlyer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
             Debug.Log(OpenFlyer.gameObject.name);
@@ -198,6 +199,7 @@ namespace Quests
         {
             if (!_opened) return;
             Manager.Inputs.OpenQuests.performed -= OpenQuests_performed;
+            Manager.Inputs.UIClose.performed -= OpenQuests_performed;
             if (Current.Count > 1) Manager.Inputs.OnNavigateBookmark.performed -= NavigateFlyers;
             DisplayCloseButton(false);
             DisplayMoveButtons(false);

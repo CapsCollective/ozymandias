@@ -195,6 +195,14 @@ namespace Inputs
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Return To Town"",
+                    ""type"": ""Button"",
+                    ""id"": ""86e37355-2fc2-470e-99a9-3027ecd2a912"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -780,6 +788,17 @@ namespace Inputs
                     ""action"": ""Open Newspaper"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d549c6e-d9c6-42bb-8a9c-6e02e39354a1"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Return To Town"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1272,6 +1291,7 @@ namespace Inputs
             m_Player_DialogueNext = m_Player.FindAction("Dialogue Next", throwIfNotFound: true);
             m_Player_OpenQuests = m_Player.FindAction("Open Quests", throwIfNotFound: true);
             m_Player_OpenNewspaper = m_Player.FindAction("Open Newspaper", throwIfNotFound: true);
+            m_Player_ReturnToTown = m_Player.FindAction("Return To Town", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1357,6 +1377,7 @@ namespace Inputs
         private readonly InputAction m_Player_DialogueNext;
         private readonly InputAction m_Player_OpenQuests;
         private readonly InputAction m_Player_OpenNewspaper;
+        private readonly InputAction m_Player_ReturnToTown;
         public struct PlayerActions
         {
             private @PlayerInputs m_Wrapper;
@@ -1383,6 +1404,7 @@ namespace Inputs
             public InputAction @DialogueNext => m_Wrapper.m_Player_DialogueNext;
             public InputAction @OpenQuests => m_Wrapper.m_Player_OpenQuests;
             public InputAction @OpenNewspaper => m_Wrapper.m_Player_OpenNewspaper;
+            public InputAction @ReturnToTown => m_Wrapper.m_Player_ReturnToTown;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1458,6 +1480,9 @@ namespace Inputs
                     @OpenNewspaper.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
                     @OpenNewspaper.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
                     @OpenNewspaper.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
+                    @ReturnToTown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToTown;
+                    @ReturnToTown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToTown;
+                    @ReturnToTown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToTown;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1528,6 +1553,9 @@ namespace Inputs
                     @OpenNewspaper.started += instance.OnOpenNewspaper;
                     @OpenNewspaper.performed += instance.OnOpenNewspaper;
                     @OpenNewspaper.canceled += instance.OnOpenNewspaper;
+                    @ReturnToTown.started += instance.OnReturnToTown;
+                    @ReturnToTown.performed += instance.OnReturnToTown;
+                    @ReturnToTown.canceled += instance.OnReturnToTown;
                 }
             }
         }
@@ -1695,6 +1723,7 @@ namespace Inputs
             void OnDialogueNext(InputAction.CallbackContext context);
             void OnOpenQuests(InputAction.CallbackContext context);
             void OnOpenNewspaper(InputAction.CallbackContext context);
+            void OnReturnToTown(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
