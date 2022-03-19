@@ -44,10 +44,11 @@ namespace Inputs
         [SerializeField] private float clampDistance;
         [SerializeField] private float pushForce = 5.0f;
         [SerializeField] private float dotMultiplier = 2.0f;
+        [SerializeField] private float dot2Multiplier = 0.5f;
         [SerializeField] private bool showDebugSphere = false;
         [SerializeField] private Mesh debugMesh;
+        [SerializeField] private Vector3 waterfallDir;
         [SerializeField] private Material debugMaterial;
-
         private void Awake()
         {
             _cam = GetComponent<Camera>();
@@ -154,9 +155,12 @@ namespace Inputs
             FreeLook.Follow.position = Vector3.SmoothDamp(FreeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
 
             float dot = Vector3.Dot(Vector3.back, (FreeLook.Follow.position - clampCenterPos).normalized) * dotMultiplier;
+            float dot2 = Vector3.Dot((clampCenterPos - waterfallDir), (FreeLook.Follow.position - clampCenterPos)) * dot2Multiplier;
             float distanceFromBorder = Vector3.Distance(FreeLook.Follow.position, clampCenterPos) / clampDistance;
             if (dot > 0)
                 distanceFromBorder -= dot;
+            if (dot2 > 0)
+                distanceFromBorder -= dot2;
             if(distanceFromBorder > 1.0f)
                     FreeLook.Follow.position += ((clampCenterPos - FreeLook.Follow.position).normalized * (distanceFromBorder - 1.0f) * pushForce) * Time.deltaTime;
         }
@@ -258,6 +262,8 @@ namespace Inputs
 
         private void OnDrawGizmos()
         {
+            var dir = (Vector3.zero - waterfallDir).normalized;
+            Gizmos.DrawLine(Vector3.zero, dir);
             if (!showDebugSphere) return;
             Gizmos.DrawWireSphere(clampCenterPos, clampDistance);
             if (debugMaterial != null && debugMesh != null)
