@@ -14,7 +14,7 @@ namespace Cards
     {
         public Toggle Toggle { get; private set; }
         public Blueprint Blueprint { get; set; }
-        [SerializeField] private CardDisplay cardDisplay;
+        public CardDisplay cardDisplay;
         [SerializeField] private Ease tweenEase;
         [SerializeField] private int popupMultiplier = 60;
         [SerializeField] private int highlightMultiplier = 20;

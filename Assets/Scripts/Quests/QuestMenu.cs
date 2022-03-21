@@ -63,7 +63,7 @@ namespace Quests
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             _canvas = GetComponent<Canvas>();
             closeButton.onClick.AddListener(Close);
-            Manager.Inputs.OnToggleBook.performed += _ => { Close(); };
+            Manager.Inputs.ToggleBook += () => { Close(); };
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
             previousButton.onClick.AddListener(() => ChangeQuest(SwapDir.Left));
             EventHandler handler = (s, e) => Close();

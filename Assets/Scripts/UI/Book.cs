@@ -109,7 +109,7 @@ namespace UI
                 Open();
             };
 
-            Manager.Inputs.OnToggleBook.performed += _ =>
+            Manager.Inputs.ToggleBook += () =>
             {
                 if (Manager.Cards.SelectedCard != null)
                 {

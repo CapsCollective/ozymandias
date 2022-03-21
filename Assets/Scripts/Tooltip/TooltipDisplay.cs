@@ -4,8 +4,10 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Utilities;
+using NaughtyAttributes;
 using static Managers.GameManager;
 using String = Utilities.String;
+using UnityEngine.InputSystem;
 
 namespace Tooltip
 {
@@ -17,8 +19,12 @@ namespace Tooltip
 
     public class TooltipDisplay : MonoBehaviour
     {
+        private int currentTooltip = -1;
         private CanvasGroup _cg;
+        private Tween _tween;
         [SerializeField] private TextMeshProUGUI title, details, description;
+        [Space]
+        [SerializeField] private TooltipPlacement[] allTooltips;
 
         const float FadeDuration = 0.3f;
 
@@ -115,9 +121,45 @@ namespace Tooltip
             }}
         };
         
-        private void Awake()
+        private void Start()
         {
             _cg = GetComponent<CanvasGroup>();
+            Manager.Inputs.ToggleTooltips.performed += ToggleTooltips;
+            Inputs.Inputs.OnControlChange += OnControlChange;
+
+            // Turn off tooltips if camera moves
+            Manager.Inputs.OnMoveCamera.performed += _ =>
+            {
+                if (currentTooltip >= 0)
+                {
+                    allTooltips[currentTooltip].OnPointerExit(null);
+                    currentTooltip = -1;
+                }
+            };
+        }
+
+        private void OnControlChange(InputControlScheme obj)
+        {
+            if(currentTooltip >= 0)
+                allTooltips[currentTooltip].OnPointerExit(null);
+        }
+
+        private void ToggleTooltips(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            var dir = (int)obj.ReadValue<float>();
+            if(currentTooltip >= 0) allTooltips[currentTooltip].OnPointerExit(null);
+            currentTooltip += dir;
+            if (currentTooltip >= allTooltips.Length) currentTooltip = -1;
+            else if (currentTooltip < -1) currentTooltip = allTooltips.Length - 1;
+            if (currentTooltip >= 0)
+            {
+                if (_tween != null && !_tween.IsComplete())
+                {
+                    _tween.Kill(true);
+                    _cg.alpha = 1;
+                }
+                allTooltips[currentTooltip].OnPointerEnter(null);
+            }
         }
 
         public void UpdateTooltip(TooltipType type)
@@ -283,12 +325,18 @@ namespace Tooltip
         
         public void Fade(float opacity)
         {
-            _cg.DOFade(opacity, FadeDuration);
+            _tween = _cg.DOFade(opacity, FadeDuration);
         }
 
         public bool IsVisible()
         {
             return _cg.alpha > 0;
+        }
+
+        [Button]
+        public void GetTooltips()
+        {
+            allTooltips = FindObjectsOfType<TooltipPlacement>();
         }
     }
 }

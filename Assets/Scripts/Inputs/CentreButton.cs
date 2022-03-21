@@ -2,6 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 using UnityEngine.UI;
 using static Managers.GameManager;
 
@@ -31,6 +32,11 @@ namespace Inputs
                          Application.platform == RuntimePlatform.OSXEditor);
             _dummyCursor = isMac ? dummyCursorNonScaling : dummyCursorScaling;
             button.onClick.AddListener(CenterCamera);
+            Manager.Inputs.CenterCamera += () =>
+             {
+                if (Manager.State.Current == Utilities.GameState.InGame)
+                    CenterCamera();
+             };
         }
 
         private void Update()
@@ -55,7 +61,7 @@ namespace Inputs
 
         private void CenterCamera()
         {
-            Manager.Camera.MoveTo(Manager.Structures.TownCentre)
+            Manager.Camera.MoveTo(Manager.Structures.TownCentre + new Vector3(0,1,0))
                 .OnStart(() => { 
                     button.interactable = false;
                     buttonText.alpha = 0;

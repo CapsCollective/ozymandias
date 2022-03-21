@@ -2,6 +2,7 @@ using System;
 using Platform;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem.Users;
 
 namespace Inputs
@@ -27,6 +28,9 @@ namespace Inputs
 
         public static InputControlScheme ControlScheme;
 
+        public Action ToggleBook;
+        public Action CenterCamera;
+
         // Player Input
         public PlayerInputs PlayerInput { get; }
         
@@ -51,6 +55,8 @@ namespace Inputs
         public InputAction OpenQuests{ get; }
         public InputAction OpenNewspaper{ get; }
         public InputAction UIClose{ get; }
+        public InputAction ReturnToTown{ get; }
+        public InputAction ToggleTooltips{ get; }
 
         public Inputs()
         {
@@ -76,6 +82,7 @@ namespace Inputs
             OpenQuests = PlayerInput.Player.OpenQuests;
             OpenNewspaper = PlayerInput.Player.OpenNewspaper;
             UIClose = PlayerInput.UI.Cancel;
+            ToggleTooltips = PlayerInput.Player.ToggleTooltips;
 
             // Cards
             OnSelectCards = PlayerInput.Player.SelectCards;
@@ -95,6 +102,13 @@ namespace Inputs
             InputUser.onChange += InputUser_onChange;
             ControlScheme =  PlayerInput.controlSchemes[PlatformManager.Instance.Input.GetDefaultControlScheme()];
             PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
+            OnToggleBook.performed += OnToggleBook_performed;
+        }
+
+        private void OnToggleBook_performed(InputAction.CallbackContext obj)
+        {
+            if (obj.interaction is HoldInteraction) CenterCamera?.Invoke();
+            else if (obj.interaction is PressInteraction) ToggleBook?.Invoke();
         }
 
         public void TogglePlayerInput(bool toggle)

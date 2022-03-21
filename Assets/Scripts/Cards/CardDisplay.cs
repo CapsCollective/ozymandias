@@ -14,7 +14,7 @@ namespace Cards
     public class CardDisplay : MonoBehaviour
     {
         [Serializable]
-        private struct EffectBadge
+        public struct EffectBadge
         {
             public Image background, icon, chevron;
             public CardBadge badge;
@@ -27,6 +27,8 @@ namespace Cards
             }
         }
     
+        public List<EffectBadge> Badges { get => badges; }
+
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private Image icon;
@@ -39,6 +41,7 @@ namespace Cards
         [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
 
         [SerializeField] private Sprite lockedIcon;
+
         
         private Image _cardBack;
         
