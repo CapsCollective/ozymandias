@@ -24,6 +24,12 @@ namespace Inputs
         private GameObject lastSelectedGameObject;
         private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
 
+        private float CursorSize { get
+            {
+                return 60 * (Screen.height / 1080.0f); 
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -43,7 +49,7 @@ namespace Inputs
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.SetActive(false);
             selectionHelper.gameObject.SetActive(false);
-
+            selectionHelper.sizeDelta = new Vector2(CursorSize, CursorSize);
         }
 
         private void Update()
@@ -104,6 +110,7 @@ namespace Inputs
                     case GameState.Loading:
                         break;
                     case GameState.ToIntro:
+                        worldSpaceCursor.gameObject.SetActive(false);
                         break;
                     case GameState.ToGame:
                         EventSystem.SetSelectedGameObject(null);
