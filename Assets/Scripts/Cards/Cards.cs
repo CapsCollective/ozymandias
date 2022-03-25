@@ -9,7 +9,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
 namespace Cards

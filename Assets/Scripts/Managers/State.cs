@@ -26,6 +26,8 @@ namespace Managers
         public bool EndGame => _state == GameState.EndGame;
         public bool ToCredits => _state == GameState.ToCredits;
         public bool InCredits => _state == GameState.InCredits;
+        public bool InDialogue => _state == GameState.InDialogue;
+
         public bool IsGameOver { get; set; }
         public GameState Current => _state;
 

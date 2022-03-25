@@ -170,27 +170,19 @@ namespace Events
             foreach (Event e in guildHallDestroyedEvents) Add(e, true);
         }
 
+        private readonly Dictionary<Guild, EventType> _requestMap = new Dictionary<Guild, EventType>
+        {
+            { Guild.Brawler, EventType.BrawlerRequest },
+            { Guild.Outrider, EventType.OutriderRequest },
+            { Guild.Performer, EventType.PerformerRequest },
+            { Guild.Diviner, EventType.DivinerRequest },
+            { Guild.Arcanist, EventType.ArcanistRequest }
+        };
+
         public void AddRequest(Guild guild)
         {
             if (Random.Range(0, 5) != 0) return; // Random spawn chance so a new request doesnt come right away
-            switch (guild)
-            {
-                case Guild.Brawler:
-                    Add(PickRandom(EventType.BrawlerRequest), true);
-                    break;
-                case Guild.Outrider:
-                    Add(PickRandom(EventType.OutriderRequest), true);
-                    break;
-                case Guild.Performer:
-                    Add(PickRandom(EventType.PerformerRequest), true);
-                    break;
-                case Guild.Diviner:
-                    Add(PickRandom(EventType.DivinerRequest), true);
-                    break;
-                case Guild.Arcanist:
-                    Add(PickRandom(EventType.ArcanistRequest), true);
-                    break;
-            }
+            Add(PickRandom(_requestMap[guild]));
         }
         
         public EventQueueDetails Save()

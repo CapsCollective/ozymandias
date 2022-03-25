@@ -65,13 +65,14 @@ namespace Quests
             {
                 int spawn = Manager.Structures.NewQuestSpawn();
                 Manager.Camera
-                    .MoveTo(Manager.Map.GetCell(spawn).Centre)
+                    .MoveTo(Manager.Map.GetCell(spawn).WorldSpace + Vector3.up)
                     .OnComplete(() => CreateBuilding(new List<int>{spawn}));
             }
             else
             {
                 SetLocation();
-                Manager.Camera.MoveTo(Structure.transform.position);
+                Vector3 pos = Structure.transform.position;
+                Manager.Camera.MoveTo(new Vector3(pos.x, 1,  pos.z));
             }
         }
 

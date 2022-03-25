@@ -65,5 +65,9 @@ namespace Platform
         {
             return Application.persistentDataPath + "/save.json";
         }
+        public virtual string GetBackupFilePath()
+        {
+            return Application.persistentDataPath + "/save_prev.json";
+        }
     }
 }

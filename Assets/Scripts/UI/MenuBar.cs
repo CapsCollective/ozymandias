@@ -26,7 +26,7 @@ namespace UI
         public Func<bool> ShouldDisplay { get; }
     }
     
-    public class MenuBar : MonoBehaviour
+    public class MenuBar : UiUpdater
     {
         public float duration = 0.5f;
         public Button questButton;
@@ -46,19 +46,15 @@ namespace UI
             Newspaper.OnClosed += () =>
             {
                 _newspaperClosed = true;
-                UpdateDisplay();
             };
             
             State.OnNewGame += () => 
             {
                 _newspaperClosed = false;
-                UpdateDisplay();
             };
-            
-            State.OnLoadingEnd += UpdateDisplay;
         }
 
-        private void UpdateDisplay()
+        protected override void UpdateUi()
         {
             // Set display of quest button
             var questButtonChanged = false;

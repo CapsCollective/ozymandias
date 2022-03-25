@@ -150,6 +150,7 @@ namespace Events
                 {
                     OnClosed?.Invoke();
                     SaveFile.SaveState(); // Save here so state only locks in after paper is closed
+                    UpdateUi();
                     _canvas.enabled = false;
                 });
             SelectUi(null);

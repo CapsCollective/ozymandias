@@ -113,6 +113,7 @@ namespace Managers
         public string version;
 
         private static readonly string SaveFilePath = PlatformManager.Instance.FileSystem.GetSaveFilePath();
+        private static readonly string BackupFilePath = PlatformManager.Instance.FileSystem.GetBackupFilePath();
 
         public static void SaveState()
         {
@@ -133,6 +134,8 @@ namespace Managers
 
         public void Save()
         {
+            File.WriteAllLines(BackupFilePath, File.ReadAllLines(SaveFilePath));
+
             version = Application.version;
             structures = Manager.Structures.Save();
             cards = Manager.Cards.Save();
@@ -165,6 +168,11 @@ namespace Managers
             {
                 string saveJson = File.ReadAllText(SaveFilePath);
                 JsonConvert.PopulateObject(saveJson, this);
+                
+                if (version != Application.version)
+                {
+                    Debug.LogWarning("Save file from previous version " + version);
+                }
             }
             catch
             {

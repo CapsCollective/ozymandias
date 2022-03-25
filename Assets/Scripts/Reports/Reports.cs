@@ -1,6 +1,7 @@
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
 
@@ -8,8 +9,13 @@ namespace Reports
 {
     public class Reports : UiUpdater
     {
-        [SerializeField]
-        private TextMeshProUGUI cardUnlocks, longestRun, greatestPopulation, campsCleared, townsDestroyed, ruinsDemolished, buildingsBuilt, petDog, fishingSimulator, worldEdge, guildHallDemolished, waterfall;
+        [SerializeField] private TextMeshProUGUI
+            cardUnlocks, longestRun, greatestPopulation, campsCleared, townsDestroyed, ruinsDemolished, buildingsBuilt,
+            petDogText, fishingText, worldEdgeText, guildHallDemolishedText, waterfallText, birdsText;
+        [SerializeField] private Image
+            petDogImage, fishingImage, worldEdgeImage, guildHallDemolishedImage, waterfallImage, birdsImage;
+        [SerializeField] private Sprite
+            petDogIcon, fishingIcon, worldEdgeIcon, guildHallDemolishedIcon, waterfallIcon, birdsIcon, lockedIcon;
 
         protected override void UpdateUi()
         {
@@ -22,11 +28,19 @@ namespace Reports
             ruinsDemolished.text = "Ruins Demolished\n" + Manager.Achievements.Milestones[Milestone.RuinsDemolished] + " Ruins";
             buildingsBuilt.text = "Buildings Built\n" + Manager.Achievements.Milestones[Milestone.BuildingsBuilt] + " Buildings";
 
-            petDog.text = Manager.Achievements.Unlocked.Contains(Achievement.PetDog) ? "You Can Pet the Dog" : "???";
-            fishingSimulator.text = Manager.Achievements.Unlocked.Contains(Achievement.CaughtFish) ? "Fishing Simulator" : "???";
-            worldEdge.text = Manager.Achievements.Unlocked.Contains(Achievement.WorldEdgeFound) ? "Edge of the World" : "???";
-            guildHallDemolished.text = Manager.Achievements.Unlocked.Contains(Achievement.GuildHallDemolished) ? "Destructive Tendencies" : "???";
-            waterfall.text = Manager.Achievements.Unlocked.Contains(Achievement.FoundWaterfall) ? "Behind the Waterfall" : "???";
+            petDogText.text = Manager.Achievements.Unlocked.Contains(Achievement.PetDog) ? "You Can Pet the Dog" : "???";
+            fishingText.text = Manager.Achievements.Unlocked.Contains(Achievement.CaughtFish) ? "Fishing Simulator" : "???";
+            worldEdgeText.text = Manager.Achievements.Unlocked.Contains(Achievement.WorldEdgeFound) ? "Edge of the World" : "???";
+            guildHallDemolishedText.text = Manager.Achievements.Unlocked.Contains(Achievement.GuildHallDemolished) ? "Destructive Tendencies" : "???";
+            waterfallText.text = Manager.Achievements.Unlocked.Contains(Achievement.FoundWaterfall) ? "Behind the Waterfall" : "???";
+            //birdsText.text = Manager.Achievements.Unlocked.Contains(Achievement.Birds) ? "Swooping Bird" : "???";
+            
+            petDogImage.sprite = Manager.Achievements.Unlocked.Contains(Achievement.PetDog) ? petDogIcon : lockedIcon;
+            fishingImage.sprite = Manager.Achievements.Unlocked.Contains(Achievement.CaughtFish) ? fishingIcon : lockedIcon;
+            worldEdgeImage.sprite = Manager.Achievements.Unlocked.Contains(Achievement.WorldEdgeFound) ? worldEdgeIcon : lockedIcon;
+            guildHallDemolishedImage.sprite = Manager.Achievements.Unlocked.Contains(Achievement.GuildHallDemolished) ? guildHallDemolishedIcon : lockedIcon;
+            waterfallImage.sprite = Manager.Achievements.Unlocked.Contains(Achievement.FoundWaterfall) ? waterfallIcon : lockedIcon;
+            //birdsImage.sprite = Manager.Achievements.Unlocked.Contains(Achievement.Birds) ? birdsIcon : lockedIcon;
         }
     }
 }

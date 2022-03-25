@@ -31,7 +31,7 @@ namespace Tutorial
 
     public class Tutorial : MonoBehaviour
     {
-        public static bool Active, DisableSelect;
+        public static bool Active, DisableSelect, DisableIntroMenu;
 
         // (Ben) I Don't love this architecture, but not sure a better way without making book public
         public static Action ShowBook;
@@ -48,6 +48,8 @@ namespace Tutorial
         private List<Objective> _currentObjectives;
         private int _sectionLine;
         private Action _onObjectivesComplete;
+
+        private GameState _prevState = GameState.InGame;
         
         #region Dialogue
         
@@ -71,18 +73,19 @@ namespace Tutorial
             next.onClick.AddListener(NextLine);
             
             State.OnNewGame += StartTutorial;
-            State.OnGameEnd += StartUpgradesDescription;
+            //State.OnGameEnd += StartUpgradesDescription;
             Cards.Cards.OnUnlock += StartUnlockDescription;
             Quests.Quests.OnQuestAdded += StartCampsDescription;
         }
 
         private void ShowDialogue(List<Line> lines)
         {
+            _prevState = Manager.State.Current;
             Manager.State.EnterState(GameState.InDialogue);
             _currentSection = lines;
             _sectionLine = 0;
             guide.GetComponent<RectTransform>().DOAnchorPosX(0, 0.5f);
-            dialogue.DOAnchorPosY(230, 0.5f);
+            dialogue.DOAnchorPosY(240, 0.5f);
             Manager.GameHud.Hide(GameHud.HudObject.LeftButtons);
 
             text.text = lines[0].Dialogue;
@@ -99,7 +102,7 @@ namespace Tutorial
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
             Manager.GameHud.Show(GameHud.HudObject.LeftButtons);
-            Manager.State.EnterState(GameState.InGame);
+            Manager.State.EnterState(_prevState);
             blocker.SetActive(false);
         }
 
@@ -419,18 +422,26 @@ namespace Tutorial
         private void StartUnlockDescription(Blueprint card)
         {
             if (Manager.Cards.UnlockedCards != 1) return;
-            
-            //TODO: Write Proper dialogue
-            ShowDialogue(new List<Line> {
-                new Line("You've just unlocked a blueprint for a new building!", GuidePose.Neutral),
-                new Line("You'll unlock more by completing stories"),
-                new Line("Unlocked cards"),
-            });
+
+            Newspaper.OnClosed += UnlockDescription;
+
+            void UnlockDescription()
+            {
+                Newspaper.OnClosed -= UnlockDescription;
+                //TODO: Write Proper dialogue
+                ShowDialogue(new List<Line> {
+                    new Line("You've just unlocked a blueprint for a new building!", GuidePose.Neutral),
+                    new Line("You'll unlock more by completing stories"),
+                    new Line("Unlocked cards"),
+                });
+            }
         }
         
-        private void StartUpgradesDescription()
+        /*private void StartUpgradesDescription()
         {
             if (Manager.Upgrades.GetLevel(UpgradeType.Discoveries) > 0) return;
+            
+            DisableIntroMenu = true;
             
             //TODO: Write Proper dialogue
             ShowDialogue(new List<Line> {
@@ -438,13 +449,20 @@ namespace Tutorial
                 new Line("Cards gone too!"),
                 new Line("Here upgrades!", GuidePose.PointingUp, ShowBook.Invoke),
                 new Line("Let me give you points", GuidePose.Neutral, AddTokens),
+                new Line("Dialogue Finished", GuidePose.Neutral, EndUpgradesDescription),
             });
+
+            void EndUpgradesDescription()
+            {
+                DisableIntroMenu = true;
+                Manager.IntroHud.Show();
+            }
             
             void AddTokens()
             {
                 foreach (Guild guild in Enum.GetValues(typeof(Guild))) Manager.Upgrades.GuildTokens[guild]++;
             }
-        }
+        }*/
         
         #endregion
     }
