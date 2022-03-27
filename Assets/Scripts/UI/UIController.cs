@@ -47,13 +47,13 @@ namespace UI
             }
         }
 
-        private void OnDrawGizmosSelected()
+        /*private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             foreach(KeyValuePair<GameObject, Vector2> pair in cursorOffsetOverrides)
             {
                 Gizmos.DrawSphere(pair.Key.transform.position + (Vector3)pair.Value, 10.0f);
             }
-        }
+        }*/
     }
 }
