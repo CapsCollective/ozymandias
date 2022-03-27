@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utilities;
+using DG.Tweening;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -23,8 +24,10 @@ namespace Inputs
         private GameObject worldSpaceCursor;
         private GameObject lastSelectedGameObject;
         private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
+        private Tween tween;
 
-        private float CursorSize { get
+        private float CursorSize { 
+            get
             {
                 return 60 * (Screen.height / 1080.0f); 
             }
@@ -47,7 +50,7 @@ namespace Inputs
 
             worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
-            worldSpaceCursor.SetActive(false);
+            worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
             selectionHelper.gameObject.SetActive(false);
             selectionHelper.sizeDelta = new Vector2(CursorSize, CursorSize);
         }
@@ -79,7 +82,7 @@ namespace Inputs
         {
             bool isController = Manager.Inputs.UsingController;
             if(Manager.State.Current == GameState.InGame)
-                worldSpaceCursor.gameObject.SetActive(isController);
+                ToggleWorldCursor(isController);
             if (Manager.State.Current == GameState.InMenu)
             {
                 selectionHelper.gameObject.SetActive(isController);
@@ -110,7 +113,7 @@ namespace Inputs
                     case GameState.Loading:
                         break;
                     case GameState.ToIntro:
-                        worldSpaceCursor.gameObject.SetActive(false);
+                        ToggleWorldCursor(false);
                         break;
                     case GameState.ToGame:
                         EventSystem.SetSelectedGameObject(null);
@@ -119,7 +122,7 @@ namespace Inputs
                     case GameState.InGame:
                         if (Manager.Inputs.UsingController)
                         {
-                            worldSpaceCursor.gameObject.SetActive(true);
+                            ToggleWorldCursor(true);
                             selectionHelper.gameObject.SetActive(false);
                         }
                         break;
@@ -137,6 +140,23 @@ namespace Inputs
             {
                 EventSystem.SetSelectedGameObject(null);
             }
+        }
+
+        private void ToggleWorldCursor(bool toggle)
+        {
+            var renderer = worldSpaceCursor.GetComponentInChildren<Renderer>();
+            Debug.Log(worldSpaceCursor.gameObject.name);
+            float tweenTo = toggle ? 0.5f : 0.0f;
+            float tweenFrom = toggle ? 0.0f : 0.5f;
+            tween = DOTween.To(() => tweenFrom, y => tweenFrom = y, tweenTo, 0.25f).OnUpdate(() =>
+            {
+                renderer.material.SetFloat("_Opacity", tweenFrom);
+            });
+        }
+
+        private void OnDestroy()
+        {
+            tween.Kill();
         }
     }
 }

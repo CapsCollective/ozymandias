@@ -9,7 +9,7 @@ namespace Inputs
 {
     public class Inputs
     {
-        const float SPHERECAST_RADIUS = 0.5f;
+        const float SPHERECAST_RADIUS = 0.4f;
 
         public bool UsingController => ControlScheme == PlayerInput.ControllerScheme;
         public Vector2 MousePosition 

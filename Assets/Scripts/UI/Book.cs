@@ -96,6 +96,9 @@ namespace UI
             unlocksRibbon.onClick.AddListener(() => Page = BookPage.Unlocks);
             progressRibbon.onClick.AddListener(() => Page = BookPage.Progress);
 
+            var rt = pages[_page].bookRibbon.transform as RectTransform;
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT);
+
             BookButton.OnClicked += (toUnlocks) =>
             {
                 if (toUnlocks) Page = BookPage.Unlocks;
