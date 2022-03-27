@@ -15,7 +15,7 @@ namespace UI
             Button = btn;
             ShouldDisplay = displayPolicy;
             StartPos = btn.transform.localPosition;
-            OffsetPos = StartPos + new Vector3(-150, 0, 0);
+            OffsetPos = StartPos + new Vector3(-200, 0, 0);
             IsDisplaying = true;
         }
 
@@ -55,9 +55,7 @@ namespace UI
 
             Manager.Inputs.OpenNewspaper.performed += _ =>
             {
-                if (!_newspaperButton.IsDisplaying) return;
-                if (Manager.State.Current == Utilities.GameState.InMenu) return;
-                newspaperButton.onClick.Invoke();
+                if (Manager.State.InGame) newspaperButton.onClick.Invoke();
             };
 
             Manager.Inputs.OpenQuests.performed += _ =>
