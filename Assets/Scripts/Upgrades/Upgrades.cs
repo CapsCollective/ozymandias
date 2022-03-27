@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Inputs;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -40,11 +41,15 @@ namespace Upgrades
 
         private void Awake()
         {
-            State.OnEnterState += (_) => Deselect();
-
             purchaseBox.purchaseButton.onClick.AddListener(Purchase);
             purchaseBox.deselectButton.onClick.AddListener(Deselect);
             _upgrades = GetComponentsInChildren<Upgrade>().ToDictionary(upgrade => upgrade.type);
+        }
+
+        private void Start()
+        {
+            State.OnEnterState += _ => Deselect();
+            Manager.Inputs.UIClose.performed += _ => Deselect();
         }
 
         private void Purchase()
@@ -76,6 +81,7 @@ namespace Upgrades
             purchaseBox.transform.position = upgrade.transform.position;
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);
+            if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(purchaseBox.purchaseButton.gameObject);
         }
 
         private void DisplayDetails(Upgrade upgrade)
@@ -105,6 +111,8 @@ namespace Upgrades
 
         private void Deselect()
         {
+            if (_selected == null) return;
+            if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(_selected.GetComponentInChildren<Button>().gameObject);
             _selected = null;
             purchaseBox.canvas.enabled = false;
         }

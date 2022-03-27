@@ -52,6 +52,20 @@ namespace UI
             {
                 _newspaperClosed = false;
             };
+
+            Manager.Inputs.OpenNewspaper.performed += _ =>
+            {
+                if (!_newspaperButton.IsDisplaying) return;
+                if (Manager.State.Current == Utilities.GameState.InMenu) return;
+                newspaperButton.onClick.Invoke();
+            };
+
+            Manager.Inputs.OpenQuests.performed += _ =>
+            {
+                if (!_questButton.IsDisplaying) return;
+                if (Manager.State.Current == Utilities.GameState.InMenu) return;
+                questButton.onClick.Invoke();
+            };
         }
 
         protected override void UpdateUi()

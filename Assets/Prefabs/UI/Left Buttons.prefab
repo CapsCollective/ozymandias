@@ -141,6 +141,11 @@ MonoBehaviour:
   pivot: {x: 0, y: 0.5}
   delay: 0.5
   type: 10
+  navigationDirections:
+    up: {fileID: 0}
+    down: {fileID: 0}
+    left: {fileID: 0}
+    right: {fileID: 0}
 --- !u!114 &6125769267517715672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3795023321368961674}
   - component: {fileID: 2508455162930751244}
+  - component: {fileID: 2014118933783010416}
   m_Layer: 5
   m_Name: Left Buttons
   m_TagString: Untagged
@@ -448,6 +454,18 @@ MonoBehaviour:
   duration: 0.5
   questButton: {fileID: 3795023322038554277}
   newspaperButton: {fileID: 3795023321622326119}
+--- !u!225 &2014118933783010416
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795023321368961669}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3795023321622326112
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +605,11 @@ MonoBehaviour:
   pivot: {x: 0, y: 0}
   delay: 0.5
   type: 9
+  navigationDirections:
+    up: {fileID: 0}
+    down: {fileID: 0}
+    left: {fileID: 0}
+    right: {fileID: 0}
 --- !u!114 &8015362018738886572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,6 +915,11 @@ MonoBehaviour:
   pivot: {x: 0, y: 0.5}
   delay: 0.5
   type: 11
+  navigationDirections:
+    up: {fileID: 0}
+    down: {fileID: 0}
+    left: {fileID: 0}
+    right: {fileID: 0}
 --- !u!114 &8538249681198540598
 MonoBehaviour:
   m_ObjectHideFlags: 0

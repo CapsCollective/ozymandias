@@ -91,7 +91,7 @@ namespace Managers
         public static Action OnUpdateUI;
         public static void UpdateUi() => OnUpdateUI.Invoke();
         public static void SelectUi(GameObject gameObject) => EventSystem.current.SetSelectedGameObject(gameObject);
-        public static bool IsOverUi => EventSystem.current.IsPointerOverGameObject();
+        public static bool IsOverUi => EventSystem.current.IsPointerOverGameObject(); // TODO: Fix/ suppress the warning from this
         #endregion
 
         #region Balancing Constants

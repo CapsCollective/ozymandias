@@ -33,6 +33,8 @@ namespace Cards
         private Cell _hoveredCell; // Used to only trigger calculations on cell changing
         private int _prevCardIndex = 1, _selectedCardIndex = -1;
         private Card _selectedCard;
+        private float _currentBadge = -1;
+        private int _lastBadge = -1;
 
         private ToggleGroup _toggleGroup;
         public  Card SelectedCard
@@ -40,15 +42,20 @@ namespace Cards
             get => _selectedCard;
             set
             {
-                _prevCardIndex = _selectedCardIndex;
+                if(_selectedCard != null && _lastBadge >= 0)
+                    _selectedCard.cardDisplay.Badges[_lastBadge].badge.OnPointerExit(null);
+
+                if (_selectedCardIndex >= 0) _prevCardIndex = _selectedCardIndex;
                 _selectedCardIndex = hand.FindIndex(card => card == value);
-                
+
                 _selectedCard = value;
-                if(_selectedCard) Manager.Map.Flood();
+                if(_selectedCard && _selectedCard.Toggle.IsInteractable()) Manager.Map.Flood();
                 else Manager.Map.Drain();
                 
                 Manager.Cursor.Current = _selectedCard ? CursorType.Build : CursorType.Pointer;
                 OnCardSelected?.Invoke(_selectedCard);
+                _lastBadge = -1;
+                _currentBadge = -1;
             }
         }
 
@@ -93,12 +100,12 @@ namespace Cards
 
         private void Start()
         {
-            Manager.Inputs.OnLeftClick.performed += PlaceBuilding;
-            Manager.Inputs.OnRotateBuilding.performed += RotateBuilding;
-            Manager.Inputs.OnSelectCards.performed += SelectCards;
-            Manager.Inputs.OnDeselectCards.performed += DeselectCards;
-            Manager.Inputs.OnNavigateCards.performed += NavigateCards;
-            Manager.Inputs.OnSelectCardIndex.performed += SelectCardIndex;
+            Manager.Inputs.LeftClick.performed += PlaceBuilding;
+            Manager.Inputs.RotateBuilding.performed += RotateBuilding;
+            Manager.Inputs.SelectCards.performed += SelectCards;
+            Manager.Inputs.DeselectCards.performed += DeselectCards;
+            Manager.Inputs.NavigateCards.performed += NavigateCards;
+            Manager.Inputs.SelectCardIndex.performed += SelectCardIndex;
             State.OnEnterState += (_) =>
             {
                 SelectCard(-1);
@@ -144,7 +151,7 @@ namespace Cards
             if (!SelectedCard || !_cellsValid || IsOverUi) return;
             PlacingBuilding = true;
             Blueprint blueprint = SelectedCard.Blueprint;
-            SelectedCard.Replace();
+            if (hand[_selectedCardIndex].Toggle.IsInteractable()) SelectedCard.Replace();
             if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
             SelectedCard = null;
         }
@@ -176,13 +183,14 @@ namespace Cards
         
         private void NavigateCards(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame || _selectedCardIndex == -1) return;
-            SelectCard((_selectedCardIndex + (int)obj.ReadValue<Vector2>().x + hand.Count) % hand.Count);
+            if (!Manager.State.InGame) return;
+            if (_selectedCardIndex == -1) SelectCard(_prevCardIndex);
+            else SelectCard((_selectedCardIndex + (int)obj.ReadValue<float>() + hand.Count) % hand.Count);
         }
 
         private void SelectCardIndex(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame) return;
+            if (!Manager.State.InGame ||  Manager.Tooltip.NavigationActive) return;
 
             int index = (int)obj.ReadValue<float>() - 1;
             SelectCard(_selectedCardIndex == index ? -1 : index);
@@ -191,21 +199,12 @@ namespace Cards
         public void SelectCard(int cardIndex)
         {
             if (cardIndex == _selectedCardIndex) return;
-            
+
             if (cardIndex >= 0)
             {
                 if (hand[cardIndex].IsReplacing) return;
-                int originalIndex = cardIndex;
-                do // Attempt to find a valid card
-                {
-                    if (hand[cardIndex].Toggle.interactable)
-                    {
-                        hand[cardIndex].Toggle.isOn = true;
-                        hand[cardIndex].OnPointerEnter(null);
-                        break;
-                    }    
-                    cardIndex = (cardIndex + 1) % hand.Count;
-                } while (originalIndex != cardIndex);
+                hand[cardIndex].OnPointerEnter(null);
+                hand[cardIndex].Toggle.isOn = true;
             }
             else _toggleGroup.SetAllTogglesOff();
         }
@@ -217,10 +216,9 @@ namespace Cards
         {
             get
             {
-                Ray ray = _cam.ScreenPointToRay(new Vector3(Manager.Inputs.MousePosition.x,
-                    Manager.Inputs.MousePosition.y,
-                    _cam.nearClipPlane));
-                Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
+                //Ray ray = Manager.Inputs.GetMouseRay(_cam);
+                //Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
+                var hit = Manager.Inputs.GetRaycast(_cam, 200f, layerMask);
                 return Manager.Map.GetClosestCell(hit.point);
             }
         }
@@ -244,6 +242,18 @@ namespace Cards
             _selectedCells = Manager.Map.GetCells(Manager.Cards.SelectedCard.Blueprint.sections, closest.Id, _rotation);
             _cellsValid = Cell.IsValid(_selectedCells);
             Manager.Map.Highlight(_selectedCells, _cellsValid ? HighlightState.Valid : HighlightState.Invalid);
+
+            // Badge Showing
+            if (!Manager.Inputs.UsingController) return;
+            _currentBadge += Time.deltaTime * 0.5f;
+            if (!SelectedCard.cardDisplay.Badges[(int)_currentBadge].badge.gameObject.activeSelf) _currentBadge = 0;
+            if (_currentBadge >= 0 && !SelectedCard.cardDisplay.Badges[(int)_currentBadge].badge.IsShowing)
+            {
+                if(_lastBadge >=0)
+                    SelectedCard.cardDisplay.Badges[_lastBadge].badge.OnPointerExit(null);
+                SelectedCard.cardDisplay.Badges[(int)_currentBadge].badge.OnPointerEnter(null);
+                _lastBadge = (int)_currentBadge;
+            }
         }
 
         private void ClearCells()

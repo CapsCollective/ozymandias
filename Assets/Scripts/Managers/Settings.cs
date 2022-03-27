@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace Managers
 {
-    public class Settings : MonoBehaviour
+    public class Settings : UIController
     {
         // Misc
         public TextMeshProUGUI versionText;

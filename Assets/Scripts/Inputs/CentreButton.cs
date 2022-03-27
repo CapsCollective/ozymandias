@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 using UnityEngine.UI;
 using static Managers.GameManager;
 
@@ -23,22 +24,39 @@ namespace Inputs
         [SerializeField] private Button button;
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private Canvas canvas;
-        [SerializeField] private Image buttonImage;
 
         [SerializeField] private GameObject dummyCursorNonScaling;
         [SerializeField] private GameObject dummyCursorScaling;
 
+        // Hold to confirm vars
+        [SerializeField] private Image maskImage;
+        private float _interactTimer;
+        
         private void Start()
         {
             var isMac = (Application.platform == RuntimePlatform.OSXPlayer || 
                          Application.platform == RuntimePlatform.OSXEditor);
             _dummyCursor = isMac ? dummyCursorNonScaling : dummyCursorScaling;
             button.onClick.AddListener(CenterCamera);
+            
+            Manager.Inputs.ReturnToTown.performed += _ =>
+            {
+                if (button.gameObject.activeSelf && Manager.State.InGame) CenterCamera();
+            };
+            
+            Manager.Inputs.ReturnToTown.canceled += _ => 
+            {
+                _interactTimer = 0;
+                maskImage.fillAmount = 0;
+            };
         }
 
         private void Update()
         {
-            float townDist = -Manager.Camera.transform.position.z;
+            if (Manager.Inputs.ReturnToTown.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+                maskImage.fillAmount = Mathf.InverseLerp(0, 0.4f, _interactTimer += Time.deltaTime);
+
+            float townDist = -Manager.Camera.FreeLook.Follow.position.z;
 
             bool isBeyondBounds = townDist > InnerDistance;
             button.gameObject.SetActive(isBeyondBounds);
@@ -58,7 +76,7 @@ namespace Inputs
 
         private void CenterCamera()
         {
-            Manager.Camera.MoveTo(Manager.Structures.TownCentre)
+            Manager.Camera.MoveTo(Manager.Structures.TownCentre + new Vector3(0,1,0))
                 .OnStart(() => { 
                     button.interactable = false;
                     buttonText.alpha = 0;

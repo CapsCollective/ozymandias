@@ -38,7 +38,8 @@ namespace Managers
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
         [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
-        [SerializeField] [Range(0, 1)] private float ToDDebug;
+        [SerializeField] private Image nextTurnMask;
+        private float _nextTurnTimer;
         
         private static readonly CameraMovement.CameraMove MenuPos = new CameraMovement.CameraMove(
             new Vector3(-2.0f, 1.0f, -24.0f),
@@ -71,13 +72,31 @@ namespace Managers
             quitButton.onClick.AddListener(Application.Quit);
             nextTurnButton.onClick.AddListener(() => EnterState(GameState.NextTurn));
             
-            Manager.Inputs.OnNextTurn.performed += _ => { if (InGame) EnterState(GameState.NextTurn); };
+            Manager.Inputs.NextTurn.performed += _ =>
+            {
+                if (InGame) EnterState(GameState.NextTurn);
+                _nextTurnTimer = 0;
+                nextTurnMask.fillAmount = 0;
+            };
+            
+            Manager.Inputs.NextTurn.canceled += _ => 
+            {
+                _nextTurnTimer = 0;
+                nextTurnMask.fillAmount = 0;
+            };
+            
             // Add cancel binding for credits
             Manager.Inputs.PlayerInput.UI.Cancel.performed += _ => {
                 if (Manager.State.InCredits) ResetCredits();
             };
         }
-        
+
+        private void Update()
+        {
+            if (InGame && Manager.Inputs.NextTurn.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+                nextTurnMask.fillAmount = Mathf.InverseLerp(0, 0.4f, _nextTurnTimer += Time.deltaTime);
+        }
+
         public void EnterState(GameState state)
         {
             _state = state;

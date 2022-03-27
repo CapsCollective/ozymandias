@@ -11,7 +11,8 @@
                     "id": "71bbbbfa-9f59-45ec-9c5d-60ea66455924",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Mouse Delta",
@@ -19,7 +20,8 @@
                     "id": "890c83d4-f8ea-488e-b0b8-c78427c7ce5b",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Left Click",
@@ -27,7 +29,8 @@
                     "id": "48b20d88-baee-4019-aea3-e565b6e52b5c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap(duration=0.3)"
+                    "interactions": "Tap(duration=0.3)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Left Mouse",
@@ -35,7 +38,8 @@
                     "id": "31a8fc31-16b9-4c27-afae-81f0bafd08a2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Right Click",
@@ -43,7 +47,8 @@
                     "id": "81fe7b64-a126-4391-84b7-69fe7c03ac20",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Right Mouse",
@@ -51,7 +56,8 @@
                     "id": "a86eadf2-f04a-4ef0-890c-3514f8dfd90e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Move Camera",
@@ -59,7 +65,8 @@
                     "id": "7c71ed57-0d72-4094-b95f-dbf4f29ae3ca",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Rotate Camera",
@@ -67,7 +74,8 @@
                     "id": "0a44445c-aa72-442e-9ce7-78b7793f95b1",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Zoom Camera",
@@ -75,23 +83,8 @@
                     "id": "61557cdb-469e-403a-8ccd-07f5d962dbaa",
                     "expectedControlType": "",
                     "processors": "Normalize(max=1),Scale",
-                    "interactions": ""
-                },
-                {
-                    "name": "Toggle Book",
-                    "type": "Button",
-                    "id": "38061098-501b-4c09-af6a-8b10442c20ae",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Toggle Tooltips",
-                    "type": "Button",
-                    "id": "66c79df1-d6cc-4d63-9162-523c1c2b24dd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Next Turn",
@@ -99,15 +92,8 @@
                     "id": "b9555a6f-7b47-4067-b0b5-7ed6ed3c7196",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Confirm Selected Structure",
-                    "type": "PassThrough",
-                    "id": "2940d26f-e08c-4a18-804f-8f913c5b61d7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Rotate Building",
@@ -115,7 +101,8 @@
                     "id": "01d6d096-8732-49ae-81e2-e83f8abaa8b6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Select Cards",
@@ -123,7 +110,8 @@
                     "id": "3688873b-b781-4552-a280-8318c205cd71",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Deselect Cards",
@@ -131,7 +119,8 @@
                     "id": "47714686-228f-4886-a09b-26c740e5bd54",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Navigate Cards",
@@ -139,7 +128,8 @@
                     "id": "3f065f30-0d1e-4f9c-854c-cf59b1871781",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Select Card Index",
@@ -147,7 +137,8 @@
                     "id": "272c9955-db7e-4e68-85fc-8d7cf6981830",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Screenshot",
@@ -155,15 +146,8 @@
                     "id": "2dd729ed-effd-4141-addd-a5abd2dcb05f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Navigate Bookmarks",
-                    "type": "Button",
-                    "id": "9282166e-cc5f-499a-b853-720b0b7bd76e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Dialogue Next",
@@ -171,7 +155,71 @@
                     "id": "93f5370f-21ac-4d13-9ca7-8da09db794b7",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Open Quests",
+                    "type": "Button",
+                    "id": "8b1ac4ed-a3ef-464a-a3a5-d1155e3eac19",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Open Newspaper",
+                    "type": "Button",
+                    "id": "de39b2e8-0d6a-4bac-aeba-f3fab0734340",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Demolish Building",
+                    "type": "PassThrough",
+                    "id": "2940d26f-e08c-4a18-804f-8f913c5b61d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Select Quest",
+                    "type": "PassThrough",
+                    "id": "ce00492c-5812-4647-aaaf-bc2bd80fefbb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Return To Town",
+                    "type": "Button",
+                    "id": "f6603c24-65ec-4871-b38b-2352c2dc3e80",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Toggle Tooltips",
+                    "type": "Button",
+                    "id": "66c79df1-d6cc-4d63-9162-523c1c2b24dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Navigate Tooltips",
+                    "type": "Value",
+                    "id": "cf428f0f-8d38-4cb4-a830-29e78542a018",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -279,7 +327,7 @@
                     "id": "164e5272-5227-42e7-a733-bd672b23aa9d",
                     "path": "<Gamepad>/rightStick/x",
                     "interactions": "",
-                    "processors": "Invert,AxisDeadzone,Scale(factor=75)",
+                    "processors": "AxisDeadzone,Scale(factor=75)",
                     "groups": "Controller",
                     "action": "Rotate Camera",
                     "isComposite": false,
@@ -332,7 +380,7 @@
                 {
                     "name": "positive",
                     "id": "e8ca6346-9311-4186-b1a5-cdf51dd87043",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Mouse and Keyboard",
@@ -343,35 +391,13 @@
                 {
                     "name": "negative",
                     "id": "587e54d4-52b4-4958-ab91-0b67c4529916",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Mouse and Keyboard",
                     "action": "Rotate Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "fd2c6981-53c6-45c4-90bb-9a8c08b6da5e",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Toggle Book",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5a75c688-e4ec-4432-9692-be31b5164126",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse and Keyboard",
-                    "action": "Toggle Book",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "Shoulder Buttons",
@@ -430,17 +456,6 @@
                 },
                 {
                     "name": "",
-                    "id": "048798e2-bacf-4c0d-bb66-ced35fe06f18",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Select Cards",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8a4805b4-d333-4691-86a6-9a5cc8c59f70",
                     "path": "<Gamepad>/dpad/down",
                     "interactions": "",
@@ -452,53 +467,53 @@
                 },
                 {
                     "name": "",
-                    "id": "9adc02fc-ee2b-4aa8-9c39-374503459508",
-                    "path": "<Gamepad>/dpad",
+                    "id": "10cb5e04-bfbe-418b-bdff-abf1b8ed6d02",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Deselect Cards",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Triggers",
+                    "id": "f0871e63-89da-4c0a-8586-805fddb0554e",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate Cards",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "be93001a-1e37-499c-9c00-c7ab81cb315c",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate Cards",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "d1c822c8-a6b3-40a8-9c1e-e0a9ed141c4f",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
                     "action": "Navigate Cards",
                     "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f98e91fb-106b-4dc1-8adb-a58b3c6ea0d8",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Toggle Tooltips",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cc970a85-536d-41f1-a2fd-a272b252fae9",
-                    "path": "<Keyboard>/delete",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse and Keyboard",
-                    "action": "Confirm Selected Structure",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5c32499e-11c4-47eb-8a32-e112a9763e3b",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Confirm Selected Structure",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
                     "id": "3392453a-a4ab-48d5-abac-119e7b4455be",
                     "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Controller",
                     "action": "Next Turn",
@@ -554,7 +569,7 @@
                     "id": "59f19d06-3e47-48b9-84cd-09950509ff35",
                     "path": "<Gamepad>/rightStick/y",
                     "interactions": "",
-                    "processors": "Scale(factor=2)",
+                    "processors": "Scale(factor=4)",
                     "groups": "Controller",
                     "action": "Zoom Camera",
                     "isComposite": false,
@@ -639,6 +654,39 @@
                 },
                 {
                     "name": "",
+                    "id": "a69c4451-3dd7-45e9-844e-665523ce4edf",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Select Card Index",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ef65c54-05de-4319-9773-04b03716ee47",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "Scale(factor=2)",
+                    "groups": "Controller",
+                    "action": "Select Card Index",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b65f256-4c08-41d7-bc7b-a10335d3ee66",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "Scale(factor=3)",
+                    "groups": "Controller",
+                    "action": "Select Card Index",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "56d3c50c-aa05-4202-8b91-e7fdb6918d84",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -658,39 +706,6 @@
                     "action": "Right Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "Shoulder Buttons",
-                    "id": "edc09bf7-f22d-4717-ac78-07f1802b87ef",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Navigate Bookmarks",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "5a1ce9b9-7dcd-4c00-a72f-7f3a4401cc1c",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Navigate Bookmarks",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "9204114e-4eac-43ec-a3d7-b8000350d3cf",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Navigate Bookmarks",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -713,6 +728,160 @@
                     "action": "Dialogue Next",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91c3013d-b8d3-4242-af40-90b410536afb",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Open Quests",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c32228f2-eaa9-4472-9700-f9d58feb27fb",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Open Newspaper",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e0e9afe-212e-47e8-bf25-ce43c98f269d",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Return To Town",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43b8d9d8-a4e6-4c25-a907-ffeccb76d18c",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Toggle Tooltips",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c57d876-dabe-4514-8114-7716310d2c14",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Tooltips",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Left Stick",
+                    "id": "4c549e7e-003b-41fd-bf2f-1b5eff688b75",
+                    "path": "2DVector",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate Tooltips",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "fdb69875-a3ea-4a46-b08e-1de29f625590",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Tooltips",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "d323bc0d-9c2b-4fdd-b05e-5dd0060ceb23",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Tooltips",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "d6d59c54-bea8-4f13-839d-898275f4dfd9",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Tooltips",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "5415e797-d113-4a75-abfc-126fb28fa944",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Tooltips",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "88530225-4f95-4d29-ae75-3fb21b99cb46",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Select Quest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52d65d8f-f2b3-4b41-be5a-fe62ced4f998",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Select Quest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc970a85-536d-41f1-a2fd-a272b252fae9",
+                    "path": "<Keyboard>/delete",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Demolish Building",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c32499e-11c4-47eb-8a32-e112a9763e3b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Demolish Building",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -726,7 +895,8 @@
                     "id": "8a9357cc-284f-4969-9575-d1b9017cdb5f",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Submit",
@@ -734,7 +904,8 @@
                     "id": "5e7faee8-a80c-4de9-b224-525ca7934fa8",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Cancel",
@@ -742,7 +913,8 @@
                     "id": "f4b486a2-c0ff-4c4c-9645-ce0108ee5e9b",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Point",
@@ -750,7 +922,8 @@
                     "id": "184850df-32f7-451a-a83d-6b75d8f7b75b",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Click",
@@ -758,7 +931,8 @@
                     "id": "7ad002d5-abfd-444b-9ac9-1b911838f3f6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ScrollWheel",
@@ -766,7 +940,8 @@
                     "id": "9f18eb80-e94c-423f-96a6-91a26a0a3342",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "MiddleClick",
@@ -774,7 +949,8 @@
                     "id": "0dcb8870-2934-414d-8658-ec4eddbe065f",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "RightClick",
@@ -782,7 +958,8 @@
                     "id": "8fda8e1a-3739-45af-b37c-448748eca144",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "TrackedDevicePosition",
@@ -790,7 +967,8 @@
                     "id": "2dfdb4e7-14f0-4ae2-b503-b187abacdcd2",
                     "expectedControlType": "Vector3",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "TrackedDeviceOrientation",
@@ -798,7 +976,26 @@
                     "id": "f343d9c8-4719-4eca-a21b-a43bcb75be2d",
                     "expectedControlType": "Quaternion",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Navigate Bookmarks",
+                    "type": "Button",
+                    "id": "92691a12-eced-4fe7-af78-5cc1701e980c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Toggle Book",
+                    "type": "Button",
+                    "id": "112e0fa7-f219-4ec3-8209-c9b1e3e0ed93",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=1),Press(behavior=1)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -830,7 +1027,7 @@
                     "path": "<Joystick>/stick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Joystick;Controller",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -841,7 +1038,7 @@
                     "path": "<Joystick>/stick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Joystick;Controller",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -852,7 +1049,7 @@
                     "path": "<Joystick>/stick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Joystick;Controller",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -863,7 +1060,7 @@
                     "path": "<Joystick>/stick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Joystick;Controller",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -919,6 +1116,61 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Mouse and Keyboard",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left Stick",
+                    "id": "3d900f04-36bc-4130-92a5-168f86faf606",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "09af6900-c6bf-444c-8e8d-3d854a8a8de9",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "a5018533-ffb3-41fc-a953-710cd5d8bbc7",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "f6a6969d-976a-4748-ac93-ad7b66e58b30",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "ffbc0719-e683-4e52-9736-4d43daed66b8",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -1074,6 +1326,61 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Shoulder Buttons",
+                    "id": "7b3107ba-fe2d-426a-bac9-3fbef15409d8",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate Bookmarks",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "549f38a7-82ce-4b2b-993e-f5acc9c2c12d",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Bookmarks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "9d85a038-01d9-43b7-8cd3-1187e7a2dbc0",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Navigate Bookmarks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "df5dbf80-e43a-4f12-8925-13854f1c5528",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Toggle Book",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6830b028-39b5-469b-9b1b-2ace0320efcf",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Toggle Book",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
