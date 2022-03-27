@@ -43,7 +43,7 @@ namespace Cards
             get => _selectedCard;
             set
             {
-                if(_selectedCard != null)
+                if(_selectedCard != null && _lastBadge >= 0)
                     _selectedCard.cardDisplay.Badges[_lastBadge].badge.OnPointerExit(null);
 
                 if (_selectedCardIndex >= 0) _prevCardIndex = _selectedCardIndex;
@@ -199,7 +199,7 @@ namespace Cards
         public void SelectCard(int cardIndex)
         {
             if (cardIndex == _selectedCardIndex) return;
-            
+
             if (cardIndex >= 0)
             {
                 if (hand[cardIndex].IsReplacing) return;
