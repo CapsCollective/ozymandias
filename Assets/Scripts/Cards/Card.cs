@@ -48,7 +48,7 @@ namespace Cards
 
         public void ToggleSelect(bool isOn)
         {
-            if(Toggle.IsInteractable()) cardDisplay.SetHighlight(isOn);
+            if (Toggle.interactable) cardDisplay.SetHighlight(isOn);
 
             if (IsReplacing) return;
             

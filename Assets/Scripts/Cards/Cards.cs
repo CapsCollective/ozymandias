@@ -9,7 +9,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
 namespace Cards
@@ -101,12 +100,12 @@ namespace Cards
 
         private void Start()
         {
-            Manager.Inputs.OnLeftClick.performed += PlaceBuilding;
-            Manager.Inputs.OnRotateBuilding.performed += RotateBuilding;
-            Manager.Inputs.OnSelectCards.performed += SelectCards;
-            Manager.Inputs.OnDeselectCards.performed += DeselectCards;
-            Manager.Inputs.OnNavigateCards.performed += NavigateCards;
-            Manager.Inputs.OnSelectCardIndex.performed += SelectCardIndex;
+            Manager.Inputs.LeftClick.performed += PlaceBuilding;
+            Manager.Inputs.RotateBuilding.performed += RotateBuilding;
+            Manager.Inputs.SelectCards.performed += SelectCards;
+            Manager.Inputs.DeselectCards.performed += DeselectCards;
+            Manager.Inputs.NavigateCards.performed += NavigateCards;
+            Manager.Inputs.SelectCardIndex.performed += SelectCardIndex;
             State.OnEnterState += (_) =>
             {
                 SelectCard(-1);
@@ -184,13 +183,14 @@ namespace Cards
         
         private void NavigateCards(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame || _selectedCardIndex == -1) return;
-            SelectCard((_selectedCardIndex + (int)obj.ReadValue<float>() + hand.Count) % hand.Count);
+            if (!Manager.State.InGame) return;
+            if (_selectedCardIndex == -1) SelectCard(_prevCardIndex);
+            else SelectCard((_selectedCardIndex + (int)obj.ReadValue<float>() + hand.Count) % hand.Count);
         }
 
         private void SelectCardIndex(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame) return;
+            if (!Manager.State.InGame ||  Manager.Tooltip.NavigationActive) return;
 
             int index = (int)obj.ReadValue<float>() - 1;
             SelectCard(_selectedCardIndex == index ? -1 : index);

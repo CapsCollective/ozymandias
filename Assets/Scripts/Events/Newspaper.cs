@@ -56,6 +56,7 @@ namespace Events
             Transform t = transform;
             t.position = ClosePos;
             t.eulerAngles = CloseRot;
+            Manager.Inputs.UIClose.performed += _ => Close();
         }
 
         private void NextTurnOpen()
@@ -102,7 +103,6 @@ namespace Events
     
         public void OnChoiceSelected(int choice)
         {
-            //TODO: This needs to be more robust for the controller input
             if (!_canvas.enabled) return; // Ignore input if newspaper is closed
             
             articleList[0].AddChoiceOutcome (_choiceEvent.MakeChoice(choice));
@@ -110,13 +110,7 @@ namespace Events
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             SelectUi(continueButton.gameObject);
-            Manager.Inputs.UIClose.performed += UIClose_performed;
             UpdateUi();
-        }
-
-        private void UIClose_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            Close();
         }
 
         private static readonly string[] NewspaperTitles = {
@@ -147,13 +141,14 @@ namespace Events
             transform.DOLocalRotate(Vector3.zero, animateInDuration);
             if (!_choiceSelected)
             {
-                Manager.Inputs.UIClose.performed += UIClose_performed;
                 OnOpen();
             }
         }
 
         private void Close()
         {
+            if (!_canvas.enabled || !continueButton.interactable) return;
+            
             transform.DOLocalMove(ClosePos, animateOutDuration);
             transform.DOLocalRotate(CloseRot, animateOutDuration)
                 .OnComplete(() =>
@@ -162,7 +157,6 @@ namespace Events
                     SaveFile.SaveState(); // Save here so state only locks in after paper is closed
                     _canvas.enabled = false;
                     Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
-                    Manager.Inputs.UIClose.performed -= UIClose_performed;
                     OnClose();
                 });
         }

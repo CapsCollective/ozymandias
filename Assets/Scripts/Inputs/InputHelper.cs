@@ -123,11 +123,8 @@ namespace Inputs
                         selectionHelper.gameObject.SetActive(false);
                         break;
                     case GameState.InGame:
-                        if (Manager.Inputs.UsingController)
-                        {
-                            ToggleWorldCursor(true);
-                            selectionHelper.gameObject.SetActive(false);
-                        }
+                        ToggleWorldCursor(true); 
+                        selectionHelper.gameObject.SetActive(false);
                         break;
                     case GameState.NextTurn:
                         break;

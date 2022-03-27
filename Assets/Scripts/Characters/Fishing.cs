@@ -33,7 +33,7 @@ namespace Characters
                 bool active = Random.Range(0, 5) == 0;
                 gameObject.SetActive(active);
             };
-            Manager.Inputs.OnLeftClick.performed += FishCheck;
+            Manager.Inputs.LeftClick.performed += FishCheck;
             gameObject.SetActive(false);
         }
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using DG.Tweening;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilities;
 using static Managers.GameManager;
@@ -15,6 +17,13 @@ namespace Tooltip
         private bool _mouseOver;
         private float _mouseTimer;
 
+        [Serializable]
+        public struct NavigationDirections
+        {
+            public TooltipPlacement up, down, left, right;
+        }
+        public NavigationDirections navigationDirections;
+        
         private void Start()
         {
             _mouseTimer = delay;
@@ -36,6 +45,8 @@ namespace Tooltip
             t.pivot = pivot;
             t.anchoredPosition = position;
             Manager.Tooltip.UpdateTooltip(type);
+            
+            if (Manager.Tooltip.NavigationActive && type != TooltipType.Stability) transform.DOScale(1.1f, 0.3f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -43,6 +54,7 @@ namespace Tooltip
             _mouseOver = false;
             _mouseTimer = delay;
             Manager.Tooltip.Fade(0);
+            transform.DOScale(1.0f, 0.3f);
         }
     }
 }

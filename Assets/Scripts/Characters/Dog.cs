@@ -24,7 +24,7 @@ namespace Characters
             _cam = Camera.main;
             
             
-            Manager.Inputs.OnLeftClick.performed += PatCheck;
+            Manager.Inputs.LeftClick.performed += PatCheck;
         }
 
         private void PatCheck(InputAction.CallbackContext obj)
@@ -39,7 +39,7 @@ namespace Characters
     
         private void OnDestroy()
         {
-            Manager.Inputs.OnLeftClick.performed -= PatCheck;
+            Manager.Inputs.LeftClick.performed -= PatCheck;
         }
     }
 }

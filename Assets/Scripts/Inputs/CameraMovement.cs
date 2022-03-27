@@ -58,10 +58,10 @@ namespace Inputs
 
         private void Start()
         {
-            Manager.Inputs.OnRightMouse.started += RightClick;
-            Manager.Inputs.OnRightMouse.canceled += RightClick;
-            Manager.Inputs.OnLeftMouse.started += LeftClick;
-            Manager.Inputs.OnLeftMouse.canceled += LeftClick;
+            Manager.Inputs.RightMouse.started += RightClick;
+            Manager.Inputs.RightMouse.canceled += RightClick;
+            Manager.Inputs.LeftMouse.started += LeftClick;
+            Manager.Inputs.LeftMouse.canceled += LeftClick;
         }
 
         private void RightClick(InputAction.CallbackContext context)
@@ -94,13 +94,13 @@ namespace Inputs
             // Depth of Field stuff
             volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
             
-            if (!Manager.State.InGame) return;
+            if (!Manager.State.InGame || Manager.Tooltip.NavigationActive) return;
 
-            float rotation = Manager.Inputs.OnRotateCamera.ReadValue<float>();
+            float rotation = Manager.Inputs.RotateCamera.ReadValue<float>();
             if (rotation != 0)
             {
                 OnRotate?.Invoke();
-                var keyboardOrMouse = Inputs.DeviceIsKeyboard(Manager.Inputs.OnRotateCamera) ? Time.deltaTime : .5f;
+                var keyboardOrMouse = Inputs.DeviceIsKeyboard(Manager.Inputs.RotateCamera) ? Time.deltaTime : .5f;
                 FreeLook.m_XAxis.Value += rotation * keyboardOrMouse;
             }
 
@@ -125,7 +125,7 @@ namespace Inputs
                 dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
             }
 
-            Vector2 inputDir = Manager.Inputs.OnMoveCamera.ReadValue<Vector2>() * Time.deltaTime;
+            Vector2 inputDir = Manager.Inputs.MoveCamera.ReadValue<Vector2>() * Time.deltaTime;
             inputDir += dragDir;
             if (inputDir.sqrMagnitude > 0.0002f)
             {
@@ -137,7 +137,7 @@ namespace Inputs
             FreeLook.Follow.GetChild(0).forward = crossFwd;
 
             // Scrolling
-            float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>() * Time.deltaTime;
+            float scroll = -Manager.Inputs.ZoomCamera.ReadValue<float>() * Time.deltaTime;
             if(scroll != 0) OnZoom?.Invoke();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);

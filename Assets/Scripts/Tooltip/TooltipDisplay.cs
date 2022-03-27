@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Managers;
 using TMPro;
 using UnityEngine;
 using Utilities;
@@ -19,12 +20,13 @@ namespace Tooltip
 
     public class TooltipDisplay : MonoBehaviour
     {
-        private int currentTooltip = -1;
         private CanvasGroup _cg;
         private Tween _tween;
         [SerializeField] private TextMeshProUGUI title, details, description;
-        [Space]
-        [SerializeField] private TooltipPlacement[] allTooltips;
+
+        [SerializeField] private TooltipPlacement defaultTooltip;
+        private TooltipPlacement _selectedTooltip;
+        public bool NavigationActive { get; private set; }
 
         const float FadeDuration = 0.3f;
 
@@ -123,45 +125,52 @@ namespace Tooltip
         
         private void Start()
         {
+            NavigationActive = false;
+            _selectedTooltip = defaultTooltip;
             _cg = GetComponent<CanvasGroup>();
             Manager.Inputs.ToggleTooltips.performed += ToggleTooltips;
-            Inputs.Inputs.OnControlChange += OnControlChange;
+            Inputs.Inputs.OnControlChange += _ => DeactivateTooltips();
+            State.OnEnterState += _ => DeactivateTooltips();
 
-            // Turn off tooltips if camera moves
-            Manager.Inputs.OnMoveCamera.performed += _ =>
-            {
-                if (currentTooltip >= 0)
-                {
-                    allTooltips[currentTooltip].OnPointerExit(null);
-                    currentTooltip = -1;
-                }
-            };
+            Manager.Inputs.NavigateTooltips.performed += NavigateTooltips;
         }
 
-        private void OnControlChange(InputControlScheme obj)
+        private void DeactivateTooltips()
         {
-            if(currentTooltip >= 0)
-                allTooltips[currentTooltip].OnPointerExit(null);
+            _selectedTooltip.OnPointerExit(null);
+            NavigationActive = false;
         }
 
-        private void ToggleTooltips(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void ToggleTooltips(InputAction.CallbackContext obj)
         {
-            var dir = (int)obj.ReadValue<float>();
-            if(currentTooltip >= 0) allTooltips[currentTooltip].OnPointerExit(null);
-            currentTooltip += dir;
-            if (currentTooltip >= allTooltips.Length) currentTooltip = -1;
-            else if (currentTooltip < -1) currentTooltip = allTooltips.Length - 1;
-            if (currentTooltip >= 0)
-            {
-                if (_tween != null && !_tween.IsComplete())
-                {
-                    _tween.Kill(true);
-                    _cg.alpha = 1;
-                }
-                allTooltips[currentTooltip].OnPointerEnter(null);
-            }
+            if (!Manager.State.InGame) return;
+            
+            NavigationActive = !NavigationActive;
+            if (NavigationActive) _selectedTooltip.OnPointerEnter(null);
+            else _selectedTooltip.OnPointerExit(null);
         }
 
+        private void NavigateTooltips(InputAction.CallbackContext obj)
+        {
+            if (!NavigationActive) return;
+
+            Vector2 direction = Manager.Inputs.NavigateTooltips.ReadValue<Vector2>();
+            Debug.Log(direction);
+            Debug.Log((int)direction.y == -1);
+            _selectedTooltip.OnPointerExit(null);
+
+            if (Mathf.RoundToInt(direction.y) == 1 && _selectedTooltip.navigationDirections.up)
+             _selectedTooltip = _selectedTooltip.navigationDirections.up;
+            else if (Mathf.RoundToInt(direction.y) == -1 && _selectedTooltip.navigationDirections.down)
+             _selectedTooltip = _selectedTooltip.navigationDirections.down;
+            else if (Mathf.RoundToInt(direction.x) == -1 && _selectedTooltip.navigationDirections.left)
+             _selectedTooltip = _selectedTooltip.navigationDirections.left;
+            else if (Mathf.RoundToInt(direction.x) == 1 && _selectedTooltip.navigationDirections.right)
+             _selectedTooltip = _selectedTooltip.navigationDirections.right;
+            
+            _selectedTooltip.OnPointerEnter(null);
+        }
+        
         public void UpdateTooltip(TooltipType type)
         {
             TooltipConfig config = Configs[type];
@@ -331,12 +340,6 @@ namespace Tooltip
         public bool IsVisible()
         {
             return _cg.alpha > 0;
-        }
-
-        [Button]
-        public void GetTooltips()
-        {
-            allTooltips = FindObjectsOfType<TooltipPlacement>();
         }
     }
 }

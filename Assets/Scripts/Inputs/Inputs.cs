@@ -17,7 +17,7 @@ namespace Inputs
             get
             {
                 if(!UsingController)
-                    return OnMousePosition.ReadValue<Vector2>();
+                    return MouseMoved.ReadValue<Vector2>();
                 return Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
             }
         }
@@ -28,87 +28,84 @@ namespace Inputs
 
         public static InputControlScheme ControlScheme;
 
-        public Action ToggleBook;
-        public Action CenterCamera;
-
         // Player Input
         public PlayerInputs PlayerInput { get; }
-        
-        public InputAction OnLeftMouse { get; }
-        public InputAction OnLeftClick { get; }
-        public InputAction OnRightMouse { get; }
-        public InputAction OnRightClick { get; }
-        public InputAction OnZoomCamera { get; }
-        public InputAction OnRotateCamera { get; }
-        public InputAction OnMousePosition { get; }
-        public InputAction OnMoveCamera { get; }
-        public InputAction OnConfirmSelectedStructure { get; }
-        public InputAction OnNextTurn { get; }
-        public InputAction OnToggleBook { get; }
-        public InputAction OnRotateBuilding { get; }
-        public InputAction OnSelectCards { get; }
-        public InputAction OnDeselectCards { get; }
-        public InputAction OnNavigateCards { get; }
-        public InputAction OnNavigateBookmark { get; }
-        public InputAction OnSelectCardIndex { get; }
-        public InputAction OnDialogueNext{ get; }
-        public InputAction OpenQuests{ get; }
-        public InputAction OpenNewspaper{ get; }
-        public InputAction UIClose{ get; }
-        public InputAction ReturnToTown{ get; }
-        public InputAction ToggleTooltips{ get; }
+        private InputAction MouseMoved { get; }
+        public InputAction LeftMouse { get; }
+        public InputAction LeftClick { get; }
+        public InputAction RightMouse { get; }
+        public InputAction RightClick { get; }
+        public InputAction ZoomCamera { get; }
+        public InputAction RotateCamera { get; }
+        public InputAction MoveCamera { get; }
+        public InputAction DemolishBuilding { get; }
+        public InputAction SelectQuest { get; }
+        public InputAction NextTurn { get; }
+        public InputAction ToggleBook { get; }
+        public InputAction RotateBuilding { get; }
+        public InputAction SelectCards { get; }
+        public InputAction DeselectCards { get; }
+        public InputAction NavigateCards { get; }
+        public InputAction NavigateBookmark { get; }
+        public InputAction SelectCardIndex { get; }
+        public InputAction DialogueNext { get; }
+        public InputAction OpenQuests { get; }
+        public InputAction OpenNewspaper { get; }
+        public InputAction UIClose { get; }
+        public InputAction ReturnToTown { get; }
+        public InputAction ToggleTooltips { get; }
+        public InputAction NavigateTooltips { get; }
 
         public Inputs()
         {
             PlayerInput = new PlayerInputs();
 
-            OnMousePosition = PlayerInput.Player.MousePosition;
-            OnLeftMouse = PlayerInput.Player.LeftMouse;
-            OnLeftClick = PlayerInput.Player.LeftClick;
-            OnRightMouse = PlayerInput.Player.RightMouse;
-            OnRightClick = PlayerInput.Player.RightClick;
+            MouseMoved = PlayerInput.Player.MousePosition;
+            LeftMouse = PlayerInput.Player.LeftMouse;
+            LeftClick = PlayerInput.Player.LeftClick;
+            RightMouse = PlayerInput.Player.RightMouse;
+            RightClick = PlayerInput.Player.RightClick;
 
             // Camera Controls
-            OnMoveCamera = PlayerInput.Player.MoveCamera;
-            OnRotateCamera = PlayerInput.Player.RotateCamera;
-            OnZoomCamera = PlayerInput.Player.ZoomCamera;
+            MoveCamera = PlayerInput.Player.MoveCamera;
+            RotateCamera = PlayerInput.Player.RotateCamera;
+            ZoomCamera = PlayerInput.Player.ZoomCamera;
             
-            // UI Navigation
-            OnConfirmSelectedStructure = PlayerInput.Player.ConfirmSelectedStructure;
-            OnNextTurn = PlayerInput.Player.NextTurn;
-            OnToggleBook = PlayerInput.UI.ToggleBook;
-            OnRotateBuilding = PlayerInput.Player.RotateBuilding;
-            OnNavigateBookmark = PlayerInput.UI.NavigateBookmarks;
-            OpenQuests = PlayerInput.Player.OpenQuests;
-            OpenNewspaper = PlayerInput.Player.OpenNewspaper;
+            // Menus
+            ToggleBook = PlayerInput.UI.ToggleBook;
+            NavigateBookmark = PlayerInput.UI.NavigateBookmarks;
             UIClose = PlayerInput.UI.Cancel;
-            ToggleTooltips = PlayerInput.Player.ToggleTooltips;
-
-            // Cards
-            OnSelectCards = PlayerInput.Player.SelectCards;
-            OnDeselectCards = PlayerInput.Player.DeselectCards;
-            OnNavigateCards = PlayerInput.Player.NavigateCards;
-            OnSelectCardIndex = PlayerInput.Player.SelectCardIndex;
-            
-            // Dialogue
-            OnDialogueNext = PlayerInput.Player.DialogueNext;
-
-            // Quests
+            OpenNewspaper = PlayerInput.Player.OpenNewspaper;
             OpenQuests = PlayerInput.Player.OpenQuests;
 
+            // Building Placement
+
+            // Tooltips
+            ToggleTooltips = PlayerInput.Player.ToggleTooltips;
+            NavigateTooltips = PlayerInput.Player.NavigateTooltips;
+
+            // Structures
+            RotateBuilding = PlayerInput.Player.RotateBuilding;
+            DemolishBuilding = PlayerInput.Player.DemolishBuilding;
+            SelectQuest = PlayerInput.Player.SelectQuest;
+            
+            // Cards
+            SelectCards = PlayerInput.Player.SelectCards;
+            DeselectCards = PlayerInput.Player.DeselectCards;
+            NavigateCards = PlayerInput.Player.NavigateCards;
+            SelectCardIndex = PlayerInput.Player.SelectCardIndex;
+
+            // Misc
+            NextTurn = PlayerInput.Player.NextTurn;
+            DialogueNext = PlayerInput.Player.DialogueNext;
+            ReturnToTown = PlayerInput.Player.ReturnToTown;
+            
             PlayerInput.UI.Enable();
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;
             ControlScheme =  PlayerInput.controlSchemes[PlatformManager.Instance.Input.GetDefaultControlScheme()];
             PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
-            OnToggleBook.performed += OnToggleBook_performed;
-        }
-
-        private void OnToggleBook_performed(InputAction.CallbackContext obj)
-        {
-            if (obj.interaction is HoldInteraction) CenterCamera?.Invoke();
-            else if (obj.interaction is PressInteraction) ToggleBook?.Invoke();
         }
 
         public void TogglePlayerInput(bool toggle)

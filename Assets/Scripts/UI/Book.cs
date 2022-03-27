@@ -112,7 +112,7 @@ namespace UI
                 Open();
             };
 
-            Manager.Inputs.ToggleBook += () =>
+            Manager.Inputs.ToggleBook.performed += _ =>
             {
                 if (Manager.Cards.SelectedCard != null)
                 {
@@ -146,7 +146,7 @@ namespace UI
                     pages[_page].canvasGroup.GetComponent<UIController>().OnOpen();
                     _changingPage = false;
                 });
-            Manager.Inputs.OnNavigateBookmark.performed += OnNavigateBookmark_performed;
+            Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }
 
 
@@ -165,7 +165,7 @@ namespace UI
                     Manager.State.EnterState(_closeState);
                 });
 
-            Manager.Inputs.OnNavigateBookmark.performed -= OnNavigateBookmark_performed;
+            Manager.Inputs.NavigateBookmark.performed -= OnNavigateBookmark_performed;
         }
 
         private void OnNavigateBookmark_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

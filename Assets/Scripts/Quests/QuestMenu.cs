@@ -62,11 +62,13 @@ namespace Quests
         {
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             _canvas = GetComponent<Canvas>();
+            
             closeButton.onClick.AddListener(Close);
-            Manager.Inputs.ToggleBook += () => { Close(); };
+            Manager.Inputs.ToggleBook.performed += _ => Close();
+            
             nextButton.onClick.AddListener(() => ChangeQuest(SwapDir.Right));
             previousButton.onClick.AddListener(() => ChangeQuest(SwapDir.Left));
-            EventHandler handler = (s, e) => Close();
+            
             Select.OnQuestSelected += quest =>
             {
                 SelectedQuest = quest;
@@ -189,7 +191,7 @@ namespace Quests
                     DisplayCloseButton(true);
                     Manager.Inputs.OpenQuests.performed += OpenQuests_performed;
                     Manager.Inputs.UIClose.performed += OpenQuests_performed;
-                    if (Current.Count > 1) Manager.Inputs.OnNavigateBookmark.performed += NavigateFlyers;
+                    if (Current.Count > 1) Manager.Inputs.NavigateBookmark.performed += NavigateFlyers;
                 });
             OpenFlyer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
             Debug.Log(OpenFlyer.gameObject.name);
@@ -200,7 +202,7 @@ namespace Quests
             if (!_opened) return;
             Manager.Inputs.OpenQuests.performed -= OpenQuests_performed;
             Manager.Inputs.UIClose.performed -= OpenQuests_performed;
-            if (Current.Count > 1) Manager.Inputs.OnNavigateBookmark.performed -= NavigateFlyers;
+            if (Current.Count > 1) Manager.Inputs.NavigateBookmark.performed -= NavigateFlyers;
             DisplayCloseButton(false);
             DisplayMoveButtons(false);
             OpenFlyer.transform.DOLocalMove(_offScreenPos, animateOutDuration);
@@ -224,7 +226,7 @@ namespace Quests
         
         private void DisplayCloseButton(bool display)
         {
-            _closeButtonCanvas.DOFade(display ? 1.0f : 0.0f, 0.2f);
+            _closeButtonCanvas.DOFade(display && !Manager.Inputs.UsingController ? 1.0f : 0.0f, 0.2f);
         }
 
         private void OpenQuests_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

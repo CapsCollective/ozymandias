@@ -111,36 +111,9 @@ namespace Inputs
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Toggle Book"",
-                    ""type"": ""Button"",
-                    ""id"": ""38061098-501b-4c09-af6a-8b10442c20ae"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Toggle Tooltips"",
-                    ""type"": ""Button"",
-                    ""id"": ""66c79df1-d6cc-4d63-9162-523c1c2b24dd"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Next Turn"",
                     ""type"": ""Button"",
                     ""id"": ""b9555a6f-7b47-4067-b0b5-7ed6ed3c7196"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Confirm Selected Structure"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""2940d26f-e08c-4a18-804f-8f913c5b61d7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -226,6 +199,51 @@ namespace Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Demolish Building"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""2940d26f-e08c-4a18-804f-8f913c5b61d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select Quest"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ce00492c-5812-4647-aaaf-bc2bd80fefbb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Return To Town"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6603c24-65ec-4871-b38b-2352c2dc3e80"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Toggle Tooltips"",
+                    ""type"": ""Button"",
+                    ""id"": ""66c79df1-d6cc-4d63-9162-523c1c2b24dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Navigate Tooltips"",
+                    ""type"": ""Value"",
+                    ""id"": ""cf428f0f-8d38-4cb4-a830-29e78542a018"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -333,7 +351,7 @@ namespace Inputs
                     ""id"": ""164e5272-5227-42e7-a733-bd672b23aa9d"",
                     ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",
-                    ""processors"": ""Invert,AxisDeadzone,Scale(factor=75)"",
+                    ""processors"": ""AxisDeadzone,Scale(factor=75)"",
                     ""groups"": ""Controller"",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
@@ -386,7 +404,7 @@ namespace Inputs
                 {
                     ""name"": ""positive"",
                     ""id"": ""e8ca6346-9311-4186-b1a5-cdf51dd87043"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
@@ -397,35 +415,13 @@ namespace Inputs
                 {
                     ""name"": ""negative"",
                     ""id"": ""587e54d4-52b4-4958-ab91-0b67c4529916"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fd2c6981-53c6-45c4-90bb-9a8c08b6da5e"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Toggle Book"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5a75c688-e4ec-4432-9692-be31b5164126"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Toggle Book"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""Shoulder Buttons"",
@@ -538,65 +534,10 @@ namespace Inputs
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""d067255d-73c6-4c01-b9e7-9d5db5531629"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Toggle Tooltips"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""383d0507-27ce-49c6-9660-619d2fe762c1"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Toggle Tooltips"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""68de81e1-0499-43a0-9a20-91253f8e4dd1"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Toggle Tooltips"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cc970a85-536d-41f1-a2fd-a272b252fae9"",
-                    ""path"": ""<Keyboard>/delete"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Confirm Selected Structure"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5c32499e-11c4-47eb-8a32-e112a9763e3b"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Confirm Selected Structure"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": """",
                     ""id"": ""3392453a-a4ab-48d5-abac-119e7b4455be"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Next Turn"",
@@ -826,11 +767,143 @@ namespace Inputs
                 {
                     ""name"": """",
                     ""id"": ""c32228f2-eaa9-4472-9700-f9d58feb27fb"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Open Newspaper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e0e9afe-212e-47e8-bf25-ce43c98f269d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Return To Town"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43b8d9d8-a4e6-4c25-a907-ffeccb76d18c"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Toggle Tooltips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c57d876-dabe-4514-8114-7716310d2c14"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Tooltips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Left Stick"",
+                    ""id"": ""4c549e7e-003b-41fd-bf2f-1b5eff688b75"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate Tooltips"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fdb69875-a3ea-4a46-b08e-1de29f625590"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Tooltips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""d323bc0d-9c2b-4fdd-b05e-5dd0060ceb23"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Tooltips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d6d59c54-bea8-4f13-839d-898275f4dfd9"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Tooltips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5415e797-d113-4a75-abfc-126fb28fa944"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate Tooltips"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88530225-4f95-4d29-ae75-3fb21b99cb46"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Select Quest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52d65d8f-f2b3-4b41-be5a-fe62ced4f998"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Select Quest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc970a85-536d-41f1-a2fd-a272b252fae9"",
+                    ""path"": ""<Keyboard>/delete"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Demolish Building"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c32499e-11c4-47eb-8a32-e112a9763e3b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Demolish Building"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -978,7 +1051,7 @@ namespace Inputs
                     ""path"": ""<Joystick>/stick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Joystick"",
+                    ""groups"": ""Joystick;Controller"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -989,7 +1062,7 @@ namespace Inputs
                     ""path"": ""<Joystick>/stick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Joystick"",
+                    ""groups"": ""Joystick;Controller"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -1000,7 +1073,7 @@ namespace Inputs
                     ""path"": ""<Joystick>/stick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Joystick"",
+                    ""groups"": ""Joystick;Controller"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -1011,7 +1084,7 @@ namespace Inputs
                     ""path"": ""<Joystick>/stick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Joystick"",
+                    ""groups"": ""Joystick;Controller"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -1067,6 +1140,61 @@ namespace Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse;Mouse and Keyboard"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left Stick"",
+                    ""id"": ""3d900f04-36bc-4130-92a5-168f86faf606"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""09af6900-c6bf-444c-8e8d-3d854a8a8de9"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a5018533-ffb3-41fc-a953-710cd5d8bbc7"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f6a6969d-976a-4748-ac93-ad7b66e58b30"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ffbc0719-e683-4e52-9736-4d43daed66b8"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -1324,10 +1452,7 @@ namespace Inputs
             m_Player_MoveCamera = m_Player.FindAction("Move Camera", throwIfNotFound: true);
             m_Player_RotateCamera = m_Player.FindAction("Rotate Camera", throwIfNotFound: true);
             m_Player_ZoomCamera = m_Player.FindAction("Zoom Camera", throwIfNotFound: true);
-            m_Player_ToggleBook = m_Player.FindAction("Toggle Book", throwIfNotFound: true);
-            m_Player_ToggleTooltips = m_Player.FindAction("Toggle Tooltips", throwIfNotFound: true);
             m_Player_NextTurn = m_Player.FindAction("Next Turn", throwIfNotFound: true);
-            m_Player_ConfirmSelectedStructure = m_Player.FindAction("Confirm Selected Structure", throwIfNotFound: true);
             m_Player_RotateBuilding = m_Player.FindAction("Rotate Building", throwIfNotFound: true);
             m_Player_SelectCards = m_Player.FindAction("Select Cards", throwIfNotFound: true);
             m_Player_DeselectCards = m_Player.FindAction("Deselect Cards", throwIfNotFound: true);
@@ -1337,6 +1462,11 @@ namespace Inputs
             m_Player_DialogueNext = m_Player.FindAction("Dialogue Next", throwIfNotFound: true);
             m_Player_OpenQuests = m_Player.FindAction("Open Quests", throwIfNotFound: true);
             m_Player_OpenNewspaper = m_Player.FindAction("Open Newspaper", throwIfNotFound: true);
+            m_Player_DemolishBuilding = m_Player.FindAction("Demolish Building", throwIfNotFound: true);
+            m_Player_SelectQuest = m_Player.FindAction("Select Quest", throwIfNotFound: true);
+            m_Player_ReturnToTown = m_Player.FindAction("Return To Town", throwIfNotFound: true);
+            m_Player_ToggleTooltips = m_Player.FindAction("Toggle Tooltips", throwIfNotFound: true);
+            m_Player_NavigateTooltips = m_Player.FindAction("Navigate Tooltips", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1419,10 +1549,7 @@ namespace Inputs
         private readonly InputAction m_Player_MoveCamera;
         private readonly InputAction m_Player_RotateCamera;
         private readonly InputAction m_Player_ZoomCamera;
-        private readonly InputAction m_Player_ToggleBook;
-        private readonly InputAction m_Player_ToggleTooltips;
         private readonly InputAction m_Player_NextTurn;
-        private readonly InputAction m_Player_ConfirmSelectedStructure;
         private readonly InputAction m_Player_RotateBuilding;
         private readonly InputAction m_Player_SelectCards;
         private readonly InputAction m_Player_DeselectCards;
@@ -1432,6 +1559,11 @@ namespace Inputs
         private readonly InputAction m_Player_DialogueNext;
         private readonly InputAction m_Player_OpenQuests;
         private readonly InputAction m_Player_OpenNewspaper;
+        private readonly InputAction m_Player_DemolishBuilding;
+        private readonly InputAction m_Player_SelectQuest;
+        private readonly InputAction m_Player_ReturnToTown;
+        private readonly InputAction m_Player_ToggleTooltips;
+        private readonly InputAction m_Player_NavigateTooltips;
         public struct PlayerActions
         {
             private @PlayerInputs m_Wrapper;
@@ -1445,10 +1577,7 @@ namespace Inputs
             public InputAction @MoveCamera => m_Wrapper.m_Player_MoveCamera;
             public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
             public InputAction @ZoomCamera => m_Wrapper.m_Player_ZoomCamera;
-            public InputAction @ToggleBook => m_Wrapper.m_Player_ToggleBook;
-            public InputAction @ToggleTooltips => m_Wrapper.m_Player_ToggleTooltips;
             public InputAction @NextTurn => m_Wrapper.m_Player_NextTurn;
-            public InputAction @ConfirmSelectedStructure => m_Wrapper.m_Player_ConfirmSelectedStructure;
             public InputAction @RotateBuilding => m_Wrapper.m_Player_RotateBuilding;
             public InputAction @SelectCards => m_Wrapper.m_Player_SelectCards;
             public InputAction @DeselectCards => m_Wrapper.m_Player_DeselectCards;
@@ -1458,6 +1587,11 @@ namespace Inputs
             public InputAction @DialogueNext => m_Wrapper.m_Player_DialogueNext;
             public InputAction @OpenQuests => m_Wrapper.m_Player_OpenQuests;
             public InputAction @OpenNewspaper => m_Wrapper.m_Player_OpenNewspaper;
+            public InputAction @DemolishBuilding => m_Wrapper.m_Player_DemolishBuilding;
+            public InputAction @SelectQuest => m_Wrapper.m_Player_SelectQuest;
+            public InputAction @ReturnToTown => m_Wrapper.m_Player_ReturnToTown;
+            public InputAction @ToggleTooltips => m_Wrapper.m_Player_ToggleTooltips;
+            public InputAction @NavigateTooltips => m_Wrapper.m_Player_NavigateTooltips;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1494,18 +1628,9 @@ namespace Inputs
                     @ZoomCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomCamera;
                     @ZoomCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomCamera;
                     @ZoomCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomCamera;
-                    @ToggleBook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleBook;
-                    @ToggleBook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleBook;
-                    @ToggleBook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleBook;
-                    @ToggleTooltips.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
-                    @ToggleTooltips.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
-                    @ToggleTooltips.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
                     @NextTurn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
                     @NextTurn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
                     @NextTurn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextTurn;
-                    @ConfirmSelectedStructure.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConfirmSelectedStructure;
-                    @ConfirmSelectedStructure.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConfirmSelectedStructure;
-                    @ConfirmSelectedStructure.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConfirmSelectedStructure;
                     @RotateBuilding.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateBuilding;
                     @RotateBuilding.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateBuilding;
                     @RotateBuilding.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotateBuilding;
@@ -1533,6 +1658,21 @@ namespace Inputs
                     @OpenNewspaper.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
                     @OpenNewspaper.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
                     @OpenNewspaper.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenNewspaper;
+                    @DemolishBuilding.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDemolishBuilding;
+                    @DemolishBuilding.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDemolishBuilding;
+                    @DemolishBuilding.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDemolishBuilding;
+                    @SelectQuest.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectQuest;
+                    @SelectQuest.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectQuest;
+                    @SelectQuest.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectQuest;
+                    @ReturnToTown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToTown;
+                    @ReturnToTown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToTown;
+                    @ReturnToTown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToTown;
+                    @ToggleTooltips.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
+                    @ToggleTooltips.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
+                    @ToggleTooltips.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTooltips;
+                    @NavigateTooltips.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateTooltips;
+                    @NavigateTooltips.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateTooltips;
+                    @NavigateTooltips.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateTooltips;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1564,18 +1704,9 @@ namespace Inputs
                     @ZoomCamera.started += instance.OnZoomCamera;
                     @ZoomCamera.performed += instance.OnZoomCamera;
                     @ZoomCamera.canceled += instance.OnZoomCamera;
-                    @ToggleBook.started += instance.OnToggleBook;
-                    @ToggleBook.performed += instance.OnToggleBook;
-                    @ToggleBook.canceled += instance.OnToggleBook;
-                    @ToggleTooltips.started += instance.OnToggleTooltips;
-                    @ToggleTooltips.performed += instance.OnToggleTooltips;
-                    @ToggleTooltips.canceled += instance.OnToggleTooltips;
                     @NextTurn.started += instance.OnNextTurn;
                     @NextTurn.performed += instance.OnNextTurn;
                     @NextTurn.canceled += instance.OnNextTurn;
-                    @ConfirmSelectedStructure.started += instance.OnConfirmSelectedStructure;
-                    @ConfirmSelectedStructure.performed += instance.OnConfirmSelectedStructure;
-                    @ConfirmSelectedStructure.canceled += instance.OnConfirmSelectedStructure;
                     @RotateBuilding.started += instance.OnRotateBuilding;
                     @RotateBuilding.performed += instance.OnRotateBuilding;
                     @RotateBuilding.canceled += instance.OnRotateBuilding;
@@ -1603,6 +1734,21 @@ namespace Inputs
                     @OpenNewspaper.started += instance.OnOpenNewspaper;
                     @OpenNewspaper.performed += instance.OnOpenNewspaper;
                     @OpenNewspaper.canceled += instance.OnOpenNewspaper;
+                    @DemolishBuilding.started += instance.OnDemolishBuilding;
+                    @DemolishBuilding.performed += instance.OnDemolishBuilding;
+                    @DemolishBuilding.canceled += instance.OnDemolishBuilding;
+                    @SelectQuest.started += instance.OnSelectQuest;
+                    @SelectQuest.performed += instance.OnSelectQuest;
+                    @SelectQuest.canceled += instance.OnSelectQuest;
+                    @ReturnToTown.started += instance.OnReturnToTown;
+                    @ReturnToTown.performed += instance.OnReturnToTown;
+                    @ReturnToTown.canceled += instance.OnReturnToTown;
+                    @ToggleTooltips.started += instance.OnToggleTooltips;
+                    @ToggleTooltips.performed += instance.OnToggleTooltips;
+                    @ToggleTooltips.canceled += instance.OnToggleTooltips;
+                    @NavigateTooltips.started += instance.OnNavigateTooltips;
+                    @NavigateTooltips.performed += instance.OnNavigateTooltips;
+                    @NavigateTooltips.canceled += instance.OnNavigateTooltips;
                 }
             }
         }
@@ -1757,10 +1903,7 @@ namespace Inputs
             void OnMoveCamera(InputAction.CallbackContext context);
             void OnRotateCamera(InputAction.CallbackContext context);
             void OnZoomCamera(InputAction.CallbackContext context);
-            void OnToggleBook(InputAction.CallbackContext context);
-            void OnToggleTooltips(InputAction.CallbackContext context);
             void OnNextTurn(InputAction.CallbackContext context);
-            void OnConfirmSelectedStructure(InputAction.CallbackContext context);
             void OnRotateBuilding(InputAction.CallbackContext context);
             void OnSelectCards(InputAction.CallbackContext context);
             void OnDeselectCards(InputAction.CallbackContext context);
@@ -1770,6 +1913,11 @@ namespace Inputs
             void OnDialogueNext(InputAction.CallbackContext context);
             void OnOpenQuests(InputAction.CallbackContext context);
             void OnOpenNewspaper(InputAction.CallbackContext context);
+            void OnDemolishBuilding(InputAction.CallbackContext context);
+            void OnSelectQuest(InputAction.CallbackContext context);
+            void OnReturnToTown(InputAction.CallbackContext context);
+            void OnToggleTooltips(InputAction.CallbackContext context);
+            void OnNavigateTooltips(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
