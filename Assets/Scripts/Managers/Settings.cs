@@ -9,7 +9,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace Managers
 {
-    public class Settings : MonoBehaviour
+    public class Settings : UIController
     {
         // Misc
         public TextMeshProUGUI versionText;

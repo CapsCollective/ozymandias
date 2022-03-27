@@ -23,7 +23,7 @@ namespace Characters
             _cam = Camera.main;
             _collider = GetComponent<Collider>();
             
-            Manager.Inputs.OnLeftClick.performed += _ =>
+            Manager.Inputs.LeftClick.performed += _ =>
             {
                 Ray ray = _cam.ScreenPointToRay(Manager.Inputs.MousePosition);
                 if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider) return;

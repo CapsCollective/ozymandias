@@ -33,7 +33,7 @@ namespace Characters
                 bool active = Random.Range(0, 5) == 0;
                 gameObject.SetActive(active);
             };
-            Manager.Inputs.OnLeftClick.performed += FishCheck;
+            Manager.Inputs.LeftClick.performed += FishCheck;
             gameObject.SetActive(false);
         }
 
@@ -58,8 +58,9 @@ namespace Characters
             }
             else
             {
-                Ray ray = _cam.ScreenPointToRay(Manager.Inputs.MousePosition);
-                if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider) return;
+                var hit = Manager.Inputs.GetRaycast(_cam, 1000, 1);
+                if (hit.collider != _collider) return;
+
                 _fishing = true;
                 _fishCaught = false;
                 particles.Stop();

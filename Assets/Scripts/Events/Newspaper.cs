@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Events
 {
-    public class Newspaper : MonoBehaviour
+    public class Newspaper : UIController
     {
         // Constants
         private static readonly Vector3 ClosePos = new Vector3(2000, 800, 0);
@@ -56,6 +56,7 @@ namespace Events
             Transform t = transform;
             t.position = ClosePos;
             t.eulerAngles = CloseRot;
+            Manager.Inputs.UIClose.performed += _ => Close();
         }
 
         private void NextTurnOpen()
@@ -102,7 +103,6 @@ namespace Events
     
         public void OnChoiceSelected(int choice)
         {
-            //TODO: This needs to be more robust for the controller input
             if (!_canvas.enabled) return; // Ignore input if newspaper is closed
             
             articleList[0].AddChoiceOutcome (_choiceEvent.MakeChoice(choice));
@@ -112,7 +112,7 @@ namespace Events
             SelectUi(continueButton.gameObject);
             UpdateUi();
         }
-    
+
         private static readonly string[] NewspaperTitles = {
             "The Wizarding Post", "The Adventurer's Economist", "The Daily Guild", "Dimensional Press",
             "The Conduit Chronicle", "The Questing Times"
@@ -139,11 +139,16 @@ namespace Events
             _canvas.enabled = true;
             transform.DOLocalMove(Vector3.zero, animateInDuration);
             transform.DOLocalRotate(Vector3.zero, animateInDuration);
+            if (!_choiceSelected)
+            {
+                OnOpen();
+            }
         }
 
         private void Close()
         {
-            Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
+            if (!_canvas.enabled || !continueButton.interactable) return;
+            
             transform.DOLocalMove(ClosePos, animateOutDuration);
             transform.DOLocalRotate(CloseRot, animateOutDuration)
                 .OnComplete(() =>
@@ -151,8 +156,9 @@ namespace Events
                     OnClosed?.Invoke();
                     SaveFile.SaveState(); // Save here so state only locks in after paper is closed
                     _canvas.enabled = false;
+                    Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
+                    OnClose();
                 });
-            SelectUi(null);
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Managers;
 using TMPro;
 using UnityEngine;
 using Utilities;
+using NaughtyAttributes;
 using static Managers.GameManager;
 using String = Utilities.String;
+using UnityEngine.InputSystem;
 
 namespace Tooltip
 {
@@ -18,7 +21,12 @@ namespace Tooltip
     public class TooltipDisplay : MonoBehaviour
     {
         private CanvasGroup _cg;
+        private Tween _tween;
         [SerializeField] private TextMeshProUGUI title, details, description;
+
+        [SerializeField] private TooltipPlacement defaultTooltip;
+        private TooltipPlacement _selectedTooltip;
+        public bool NavigationActive { get; private set; }
 
         const float FadeDuration = 0.3f;
 
@@ -115,11 +123,54 @@ namespace Tooltip
             }}
         };
         
-        private void Awake()
+        private void Start()
         {
+            NavigationActive = false;
+            _selectedTooltip = defaultTooltip;
             _cg = GetComponent<CanvasGroup>();
+            Manager.Inputs.ToggleTooltips.performed += ToggleTooltips;
+            Inputs.Inputs.OnControlChange += _ => DeactivateTooltips();
+            State.OnEnterState += _ => DeactivateTooltips();
+
+            Manager.Inputs.NavigateTooltips.performed += NavigateTooltips;
         }
 
+        private void DeactivateTooltips()
+        {
+            _selectedTooltip.OnPointerExit(null);
+            NavigationActive = false;
+        }
+
+        private void ToggleTooltips(InputAction.CallbackContext obj)
+        {
+            if (!Manager.State.InGame) return;
+            
+            NavigationActive = !NavigationActive;
+            if (NavigationActive) _selectedTooltip.OnPointerEnter(null);
+            else _selectedTooltip.OnPointerExit(null);
+        }
+
+        private void NavigateTooltips(InputAction.CallbackContext obj)
+        {
+            if (!NavigationActive) return;
+
+            Vector2 direction = Manager.Inputs.NavigateTooltips.ReadValue<Vector2>();
+            Debug.Log(direction);
+            Debug.Log((int)direction.y == -1);
+            _selectedTooltip.OnPointerExit(null);
+
+            if (Mathf.RoundToInt(direction.y) == 1 && _selectedTooltip.navigationDirections.up)
+             _selectedTooltip = _selectedTooltip.navigationDirections.up;
+            else if (Mathf.RoundToInt(direction.y) == -1 && _selectedTooltip.navigationDirections.down)
+             _selectedTooltip = _selectedTooltip.navigationDirections.down;
+            else if (Mathf.RoundToInt(direction.x) == -1 && _selectedTooltip.navigationDirections.left)
+             _selectedTooltip = _selectedTooltip.navigationDirections.left;
+            else if (Mathf.RoundToInt(direction.x) == 1 && _selectedTooltip.navigationDirections.right)
+             _selectedTooltip = _selectedTooltip.navigationDirections.right;
+            
+            _selectedTooltip.OnPointerEnter(null);
+        }
+        
         public void UpdateTooltip(TooltipType type)
         {
             TooltipConfig config = Configs[type];
@@ -283,7 +334,7 @@ namespace Tooltip
         
         public void Fade(float opacity)
         {
-            _cg.DOFade(opacity, FadeDuration);
+            _tween = _cg.DOFade(opacity, FadeDuration);
         }
 
         public bool IsVisible()

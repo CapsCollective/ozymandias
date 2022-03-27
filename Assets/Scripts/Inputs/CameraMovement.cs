@@ -44,10 +44,11 @@ namespace Inputs
         [SerializeField] private float clampDistance;
         [SerializeField] private float pushForce = 5.0f;
         [SerializeField] private float dotMultiplier = 2.0f;
+        [SerializeField] private float dot2Multiplier = 0.5f;
         [SerializeField] private bool showDebugSphere = false;
         [SerializeField] private Mesh debugMesh;
+        [SerializeField] private Vector3 waterfallDir;
         [SerializeField] private Material debugMaterial;
-
         private void Awake()
         {
             _cam = GetComponent<Camera>();
@@ -57,10 +58,10 @@ namespace Inputs
 
         private void Start()
         {
-            Manager.Inputs.OnRightMouse.started += RightClick;
-            Manager.Inputs.OnRightMouse.canceled += RightClick;
-            Manager.Inputs.OnLeftMouse.started += LeftClick;
-            Manager.Inputs.OnLeftMouse.canceled += LeftClick;
+            Manager.Inputs.RightMouse.started += RightClick;
+            Manager.Inputs.RightMouse.canceled += RightClick;
+            Manager.Inputs.LeftMouse.started += LeftClick;
+            Manager.Inputs.LeftMouse.canceled += LeftClick;
         }
 
         private void RightClick(InputAction.CallbackContext context)
@@ -93,13 +94,13 @@ namespace Inputs
             // Depth of Field stuff
             volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
             
-            if (!Manager.State.InGame) return;
+            if (!Manager.State.InGame || Manager.Tooltip.NavigationActive) return;
 
-            float rotation = Manager.Inputs.OnRotateCamera.ReadValue<float>();
+            float rotation = Manager.Inputs.RotateCamera.ReadValue<float>();
             if (rotation != 0)
             {
                 OnRotate?.Invoke();
-                var keyboardOrMouse = Inputs.DeviceIsKeyboard(Manager.Inputs.OnRotateCamera) ? Time.deltaTime : .5f;
+                var keyboardOrMouse = Inputs.DeviceIsKeyboard(Manager.Inputs.RotateCamera) ? Time.deltaTime : .5f;
                 FreeLook.m_XAxis.Value += rotation * keyboardOrMouse;
             }
 
@@ -110,7 +111,6 @@ namespace Inputs
                 {
                     StartCursorGrab();
                     _dragging = true;
-                    OnPan?.Invoke();
                 }
 
                 if (_dragging)
@@ -125,14 +125,19 @@ namespace Inputs
                 dragDir = Vector3.SmoothDamp(dragDir, Vector3.zero, ref vel, dragAcceleration);
             }
 
-            Vector2 inputDir = Manager.Inputs.OnMoveCamera.ReadValue<Vector2>() * Time.deltaTime;
+            Vector2 inputDir = Manager.Inputs.MoveCamera.ReadValue<Vector2>() * Time.deltaTime;
             inputDir += dragDir;
+            if (inputDir.sqrMagnitude > 0.0002f)
+            {
+                OnPan?.Invoke();
+            }
             Vector3 crossFwd = Vector3.Cross(transform.right, Vector3.up);
             Vector3 crossSide = Vector3.Cross(transform.up, transform.forward);
             FreeLook.Follow.Translate(((crossFwd * inputDir.y) + (crossSide * inputDir.x)));
+            FreeLook.Follow.GetChild(0).forward = crossFwd;
 
             // Scrolling
-            float scroll = -Manager.Inputs.OnZoomCamera.ReadValue<float>() * Time.deltaTime;
+            float scroll = -Manager.Inputs.ZoomCamera.ReadValue<float>() * Time.deltaTime;
             if(scroll != 0) OnZoom?.Invoke();
             scrollAcceleration += scroll * Time.deltaTime;
             scrollAcceleration = Mathf.SmoothDamp(scrollAcceleration, 0, ref scrollAccelerationRef, scrollAccelerationSpeed);
@@ -150,9 +155,12 @@ namespace Inputs
             FreeLook.Follow.position = Vector3.SmoothDamp(FreeLook.Follow.position, newFollowPos, ref followVelRef, bounceTime);
 
             float dot = Vector3.Dot(Vector3.back, (FreeLook.Follow.position - clampCenterPos).normalized) * dotMultiplier;
+            float dot2 = Vector3.Dot((clampCenterPos - waterfallDir), (FreeLook.Follow.position - clampCenterPos)) * dot2Multiplier;
             float distanceFromBorder = Vector3.Distance(FreeLook.Follow.position, clampCenterPos) / clampDistance;
             if (dot > 0)
                 distanceFromBorder -= dot;
+            if (dot2 > 0)
+                distanceFromBorder -= dot2;
             if(distanceFromBorder > 1.0f)
                     FreeLook.Follow.position += ((clampCenterPos - FreeLook.Follow.position).normalized * (distanceFromBorder - 1.0f) * pushForce) * Time.deltaTime;
         }
@@ -254,6 +262,8 @@ namespace Inputs
 
         private void OnDrawGizmos()
         {
+            var dir = (Vector3.zero - waterfallDir).normalized;
+            Gizmos.DrawLine(Vector3.zero, dir);
             if (!showDebugSphere) return;
             Gizmos.DrawWireSphere(clampCenterPos, clampDistance);
             if (debugMaterial != null && debugMesh != null)
