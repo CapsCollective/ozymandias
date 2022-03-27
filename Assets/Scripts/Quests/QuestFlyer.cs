@@ -22,6 +22,8 @@ namespace Quests
         private const float CostScaleMin = 0.5f;
         private const float CostScaleMax = 1.5f;
 
+        private Quest _quest;
+
         private void Start()
         {
             adventurerSlider.onValueChanged.AddListener(value =>
@@ -34,6 +36,7 @@ namespace Quests
             });
             sendButton.onClick.AddListener(() =>
             {
+                Inputs.InputHelper.OnToggleCursor?.Invoke(false);
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();
                 OnStartClicked?.Invoke((int)adventurerSlider.value, costSlider.value);
@@ -51,6 +54,7 @@ namespace Quests
 
         public void UpdateContent(Quest quest, bool valueChange = false)
         {
+            _quest = quest;
             titleText.text = quest.Title;
             descriptionText.text = quest.Description;
             icon.sprite = quest.image;
@@ -120,6 +124,12 @@ namespace Quests
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
             }
+        }
+
+        public override void OnOpen()
+        {
+            base.OnOpen();
+            Inputs.InputHelper.OnToggleCursor?.Invoke(!_quest.IsActive);
         }
     }
 }

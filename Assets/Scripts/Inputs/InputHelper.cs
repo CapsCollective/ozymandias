@@ -17,6 +17,7 @@ namespace Inputs
         public static PlayerInput PlayerInput;
         public static EventSystem EventSystem;
         public static Action<GameObject> OnNewSelection;
+        public static Action<bool> OnToggleCursor;
         public static Dictionary<GameObject, Vector2> CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
 
         [SerializeField] private RectTransform selectionHelper;
@@ -53,6 +54,8 @@ namespace Inputs
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
             selectionHelper.gameObject.SetActive(false);
             selectionHelper.sizeDelta = new Vector2(CursorSize, CursorSize);
+
+            OnToggleCursor += ToggleUICursor;
         }
 
         private void Update()
@@ -152,6 +155,12 @@ namespace Inputs
             {
                 renderer.material.SetFloat("_Opacity", tweenFrom);
             });
+        }
+
+        private void ToggleUICursor(bool toggle)
+        {
+            Debug.Log(toggle);
+            selectionHelper.gameObject.SetActive(toggle);
         }
 
         private void OnDestroy()

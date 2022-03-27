@@ -26,13 +26,13 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void OnOpen()
+    public virtual void OnOpen()
     {
         Inputs.Inputs.OnControlChange += ControllerFocus;
         OnUIOpen?.Invoke(firstSelected, showCursor);
     }
 
-    public void OnClose()
+    public virtual void OnClose()
     {
         Inputs.Inputs.OnControlChange -= ControllerFocus;
         OnUIClose?.Invoke();
