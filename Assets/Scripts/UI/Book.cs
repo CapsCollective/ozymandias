@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Inputs;
 using Requests;
 using UnityEngine;
 using UnityEngine.UI;
@@ -145,7 +146,7 @@ namespace UI
                 {
                     closeButton.gameObject.SetActive(true);
                     _closeButtonCanvas.alpha = 0;
-                    _closeButtonCanvas.DOFade(1, 0.5f);
+                    if (!Manager.Inputs.UsingController) _closeButtonCanvas.DOFade(1, 0.5f);
                     _transitioning = false;
                     _isOpen = true;
                     Manager.Jukebox.PlayBookThump();
@@ -154,7 +155,6 @@ namespace UI
                 });
             Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }
-
 
         private void Close()
         {
