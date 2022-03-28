@@ -37,6 +37,7 @@ namespace Quests
             });
             sendButton.onClick.AddListener(() =>
             {
+                if (!Manager.State.InMenu) return;
                 Inputs.InputHelper.OnToggleCursor?.Invoke(false);
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();

@@ -55,14 +55,12 @@ namespace UI
 
             Manager.Inputs.OpenNewspaper.performed += _ =>
             {
-                if (Manager.State.InGame) newspaperButton.onClick.Invoke();
+                if (_newspaperButton.IsDisplaying && Manager.State.InGame) newspaperButton.onClick.Invoke();
             };
 
             Manager.Inputs.OpenQuests.performed += _ =>
             {
-                if (!_questButton.IsDisplaying) return;
-                if (Manager.State.Current == Utilities.GameState.InMenu) return;
-                questButton.onClick.Invoke();
+                if (_questButton.IsDisplaying && Manager.State.InGame) questButton.onClick.Invoke();
             };
         }
 

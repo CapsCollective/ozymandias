@@ -144,7 +144,6 @@ namespace Inputs
         private void ToggleWorldCursor(bool toggle)
         {
             var renderer = worldSpaceCursor.GetComponentInChildren<Renderer>();
-            Debug.Log(worldSpaceCursor.gameObject.name);
             float tweenTo = toggle ? 0.5f : 0.0f;
             float tweenFrom = toggle ? 0.0f : 0.5f;
             tween = DOTween.To(() => tweenFrom, y => tweenFrom = y, tweenTo, 0.25f).OnUpdate(() =>
@@ -155,7 +154,6 @@ namespace Inputs
 
         private void ToggleUICursor(bool toggle)
         {
-            Debug.Log(toggle);
             selectionHelper.gameObject.SetActive(toggle);
         }
 
