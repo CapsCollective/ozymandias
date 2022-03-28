@@ -4485,7 +4485,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7888179287069868169}
   m_HandleRect: {fileID: 7896242702480789253}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -8045,7 +8045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 515, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3028002782492864943
@@ -8075,14 +8075,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 5
     m_Right: 0
     m_Top: 10
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 250, y: 370}
+  m_CellSize: {x: 160, y: 240}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -8098,8 +8098,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4956c40086d1943a5d20aacf3847e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardDisplayPrefab: {fileID: 6225598171372005367, guid: b7d2f3f91f10c405286e87e6c4a9f595,
+  cardDisplayPrefab: {fileID: 6225598171372005367, guid: e65515ecf2401254c8ec5acb025266ae,
     type: 3}
+  scrollbar: {fileID: 184875647928558101}
+  speed: 0.4
 --- !u!1 &4923186349671780806
 GameObject:
   m_ObjectHideFlags: 0
@@ -12180,27 +12182,25 @@ MonoBehaviour:
   cursorOffsetOverrides:
     list:
     - Key: {fileID: 1050752166406452780}
-      Value: {x: 90, y: -5}
+      Value: {x: 5, y: 5}
     - Key: {fileID: 8010325637094913151}
-      Value: {x: 10, y: 0}
+      Value: {x: 30, y: 5}
     - Key: {fileID: 6082428880928181542}
-      Value: {x: 10, y: 0}
-    - Key: {fileID: 4654333570729145958}
-      Value: {x: 10, y: 0}
-    - Key: {fileID: 1050752166293675357}
-      Value: {x: 90, y: 0}
-    - Key: {fileID: 7936797109666618875}
-      Value: {x: 90, y: 0}
-    - Key: {fileID: 3209699434983107394}
-      Value: {x: 90, y: 0}
+      Value: {x: 30, y: 5}
     - Key: {fileID: 1050752165766888670}
-      Value: {x: 10, y: 0}
+      Value: {x: 30, y: 5}
     - Key: {fileID: 6401410905726423887}
-      Value: {x: 10, y: 0}
+      Value: {x: 30, y: 5}
     - Key: {fileID: 7674369058974532350}
-      Value: {x: 10, y: 0}
+      Value: {x: 30, y: 5}
+    - Key: {fileID: 1050752166293675357}
+      Value: {x: 5, y: 3}
+    - Key: {fileID: 7936797109666618875}
+      Value: {x: 5, y: 3}
+    - Key: {fileID: 3209699434983107394}
+      Value: {x: 5, y: 3}
     - Key: {fileID: 1786333052615813409}
-      Value: {x: 85, y: -20}
+      Value: {x: 10, y: 10}
     keyCollision: 0
   versionText: {fileID: 3270113382169185024}
   resolutionDropdown: {fileID: 1050752166406452782}

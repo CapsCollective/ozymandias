@@ -57,7 +57,7 @@ namespace Events
             Transform t = transform;
             t.position = ClosePos;
             t.eulerAngles = CloseRot;
-            Manager.Inputs.UIClose.performed += _ => Close();
+            Manager.Inputs.Close.performed += _ => Close();
         }
 
         private void NextTurnOpen()
@@ -139,17 +139,15 @@ namespace Events
             
             _canvas.enabled = true;
             transform.DOLocalMove(Vector3.zero, animateInDuration);
-            transform.DOLocalRotate(Vector3.zero, animateInDuration);
-            if (!_choiceSelected)
-            {
-                OnOpen();
-            }
+            transform.DOLocalRotate(Vector3.zero, animateInDuration)
+                .OnComplete(() => { if (!_choiceSelected) OnOpen(); });
         }
 
         private void Close()
         {
             if (!_canvas.enabled || !continueButton.interactable) return;
-            
+            OnClose();
+
             transform.DOLocalMove(ClosePos, animateOutDuration);
             transform.DOLocalRotate(CloseRot, animateOutDuration)
                 .OnComplete(() =>
@@ -159,7 +157,6 @@ namespace Events
                     UpdateUi();
                     _canvas.enabled = false;
                     Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
-                    OnClose();
                 });
         }
     }

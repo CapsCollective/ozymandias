@@ -252,7 +252,7 @@ namespace Structures
 
         private static bool IsSelectionDisabled()
         {
-            return Manager.Cards.SelectedCard || IsOverUi || Manager.Cards.PlacingBuilding;
+            return !Manager.State.InGame || Manager.Cards.SelectedCard || IsOverUi || Manager.Cards.PlacingBuilding;
         }
 
         private void DisplayEffects()

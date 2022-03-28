@@ -593,7 +593,7 @@ namespace Inputs
                     ""id"": ""59f19d06-3e47-48b9-84cd-09950509ff35"",
                     ""path"": ""<Gamepad>/rightStick/y"",
                     ""interactions"": """",
-                    ""processors"": ""Scale(factor=4)"",
+                    ""processors"": ""Scale(factor=6)"",
                     ""groups"": ""Controller"",
                     ""action"": ""Zoom Camera"",
                     ""isComposite"": false,
@@ -923,6 +923,24 @@ namespace Inputs
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""ScrollWheel"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""9f18eb80-e94c-423f-96a6-91a26a0a3342"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""bff9a461-1657-42cc-b67c-86706a7c5969"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""5e7faee8-a80c-4de9-b224-525ca7934fa8"",
@@ -954,15 +972,6 @@ namespace Inputs
                     ""type"": ""PassThrough"",
                     ""id"": ""7ad002d5-abfd-444b-9ac9-1b911838f3f6"",
                     ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ScrollWheel"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""9f18eb80-e94c-423f-96a6-91a26a0a3342"",
-                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1300,17 +1309,6 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e6eb5972-d916-475f-b647-7baef49aac76"",
-                    ""path"": ""<Mouse>/scroll"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""ScrollWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c15f95b3-7107-4342-a09c-33fdefe3ea1d"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
@@ -1407,6 +1405,83 @@ namespace Inputs
                     ""action"": ""Toggle Book"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6eb5972-d916-475f-b647-7baef49aac76"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""ScrollWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5b50f5a-ed9e-4fc2-b77f-910bf68b7a16"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""a0fca06a-100e-4774-ad53-dca944768f13"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""ebbb6299-6dd9-40f5-99a0-5d2a282f8d8d"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""dae62c04-c573-4d8f-8ef3-014414a6039b"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""bbe68e29-3848-42b7-9bb1-f543573519c4"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""f77c989a-681c-4f7c-bd76-6b41fed1b748"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -1470,11 +1545,12 @@ namespace Inputs
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
+            m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
+            m_UI_Scroll = m_UI.FindAction("Scroll", throwIfNotFound: true);
             m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
             m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
             m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
             m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
-            m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
             m_UI_MiddleClick = m_UI.FindAction("MiddleClick", throwIfNotFound: true);
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
@@ -1758,11 +1834,12 @@ namespace Inputs
         private readonly InputActionMap m_UI;
         private IUIActions m_UIActionsCallbackInterface;
         private readonly InputAction m_UI_Navigate;
+        private readonly InputAction m_UI_ScrollWheel;
+        private readonly InputAction m_UI_Scroll;
         private readonly InputAction m_UI_Submit;
         private readonly InputAction m_UI_Cancel;
         private readonly InputAction m_UI_Point;
         private readonly InputAction m_UI_Click;
-        private readonly InputAction m_UI_ScrollWheel;
         private readonly InputAction m_UI_MiddleClick;
         private readonly InputAction m_UI_RightClick;
         private readonly InputAction m_UI_TrackedDevicePosition;
@@ -1774,11 +1851,12 @@ namespace Inputs
             private @PlayerInputs m_Wrapper;
             public UIActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
+            public InputAction @ScrollWheel => m_Wrapper.m_UI_ScrollWheel;
+            public InputAction @Scroll => m_Wrapper.m_UI_Scroll;
             public InputAction @Submit => m_Wrapper.m_UI_Submit;
             public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
             public InputAction @Point => m_Wrapper.m_UI_Point;
             public InputAction @Click => m_Wrapper.m_UI_Click;
-            public InputAction @ScrollWheel => m_Wrapper.m_UI_ScrollWheel;
             public InputAction @MiddleClick => m_Wrapper.m_UI_MiddleClick;
             public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
             public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
@@ -1797,6 +1875,12 @@ namespace Inputs
                     @Navigate.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
                     @Navigate.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
                     @Navigate.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
+                    @ScrollWheel.started -= m_Wrapper.m_UIActionsCallbackInterface.OnScrollWheel;
+                    @ScrollWheel.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnScrollWheel;
+                    @ScrollWheel.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnScrollWheel;
+                    @Scroll.started -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
+                    @Scroll.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
+                    @Scroll.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
                     @Submit.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                     @Submit.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                     @Submit.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
@@ -1809,9 +1893,6 @@ namespace Inputs
                     @Click.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
                     @Click.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
                     @Click.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
-                    @ScrollWheel.started -= m_Wrapper.m_UIActionsCallbackInterface.OnScrollWheel;
-                    @ScrollWheel.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnScrollWheel;
-                    @ScrollWheel.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnScrollWheel;
                     @MiddleClick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMiddleClick;
                     @MiddleClick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMiddleClick;
                     @MiddleClick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMiddleClick;
@@ -1837,6 +1918,12 @@ namespace Inputs
                     @Navigate.started += instance.OnNavigate;
                     @Navigate.performed += instance.OnNavigate;
                     @Navigate.canceled += instance.OnNavigate;
+                    @ScrollWheel.started += instance.OnScrollWheel;
+                    @ScrollWheel.performed += instance.OnScrollWheel;
+                    @ScrollWheel.canceled += instance.OnScrollWheel;
+                    @Scroll.started += instance.OnScroll;
+                    @Scroll.performed += instance.OnScroll;
+                    @Scroll.canceled += instance.OnScroll;
                     @Submit.started += instance.OnSubmit;
                     @Submit.performed += instance.OnSubmit;
                     @Submit.canceled += instance.OnSubmit;
@@ -1849,9 +1936,6 @@ namespace Inputs
                     @Click.started += instance.OnClick;
                     @Click.performed += instance.OnClick;
                     @Click.canceled += instance.OnClick;
-                    @ScrollWheel.started += instance.OnScrollWheel;
-                    @ScrollWheel.performed += instance.OnScrollWheel;
-                    @ScrollWheel.canceled += instance.OnScrollWheel;
                     @MiddleClick.started += instance.OnMiddleClick;
                     @MiddleClick.performed += instance.OnMiddleClick;
                     @MiddleClick.canceled += instance.OnMiddleClick;
@@ -1922,11 +2006,12 @@ namespace Inputs
         public interface IUIActions
         {
             void OnNavigate(InputAction.CallbackContext context);
+            void OnScrollWheel(InputAction.CallbackContext context);
+            void OnScroll(InputAction.CallbackContext context);
             void OnSubmit(InputAction.CallbackContext context);
             void OnCancel(InputAction.CallbackContext context);
             void OnPoint(InputAction.CallbackContext context);
             void OnClick(InputAction.CallbackContext context);
-            void OnScrollWheel(InputAction.CallbackContext context);
             void OnMiddleClick(InputAction.CallbackContext context);
             void OnRightClick(InputAction.CallbackContext context);
             void OnTrackedDevicePosition(InputAction.CallbackContext context);

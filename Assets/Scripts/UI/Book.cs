@@ -1,3 +1,4 @@
+using Cards;
 using DG.Tweening;
 using Inputs;
 using Requests;
@@ -61,6 +62,8 @@ namespace UI
                 quitButton.enabled = enableQuit;
                 
                 if (_page == value) return;
+
+                if (value == BookPage.Reports) CardsBookList.ScrollActive = true;
                 
                 Manager.Jukebox.PlayPageTurn();
 
@@ -152,6 +155,7 @@ namespace UI
                     Manager.Jukebox.PlayBookThump();
                     pages[_page].canvasGroup.GetComponent<UIController>().OnOpen();
                     _changingPage = false;
+                    if (_page == BookPage.Reports) CardsBookList.ScrollActive = true;
                 });
             Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }

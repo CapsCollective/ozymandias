@@ -569,7 +569,7 @@
                     "id": "59f19d06-3e47-48b9-84cd-09950509ff35",
                     "path": "<Gamepad>/rightStick/y",
                     "interactions": "",
-                    "processors": "Scale(factor=4)",
+                    "processors": "Scale(factor=6)",
                     "groups": "Controller",
                     "action": "Zoom Camera",
                     "isComposite": false,
@@ -899,6 +899,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "ScrollWheel",
+                    "type": "PassThrough",
+                    "id": "9f18eb80-e94c-423f-96a6-91a26a0a3342",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Scroll",
+                    "type": "PassThrough",
+                    "id": "bff9a461-1657-42cc-b67c-86706a7c5969",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Submit",
                     "type": "Button",
                     "id": "5e7faee8-a80c-4de9-b224-525ca7934fa8",
@@ -930,15 +948,6 @@
                     "type": "PassThrough",
                     "id": "7ad002d5-abfd-444b-9ac9-1b911838f3f6",
                     "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ScrollWheel",
-                    "type": "PassThrough",
-                    "id": "9f18eb80-e94c-423f-96a6-91a26a0a3342",
-                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1276,17 +1285,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e6eb5972-d916-475f-b647-7baef49aac76",
-                    "path": "<Mouse>/scroll",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "ScrollWheel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c15f95b3-7107-4342-a09c-33fdefe3ea1d",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
@@ -1383,6 +1381,83 @@
                     "action": "Toggle Book",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6eb5972-d916-475f-b647-7baef49aac76",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "ScrollWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5b50f5a-ed9e-4fc2-b77f-910bf68b7a16",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "a0fca06a-100e-4774-ad53-dca944768f13",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Up",
+                    "id": "ebbb6299-6dd9-40f5-99a0-5d2a282f8d8d",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "dae62c04-c573-4d8f-8ef3-014414a6039b",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "bbe68e29-3848-42b7-9bb1-f543573519c4",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "f77c989a-681c-4f7c-bd76-6b41fed1b748",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

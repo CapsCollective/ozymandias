@@ -49,7 +49,7 @@ namespace Upgrades
         private void Start()
         {
             State.OnEnterState += _ => Deselect();
-            Manager.Inputs.UIClose.performed += _ => Deselect();
+            Manager.Inputs.Close.performed += _ => Deselect();
         }
 
         private void Purchase()

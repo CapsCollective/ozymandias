@@ -1,6 +1,5 @@
 using Managers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -54,7 +53,6 @@ namespace Inputs
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
             selectionHelper.gameObject.SetActive(false);
-            selectionHelper.sizeDelta = new Vector2(CursorSize, CursorSize);
 
             OnToggleCursor += ToggleUICursor;
         }
@@ -71,15 +69,15 @@ namespace Inputs
 
         private void NewSelection(GameObject obj)
         {
-            if (Manager.Inputs.UsingController && EventSystem.currentSelectedGameObject != null)
-            {
-                previousSelections[Manager.State.Current] = obj;
-                var rt = obj.transform as RectTransform;
-                var pos = rt.transform.position;
-                if(CursorOffsetOverrides.ContainsKey(obj))
-                    pos += (Vector3)CursorOffsetOverrides[obj];
-                selectionHelper.anchoredPosition = pos;
-            }
+            if (!Manager.Inputs.UsingController || EventSystem.currentSelectedGameObject == null) return;
+            
+            previousSelections[Manager.State.Current] = obj;
+            
+            selectionHelper.parent = obj.transform as RectTransform;
+            selectionHelper.anchoredPosition = CursorOffsetOverrides.ContainsKey(obj) ?
+                CursorOffsetOverrides[obj] : Vector2.zero;
+            selectionHelper.localScale = Vector3.one;
+            selectionHelper.eulerAngles = Vector3.zero;
         }
 
         private void OnControlChanged(InputControlScheme obj)

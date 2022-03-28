@@ -190,7 +190,7 @@ namespace Quests
                     DisplayMoveButtons(true);
                     DisplayCloseButton(true);
                     Manager.Inputs.OpenQuests.performed += OpenQuests_performed;
-                    Manager.Inputs.UIClose.performed += OpenQuests_performed;
+                    Manager.Inputs.Close.performed += OpenQuests_performed;
                     if (Current.Count > 1) Manager.Inputs.NavigateBookmark.performed += NavigateFlyers;
                 });
             OpenFlyer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
@@ -201,10 +201,11 @@ namespace Quests
         {
             if (!_opened) return;
             Manager.Inputs.OpenQuests.performed -= OpenQuests_performed;
-            Manager.Inputs.UIClose.performed -= OpenQuests_performed;
+            Manager.Inputs.Close.performed -= OpenQuests_performed;
             if (Current.Count > 1) Manager.Inputs.NavigateBookmark.performed -= NavigateFlyers;
             DisplayCloseButton(false);
             DisplayMoveButtons(false);
+            OpenFlyer.OnClose();
             OpenFlyer.transform.DOLocalMove(_offScreenPos, animateOutDuration);
             OpenFlyer.transform
                 .DOLocalRotate(_offScreenRot, animateOutDuration)
@@ -213,7 +214,6 @@ namespace Quests
                     _canvas.enabled = false;
                     _opened = false;
                     Manager.State.EnterState(GameState.InGame);
-                    OpenFlyer.OnClose();
                 });
         }
 

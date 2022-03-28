@@ -12,6 +12,14 @@ namespace Inputs
         const float SPHERECAST_RADIUS = 0.4f;
 
         public bool UsingController => ControlScheme == PlayerInput.ControllerScheme;
+        public static Action<InputControlScheme> OnControlChange;
+        public static InputControlScheme ControlScheme;
+        
+        public Transform WorldSpaceCursor;
+
+        // Player Input
+        public PlayerInputs PlayerInput { get; }
+        private InputAction MouseMoved { get; }
         public Vector2 MousePosition 
         {
             get
@@ -21,20 +29,12 @@ namespace Inputs
                 return Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
             }
         }
-
-        public Transform WorldSpaceCursor;
-
-        public static Action<InputControlScheme> OnControlChange;
-
-        public static InputControlScheme ControlScheme;
-
-        // Player Input
-        public PlayerInputs PlayerInput { get; }
-        private InputAction MouseMoved { get; }
+        
         public InputAction LeftMouse { get; }
         public InputAction LeftClick { get; }
         public InputAction RightMouse { get; }
         public InputAction RightClick { get; }
+        public InputAction Scroll { get; }
         public InputAction ZoomCamera { get; }
         public InputAction RotateCamera { get; }
         public InputAction MoveCamera { get; }
@@ -51,7 +51,7 @@ namespace Inputs
         public InputAction DialogueNext { get; }
         public InputAction OpenQuests { get; }
         public InputAction OpenNewspaper { get; }
-        public InputAction UIClose { get; }
+        public InputAction Close { get; }
         public InputAction ReturnToTown { get; }
         public InputAction ToggleTooltips { get; }
         public InputAction NavigateTooltips { get; }
@@ -65,6 +65,7 @@ namespace Inputs
             LeftClick = PlayerInput.Player.LeftClick;
             RightMouse = PlayerInput.Player.RightMouse;
             RightClick = PlayerInput.Player.RightClick;
+            Scroll = PlayerInput.UI.Scroll;
 
             // Camera Controls
             MoveCamera = PlayerInput.Player.MoveCamera;
@@ -74,11 +75,9 @@ namespace Inputs
             // Menus
             ToggleBook = PlayerInput.UI.ToggleBook;
             NavigateBookmark = PlayerInput.UI.NavigateBookmarks;
-            UIClose = PlayerInput.UI.Cancel;
+            Close = PlayerInput.UI.Cancel;
             OpenNewspaper = PlayerInput.Player.OpenNewspaper;
             OpenQuests = PlayerInput.Player.OpenQuests;
-
-            // Building Placement
 
             // Tooltips
             ToggleTooltips = PlayerInput.Player.ToggleTooltips;
