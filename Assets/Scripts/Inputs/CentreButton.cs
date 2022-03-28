@@ -94,10 +94,19 @@ namespace Inputs
             yield return new WaitForSeconds(1);
             _dummyCursor.SetActive(true);
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, 
-                Manager.Inputs.MousePosition, canvas.worldCamera, out var currentPos);
+            Vector2 currentPos;
+            
+            if (Manager.Inputs.UsingController)
+            {
+                currentPos = new Vector2(-1000, 0);
+            }
+            else
+            {
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, 
+                    Manager.Inputs.MousePosition, canvas.worldCamera, out currentPos);
+            }
+            
             currentPos = canvas.transform.TransformPoint(currentPos);
-
             var endPos = button.gameObject.transform.position;
             _dummyCursor.transform.position = currentPos;
             Cursor.visible = false;
