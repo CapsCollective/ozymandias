@@ -7,6 +7,9 @@ using Utilities;
 using static Managers.GameManager;
 using static UI.GameHud.HudObject;
 using System;
+using System.Collections;
+using System.IO;
+using NaughtyAttributes;
 
 namespace UI
 {
@@ -51,6 +54,10 @@ namespace UI
             };
 
             State.OnEnterState += OnNewState;
+
+#if UNITY_EDITOR
+            Manager.Inputs.OnScreenshot.performed += obj => { TakeScreenshot(); };
+#endif
         }
 
         private void OnNewState(GameState state)
@@ -112,6 +119,26 @@ namespace UI
             HudObjectValues objValues = _hudValuesMap[obj];
             if (animate) objValues.RectTransform.DOAnchorPos(objValues.ShowPos, animateInDuration);
             else objValues.RectTransform.anchoredPosition = objValues.ShowPos;
+        }
+
+        [Button("Take Screenshot")]
+        private void TakeScreenshot()
+        {
+            // This unfortunately needs to run as a coroutine to make sure the UI is not visible
+            StartCoroutine(_TakeScreenshot());
+        }
+        
+        private IEnumerator _TakeScreenshot()
+        {
+            CanvasGroup gameCanvas = gameObject.GetComponent<CanvasGroup>();
+            gameCanvas.alpha = 0;
+            const string screenshotDir = "Screenshots";
+            Directory.CreateDirectory(screenshotDir);
+            var filename = $"{screenshotDir}/FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png";
+            ScreenCapture.CaptureScreenshot(filename);
+            Debug.Log($"Saved screenshot capture to {filename}");
+            yield return null;
+            gameCanvas.alpha = 1;
         }
     }
 }

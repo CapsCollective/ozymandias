@@ -161,13 +161,7 @@ namespace Managers
         {
             State.EnterState(GameState.NextTurn);
         }
-        
-        [Button("Take Screenshot")]
-        public void Screenshot()
-        {
-            ScreenCapture.CaptureScreenshot($"Screenshots/FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
-        }
-        
+
         [Button("Reset Achievements")]
         public void ResetAchievements()
         {

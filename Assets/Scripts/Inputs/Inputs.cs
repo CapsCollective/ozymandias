@@ -42,8 +42,8 @@ namespace Inputs
         public InputAction OnDeselectCards { get; }
         public InputAction OnNavigateCards { get; }
         public InputAction OnSelectCardIndex { get; }
-        
         public InputAction OnDialogueNext{ get; }
+        public InputAction OnScreenshot{ get; }
 
         public Inputs()
         {
@@ -74,6 +74,9 @@ namespace Inputs
             
             // Dialogue
             OnDialogueNext = PlayerInput.Player.DialogueNext;
+            
+            // Misc
+            OnScreenshot = PlayerInput.Player.Screenshot;
 
             PlayerInput.UI.Enable();
             PlayerInput.Player.Enable();
