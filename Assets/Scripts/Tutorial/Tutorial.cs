@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
+using Cards;
 using DG.Tweening;
 using Events;
 using Inputs;
@@ -31,7 +32,7 @@ namespace Tutorial
 
     public class Tutorial : MonoBehaviour
     {
-        public static bool Active, DisableSelect, DisableIntroMenu;
+        public static bool Active, DisableSelect, DisableNextTurn, ShowShade;
 
         // (Ben) I Don't love this architecture, but not sure a better way without making book public
         public static Action ShowBook;
@@ -49,7 +50,7 @@ namespace Tutorial
         private int _sectionLine;
         private Action _onObjectivesComplete;
 
-        private GameState _prevState = GameState.InGame;
+        private GameState _exitState = GameState.InGame;
         
         #region Dialogue
         
@@ -74,13 +75,13 @@ namespace Tutorial
             
             State.OnNewGame += StartTutorial;
             //State.OnGameEnd += StartUpgradesDescription;
-            Cards.Cards.OnUnlock += StartUnlockDescription;
-            Quests.Quests.OnQuestAdded += StartCampsDescription;
+            UnlockDisplay.OnUnlockDisplayed += StartUnlockDescription;
+            Quests.Quests.OnCampAdded += StartCampsDescription;
         }
 
-        private void ShowDialogue(List<Line> lines)
+        private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame)
         {
-            _prevState = Manager.State.Current;
+            _exitState = exitState;
             Manager.State.EnterState(GameState.InDialogue);
             _currentSection = lines;
             _sectionLine = 0;
@@ -102,7 +103,7 @@ namespace Tutorial
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
             Manager.GameHud.Show(GameHud.HudObject.LeftButtons);
-            Manager.State.EnterState(_prevState);
+            Manager.State.EnterState(_exitState);
             blocker.SetActive(false);
         }
 
@@ -339,7 +340,7 @@ namespace Tutorial
         
         private void StartAdventurerObjectives()
         {
-            DisableSelect = false;
+            DisableNextTurn = false;
             Manager.Camera.MoveTo(Manager.Structures.TownCentre);
             
             ClearObjectives();
@@ -354,7 +355,7 @@ namespace Tutorial
 
             Adventurers.Adventurers.OnAdventurerJoin += AdventurerJoin;
             State.OnNextTurnBegin += NextTurn;
-            Newspaper.OnClosed += ReadNews;
+            Newspaper.OnNextClosed += ReadNews;
 
             void NextTurn()
             {
@@ -364,7 +365,6 @@ namespace Tutorial
             
             void ReadNews()
             {
-                Newspaper.OnClosed -= ReadNews;
                 CompleteObjective(_currentObjectives[1]);
             }
             
@@ -372,28 +372,21 @@ namespace Tutorial
             {
                 if (!_currentObjectives[2].Increment()) return;
                 Adventurers.Adventurers.OnAdventurerJoin -= AdventurerJoin;
-                CompleteObjective(_currentObjectives[2]);
+                Newspaper.OnNextClosed += () => CompleteObjective(_currentObjectives[2]);
             }
         }
 
         private void EndTutorialDialogue()
         {
-            void ShowEndTutorialDialogue()
-            {
-                ShowDialogue(new List<Line> {
-                    new Line("Well, that's all for now!", GuidePose.Neutral),
-                    new Line("Wait, I totally forgot to mention how the last town got overrun, huh?", GuidePose.Embarrassed),
-                    new Line("That bar up the top there is your towns stability, it hits 0, well you can probably guess...", GuidePose.PointingUp),
-                    new Line("You want your defence (total adventurers + defensive buildings) to be larger than threat, which grows over time."),
-                    new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over.", GuidePose.Neutral),
-                    new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
-                    new Line("Good Luck!", GuidePose.FingerGuns, EndTutorial)
-                });
-                Newspaper.OnClosed -= ShowEndTutorialDialogue;
-            }
-            
-            // Make it only display once the newspaper has been closed
-            Newspaper.OnClosed += ShowEndTutorialDialogue;
+            ShowDialogue(new List<Line> {
+                new Line("Well, that's all for now!", GuidePose.Neutral),
+                new Line("Wait, I totally forgot to mention how the last town got overrun, huh?", GuidePose.Embarrassed),
+                new Line("That bar up the top there is your towns stability, it hits 0, well you can probably guess...", GuidePose.PointingUp),
+                new Line("You want your defence (total adventurers + defensive buildings) to be larger than threat, which grows over time."),
+                new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over.", GuidePose.Neutral),
+                new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
+                new Line("Good Luck!", GuidePose.FingerGuns, EndTutorial)
+            });
         }
 
         private void EndTutorial()
@@ -403,38 +396,33 @@ namespace Tutorial
             {
                 ++Manager.Upgrades.GuildTokens[guild];
             }
-            SaveFile.SaveState();
+            SaveFile.SaveState(false);
         }
 
         private void StartCampsDescription(Quest quest)
         {
             if (Manager.Achievements.Milestones[Milestone.CampsCleared] > 0 || !quest.IsRadiant || Manager.Quests.RadiantCount > 1) return;
-            
             //TODO: Write Proper dialogue
             ShowDialogue(new List<Line> {
-                new Line("Camp here!", GuidePose.Neutral),
-                new Line("They don't look too threatening right now, but give them a few days to grow and they could become a real problem"),
-                new Line("Consider sending a few adventurers to deal with them. Just be warned, while they're out on quests, they won't be providing defence to your town"),
-                new Line("How much you spend to gear up your adventurers will influence how long a quest will take"),
+                new Line("Heads up, our scouts have found an enemy camp!", GuidePose.Neutral),
+                new Line("They don't look too threatening right now, but give them a few days to grow and they could become a real problem. Each space they take up adds 1 threat until cleared."),
+                new Line("You'll probably wanna get on sending a few adventurers to deal with them. How much you spend to gear them up will influence how long a quest will take."),
+                new Line("Just be warned, while they're out on quests, they won't be providing defence to your town."),
             });
         }
         
-        private void StartUnlockDescription(Blueprint card)
+        private void StartUnlockDescription()
         {
             if (Manager.Cards.UnlockedCards != 1) return;
-
-            Newspaper.OnClosed += UnlockDescription;
-
-            void UnlockDescription()
-            {
-                Newspaper.OnClosed -= UnlockDescription;
-                //TODO: Write Proper dialogue
-                ShowDialogue(new List<Line> {
-                    new Line("You've just unlocked a blueprint for a new building!", GuidePose.Neutral),
-                    new Line("You'll unlock more by completing stories"),
-                    new Line("Unlocked cards"),
-                });
-            }
+            ShowShade = true;
+            //TODO: Write Proper dialogue
+            ShowDialogue(new List<Line> {
+                new Line("You've just unlocked a new building card! Keep an eye on news in the town, and you might be able to find more.", GuidePose.Neutral),
+                new Line("This building will be added to your cards, at least until they all get lost in the ruins of your town..."),
+                new Line("But fear not! Check the upgrades page in your book to purchase the ability to rediscover them from the ruins of your previous towns."),
+                new Line("Discovering more buildings might just give us the edge to lasting a little longer out here...")
+            }, GameState.InMenu);
+            ShowShade = false;
         }
         
         /*private void StartUpgradesDescription()

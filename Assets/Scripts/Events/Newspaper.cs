@@ -19,7 +19,8 @@ namespace Events
         private static readonly Vector3 CloseRot = new Vector3(0, 0, -20);
         
         // Public fields
-        public static Action OnClosed;
+        public static Action OnClosed; // For every newspaper close
+        public static Action OnNextClosed; // Only on the next newspaper close
 
         // Serialised Fields
         [SerializeField] private TextMeshProUGUI titleText;
@@ -111,7 +112,6 @@ namespace Events
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             SelectUi(continueButton.gameObject);
-            UpdateUi();
         }
 
         private static readonly string[] NewspaperTitles = {
@@ -147,16 +147,24 @@ namespace Events
         {
             if (!_canvas.enabled || !continueButton.interactable) return;
             OnClose();
-
             transform.DOLocalMove(ClosePos, animateOutDuration);
             transform.DOLocalRotate(CloseRot, animateOutDuration)
                 .OnComplete(() =>
                 {
-                    OnClosed?.Invoke();
-                    SaveFile.SaveState(); // Save here so state only locks in after paper is closed
-                    UpdateUi();
+                    if (Manager.State.IsGameOver)
+                    {
+                        Manager.State.EnterState(GameState.EndGame);
+                    }
+                    else
+                    {
+                        Manager.State.EnterState(GameState.InGame);
+                        OnClosed?.Invoke();
+                        OnNextClosed?.Invoke();
+                        SaveFile.SaveState(); // Save here so state only locks in after paper is closed
+                        UpdateUi();
+                    }
+                    OnNextClosed = null;
                     _canvas.enabled = false;
-                    Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
                 });
         }
     }

@@ -12,17 +12,10 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            Newspaper.OnClosed += AddQuest;
+            Newspaper.OnNextClosed += () => Manager.Quests.Add(quest);
             return true;
         }
-
-        private void AddQuest()
-        {
-            Manager.Quests.Add(quest);
-            Newspaper.OnClosed -= AddQuest;
-            
-        }
-
+        
         private static readonly Dictionary<Location, string> LocationDescriptors = new Dictionary<Location, string>
         {
             { Location.Grid, "near your town" },

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
-using DG.Tweening.Core;
 using Inputs;
 using UnityEngine;
 using UnityEngine.UI;
@@ -74,7 +73,7 @@ namespace Managers
             
             Manager.Inputs.NextTurn.performed += _ =>
             {
-                if (InGame) EnterState(GameState.NextTurn);
+                if (InGame && !Tutorial.Tutorial.DisableNextTurn) EnterState(GameState.NextTurn);
                 _nextTurnTimer = 0;
                 nextTurnMask.fillAmount = 0;
             };

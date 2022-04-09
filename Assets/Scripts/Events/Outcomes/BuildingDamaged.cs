@@ -12,7 +12,7 @@ namespace Events.Outcomes
         protected override bool Execute()
         {
             if (Manager.Structures.GetCount(type) == 0) return false;
-            Newspaper.OnClosed += DestroyBuilding;
+            Newspaper.OnNextClosed += DestroyBuilding;
             return true;
         }
 
@@ -21,7 +21,6 @@ namespace Events.Outcomes
             Structure building = Manager.Structures.GetRandom(type);
             Manager.Camera.MoveTo(building.transform.position)
                 .OnComplete(() => Manager.Structures.Remove(type));
-            Newspaper.OnClosed -= DestroyBuilding;
         }
 
         protected override string Description => customDescription != "" ?

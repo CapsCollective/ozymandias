@@ -13,6 +13,7 @@ namespace Quests
     {
         public static Action<Quest> OnQuestCompleted;
         public static Action<Quest> OnQuestAdded;
+        public static Action<Quest> OnCampAdded;
         public static Action<Quest> OnQuestRemoved;
 
         public SerializedDictionary<Location, Structure> locations;
@@ -25,7 +26,7 @@ namespace Quests
         public int RadiantCount => Current.Count(quest => quest.IsRadiant);
         
         public int RadiantQuestCellCount =>
-            Current.Where(quest => quest.IsRadiant).Sum(quest => quest.Structure.SectionCount);
+            Current.Where(quest => quest.IsRadiant && quest.Structure).Sum(quest => quest.Structure.SectionCount);
         
         // If a location is far enough away from the other quests
         private const int MinDistance = 3;

@@ -66,7 +66,14 @@ namespace Quests
                 int spawn = Manager.Structures.NewQuestSpawn();
                 Manager.Camera
                     .MoveTo(Manager.Map.GetCell(spawn).WorldSpace + Vector3.up)
-                    .OnComplete(() => CreateBuilding(new List<int>{spawn}));
+                    .OnComplete(() =>
+                    {
+                        CreateBuilding(new List<int> { spawn });
+                        Quests.OnCampAdded?.Invoke(this);
+                        
+                        SaveFile.SaveState(false);
+                        UpdateUi();
+                    });
             }
             else
             {

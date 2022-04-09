@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -12,6 +13,8 @@ namespace Cards
 {
     public class UnlockDisplay : MonoBehaviour
     {
+        public static Action OnUnlockDisplayed;
+
         [SerializeField] private CardDisplay cardDisplay;
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private float animateInDuration = 2.0f;
@@ -34,7 +37,7 @@ namespace Cards
 
         private void CheckUnlockCard()
         {
-            if (!_buildings.Any() || _displayBuilding || !Manager.State.InGame) return;
+            if (!_buildings.Any() || _displayBuilding) return;
 
             _displayBuilding = _buildings.Pop();
             cardDisplay.UpdateDetails(_displayBuilding);
@@ -51,6 +54,7 @@ namespace Cards
             cardTransform.localPosition = new Vector3(1000, 200, 0);
             cardTransform.localRotation = new Quaternion( 0.0f, 0.0f, 10.0f, 0.0f);
             
+            OnUnlockDisplayed?.Invoke();
             cardTransform.DOLocalRotate(Vector3.zero, animateInDuration);
             cardTransform.DOLocalMove(_originalPos, animateInDuration)
                 .OnComplete(() => text.DOFade(1.0f, 0.5f));

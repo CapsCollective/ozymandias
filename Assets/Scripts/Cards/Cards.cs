@@ -171,26 +171,25 @@ namespace Cards
         
         private void SelectCards(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame || _selectedCardIndex != -1) return;
+            if (_selectedCardIndex != -1) return;
             SelectCard(_prevCardIndex);
         }
         
         private void DeselectCards(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame || _selectedCardIndex == -1) return;
+            if (_selectedCardIndex == -1) return;
             SelectCard(-1);
         }
         
         private void NavigateCards(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame) return;
             if (_selectedCardIndex == -1) SelectCard(_prevCardIndex);
             else SelectCard((_selectedCardIndex + (int)obj.ReadValue<float>() + hand.Count) % hand.Count);
         }
 
         private void SelectCardIndex(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame ||  Manager.Tooltip.NavigationActive) return;
+            if (Manager.Tooltip.NavigationActive) return;
 
             int index = (int)obj.ReadValue<float>() - 1;
             SelectCard(_selectedCardIndex == index ? -1 : index);
@@ -198,7 +197,7 @@ namespace Cards
         
         public void SelectCard(int cardIndex)
         {
-            if (cardIndex == _selectedCardIndex) return;
+            if (cardIndex == _selectedCardIndex || Tutorial.Tutorial.DisableSelect || !Manager.State.InGame) return;
 
             if (cardIndex >= 0)
             {

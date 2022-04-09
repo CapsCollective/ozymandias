@@ -115,11 +115,11 @@ namespace Managers
         private static readonly string SaveFilePath = PlatformManager.Instance.FileSystem.GetSaveFilePath();
         private static readonly string BackupFilePath = PlatformManager.Instance.FileSystem.GetBackupFilePath();
 
-        public static void SaveState()
+        public static void SaveState(bool overwriteBackup = true)
         {
             if (Tutorial.Tutorial.Active) return; // No saving during tutorial
             OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
-            new SaveFile().Save();
+            new SaveFile().Save(overwriteBackup);
         }
         
         public static void LoadState()
@@ -132,9 +132,9 @@ namespace Managers
             File.Delete(SaveFilePath);
         }
 
-        public void Save()
+        public void Save(bool overwriteBackup)
         {
-            File.WriteAllLines(BackupFilePath, File.ReadAllLines(SaveFilePath));
+            if (File.Exists(SaveFilePath) && overwriteBackup) File.WriteAllLines(BackupFilePath, File.ReadAllLines(SaveFilePath));
 
             version = Application.version;
             structures = Manager.Structures.Save();
@@ -179,6 +179,7 @@ namespace Managers
                 Debug.LogWarning("Save.json not found, starting tutorial");
                 Tutorial.Tutorial.Active = true;
                 Tutorial.Tutorial.DisableSelect = true;
+                Tutorial.Tutorial.DisableNextTurn = true;
 
                 Manager.Structures.SpawnTutorialRuins();
             }

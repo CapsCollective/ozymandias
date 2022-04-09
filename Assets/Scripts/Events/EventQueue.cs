@@ -78,7 +78,6 @@ namespace Events
             foreach (Event e in _current) _outcomeDescriptions.Add(e.Execute());
         
             _newspaper.UpdateDisplay(_current, _outcomeDescriptions);
-            UpdateUi();
         }
 
         private void AddRandomSelection()
@@ -99,10 +98,10 @@ namespace Events
                 
                 // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
                 int random = Random.Range(0, 20);
-                if (random == 0 || random < lead) eventPool.Add(PickRandom(EventType.Radiant));
+                if (!Tutorial.Tutorial.Active && (random == 0 || random < lead)) eventPool.Add(PickRandom(EventType.Radiant));
 
                 // 20% chance to start a new story while no other is active
-                if (!Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
+                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
                 {
                     Flags[Flag.StoryActive] = true;
                     // Pick a story that isn't for an already unlocked/ discoverable building

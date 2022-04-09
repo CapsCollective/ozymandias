@@ -17,7 +17,7 @@ namespace UI
             _image = GetComponent<Image>();
             gameObject.SetActive(false);
             // Keeps shade if dialogue from menu
-            OnEnterState += (_) => SetDisplay(Manager.State.InMenu || (_active && Manager.State.InDialogue));
+            OnEnterState += (_) => SetDisplay(Manager.State.InMenu || Tutorial.Tutorial.ShowShade);
         }
 
         private void SetDisplay(bool display)
