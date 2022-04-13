@@ -108,8 +108,8 @@ namespace Tooltip
                 Description = "Re-read the morning news.",
             }},
             {TooltipType.Progress, new TooltipConfig {
-                Title = "Progress Report",
-                Description = "Check out your cities growth, and have a look at your achievements.",
+                Title = "Town Ledger",
+                Description = "Check your progress, purchase upgrades, and change settings.",
             }},
             {TooltipType.Quests, new TooltipConfig {
                 Title = "Quest Map",

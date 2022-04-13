@@ -15,7 +15,7 @@ namespace UI
             Button = btn;
             ShouldDisplay = displayPolicy;
             StartPos = btn.transform.localPosition;
-            OffsetPos = StartPos + new Vector3(-200, 0, 0);
+            OffsetPos = StartPos + new Vector3(0, 200);
             IsDisplaying = true;
         }
 

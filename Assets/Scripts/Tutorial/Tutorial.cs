@@ -87,7 +87,7 @@ namespace Tutorial
             _sectionLine = 0;
             guide.GetComponent<RectTransform>().DOAnchorPosX(0, 0.5f);
             dialogue.DOAnchorPosY(240, 0.5f);
-            Manager.GameHud.Hide(GameHud.HudObject.LeftButtons);
+            Manager.GameHud.Hide(GameHud.HudObject.MenuBar);
 
             text.text = lines[0].Dialogue;
             text.maxVisibleCharacters = lines[0].Dialogue.Length;
@@ -102,7 +102,7 @@ namespace Tutorial
             _currentSection = null;
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
-            Manager.GameHud.Show(GameHud.HudObject.LeftButtons);
+            Manager.GameHud.Show(GameHud.HudObject.MenuBar);
             Manager.State.EnterState(_exitState);
             blocker.SetActive(false);
         }
