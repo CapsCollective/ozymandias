@@ -5,7 +5,6 @@ using Managers;
 using TMPro;
 using UnityEngine;
 using Utilities;
-using NaughtyAttributes;
 using static Managers.GameManager;
 using String = Utilities.String;
 using UnityEngine.InputSystem;
