@@ -54,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Noise_Texture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -97,21 +97,22 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _Depth: 0.41
+    - _Depth: 5.78
     - _DepthMaxDistance: 1
     - _DetailNormalMapScale: 1
     - _DistanceDensity: 0.1
-    - _Distance_Density: 0
+    - _Distance_Density: 0.1
     - _DstBlend: 0
     - _Float2: -9000
     - _Float3: 0.5
     - _FlowCoverage: 0.5
     - _FlowStrength: 0.05
+    - _Flow_Coverage: 1
     - _Flow_Strength: 0.25
     - _FoamMaxDistance: 0.4
     - _FoamMinDistance: 0.04
     - _FoamPower: 0.15
-    - _Foam_Power: 0
+    - _Foam_Power: 0.26
     - _Foam_Speed: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.874
@@ -130,20 +131,21 @@ Material:
     - _TextureScrollSpeed: 1000
     - _UVSec: 0
     - _WaterfallSpeed: 0.1
+    - _Waterfall_Speed: 0
     - _WaveNormalStrength: -3.5
     - _WaveSpeed: 0
-    - _Wave_Normal_Strength: 0
+    - _Wave_Normal_Strength: 3.1
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
     - _CloseColor: {r: 0.29099235, g: 0.8034456, b: 1, a: 0}
-    - _Close_Colour: {r: 0, g: 0, b: 0, a: 0}
+    - _Close_Colour: {r: 0.2901961, g: 0.8039216, b: 1, a: 0}
     - _Color: {r: 0.3820755, g: 0.9455812, b: 1, a: 1}
     - _DepthGradientDeep: {r: 0.08599999, g: 0.40699998, b: 1, a: 0.749}
     - _DepthGradientShallow: {r: 0.32499996, g: 0.807, b: 0.971, a: 0.725}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FarColor: {r: 0.09899313, g: 0.5254902, b: 1, a: 0}
-    - _Far_Colour: {r: 0, g: 0, b: 0, a: 0}
+    - _Far_Colour: {r: 0.09803922, g: 0.5254902, b: 1, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _SurfaceNoiseScroll: {r: 0.03, g: 0.03, b: 0, a: 0}
