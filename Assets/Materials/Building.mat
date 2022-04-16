@@ -2,14 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Building
-  m_Shader: {fileID: 4800000, guid: 87c4f90685d5a5a46ab0e85f5a9ba55d, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: -6465566751694194690, guid: 3f8ab8888f5128f43b1dc694aae73f3a,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,6 +22,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BlendTex:
+        m_Texture: {fileID: 2800000, guid: bfae3c019712e5240ae2eeba0cfe1204, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Blend_Texture:
         m_Texture: {fileID: 2800000, guid: bfae3c019712e5240ae2eeba0cfe1204, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -47,7 +53,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: 915c3cfbc7b8eb1439d29bc5a337b952, type: 3}
         m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
+    - _Emission_Texture:
+        m_Texture: {fileID: 2800000, guid: 915c3cfbc7b8eb1439d29bc5a337b952, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 16dba6982b1582041a54b605f794b46a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Main_Texture:
         m_Texture: {fileID: 2800000, guid: 16dba6982b1582041a54b605f794b46a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -56,6 +70,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Texture:
         m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -71,27 +89,55 @@ Material:
         m_Texture: {fileID: 2800000, guid: 77f2b8b02ad08ca44a07ef50eeab1b52, type: 3}
         m_Scale: {x: 0.1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Smoothness_Texture:
+        m_Texture: {fileID: 2800000, guid: 77f2b8b02ad08ca44a07ef50eeab1b52, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _WindowEmissionTex:
         m_Texture: {fileID: 2800000, guid: 37e43b99e76025443ab6b2d3462c7b72, type: 3}
         m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
+    - _Window_Emission_Texture:
+        m_Texture: {fileID: 2800000, guid: 37e43b99e76025443ab6b2d3462c7b72, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - _Autumn: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissionIntensity: 3
+    - _Emission_Intensity: 3
     - _Exponent: 5
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _Has_Grass: 1
     - _Height: 1.05
     - _Metallic: 0
     - _Mode: 0
     - _NoiseScale: 1
+    - _Noise_Scale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _Scale: 1
+    - _Selected: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -99,12 +145,31 @@ Material:
     - _UVSec: 0
     - _WindowEmissionIntensity: 0
     - _WindowMaxBrightness: 10
+    - _Window_Emission_Intensity: 0
+    - _Window_Max_Brightness: 10
+    - _Winter: 0
     - _ZWrite: 1
     m_Colors:
     - _AutumnColor: {r: 0.754717, g: 0.61744636, b: 0.13171947, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Ground: {r: 0.40784314, g: 0.50980395, b: 0.101960786, a: 1}
+    - _Grass_Color: {r: 0.40784314, g: 0.50980395, b: 0.101960786, a: 1}
+    - _Ground: {r: 0, g: 0, b: 0, a: 0}
     - _RoofColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Roof_Color: {r: 0, g: 0, b: 0, a: 0}
     - _SnowColor: {r: 0.82961017, g: 0.9219673, b: 0.9716981, a: 1}
+    - _Stretch: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &8583206056217443354
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

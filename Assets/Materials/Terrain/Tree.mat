@@ -1,15 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7965536496748630795
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Tree
-  m_Shader: {fileID: 4800000, guid: 244aa3dff3bce224c83c9ccc2a1d4c7a, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: -6465566751694194690, guid: 4ba654a984644044fa297943bd5fd949,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -59,7 +74,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: ea0286e6eed566042be2862481a3191f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Main_Texture:
+        m_Texture: {fileID: 2800000, guid: ea0286e6eed566042be2862481a3191f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaskTex:
+        m_Texture: {fileID: 2800000, guid: f310bc72d4393fd489d2166423b1b401, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask_Texture:
         m_Texture: {fileID: 2800000, guid: f310bc72d4393fd489d2166423b1b401, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -76,6 +99,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex2:
+        m_Texture: {fileID: 2800000, guid: b9cb4384db173ab46a731371cc9f0625, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Texture_2:
         m_Texture: {fileID: 2800000, guid: b9cb4384db173ab46a731371cc9f0625, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -107,9 +138,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaDistance: 2.5
     - _AlphaFalloff: 5
+    - _Autumn: 0
     - _AutumnHueInfluence: 0.35
     - _BumpScale: 1
     - _ColVariance: 0.15
@@ -130,6 +175,8 @@ Material:
     - _OcclusionStrength: 1
     - _Outline1: 0
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RimOffset: 0.6
     - _RimPower: 0
     - _ShadowOffsetFloat: 0.5
@@ -145,6 +192,7 @@ Material:
     - _UVSec: 0
     - _WindSpeed: 0.25
     - _WindStrength: 0.01
+    - _Winter: 0
     - _ZWrite: 1
     - __dirty: 1
     - _dabs_rotate: 15
@@ -154,14 +202,20 @@ Material:
     m_Colors:
     - _AutumnCol1: {r: 0.4811321, g: 0.11988525, b: 0.043120317, a: 1}
     - _AutumnCol2: {r: 0.7264151, g: 0.5261532, b: 0.18845676, a: 1}
+    - _Autumn_Color_1: {r: 0.48235294, g: 0.12156863, b: 0.043137256, a: 0}
+    - _Autumn_Color_2: {r: 0.7254902, g: 0.5254902, b: 0.1882353, a: 0}
     - _Color: {r: 0.22208786, g: 0.42999998, b: 0.25043952, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
     - _RimTint: {r: 0.0036044938, g: 0.5902472, b: 0.764151, a: 0}
     - _SnowColor: {r: 0.7980598, g: 0.87504065, b: 0.9245283, a: 1}
+    - _Snow_Color: {r: 0.8, g: 0.8745098, b: 0.9254902, a: 1}
     - _Spec_Color: {r: 1, g: 1, b: 1, a: 0}
     - _SpringCol1: {r: 0.09104524, g: 0.3018868, b: 0, a: 1}
     - _SpringCol2: {r: 0.03321823, g: 0.4716981, b: 0, a: 1}
+    - _Spring_Color_1: {r: 0.09019608, g: 0.3019608, b: 0, a: 0}
+    - _Spring_Color_2: {r: 0.03137255, g: 0.47058824, b: 0, a: 0}
     - _Tint: {r: 0.62264144, g: 0.62264144, b: 0.62264144, a: 0}
     - _TrunkCol: {r: 0.2830189, g: 0.09478463, b: 0.09478463, a: 1}
+    - _Trunk_Color: {r: 0.28235295, g: 0.09411765, b: 0.09411765, a: 0}
   m_BuildTextureStacks: []

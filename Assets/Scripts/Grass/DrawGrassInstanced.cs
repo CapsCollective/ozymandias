@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Grass
 {
@@ -43,6 +44,8 @@ namespace Grass
         public GrassGraphicsSetting GrassQuality = GrassGraphicsSetting.Ultra;
 
         private ComputeBuffer matrixBuffer;
+        private GraphicsBuffer grassGraphicsBuffer;
+        [SerializeField] private VisualEffect grassEffect;
 
         // Serialized so that positions get saved.
         // Hidden because the information isn't valuable to see and it slows down the editor
@@ -71,6 +74,7 @@ namespace Grass
             bounds = new Bounds(transform.position, Vector3.one * (boundsRange + 1));
 
             InitializeBuffers();
+            grassEffect.SetGraphicsBuffer("Grass Buffer", grassGraphicsBuffer);
         }
 
         public void InitializeBuffers()
@@ -89,6 +93,8 @@ namespace Grass
 
                 matrixBuffer = new ComputeBuffer(dupMatrixCount, 4 * 4 * 4);
                 matrixBuffer.SetData(dupMatrix);
+                grassGraphicsBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, GrassCount, 4*4*4);
+                grassGraphicsBuffer.SetData(dupMatrix);
                 mat.SetBuffer("_MatrixBuffer", matrixBuffer);
             }
         }
@@ -107,8 +113,9 @@ namespace Grass
         {
             if (!GrassOn) return;
 
-            if(GrassCount > 0)
-                Graphics.DrawMeshInstancedProcedural(mesh, 0, mat, bounds, dupMatrixCount, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);
+            //if(GrassCount > 0)
+            //    Graphics.DrawMeshInstancedProcedural(mesh, 0, mat, bounds, dupMatrixCount, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);
+
         }
 
         private void OnDisable()
@@ -119,7 +126,9 @@ namespace Grass
                 matrixBuffer.Release();
             }
             matrixBuffer = null;
-
+            grassGraphicsBuffer.Release();
+            grassGraphicsBuffer.Dispose();
+            grassGraphicsBuffer = null;
 #if UNITY_EDITOR
             SceneView.duringSceneGui -= SceneView_duringSceneGui;
 #endif

@@ -2,14 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Terrain
-  m_Shader: {fileID: 4800000, guid: e1e1b26d29a0b9f48a2f60f735e9ff4c, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: -6465566751694194690, guid: d9e4c34a7c33f6c46aaedbff96809174,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -51,6 +53,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Noise_Texture:
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -67,7 +73,25 @@ Material:
         m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Triplanar_89635753024c4c76a5d2883546ce9162_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c37e97c8024b1c84aa7d45200a9a8c9b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - _Autumn: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -76,24 +100,45 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Height: -0.6
+    - _Height: 0.6
     - _Metallic: 0
     - _Mode: 0
+    - _Noise_Tile: 0.03
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _SmoothnessTextureChannel: 0
     - _Snow: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _Winter: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
     - _AutumnColor: {r: 0.6792453, g: 0.54339635, b: 0.15699539, a: 1}
+    - _Autumn_Colour: {r: 0.6784314, g: 0.54509807, b: 0.15686275, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Grass: {r: 0.40784314, g: 0.50980395, b: 0.101960786, a: 0}
+    - _Grass_Colour: {r: 0.40784314, g: 0.50980395, b: 0.101960786, a: 0}
     - _Sand: {r: 0.8666667, g: 0.69803923, b: 0.43137255, a: 0}
+    - _Sand_Colour: {r: 0.8666667, g: 0.69803923, b: 0.43137255, a: 0}
     - _SnowColor: {r: 0.8915094, g: 0.9560872, b: 1, a: 1}
+    - _Snow_Colour: {r: 0.8901961, g: 0.95686275, b: 1, a: 0}
     - _Tiling: {r: 0.03, g: 0.03, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &1336879854765109780
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

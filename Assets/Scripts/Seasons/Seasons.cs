@@ -77,6 +77,7 @@ namespace Seasons
             State.OnLoadingEnd += UpdateSeason;
             Newspaper.OnClosed += UpdateSeason;
             State.OnNextTurnBegin += TurnTransition;
+            Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
         }
 
         private void TurnTransition()
@@ -89,6 +90,7 @@ namespace Seasons
                 timer += Time.deltaTime / State.TurnTransitionTime;
                 Weather weather = GetWeather(_currentSeason);
                 CycleWeather(weather, timer);
+                Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
             });
         }
         
