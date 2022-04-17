@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
 
 namespace Structures
@@ -7,35 +8,25 @@ namespace Structures
     [ExecuteAlways]
     public class Outline : MonoBehaviour
     {
-        public static CommandBuffer OutlineBuffer { get; private set; }
-
-        private Camera _cam;
-        private int _bufferName;
+        private RenderTexture outlineRT;
+        private Camera cam;
 
         private void OnEnable()
         {
-            _cam = Camera.main;
-            OutlineBuffer = new CommandBuffer {name = "Outline Buffer"};
-            if (_cam) _cam.AddCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
-
-            _bufferName = Shader.PropertyToID("_OutlineBuffer");
+            cam = GetComponent<Camera>();
+            outlineRT = RenderTexture.GetTemporary(Screen.width, Screen.height, 0, RenderTextureFormat.RFloat);
         }
 
         private void Update()
         {
-            OutlineBuffer.Clear();
-            OutlineBuffer.GetTemporaryRT(_bufferName, -1, -1, 32, FilterMode.Point, RenderTextureFormat.RGFloat);
-            OutlineBuffer.SetGlobalTexture("_OutlineRT", _bufferName);
-            OutlineBuffer.SetRenderTarget(_bufferName);
-
-            OutlineBuffer.ClearRenderTarget(true, true, Color.black);
+            cam.targetTexture = outlineRT;
+            Shader.SetGlobalTexture("_OutlineRT", outlineRT);
         }
 
         private void OnDisable()
         {
-            if (_cam) _cam.RemoveCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
-            OutlineBuffer.Clear();
-            OutlineBuffer.Dispose();
+            RenderTexture.ReleaseTemporary(outlineRT);
+            cam.targetTexture = null;
         }
     }
 }

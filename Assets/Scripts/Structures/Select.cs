@@ -247,7 +247,7 @@ namespace Structures
 
         private void SetHighlightColor(Color color)
         {
-            _outline.color.value = color;
+            //_outline.color.value = color;
         }
 
         private static bool IsSelectionDisabled()
