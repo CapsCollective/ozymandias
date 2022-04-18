@@ -638,7 +638,7 @@ namespace Inputs
                     ""path"": ""<Keyboard>/f5"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse and Keyboard"",
                     ""action"": ""Screenshot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

@@ -55,6 +55,7 @@ namespace Inputs
         public InputAction ReturnToTown { get; }
         public InputAction ToggleTooltips { get; }
         public InputAction NavigateTooltips { get; }
+        public InputAction OnScreenshot{ get; }
 
         public Inputs()
         {
@@ -99,6 +100,7 @@ namespace Inputs
             NextTurn = PlayerInput.Player.NextTurn;
             DialogueNext = PlayerInput.Player.DialogueNext;
             ReturnToTown = PlayerInput.Player.ReturnToTown;
+            OnScreenshot = PlayerInput.Player.Screenshot;
             
             PlayerInput.UI.Enable();
             PlayerInput.Player.Enable();
