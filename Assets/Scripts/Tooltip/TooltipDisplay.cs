@@ -5,7 +5,6 @@ using Managers;
 using TMPro;
 using UnityEngine;
 using Utilities;
-using NaughtyAttributes;
 using static Managers.GameManager;
 using String = Utilities.String;
 using UnityEngine.InputSystem;
@@ -108,8 +107,8 @@ namespace Tooltip
                 Description = "Re-read the morning news.",
             }},
             {TooltipType.Progress, new TooltipConfig {
-                Title = "Progress Report",
-                Description = "Check out your cities growth, and have a look at your achievements.",
+                Title = "Town Ledger",
+                Description = "Check your progress, purchase upgrades, and change settings.",
             }},
             {TooltipType.Quests, new TooltipConfig {
                 Title = "Quest Map",
@@ -120,7 +119,12 @@ namespace Tooltip
                 Title = "Next Turn",
                 Description = "Jump forward to the next day, collect your income, get new a new set of building, and " +
                               "see what awaits.",
-            }}
+            }},
+            {TooltipType.GuildTokens, new TooltipConfig {
+                Title = "Guild Tokens",
+                Description = "Earn tokens from each guild by completing their requests. Tokens can be used to purchase " +
+                              "upgrades for your towns.",
+            }},
         };
         
         private void Start()
@@ -205,7 +209,7 @@ namespace Tooltip
                     break;
                 case Stat.Defence:
                     details.text = $"{Manager.Stats.Defence} defence\n" +
-                                   $"  ● +{adventurers} from total adventurers\n" +
+                                   $"  ● +{adventurers} from total adventurers in town\n" +
                                    $"{FormattedBuildingString(Stat.Defence)}" +
                                    (Manager.Stats.MineStrikePenalty != 0 ? $"  ● {Manager.Stats.MineStrikePenalty} from the miners strike\n" : "") +
                                    $"{FormattedModifierString(Stat.Defence)}";

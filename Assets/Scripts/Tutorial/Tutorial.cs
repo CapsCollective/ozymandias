@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
+using Cards;
 using DG.Tweening;
 using Events;
 using Inputs;
 using Managers;
 using NaughtyAttributes;
+using Quests;
+using Reports;
 using Structures;
 using TMPro;
 using UI;
@@ -29,7 +32,10 @@ namespace Tutorial
 
     public class Tutorial : MonoBehaviour
     {
-        public static bool Active, DisableSelect;
+        public static bool Active, DisableSelect, DisableNextTurn, ShowShade;
+
+        // (Ben) I Don't love this architecture, but not sure a better way without making book public
+        public static Action ShowBook;
         
         [SerializeField] private SerializedDictionary<GuidePose, Sprite> poses;
         
@@ -43,6 +49,24 @@ namespace Tutorial
         private List<Objective> _currentObjectives;
         private int _sectionLine;
         private Action _onObjectivesComplete;
+
+        private GameState _exitState = GameState.InGame;
+        
+        #region Dialogue
+        
+        private struct Line
+        {
+            public Line(string dialogue, GuidePose? pose = null, Action onNext = null)
+            {
+                Dialogue = dialogue;
+                Pose = pose;
+                OnNext = onNext;
+            }
+        
+            public readonly string Dialogue;
+            public GuidePose? Pose;
+            public readonly Action OnNext;
+        }
         
         private void Start()
         {
@@ -50,16 +74,20 @@ namespace Tutorial
             next.onClick.AddListener(NextLine);
             
             State.OnNewGame += StartTutorial;
+            //State.OnGameEnd += StartUpgradesDescription;
+            UnlockDisplay.OnUnlockDisplayed += StartUnlockDescription;
+            Quests.Quests.OnCampAdded += StartCampsDescription;
         }
 
-        private void ShowDialogue(List<Line> lines)
+        private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame)
         {
+            _exitState = exitState;
             Manager.State.EnterState(GameState.InDialogue);
             _currentSection = lines;
             _sectionLine = 0;
             guide.GetComponent<RectTransform>().DOAnchorPosX(0, 0.5f);
-            dialogue.DOAnchorPosY(230, 0.5f);
-            Manager.GameHud.Hide(GameHud.HudObject.LeftButtons);
+            dialogue.DOAnchorPosY(240, 0.5f);
+            Manager.GameHud.Hide(GameHud.HudObject.MenuBar);
 
             text.text = lines[0].Dialogue;
             text.maxVisibleCharacters = lines[0].Dialogue.Length;
@@ -74,8 +102,8 @@ namespace Tutorial
             _currentSection = null;
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
-            Manager.GameHud.Show(GameHud.HudObject.LeftButtons);
-            Manager.State.EnterState(GameState.InGame);
+            Manager.GameHud.Show(GameHud.HudObject.MenuBar);
+            Manager.State.EnterState(_exitState);
             blocker.SetActive(false);
         }
 
@@ -108,7 +136,8 @@ namespace Tutorial
             }
             text.maxVisibleCharacters = characters;
         }
-
+        #endregion
+        
         #region Objectives
         private class Objective
         {
@@ -194,9 +223,9 @@ namespace Tutorial
             ClearObjectives();
             _currentObjectives = new List<Objective>
             {
-                CreateObjective("Pan Camera\n(Drag Left Mouse)"),
-                CreateObjective("Rotate Camera\n(Drag Right Mouse)"),
-                CreateObjective("Zoom Camera\n(Scroll Wheel)")
+                CreateObjective($"Pan Camera\n({(Manager.Inputs.UsingController ? "Left Stick" : "Drag Left Mouse")})"),
+                CreateObjective($"Rotate Camera\n({(Manager.Inputs.UsingController ? "Right Stick Horizontal" : "Drag Right Mouse")})"),
+                CreateObjective($"Zoom Camera\n({(Manager.Inputs.UsingController ? "Right Stick Vertical" : "Scroll Wheel")})")
             };
             _onObjectivesComplete = StartBuildingDialogue;
             ShowObjectives();
@@ -243,8 +272,8 @@ namespace Tutorial
             _currentObjectives = new List<Objective>
             {
                 CreateObjective("Clear Ruins", 3),
-                CreateObjective("Place Buildings", 3),
-                CreateObjective("Rotate to Fit\n(Right Click)")
+                CreateObjective("Place Buildings in Cleared Space", 3),
+                CreateObjective($"Rotate to Fit\n({(Manager.Inputs.UsingController ? "LB/RB" : "Right Click")})")
             };
             _onObjectivesComplete = StartAdventurerDialogue;
             ShowObjectives();
@@ -311,7 +340,7 @@ namespace Tutorial
         
         private void StartAdventurerObjectives()
         {
-            DisableSelect = false;
+            DisableNextTurn = false;
             Manager.Camera.MoveTo(Manager.Structures.TownCentre);
             
             ClearObjectives();
@@ -326,7 +355,7 @@ namespace Tutorial
 
             Adventurers.Adventurers.OnAdventurerJoin += AdventurerJoin;
             State.OnNextTurnBegin += NextTurn;
-            Newspaper.OnClosed += ReadNews;
+            Newspaper.OnNextClosed += ReadNews;
 
             void NextTurn()
             {
@@ -336,7 +365,6 @@ namespace Tutorial
             
             void ReadNews()
             {
-                Newspaper.OnClosed -= ReadNews;
                 CompleteObjective(_currentObjectives[1]);
             }
             
@@ -344,28 +372,21 @@ namespace Tutorial
             {
                 if (!_currentObjectives[2].Increment()) return;
                 Adventurers.Adventurers.OnAdventurerJoin -= AdventurerJoin;
-                CompleteObjective(_currentObjectives[2]);
+                Newspaper.OnNextClosed += () => CompleteObjective(_currentObjectives[2]);
             }
         }
 
         private void EndTutorialDialogue()
         {
-            void ShowEndTutorialDialogue()
-            {
-                ShowDialogue(new List<Line> {
-                    new Line("Well, that's all for now!", GuidePose.Neutral),
-                    new Line("Wait, I totally forgot to mention how the last town got overrun, huh?", GuidePose.Embarrassed),
-                    new Line("That bar up the top there is your towns stability, it hits 0, well you can probably guess...", GuidePose.PointingUp),
-                    new Line("You want your defence (total adventurers + defensive buildings) to be larger than threat, which grows over time."),
-                    new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over.", GuidePose.Neutral),
-                    new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
-                    new Line("Good Luck!", GuidePose.FingerGuns, EndTutorial)
-                });
-                Newspaper.OnClosed -= ShowEndTutorialDialogue;
-            }
-            
-            // Make it only display once the newspaper has been closed
-            Newspaper.OnClosed += ShowEndTutorialDialogue;
+            ShowDialogue(new List<Line> {
+                new Line("Well, that's all for now!", GuidePose.Neutral),
+                new Line("Wait, I totally forgot to mention how the last town got overrun, huh?", GuidePose.Embarrassed),
+                new Line("That bar up the top there is your towns stability, it hits 0, well you can probably guess...", GuidePose.PointingUp),
+                new Line("You want your defence (total adventurers + defensive buildings) to be larger than threat, which grows over time."),
+                new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over.", GuidePose.Neutral),
+                new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
+                new Line("Good Luck!", GuidePose.FingerGuns, EndTutorial)
+            });
         }
 
         private void EndTutorial()
@@ -375,27 +396,62 @@ namespace Tutorial
             {
                 ++Manager.Upgrades.GuildTokens[guild];
             }
-            SaveFile.SaveState();
+            SaveFile.SaveState(false);
         }
 
-        #endregion
-
-        private struct Line
+        private void StartCampsDescription(Quest quest)
         {
-            public Line(string dialogue, GuidePose? pose = null, Action onNext = null)
-            {
-                Dialogue = dialogue;
-                Pose = pose;
-                OnNext = onNext;
-            }
-        
-            public readonly string Dialogue;
-            public GuidePose? Pose;
-            public readonly Action OnNext;
+            if (Manager.Achievements.Milestones[Milestone.CampsCleared] > 0 || !quest.IsRadiant || Manager.Quests.RadiantCount > 1) return;
+            //TODO: Write Proper dialogue
+            ShowDialogue(new List<Line> {
+                new Line("Heads up, our scouts have found an enemy camp!", GuidePose.Neutral),
+                new Line("They don't look too threatening right now, but give them a few days to grow and they could become a real problem. Each space they take up adds 1 threat until cleared."),
+                new Line("You'll probably wanna get on sending a few adventurers to deal with them. How much you spend to gear them up will influence how long a quest will take."),
+                new Line("Just be warned, while they're out on quests, they won't be providing defence to your town."),
+            });
         }
+        
+        private void StartUnlockDescription()
+        {
+            if (Manager.Cards.UnlockedCards != 1) return;
+            ShowShade = true;
+            //TODO: Write Proper dialogue
+            ShowDialogue(new List<Line> {
+                new Line("You've just unlocked a new building card! Keep an eye on news in the town, and you might be able to find more.", GuidePose.Neutral),
+                new Line("This building will be added to your cards, at least until they all get lost in the ruins of your town..."),
+                new Line("But fear not! Check the upgrades page in your book to purchase the ability to rediscover them from the ruins of your previous towns."),
+                new Line("Discovering more buildings might just give us the edge to lasting a little longer out here...")
+            }, GameState.InMenu);
+            ShowShade = false;
+        }
+        
+        /*private void StartUpgradesDescription()
+        {
+            if (Manager.Upgrades.GetLevel(UpgradeType.Discoveries) > 0) return;
+            
+            DisableIntroMenu = true;
+            
+            //TODO: Write Proper dialogue
+            ShowDialogue(new List<Line> {
+                new Line("Camp gone! It's all ruins now", GuidePose.Neutral),
+                new Line("Cards gone too!"),
+                new Line("Here upgrades!", GuidePose.PointingUp, ShowBook.Invoke),
+                new Line("Let me give you points", GuidePose.Neutral, AddTokens),
+                new Line("Dialogue Finished", GuidePose.Neutral, EndUpgradesDescription),
+            });
 
-       
+            void EndUpgradesDescription()
+            {
+                DisableIntroMenu = true;
+                Manager.IntroHud.Show();
+            }
+            
+            void AddTokens()
+            {
+                foreach (Guild guild in Enum.GetValues(typeof(Guild))) Manager.Upgrades.GuildTokens[guild]++;
+            }
+        }*/
+        
+        #endregion
     }
-
-    
 }

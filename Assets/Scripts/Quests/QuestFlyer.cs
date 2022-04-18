@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using static Managers.GameManager;
@@ -36,6 +37,7 @@ namespace Quests
             });
             sendButton.onClick.AddListener(() =>
             {
+                if (!Manager.State.InMenu) return;
                 Inputs.InputHelper.OnToggleCursor?.Invoke(false);
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();

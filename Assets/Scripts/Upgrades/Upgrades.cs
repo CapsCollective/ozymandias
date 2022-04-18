@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Inputs;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -12,12 +13,13 @@ namespace Upgrades
 {
     public class Upgrades: MonoBehaviour
     {
+        public static Action<UpgradeType> OnUpgradePurchased;
+
         public Dictionary<Guild, int> GuildTokens { get; private set; }
         
         [SerializeField] private Upgrade root;
         
-        [Serializable]
-        private struct PurchaseBox
+        [Serializable] private struct PurchaseBox
         {
             public RectTransform transform;
             public Canvas canvas;
@@ -34,13 +36,20 @@ namespace Upgrades
         public int GetLevel(UpgradeType type) => _upgrades[type].level;
         public bool IsUnlocked(UpgradeType type) => _upgrades[type].level > 0;
 
+        public int UpgradesPurchased => _upgrades.Count(upgrade => upgrade.Value.level != 0);
+        public int TotalUpgrades => _upgrades.Count;
+
         private void Awake()
         {
-            State.OnEnterState += (_) => Deselect();
-
             purchaseBox.purchaseButton.onClick.AddListener(Purchase);
             purchaseBox.deselectButton.onClick.AddListener(Deselect);
             _upgrades = GetComponentsInChildren<Upgrade>().ToDictionary(upgrade => upgrade.type);
+        }
+
+        private void Start()
+        {
+            State.OnEnterState += _ => Deselect();
+            Manager.Inputs.Close.performed += _ => Deselect();
         }
 
         private void Purchase()
@@ -54,6 +63,7 @@ namespace Upgrades
             _selected.Display(true);
             DisplayDetails(_selected);
             Manager.Structures.CheckAdjacencyBonuses();
+            OnUpgradePurchased?.Invoke(_selected.type);
             UpdateUi();
         }
 
@@ -71,6 +81,7 @@ namespace Upgrades
             purchaseBox.transform.position = upgrade.transform.position;
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);
+            if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(purchaseBox.purchaseButton.gameObject);
         }
 
         private void DisplayDetails(Upgrade upgrade)
@@ -100,6 +111,8 @@ namespace Upgrades
 
         private void Deselect()
         {
+            if (_selected == null) return;
+            if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(_selected.GetComponentInChildren<Button>().gameObject);
             _selected = null;
             purchaseBox.canvas.enabled = false;
         }

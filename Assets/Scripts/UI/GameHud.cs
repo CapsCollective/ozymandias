@@ -1,28 +1,27 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 using Managers;
 using Utilities;
-using static Managers.GameManager;
-using static UI.GameHud.HudObject;
-using System;
 using System.Collections;
 using System.IO;
 using NaughtyAttributes;
+using static Managers.GameManager;
+using static UI.GameHud.HudObject;
+using System;
 
 namespace UI
 {
     public class GameHud : MonoBehaviour
     {
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
-        [SerializeField] private RectTransform topBar, leftButtons, rightButtons, cards;
-        [SerializeField] private CanvasGroup leftGameGroup, rightGameGroup;
+        [SerializeField] private RectTransform topBar, menuBar, rightButtons, cards;
+        [SerializeField] private CanvasGroup menuBarGroup, rightGameGroup;
 
         public enum HudObject
         {
             TopBar,
-            LeftButtons,
+            MenuBar,
             RightButtons,
             Cards,
         }
@@ -48,7 +47,7 @@ namespace UI
             _hudValuesMap = new Dictionary<HudObject, HudObjectValues>
             {
                 {TopBar, new HudObjectValues(topBar, Vector2.zero, new Vector2(0,200))},
-                {LeftButtons, new HudObjectValues(leftButtons, new Vector2(10,0), new Vector2(-150,0))},
+                {HudObject.MenuBar, new HudObjectValues(menuBar, new Vector2(0,0), new Vector2(0, 150))},
                 {RightButtons, new HudObjectValues(rightButtons, Vector2.zero, new Vector2(0,-230))},
                 {HudObject.Cards, new HudObjectValues(cards, new Vector2(0,-155), new Vector2(0,-390))},
             };
@@ -65,15 +64,15 @@ namespace UI
             switch (state)
             {
                 case GameState.InGame:
-                    leftGameGroup.interactable = true;
+                    menuBarGroup.interactable = true;
                     rightGameGroup.interactable = true;
                     break;
                 case GameState.InMenu:
-                    leftGameGroup.interactable = false;
+                    menuBarGroup.interactable = false;
                     rightGameGroup.interactable = false;
                     break;
                 case GameState.NextTurn:
-                    leftGameGroup.interactable = false;
+                    menuBarGroup.interactable = false;
                     rightGameGroup.interactable = false;
                     break;
             }

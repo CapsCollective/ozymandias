@@ -1,3 +1,4 @@
+using Cards;
 using DG.Tweening;
 using Requests;
 using UnityEngine;
@@ -19,8 +20,8 @@ namespace UI
         private enum BookPage
         {
             Settings,
-            Progress,
-            Unlocks
+            Reports,
+            Upgrades
         }
 
         const float DEFAULT_RIBBON_HEIGHT = 160f;
@@ -35,8 +36,8 @@ namespace UI
             quitButton, 
             introSettingsButton,
             settingsRibbon,
-            progressRibbon,
-            unlocksRibbon;
+            reportsRibbon,
+            upgradesRibbon;
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
         [SerializeField] private SerializedDictionary<BookPage, BookGroup> pages;
@@ -60,6 +61,8 @@ namespace UI
                 quitButton.enabled = enableQuit;
                 
                 if (_page == value) return;
+
+                if (value == BookPage.Reports) CardsBookList.ScrollActive = true;
                 
                 Manager.Jukebox.PlayPageTurn();
 
@@ -93,22 +96,28 @@ namespace UI
             });
             
             settingsRibbon.onClick.AddListener(() => Page = BookPage.Settings);
-            unlocksRibbon.onClick.AddListener(() => Page = BookPage.Unlocks);
-            progressRibbon.onClick.AddListener(() => Page = BookPage.Progress);
+            reportsRibbon.onClick.AddListener(() => Page = BookPage.Reports);
+            upgradesRibbon.onClick.AddListener(() => Page = BookPage.Upgrades);
 
             var rt = pages[_page].bookRibbon.transform as RectTransform;
             rt.sizeDelta = new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT);
 
             BookButton.OnClicked += (toUnlocks) =>
             {
-                if (toUnlocks) Page = BookPage.Unlocks;
+                if (toUnlocks) Page = BookPage.Upgrades;
                 Open();
             };
             
             RequestDisplay.OnNotificationClicked += () =>
             {
                 if (!Manager.State.InGame) return;
-                Page = BookPage.Progress;
+                Page = BookPage.Upgrades;
+                Open();
+            };
+
+            Tutorial.Tutorial.ShowBook += () =>
+            {
+                Page = BookPage.Upgrades;
                 Open();
             };
 
@@ -139,16 +148,16 @@ namespace UI
                 {
                     closeButton.gameObject.SetActive(true);
                     _closeButtonCanvas.alpha = 0;
-                    _closeButtonCanvas.DOFade(1, 0.5f);
+                    if (!Manager.Inputs.UsingController) _closeButtonCanvas.DOFade(1, 0.5f);
                     _transitioning = false;
                     _isOpen = true;
                     Manager.Jukebox.PlayBookThump();
                     pages[_page].canvasGroup.GetComponent<UIController>().OnOpen();
                     _changingPage = false;
+                    if (_page == BookPage.Reports) CardsBookList.ScrollActive = true;
                 });
             Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }
-
 
         private void Close()
         {

@@ -1,6 +1,4 @@
-using Achievements;
-using Inputs;
-using UnityEngine.InputSystem;
+using Reports;
 using UnityEngine;
 
 namespace Platform
@@ -34,13 +32,13 @@ namespace Platform
                                        "delegate method AchievementsDelegate.UnlockAchievement");
         }
         
-        public virtual void UpdateStat(GameStat stat, int value)
+        public virtual void UpdateStat(Milestone stat, int value)
         {
             Debug.LogError($"Call to unimplemented {GetPlatformId().ToString()} " +
                                        "delegate method AchievementsDelegate.UpdateStat");
         }
         
-        public virtual void UpdateProgress(GameStat stat, Achievement achievement, int value)
+        public virtual void UpdateProgress(Milestone stat, Achievement achievement, int value)
         {
             Debug.LogError($"Call to unimplemented {GetPlatformId().ToString()} " +
                                        "delegate method AchievementsDelegate.UpdateProgress");
@@ -66,6 +64,10 @@ namespace Platform
         public virtual string GetSaveFilePath()
         {
             return Application.persistentDataPath + "/save.json";
+        }
+        public virtual string GetBackupFilePath()
+        {
+            return Application.persistentDataPath + "/save_prev.json";
         }
     }
 }

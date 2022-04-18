@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Achievements;
 using Events;
 using Inputs;
 using NaughtyAttributes;
 using Quests;
+using Reports;
 using Requests.Templates;
 using Structures;
 using Tooltip;
@@ -25,6 +25,7 @@ namespace Managers
         public static GameManager Manager { get; private set; }
         
         // All Managers/ Universal Controllers
+        public Achievements Achievements { get; private set; }
         public Inputs.Inputs Inputs { get; private set; }
         public State State { get; private set; }
         public Stats Stats { get; private set; }
@@ -48,7 +49,8 @@ namespace Managers
             Manager = this;
             Random.InitState((int)DateTime.Now.Ticks);
             Inputs = new Inputs.Inputs();
-            
+
+            Achievements = FindObjectOfType<Achievements>();
             State = FindObjectOfType<State>();
             Stats = FindObjectOfType<Stats>();
             Adventurers = FindObjectOfType<Adventurers.Adventurers>();
@@ -65,7 +67,6 @@ namespace Managers
             Cursor = FindObjectOfType<CursorSelect>();
             GameHud = FindObjectOfType<GameHud>();
             IntroHud = FindObjectOfType<IntroHud>();
-            gameObject.AddComponent<AchievementManager>();
         }
         #endregion
         
@@ -165,7 +166,7 @@ namespace Managers
         [Button("Reset Achievements")]
         public void ResetAchievements()
         {
-            AchievementManager.ResetAll();
+            Achievements.ResetAll();
         }
         
         [Button("Reset Save File")]

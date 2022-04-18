@@ -1,8 +1,9 @@
 using System.Collections.Generic;
-using Achievements;
+using Reports;
 using Steamworks;
 using Steamworks.NET;
 using UnityEngine;
+using static Managers.GameManager;
 
 namespace Platform
 {
@@ -13,12 +14,12 @@ namespace Platform
             return PlatformID.Steam;
         }
         
-        private static readonly Dictionary<GameStat, string> StatIDs = 
-            new Dictionary<GameStat, string>
+        private static readonly Dictionary<Milestone, string> StatIDs = 
+            new Dictionary<Milestone, string>
             {
-                {GameStat.Population, "GREATEST_POPULATION"},
-                {GameStat.Turn, "GREATEST_TURN"},
-                {GameStat.Cards, "UNLOCKED_CARDS"}
+                {Milestone.Population, "GREATEST_POPULATION"},
+                {Milestone.Turn, "GREATEST_TURN"},
+                {Milestone.Cards, "UNLOCKED_CARDS"}
             };
 
         private static readonly Dictionary<Achievement, string> AchievementIDs = 
@@ -50,8 +51,8 @@ namespace Platform
         
         public override void UnlockAchievement(Achievement achievement)
         {
-            if (AchievementManager.Unlocked.Contains(achievement)) return;
-            AchievementManager.Unlocked.Add(achievement);
+            if (Manager.Achievements.Unlocked.Contains(achievement)) return;
+            Manager.Achievements.Unlocked.Add(achievement);
             
             // Handle Steam unlock if Steam API is active
             if (!SteamManager.Initialized) return;
@@ -59,14 +60,14 @@ namespace Platform
             SteamUserStats.StoreStats();
         }
         
-        public override void UpdateStat(GameStat stat, int value)
+        public override void UpdateStat(Milestone stat, int value)
         {
             if (!SteamManager.Initialized) return; 
             SteamUserStats.SetStat(StatIDs[stat], value);
             SteamUserStats.StoreStats();
         }
         
-        public override void UpdateProgress(GameStat stat, Achievement achievement, int value)
+        public override void UpdateProgress(Milestone stat, Achievement achievement, int value)
         {
             // if (!Initialised) return;
             // var achievementID = AchievementIDs[achievement];

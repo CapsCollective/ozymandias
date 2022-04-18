@@ -15,7 +15,7 @@ namespace UI
             Button = btn;
             ShouldDisplay = displayPolicy;
             StartPos = btn.transform.localPosition;
-            OffsetPos = StartPos + new Vector3(-150, 0, 0);
+            OffsetPos = StartPos + new Vector3(0, 200);
             IsDisplaying = true;
         }
 
@@ -26,7 +26,7 @@ namespace UI
         public Func<bool> ShouldDisplay { get; }
     }
     
-    public class MenuBar : MonoBehaviour
+    public class MenuBar : UiUpdater
     {
         public float duration = 0.5f;
         public Button questButton;
@@ -46,33 +46,25 @@ namespace UI
             Newspaper.OnClosed += () =>
             {
                 _newspaperClosed = true;
-                UpdateDisplay();
             };
             
             State.OnNewGame += () => 
             {
                 _newspaperClosed = false;
-                UpdateDisplay();
             };
 
             Manager.Inputs.OpenNewspaper.performed += _ =>
             {
-                if (!_newspaperButton.IsDisplaying) return;
-                if (Manager.State.Current == Utilities.GameState.InMenu) return;
-                newspaperButton.onClick.Invoke();
+                if (_newspaperButton.IsDisplaying && Manager.State.InGame) newspaperButton.onClick.Invoke();
             };
 
             Manager.Inputs.OpenQuests.performed += _ =>
             {
-                if (!_questButton.IsDisplaying) return;
-                if (Manager.State.Current == Utilities.GameState.InMenu) return;
-                questButton.onClick.Invoke();
+                if (_questButton.IsDisplaying && Manager.State.InGame) questButton.onClick.Invoke();
             };
-
-            State.OnLoadingEnd += UpdateDisplay;
         }
 
-        private void UpdateDisplay()
+        protected override void UpdateUi()
         {
             // Set display of quest button
             var questButtonChanged = false;

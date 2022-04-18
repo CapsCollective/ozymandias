@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Achievements;
 using Newtonsoft.Json;
 using Platform;
+using Reports;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -15,7 +15,8 @@ namespace Managers
     [Serializable]
     public struct StatDetails
     {
-        public int wealth, turnCounter, stability, baseThreat;
+        public int wealth, turnCounter, stability, baseThreat, longestRun, maxAdventurers, campsCleared, townsDestroyed, buildingsBuilt, ruinsDemolished;
+        public HashSet<Secret> secrets;
         public Dictionary<Stat, List<Stats.Modifier>> modifiers;
     }
     
@@ -63,6 +64,7 @@ namespace Managers
         public bool isRuin;
     }
     
+    [Serializable]
     public struct TerrainDetails
     {
         public int rootId;
@@ -78,7 +80,8 @@ namespace Managers
     [Serializable]
     public struct AchievementDetails
     {
-        public List<Achievement> unlocked;
+        public HashSet<Achievement> unlocked;
+        public Dictionary<Milestone, int> milestones;
     }
     
     [Serializable]
@@ -107,14 +110,16 @@ namespace Managers
         public AchievementDetails achievements;
         public Dictionary<Guild, RequestDetails> requests;
         public UpgradeDetails upgrades;
+        public string version;
 
         private static readonly string SaveFilePath = PlatformManager.Instance.FileSystem.GetSaveFilePath();
+        private static readonly string BackupFilePath = PlatformManager.Instance.FileSystem.GetBackupFilePath();
 
-        public static void SaveState()
+        public static void SaveState(bool overwriteBackup = true)
         {
             if (Tutorial.Tutorial.Active) return; // No saving during tutorial
             OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
-            new SaveFile().Save();
+            new SaveFile().Save(overwriteBackup);
         }
         
         public static void LoadState()
@@ -127,10 +132,14 @@ namespace Managers
             File.Delete(SaveFilePath);
         }
 
-        public void Save()
+        public void Save(bool overwriteBackup)
         {
+            if (File.Exists(SaveFilePath) && overwriteBackup) File.WriteAllLines(BackupFilePath, File.ReadAllLines(SaveFilePath));
+
+            version = Application.version;
             structures = Manager.Structures.Save();
             cards = Manager.Cards.Save();
+            achievements = Manager.Achievements.Save();
             
             if (Manager.State.IsGameOver)
             {
@@ -159,16 +168,23 @@ namespace Managers
             {
                 string saveJson = File.ReadAllText(SaveFilePath);
                 JsonConvert.PopulateObject(saveJson, this);
+                
+                if (version != Application.version)
+                {
+                    Debug.LogWarning("Save file from previous version " + version);
+                }
             }
             catch
             {
                 Debug.LogWarning("Save.json not found, starting tutorial");
                 Tutorial.Tutorial.Active = true;
                 Tutorial.Tutorial.DisableSelect = true;
+                Tutorial.Tutorial.DisableNextTurn = true;
 
                 Manager.Structures.SpawnTutorialRuins();
             }
-
+            
+            Manager.Achievements.Load(achievements);
             Manager.Upgrades.Load(upgrades);
             Manager.Cards.Load(cards);
             Manager.Stats.Load(stats);

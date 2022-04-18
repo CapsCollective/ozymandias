@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Adventurers;
+using DG.Tweening;
 using Managers;
 using Map;
 using NaughtyAttributes;
@@ -59,8 +60,27 @@ namespace Quests
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
             State.OnNextTurnEnd += OnNewTurn;
-            if (location == Location.Grid) CreateBuilding(new List<int>{Manager.Structures.NewQuestSpawn()});
-            else SetLocation();
+
+            if (location == Location.Grid)
+            {
+                int spawn = Manager.Structures.NewQuestSpawn();
+                Manager.Camera
+                    .MoveTo(Manager.Map.GetCell(spawn).WorldSpace + Vector3.up)
+                    .OnComplete(() =>
+                    {
+                        CreateBuilding(new List<int> { spawn });
+                        Quests.OnCampAdded?.Invoke(this);
+                        
+                        SaveFile.SaveState(false);
+                        UpdateUi();
+                    });
+            }
+            else
+            {
+                SetLocation();
+                Vector3 pos = Structure.transform.position;
+                Manager.Camera.MoveTo(new Vector3(pos.x, 1,  pos.z));
+            }
         }
 
         public void Remove()
@@ -68,7 +88,6 @@ namespace Quests
             if (location == Location.Grid) ClearBuilding();
             else ResetLocation();
             State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
-            
         }
         
         private void SetLocation()
@@ -76,6 +95,7 @@ namespace Quests
             Structure = Manager.Quests.locations[location];
             Structure.Quest = this;
         }
+        
         private void ResetLocation()
         {
             Structure.Quest = null;
@@ -150,11 +170,11 @@ namespace Quests
                     else Debug.LogError("Quest was completed with no event.");
                 }
                 Debug.Log($"Quest in progress: {title}. {TurnsLeft} turns remaining.");
-                TurnsLeft--;                
+                TurnsLeft--;
             }
             else if (
-                location == Location.Grid && 
-                _turnCreated != Manager.Stats.TurnCounter && 
+                IsRadiant &&
+                _turnCreated != Manager.Stats.TurnCounter &&
                 Random.Range(0,10) >= Manager.Upgrades.GetLevel(UpgradeType.CampSpread) // 10% chance per level to avoid
             )
             {

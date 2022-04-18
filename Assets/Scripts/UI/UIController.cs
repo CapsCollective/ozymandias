@@ -1,57 +1,50 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using Inputs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;
-using Inputs;
 using static Managers.GameManager;
 
-public class UIController : MonoBehaviour
+namespace UI
 {
-    public static Action<GameObject, bool> OnUIOpen;
-    public static Action OnUIClose;
-
-    [SerializeField] private bool showCursor = true;
-    [SerializeField] private GameObject firstSelected;
-    private GameObject currentSelected;
-
-    [SerializeField] private SerializedDictionary<GameObject, Vector2> cursorOffsetOverrides = new SerializedDictionary<GameObject, Vector2>();
-
-    private void Awake()
+    public class UIController : MonoBehaviour
     {
-        foreach (KeyValuePair<GameObject, Vector2> pair in cursorOffsetOverrides)
+        public static Action<GameObject, bool> OnUIOpen;
+        public static Action OnUIClose;
+
+        [SerializeField] private bool showCursor = true;
+        [SerializeField] private GameObject firstSelected;
+        private GameObject currentSelected;
+
+        [SerializeField] private SerializedDictionary<GameObject, Vector2> cursorOffsetOverrides = new SerializedDictionary<GameObject, Vector2>();
+
+        private void Awake()
         {
-            InputHelper.CursorOffsetOverrides.Add(pair.Key, pair.Value);
+            foreach (KeyValuePair<GameObject, Vector2> pair in cursorOffsetOverrides)
+            {
+                InputHelper.CursorOffsetOverrides.Add(pair.Key, pair.Value);
+            }
         }
-    }
 
-    public virtual void OnOpen()
-    {
-        Inputs.Inputs.OnControlChange += ControllerFocus;
-        OnUIOpen?.Invoke(firstSelected, showCursor);
-    }
-
-    public virtual void OnClose()
-    {
-        Inputs.Inputs.OnControlChange -= ControllerFocus;
-        OnUIClose?.Invoke();
-    }
-
-    public void ControllerFocus(InputControlScheme scheme)
-    {
-        if(scheme == Manager.Inputs.PlayerInput.ControllerScheme)
+        public virtual void OnOpen()
         {
-            OnUIOpen.Invoke(firstSelected, showCursor);
+            Inputs.Inputs.OnControlChange += ControllerFocus;
+            OnUIOpen?.Invoke(firstSelected, showCursor);
         }
-    }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        foreach(KeyValuePair<GameObject, Vector2> pair in cursorOffsetOverrides)
+        public virtual void OnClose()
         {
-            Gizmos.DrawSphere(pair.Key.transform.position + (Vector3)pair.Value, 10.0f);
+            Inputs.Inputs.OnControlChange -= ControllerFocus;
+            OnUIClose?.Invoke();
+        }
+
+        public void ControllerFocus(InputControlScheme scheme)
+        {
+            if(scheme == Manager.Inputs.PlayerInput.ControllerScheme)
+            {
+                OnUIOpen.Invoke(firstSelected, showCursor);
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -18,7 +19,8 @@ namespace Events
         private static readonly Vector3 CloseRot = new Vector3(0, 0, -20);
         
         // Public fields
-        public static Action OnClosed;
+        public static Action OnClosed; // For every newspaper close
+        public static Action OnNextClosed; // Only on the next newspaper close
 
         // Serialised Fields
         [SerializeField] private TextMeshProUGUI titleText;
@@ -56,7 +58,7 @@ namespace Events
             Transform t = transform;
             t.position = ClosePos;
             t.eulerAngles = CloseRot;
-            Manager.Inputs.UIClose.performed += _ => Close();
+            Manager.Inputs.Close.performed += _ => Close();
         }
 
         private void NextTurnOpen()
@@ -110,7 +112,6 @@ namespace Events
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             SelectUi(continueButton.gameObject);
-            UpdateUi();
         }
 
         private static readonly string[] NewspaperTitles = {
@@ -138,26 +139,32 @@ namespace Events
             
             _canvas.enabled = true;
             transform.DOLocalMove(Vector3.zero, animateInDuration);
-            transform.DOLocalRotate(Vector3.zero, animateInDuration);
-            if (!_choiceSelected)
-            {
-                OnOpen();
-            }
+            transform.DOLocalRotate(Vector3.zero, animateInDuration)
+                .OnComplete(() => { if (!_choiceSelected) OnOpen(); });
         }
 
         private void Close()
         {
             if (!_canvas.enabled || !continueButton.interactable) return;
-            
+            OnClose();
             transform.DOLocalMove(ClosePos, animateOutDuration);
             transform.DOLocalRotate(CloseRot, animateOutDuration)
                 .OnComplete(() =>
                 {
-                    OnClosed?.Invoke();
-                    SaveFile.SaveState(); // Save here so state only locks in after paper is closed
+                    if (Manager.State.IsGameOver)
+                    {
+                        Manager.State.EnterState(GameState.EndGame);
+                    }
+                    else
+                    {
+                        Manager.State.EnterState(GameState.InGame);
+                        OnClosed?.Invoke();
+                        OnNextClosed?.Invoke();
+                        SaveFile.SaveState(); // Save here so state only locks in after paper is closed
+                        UpdateUi();
+                    }
+                    OnNextClosed = null;
                     _canvas.enabled = false;
-                    Manager.State.EnterState(Manager.State.IsGameOver ? GameState.EndGame : GameState.InGame);
-                    OnClose();
                 });
         }
     }

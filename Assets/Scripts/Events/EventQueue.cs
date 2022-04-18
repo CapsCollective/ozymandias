@@ -78,7 +78,6 @@ namespace Events
             foreach (Event e in _current) _outcomeDescriptions.Add(e.Execute());
         
             _newspaper.UpdateDisplay(_current, _outcomeDescriptions);
-            UpdateUi();
         }
 
         private void AddRandomSelection()
@@ -99,10 +98,10 @@ namespace Events
                 
                 // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
                 int random = Random.Range(0, 20);
-                if (random == 0 || random < lead) eventPool.Add(PickRandom(EventType.Radiant));
+                if (!Tutorial.Tutorial.Active && (random == 0 || random < lead)) eventPool.Add(PickRandom(EventType.Radiant));
 
                 // 20% chance to start a new story while no other is active
-                if (!Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
+                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
                 {
                     Flags[Flag.StoryActive] = true;
                     // Pick a story that isn't for an already unlocked/ discoverable building
@@ -170,27 +169,19 @@ namespace Events
             foreach (Event e in guildHallDestroyedEvents) Add(e, true);
         }
 
+        private readonly Dictionary<Guild, EventType> _requestMap = new Dictionary<Guild, EventType>
+        {
+            { Guild.Brawler, EventType.BrawlerRequest },
+            { Guild.Outrider, EventType.OutriderRequest },
+            { Guild.Performer, EventType.PerformerRequest },
+            { Guild.Diviner, EventType.DivinerRequest },
+            { Guild.Arcanist, EventType.ArcanistRequest }
+        };
+
         public void AddRequest(Guild guild)
         {
             if (Random.Range(0, 5) != 0) return; // Random spawn chance so a new request doesnt come right away
-            switch (guild)
-            {
-                case Guild.Brawler:
-                    Add(PickRandom(EventType.BrawlerRequest), true);
-                    break;
-                case Guild.Outrider:
-                    Add(PickRandom(EventType.OutriderRequest), true);
-                    break;
-                case Guild.Performer:
-                    Add(PickRandom(EventType.PerformerRequest), true);
-                    break;
-                case Guild.Diviner:
-                    Add(PickRandom(EventType.DivinerRequest), true);
-                    break;
-                case Guild.Arcanist:
-                    Add(PickRandom(EventType.ArcanistRequest), true);
-                    break;
-            }
+            Add(PickRandom(_requestMap[guild]));
         }
         
         public EventQueueDetails Save()

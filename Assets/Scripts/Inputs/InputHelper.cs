@@ -1,12 +1,12 @@
 using Managers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utilities;
 using DG.Tweening;
+using UI;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -53,7 +53,6 @@ namespace Inputs
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
             selectionHelper.gameObject.SetActive(false);
-            selectionHelper.sizeDelta = new Vector2(CursorSize, CursorSize);
 
             OnToggleCursor += ToggleUICursor;
         }
@@ -70,15 +69,14 @@ namespace Inputs
 
         private void NewSelection(GameObject obj)
         {
-            if (Manager.Inputs.UsingController && EventSystem.currentSelectedGameObject != null)
-            {
-                previousSelections[Manager.State.Current] = obj;
-                var rt = obj.transform as RectTransform;
-                var pos = rt.transform.position;
-                if(CursorOffsetOverrides.ContainsKey(obj))
-                    pos += (Vector3)CursorOffsetOverrides[obj];
-                selectionHelper.anchoredPosition = pos;
-            }
+            if (!Manager.Inputs.UsingController || EventSystem.currentSelectedGameObject == null) return;
+            
+            previousSelections[Manager.State.Current] = obj;
+            
+            selectionHelper.SetParent(obj.transform);
+            selectionHelper.anchoredPosition = CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero;
+            selectionHelper.localScale = Vector3.one;
+            selectionHelper.eulerAngles = Vector3.zero;
         }
 
         private void OnControlChanged(InputControlScheme obj)
@@ -145,7 +143,6 @@ namespace Inputs
         private void ToggleWorldCursor(bool toggle)
         {
             var renderer = worldSpaceCursor.GetComponentInChildren<Renderer>();
-            Debug.Log(worldSpaceCursor.gameObject.name);
             float tweenTo = toggle ? 0.5f : 0.0f;
             float tweenFrom = toggle ? 0.0f : 0.5f;
             tween = DOTween.To(() => tweenFrom, y => tweenFrom = y, tweenTo, 0.25f).OnUpdate(() =>
@@ -156,7 +153,6 @@ namespace Inputs
 
         private void ToggleUICursor(bool toggle)
         {
-            Debug.Log(toggle);
             selectionHelper.gameObject.SetActive(toggle);
         }
 
