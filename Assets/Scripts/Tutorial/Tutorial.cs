@@ -223,9 +223,9 @@ namespace Tutorial
             ClearObjectives();
             _currentObjectives = new List<Objective>
             {
-                CreateObjective("Pan Camera\n(Drag Left Mouse)"),
-                CreateObjective("Rotate Camera\n(Drag Right Mouse)"),
-                CreateObjective("Zoom Camera\n(Scroll Wheel)")
+                CreateObjective($"Pan Camera\n({(Manager.Inputs.UsingController ? "Left Stick" : "Drag Left Mouse")})"),
+                CreateObjective($"Rotate Camera\n({(Manager.Inputs.UsingController ? "Right Stick Horizontal" : "Drag Right Mouse")})"),
+                CreateObjective($"Zoom Camera\n({(Manager.Inputs.UsingController ? "Right Stick Vertical" : "Scroll Wheel")})")
             };
             _onObjectivesComplete = StartBuildingDialogue;
             ShowObjectives();
@@ -273,7 +273,7 @@ namespace Tutorial
             {
                 CreateObjective("Clear Ruins", 3),
                 CreateObjective("Place Buildings in Cleared Space", 3),
-                CreateObjective("Rotate to Fit\n(Right Click)")
+                CreateObjective($"Rotate to Fit\n({(Manager.Inputs.UsingController ? "LB/RB" : "Right Click")})")
             };
             _onObjectivesComplete = StartAdventurerDialogue;
             ShowObjectives();
