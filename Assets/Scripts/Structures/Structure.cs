@@ -23,14 +23,10 @@ namespace Structures
             set
             {
                 _selected = value;
-                List<MeshFilter> list = new List<MeshFilter>();
                 foreach (MeshFilter r in _sectionRenderers)
                 {
                     r.gameObject.layer = _selected ? LayerMask.NameToLayer("Selected") : LayerMask.NameToLayer("Grid Terrain");
-                    //?.DrawRenderer(r, Manager.Structures.OutlineMaterial);
-                    list.Add(r);
                 }
-                if (_selected) OutlineRenderFeature.OutlineRenderPass.AddNewRenderers(list);
             }
         }
         public bool IsBuilding => StructureType == StructureType.Building;
@@ -326,22 +322,6 @@ namespace Structures
             ParticleSystem.transform.parent = null;
             ParticleSystem.MainModule psMain = ParticleSystem.main;
             psMain.stopAction = ParticleSystemStopAction.Destroy;
-        }
-        
-        private void Update()
-        {
-            #if UNITY_EDITOR
-            if (Manager.disableOutline) return;
-            #endif
-            
-            //TODO: Make this on mouse input instead of every frame?
-            if (!Selected || !Manager.State.InGame) return;
-
-            //foreach (Renderer r in _sectionRenderers)
-            //{
-            //    //r.gameObject.layer = LayerMask.NameToLayer("Selected");
-            //    //OutlineRenderFeature.OutlineRenderPass.OutlineBuffer?.DrawRenderer(r, Manager.Structures.OutlineMaterial);
-            //}
         }
     }
 }

@@ -6,12 +6,15 @@ using UI;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Managers
 {
     public class Settings : UIController
     {
+        public static Action<int, int> NewResolution;
+
         // Misc
         public TextMeshProUGUI versionText;
 
@@ -27,7 +30,7 @@ namespace Managers
         [SerializeField] private Toggle fullscreenToggle, shadowToggle, grassToggle, dofToggle, vsyncToggle, aoToggle;
 
         // Post Processing
-        [SerializeField] private PostProcessProfile dofProfile, postProcess;
+        [SerializeField] private VolumeProfile dofProfile, postProcess;
 
         // Needs to be Start, not Awake for mixer values to apply - Ben
         private void Start()
@@ -100,6 +103,7 @@ namespace Managers
             Resolution resolution = _resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             PlayerPrefs.SetInt("resolution", resolutionIndex);
+            NewResolution?.Invoke(resolution.width, resolution.height);
         }
         
         private void ToggleFullScreen(bool toggle)
@@ -112,6 +116,7 @@ namespace Managers
         {
             int distance = toggle ? 50 : 0;
             QualitySettings.shadowDistance = distance;
+            UnityGraphicsBullshit.MainLightCastShadows = toggle;
             PlayerPrefs.SetInt("shadows", Convert.ToInt32(toggle));
         }
         
@@ -130,16 +135,16 @@ namespace Managers
 
         private void ToggleDoF(bool toggle)
         {
-            dofProfile.TryGetSettings<DepthOfField>(out var dof);
+            dofProfile.TryGet<DepthOfField>(out var dof);
             dof.active = toggle;
             PlayerPrefs.SetInt("dof", Convert.ToInt32(toggle));
         }
 
         private void ToggleAO(bool toggle)
         {
-            postProcess.TryGetSettings<AmbientOcclusion>(out var ao);
-            ao.active = toggle;
-            PlayerPrefs.SetInt("ao", Convert.ToInt32(toggle));
+            //postProcess.TryGet<AmbientOcclusion>(out var ao);
+            //ao.active = toggle;
+            //PlayerPrefs.SetInt("ao", Convert.ToInt32(toggle));
         }
         #endregion
         

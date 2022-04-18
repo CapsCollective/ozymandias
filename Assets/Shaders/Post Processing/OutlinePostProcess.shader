@@ -64,7 +64,7 @@ Shader "Custom/Post Processing/Post Process Outline"
             float4 Frag(Varyings i) : SV_Target
             {
                 float4 main = tex2D(_MainTex, i.uv);
-                float4 color = tex2D(_OutlineRT, i.uv);
+                float4 color = tex2Dlod(_OutlineRT, float4(i.uv,0,0));
 
                 float halfScaleFloor = floor(_Scale * 0.5);
                 float halfScaleCeil = ceil(_Scale * 0.5);

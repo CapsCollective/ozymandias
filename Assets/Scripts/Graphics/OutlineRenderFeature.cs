@@ -26,7 +26,6 @@ public class OutlineRenderFeature : ScriptableRendererFeature
         public static List<MeshFilter> renderers = new List<MeshFilter>();
         public Settings settings;
         public RenderTargetIdentifier source;
-        public RenderTargetIdentifier dest;
         RenderTargetHandle tempTex;
         public static CommandBuffer OutlineBuffer;
         private string profilerTag = "Ouline";
@@ -37,11 +36,6 @@ public class OutlineRenderFeature : ScriptableRendererFeature
             OutlineBuffer = new CommandBuffer { name = profilerTag };
         }
 
-        public static void AddNewRenderers(List<MeshFilter> newRenderers)
-        {
-            renderers = newRenderers;
-        }
-
         // This method is called before executing the render pass.
         // It can be used to configure render targets and their clear state. Also to create temporary render target textures.
         // When empty this render pass will render to the active camera render target.
@@ -50,13 +44,10 @@ public class OutlineRenderFeature : ScriptableRendererFeature
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
         {
             this.source = renderingData.cameraData.renderer.cameraColorTarget;
-            this.dest = renderingData.cameraData.renderer.cameraColorTarget;
-
             var descriptor = renderingData.cameraData.cameraTargetDescriptor;
             descriptor.depthBufferBits = 0;
             descriptor.msaaSamples = 1;
             descriptor.colorFormat = RenderTextureFormat.ARGBFloat;
-
             cmd.GetTemporaryRT(tempTex.id, descriptor);
             ConfigureTarget(tempTex.Identifier());
             ConfigureClear(ClearFlag.All, Color.black);
@@ -68,6 +59,9 @@ public class OutlineRenderFeature : ScriptableRendererFeature
         // You don't have to call ScriptableRenderContext.submit, the render pipeline will call it at specific points in the pipeline.
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
+            //if (!Application.isPlaying) return;
+            //if (renderingData.cameraData.isSceneViewCamera) return;
+
             CommandBuffer cmd = CommandBufferPool.Get(profilerTag);
             //cmd.DrawRendererList(context.CreateRendererList(desc));
             settings.material.SetColor("_Color", settings.color);
