@@ -46,7 +46,7 @@ namespace Tutorial
         
         private void Start()
         {
-            Manager.Inputs.OnDialogueNext.performed += _ => NextLine();
+            Manager.Inputs.DialogueNext.performed += _ => NextLine();
             next.onClick.AddListener(NextLine);
             
             State.OnNewGame += StartTutorial;

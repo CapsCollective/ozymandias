@@ -7,6 +7,7 @@ namespace Cards
 {
     public class CardBadge : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        public bool IsShowing = false;
         public string Description { get; set; }
         [SerializeField] private RectTransform tooltip;
         [SerializeField] private CanvasGroup tooltipCanvas;
@@ -14,6 +15,7 @@ namespace Cards
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            IsShowing = true;
             tooltip.position = transform.position;
             tooltipText.text = Description;
             Fade(1);
@@ -21,6 +23,7 @@ namespace Cards
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            IsShowing = false;
             Fade(0);
         }
 

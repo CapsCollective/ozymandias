@@ -659,6 +659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f562b6a341f74e288e65f27d456752ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showCursor: 1
+  firstSelected: {fileID: 5795463562627753118}
   titleText: {fileID: 6199311125706028579}
   descriptionText: {fileID: 5318351942749383951}
   statsText: {fileID: 2312646504759134286}
@@ -758,9 +760,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 7881375373388473113}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -1157,6 +1159,16 @@ PrefabInstance:
       propertyPath: m_MinValue
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6087238696455750678, guid: 2129b899e468e493e9aa2f03c7019c41,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 3590234576522988213}
+    - target: {fileID: 6087238696455750678, guid: 2129b899e468e493e9aa2f03c7019c41,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 3973125541270198487}
     - target: {fileID: 6087238697090832294, guid: 2129b899e468e493e9aa2f03c7019c41,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1339,6 +1351,11 @@ PrefabInstance:
       propertyPath: m_WholeNumbers
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6087238696455750678, guid: 2129b899e468e493e9aa2f03c7019c41,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 7881375373388473113}
     - target: {fileID: 6087238697090832294, guid: 2129b899e468e493e9aa2f03c7019c41,
         type: 3}
       propertyPath: m_AnchorMax.x

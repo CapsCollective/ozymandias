@@ -14,7 +14,7 @@ namespace Cards
     {
         public Toggle Toggle { get; private set; }
         public Blueprint Blueprint { get; set; }
-        [SerializeField] private CardDisplay cardDisplay;
+        public CardDisplay cardDisplay;
         [SerializeField] private Ease tweenEase;
         [SerializeField] private int popupMultiplier = 60;
         [SerializeField] private int highlightMultiplier = 20;
@@ -48,7 +48,7 @@ namespace Cards
 
         public void ToggleSelect(bool isOn)
         {
-            cardDisplay.SetHighlight(isOn);
+            if (Toggle.interactable) cardDisplay.SetHighlight(isOn);
 
             if (IsReplacing) return;
             

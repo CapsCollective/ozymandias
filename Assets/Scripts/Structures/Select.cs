@@ -8,6 +8,7 @@ using Managers;
 using Quests;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using Utilities;
@@ -27,8 +28,7 @@ namespace Structures
         }
         
         [SerializeField] private int yOffset;
-        [SerializeField] private Image buttonImage;
-        [SerializeField] private Image maskImage;
+        [SerializeField] private Image buttonImage, maskImage;
         [SerializeField] private TextMeshProUGUI nameText, costText, questTitleText;
         [SerializeField] private Sprite buildingButtonBacking, questButtonBacking;
         [SerializeField] private CanvasGroup buttonCanvasGroup;
@@ -168,14 +168,22 @@ namespace Structures
             if (_cam) _cam.GetComponentInChildren<PostProcessVolume>().profile.TryGetSettings(out _outline);
 
             Cards.Cards.OnCardSelected += _ => Deselect();
-            Manager.Inputs.OnLeftClick.performed += _ => ToggleSelect();
-            Manager.Inputs.OnRightClick.performed += _ => Deselect();
-            Manager.Inputs.OnConfirmSelectedStructure.performed += _ => Interact();
-            Manager.Inputs.OnConfirmSelectedStructure.canceled += _ => 
+            Manager.Inputs.LeftClick.performed += _ => ToggleSelect();
+            Manager.Inputs.RightClick.performed += _ => Deselect();
+            
+            Manager.Inputs.DemolishBuilding.performed += _ => { if(SelectedStructure && !SelectedStructure.IsQuest) Interact(); };
+            Manager.Inputs.DemolishBuilding.canceled += _ => 
             {
                 _interactTimer = 0;
                 maskImage.fillAmount = 0;
             };
+            Manager.Inputs.SelectQuest.performed += _ => { if(SelectedStructure && SelectedStructure.IsQuest) Interact(); };
+            Manager.Inputs.SelectQuest.canceled += _ => 
+            {
+                _interactTimer = 0;
+                maskImage.fillAmount = 0;
+            };
+            
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
             State.OnEnterState += (_) =>
             {
@@ -190,7 +198,9 @@ namespace Structures
             if (SelectedStructure || CameraMovement.IsMoving || IsSelectionDisabled() || Tutorial.Tutorial.DisableSelect)
             {
                 HoveredStructure = null;
-                if (Manager.Inputs.OnConfirmSelectedStructure.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+                if (SelectedStructure && 
+                    (!SelectedStructure.IsQuest && Manager.Inputs.DemolishBuilding.phase == InputActionPhase.Started ||
+                    SelectedStructure.IsQuest && Manager.Inputs.SelectQuest.phase == InputActionPhase.Started))
                 {
                     maskImage.fillAmount = Mathf.InverseLerp(0, 0.4f, _interactTimer += Time.deltaTime);
                 }
@@ -215,9 +225,9 @@ namespace Structures
         // Returns the building the cursor is hovering over if exists
         private Structure Hovered()
         {
-            Ray ray = _cam.ScreenPointToRay(
-                new Vector3(Manager.Inputs.MousePosition.x, Manager.Inputs.MousePosition.y, _cam.nearClipPlane));
-            Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
+            //Ray ray = Manager.Inputs.GetMouseRay(_cam);
+            //Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
+            var hit = Manager.Inputs.GetRaycast(_cam, 200f, collisionMask);
             return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
         }
         

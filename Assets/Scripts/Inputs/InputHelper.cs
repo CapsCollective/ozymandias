@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utilities;
+using DG.Tweening;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -15,47 +16,153 @@ namespace Inputs
     {
         public static PlayerInput PlayerInput;
         public static EventSystem EventSystem;
+        public static Action<GameObject> OnNewSelection;
+        public static Action<bool> OnToggleCursor;
+        public static Dictionary<GameObject, Vector2> CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
+
+        [SerializeField] private RectTransform selectionHelper;
+
+        private GameObject worldSpaceCursor;
+        private GameObject lastSelectedGameObject;
+        private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
+        private Tween tween;
+
+        private float CursorSize { 
+            get
+            {
+                return 60 * (Screen.height / 1080.0f); 
+            }
+        }
 
         // Start is called before the first frame update
-        void Awake()
+        void Start()
         {
             EventSystem = FindObjectOfType<EventSystem>();
             PlayerInput = GetComponent<PlayerInput>();
 
-            State.OnEnterState += AutoSelect;
+            State.OnEnterState += StateChecks;
+            Inputs.OnControlChange += OnControlChanged;
+            OnNewSelection += NewSelection;
+            UIController.OnUIOpen += (g, b) =>
+            {
+                EventSystem.SetSelectedGameObject(g);
+                selectionHelper.gameObject.SetActive(b);
+            };
+
+            worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
+            Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
+            worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
+            selectionHelper.gameObject.SetActive(false);
+            selectionHelper.sizeDelta = new Vector2(CursorSize, CursorSize);
+
+            OnToggleCursor += ToggleUICursor;
+        }
+
+        private void Update()
+        {
+            if (EventSystem.currentSelectedGameObject != lastSelectedGameObject)
+            {
+                OnNewSelection?.Invoke(EventSystem.currentSelectedGameObject);
+            }
+                
+            lastSelectedGameObject = EventSystem.currentSelectedGameObject;
+        }
+
+        private void NewSelection(GameObject obj)
+        {
+            if (Manager.Inputs.UsingController && EventSystem.currentSelectedGameObject != null)
+            {
+                previousSelections[Manager.State.Current] = obj;
+                var rt = obj.transform as RectTransform;
+                var pos = rt.transform.position;
+                if(CursorOffsetOverrides.ContainsKey(obj))
+                    pos += (Vector3)CursorOffsetOverrides[obj];
+                selectionHelper.anchoredPosition = pos;
+            }
+        }
+
+        private void OnControlChanged(InputControlScheme obj)
+        {
+            bool isController = Manager.Inputs.UsingController;
+            if(Manager.State.Current == GameState.InGame)
+                ToggleWorldCursor(isController);
+            if (Manager.State.Current == GameState.InMenu)
+            {
+                selectionHelper.gameObject.SetActive(isController);
+                Cursor.visible = !isController;
+            }
+        }
+
+        public void ResetSelection(GameState state)
+        {
+            previousSelections[state] = null;
         }
 
         // I'll fill this up with stuff when I can.
-        private void AutoSelect(GameState state)
+        private void StateChecks(GameState state)
         {
-            switch (state)
+            if (Manager.Inputs.UsingController)
             {
-                case GameState.InCredits:
-                    EventSystem.SetSelectedGameObject(null);
-                    break;
-                case GameState.InIntro:
-                    EventSystem.SetSelectedGameObject(null);
-                    break;
-                case GameState.ToCredits:
-                    EventSystem.SetSelectedGameObject(null);
-                    break;
-                case GameState.Loading:
-                    break;
-                case GameState.ToIntro:
-                    break;
-                case GameState.ToGame:
-                    break;
-                case GameState.InGame:
-                    break;
-                case GameState.NextTurn:
-                    break;
-                case GameState.InMenu:
-                    break;
-                case GameState.EndGame:
-                    break;
-                case GameState.InDialogue:
-                    break;
+                switch (state)
+                {
+                    case GameState.InCredits:
+                        EventSystem.SetSelectedGameObject(null);
+                        break;
+                    case GameState.InIntro:
+                        break;
+                    case GameState.ToCredits:
+                        EventSystem.SetSelectedGameObject(null);
+                        break;
+                    case GameState.Loading:
+                        break;
+                    case GameState.ToIntro:
+                        ToggleWorldCursor(false);
+                        break;
+                    case GameState.ToGame:
+                        EventSystem.SetSelectedGameObject(null);
+                        selectionHelper.gameObject.SetActive(false);
+                        break;
+                    case GameState.InGame:
+                        ToggleWorldCursor(true); 
+                        selectionHelper.gameObject.SetActive(false);
+                        break;
+                    case GameState.NextTurn:
+                        break;
+                    case GameState.InMenu:
+                        break;
+                    case GameState.EndGame:
+                        break;
+                    case GameState.InDialogue:
+                        break;
+                }
             }
+            else
+            {
+                EventSystem.SetSelectedGameObject(null);
+            }
+        }
+
+        private void ToggleWorldCursor(bool toggle)
+        {
+            var renderer = worldSpaceCursor.GetComponentInChildren<Renderer>();
+            Debug.Log(worldSpaceCursor.gameObject.name);
+            float tweenTo = toggle ? 0.5f : 0.0f;
+            float tweenFrom = toggle ? 0.0f : 0.5f;
+            tween = DOTween.To(() => tweenFrom, y => tweenFrom = y, tweenTo, 0.25f).OnUpdate(() =>
+            {
+                renderer.material.SetFloat("_Opacity", tweenFrom);
+            });
+        }
+
+        private void ToggleUICursor(bool toggle)
+        {
+            Debug.Log(toggle);
+            selectionHelper.gameObject.SetActive(toggle);
+        }
+
+        private void OnDestroy()
+        {
+            tween.Kill();
         }
     }
 }
