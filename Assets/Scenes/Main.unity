@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 938970612}
-  m_IndirectSpecularColor: {r: 0.099139765, g: 0.1860871, b: 0.54829144, a: 1}
+  m_IndirectSpecularColor: {r: 0.099139765, g: 0.186582, b: 0.54829144, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6326,6 +6326,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2213358298940856872, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
+      propertyPath: m_DrawHeightmap
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2213358298940856872, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
       propertyPath: m_DrawInstanced
       value: 1
       objectReference: {fileID: 0}
@@ -6336,8 +6341,18 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: edcb6e9a9dc20aa44838401611cac932, type: 2}
     - target: {fileID: 2213358298940856872, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
+      propertyPath: m_SplatMapDistance
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2213358298940856872, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
+      propertyPath: m_ShadowCastingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2213358298940856872, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
+        type: 3}
       propertyPath: m_HeightmapPixelError
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2764794536778551757, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
@@ -6372,7 +6387,7 @@ PrefabInstance:
     - target: {fileID: 3064483103816353535, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_SelectedEdges.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3064483103816353535, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
@@ -6587,7 +6602,7 @@ PrefabInstance:
     - target: {fileID: 3064483103816353535, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
       propertyPath: m_SelectedVertices.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3064483103816353535, guid: 4a8cfe36fc5e1d94b9fcd783f189bffc,
         type: 3}
@@ -7621,7 +7636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  m_UsePipelineSettings: 0
+  m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
   m_CustomShadowLayers: 0
@@ -7635,6 +7650,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1999791954003377718, guid: 3472e3297a383e94ca044f6f040c7ca1,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4982430811513653468, guid: 3472e3297a383e94ca044f6f040c7ca1,
         type: 3}
       propertyPath: m_RootOrder
@@ -12191,7 +12211,7 @@ PrefabInstance:
     - target: {fileID: 793420195877318428, guid: f499c8abfdae2a941a61a736ec8d8a0b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 39026828
+      value: 77803160
       objectReference: {fileID: 0}
     - target: {fileID: 883400524747450198, guid: f499c8abfdae2a941a61a736ec8d8a0b,
         type: 3}
