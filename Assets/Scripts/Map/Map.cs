@@ -42,8 +42,16 @@ namespace Map
             if (!_flooded) return;
             UpdateEffectOrigin();
             _flooded = false;
-            DOTween.To(() => _radius, x => _radius = x, 0, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat(Radius, _radius));
-            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
+            DOTween.To(() => _radius, x => _radius = x, 0, 0.5f)
+                .OnUpdate(() =>
+                {
+                    _meshRenderer.material.SetFloat(Radius, _radius);
+                    Shader.SetGlobalFloat("_Grass_Clip_Fill", _radius / 70.0f);
+                });
+            //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
+            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0f), 0.5f)
+                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
+                //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
         }
 
         public void Flood()
@@ -51,8 +59,16 @@ namespace Map
             if (_flooded) return;
             UpdateEffectOrigin();
             _flooded = true;
-            DOTween.To(() => _radius, x => _radius = x, 70, 0.5f).OnUpdate(() => _meshRenderer.material.SetFloat(Radius, _radius));
-            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0.5f), 0.5f).OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
+            DOTween.To(() => _radius, x => _radius = x, 70, 0.5f)
+                .OnUpdate(() =>
+                {
+                    _meshRenderer.material.SetFloat(Radius, _radius);
+                    Shader.SetGlobalFloat("_Grass_Clip_Fill", _radius / 70.0f);
+                });
+                //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
+            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0.5f), 0.5f)
+                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
+                //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
         }
 
         private void UpdateEffectOrigin()

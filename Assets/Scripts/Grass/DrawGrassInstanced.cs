@@ -26,6 +26,7 @@ namespace Grass
         }
 
         public static bool GrassOn;
+        public static bool GrassNeedsUpdate = false;
 
         public int Population;
         [SerializeField] private float boundsRange;
@@ -46,6 +47,8 @@ namespace Grass
         private ComputeBuffer matrixBuffer;
         private GraphicsBuffer grassGraphicsBuffer;
         [SerializeField] private VisualEffect grassEffect;
+        [SerializeField] private CustomRenderTexture grassRT;
+        [SerializeField] private Camera grassRTCam;
 
         // Serialized so that positions get saved.
         // Hidden because the information isn't valuable to see and it slows down the editor
@@ -75,8 +78,18 @@ namespace Grass
 
             InitializeBuffers();
             grassEffect.SetGraphicsBuffer("Grass Buffer", grassGraphicsBuffer);
+            Managers.State.OnLoadingEnd += () => GrassNeedsUpdate = true;
+            Structures.Structures.OnBuild += (s) => GrassNeedsUpdate = true;
+            Structures.Structures.OnDestroy += (s) => GrassNeedsUpdate = true;
         }
 
+        public void UpdateTexture(Structures.Structure s)
+        {
+            grassRTCam.enabled = true;
+            grassRT.Update();
+        }
+
+           
         public void InitializeBuffers()
         {
             if(matrixBuffer != null)
@@ -112,6 +125,16 @@ namespace Grass
         void Update()
         {
             if (!GrassOn) return;
+
+            if (!GrassNeedsUpdate)
+                grassRTCam.enabled = false;
+
+            if (GrassNeedsUpdate)
+            {
+                Debug.Log("Updating Grass");
+                UpdateTexture(null);
+                GrassNeedsUpdate = false;
+            }
 
             //if(GrassCount > 0)
             //    Graphics.DrawMeshInstancedProcedural(mesh, 0, mat, bounds, dupMatrixCount, castShadows: UnityEngine.Rendering.ShadowCastingMode.Off);

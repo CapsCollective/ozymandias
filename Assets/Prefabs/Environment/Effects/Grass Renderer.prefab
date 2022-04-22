@@ -59,6 +59,8 @@ MonoBehaviour:
   density: 100
   GrassQuality: 1
   grassEffect: {fileID: 4402737074244970403}
+  grassRT: {fileID: 8600000, guid: 2edc3d2701a48c2418bd626f6f7cae4b, type: 2}
+  grassRTCam: {fileID: 4982430811544454522}
   matrices:
   - e00: 0.81926394
     e01: -0
@@ -76837,7 +76839,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4982430811544454532}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
@@ -76857,7 +76859,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 22
+  orthographic size: 28
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -76885,8 +76887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
+  m_RenderShadows: 0
+  m_RequiresDepthTextureOption: 0
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []

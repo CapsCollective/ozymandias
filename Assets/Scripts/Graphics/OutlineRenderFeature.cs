@@ -61,7 +61,7 @@ public class OutlineRenderFeature : ScriptableRendererFeature
         {
             //if (!Application.isPlaying) return;
             //if (renderingData.cameraData.isSceneViewCamera) return;
-
+            if (renderingData.cameraData.targetTexture != null) return;
             CommandBuffer cmd = CommandBufferPool.Get(profilerTag);
             //cmd.DrawRendererList(context.CreateRendererList(desc));
             settings.material.SetColor("_Color", settings.color);
