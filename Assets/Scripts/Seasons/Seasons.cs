@@ -58,6 +58,12 @@ namespace Seasons
             Instance = this;
         }
 
+        [Button]
+        public void SetSunDirection()
+        {
+            Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
+        }
+
         private static Season GetSeason(int turn)
         {
             // Calculate the season by current turn value

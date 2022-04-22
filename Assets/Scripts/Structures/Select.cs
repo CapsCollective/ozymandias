@@ -9,7 +9,7 @@ using Quests;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -44,7 +44,7 @@ namespace Structures
         [SerializeField] private EffectBadge bonusBadge;
         [SerializeField] private TextMeshProUGUI bonusText;
         [SerializeField] private List<Sprite> chevronSizes;
-        [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
+        [SerializeField] private Utilities.SerializedDictionary<Stat, Sprite> statIcons;
 
         private Canvas _canvas;
         private Camera _cam;
@@ -165,7 +165,6 @@ namespace Structures
         {
             _canvas = GetComponent<Canvas>();
             _cam = Camera.main;
-            if (_cam) _cam.GetComponentInChildren<PostProcessVolume>().profile.TryGetSettings(out _outline);
 
             Cards.Cards.OnCardSelected += _ => Deselect();
             Manager.Inputs.LeftClick.performed += _ => ToggleSelect();
