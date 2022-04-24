@@ -42,6 +42,7 @@ int _PassValue;
 CBUFFER_END
 
 TEXTURE2D(_NoiseTexture); SAMPLER(sampler_NoiseTexture);
+TEXTURE2D(_CloudTexture); SAMPLER(sampler_CloudTexture);
 TEXTURE2D(_Control);    SAMPLER(sampler_Control);
 TEXTURE2D(_Splat0);     SAMPLER(sampler_Splat0);
 TEXTURE2D(_Splat1);

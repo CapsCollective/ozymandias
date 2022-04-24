@@ -3,6 +3,7 @@ Shader "FTRM/Terrain Lit"
     Properties
     {
         _NoiseTexture("Noise Texture", 2D) = "white" {}
+        _CloudTexture("Cloud Texture", 2D) = "white" {}
         _Height("Height", Float) = 0.0
         _Sand("Sand", Color) = (1,1,1,1)
         _Grass("Grass", Color) = (1,1,1,1)

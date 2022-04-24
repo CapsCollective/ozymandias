@@ -5,6 +5,8 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
+#include "Assets/Shaders/VoronoiExtension.hlsl"
+#include "Assets/Shaders/GaussianBlur.hlsl"
 
 struct Attributes
 {
@@ -334,6 +336,8 @@ float3 GetTerrainColor(float3 pos, float3 normal) {
 
     float3 color = lerp(lerp(_Grass, _SnowColor, _Winter), _AutumnColor, _Autumn);
     color = lerp(_Sand, color, height);
+    //float cloud = 1 - step(VoronoiColor_float(color, pos.xz * 0.5, 0, 0.3, 0.3), 0.01);//SAMPLE_TEXTURE2D(_CloudTexture, sampler_CloudTexture, (pos.xz + 2048) * 0.005).r;
+    color = VoronoiColor_float(color, (pos.xz * 0.1) + (_Time.x * 0.25), _Time.x, 0.3, 0.3);
 
     return color;
 }
