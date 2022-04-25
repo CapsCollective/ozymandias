@@ -122,7 +122,7 @@ namespace Managers
         
         private void ToggleGrass(bool toggle)
         {
-            Grass.DrawGrassInstanced.GrassOn = toggle;
+            Grass.GrassEffectController.GrassOn = toggle;
             PlayerPrefs.SetInt("grass", Convert.ToInt32(toggle));
         }
 

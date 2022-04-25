@@ -28,7 +28,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3001
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -88,7 +88,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Angle: 255
+    - _AlphaClip: 0
+    - _Angle: 75
     - _BumpScale: 1
     - _CloudOpacity: 0.7
     - _CloudSubtractScale: 10
@@ -96,6 +97,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Float: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -103,10 +105,10 @@ Material:
     - _Mode: 0
     - _NoiseThreshold: 0.171
     - _OcclusionStrength: 1
-    - _Opacity: 1
+    - _Opacity: 0.25
     - _Parallax: 0.02
     - _QueueControl: 0
-    - _QueueOffset: 0
+    - _QueueOffset: 1
     - _Scale: 20
     - _Smoothing: 0.5
     - _SmoothnessTextureChannel: 0

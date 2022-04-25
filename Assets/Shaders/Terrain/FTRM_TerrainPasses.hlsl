@@ -337,7 +337,16 @@ float3 GetTerrainColor(float3 pos, float3 normal) {
     float3 color = lerp(lerp(_Grass, _SnowColor, _Winter), _AutumnColor, _Autumn);
     color = lerp(_Sand, color, height);
     //float cloud = 1 - step(VoronoiColor_float(color, pos.xz * 0.5, 0, 0.3, 0.3), 0.01);//SAMPLE_TEXTURE2D(_CloudTexture, sampler_CloudTexture, (pos.xz + 2048) * 0.005).r;
-    color = VoronoiColor_float(color, (pos.xz * 0.1) + (_Time.x * 0.25), _Time.x, 0.3, 0.3);
+    float r = radians(75);
+    float2 p = pos.xz;
+    float2 r2 = float2(cos(r), sin(r));
+    float2x2 rMatrix = float2x2(r2.x, -r2.y, r2.y, r2.x);
+    rMatrix *= 0.5;
+    rMatrix += 0.5;
+    rMatrix = rMatrix * 2 - 1;
+    p = mul(p, rMatrix);
+    p = p * 0.1 + (_Time.x * 0.25);
+    color = VoronoiColor_float(color, p, _Time.x, 0.3, 0.3);
 
     return color;
 }
