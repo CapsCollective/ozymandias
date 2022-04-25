@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,18 +8,18 @@ namespace Grass
 {
     public class GrassEffectController : MonoBehaviour
     {
-        public enum GrassQualitySettings 
-        { 
+        public enum GrassQualitySettings
+        {
             Off = 0,
             Low = 1,
             Medium = 2,
             High = 3,
         };
 
-        public static bool GrassOn;
+        public static Action<GrassQualitySettings> OnGrassQualityChange;
         public static bool GrassNeedsUpdate = false;
+        public static GrassQualitySettings GrassQuality = GrassQualitySettings.Low;
 
-        public GrassQualitySettings _grassQuality;
         [SerializeField] private VisualEffect _grassEffect;
         [SerializeField] private CustomRenderTexture _grassRT;
         [SerializeField] private Camera _grassCam;
@@ -29,6 +30,20 @@ namespace Grass
             Managers.State.OnLoadingEnd += () => GrassNeedsUpdate = true;
             Structures.Structures.OnBuild += (s) => GrassNeedsUpdate = true;
             Structures.Structures.OnDestroy += (s) => GrassNeedsUpdate = true;
+            OnGrassQualityChange += UpdateVFX;
+        }
+
+        private void UpdateVFX(GrassQualitySettings obj)
+        {
+            Debug.Log(obj);
+            _grassEffect.SetInt("Quality", (int)obj);
+            _grassEffect.Reinit();
+        }
+
+        public static void ChangeGrassQuality(bool toggle)
+        {
+            GrassQuality = (toggle ? GrassQualitySettings.Low : GrassQualitySettings.Off);
+            OnGrassQualityChange?.Invoke(GrassQuality);
         }
 
         public void UpdateTexture(Structures.Structure s)
