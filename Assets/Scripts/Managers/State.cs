@@ -6,6 +6,8 @@ using DG.Tweening;
 using Inputs;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using Utilities;
 using static Managers.GameManager;
 
@@ -38,6 +40,7 @@ namespace Managers
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
         [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
         [SerializeField] private Image nextTurnMask;
+        [SerializeField] private VolumeProfile dofProfile;
         private float _nextTurnTimer;
         
         private static readonly CameraMovement.CameraMove MenuPos = new CameraMovement.CameraMove(
@@ -155,6 +158,9 @@ namespace Managers
             Manager.IntroHud.Hide(false);
             menuCanvas.enabled = false;
             gameCanvas.enabled = false;
+            float dofFocalDist = 1.5f;
+            dofProfile.TryGet<DepthOfField>(out var dof);
+            dof.focusDistance.value = dofFocalDist;
 
             // Reveal the CC logo screen
             loadingShadeCanvasGroup.DOFade(0.0f, 0.5f).SetDelay(0.5f)
@@ -206,7 +212,12 @@ namespace Managers
             
             Manager.Inputs.TogglePlayerInput(false);
             Manager.Jukebox.OnEnterMenu();
-
+            float dofFocalLength = 5.5f;
+            dofProfile.TryGet<DepthOfField>(out var dof);
+            DOTween.To(() => dofFocalLength, x => dofFocalLength = x, 1.5f, 6.0f).OnUpdate(() =>
+            {
+                dof.focusDistance.value = dofFocalLength;
+            });
             StartCoroutine(ToIntroUpdate());
         }
         
@@ -239,7 +250,12 @@ namespace Managers
             // TODO add some kind of juicy on-play sound here
             Manager.Jukebox.FadeTo(Jukebox.MusicVolume, Jukebox.LowestVolume, 5f);
             StartCoroutine(Algorithms.DelayCall(6f,() => Manager.Jukebox.OnStartPlay()));
-            
+            float dofFocalLength = 1.5f;
+            dofProfile.TryGet<DepthOfField>(out var dof);
+            DOTween.To(() => dofFocalLength, x => dofFocalLength = x, 5.5f, 6.0f).OnUpdate(() =>
+            {
+                dof.focusDistance.value = dofFocalLength;
+            });
             StartCoroutine(ToGameUpdate());
         }
 
