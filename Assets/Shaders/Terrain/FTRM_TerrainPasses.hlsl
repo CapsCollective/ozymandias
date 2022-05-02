@@ -346,7 +346,7 @@ float3 GetTerrainColor(float3 pos, float3 normal) {
     rMatrix = rMatrix * 2 - 1;
     p = mul(p, rMatrix);
     p = p * 0.1 + (_Time.x * 0.25);
-    color = VoronoiColor_float(color, p, _Time.x, 0.3, 0.3);
+    color = VoronoiColor_float(color, p, _Time.x, 0.3, 0.3, 0.171);
 
     return color;
 }

@@ -31,6 +31,7 @@ namespace Managers
 
         // Post Processing
         [SerializeField] private VolumeProfile dofProfile, postProcess;
+        [SerializeField] private UniversalRendererData rendererData;
 
         // Needs to be Start, not Awake for mixer values to apply - Ben
         private void Start()
@@ -142,9 +143,7 @@ namespace Managers
 
         private void ToggleAO(bool toggle)
         {
-            //postProcess.TryGet<AmbientOcclusion>(out var ao);
-            //ao.active = toggle;
-            //PlayerPrefs.SetInt("ao", Convert.ToInt32(toggle));
+            rendererData.rendererFeatures[0].SetActive(toggle);   
         }
         #endregion
         

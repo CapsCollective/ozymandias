@@ -362,7 +362,7 @@ namespace Inputs
                     ""id"": ""526fb184-f2dc-4128-b327-f2b9522023df"",
                     ""path"": ""ButtonWithOneModifier"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Scale(factor=0.7)"",
                     ""groups"": """",
                     ""action"": ""Rotate Camera"",
                     ""isComposite"": true,

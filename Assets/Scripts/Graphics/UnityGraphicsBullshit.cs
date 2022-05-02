@@ -8,6 +8,8 @@ using ShadowResolution = UnityEngine.Rendering.Universal.ShadowResolution;
 
 /// <summary>
 /// Enables getting/setting URP graphics settings properties that don't have built-in getters and setters.
+/// 
+/// Source: https://gist.github.com/JimmyCushnie/e998cdec15394d6b68a4dbbf700f66ce
 /// </summary>
 public static class UnityGraphicsBullshit
 {

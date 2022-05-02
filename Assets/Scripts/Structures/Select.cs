@@ -9,7 +9,7 @@ using Quests;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -45,10 +45,11 @@ namespace Structures
         [SerializeField] private TextMeshProUGUI bonusText;
         [SerializeField] private List<Sprite> chevronSizes;
         [SerializeField] private Utilities.SerializedDictionary<Stat, Sprite> statIcons;
-
+        [SerializeField] private UniversalRendererData rendererData;
+        
+        private OutlineRenderFeature _outline;
         private Canvas _canvas;
         private Camera _cam;
-        private OutlinePostProcess _outline;
         private Structure _hoveredStructure, _selectedStructure;
         private float _timeSinceRaycast;
         private float _interactTimer;
@@ -189,6 +190,14 @@ namespace Structures
                 SelectedStructure = null;
                 HoveredStructure = null;
             };
+            foreach(var rd in rendererData.rendererFeatures)
+            {
+                if (rd is OutlineRenderFeature)
+                {
+                    _outline = rd as OutlineRenderFeature;
+                    break;
+                }
+            }
         }
 
         private void Update()
@@ -246,7 +255,7 @@ namespace Structures
 
         private void SetHighlightColor(Color color)
         {
-            //_outline.color.value = color;
+            _outline.settings.color = color;
         }
 
         private static bool IsSelectionDisabled()

@@ -27,7 +27,7 @@ Shader "Unlit/CloudsToTexture"
 
            float4 frag(v2f_customrendertexture IN) : COLOR
            {
-               float c = VoronoiColor_float(_Color.rgb, IN.localTexcoord.xy * 10 + _Time.x, 0, 0.3, 1.0);
+               float c = VoronoiColor_float(_Color.rgb, IN.localTexcoord.xy * 10 + _Time.x, 0.3, 0.3, 1.0, 0.171);
            c = smoothstep(_Smoothstep.x, _Smoothstep.y, 1 - c);
                return c;//VoronoiColor_float(_Color.rgb, IN.localTexcoord.xy * 10, _Time.x, 0.3, 1.0);
            }

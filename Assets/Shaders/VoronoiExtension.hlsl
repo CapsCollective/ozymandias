@@ -1,4 +1,5 @@
 #define VTIME 0.5
+#define SMOOTHING 0.171
 
 float2 VoronoiHash(float2 p)
 {
@@ -7,12 +8,12 @@ float2 VoronoiHash(float2 p)
 }
 
 
-void Voronoii_float(float2 v, float time, float2 id, float2 mr, float smoothness, out float Out)
+float Voronoi(float2 v, float time, float smoothness)
 {
 	float2 n = floor(v);
 	float2 f = frac(v);
 	float F1 = 8.0;
-	float F2 = 8.0; float2 mg = 0;
+	float F2 = 8.0;
 	for (int j = -1; j <= 1; j++)
 	{
 		for (int i = -1; i <= 1; i++)
@@ -23,29 +24,46 @@ void Voronoii_float(float2 v, float time, float2 id, float2 mr, float smoothness
 			float d = 0.5 * dot(r, r);
 			//		if( d<F1 ) {
 			//			F2 = F1;
-			float h = smoothstep(0.0, 1.0, 0.5 + 0.5 * (F1 - d) / smoothness); F1 = lerp(F1, d, h) - smoothness * h * (1.0 - h); mg = g; mr = r; id = o;
+			float h = smoothstep(0.0, 1.0, 0.5 + 0.5 * (F1 - d) / smoothness); F1 = lerp(F1, d, h) - smoothness * h * (1.0 - h);
 			//		} else if( d<F2 ) {
 			//			F2 = d;
+
 			//		}
 		}
 	}
-	Out = F1;
+	return F1;
 }
 
-float3 VoronoiColor_float(inout float3 color, float2 v, float time, float smoothness, float darkness) 
+void Voronoii_float(float2 v, float time, float smoothness, inout float Out)
 {
-	float o = 0;
-	Voronoii_float(v, time * VTIME, 0, 0, smoothness, o);
-	o = saturate(smoothstep(0.171, 0.191, o));
+	float vor = 0;
+	float fade = 0.5;
+	float rest = 0;
+	
+	// Uncomment for more detailed clouds
+	//for (int i = 0; i < 2; i++) {
+	vor += Voronoi(v, time, smoothness);
+	//	rest += fade;
+	//	v *= 2;
+	//	fade *= 0.5;
+	//}
+	Out = vor;
+}
+
+float3 VoronoiColor_float(inout float3 color, float2 v, float time, float smoothness, float darkness, float smoothing)
+{
+	float o = 0.0;
+	Voronoii_float(v, time * VTIME, smoothness, o);
+	o = saturate(smoothstep(SMOOTHING, SMOOTHING + 0.02, o));
 	color = lerp(color, float3(0, 0, 0), o * darkness);
 	return color;
 }
 
-void VoronoiColor_float(in float3 color, float2 v, float time, float smoothness, float darkness, out float3 Out)
+void VoronoiColor_float(in float3 color, float2 v, float time, float smoothness, float darkness, float smoothing, out float3 Out)
 {
 	float o = 0;
-	Voronoii_float(v, time * VTIME, 0, 0, smoothness, o);
-	o = saturate(smoothstep(0.171, 0.191, o));
+	Voronoii_float(v, time * VTIME, smoothness, o);
+	o = saturate(smoothstep(SMOOTHING, SMOOTHING + 0.02, o));
 	color = lerp(color, float3(0, 0, 0), o * darkness);
 	Out = color;
 }
@@ -53,6 +71,6 @@ void VoronoiColor_float(in float3 color, float2 v, float time, float smoothness,
 void VoronoiSample_float(in float3 color, float2 v, float time, float smoothness, float darkness, out float3 Out)
 {
 	float o = 0;
-	Voronoii_float(v, time * VTIME, 0, 0, smoothness, o);
+	Voronoii_float(v, time * VTIME, smoothness, o);
 	Out = o;
 }
