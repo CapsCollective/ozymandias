@@ -259,7 +259,7 @@ namespace Tutorial
                 new Line("Ok, now that's out of the way let's get this show on the road!", GuidePose.Neutral),
                 new Line("There's a few ruins that you can clear to make some space for some new buildings."),
                 new Line("You can do it by selecting the ruin, and then the clear button. Then, you can select a card, and place it in the spot!"),
-                new Line("Space can be tight when building in the forest, so right click to rotate the buildings to fit everything in.", onNext: StartBuildingObjectives)
+                new Line("Space can be tight when building in the forest, so make sure to rotate the buildings to fit everything in.", onNext: StartBuildingObjectives)
             });
         }
         
