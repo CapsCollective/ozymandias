@@ -29,11 +29,14 @@ public class OutlineRenderFeature : ScriptableRendererFeature
         RenderTargetHandle tempTex;
         public static CommandBuffer OutlineBuffer;
         private string profilerTag = "Ouline";
+        private Material instancedMaterial;
 
-        public OutlineRenderPass(string profilerTag)
+        public OutlineRenderPass(Settings pSettings, string profilerTag)
         {
             this.profilerTag = profilerTag;
             OutlineBuffer = new CommandBuffer { name = profilerTag };
+            instancedMaterial = new Material(pSettings.material);
+            settings = pSettings;
         }
 
         // This method is called before executing the render pass.
@@ -64,12 +67,12 @@ public class OutlineRenderFeature : ScriptableRendererFeature
             if (renderingData.cameraData.targetTexture != null) return;
             CommandBuffer cmd = CommandBufferPool.Get(profilerTag);
             //cmd.DrawRendererList(context.CreateRendererList(desc));
-            settings.material.SetColor("_Color", settings.color);
-            settings.material.SetFloat("_Scale", settings.scale);
-            settings.material.SetFloat("_Threshold", settings.threshold);
-            settings.material.SetFloat("_Opacity", settings.opacity);
+            instancedMaterial.SetColor("_Color", settings.color);
+            instancedMaterial.SetFloat("_Scale", settings.scale);
+            instancedMaterial.SetFloat("_Threshold", settings.threshold);
+            instancedMaterial.SetFloat("_Opacity", settings.opacity);
             // _MainTex must be a PROPERTY not just a variable!!!
-            cmd.Blit(source, tempTex.Identifier(), settings.material);
+            cmd.Blit(source, tempTex.Identifier(), instancedMaterial);
             cmd.Blit(tempTex.Identifier(), source);
             context.ExecuteCommandBuffer(cmd);
             cmd.Clear();
@@ -87,8 +90,7 @@ public class OutlineRenderFeature : ScriptableRendererFeature
     /// <inheritdoc/>
     public override void Create()
     {
-        m_ScriptablePass = new OutlineRenderPass("Outline");
-        m_ScriptablePass.settings = settings;
+        m_ScriptablePass = new OutlineRenderPass(settings, "Outline");
         m_ScriptablePass.renderPassEvent = settings.passEvent;
     }
 

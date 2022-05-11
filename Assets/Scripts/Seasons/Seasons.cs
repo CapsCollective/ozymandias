@@ -39,6 +39,8 @@ namespace Seasons
         [SerializeField] private Material skyMaterial;
         [SerializeField] private Light sun;
         [SerializeField] private ParticleSystem glowflies;
+
+        private Material instancedSkyMaterial;
         
         private static readonly int MaterialIdHorizonColor = Shader.PropertyToID("_HorizonColor");
         private static readonly int MaterialIdWindowEmission = Shader.PropertyToID("_WindowEmissionIntensity");
@@ -84,6 +86,8 @@ namespace Seasons
             Newspaper.OnClosed += UpdateSeason;
             State.OnNextTurnBegin += TurnTransition;
             Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
+            instancedSkyMaterial = new Material(skyMaterial);
+            RenderSettings.skybox = instancedSkyMaterial;
         }
 
         private void TurnTransition()
@@ -147,8 +151,8 @@ namespace Seasons
             Color sunColorValue = sun.color;
             Color ambientLightValue = RenderSettings.ambientLight;
             Color fogColorValue = RenderSettings.fogColor;
-            Color skyColorValue = skyMaterial.GetColor(MaterialIdSkyColor);
-            Color horizonColorValue = skyMaterial.GetColor(MaterialIdHorizonColor);
+            Color skyColorValue = instancedSkyMaterial.GetColor(MaterialIdSkyColor);
+            Color horizonColorValue = instancedSkyMaterial.GetColor(MaterialIdHorizonColor);
             
             // Set effect target values
             Weather weather = GetWeather(season);
@@ -191,8 +195,8 @@ namespace Seasons
             sun.color = sunColor;
             RenderSettings.ambientLight = ambientLight;
             RenderSettings.fogColor = fogColor;
-            skyMaterial.SetColor(MaterialIdSkyColor, skyColorGradient);
-            skyMaterial.SetColor(MaterialIdHorizonColor, horizonColorGradient);
+            instancedSkyMaterial.SetColor(MaterialIdSkyColor, skyColorGradient);
+            instancedSkyMaterial.SetColor(MaterialIdHorizonColor, horizonColorGradient);
             Shader.SetGlobalFloat(MaterialIdWindowEmission, windowIntensity);
         }
 
