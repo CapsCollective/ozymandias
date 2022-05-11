@@ -5,8 +5,8 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
-#include "Assets/Shaders/VoronoiExtension.hlsl"
-#include "Assets/Shaders/GaussianBlur.hlsl"
+#include "Assets/Shaders/Clouds/VoronoiExtension.hlsl"
+#include "Assets/Shaders/Clouds/GaussianBlur.hlsl"
 
 struct Attributes
 {
