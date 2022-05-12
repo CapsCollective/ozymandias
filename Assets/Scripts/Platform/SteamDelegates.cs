@@ -55,14 +55,14 @@ namespace Platform
             Manager.Achievements.Unlocked.Add(achievement);
             
             // Handle Steam unlock if Steam API is active
-            if (!SteamManager.Initialized) return;
+            if (!SteamManager.Initialized || !AchievementIDs.ContainsKey(achievement)) return;
             SteamUserStats.SetAchievement(AchievementIDs[achievement]);
             SteamUserStats.StoreStats();
         }
         
         public override void UpdateStat(Milestone stat, int value)
         {
-            if (!SteamManager.Initialized) return; 
+            if (!SteamManager.Initialized || !StatIDs.ContainsKey(stat)) return;
             SteamUserStats.SetStat(StatIDs[stat], value);
             SteamUserStats.StoreStats();
         }

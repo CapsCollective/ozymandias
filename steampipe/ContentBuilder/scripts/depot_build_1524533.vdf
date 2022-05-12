@@ -1,0 +1,11 @@
+"DepotBuild"
+{
+	"DepotID" "1524533" // Linux
+	"FileMapping"
+	{
+		"LocalPath" "./linux_content/*" // all files from content folder
+		"DepotPath" "." // mapped into the root of the depot
+		"recursive" "1" // include all subfolders
+	}
+	"FileExclusion" "*_DoNotShip" // exclude all non-shippable build files
+}

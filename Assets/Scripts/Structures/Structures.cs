@@ -15,6 +15,7 @@ namespace Structures
     public class Structures : MonoBehaviour
     {
         public static Action<Structure> OnBuild;
+        public static Action<Structure> OnDestroy;
         public static Action OnGuildHallDemolished;
 
         [Serializable] private struct Location { public int root, rotation; }
@@ -144,6 +145,7 @@ namespace Structures
             
             structure.Destroy();
             CheckAdjacencyBonuses();
+            OnDestroy?.Invoke(structure);
             if(!Manager.State.Loading) UpdateUi();
         }
 

@@ -50,10 +50,7 @@ namespace Structures
             _usesShader = _meshCompute != null && 
                           (Application.platform == RuntimePlatform.WindowsPlayer || 
                            Application.platform == RuntimePlatform.WindowsEditor);
-            
-            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-            materialPropertyBlock.SetInt(HasGrass, hasGrass ? 1 : 0);
-            GetComponent<Renderer>().SetPropertyBlock(materialPropertyBlock);
+            GetComponent<Renderer>().material.SetInt(HasGrass, hasGrass ? 1 : 0);
         }
 
         public void Init(Cell cell, bool fitToCell = false, bool isRuin = false, int clockwiseRotations = 0)

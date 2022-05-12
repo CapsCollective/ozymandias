@@ -133,7 +133,7 @@ public class ScenarioEditor : EditorWindow
                 AssetDatabase.AddObjectToAsset(newOutcome, scenario);
                 listEventOutcomes.itemsSource = scenario.outcomes;
                 AssetDatabase.SaveAssets();
-                listEventOutcomes.Refresh();
+                listEventOutcomes.Rebuild();
             };
             menuEventOutcomes.menu.InsertAction(i, outcome.name, dropdownAction, DropdownMenuAction.Status.Normal);
         }
@@ -170,7 +170,7 @@ public class ScenarioEditor : EditorWindow
         searchList = eventsList.Where((x) => x.headline.ToLower().Contains(s.ToLower()));
         listViewLibrary.itemsSource = searchList.ToList();
 
-        listViewLibrary.Refresh();
+        listViewLibrary.Rebuild();
     }
 
     private void PopulateLibrary()
@@ -213,7 +213,7 @@ public class ScenarioEditor : EditorWindow
             {
                 AssetDatabase.RemoveObjectFromAsset(scenario.outcomes[i]);
                 scenario.outcomes.RemoveAt(i);
-                listEventOutcomes.Refresh();
+                listEventOutcomes.Rebuild();
                 AssetDatabase.SaveAssets();
             };
         };
@@ -310,7 +310,7 @@ public class ScenarioEditor : EditorWindow
                 AssetDatabase.RemoveObjectFromAsset(scenario.choices[i]);
                 scenario.choices.RemoveAt(i);
                 choiceListView.itemsSource = scenario.choices;
-                choiceListView.Refresh();
+                choiceListView.Rebuild();
                 AssetDatabase.SaveAssets();
             };
         };
@@ -335,7 +335,7 @@ public class ScenarioEditor : EditorWindow
         tfChoiceDescription.SetValueWithoutNotify(c.name);
         tfChoiceDescription.RegisterValueChangedCallback((s) => {
             scenario.choices[choiceListView.selectedIndex].name = s.newValue;
-            choiceListView.Refresh();
+            choiceListView.Rebuild();
         });
 
          // TextField tfChoiceText = root.Query<TextField>("tfChoiceDescription");
@@ -391,7 +391,7 @@ public class ScenarioEditor : EditorWindow
             searchList = eventsList;
             eventsList.Sort((x, y) => string.Compare(x.headline, y.headline));
             listViewLibrary.itemsSource = searchList.ToList();
-            listViewLibrary.Refresh();
+            listViewLibrary.Rebuild();
         }
     }
 

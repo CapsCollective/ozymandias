@@ -1,41 +1,41 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
+using System;
 
 namespace Structures
 {
-    [ExecuteAlways]
     public class Outline : MonoBehaviour
     {
-        public static CommandBuffer OutlineBuffer { get; private set; }
-
-        private Camera _cam;
-        private int _bufferName;
+        private RenderTexture outlineRT;
+        private Camera cam;
 
         private void OnEnable()
         {
-            _cam = Camera.main;
-            OutlineBuffer = new CommandBuffer {name = "Outline Buffer"};
-            if (_cam) _cam.AddCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
+            Managers.Settings.NewResolution += OnNewResolution;
+            cam = GetComponent<Camera>();
+            outlineRT = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.RFloat);
+            outlineRT.useMipMap = false;
+        }
 
-            _bufferName = Shader.PropertyToID("_OutlineBuffer");
+        private void OnNewResolution(int width, int height)
+        {
+            outlineRT.Release();
+            outlineRT = new RenderTexture(width, height, 0, RenderTextureFormat.RFloat);
         }
 
         private void Update()
         {
-            OutlineBuffer.Clear();
-            OutlineBuffer.GetTemporaryRT(_bufferName, -1, -1, 32, FilterMode.Point, RenderTextureFormat.RGFloat);
-            OutlineBuffer.SetGlobalTexture("_OutlineRT", _bufferName);
-            OutlineBuffer.SetRenderTarget(_bufferName);
-
-            OutlineBuffer.ClearRenderTarget(true, true, Color.black);
+            cam.targetTexture = outlineRT;
+            Shader.SetGlobalTexture("_OutlineRT", outlineRT);
         }
 
         private void OnDisable()
         {
-            if (_cam) _cam.RemoveCommandBuffer(CameraEvent.BeforeImageEffectsOpaque, OutlineBuffer);
-            OutlineBuffer.Clear();
-            OutlineBuffer.Dispose();
+            Managers.Settings.NewResolution -= OnNewResolution;
+            outlineRT.Release();
+            cam.targetTexture = null;
         }
     }
 }

@@ -212,7 +212,7 @@ namespace Tutorial
                 new Line("I found you washed up on the shore while I was looti... cleaning up the remains of this old town.", GuidePose.Embarrassed),
                 new Line("There was a bustling adventuring town here a short while back, got completely overrun. Now just a few ruins is all that's left.", GuidePose.Neutral),
                 new Line("Oh! Are you the replacement regional manager that head office was gonna send down?"),
-                new Line("You know what, don't answer, you are now.", GuidePose.Dismissive),
+                new Line("You know what, don't answer that, you are now.", GuidePose.Dismissive),
                 new Line("I could never run it myself, too much paperwork. But if you were to run the town and leave me to... clean.. then maybe we could work something out.", GuidePose.Neutral), // Should point a 'thinking' pose
                 new Line("Let's start you off by showing you around the place...", GuidePose.FingerGuns, StartCameraObjectives)
             });
@@ -259,7 +259,7 @@ namespace Tutorial
                 new Line("Ok, now that's out of the way let's get this show on the road!", GuidePose.Neutral),
                 new Line("There's a few ruins that you can clear to make some space for some new buildings."),
                 new Line("You can do it by selecting the ruin, and then the clear button. Then, you can select a card, and place it in the spot!"),
-                new Line("Space can be tight when building in the forest, so right click to rotate the buildings to fit everything in.", onNext: StartBuildingObjectives)
+                new Line("Space can be tight when building in the forest, so make sure to rotate the buildings to fit everything in.", onNext: StartBuildingObjectives)
             });
         }
         

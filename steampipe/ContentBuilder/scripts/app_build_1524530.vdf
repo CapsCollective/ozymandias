@@ -8,32 +8,9 @@
 	"BuildOutput" "../output"
 	"Depots"
 	{
-		"1524531" // macOS Depot
-		{
-			"FileMapping"
-			{
-				"LocalPath" "./macos_content/*" // all files from content folder
-				"DepotPath" "." // mapped into the root of the depot
-				"recursive" "1" // include all subfolders
-			}
-		}
-		"1524532" // Windows Depot
-		{
-			"FileMapping"
-			{
-				"LocalPath" "./windows_content/Fantasy Town Regional Manager/*" // all files from content folder
-				"DepotPath" "." // mapped into the root of the depot
-				"recursive" "1" // include all subfolders
-			}
-		}
-		"1524533" // Linux Depot
-		{
-			"FileMapping"
-			{
-				"LocalPath" "./linux_content/*" // all files from content folder
-				"DepotPath" "." // mapped into the root of the depot
-				"recursive" "1" // include all subfolders
-			}
-		}
+		// depot mapping abstracted to DepotBuild files
+		"1524531" "depot_build_1524531.vdf" // macOS
+		"1524532" "depot_build_1524532.vdf" // Windows
+		"1524533" "depot_build_1524533.vdf" // Linux
 	}
 }

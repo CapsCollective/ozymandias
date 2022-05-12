@@ -122,6 +122,7 @@ namespace Quests
 
         private void CreateBuilding(List<int> occupied)
         {
+            if (occupied == null) return;
             Structure = Instantiate(Manager.Structures.StructurePrefab, Manager.Quests.transform).GetComponent<Structure>();
             Structure.CreateQuest(occupied, this);
         }

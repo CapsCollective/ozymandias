@@ -18,7 +18,17 @@ namespace Structures
         public StructureType StructureType { get; private set; }
         public Quest Quest { get; set; }
         public List<Cell> Occupied { get; private set; }
-        public bool Selected { get; set; }
+        public bool Selected 
+        { get => _selected; 
+            set
+            {
+                _selected = value;
+                foreach (MeshFilter r in _sectionRenderers)
+                {
+                    r.gameObject.layer = _selected ? LayerMask.NameToLayer("Selected") : LayerMask.NameToLayer("Grid Terrain");
+                }
+            }
+        }
         public bool IsBuilding => StructureType == StructureType.Building;
         public bool IsRuin => StructureType == StructureType.Ruins;
         public bool IsTerrain => StructureType == StructureType.Terrain;
@@ -37,7 +47,8 @@ namespace Structures
         
         // Stored here as well as blueprints so the stats can be modified by adjacency bonuses
         public Dictionary<Stat, int> Stats { get; private set; }
-        
+
+        private bool _selected;
         private int _rootId; // Cell id of the building root
         private int _rotation;
         private List<Section> _sections = new List<Section>();
@@ -45,14 +56,14 @@ namespace Structures
         private ParticleSystem ParticleSystem => _particleSystem
             ? _particleSystem
             : _particleSystem = GetComponentInChildren<ParticleSystem>();
-        private List<Renderer> _sectionRenderers = new List<Renderer>();
+        private List<MeshFilter> _sectionRenderers = new List<MeshFilter>();
         [SerializeField] private bool fixedPosition;
         
         private void Awake()
         {
             if (!fixedPosition) return;
             StructureType = StructureType.Quest;
-            _sectionRenderers = GetComponentsInChildren<Renderer>().ToList();
+            _sectionRenderers = GetComponentsInChildren<MeshFilter>().ToList();
         }
 
         public void CreateQuest(List<int> occupied, Quest quest) // Creation for quests
@@ -78,7 +89,7 @@ namespace Structures
             {
                 _sections[i].Init(Occupied[i]);
                 _sections[i].SetRoofColor(quest.colour);
-                _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
+                _sectionRenderers.Add(_sections[i].GetComponent<MeshFilter>());
             }
 
             if (!Manager.State.Loading) AnimateCreate();
@@ -133,7 +144,7 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++) 
             {
                 _sections[i].Init(Occupied[i]);
-                _sectionRenderers.Add(_sections[i].GetComponent<Renderer>());
+                _sectionRenderers.Add(_sections[i].GetComponent<MeshFilter>());
             }
 
             if (!Manager.State.Loading) AnimateCreate(false); // TODO: Animate check (just not during loading???)
@@ -181,7 +192,7 @@ namespace Structures
                 _sections[i].Init(Occupied[i], true, isRuin, Blueprint.sections[i].clockwiseRotations);
                 _sections[i].SetRoofColor(Blueprint.roofColor);
                 // Add the renderer for all sections to a list for outline highlighting
-                _sectionRenderers.Add(_sections[i].transform.GetComponent<Renderer>());
+                _sectionRenderers.Add(_sections[i].transform.GetComponent<MeshFilter>());
             }
 
             if (!Manager.State.Loading) AnimateCreate();
@@ -209,7 +220,7 @@ namespace Structures
             _sections.Add(newSection);
             newSection.SetRoofColor(Quest.colour);
             newSection.Init(newCell);
-            _sectionRenderers.Add(newSection.GetComponent<Renderer>());
+            _sectionRenderers.Add(newSection.GetComponent<MeshFilter>());
             
             if (Occupied.Count == 4) Notification.OnNotification.Invoke("A camp is growing dangerously large!", Manager.questIcon, 3); 
         }
@@ -218,7 +229,7 @@ namespace Structures
         {
             for (int i = 0; i < count; i++)
             {
-                _sectionRenderers.Remove(_sections[SectionCount - 1].transform.GetComponent<Renderer>());
+                _sectionRenderers.Remove(_sections[SectionCount - 1].transform.GetComponent<MeshFilter>());
 
                 Destroy(_sections[SectionCount - 1].gameObject);
                 Occupied[Occupied.Count - 1].Occupant = null;
@@ -311,21 +322,6 @@ namespace Structures
             ParticleSystem.transform.parent = null;
             ParticleSystem.MainModule psMain = ParticleSystem.main;
             psMain.stopAction = ParticleSystemStopAction.Destroy;
-        }
-        
-        private void Update()
-        {
-            #if UNITY_EDITOR
-            if (Manager.disableOutline) return;
-            #endif
-            
-            //TODO: Make this on mouse input instead of every frame?
-            if (!Selected || !Manager.State.InGame) return;
-
-            foreach (Renderer r in _sectionRenderers)
-            {
-                Outline.OutlineBuffer?.DrawRenderer(r, Manager.Structures.OutlineMaterial);
-            }
         }
     }
 }

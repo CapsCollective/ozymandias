@@ -519,6 +519,7 @@ namespace Map
             // Add the perimeter to RoadGraph
             AddRoad(perimeter);
             mesh.sharedMesh = GenerateRoadMesh();
+            Grass.GrassEffectController.GrassNeedsUpdate = true;
             yield return new WaitForEndOfFrame();
         }
 

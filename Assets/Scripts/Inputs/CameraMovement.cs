@@ -5,7 +5,8 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using Utilities;
 using static Managers.GameManager;
 
@@ -37,8 +38,8 @@ namespace Inputs
         [SerializeField] private float dragAcceleration = 0.1f;
         [SerializeField] private float scrollAccelerationSpeed = 0.1f;
         [SerializeField] private float bounceTime = 0.1f;
-        [SerializeField] private PostProcessProfile profile;
-        [SerializeField] private PostProcessVolume volume;
+        [SerializeField] private Volume dofVolume;
+        [SerializeField] private Volume mainVolume;
         [Header("Clamping")]
         [SerializeField] private Vector3 clampCenterPos;
         [SerializeField] private float clampDistance;
@@ -52,7 +53,7 @@ namespace Inputs
         private void Awake()
         {
             _cam = GetComponent<Camera>();
-            profile.TryGetSettings(out _depthOfField);
+            dofVolume.sharedProfile.TryGet<DepthOfField>(out _depthOfField);
             FreeLook = GetComponent<CinemachineFreeLook>();
         }
 
@@ -92,7 +93,7 @@ namespace Inputs
         private void Update()
         {
             // Depth of Field stuff
-            volume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
+            dofVolume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
             
             if (!Manager.State.InGame || Manager.Tooltip.NavigationActive) return;
 
@@ -162,7 +163,7 @@ namespace Inputs
             if (dot2 > 0)
                 distanceFromBorder -= dot2;
             if(distanceFromBorder > 1.0f)
-                    FreeLook.Follow.position += ((clampCenterPos - FreeLook.Follow.position).normalized * (distanceFromBorder - 1.0f) * pushForce) * Time.deltaTime;
+                FreeLook.Follow.position += ((clampCenterPos - FreeLook.Follow.position).normalized * (distanceFromBorder - 1.0f) * pushForce) * Time.deltaTime;
         }
 
         public TweenerCore<Vector3,Vector3,VectorOptions> MoveTo(Vector3 pos, float duration = 0.5f)
