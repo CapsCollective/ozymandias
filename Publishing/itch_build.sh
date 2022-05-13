@@ -12,8 +12,8 @@ itch_branch_windows="windows"
 
 # Find repo root and requested executable
 scriptdir=$(dirname "${BASH_SOURCE[0]}")
-rootdir=$(cd "$scriptdir/../.." ; pwd -P)
-butlerexe="$scriptdir/$1/butler"
+rootdir=$(cd "$scriptdir/.." ; pwd -P)
+butlerexe="$scriptdir/butler/$1/butler"
 
 # Set build details
 bindir="$scriptdir/builds"
@@ -30,6 +30,6 @@ userversion="--userversion $appversion"
 # Run butler push for each platform
 $butlerexe -V
 echo "Starting push from $1 to $itch_title:$itch_branch_state for build v$appversion..."; echo
-$butlerexe push "$bindir/$bin_macos" "$itch_title:$itch_branch_macos-$itch_branch_state" $userversion
-$butlerexe push "$bindir/$bin_linux" "$itch_title:$itch_branch_linux-$itch_branch_state" $userversion
-$butlerexe push "$bindir/$bin_windows" "$itch_title:$itch_branch_windows-$itch_branch_state" $userversion
+$butlerexe push --ignore "*.gitkeep" "$bindir/$bin_macos" "$itch_title:$itch_branch_macos-$itch_branch_state" $userversion
+$butlerexe push --ignore "*.gitkeep" "$bindir/$bin_linux" "$itch_title:$itch_branch_linux-$itch_branch_state" $userversion
+$butlerexe push --ignore "*.gitkeep" "$bindir/$bin_windows" "$itch_title:$itch_branch_windows-$itch_branch_state" $userversion
