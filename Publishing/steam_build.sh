@@ -19,5 +19,5 @@ rootdir=$(cd "$scriptdir/../.." ; pwd -P)
 steampipeexe="$scriptdir/steampipe/$builder/steamcmd.sh"
 
 # Run Steam app build for each platform
-echo "Starting steamcmd..."; echo
+echo "Running steamcmd..."
 $steampipeexe +login $1 $2 +run_app_build ../scripts/app_build_1524530.vdf +quit
