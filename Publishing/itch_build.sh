@@ -30,6 +30,6 @@ userversion="--userversion $appversion"
 # Run butler push for each platform
 $butlerexe -V
 echo "Starting push from $1 to $itch_title:$itch_branch_state for build v$appversion..."; echo
-$butlerexe push --ignore "*.gitkeep" "$bindir/$bin_macos" "$itch_title:$itch_branch_macos-$itch_branch_state" $userversion
-$butlerexe push --ignore "*.gitkeep" "$bindir/$bin_linux" "$itch_title:$itch_branch_linux-$itch_branch_state" $userversion
-$butlerexe push --ignore "*.gitkeep" "$bindir/$bin_windows" "$itch_title:$itch_branch_windows-$itch_branch_state" $userversion
+$butlerexe push "$bindir/$bin_macos" "$itch_title:$itch_branch_macos-$itch_branch_state" $userversion --ignore '*.gitkeep' --ignore '*_DoNotShip'
+$butlerexe push "$bindir/$bin_linux" "$itch_title:$itch_branch_linux-$itch_branch_state" $userversion --ignore '*.gitkeep' --ignore '*_DoNotShip'
+$butlerexe push "$bindir/$bin_windows" "$itch_title:$itch_branch_windows-$itch_branch_state" $userversion --ignore '*.gitkeep' --ignore '*_DoNotShip'
