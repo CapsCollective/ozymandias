@@ -130,7 +130,8 @@ namespace UI
                 else if (Structures.Select.Instance.SelectedStructure != null) Structures.Select.Instance.SelectedStructure = null;
                 else if (Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
             };
-
+            
+            // Position it as closed on start
             transform.localPosition = ClosePos;
         }
 

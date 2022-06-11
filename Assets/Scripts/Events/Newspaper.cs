@@ -55,10 +55,12 @@ namespace Events
             State.OnNextTurnEnd += NextTurnOpen;
             continueButton.onClick.AddListener(Close);
             openNewspaperButton.onClick.AddListener(Open);
-            Transform t = transform;
-            t.position = ClosePos;
-            t.eulerAngles = CloseRot;
             Manager.Inputs.Close.performed += _ => Close();
+            
+            // Position it as closed on start
+            var xform = transform;
+            xform.localPosition = ClosePos;
+            xform.localEulerAngles = CloseRot;
         }
 
         private void NextTurnOpen()
