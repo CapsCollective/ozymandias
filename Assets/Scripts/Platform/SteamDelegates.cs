@@ -31,6 +31,9 @@ namespace Platform
                 {Achievement.PetDog, "PET_THE_DOG"},
                 {Achievement.CaughtFish, "GONE_FISHING"},
                 {Achievement.FoundWaterfall, "FIND_WATERFALL"},
+                {Achievement.WorldEdgeFound, "WORLD_EDGE"},
+                {Achievement.GuildHallDemolished, "DESTROY_GUILDHALL"},
+                
                 
                 {Achievement.PopulationHamlet, "POPULATION_HAMLET"},
                 {Achievement.PopulationVillage, "POPULATION_VILLAGE"},
