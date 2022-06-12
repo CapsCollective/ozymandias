@@ -84,6 +84,7 @@ namespace Seasons
         {
             State.OnLoadingEnd += UpdateSeason;
             Newspaper.OnClosed += UpdateSeason;
+            State.OnNewGame += UpdateSeason;
             State.OnNextTurnBegin += TurnTransition;
             Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
             instancedSkyMaterial = new Material(skyMaterial);
