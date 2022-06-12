@@ -45,6 +45,8 @@ namespace UI
         private bool _isOpen, _transitioning, _changingPage;
         private bool _fromGame; // TODO this state cache must be removed, please do not use it
         private CanvasGroup _closeButtonCanvas;
+
+        [SerializeField] private ExtendedDropdown resDropdown;
         
         private BookPage _page = BookPage.Settings;
         private BookPage Page
@@ -130,7 +132,13 @@ namespace UI
                 else if (Structures.Select.Instance.SelectedStructure != null) Structures.Select.Instance.SelectedStructure = null;
                 else if (Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
             };
-            
+
+            Manager.Inputs.Close.performed += _ =>
+            {
+                if (!_isOpen || _transitioning || Manager.Upgrades.BoxOpen || resDropdown.isOpen) return;
+                Close();
+            };
+
             // Position it as closed on start
             transform.localPosition = ClosePos;
         }

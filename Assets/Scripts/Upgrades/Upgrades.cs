@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Inputs;
@@ -14,6 +15,7 @@ namespace Upgrades
     public class Upgrades: MonoBehaviour
     {
         public static Action<UpgradeType> OnUpgradePurchased;
+        public bool BoxOpen { get; private set; }
 
         public Dictionary<Guild, int> GuildTokens { get; private set; }
         
@@ -82,6 +84,7 @@ namespace Upgrades
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);
             if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(purchaseBox.purchaseButton.gameObject);
+            BoxOpen = true;
         }
 
         private void DisplayDetails(Upgrade upgrade)
@@ -115,6 +118,14 @@ namespace Upgrades
             if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(_selected.GetComponentInChildren<Button>().gameObject);
             _selected = null;
             purchaseBox.canvas.enabled = false;
+
+            StartCoroutine(WaitToClose());
+        }
+
+        private IEnumerator WaitToClose()
+        {
+            yield return new WaitForEndOfFrame();
+            BoxOpen = false;
         }
 
         public bool Affordable(Dictionary<Guild, int> costs)
