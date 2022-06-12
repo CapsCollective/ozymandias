@@ -88,6 +88,13 @@ namespace Inputs
                 });
         }
 
+        private static void SetCursorState(bool isOn)
+        {
+            if (Manager.Inputs.UsingController) return;
+            Cursor.lockState = isOn ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isOn;
+        }
+
         private IEnumerator ManualCenter()
         {
             _isCentering = true;
@@ -109,8 +116,7 @@ namespace Inputs
             currentPos = canvas.transform.TransformPoint(currentPos);
             var endPos = button.gameObject.transform.position;
             _dummyCursor.transform.position = currentPos;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            SetCursorState(false);
 
             while (Vector2.Distance(currentPos, endPos) > 10f)
             {
@@ -123,8 +129,7 @@ namespace Inputs
             Manager.Jukebox.PlayClick();
             CenterCamera();
             _dummyCursor.SetActive(false);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            SetCursorState(true);
         }
     }
 }
