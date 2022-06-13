@@ -1,4 +1,3 @@
-using System;
 using Managers;
 using Structures;
 using UnityEngine;
@@ -14,12 +13,15 @@ namespace Cards
         [SerializeField] private GameObject cardDisplayPrefab;
 
         [SerializeField] private Scrollbar scrollbar;
+        [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private float speed;
         
         private void Awake()
         {
             State.OnLoadingEnd += Display;
             State.OnEnterState += _ => ScrollActive = false;
+            scrollRect.enabled = true;
+            scrollbar.value = 0;
         }
 
         private void Update()

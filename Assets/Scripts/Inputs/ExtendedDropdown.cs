@@ -1,8 +1,7 @@
 ﻿using TMPro;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-namespace Utilities
+namespace Inputs
 {
     public class ExtendedDropdown : TMP_Dropdown
     {
@@ -12,14 +11,13 @@ namespace Utilities
         {
             base.OnSubmit(eventData);
             isOpen = true;
-            UnityEngine.Debug.Log("Submit");
+            GetComponentInChildren<EventSensitiveScrollRect>().OnUpdateSelected(eventData);
         }
 
         public override void OnCancel(BaseEventData eventData)
         {
             base.OnCancel(eventData);
             isOpen = false;
-            UnityEngine.Debug.Log("Cancel");
         }
     }
 }
