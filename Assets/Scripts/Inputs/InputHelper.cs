@@ -27,13 +27,6 @@ namespace Inputs
         private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
         private Tween tween;
 
-        private float CursorSize { 
-            get
-            {
-                return 60 * (Screen.height / 1080.0f); 
-            }
-        }
-
         // Start is called before the first frame update
         void Start()
         {
@@ -45,6 +38,7 @@ namespace Inputs
             OnNewSelection += NewSelection;
             UIController.OnUIOpen += (g, b) =>
             {
+                if (!Manager.Inputs.UsingController) return; 
                 EventSystem.SetSelectedGameObject(g);
                 selectionHelper.gameObject.SetActive(b);
             };
@@ -82,11 +76,11 @@ namespace Inputs
         private void OnControlChanged(InputControlScheme obj)
         {
             bool isController = Manager.Inputs.UsingController;
-            if(Manager.State.Current == GameState.InGame)
+            if (Manager.State.Current == GameState.InGame)
                 ToggleWorldCursor(isController);
             if (Manager.State.Current == GameState.InMenu)
             {
-                selectionHelper.gameObject.SetActive(isController);
+                if (!isController) selectionHelper.gameObject.SetActive(false);
                 Cursor.visible = !isController;
             }
         }

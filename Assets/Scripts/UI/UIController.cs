@@ -39,11 +39,11 @@ namespace UI
             OnUIClose?.Invoke();
         }
 
-        public void ControllerFocus(InputControlScheme scheme)
+        private void ControllerFocus(InputControlScheme scheme)
         {
             if(scheme == Manager.Inputs.PlayerInput.ControllerScheme)
             {
-                OnUIOpen.Invoke(firstSelected, showCursor);
+                OnUIOpen?.Invoke(firstSelected, showCursor);
             }
         }
     }

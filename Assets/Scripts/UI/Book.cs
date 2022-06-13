@@ -183,7 +183,7 @@ namespace UI
                     _isOpen = false;
                     Manager.State.EnterState(_closeState);
                 });
-
+            pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
             Manager.Inputs.NavigateBookmark.performed -= OnNavigateBookmark_performed;
         }
 
