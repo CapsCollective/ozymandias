@@ -90,7 +90,7 @@ namespace Quests
                 if (!valueChange)
                 {
                     // Set default values for sliders
-                    adventurerSlider.gameObject.SetActive(quest.IsRadiant);
+                    adventurerSlider.gameObject.SetActive(quest.IsRadiant && quest.MinAdventurers != quest.MaxAdventurers);
                     if (quest.IsRadiant)
                     {
                         adventurerSlider.minValue = quest.MinAdventurers;
