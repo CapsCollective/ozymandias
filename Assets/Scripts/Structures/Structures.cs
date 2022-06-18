@@ -221,7 +221,6 @@ namespace Structures
         
         private Location NewSpawnLocation() => spawnLocations.SelectRandom();
         
-        [Button("Guild Hall")]
         public void SpawnGuildHall()
         {
             foreach (Cell cell in Manager.Map.GetCells(TownCentre, 4).Where(cell => cell.Occupied && cell.Occupant.IsTerrain)) Remove(cell.Occupant);

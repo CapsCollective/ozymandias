@@ -29,12 +29,14 @@ namespace UI
 
         public virtual void OnOpen()
         {
+            Debug.Log("Opened " + name);
             Inputs.Inputs.OnControlChange += ControllerFocus;
             OnUIOpen?.Invoke(firstSelected, showCursor);
         }
 
         public virtual void OnClose()
         {
+            Debug.Log("Closed " + name);
             Inputs.Inputs.OnControlChange -= ControllerFocus;
             OnUIClose?.Invoke();
         }

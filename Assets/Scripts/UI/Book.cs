@@ -73,6 +73,7 @@ namespace UI
                 pages[_page].canvasGroup.blocksRaycasts = false;
                 var rt = pages[_page].bookRibbon.transform as RectTransform;
                 rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, DEFAULT_RIBBON_HEIGHT), 0.15f);
+                pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
                 pages[_page].canvasGroup.DOFade(0, 0.2f).OnComplete(() =>
                 {
                     _page = value;

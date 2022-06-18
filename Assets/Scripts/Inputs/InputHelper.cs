@@ -21,6 +21,11 @@ namespace Inputs
         public static Dictionary<GameObject, Vector2> CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
 
         [SerializeField] private RectTransform selectionHelper;
+        private bool HelperActive
+        {
+            get => selectionHelper.gameObject.activeSelf;
+            set => selectionHelper.gameObject.SetActive(value);
+        }
 
         private GameObject worldSpaceCursor;
         private GameObject lastSelectedGameObject;
@@ -40,13 +45,13 @@ namespace Inputs
             {
                 if (!Manager.Inputs.UsingController) return; 
                 EventSystem.SetSelectedGameObject(g);
-                selectionHelper.gameObject.SetActive(b);
+                HelperActive = b;
             };
 
             worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
-            selectionHelper.gameObject.SetActive(false);
+            HelperActive = false;
 
             OnToggleCursor += ToggleUICursor;
         }
@@ -80,7 +85,7 @@ namespace Inputs
                 ToggleWorldCursor(isController);
             if (Manager.State.Current == GameState.InMenu)
             {
-                if (!isController) selectionHelper.gameObject.SetActive(false);
+                if (!isController) HelperActive = false;
                 Cursor.visible = !isController;
             }
         }
@@ -112,11 +117,11 @@ namespace Inputs
                         break;
                     case GameState.ToGame:
                         EventSystem.SetSelectedGameObject(null);
-                        selectionHelper.gameObject.SetActive(false);
+                        HelperActive = false;
                         break;
                     case GameState.InGame:
                         ToggleWorldCursor(true); 
-                        selectionHelper.gameObject.SetActive(false);
+                        HelperActive = false;
                         break;
                     case GameState.NextTurn:
                         break;
@@ -147,7 +152,7 @@ namespace Inputs
 
         private void ToggleUICursor(bool toggle)
         {
-            selectionHelper.gameObject.SetActive(toggle);
+            HelperActive = Manager.Inputs.UsingController && toggle;
         }
 
         private void OnDestroy()
