@@ -5,6 +5,7 @@ using DG.Tweening;
 using Events;
 using Structures;
 using TMPro;
+using UI;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -20,6 +21,7 @@ namespace Cards
         [SerializeField] private float animateInDuration = 2.0f;
         [SerializeField] private float animateOutDuration = 2.0f;
 
+        private bool _transitioning;
         private Vector3 _originalPos;
         private Canvas _canvas;
         private readonly Stack<Blueprint> _buildings = new Stack<Blueprint>();
@@ -33,6 +35,7 @@ namespace Cards
             Cards.OnUnlock += _buildings.Push;
             Cards.OnDiscoverRuin += CheckUnlockCard;
             Newspaper.OnClosed += CheckUnlockCard;
+            Manager.Inputs.LeftClick.performed += _ => Close();
         }
 
         private void CheckUnlockCard()
@@ -62,6 +65,8 @@ namespace Cards
         
         public void Close()
         {
+            if (_transitioning || !_canvas.enabled) return;
+            _transitioning = true;
             text.DOFade(0.0f, 0.5f);
             cardDisplay.transform.DOLocalMove(new Vector3(-300, -500, 0), animateOutDuration);
             cardDisplay.transform.DOScale(Vector3.one * 0.4f, animateOutDuration);
@@ -76,6 +81,7 @@ namespace Cards
                         _canvas.enabled = false;
                         Manager.State.EnterState(GameState.InGame);
                     }
+                    _transitioning = false;
                 });
         }
     }
