@@ -60,7 +60,9 @@ namespace Cards
                 if (Manager.Cards.SelectedCard == this) Manager.Cards.SelectedCard = null;
             }
             
-            if (_isPointerOverCard) AnimateSelected();
+            // Animate the selection for the input type
+            var selected = Manager.Inputs.UsingController ? isOn : _isPointerOverCard;
+            if (selected) AnimateSelected();
             else AnimateDeselected();
         }
         
