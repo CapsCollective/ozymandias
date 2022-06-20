@@ -14,6 +14,12 @@ namespace Inputs
             GetComponentInChildren<EventSensitiveScrollRect>().OnUpdateSelected(eventData);
         }
 
+        public override void OnDeselect(BaseEventData eventData)
+        {
+            base.OnDeselect(eventData);
+            isOpen = false;
+        }
+        
         public override void OnCancel(BaseEventData eventData)
         {
             base.OnCancel(eventData);
