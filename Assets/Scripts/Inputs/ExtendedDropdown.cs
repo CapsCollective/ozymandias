@@ -1,4 +1,5 @@
 ﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Inputs
@@ -23,6 +24,12 @@ namespace Inputs
         public override void OnCancel(BaseEventData eventData)
         {
             base.OnCancel(eventData);
+            isOpen = false;
+        }
+
+        protected override void DestroyDropdownList(GameObject dropdownList)
+        {
+            base.DestroyDropdownList(dropdownList);
             isOpen = false;
         }
     }
