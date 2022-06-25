@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
+using static Managers.GameManager;
 
 namespace UI
 {
@@ -9,7 +11,7 @@ namespace UI
     {
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform title, buttons, socials;
-        [SerializeField] private Button introSettingsButton;
+        [SerializeField] private Button playButton, creditsButton, quitButton, introSettingsButton;
 
         public enum HudObject
         {
@@ -37,6 +39,9 @@ namespace UI
         private void Start()
         {
             OnOpen();
+            playButton.onClick.AddListener(() => { if (Manager.State.InIntro) Manager.State.EnterState(GameState.ToGame); });
+            creditsButton.onClick.AddListener(() => { if (Manager.State.InIntro) Manager.State.EnterState(GameState.ToCredits); });
+            quitButton.onClick.AddListener(() => { if (Manager.State.InIntro) Application.Quit(); });
             introSettingsButton.onClick.AddListener(OnClose);
             _hudValuesMap = new Dictionary<HudObject, HudObjectValues>
             {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static Managers.GameManager;
 
 namespace Utilities
 {
@@ -11,7 +12,7 @@ namespace Utilities
         {
             GetComponent<Button>().onClick.AddListener(() =>
             {
-                Application.OpenURL(url);
+                if (Manager.State.InIntro) Application.OpenURL(url);
             });
         }
     }

@@ -38,7 +38,7 @@ namespace Managers
             loadingCanvasGroup, loadingShadeCanvasGroup;
         [SerializeField] private List<CreditsWaypoint> creditsWaypoints;
         [SerializeField] private AnimationCurve menuTransitionCurve, creditsCurve;
-        [SerializeField] private Button playButton, creditsButton, quitButton, nextTurnButton;
+        [SerializeField] private Button nextTurnButton;
         [SerializeField] private Image nextTurnMask;
         [SerializeField] private VolumeProfile dofProfile;
         private float _nextTurnTimer;
@@ -69,9 +69,6 @@ namespace Managers
 
         private void Start()
         {
-            playButton.onClick.AddListener(() => EnterState(GameState.ToGame));
-            creditsButton.onClick.AddListener(() => EnterState(GameState.ToCredits));
-            quitButton.onClick.AddListener(Application.Quit);
             nextTurnButton.onClick.AddListener(() => EnterState(GameState.NextTurn));
             
             Manager.Inputs.NextTurn.performed += _ =>
