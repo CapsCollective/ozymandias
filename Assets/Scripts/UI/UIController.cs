@@ -16,6 +16,7 @@ namespace UI
         [SerializeField] private bool showCursor = true;
         [SerializeField] private GameObject firstSelected;
         private GameObject currentSelected;
+        private bool isOpen;
 
         [SerializeField] private SerializedDictionary<GameObject, Vector2> cursorOffsetOverrides = new SerializedDictionary<GameObject, Vector2>();
 
@@ -30,15 +31,23 @@ namespace UI
         public virtual void OnOpen()
         {
             Debug.Log("Opened " + name);
-            Inputs.Inputs.OnControlChange += ControllerFocus;
-            OnUIOpen?.Invoke(firstSelected, showCursor);
+            if (!isOpen)
+            {
+                Inputs.Inputs.OnControlChange += ControllerFocus;
+                OnUIOpen?.Invoke(firstSelected, showCursor);
+            }
+            isOpen = true;
         }
 
         public virtual void OnClose()
         {
             Debug.Log("Closed " + name);
-            Inputs.Inputs.OnControlChange -= ControllerFocus;
-            OnUIClose?.Invoke();
+            if (isOpen)
+            {
+                Inputs.Inputs.OnControlChange -= ControllerFocus;
+                OnUIClose?.Invoke();
+            }
+            isOpen = false;
         }
 
         private void ControllerFocus(InputControlScheme scheme)
