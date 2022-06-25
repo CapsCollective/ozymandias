@@ -43,7 +43,7 @@ namespace Inputs
             OnNewSelection += NewSelection;
             UIController.OnUIOpen += (g, b) =>
             {
-                if (!Manager.Inputs.UsingController) return; 
+                if (!Manager.Inputs.UsingController) return;
                 EventSystem.SetSelectedGameObject(g);
                 HelperActive = b;
             };
@@ -68,6 +68,7 @@ namespace Inputs
 
         private void NewSelection(GameObject obj)
         {
+            Debug.Log("Prev: " + (lastSelectedGameObject?.name ?? "null") + ", New: " + (obj?.name ?? "null"));
             if (!Manager.Inputs.UsingController || EventSystem.currentSelectedGameObject == null) return;
             
             previousSelections[Manager.State.Current] = obj;

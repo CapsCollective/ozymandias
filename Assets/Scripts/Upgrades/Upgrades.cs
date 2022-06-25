@@ -83,7 +83,7 @@ namespace Upgrades
             purchaseBox.transform.position = upgrade.transform.position;
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);
-            if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(purchaseBox.purchaseButton.gameObject);
+            if (Manager.Inputs.UsingController) Manager.SelectUi(purchaseBox.purchaseButton.gameObject);
             BoxOpen = true;
         }
 
@@ -115,7 +115,7 @@ namespace Upgrades
         private void Deselect()
         {
             if (_selected == null) return;
-            if (Manager.Inputs.UsingController) InputHelper.EventSystem.SetSelectedGameObject(_selected.GetComponentInChildren<Button>().gameObject);
+            if (Manager.Inputs.UsingController) Manager.SelectUi(_selected.GetComponentInChildren<Button>().gameObject);
             _selected = null;
             purchaseBox.canvas.enabled = false;
 

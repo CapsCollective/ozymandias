@@ -173,8 +173,8 @@ namespace UI
         private void Close()
         {
             _transitioning = true;
-            closeButton.gameObject.SetActive(false);
-            SelectUi(null);          
+            closeButton.gameObject.SetActive(false); 
+            Manager.SelectUi(null);          
             transform.DOPunchScale(PunchScale, animateOutDuration, 0, 0);
             transform.DOLocalMove(ClosePos, animateOutDuration)
                 .OnComplete(() =>

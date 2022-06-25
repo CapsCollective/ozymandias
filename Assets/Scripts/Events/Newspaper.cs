@@ -107,7 +107,7 @@ namespace Events
             SetContinueButtonState(ButtonState.Close);
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
-            SelectUi(continueButton.gameObject);
+            Manager.SelectUi(continueButton.gameObject);
         }
 
         private static readonly string[] NewspaperTitles = {
