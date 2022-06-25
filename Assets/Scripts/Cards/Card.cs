@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using Managers;
 using Structures;
 using UI;
 using UnityEngine;
@@ -21,6 +20,7 @@ namespace Cards
 
         private Vector3 _initialPosition, _dropPosition;
         private RectTransform _rectTransform;
+        private bool _isPointerOverCard;
         public bool IsReplacing { get; private set; }
         
         private void Start()
@@ -51,31 +51,30 @@ namespace Cards
             if (Toggle.interactable) cardDisplay.SetHighlight(isOn);
 
             if (IsReplacing) return;
-            
+
             if (isOn) Manager.Cards.SelectedCard = this;
             else
             {
-                // Deselect if not changing to another cards
+                // Deselect if not changing to another card
                 if (Manager.Cards.SelectedCard == this) Manager.Cards.SelectedCard = null;
-                OnPointerExit(null);
             }
+            
+            // Animate the selection for the input type
+            var selected = Manager.Inputs.UsingController ? isOn : _isPointerOverCard;
+            if (selected) AnimateSelected();
+            else AnimateDeselected();
         }
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            // Run pointer enter tween
-            ApplyTween(_initialPosition + _rectTransform.transform.up * popupMultiplier, new Vector3(1.1f, 1.1f), 0.5f);
+            _isPointerOverCard = true;
+            AnimateSelected();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            // Run pointer exit tween
-            if (!_rectTransform) return;
-
-            var move = _initialPosition;
-            if (Toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
-
-            ApplyTween(move, Vector3.one, 0.5f);
+            _isPointerOverCard = false;
+            AnimateDeselected();
         }
         
         public void Drop()
@@ -114,7 +113,22 @@ namespace Cards
                         .OnComplete(() => { IsReplacing = false; });
                 });
         }
+
+        public void AnimateSelected()
+        {
+            ApplyTween(
+                _initialPosition + _rectTransform.transform.up * popupMultiplier, 
+                new Vector3(1.1f, 1.1f), 0.5f);
+        }
         
+        private void AnimateDeselected()
+        {
+            if (!_rectTransform) return;
+            var move = _initialPosition;
+            if (Toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
+            ApplyTween(move, Vector3.one, 0.5f);
+        }
+
         private void ApplyTween(Vector3 localMove, Vector3 scale, float duration)
         {
             if (!_rectTransform || IsReplacing) return;

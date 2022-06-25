@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilities;
 using Random = UnityEngine.Random;
+using static Managers.GameManager;
 
 namespace Managers
 {
@@ -90,7 +91,10 @@ namespace Managers
         
         public static Action OnUpdateUI;
         public static void UpdateUi() => OnUpdateUI.Invoke();
-        public static void SelectUi(GameObject gameObject) => EventSystem.current.SetSelectedGameObject(gameObject);
+        public void SelectUi(GameObject g)
+        {
+            if (Inputs.UsingController) EventSystem.current.SetSelectedGameObject(g);
+        }
         public static bool IsOverUi => EventSystem.current.IsPointerOverGameObject(); // TODO: Fix/ suppress the warning from this
         #endregion
 

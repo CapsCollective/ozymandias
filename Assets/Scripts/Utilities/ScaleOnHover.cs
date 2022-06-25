@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Inputs;
+using static Managers.GameManager;
 
 namespace Utilities
 {
@@ -18,7 +19,15 @@ namespace Utilities
             {
                 target = gameObject;
             }
-            InputHelper.OnNewSelection += DoScaling;
+            Inputs.Inputs.OnControlChange += OnControlChange;
+        }
+
+        private void OnControlChange(UnityEngine.InputSystem.InputControlScheme scheme)
+        {
+            if (Manager.Inputs.UsingController)
+                InputHelper.OnNewSelection += DoScaling;
+            else
+                InputHelper.OnNewSelection -= DoScaling;
         }
 
         public void OnPointerEnter(PointerEventData eventData)

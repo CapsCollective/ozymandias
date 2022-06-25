@@ -1,5 +1,6 @@
 using Cards;
 using DG.Tweening;
+using Inputs;
 using Requests;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +46,8 @@ namespace UI
         private bool _isOpen, _transitioning, _changingPage;
         private bool _fromGame; // TODO this state cache must be removed, please do not use it
         private CanvasGroup _closeButtonCanvas;
+
+        [SerializeField] private ExtendedDropdown resDropdown;
         
         private BookPage _page = BookPage.Settings;
         private BookPage Page
@@ -70,6 +73,7 @@ namespace UI
                 pages[_page].canvasGroup.blocksRaycasts = false;
                 var rt = pages[_page].bookRibbon.transform as RectTransform;
                 rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, DEFAULT_RIBBON_HEIGHT), 0.15f);
+                pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
                 pages[_page].canvasGroup.DOFade(0, 0.2f).OnComplete(() =>
                 {
                     _page = value;
@@ -130,7 +134,13 @@ namespace UI
                 else if (Structures.Select.Instance.SelectedStructure != null) Structures.Select.Instance.SelectedStructure = null;
                 else if (Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
             };
-            
+
+            Manager.Inputs.Close.performed += _ =>
+            {
+                if (!_isOpen || _transitioning || Manager.Upgrades.BoxOpen || resDropdown.isOpen) return;
+                Close();
+            };
+
             // Position it as closed on start
             transform.localPosition = ClosePos;
         }
@@ -163,8 +173,8 @@ namespace UI
         private void Close()
         {
             _transitioning = true;
-            closeButton.gameObject.SetActive(false);
-            SelectUi(null);          
+            closeButton.gameObject.SetActive(false); 
+            Manager.SelectUi(null);          
             transform.DOPunchScale(PunchScale, animateOutDuration, 0, 0);
             transform.DOLocalMove(ClosePos, animateOutDuration)
                 .OnComplete(() =>
@@ -174,7 +184,7 @@ namespace UI
                     _isOpen = false;
                     Manager.State.EnterState(_closeState);
                 });
-
+            pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
             Manager.Inputs.NavigateBookmark.performed -= OnNavigateBookmark_performed;
         }
 

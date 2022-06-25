@@ -202,7 +202,7 @@ namespace Cards
             if (cardIndex >= 0)
             {
                 if (hand[cardIndex].IsReplacing) return;
-                hand[cardIndex].OnPointerEnter(null);
+                hand[cardIndex].AnimateSelected();
                 hand[cardIndex].Toggle.isOn = true;
             }
             else _toggleGroup.SetAllTogglesOff();

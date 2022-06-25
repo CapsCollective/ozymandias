@@ -150,7 +150,8 @@ namespace Quests
                     currentFlyer.gameObject.SetActive(false);
                     _inAnim = false;
                 });
-
+            currentFlyer.OnClose();
+            
             nextFlyer.UpdateContent(selectedQuest);
             nextFlyer.transform.localPosition = new Vector3(nextStartX, 0, 0);
             nextFlyer.transform
@@ -194,7 +195,6 @@ namespace Quests
                     if (Current.Count > 1) Manager.Inputs.NavigateBookmark.performed += NavigateFlyers;
                 });
             OpenFlyer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
-            Debug.Log(OpenFlyer.gameObject.name);
         }
 
         private void Close()

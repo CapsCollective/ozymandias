@@ -133,6 +133,7 @@ namespace Tooltip
             _selectedTooltip = defaultTooltip;
             _cg = GetComponent<CanvasGroup>();
             Manager.Inputs.ToggleTooltips.performed += ToggleTooltips;
+            Manager.Inputs.Close.performed += _ => DeactivateTooltips(); 
             Inputs.Inputs.OnControlChange += _ => DeactivateTooltips();
             State.OnEnterState += _ => DeactivateTooltips();
 
@@ -159,8 +160,6 @@ namespace Tooltip
             if (!NavigationActive) return;
 
             Vector2 direction = Manager.Inputs.NavigateTooltips.ReadValue<Vector2>();
-            Debug.Log(direction);
-            Debug.Log((int)direction.y == -1);
             _selectedTooltip.OnPointerExit(null);
 
             if (Mathf.RoundToInt(direction.y) == 1 && _selectedTooltip.navigationDirections.up)

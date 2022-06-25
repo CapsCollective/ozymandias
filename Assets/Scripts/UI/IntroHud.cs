@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -8,6 +9,7 @@ namespace UI
     {
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform title, buttons, socials;
+        [SerializeField] private Button introSettingsButton;
 
         public enum HudObject
         {
@@ -35,6 +37,7 @@ namespace UI
         private void Start()
         {
             OnOpen();
+            introSettingsButton.onClick.AddListener(OnClose);
             _hudValuesMap = new Dictionary<HudObject, HudObjectValues>
             {
                 {HudObject.Title, new HudObjectValues(title, new Vector2(600,320), new Vector2(600,700))},

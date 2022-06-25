@@ -21,18 +21,16 @@ namespace Inputs
         public static Dictionary<GameObject, Vector2> CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
 
         [SerializeField] private RectTransform selectionHelper;
+        private bool HelperActive
+        {
+            get => selectionHelper.gameObject.activeSelf;
+            set => selectionHelper.gameObject.SetActive(value);
+        }
 
         private GameObject worldSpaceCursor;
         private GameObject lastSelectedGameObject;
         private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
         private Tween tween;
-
-        private float CursorSize { 
-            get
-            {
-                return 60 * (Screen.height / 1080.0f); 
-            }
-        }
 
         // Start is called before the first frame update
         void Start()
@@ -45,14 +43,15 @@ namespace Inputs
             OnNewSelection += NewSelection;
             UIController.OnUIOpen += (g, b) =>
             {
+                if (!Manager.Inputs.UsingController) return;
                 EventSystem.SetSelectedGameObject(g);
-                selectionHelper.gameObject.SetActive(b);
+                HelperActive = b;
             };
 
             worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
-            selectionHelper.gameObject.SetActive(false);
+            HelperActive = false;
 
             OnToggleCursor += ToggleUICursor;
         }
@@ -69,6 +68,7 @@ namespace Inputs
 
         private void NewSelection(GameObject obj)
         {
+            Debug.Log("Prev: " + (lastSelectedGameObject?.name ?? "null") + ", New: " + (obj?.name ?? "null"));
             if (!Manager.Inputs.UsingController || EventSystem.currentSelectedGameObject == null) return;
             
             previousSelections[Manager.State.Current] = obj;
@@ -82,11 +82,11 @@ namespace Inputs
         private void OnControlChanged(InputControlScheme obj)
         {
             bool isController = Manager.Inputs.UsingController;
-            if(Manager.State.Current == GameState.InGame)
+            if (Manager.State.Current == GameState.InGame)
                 ToggleWorldCursor(isController);
             if (Manager.State.Current == GameState.InMenu)
             {
-                selectionHelper.gameObject.SetActive(isController);
+                if (!isController) HelperActive = false;
                 Cursor.visible = !isController;
             }
         }
@@ -118,11 +118,11 @@ namespace Inputs
                         break;
                     case GameState.ToGame:
                         EventSystem.SetSelectedGameObject(null);
-                        selectionHelper.gameObject.SetActive(false);
+                        HelperActive = false;
                         break;
                     case GameState.InGame:
                         ToggleWorldCursor(true); 
-                        selectionHelper.gameObject.SetActive(false);
+                        HelperActive = false;
                         break;
                     case GameState.NextTurn:
                         break;
@@ -153,7 +153,7 @@ namespace Inputs
 
         private void ToggleUICursor(bool toggle)
         {
-            selectionHelper.gameObject.SetActive(toggle);
+            HelperActive = Manager.Inputs.UsingController && toggle;
         }
 
         private void OnDestroy()

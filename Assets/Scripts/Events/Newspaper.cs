@@ -38,7 +38,6 @@ namespace Events
         private Event _choiceEvent;
         private string _newspaperTitle;
         private Canvas _canvas;
-        private bool _choiceSelected;
 
         private enum ButtonState
         {
@@ -87,7 +86,6 @@ namespace Events
 
             // Set all event choices on button texts
             for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i, i < _choiceEvent.choices.Count);
-            if (!_choiceSelected) SelectUi(continueButton.gameObject);
         }
 
         private void SetChoiceActive(int choice, bool active)
@@ -99,10 +97,6 @@ namespace Events
             choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text =
                 _choiceEvent.choices[choice].name + (cost != 0 ? $"\n(Spend {cost}/{Manager.Stats.Wealth} Wealth)" : "");
             choiceList[choice].GetComponent<Button>().interactable = cost == 0 || Manager.Stats.Wealth >= cost;
-
-            if (choice != 0) return;
-            SelectUi(choiceList[choice].gameObject);
-            _choiceSelected = true;
         }
     
         public void OnChoiceSelected(int choice)
@@ -113,7 +107,7 @@ namespace Events
             SetContinueButtonState(ButtonState.Close);
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
-            SelectUi(continueButton.gameObject);
+            Manager.SelectUi(continueButton.gameObject);
         }
 
         private static readonly string[] NewspaperTitles = {
@@ -141,8 +135,7 @@ namespace Events
             
             _canvas.enabled = true;
             transform.DOLocalMove(Vector3.zero, animateInDuration);
-            transform.DOLocalRotate(Vector3.zero, animateInDuration)
-                .OnComplete(() => { if (!_choiceSelected) OnOpen(); });
+            transform.DOLocalRotate(Vector3.zero, animateInDuration).OnComplete(OnOpen);
         }
 
         private void Close()
