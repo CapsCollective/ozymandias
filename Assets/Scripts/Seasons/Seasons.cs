@@ -31,7 +31,6 @@ namespace Seasons
         }
         
         [Range(0.0f, 1.0f)] public float depthOfSeason = 1.0f;
-        public int debugTurn;
         public float transitionTime = 2f;
         public SerializedDictionary<Season, Weather> weathers = new SerializedDictionary<Season, Weather>();
 
@@ -40,6 +39,12 @@ namespace Seasons
         [SerializeField] private Light sun;
         [SerializeField] private ParticleSystem glowflies;
 
+        [HorizontalLine]
+        [SerializeField] private Season debugSeason;
+        [Range(0,1f)][SerializeField] private float debugTime;
+
+        private Vector3 _startRotation;
+        
         private Material instancedSkyMaterial;
         
         private static readonly int MaterialIdHorizonColor = Shader.PropertyToID("_HorizonColor");
@@ -58,12 +63,7 @@ namespace Seasons
         private void Awake()
         {
             Instance = this;
-        }
-
-        [Button]
-        public void SetSunDirection()
-        {
-            Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
+            _startRotation = sunTransform.eulerAngles;
         }
 
         private static Season GetSeason(int turn)
@@ -91,10 +91,12 @@ namespace Seasons
             RenderSettings.skybox = instancedSkyMaterial;
         }
 
+        [Button("Turn Transition")]
         private void TurnTransition()
         {
             float timer = 0;
-            Vector3 target = sunTransform.eulerAngles + new Vector3(360, 0, 0);
+            sunTransform.eulerAngles = _startRotation;
+            Vector3 target = _startRotation + new Vector3(360, 0, 0);
             if (_currentSeason == Season.Summer) glowflies.Play();
             sunTransform.DORotate(target, State.TurnTransitionTime, RotateMode.FastBeyond360).OnUpdate(() =>
             {
@@ -104,7 +106,7 @@ namespace Seasons
                 Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
             });
         }
-        
+
         private void CycleWeather(Weather weather, float amount = 0)
         {
             var windowIntensity = (0.5f - Mathf.Abs(amount % (2 * 0.5f) - 0.5f)) * 2;
@@ -201,11 +203,25 @@ namespace Seasons
             Shader.SetGlobalFloat(MaterialIdWindowEmission, windowIntensity);
         }
 
-        [Button("Refresh Debug")]
-        public static void DebugRefresh()
+        [Button("Set Season")]
+        public void DebugSeason()
         {
-            Season season = GetSeason(Instance.debugTurn);
-            Instance.RefreshVisuals(season, Instance.depthOfSeason);
+            RefreshVisuals(debugSeason, Instance.depthOfSeason);
+        }
+        
+        
+        [Button("Set Time")]
+        public void DebugTime()
+        {
+            Weather weather = GetWeather(debugSeason);
+            sunTransform.eulerAngles = _startRotation + new Vector3(debugTime * 360, 0, 0);
+            CycleWeather(weather, debugTime);
+        }
+        
+        [Button("Set Sun Direction")]
+        public void SetSunDirection()
+        {
+            Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
         }
     }
 }
