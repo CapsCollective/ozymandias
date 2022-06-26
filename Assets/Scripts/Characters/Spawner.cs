@@ -62,7 +62,7 @@ namespace Characters
             foreach (GameObject adventurer in adventurersToRemove)
             {
                 _activeAdventurers.Remove(adventurer);
-                StartCoroutine(FadeAdventurer(adventurer, 1f, 0f, true));
+                adventurer.GetComponent<Adventurer>().FadeTo(1, 1, 0, true);
             }
             adventurersToRemove.Clear();
         }
@@ -148,7 +148,7 @@ namespace Characters
             GameObject newAdventurer = Instantiate(model, start, Quaternion.identity);
             newAdventurer.transform.parent = transform;
             newAdventurer.transform.position += new Vector3(0, .05f, 0);
-            StartCoroutine(FadeAdventurer(newAdventurer, 0f, 1f));
+            newAdventurer.GetComponent<Adventurer>().FadeTo(1, 0, 1, false);
             return newAdventurer;
         }
 
