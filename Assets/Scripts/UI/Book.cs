@@ -91,7 +91,10 @@ namespace UI
         private void Start()
         {
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
-            introSettingsButton.onClick.AddListener(Open);
+            introSettingsButton.onClick.AddListener(() =>
+            {
+                if (Manager.State.InIntro) Open();
+            });
             closeButton.onClick.AddListener(Close);
             quitButton.onClick.AddListener(() =>
             {
