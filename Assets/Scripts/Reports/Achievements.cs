@@ -140,6 +140,7 @@ namespace Reports
         private void UnlockAchievement(Achievement achievement)
         {
             if (Unlocked.Contains(achievement)) return;
+            Debug.Log($"Unlocking achievement {achievement.ToString()}");
             Unlocked.Add(achievement);
             
             // Handle Steam unlock if Steam API is active

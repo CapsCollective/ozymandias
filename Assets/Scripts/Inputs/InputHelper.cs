@@ -68,7 +68,6 @@ namespace Inputs
 
         private void NewSelection(GameObject obj)
         {
-            Debug.Log("Prev: " + (lastSelectedGameObject?.name ?? "null") + ", New: " + (obj?.name ?? "null"));
             if (!Manager.Inputs.UsingController || EventSystem.currentSelectedGameObject == null) return;
             
             previousSelections[Manager.State.Current] = obj;
