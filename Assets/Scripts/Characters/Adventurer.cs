@@ -1,17 +1,29 @@
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Characters
 {
     public class Adventurer : MonoBehaviour
     {
         [SerializeField] private Renderer[] renderers;
-        private MaterialPropertyBlock[] _propertyBlocks;
         private static readonly int Dither = Shader.PropertyToID("_CharacterDither");
+        private float alpha;
 
-        private void Awake()
+
+        public void FadeTo(float time, float from, float to, bool destroy)
         {
-            _propertyBlocks = renderers.Select(_ => new MaterialPropertyBlock()).ToArray();
+            alpha = from;
+            DOTween.To(() => alpha, x => alpha = x, to, time).OnUpdate(() =>
+            {
+                for (var i = 0; i < renderers.Length; i++)
+                {
+                    renderers[i].material.SetFloat(Dither, alpha);
+                }
+            }).OnComplete(() =>
+            {
+                if(destroy) Destroy(gameObject);
+            });
         }
         
         public void SetAlphaTo(float alpha)
@@ -20,12 +32,10 @@ namespace Characters
 
             for (var i = 0; i < renderers.Length; i++)
             {
-                renderers[i].GetPropertyBlock(_propertyBlocks[i]);
-                var currentDither = _propertyBlocks[i].GetFloat(Dither);
+                var currentDither = renderers[i].material.GetFloat(Dither);
                 var newDither = currentDither;
                 newDither = alpha;
-                _propertyBlocks[i].SetFloat(Dither, newDither);
-                renderers[i].SetPropertyBlock(_propertyBlocks[i]);
+                renderers[i].material.SetFloat(Dither, newDither);
             }
         }
     }

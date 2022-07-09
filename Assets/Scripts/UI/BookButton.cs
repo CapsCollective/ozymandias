@@ -19,6 +19,9 @@ namespace UI
                 OnClicked?.Invoke(notification.activeSelf);
                 notification.SetActive(false);
             });
+            
+            // Controller and keyboard input case
+            Book.OnOpened += () => notification.SetActive(false);
 
             Requests.Requests.OnRequestCompleted += guild =>
             {

@@ -1,3 +1,4 @@
+using System;
 using Cards;
 using DG.Tweening;
 using Inputs;
@@ -27,6 +28,9 @@ namespace UI
 
         const float DEFAULT_RIBBON_HEIGHT = 160f;
         const float EXPANDED_RIBBON_HEIGHT = 200f;
+        
+        // Public fields
+        public static Action OnOpened;
 
         private static readonly Vector3 ClosePos = new Vector3(0, -1000, 0);
         private static readonly Vector3 PunchScale = Vector3.one * 0.5f;
@@ -91,7 +95,10 @@ namespace UI
         private void Start()
         {
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
-            introSettingsButton.onClick.AddListener(Open);
+            introSettingsButton.onClick.AddListener(() =>
+            {
+                if (Manager.State.InIntro) Open();
+            });
             closeButton.onClick.AddListener(Close);
             quitButton.onClick.AddListener(() =>
             {
@@ -166,6 +173,7 @@ namespace UI
                     pages[_page].canvasGroup.GetComponent<UIController>().OnOpen();
                     _changingPage = false;
                     if (_page == BookPage.Reports) CardsBookList.ScrollActive = true;
+                    OnOpened?.Invoke();
                 });
             Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }
