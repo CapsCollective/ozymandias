@@ -33,8 +33,7 @@ namespace Platform
                 {Achievement.FoundWaterfall, "FIND_WATERFALL"},
                 {Achievement.WorldEdgeFound, "WORLD_EDGE"},
                 {Achievement.GuildHallDemolished, "DESTROY_GUILDHALL"},
-                
-                
+
                 {Achievement.PopulationHamlet, "POPULATION_HAMLET"},
                 {Achievement.PopulationVillage, "POPULATION_VILLAGE"},
                 {Achievement.PopulationCity, "POPULATION_CITY"},
@@ -54,9 +53,6 @@ namespace Platform
         
         public override void UnlockAchievement(Achievement achievement)
         {
-            if (Manager.Achievements.Unlocked.Contains(achievement)) return;
-            Manager.Achievements.Unlocked.Add(achievement);
-            
             // Handle Steam unlock if Steam API is active
             if (!SteamManager.Initialized || !AchievementIDs.ContainsKey(achievement)) return;
             SteamUserStats.SetAchievement(AchievementIDs[achievement]);
