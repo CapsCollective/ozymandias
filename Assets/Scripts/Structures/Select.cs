@@ -206,7 +206,7 @@ namespace Structures
             if (SelectedStructure || CameraMovement.IsMoving || IsSelectionDisabled() || Tutorial.Tutorial.DisableSelect)
             {
                 HoveredStructure = null;
-                if (SelectedStructure && 
+                if (SelectedStructure && IsInteractable() &&
                     (!SelectedStructure.IsQuest && Manager.Inputs.DemolishBuilding.phase == InputActionPhase.Started ||
                     SelectedStructure.IsQuest && Manager.Inputs.SelectQuest.phase == InputActionPhase.Started))
                 {
@@ -340,35 +340,43 @@ namespace Structures
             _canvas.enabled = true;
         }
 
+        private int SelectedStructureCost()
+        {
+            var cost = 0;
+            switch (SelectedStructure.StructureType)
+            {
+                case StructureType.Building:
+                    cost = -SelectedStructure.Blueprint.Refund;
+                    break;
+                case StructureType.Terrain:
+                case StructureType.Ruins:
+                    if (Tutorial.Tutorial.Active) break;
+                    cost = SelectedStructure.ClearCost;
+                    break;
+            }
+            return cost;
+        }
+
+        private bool IsInteractable()
+        {
+            if (!SelectedStructure) return false;
+            
+            if (SelectedStructure.IsQuest) return SelectedStructure.Quest;
+            
+            // Guard against destroying terrain and guild hall in tutorial
+            if (Tutorial.Tutorial.Active && (SelectedStructure.IsTerrain || SelectedStructure.IsGuildHall))
+                return false;
+            return Manager.Stats.Wealth >= SelectedStructureCost();
+        }
+
         private void Interact()
         {
-            if (!SelectedStructure) return;
+            if (!IsInteractable()) return;
             
-            if (SelectedStructure.IsQuest)
-            {
-                if(SelectedStructure.Quest) OnQuestSelected?.Invoke(SelectedStructure.Quest);
-            } 
+            if (SelectedStructure.IsQuest) OnQuestSelected?.Invoke(SelectedStructure.Quest);
             else
             {
-                // Guard against destroying terrain and guild hall in tutorial
-                if (Tutorial.Tutorial.Active && 
-                    (SelectedStructure.IsTerrain || SelectedStructure.IsGuildHall)) return;
-                
-                int price = 0;
-
-                switch (SelectedStructure.StructureType)
-                {
-                    case StructureType.Building:
-                        price = -SelectedStructure.Blueprint.Refund;
-                        break;
-                    case StructureType.Terrain:
-                    case StructureType.Ruins:
-                        if (Tutorial.Tutorial.Active) break;
-                        price = SelectedStructure.ClearCost;
-                        break;
-                }
-                
-                if (!Manager.Stats.Spend(price)) return;
+                Manager.Stats.Spend(SelectedStructureCost());
                 
                 Structure structure = SelectedStructure; // Cache because invoke can deselect
                 OnClear?.Invoke(SelectedStructure);
