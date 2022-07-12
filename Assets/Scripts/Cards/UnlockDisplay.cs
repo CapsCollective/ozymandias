@@ -35,7 +35,10 @@ namespace Cards
             Cards.OnUnlock += _buildings.Push;
             Cards.OnDiscoverRuin += CheckUnlockCard;
             Newspaper.OnClosed += CheckUnlockCard;
-            Manager.Inputs.LeftClick.performed += _ => Close();
+            Manager.Inputs.LeftClick.performed += _ =>
+            {
+                if (!Tutorial.Tutorial.ShowShade) Close();
+            };
         }
 
         private void CheckUnlockCard()

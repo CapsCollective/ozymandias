@@ -79,9 +79,10 @@ namespace Tutorial
             Quests.Quests.OnCampAdded += StartCampsDescription;
         }
 
-        private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame)
+        private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame, bool showShade = false)
         {
             _exitState = exitState;
+            ShowShade = showShade;
             Manager.State.EnterState(GameState.InDialogue);
             _currentSection = lines;
             _sectionLine = 0;
@@ -99,6 +100,7 @@ namespace Tutorial
 
         private void HideDialogue()
         {
+            ShowShade = false;
             _currentSection = null;
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
@@ -414,15 +416,13 @@ namespace Tutorial
         private void StartUnlockDescription()
         {
             if (Manager.Cards.UnlockedCards != 1) return;
-            ShowShade = true;
             //TODO: Write Proper dialogue
             ShowDialogue(new List<Line> {
                 new Line("You've just unlocked a new building card! Keep an eye on news in the town, and you might be able to find more.", GuidePose.Neutral),
                 new Line("This building will be added to your cards, at least until they all get lost in the ruins of your town..."),
                 new Line("But fear not! Check the upgrades page in your book to purchase the ability to rediscover them from the ruins of your previous towns."),
                 new Line("Discovering more buildings might just give us the edge to lasting a little longer out here...")
-            }, GameState.InMenu);
-            ShowShade = false;
+            }, GameState.InMenu, true);
         }
         
         /*private void StartUpgradesDescription()
