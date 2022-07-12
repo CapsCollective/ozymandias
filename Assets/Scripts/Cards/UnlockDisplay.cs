@@ -37,7 +37,7 @@ namespace Cards
             Newspaper.OnClosed += CheckUnlockCard;
             Manager.Inputs.LeftClick.performed += _ =>
             {
-                if (!Tutorial.Tutorial.ShowShade) Close();
+                if (!Tutorial.Tutorial.ShowShade && !Tutorial.Tutorial.DisableSelect) Close();
             };
         }
 
