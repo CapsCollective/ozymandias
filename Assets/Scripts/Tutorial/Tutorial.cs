@@ -417,7 +417,6 @@ namespace Tutorial
         private void StartCampsDescription(Quest quest)
         {
             if (Manager.Achievements.Milestones[Milestone.CampsCleared] > 0 || !quest.IsRadiant || Manager.Quests.RadiantCount > 1) return;
-            //TODO: Write Proper dialogue
             ShowDialogue(new List<Line> {
                 new Line("Heads up, our scouts have found an enemy camp!", GuidePose.Neutral),
                 new Line("They don't look too threatening right now, but give them a few days to grow and they could become a real problem. Each space they take up adds 1 threat until cleared."),
@@ -434,7 +433,6 @@ namespace Tutorial
             // (to stop controllers closing the card on exiting tutorial)
             DisableSelect = true;
 
-            //TODO: Write Proper dialogue
             ShowDialogue(new List<Line> {
                 new Line("You've just unlocked a new building card! Keep an eye on news in the town, and you might be able to find more.", GuidePose.Neutral),
                 new Line("This building will be added to your cards, at least until they all get lost in the ruins of your town..."),
