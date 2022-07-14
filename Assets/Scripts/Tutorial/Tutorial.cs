@@ -51,6 +51,7 @@ namespace Tutorial
         private Action _onObjectivesComplete;
 
         private GameState _exitState = GameState.InGame;
+        private Action _exitAction = null;
         
         #region Dialogue
         
@@ -79,9 +80,11 @@ namespace Tutorial
             Quests.Quests.OnCampAdded += StartCampsDescription;
         }
 
-        private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame)
+        private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame, Action exitAction = null, bool showShade = false)
         {
             _exitState = exitState;
+            _exitAction = exitAction;
+            ShowShade = showShade;
             Manager.State.EnterState(GameState.InDialogue);
             _currentSection = lines;
             _sectionLine = 0;
@@ -99,11 +102,13 @@ namespace Tutorial
 
         private void HideDialogue()
         {
+            ShowShade = false;
             _currentSection = null;
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
             Manager.GameHud.Show(GameHud.HudObject.MenuBar);
             Manager.State.EnterState(_exitState);
+            _exitAction?.Invoke();
             blocker.SetActive(false);
         }
 
@@ -265,8 +270,9 @@ namespace Tutorial
         
         private void StartBuildingObjectives()
         {
-            DisableSelect = false;
-            Manager.Camera.MoveTo(Manager.Structures.TownCentre);
+            // Workaround to make sure the selection is not active immediately after clicking next
+            // (to stop controllers selecting structures on exiting tutorial)
+            Manager.Camera.MoveTo(Manager.Structures.TownCentre).OnComplete(() => DisableSelect = false);
             
             ClearObjectives();
             _currentObjectives = new List<Objective>
@@ -341,7 +347,11 @@ namespace Tutorial
         private void StartAdventurerObjectives()
         {
             DisableNextTurn = false;
-            Manager.Camera.MoveTo(Manager.Structures.TownCentre);
+            
+            // Workaround to make sure the selection is not active immediately after clicking next
+            // (to stop controllers selecting structures on exiting tutorial)
+            DisableSelect = true;
+            Manager.Camera.MoveTo(Manager.Structures.TownCentre).OnComplete(() => DisableSelect = false);
             
             ClearObjectives();
             _currentObjectives = new List<Objective>
@@ -391,6 +401,11 @@ namespace Tutorial
 
         private void EndTutorial()
         {
+            // Workaround to make sure the selection is not active immediately after clicking next
+            // (to stop controllers selecting structures on exiting tutorial)
+            DisableSelect = true;
+            Manager.Camera.MoveTo(Manager.Structures.TownCentre).OnComplete(() => DisableSelect = false);
+            
             Active = false;
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
@@ -402,7 +417,6 @@ namespace Tutorial
         private void StartCampsDescription(Quest quest)
         {
             if (Manager.Achievements.Milestones[Milestone.CampsCleared] > 0 || !quest.IsRadiant || Manager.Quests.RadiantCount > 1) return;
-            //TODO: Write Proper dialogue
             ShowDialogue(new List<Line> {
                 new Line("Heads up, our scouts have found an enemy camp!", GuidePose.Neutral),
                 new Line("They don't look too threatening right now, but give them a few days to grow and they could become a real problem. Each space they take up adds 1 threat until cleared."),
@@ -414,15 +428,20 @@ namespace Tutorial
         private void StartUnlockDescription()
         {
             if (Manager.Cards.UnlockedCards != 1) return;
-            ShowShade = true;
-            //TODO: Write Proper dialogue
+            
+            // Workaround to make sure the selection is not active immediately after clicking next
+            // (to stop controllers closing the card on exiting tutorial)
+            DisableSelect = true;
+
             ShowDialogue(new List<Line> {
                 new Line("You've just unlocked a new building card! Keep an eye on news in the town, and you might be able to find more.", GuidePose.Neutral),
                 new Line("This building will be added to your cards, at least until they all get lost in the ruins of your town..."),
                 new Line("But fear not! Check the upgrades page in your book to purchase the ability to rediscover them from the ruins of your previous towns."),
                 new Line("Discovering more buildings might just give us the edge to lasting a little longer out here...")
-            }, GameState.InMenu);
-            ShowShade = false;
+            },
+                GameState.InMenu,
+                () => StartCoroutine(Algorithms.DelayCall(0.5f, () => DisableSelect = false)),
+                true);
         }
         
         /*private void StartUpgradesDescription()

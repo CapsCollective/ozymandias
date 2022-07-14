@@ -5,7 +5,6 @@ using DG.Tweening;
 using Events;
 using Structures;
 using TMPro;
-using UI;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -35,7 +34,10 @@ namespace Cards
             Cards.OnUnlock += _buildings.Push;
             Cards.OnDiscoverRuin += CheckUnlockCard;
             Newspaper.OnClosed += CheckUnlockCard;
-            Manager.Inputs.LeftClick.performed += _ => Close();
+            Manager.Inputs.LeftClick.performed += _ =>
+            {
+                if (!Tutorial.Tutorial.ShowShade && !Tutorial.Tutorial.DisableSelect) Close();
+            };
         }
 
         private void CheckUnlockCard()

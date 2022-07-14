@@ -134,7 +134,7 @@ namespace Utilities
         {
             // Defer callback action by duration
             yield return new WaitForSeconds(duration);
-            callback();
+            callback?.Invoke();
         }
 
         private readonly struct Costs
