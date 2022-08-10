@@ -12,7 +12,7 @@ namespace Adventurers
     [Serializable]
     public class Adventurer : MonoBehaviour
     {
-        private static string[] firstNames = { "Lydan", "Syrin", "Ptorik", "Joz", "Varog", "Gethrod", "Hezra", "Feron", "Ophni",
+        private static readonly string[] firstNames = { "Lydan", "Syrin", "Ptorik", "Joz", "Varog", "Gethrod", "Hezra", "Feron", "Ophni",
             "Colborn", "Fintis", "Gatlin", "Jinto", "Hagalbar", "Krinn", "Lenox", "Revvyn", "Hodus", "Dimian", "Paskel", 
             "Kontas", "Weston", "Azamarr", "Jather", "Tekren", "Jareth", "Adon", "Zaden", "Eune", "Graff", "Tez", "Jessop", 
             "Gunnar", "Pike", "Domnhar", "Baske", "Jerrick", "Mavrek", "Riordan", "Wulfe", "Straus", "Tyvrik", "Henndar", 
@@ -32,7 +32,7 @@ namespace Adventurers
             "Hartie", "Beela", "Leska", "Vemery", "Lunex", "Fidess", "Tisette", "Partha"
         };
     
-        private static string[] lastNames = { "Bonebreaker", "Ashheart", "Marblecleaver", "Mountainkiller", "Seabreaker",
+        private static readonly string[] lastNames = { "Bonebreaker", "Ashheart", "Marblecleaver", "Mountainkiller", "Seabreaker",
             "Clearmaul", "Lonesurge", "Honorbane", "Bouldergrain", "Claw", "Bluechief", "Hallowdrifter", "Netherbleeder",
             "Terrarock", "Sacredlight", "Rosetalon", "Barleyless", "Winterhunter", "Twoforest", "Deadshield", "Woodcloud",
             "Loneflaw", "Landsword", "Sheephunter", "Gazersea", "Landthunder", "Shieldgazer", "Whitesilver", "Starcloak",

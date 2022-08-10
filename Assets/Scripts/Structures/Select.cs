@@ -58,7 +58,7 @@ namespace Structures
         public static Action<Structure> OnClear;
         public static Action<Quest> OnQuestSelected;
 
-        public static Select Instance { get; private set; }
+        public static Select Instance { get; internal set; }
 
         private Structure HoveredStructure
         {

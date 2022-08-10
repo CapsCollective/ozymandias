@@ -8,7 +8,7 @@ namespace Cards
 {
     public class CardsBookList : MonoBehaviour
     {
-        public static bool ScrollActive = false;
+        public static bool ScrollActive;
         
         [SerializeField] private GameObject cardDisplayPrefab;
 

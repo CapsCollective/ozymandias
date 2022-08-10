@@ -12,6 +12,7 @@ namespace UI
 
         private void OnDestroy()
         {
+            if (RestartingGame) return;
             OnUpdateUI -= UpdateUi;
         }
 

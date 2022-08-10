@@ -7,7 +7,7 @@ namespace Inputs
 {
     public class EventSensitiveScrollRect : MonoBehaviour {
  
-        private static float SCROLL_MARGIN = 0.3f; // how much to "overshoot" when scrolling, relative to the selected item's height
+        private static readonly float SCROLL_MARGIN = 0.3f; // how much to "overshoot" when scrolling, relative to the selected item's height
         
         private ScrollRect sr;
  

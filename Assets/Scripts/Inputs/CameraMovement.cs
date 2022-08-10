@@ -188,8 +188,8 @@ namespace Inputs
         }
         
         private const float MoveEpsilon = 0.05f;
-        private static float _startMoveTime;
-        private static CameraMove _startRig;
+        private float _startMoveTime;
+        private CameraMove _startRig;
 
         public bool MoveCamRig(CameraMove cameraMove, AnimationCurve curve, float length = 3.0f)
         {

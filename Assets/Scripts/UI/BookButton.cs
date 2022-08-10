@@ -8,7 +8,7 @@ namespace UI
     {
         public static Action<bool> OnClicked;
 
-        private static Button _button;
+        private Button _button;
         public GameObject notification;
 
         private void Start()

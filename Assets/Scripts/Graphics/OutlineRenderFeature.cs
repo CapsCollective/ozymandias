@@ -23,11 +23,10 @@ public class OutlineRenderFeature : ScriptableRendererFeature
 
     public class OutlineRenderPass : ScriptableRenderPass
     {
-        public static List<MeshFilter> renderers = new List<MeshFilter>();
         public Settings settings;
         public RenderTargetIdentifier source;
         RenderTargetHandle tempTex;
-        public static CommandBuffer OutlineBuffer;
+        public CommandBuffer OutlineBuffer;
         private string profilerTag = "Ouline";
         private Material instancedMaterial;
 

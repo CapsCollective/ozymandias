@@ -22,8 +22,7 @@ namespace Characters
             _collider = GetComponent<Collider>();
             _particleSystem = GetComponent<ParticleSystem>();
             _cam = Camera.main;
-            
-            
+
             Manager.Inputs.LeftClick.performed += PatCheck;
         }
 
@@ -39,6 +38,7 @@ namespace Characters
     
         private void OnDestroy()
         {
+            if (RestartingGame) return;
             Manager.Inputs.LeftClick.performed -= PatCheck;
         }
     }
