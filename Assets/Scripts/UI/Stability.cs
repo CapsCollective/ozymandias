@@ -19,6 +19,8 @@ namespace UI
         
         protected override void UpdateUi()
         {
+            if (Manager.State.InMenu) return;
+
             int defence = Manager.Stats.Defence;
             int threat = Manager.Stats.Threat;
             int change = defence - threat;
@@ -26,6 +28,8 @@ namespace UI
             if (_oldDefence != defence)
             {
                 defenceCount.text = defence.ToString();
+                int unavailable = Manager.Adventurers.Unavailable;
+                if (unavailable != 0) defenceCount.text += $"/{defence + unavailable}";
                 PunchBadge(defenceBadge);
                 _oldDefence = defence;
             }

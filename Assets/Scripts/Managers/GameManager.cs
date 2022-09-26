@@ -18,7 +18,6 @@ using UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.Users;
 using UnityEngine.SceneManagement;
 using Utilities;
 using Random = UnityEngine.Random;

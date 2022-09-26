@@ -16,6 +16,8 @@ namespace UI
         
         protected override void UpdateUi()
         {
+            if (Manager.State.InMenu) return;
+
             int satisfaction = Manager.Stats.GetSatisfaction(stat);
             glow.color = Color.clear;
             

@@ -116,6 +116,7 @@ namespace Quests
             Quests.OnQuestCompleted?.Invoke(this);
             if (!IsRadiant || AssignedCount >= BaseAdventurers + Structure.SectionCount) Manager.Quests.Remove(this);
             else Structure.Shrink(AssignedCount - BaseAdventurers);
+            _assigned.ForEach(a => a.assignedQuest = null);
             _assigned.Clear();
             TurnsLeft = -1;
         }
