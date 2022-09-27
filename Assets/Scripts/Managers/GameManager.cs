@@ -163,6 +163,7 @@ namespace Managers
             {
                 Upgrades.GuildTokens[guild] = 99;
             }
+            Manager.Upgrades.Display();
             UpdateUi();
         }
         

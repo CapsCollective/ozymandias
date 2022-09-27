@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Inputs;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -52,6 +51,7 @@ namespace Upgrades
         {
             State.OnEnterState += _ => Deselect();
             Manager.Inputs.Close.performed += _ => Deselect();
+            
         }
 
         private void Purchase()
@@ -62,7 +62,7 @@ namespace Upgrades
             }
 
             _selected.level++;
-            _selected.Display(true);
+            Display();
             DisplayDetails(_selected);
             Manager.Structures.CheckAdjacencyBonuses();
             OnUpgradePurchased?.Invoke(_selected.type);
@@ -112,6 +112,11 @@ namespace Upgrades
             }
         }
 
+        public void Display()
+        {
+            root.Display(true);
+        }
+
         private void Deselect()
         {
             if (_selected == null) return;
@@ -158,7 +163,8 @@ namespace Upgrades
                 if(_upgrades.ContainsKey(upgradeLevel.Key))
                     _upgrades[upgradeLevel.Key].level = upgradeLevel.Value;
             }
-            root.Display(true);
+
+            Display();
         }
     }
 }

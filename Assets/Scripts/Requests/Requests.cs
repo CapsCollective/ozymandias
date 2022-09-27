@@ -43,6 +43,7 @@ namespace Requests
         {
             _requests[guild].Complete();
             Manager.Upgrades.GuildTokens[guild] += _requests[guild].Tokens;
+            Manager.Upgrades.Display();
             _requests[guild] = null;
             displays[guild].Request = null;
             OnRequestCompleted?.Invoke(guild);
