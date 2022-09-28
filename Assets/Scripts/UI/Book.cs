@@ -44,7 +44,8 @@ namespace UI
             settingsRibbon,
             reportsRibbon,
             upgradesRibbon;
-        [SerializeField] private GameObject clearSaveText, confirmClearText;
+        [SerializeField] private Slider sfxSlider;
+        [SerializeField] private GameObject clearSaveText, confirmClearText, finalClearText;
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
         [SerializeField] private SerializedDictionary<BookPage, BookGroup> pages;
@@ -53,15 +54,16 @@ namespace UI
         private bool _fromGame; // TODO this state cache must be removed, please do not use it
         private CanvasGroup _closeButtonCanvas;
 
-        private bool _confirmingDelete;
-        private bool ConfirmingDelete
+        private int _confirmDeleteStep;
+        private int ConfirmingDelete
         {
-            get => _confirmingDelete;
+            get => _confirmDeleteStep;
             set
             {
-                _confirmingDelete = value;
-                clearSaveText.SetActive(!value);
-                confirmClearText.SetActive(value);
+                _confirmDeleteStep = value;
+                clearSaveText.SetActive(value == 0);
+                confirmClearText.SetActive(value == 1);
+                finalClearText.SetActive(value == 2);
             }
         }
 
@@ -72,7 +74,7 @@ namespace UI
         {
             set
             {
-                ConfirmingDelete = false;
+                ConfirmingDelete = 0;
                 // Enable or disable the quit to menu button to avoid the raycaster affecting
                 // other pages in the book
                 // TODO this needs a second menu state available for in-menu/game vs in-menu/intro
@@ -86,6 +88,16 @@ namespace UI
                 clearSaveButton.gameObject.SetActive(enableClear);
                 clearSaveButton.interactable = enableClear;
                 clearSaveButton.enabled = enableClear;
+
+                if (value == BookPage.Settings)
+                {
+                    sfxSlider.navigation = new Navigation
+                    {
+                        selectOnDown = _fromGame ? quitButton : clearSaveButton,
+                        selectOnUp = sfxSlider.navigation.selectOnUp,
+                        mode = Navigation.Mode.Explicit
+                    };
+                }
 
                 if (_page == value) return;
 
@@ -128,13 +140,8 @@ namespace UI
             
             clearSaveButton.onClick.AddListener(() =>
             {
-                if (_confirmingDelete) Manager.ResetGameSave();
-                else
-                {
-                    ConfirmingDelete = true;
-                    clearSaveText.SetActive(false);
-                    confirmClearText.SetActive(true);
-                }
+                if (ConfirmingDelete == 2) Manager.ResetGameSave();
+                else ConfirmingDelete++;
             });
             
             settingsRibbon.onClick.AddListener(() => Page = BookPage.Settings);
@@ -211,7 +218,7 @@ namespace UI
 
         private void Close()
         {
-            ConfirmingDelete = false;
+            ConfirmingDelete = 0;
             _transitioning = true;
             closeButton.gameObject.SetActive(false); 
             Manager.SelectUi(null);          
