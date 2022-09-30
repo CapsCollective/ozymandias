@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 using static Managers.GameManager;
 
 namespace UI
@@ -12,7 +13,7 @@ namespace UI
 
         private void OnDestroy()
         {
-            if (RestartingGame) return;
+            if (Globals.RestartingGame) return;
             OnUpdateUI -= UpdateUi;
         }
 

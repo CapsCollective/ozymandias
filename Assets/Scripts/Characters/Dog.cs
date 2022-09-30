@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -38,7 +39,7 @@ namespace Characters
     
         private void OnDestroy()
         {
-            if (RestartingGame) return;
+            if (Globals.RestartingGame) return;
             Manager.Inputs.LeftClick.performed -= PatCheck;
         }
     }

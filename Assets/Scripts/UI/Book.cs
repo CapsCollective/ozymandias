@@ -2,6 +2,7 @@ using System;
 using Cards;
 using DG.Tweening;
 using Inputs;
+using Managers;
 using Requests;
 using UnityEngine;
 using UnityEngine.UI;
@@ -140,7 +141,7 @@ namespace UI
             
             clearSaveButton.onClick.AddListener(() =>
             {
-                if (ConfirmingDelete == 2) Manager.ResetGameSave();
+                if (ConfirmingDelete == 2) Globals.ResetGameSave();
                 else ConfirmingDelete++;
             });
             
