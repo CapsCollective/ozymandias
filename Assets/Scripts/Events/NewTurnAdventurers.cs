@@ -18,8 +18,13 @@ namespace Events
             
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
-                int difference = Manager.Adventurers.GetCount(guild) - Manager.Stats.AdventurerHistory[guild].DefaultIfEmpty(0).Last();
-                adventurerCounts[guild].text = (difference >= 0 ? "+" : Colors.RedText) + difference + (Math.Sign(difference) >= 0 ? "" : Colors.EndText);
+                var difference = Manager.Adventurers.GetCount(guild) - Manager.Stats.AdventurerHistory[guild].DefaultIfEmpty(0).Last();
+                adventurerCounts[guild].text = difference switch
+                {
+                    > 0 => "+" + difference,
+                    < 0 => Colors.RedText + difference + Colors.EndText,
+                    _ => ""
+                };
             }
             //defenceCounts.text = "= " + (Manager.Stats.Defence - Manager.Stats.StatHistory[Stat.Defence].DefaultIfEmpty(0).Last());
         }
