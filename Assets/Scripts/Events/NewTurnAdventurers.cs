@@ -11,22 +11,37 @@ namespace Events
     public class NewTurnAdventurers: UiUpdater
     {
         [SerializeField] private SerializedDictionary<Guild, TextMeshProUGUI> adventurerCounts;
+        [SerializeField] private GameObject newAdventurersTitle, newAdventurersSeparator;
         //[SerializeField] private TextMeshProUGUI defenceCounts;
         protected override void UpdateUi()
         {
             if (Manager.State.InGame) return;
-            
+
+            bool anyChanged = false;
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
-                var difference = Manager.Adventurers.GetCount(guild) - Manager.Stats.AdventurerHistory[guild].DefaultIfEmpty(0).Last();
-                adventurerCounts[guild].text = difference switch
-                {
-                    > 0 => "+" + difference,
-                    < 0 => Colors.RedText + difference + Colors.EndText,
-                    _ => ""
-                };
+                int previousAvailable = Manager.Stats.AdventurerHistory[guild].DefaultIfEmpty(0).Last();
+                int currentAvailable = Manager.Adventurers.GetCount(guild);
+                int difference = currentAvailable - previousAvailable;
+                if (difference != 0) anyChanged = true;
+                PopulateBadgeValue(guild, difference);
             }
-            //defenceCounts.text = "= " + (Manager.Stats.Defence - Manager.Stats.StatHistory[Stat.Defence].DefaultIfEmpty(0).Last());
+
+            bool displayNewTurnAdventurers = anyChanged && !Manager.State.IsGameOver;
+            print(displayNewTurnAdventurers);
+            newAdventurersTitle.SetActive(displayNewTurnAdventurers);
+            gameObject.SetActive(displayNewTurnAdventurers);
+            newAdventurersSeparator.SetActive(displayNewTurnAdventurers);
+        }
+
+        private void PopulateBadgeValue(Guild guild, int difference)
+        {
+            adventurerCounts[guild].text = difference switch
+            {
+                > 0 => "+" + difference,
+                < 0 => Colors.RedText + difference + Colors.EndText,
+                _ => ""
+            };
         }
     }
 }

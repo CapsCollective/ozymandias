@@ -34,7 +34,6 @@ namespace Events
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
         [SerializeField] private GameObject gameOverButtonContent;
-        [SerializeField] private GameObject newAdventurersTitle;
         [SerializeField] private GameObject newAdventurersContent;
 
         [SerializeField] private float animateInDuration = .5f;
@@ -133,8 +132,6 @@ namespace Events
             continueButtonContent.SetActive(state == ButtonState.Close);
             disableButtonContent.SetActive(state == ButtonState.Choice);
             gameOverButtonContent.SetActive(state == ButtonState.GameOver);
-            newAdventurersTitle.SetActive(state != ButtonState.GameOver);
-            newAdventurersContent.SetActive(state != ButtonState.GameOver);
         }
         
         private void Open()
