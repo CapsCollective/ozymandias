@@ -58,7 +58,7 @@ namespace Managers
 
         private GameState _state;
         private bool _alreadySkippedIntro;
-        private static CameraMovement.CameraMove _startPos;
+        private CameraMovement.CameraMove _startPos;
 
         public static Action<GameState> OnEnterState;
         public static Action OnNewGame;

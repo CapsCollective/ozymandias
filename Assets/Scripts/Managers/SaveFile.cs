@@ -18,6 +18,8 @@ namespace Managers
         public int wealth, turnCounter, stability, baseThreat, longestRun, maxAdventurers, campsCleared, townsDestroyed, buildingsBuilt, ruinsDemolished;
         public HashSet<Secret> secrets;
         public Dictionary<Stat, List<Stats.Modifier>> modifiers;
+        public Dictionary<Stat, List<int>> statHistory;
+        public Dictionary<Guild, List<int>> adventurerHistory;
     }
     
     [Serializable]

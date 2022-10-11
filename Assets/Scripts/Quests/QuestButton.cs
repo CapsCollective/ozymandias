@@ -12,7 +12,7 @@ namespace Quests
         public static Action OnClicked;
 
         [SerializeField] private TextMeshProUGUI text;
-        private static Button _button;
+        private Button _button;
 
         private void Start()
         {

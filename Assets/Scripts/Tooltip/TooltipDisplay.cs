@@ -193,24 +193,28 @@ namespace Tooltip
                     string spawnText = spawnRate == -1
                         ? "Adventurers will start to flee"
                         : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
-                    details.text = $"{stat} housing for {adventurers} total adventurers ({(diff > 0 ? "+" : "") + diff})\n" +
+                    details.text = $"{stat} housing for {adventurers} adventurers in town\n" +
+                                   $"({(diff > 0 ? "+" : "") + diff} total)\n" +
                                    $"{FormattedBuildingString(Stat.Housing)}" +
                                    $"{FormattedUpgradeString(Stat.Housing)}" +
                                    $"{FormattedModifierString(Stat.Housing)}" +
                                    $"{HousingDescriptor(spawnRate)} ({spawnText})";
                     break;
                 case Stat.Food:
-                    details.text = $"{stat} food for {adventurers} total adventurers ({(diff > 0 ? "+" : "") + diff})\n" +
+                    details.text = $"{stat} food for {adventurers} adventurers in town\n"+
+                                   $"({(diff > 0 ? "+" : "") + diff} total)\n" +
                                    $"{FormattedBuildingString(Stat.Food)}" +
                                    $"{FormattedUpgradeString(Stat.Food)}" +
                                    $"{FormattedModifierString(Stat.Food)}" +
                                    $"{FoodDescriptor(Manager.Stats.FoodModifier)}";
                     break;
                 case Stat.Defence:
+                    int unavailable = Manager.Adventurers.Unavailable;
                     details.text = $"{Manager.Stats.Defence} defence\n" +
-                                   $"  ● +{adventurers} from total adventurers in town\n" +
-                                   $"{FormattedBuildingString(Stat.Defence)}" +
-                                   (Manager.Stats.MineStrikePenalty != 0 ? $"  ● {Manager.Stats.MineStrikePenalty} from the miners strike\n" : "") +
+                                   $"  ● +{adventurers}{(unavailable != 0 ? "/" + (adventurers + unavailable) : "")} from adventurers in town\n"+
+                                   (unavailable != 0 ? $"     ({unavailable} out questing)\n" : "") + 
+                                   $"{FormattedBuildingString(Stat.Defence)}" + 
+                                   (Manager.Stats.MineStrikePenalty != 0 ? $"  ● {Manager.Stats.MineStrikePenalty} from the miners strike\n" : "") + 
                                    $"{FormattedModifierString(Stat.Defence)}";
                     break;
                 case Stat.Threat:
@@ -227,7 +231,7 @@ namespace Tooltip
                     break;
                 case Stat.Spending:
                     details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"  ● +{(Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) * adventurers} from {adventurers} total adventurers" +
+                                   $"  ● +{(Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) * adventurers} from {adventurers} adventurers in town" +
                                    $"{(Manager.EventQueue.Flags[Flag.Cosmetics] ? " (-2 spending per adventurers due to cosmetics)" : "")}\n" +
                                    $"  ● +{StartingSalary} starting salary\n" +
                                    $"{FormattedBuildingString(Stat.Spending)}" +
@@ -237,12 +241,12 @@ namespace Tooltip
                 default: // Stat for a guild
                     Guild guild = (Guild) config.Stat.Value;
                     string guildName = config.Stat.ToString().ToLower();
-                    int count = Manager.Adventurers.GetCount(guild);
+                    int count = Manager.Adventurers.GetCount(guild, true);
                     int spawnChance = Manager.Stats.SpawnChance(guild);
                     
                     details.text =
-                        $"{stat} satisfaction for {count} {String.Pluralise(guildName)} " +
-                        $"({(stat - count > 0 ? "+" : "")}{stat - count})\n" +
+                        $"{stat} satisfaction for {count} {String.Pluralise(guildName)} in town\n" +
+                        $"({(stat - count > 0 ? "+" : "")}{stat - count} total)\n" +
                         $"{FormattedBuildingString(config.Stat.Value)}" +
                         $"{FormattedUpgradeString(config.Stat.Value)}" +
                         $"{FormattedFoodModifierString}" +
@@ -260,7 +264,7 @@ namespace Tooltip
 
         private string FormattedUpgradeString(Stat stat)
         {
-            int upgradeMod = Manager.Stats.GetUpgradeMod(stat);
+            int upgradeMod = Manager.Stats.GetUpgradeMod(stat) * Manager.Stats.StatMultiplier(stat);
             return upgradeMod == 0 ? "" : $"  ● +{upgradeMod} from upgrades\n";
         }
 

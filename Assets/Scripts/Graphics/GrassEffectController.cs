@@ -17,8 +17,9 @@ namespace Grass
         };
 
         public static Action<GrassQualitySettings> OnGrassQualityChange;
-        public static bool GrassNeedsUpdate = false;
         public static GrassQualitySettings GrassQuality = GrassQualitySettings.Low;
+        
+        public static bool GrassNeedsUpdate;
 
         [SerializeField] private VisualEffect _grassEffect;
         [SerializeField] private CustomRenderTexture _grassRT;
@@ -29,7 +30,7 @@ namespace Grass
         {
             Managers.State.OnLoadingEnd += () => GrassNeedsUpdate = true;
             Structures.Structures.OnBuild += (s) => GrassNeedsUpdate = true;
-            Structures.Structures.OnDestroy += (s) => GrassNeedsUpdate = true;
+            Structures.Structures.OnDestroyed += (s) => GrassNeedsUpdate = true;
             OnGrassQualityChange += UpdateVFX;
         }
 

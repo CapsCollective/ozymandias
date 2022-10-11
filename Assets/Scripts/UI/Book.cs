@@ -2,6 +2,7 @@ using System;
 using Cards;
 using DG.Tweening;
 using Inputs;
+using Managers;
 using Requests;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,11 +39,14 @@ namespace UI
         [SerializeField] private Canvas canvas;
         [SerializeField] private Button 
             closeButton, 
-            quitButton, 
+            quitButton,
+            clearSaveButton,
             introSettingsButton,
             settingsRibbon,
             reportsRibbon,
             upgradesRibbon;
+        [SerializeField] private Slider sfxSlider;
+        [SerializeField] private GameObject clearSaveText, confirmClearText, finalClearText;
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
         [SerializeField] private SerializedDictionary<BookPage, BookGroup> pages;
@@ -51,6 +55,19 @@ namespace UI
         private bool _fromGame; // TODO this state cache must be removed, please do not use it
         private CanvasGroup _closeButtonCanvas;
 
+        private int _confirmDeleteStep;
+        private int ConfirmingDelete
+        {
+            get => _confirmDeleteStep;
+            set
+            {
+                _confirmDeleteStep = value;
+                clearSaveText.SetActive(value == 0);
+                confirmClearText.SetActive(value == 1);
+                finalClearText.SetActive(value == 2);
+            }
+        }
+
         [SerializeField] private ExtendedDropdown resDropdown;
         
         private BookPage _page = BookPage.Settings;
@@ -58,15 +75,31 @@ namespace UI
         {
             set
             {
+                ConfirmingDelete = 0;
                 // Enable or disable the quit to menu button to avoid the raycaster affecting
                 // other pages in the book
                 // TODO this needs a second menu state available for in-menu/game vs in-menu/intro
                 _changingPage = true;
-                var enableQuit = _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings;
+                bool enableQuit = _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings;
                 quitButton.gameObject.SetActive(enableQuit);
                 quitButton.interactable = enableQuit;
                 quitButton.enabled = enableQuit;
                 
+                bool enableClear = !_fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings;
+                clearSaveButton.gameObject.SetActive(enableClear);
+                clearSaveButton.interactable = enableClear;
+                clearSaveButton.enabled = enableClear;
+
+                if (value == BookPage.Settings)
+                {
+                    sfxSlider.navigation = new Navigation
+                    {
+                        selectOnDown = _fromGame ? quitButton : clearSaveButton,
+                        selectOnUp = sfxSlider.navigation.selectOnUp,
+                        mode = Navigation.Mode.Explicit
+                    };
+                }
+
                 if (_page == value) return;
 
                 if (value == BookPage.Reports) CardsBookList.ScrollActive = true;
@@ -104,6 +137,12 @@ namespace UI
             {
                 _closeState = GameState.ToIntro;
                 Close();
+            });
+            
+            clearSaveButton.onClick.AddListener(() =>
+            {
+                if (ConfirmingDelete == 2) Globals.ResetGameSave();
+                else ConfirmingDelete++;
             });
             
             settingsRibbon.onClick.AddListener(() => Page = BookPage.Settings);
@@ -180,6 +219,7 @@ namespace UI
 
         private void Close()
         {
+            ConfirmingDelete = 0;
             _transitioning = true;
             closeButton.gameObject.SetActive(false); 
             Manager.SelectUi(null);          

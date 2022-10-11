@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cards;
+using Characters;
+using DG.Tweening;
 using Events;
+using Grass;
 using Inputs;
 using NaughtyAttributes;
 using Quests;
 using Reports;
+using Requests;
 using Requests.Templates;
 using Structures;
 using Tooltip;
@@ -13,17 +18,113 @@ using UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using Utilities;
 using Random = UnityEngine.Random;
-using static Managers.GameManager;
 
 namespace Managers
 {
+    public static class Globals
+    {
+        public static bool RestartingGame { get; private set; }
+        
+        private static void OnSceneReloaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            // Deregister the event and update state
+            SceneManager.sceneLoaded -= OnSceneReloaded;
+            RestartingGame = false;
+        }
+        
+        public static void RestartGame()
+        {
+            // Set reload state info
+            RestartingGame = true;
+            SceneManager.sceneLoaded += OnSceneReloaded;
+            
+            // Dispose all input bindings
+            GameManager.Manager.Inputs.PlayerInput.Dispose();
+            
+            // Reset all static events and data
+            GameManager.Manager = null;
+            GameManager.OnUpdateUI = null;
+            Settings.NewResolution = null;
+            UIController.OnUIOpen = null;
+            UIController.OnUIClose = null;
+            State.OnEnterState = null;
+            State.OnNewGame = null;
+            State.OnLoadingEnd = null;
+            State.OnGameEnd = null;
+            State.OnNextTurnBegin = null;
+            State.OnNextTurnEnd = null;
+            Events.Newspaper.OnClosed = null;
+            Events.Newspaper.OnNextClosed = null;
+            global::Adventurers.Adventurers.OnAdventurerJoin = null;
+            global::Adventurers.Adventurers.OnAdventurerRemoved = null;
+            global::Cards.Cards.OnCardSelected = null;
+            global::Cards.Cards.OnUnlock = null;
+            global::Cards.Cards.OnDiscoverRuin = null;
+            global::Cards.Cards.OnBuildingRotate = null;
+            CardsBookList.ScrollActive = false;
+            UnlockDisplay.OnUnlockDisplayed = null;
+            Dog.OnDogPet = null;
+            Fishing.OnFishCaught = null;
+            Waterfall.OnOpened = null;
+            GrassEffectController.OnGrassQualityChange = null;
+            GrassEffectController.GrassQuality = GrassEffectController.GrassQualitySettings.Low;
+            GrassEffectController.GrassNeedsUpdate = false;
+            CameraMovement.OnPan = null;
+            CameraMovement.OnRotate = null;
+            CameraMovement.OnZoom = null;
+            CameraMovement.IsMoving = false;
+            CentreButton.OnWorldEdge = null;
+            global::Inputs.Inputs.OnControlChange = null;
+            InputHelper.OnNewSelection = null;
+            InputHelper.OnToggleCursor = null;
+            InputHelper.CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
+            Quest.OnQuestStarted = null;
+            QuestButton.OnClicked = null;
+            global::Quests.Quests.OnQuestCompleted = null;
+            global::Quests.Quests.OnQuestAdded = null;
+            global::Quests.Quests.OnCampAdded = null;
+            global::Quests.Quests.OnQuestRemoved = null;
+            RequestDisplay.OnNotificationClicked = null;
+            global::Requests.Requests.OnRequestCompleted = null;
+            Seasons.Seasons.Instance = null;
+            Select.OnClear = null;
+            Select.OnQuestSelected = null;
+            Select.Instance = null;
+            global::Structures.Structures.OnBuild = null;
+            global::Structures.Structures.OnDestroyed = null;
+            global::Structures.Structures.OnGuildHallDemolished = null;
+            Tutorial.Tutorial.ShowBook = null;
+            Tutorial.Tutorial.Active = false;
+            Tutorial.Tutorial.DisableSelect = false;
+            Tutorial.Tutorial.DisableNextTurn = false;
+            Tutorial.Tutorial.ShowShade = false;
+            Book.OnOpened = null;
+            BookButton.OnClicked = null;
+            Notification.OnNotification = null;
+            global::Upgrades.Upgrades.OnUpgradePurchased = null;
+            ClickOnButtonDown.OnUIClick = null;
+            
+            // Kill all active tweens
+            DOTween.KillAll();
+
+            // Reload the scene
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        
+        public static void ResetGameSave()
+        {
+            SaveFile.Delete();
+            RestartGame();
+        }
+    }
 
     public class GameManager : MonoBehaviour
     {
         #region Static Accessors
-        public static GameManager Manager { get; private set; }
+        public static GameManager Manager { get; internal set; }
         
         // All Managers/ Universal Controllers
         public Achievements Achievements { get; private set; }
@@ -158,6 +259,7 @@ namespace Managers
             {
                 Upgrades.GuildTokens[guild] = 99;
             }
+            Manager.Upgrades.Display();
             UpdateUi();
         }
         
@@ -172,11 +274,17 @@ namespace Managers
         {
             Achievements.ResetAll();
         }
-        
-        [Button("Reset Save File")]
-        public void ResetSave()
+
+        [Button("Restart Game")]
+        private void RestartGame()
         {
-            SaveFile.Delete();
+            Globals.RestartGame();
+        }
+
+        [Button("Reset Game Save")]
+        public void ResetGameSave()
+        {
+            Globals.ResetGameSave();
         }
         
         [Button("Load All Assets")]

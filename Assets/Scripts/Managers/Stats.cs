@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Events;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
@@ -21,7 +22,9 @@ namespace Managers
 
         public Dictionary<Stat, List<Modifier>> Modifiers = new Dictionary<Stat, List<Modifier>>();
         public readonly Dictionary<Stat, int> ModifiersTotal = new Dictionary<Stat, int>();
-        
+        public Dictionary<Stat, List<int>> StatHistory = new Dictionary<Stat, List<int>>();
+        public Dictionary<Guild, List<int>> AdventurerHistory = new Dictionary<Guild, List<int>>();
+
         private static readonly Dictionary<Stat, UpgradeType> UpgradeMap = new Dictionary<Stat, UpgradeType>
         {
             { Stat.Brawler, UpgradeType.Brawler },
@@ -59,7 +62,7 @@ namespace Managers
 
         public int GetSatisfaction(Guild guild)
         {
-            return GetStat((Stat)guild) - Manager.Adventurers.GetCount(guild);
+            return GetStat((Stat)guild) - Manager.Adventurers.GetCount(guild, true);
         }
         
         public int GetSatisfaction(Stat stat)
@@ -112,7 +115,9 @@ namespace Managers
         private void Start()
         {
             State.OnNewGame += OnNewGame;
+            State.OnNextTurnBegin += OnNextTurnBegin;
             State.OnNextTurnEnd += OnNextTurnEnd;
+            Structures.Structures.OnGuildHallDemolished += () => Stability = 0;
         }
 
         private void OnNewGame()
@@ -125,10 +130,16 @@ namespace Managers
             {
                 ModifiersTotal[stat] = 0;
                 Modifiers[stat] = new List<Modifier>();
+                StatHistory[stat] = new List<int>();
+            }
+            
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
+            {
+                AdventurerHistory[guild] = new List<int>();
             }
         }
 
-        private void OnNextTurnEnd()
+        private void OnNextTurnBegin()
         {
             Stability += Defence - Threat;
             if (Stability > 100) Stability = 100;
@@ -141,7 +152,11 @@ namespace Managers
                 if (Random.Range(0, 100) < SpawnChance(guild)) Manager.Adventurers.Add(guild);
                 if (GetSatisfaction(guild) >= 10) Manager.EventQueue.Add(excessEvents[guild], true);
             }
-
+            UpdateUi();
+        }
+        
+        private void OnNextTurnEnd()
+        {
             if (Stability <= 0) Manager.EventQueue.AddGameOverEvents();
         
             foreach (var stat in Modifiers)
@@ -154,6 +169,40 @@ namespace Managers
                     ModifiersTotal[stat.Key] -= Modifiers[stat.Key][i].amount;
                     Modifiers[stat.Key].RemoveAt(i);
                 }
+            }
+            
+            // Pattern so it only calls for the close to save for the new turn 
+            Newspaper.OnNextClosed += NewTurnClosed; 
+        }
+
+        private void NewTurnClosed()
+        {
+            Debug.Log("Closing for new turn");
+            foreach (Stat stat in Enum.GetValues(typeof(Stat)))
+            {
+                switch (stat)
+                {
+                    case Stat.Spending:
+                        StatHistory[stat].Add(WealthPerTurn);
+                        break;
+                    case Stat.Defence:
+                        StatHistory[stat].Add(Defence);
+                        break;
+                    case Stat.Threat:
+                        StatHistory[stat].Add(Threat);
+                        break;
+                    case Stat.Stability:
+                        StatHistory[stat].Add(Stability);
+                        break;
+                    default:
+                        StatHistory[stat].Add(GetStat(stat));
+                        break;
+                }
+            }
+            
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
+            {
+                AdventurerHistory[guild].Add(Manager.Adventurers.GetCount(guild));
             }
         }
         
@@ -168,7 +217,9 @@ namespace Managers
                 turnCounter = TurnCounter,
                 stability = Stability,
                 baseThreat = BaseThreat,
-                modifiers = Modifiers
+                modifiers = Modifiers,
+                statHistory = StatHistory,
+                adventurerHistory = AdventurerHistory
             };
         }
 
@@ -180,14 +231,21 @@ namespace Managers
             BaseThreat = details.baseThreat;
 
             Modifiers = details.modifiers ?? new Dictionary<Stat, List<Modifier>>();
-            
+            StatHistory = details.statHistory ?? new Dictionary<Stat, List<int>>();
+            AdventurerHistory = details.adventurerHistory ?? new Dictionary<Guild, List<int>>();
+
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
             {
                 ModifiersTotal.Add(stat, 0);
-                if (Modifiers.ContainsKey(stat)) continue;
-                Modifiers.Add(stat, new List<Modifier>());
+                if (!Modifiers.ContainsKey(stat)) Modifiers.Add(stat, new List<Modifier>());
+                if (!StatHistory.ContainsKey(stat)) StatHistory.Add(stat, new List<int>());
             }
-            
+
+            foreach (Guild stat in Enum.GetValues(typeof(Guild)))
+            {
+                if (!AdventurerHistory.ContainsKey(stat)) AdventurerHistory.Add(stat, new List<int>());
+            }
+
             foreach (var metricPair in Modifiers)
                 ModifiersTotal[metricPair.Key] = metricPair.Value.Sum(x => x.amount);
         }

@@ -84,10 +84,9 @@ namespace Inputs
             if (Manager.State.Current == GameState.InGame)
                 ToggleWorldCursor(isController);
             if (Manager.State.Current == GameState.InMenu)
-            {
                 if (!isController) HelperActive = false;
-                Cursor.visible = !isController;
-            }
+
+            Cursor.visible = !isController;
         }
 
         public void ResetSelection(GameState state)

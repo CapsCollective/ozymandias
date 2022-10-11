@@ -106,11 +106,7 @@ namespace Birds
             public Vector3 avoidanceHeading;
             public int numFlockmates;
 
-            public static int Size {
-                get {
-                    return sizeof (float) * 3 * 5 + sizeof (int);
-                }
-            }
+            public static int Size => sizeof (float) * 3 * 5 + sizeof (int);
         }
     }
 }

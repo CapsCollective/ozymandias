@@ -29,9 +29,12 @@ namespace Events
         [SerializeField] private Button[] choiceList;
         [SerializeField] private Button continueButton, openNewspaperButton;
         [SerializeField] private TextMeshProUGUI turnCounter;
+        
+        [Header("Button States")]
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
         [SerializeField] private GameObject gameOverButtonContent;
+        [SerializeField] private GameObject newAdventurersContent;
 
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
@@ -86,6 +89,8 @@ namespace Events
 
             // Set all event choices on button texts
             for (var i = 0; i < choiceList.Length; i++) SetChoiceActive(i, i < _choiceEvent.choices.Count);
+            
+            UpdateUi();
         }
 
         private void SetChoiceActive(int choice, bool active)
@@ -95,7 +100,7 @@ namespace Events
             
             int cost = (int)(_choiceEvent.choices[choice].costScale * Manager.Stats.WealthPerTurn);
             choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text =
-                _choiceEvent.choices[choice].name + (cost != 0 ? $"\n(Spend {cost}/{Manager.Stats.Wealth} Wealth)" : "");
+                _choiceEvent.choices[choice].name + (cost != 0 ? $"\n(Spend {cost} of {Manager.Stats.Wealth} Wealth)" : "");
             choiceList[choice].GetComponent<Button>().interactable = cost == 0 || Manager.Stats.Wealth >= cost;
         }
     
@@ -108,6 +113,7 @@ namespace Events
             for (int i = 0; i < choiceList.Length; i++) SetChoiceActive(i,false);
         
             Manager.SelectUi(continueButton.gameObject);
+            UpdateUi();
         }
 
         private static readonly string[] NewspaperTitles = {

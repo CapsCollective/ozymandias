@@ -44,8 +44,7 @@ namespace Seasons
         [Range(0,1f)][SerializeField] private float debugTime;
 
         private Vector3 _startRotation;
-        
-        private Material instancedSkyMaterial;
+        private Material _instancedSkyMaterial;
         
         private static readonly int MaterialIdHorizonColor = Shader.PropertyToID("_HorizonColor");
         private static readonly int MaterialIdWindowEmission = Shader.PropertyToID("_WindowEmissionIntensity");
@@ -53,12 +52,13 @@ namespace Seasons
         
         private static readonly int ShaderIdAutumn = Shader.PropertyToID("_Autumn");
         private static readonly int ShaderIdWinter = Shader.PropertyToID("_Winter");
+        private static readonly int SunDirection = Shader.PropertyToID("_SunDirection");
 
         private const int SeasonCount = 4;
         private const int SeasonLength = 15;
         private Season _currentSeason = Season.Unset;
 
-        private static Seasons Instance { get; set; }
+        internal static Seasons Instance { get; set; }
 
         private void Awake()
         {
@@ -86,9 +86,9 @@ namespace Seasons
             Newspaper.OnClosed += UpdateSeason;
             State.OnNewGame += UpdateSeason;
             State.OnNextTurnBegin += TurnTransition;
-            Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
-            instancedSkyMaterial = new Material(skyMaterial);
-            RenderSettings.skybox = instancedSkyMaterial;
+            Shader.SetGlobalVector(SunDirection, sunTransform.forward);
+            _instancedSkyMaterial = new Material(skyMaterial);
+            RenderSettings.skybox = _instancedSkyMaterial;
         }
 
         [Button("Turn Transition")]
@@ -103,7 +103,7 @@ namespace Seasons
                 timer += Time.deltaTime / State.TurnTransitionTime;
                 Weather weather = GetWeather(_currentSeason);
                 CycleWeather(weather, timer);
-                Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
+                Shader.SetGlobalVector(SunDirection, sunTransform.forward);
             });
         }
 
@@ -154,8 +154,8 @@ namespace Seasons
             Color sunColorValue = sun.color;
             Color ambientLightValue = RenderSettings.ambientLight;
             Color fogColorValue = RenderSettings.fogColor;
-            Color skyColorValue = instancedSkyMaterial.GetColor(MaterialIdSkyColor);
-            Color horizonColorValue = instancedSkyMaterial.GetColor(MaterialIdHorizonColor);
+            Color skyColorValue = _instancedSkyMaterial.GetColor(MaterialIdSkyColor);
+            Color horizonColorValue = _instancedSkyMaterial.GetColor(MaterialIdHorizonColor);
             
             // Set effect target values
             Weather weather = GetWeather(season);
@@ -198,8 +198,8 @@ namespace Seasons
             sun.color = sunColor;
             RenderSettings.ambientLight = ambientLight;
             RenderSettings.fogColor = fogColor;
-            instancedSkyMaterial.SetColor(MaterialIdSkyColor, skyColorGradient);
-            instancedSkyMaterial.SetColor(MaterialIdHorizonColor, horizonColorGradient);
+            _instancedSkyMaterial.SetColor(MaterialIdSkyColor, skyColorGradient);
+            _instancedSkyMaterial.SetColor(MaterialIdHorizonColor, horizonColorGradient);
             Shader.SetGlobalFloat(MaterialIdWindowEmission, windowIntensity);
         }
 
@@ -221,7 +221,7 @@ namespace Seasons
         [Button("Set Sun Direction")]
         public void SetSunDirection()
         {
-            Shader.SetGlobalVector("_SunDirection", sunTransform.forward);
+            Shader.SetGlobalVector(SunDirection, sunTransform.forward);
         }
     }
 }

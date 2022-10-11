@@ -411,6 +411,7 @@ namespace Tutorial
             {
                 ++Manager.Upgrades.GuildTokens[guild];
             }
+            Manager.Upgrades.Display();
             SaveFile.SaveState(false);
         }
 

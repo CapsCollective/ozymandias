@@ -22,6 +22,7 @@ namespace Adventurers
 
         public int Count => _adventurers.Count;
         public int Available => _adventurers.Count(x => !x.assignedQuest);
+        public int Unavailable => _adventurers.Count(x => x.assignedQuest);
         public int Removable => _adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
 
         public IEnumerable<Adventurer> List => _adventurers
@@ -33,9 +34,9 @@ namespace Adventurers
             State.OnGameEnd += OnGameEnd;
         }
 
-        public int GetCount(Guild type)
+        public int GetCount(Guild type, bool onlyAvailable = false)
         {
-            return _adventurers.Count(a => !a.assignedQuest && a.guild == type);
+            return _adventurers.Count(a => (!onlyAvailable || !a.assignedQuest) && a.guild == type);
         }
         
         public Adventurer Assign(Quest quest)

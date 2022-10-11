@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,105 +7,105 @@ namespace Utilities.Debug
 {
     public class DebugTemp
     {
-        public object debugObject;
-        public float debugTime;
+        public object DebugObject;
+        public float DebugTime;
 
         public DebugTemp(object debugObject, float debugTime)
         {
-            this.debugObject = debugObject;
-            this.debugTime = debugTime;
+            this.DebugObject = debugObject;
+            this.DebugTime = debugTime;
         }
     }
 
     public class DebugGUIController : MonoBehaviour
     {
-        private static Dictionary<string, object> debugObjects = new Dictionary<string, object>();
-        private static Dictionary<string, float> tempDebugObjects = new Dictionary<string, float>();
+        private static readonly Dictionary<string, object> DebugObjects = new Dictionary<string, object>();
+        private static readonly Dictionary<string, float> TempDebugObjects = new Dictionary<string, float>();
 
-        private bool showDebug = false;
-        private Rect guiPosition;
-        private string statsText;
-        private float timer = 0;
-        private List<string> tempRemovals = new List<string>();
+        private bool _showDebug;
+        private Rect _guiPosition;
+        private string _statsText;
+        private float _timer;
+        private List<string> _tempRemovals = new List<string>();
 
         // Start is called before the first frame update
         void Start()
         {
-            guiPosition = new Rect(Screen.width - 300, 0, 200, 200);
+            _guiPosition = new Rect(Screen.width - 300, 0, 200, 200);
         }
 
         // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.F2))
-                showDebug = !showDebug;
+                _showDebug = !_showDebug;
 
-            timer += Time.deltaTime;
-            if (timer >= 0.1f)
+            _timer += Time.deltaTime;
+            if (_timer >= 0.1f)
             {
-                timer = 0;
+                _timer = 0;
                 UpdateText();
             }
 
-            foreach(var key in tempDebugObjects.Keys.ToList()) 
+            foreach(var key in TempDebugObjects.Keys.ToList()) 
             { 
-                tempDebugObjects[key] -= Time.deltaTime;
-                if(tempDebugObjects[key] <= 0)
+                TempDebugObjects[key] -= Time.deltaTime;
+                if(TempDebugObjects[key] <= 0)
                 {
-                    tempRemovals.Add(key);
+                    _tempRemovals.Add(key);
                 }
             }
 
-            foreach (string item in tempRemovals)
+            foreach (string item in _tempRemovals)
             {
-                tempDebugObjects.Remove(item);
+                TempDebugObjects.Remove(item);
             }
-            tempRemovals = new List<string>();
+            _tempRemovals = new List<string>();
         }
 
         void UpdateText()
         {
             var sb = new StringBuilder(500);
-            foreach (KeyValuePair<string, object> o in debugObjects)
+            foreach (KeyValuePair<string, object> o in DebugObjects)
             {
                 sb.AppendLine($"{o.Key}: {o.Value}");
             }
-            foreach (KeyValuePair<string, float> o in tempDebugObjects)
+            foreach (KeyValuePair<string, float> o in TempDebugObjects)
             {
                 sb.AppendLine($"Log: {o.Key}");
             }
-            statsText = sb.ToString();
+            _statsText = sb.ToString();
         }
 
         private void OnGUI()
         {
-            if (!showDebug)
+            if (!_showDebug)
                 return;
 
-            GUILayout.BeginArea(guiPosition);
-            GUILayout.Box(statsText);
+            GUILayout.BeginArea(_guiPosition);
+            GUILayout.Box(_statsText);
             GUILayout.EndArea();
         }
 
         public static void Debug(string title, object value)
         {
-            if (debugObjects.ContainsKey(title))
+            if (DebugObjects.ContainsKey(title))
             {
-                debugObjects[title] = value;
+                DebugObjects[title] = value;
             }
             else
             {
-                debugObjects.Add(title, value);
+                DebugObjects.Add(title, value);
             }
         }
 
         public static void DebugLog(string value, float time)
         {
-            if(!tempDebugObjects.ContainsKey(value))
-                tempDebugObjects.Add(value, time);
+            if(!TempDebugObjects.ContainsKey(value))
+                TempDebugObjects.Add(value, time);
             else
             {
-                tempDebugObjects[value] = time;
+                TempDebugObjects[value] = time;
             }
         }
     }

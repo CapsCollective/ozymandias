@@ -19,10 +19,12 @@ namespace UI
         
         protected override void UpdateUi()
         {
-            int value = Manager.Adventurers.GetCount(guild);
+            if (Manager.State.InMenu) return;
+            
+            int value = Manager.Adventurers.GetCount(guild, true);
             int satisfaction = Manager.Stats.GetStat((Stat)guild);
 
-            if (value > _oldValue)
+            if (value != _oldValue)
             {
                 TriggerTicker(value - _oldValue);
                 _oldValue = value;
@@ -43,12 +45,12 @@ namespace UI
 
         private void TriggerTicker(int amount)
         {
-            countTicker.text = "+" + amount;
+            countTicker.text = (amount > 0 ? "+" : Colors.RedText) + amount + (amount > 0 ? "" : Colors.EndText);
             countTicker.enabled = true;
             countTicker.alpha = 1;
             countTicker.rectTransform.localPosition = new Vector3(0, -110, 0);
-            countTicker.DOFade(0, 1f);
-            countTicker.rectTransform.DOLocalMove(new Vector3(0,-60,0), 1f);
+            countTicker.DOFade(0, 1f).SetDelay(1f);
+            countTicker.rectTransform.DOLocalMove(new Vector3(0,-60,0), 1f).SetDelay(1f);
         }
         
         private void PunchBadge()
