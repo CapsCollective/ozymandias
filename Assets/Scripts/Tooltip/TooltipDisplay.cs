@@ -264,7 +264,7 @@ namespace Tooltip
 
         private string FormattedUpgradeString(Stat stat)
         {
-            int upgradeMod = Manager.Stats.GetUpgradeMod(stat);
+            int upgradeMod = Manager.Stats.GetUpgradeMod(stat) * Manager.Stats.StatMultiplier(stat);
             return upgradeMod == 0 ? "" : $"  ● +{upgradeMod} from upgrades\n";
         }
 
