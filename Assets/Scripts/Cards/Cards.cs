@@ -37,7 +37,7 @@ namespace Cards
         private int _lastBadge = -1;
 
         private ToggleGroup _toggleGroup;
-        public  Card SelectedCard
+        public Card SelectedCard
         {
             get => _selectedCard;
             set
@@ -108,7 +108,7 @@ namespace Cards
             Manager.Inputs.SelectCardIndex.performed += SelectCardIndex;
             State.OnEnterState += (_) =>
             {
-                SelectCard(-1);
+                _toggleGroup.SetAllTogglesOff();
                 if (Manager.State.InGame) PopCards();
                 else DropCards();
             };
