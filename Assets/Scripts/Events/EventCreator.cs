@@ -229,8 +229,8 @@ namespace Events
                 quest.image = LoadSprite(config.image);
                 quest.colour = ColorUtility.TryParseHtmlString(config.colour, out Color color) ? color : new Color(0.75f, 0.7f, 0.55f);
                 quest.location = config.location;
-                quest.adventurers = config.adventurers;
-                quest.baseTurns = config.baseTurns;
+                quest.baseAdventurers = config.adventurers;
+                quest.baseDuration = config.baseTurns;
                 quest.wealthMultiplier = config.wealthMultiplier;
                 quest.reward = config.reward;
 

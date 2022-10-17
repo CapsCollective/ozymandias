@@ -3,6 +3,7 @@ using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
@@ -14,11 +15,11 @@ namespace Quests
         [SerializeField] private Image icon;
         [SerializeField] private Button sendButton;
         [SerializeField] private GameObject stamp;
-        [SerializeField] private Slider adventurerSlider, costSlider;
+        [SerializeField] private Slider adventurerSlider, durationSlider;
         
-        public Action<int, float> OnStartClicked;
+        public Action<int, int> OnStartClicked;
         public Action<int> OnAdventurerValueChanged;
-        public Action<int> OnCostValueChanged;
+        public Action<int> OnDurationValueChanged;
 
         private const float CostScaleMin = 0.5f;
         private const float CostScaleMax = 1.5f;
@@ -31,9 +32,9 @@ namespace Quests
             {
                 OnAdventurerValueChanged?.Invoke((int) value);
             });
-            costSlider.onValueChanged.AddListener(value =>
+            durationSlider.onValueChanged.AddListener(value =>
             {
-                OnCostValueChanged?.Invoke((int) value);
+                OnDurationValueChanged?.Invoke((int) value);
             });
             sendButton.onClick.AddListener(() =>
             {
@@ -41,7 +42,7 @@ namespace Quests
                 Inputs.InputHelper.OnToggleCursor?.Invoke(false);
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();
-                OnStartClicked?.Invoke((int)adventurerSlider.value, costSlider.value);
+                OnStartClicked?.Invoke((int)adventurerSlider.value, (int)durationSlider.value);
             });
         }
 
@@ -62,8 +63,8 @@ namespace Quests
             icon.sprite = quest.image;
             
             sendButton.gameObject.SetActive(!quest.IsActive);
-            costSlider.gameObject.SetActive(!quest.IsActive);
-            adventurerSlider.gameObject.SetActive(!quest.IsActive && quest.IsRadiant && quest.MinAdventurers != quest.MaxAdventurers);
+            durationSlider.gameObject.SetActive(!quest.IsActive);
+            adventurerSlider.gameObject.SetActive(!quest.IsActive);
             stamp.SetActive(quest.IsActive);
 
             if (quest.IsActive)
@@ -90,8 +91,8 @@ namespace Quests
                 if (!valueChange)
                 {
                     // Set default values for sliders
-                    adventurerSlider.gameObject.SetActive(quest.IsRadiant && quest.MinAdventurers != quest.MaxAdventurers);
-                    if (quest.IsRadiant)
+                    //adventurerSlider.gameObject.SetActive(quest.IsRadiant && quest.MinAdventurers != quest.MaxAdventurers);
+                    /*if (quest.IsRadiant)
                     {
                         adventurerSlider.minValue = quest.MinAdventurers;
                         adventurerSlider.maxValue = quest.MaxAdventurers;
@@ -101,28 +102,32 @@ namespace Quests
                     {
                         adventurerSlider.maxValue = quest.adventurers;
                         adventurerSlider.value = quest.adventurers;
-                    }
+                    }*/
                     
-                    costSlider.minValue = CostScaleMin;
+                    /*costSlider.minValue = CostScaleMin;
                     costSlider.maxValue = CostScaleMax;
-                    costSlider.value = 1f;
+                    costSlider.value = 1f;*/
+
+                    adventurerSlider.value = 0;
+                    durationSlider.value = 0;
                 }
 
                 // Use slider assigned values
-                int adventurers = (int)adventurerSlider.value;
-                int cost = quest.ScaledCost(costSlider.value);
+                int adventurers = (int)adventurerSlider.value + quest.BaseAdventurers;
+                int duration = (int)durationSlider.value + quest.baseDuration;
+                int cost = quest.ScaledCost((int)adventurerSlider.value + (int)durationSlider.value);
 
                 bool enoughAdventurers = Manager.Adventurers.Removable > adventurers;
                 bool enoughMoney = Manager.Stats.Wealth >= cost;
                 statsText.text =
-                    (enoughAdventurers ? "" : "<color=#820000ff>") + 
+                    (enoughAdventurers ? "" : Colors.RedText) + 
                     "Adventurers: " + adventurers +
-                    (enoughAdventurers ? "" : "</color>") +
-                    (enoughMoney ? "" : "<color=#820000ff>") +
+                    (enoughAdventurers ? "" : Colors.EndText) +
+                    "\nDuration: " + duration + " Turns" +
+                    (enoughMoney ? "" : Colors.RedText) +
                     "\nCost: " + cost +
-                    (enoughMoney ? "" : "</color>") +
-                    "\nDuration: " + quest.ScaledTurns(costSlider.value) + " Turns" +
-                    "\nReward: " + quest.ScaledReward(adventurers);
+                    (enoughMoney ? "" : Colors.EndText) +
+                    "\nReward: " + quest.RewardDescription;
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
             }
