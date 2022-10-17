@@ -58,6 +58,21 @@ namespace Cards
 
         public void UpdateDetails(Blueprint blueprint, bool interactable = true)
         {
+            if (interactable)
+            {
+                // Brighten the card if selectable
+                _cardBack.color = Color.white;
+                cost.color = Colors.CostActive;
+                costIcon.color = Colors.CostActive;
+            }
+            else
+            {
+                // Darken the card if unselectable
+                _cardBack.color = Colors.CostInactive;
+                cost.color = Colors.CostInactive;
+                costIcon.color = Colors.CostInactive;
+            }
+            
             if (blueprint == null)
             {
                 //TODO: Make actual locked design
@@ -74,21 +89,6 @@ namespace Cards
             description.text = blueprint.description;
             cost.text = blueprint.Free ? "Free" : blueprint.ScaledCost.ToString();
             icon.sprite = blueprint.icon;
-
-            if (interactable)
-            {
-                // Brighten the card if selectable
-                _cardBack.color = Color.white;
-                cost.color = Colors.CostActive;
-                costIcon.color = Colors.CostActive;
-            }
-            else
-            {
-                // Darken the card if unselectable
-                _cardBack.color = Colors.CostInactive;
-                cost.color = Colors.CostInactive;
-                costIcon.color = Colors.CostInactive;
-            }
 
             var effects = blueprint.stats.OrderByDescending(x => x.Value).ToList();
             

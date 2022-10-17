@@ -34,6 +34,9 @@ namespace Managers
         // Post Processing
         [SerializeField] private VolumeProfile dofProfile, postProcess;
         [SerializeField] private UniversalRendererData rendererData;
+        private static readonly int Active = Shader.PropertyToID("_Active");
+        private static readonly int Invalid = Shader.PropertyToID("_Invalid");
+        private static readonly int Inactive = Shader.PropertyToID("_Inactive");
 
         // Needs to be Start, not Awake for mixer values to apply - Ben
         private void Start()
@@ -157,6 +160,9 @@ namespace Managers
         {
             Colors.ColorBlind = toggle;
             if (Manager.State.InMenu) UpdateUi(); 
+            Shader.SetGlobalColor(Inactive, Colors.GridInactive);
+            Shader.SetGlobalColor(Active, Colors.GridActive);
+            Shader.SetGlobalColor(Invalid, Colors.GridInvalid);
         }
         #endregion
         

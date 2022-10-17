@@ -68,6 +68,7 @@ namespace Cards
         private List<Blueprint> Unlocked { get; set; } // Unlocked across all playthroughs
         private List<Blueprint> Playable { get; set; } // Currently playable (both starter and unlocked/ discovered)
         private List<Blueprint> Discoverable { get; set; } // Cards discoverable in ruins
+        public bool IsPlayable(Blueprint blueprint) => Playable.Contains(blueprint);
         public bool IsUnlocked(Blueprint blueprint) => Unlocked.Contains(blueprint);
         public bool IsDiscoverable(Blueprint blueprint) => Discoverable.Contains(blueprint);
         public Blueprint Find(BuildingType type) => type == BuildingType.GuildHall ? GuildHall : All.Find(blueprint => blueprint.type == type);

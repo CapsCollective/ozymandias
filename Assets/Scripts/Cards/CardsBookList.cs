@@ -1,3 +1,4 @@
+using System.Linq;
 using Managers;
 using Structures;
 using UnityEngine;
@@ -22,6 +23,10 @@ namespace Cards
             State.OnEnterState += _ => ScrollActive = false;
             scrollRect.enabled = true;
             scrollbar.value = 0;
+            
+            // Update list on card unlock
+            Cards.OnUnlock += _ => Display();
+            State.OnNewGame += Display;
         }
 
         private void Update()
@@ -32,18 +37,24 @@ namespace Cards
 
         private void Display()
         {
-            foreach (Blueprint blueprint in Manager.Cards.All)
+            foreach (Transform child in transform) Destroy(child.gameObject);
+            
+            // Order starters first, then playable, then previously unlocked (but not playable), then locked
+            var sorted = Manager.Cards.All.OrderBy(c =>
+            {
+                if (c.starter) return 0;
+                if (Manager.Cards.IsPlayable(c)) return 1;
+                if (Manager.Cards.IsUnlocked(c)) return 2;
+                return 3;
+            });
+            
+            foreach (Blueprint blueprint in sorted)
             {
                 bool isUnlocked = Manager.Cards.IsUnlocked(blueprint);
+                bool isPlayable = Manager.Cards.IsPlayable(blueprint);
                 
                 CardDisplay card = Instantiate(cardDisplayPrefab, transform).GetComponentInChildren<CardDisplay>();
-                card.UpdateDetails(isUnlocked || blueprint.starter ? blueprint : null);
-                
-                // Update list on card unlock
-                if(!isUnlocked) Cards.OnUnlock += (unlocked) =>
-                {
-                    if (unlocked.type == blueprint.type) card.UpdateDetails(blueprint);
-                };
+                card.UpdateDetails(isUnlocked || blueprint.starter ? blueprint : null, isPlayable);
             }
         }
     }
