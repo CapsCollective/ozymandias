@@ -1,13 +1,15 @@
 using Reports;
+using Structures;
 using UnityEngine;
+using System.IO;
+using static Managers.GameManager;
 
 namespace Platform
 {
     public enum PlatformID
     {
         Base,
-        Steam,
-        Switch
+        Steam
     }
     
     public class PlatformDelegate
@@ -61,6 +63,13 @@ namespace Platform
     
     public class FileSystemDelegate : PlatformDelegate
     {
+        public Managers.SaveFile SaveFile;
+
+        public FileSystemDelegate()
+        {
+            SaveFile = new Managers.SaveFile();
+        }
+
         public virtual string GetSaveFilePath()
         {
             return Application.persistentDataPath + "/save.json";
@@ -68,6 +77,27 @@ namespace Platform
         public virtual string GetBackupFilePath()
         {
             return Application.persistentDataPath + "/save_prev.json";
+        }
+    }
+    
+    public class GameplayDelegate : PlatformDelegate
+    {
+        public bool GenerateColliders = true;
+
+        public virtual PlatformAssets GetPlatformAssets()
+        {
+            return Resources.Load<PlatformAssets>("DefaultPlatformAssets");
+        }
+
+        public virtual Structure GetHoveredStructure(Camera camera, LayerMask collisionMask)
+        {
+            var hit = Manager.Inputs.GetRaycast(camera, 200f, collisionMask);
+            return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
+        }
+
+        public virtual bool IsOverUI(UnityEngine.EventSystems.EventSystem eventSystem)
+        {
+            return eventSystem.IsPointerOverGameObject();
         }
     }
 }
