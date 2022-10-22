@@ -1018,6 +1018,15 @@ namespace Inputs
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=1),Press(behavior=1)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""264416ca-3abf-4f4f-b799-815cd34dfe20"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1471,6 +1480,61 @@ namespace Inputs
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""150cde3e-644e-43f7-9174-b2db414c5e2c"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""DebugToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Controller"",
+                    ""id"": ""eab42945-216d-4afa-971a-993ff2d7a811"",
+                    ""path"": ""TwoModifiers"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugToggle"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier1"",
+                    ""id"": ""544faf94-8bdd-4555-adeb-7d5f17d39c21"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""DebugToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""modifier2"",
+                    ""id"": ""f33f0508-6192-46d6-8d2f-370dd504de13"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""DebugToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""91791451-e5ba-4d9d-a30b-da2a59b76514"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""DebugToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -1546,6 +1610,7 @@ namespace Inputs
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
             m_UI_NavigateBookmarks = m_UI.FindAction("Navigate Bookmarks", throwIfNotFound: true);
             m_UI_ToggleBook = m_UI.FindAction("Toggle Book", throwIfNotFound: true);
+            m_UI_DebugToggle = m_UI.FindAction("DebugToggle", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1835,6 +1900,7 @@ namespace Inputs
         private readonly InputAction m_UI_TrackedDeviceOrientation;
         private readonly InputAction m_UI_NavigateBookmarks;
         private readonly InputAction m_UI_ToggleBook;
+        private readonly InputAction m_UI_DebugToggle;
         public struct UIActions
         {
             private @PlayerInputs m_Wrapper;
@@ -1852,6 +1918,7 @@ namespace Inputs
             public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
             public InputAction @NavigateBookmarks => m_Wrapper.m_UI_NavigateBookmarks;
             public InputAction @ToggleBook => m_Wrapper.m_UI_ToggleBook;
+            public InputAction @DebugToggle => m_Wrapper.m_UI_DebugToggle;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1900,6 +1967,9 @@ namespace Inputs
                     @ToggleBook.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleBook;
                     @ToggleBook.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleBook;
                     @ToggleBook.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleBook;
+                    @DebugToggle.started -= m_Wrapper.m_UIActionsCallbackInterface.OnDebugToggle;
+                    @DebugToggle.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnDebugToggle;
+                    @DebugToggle.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnDebugToggle;
                 }
                 m_Wrapper.m_UIActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1943,6 +2013,9 @@ namespace Inputs
                     @ToggleBook.started += instance.OnToggleBook;
                     @ToggleBook.performed += instance.OnToggleBook;
                     @ToggleBook.canceled += instance.OnToggleBook;
+                    @DebugToggle.started += instance.OnDebugToggle;
+                    @DebugToggle.performed += instance.OnDebugToggle;
+                    @DebugToggle.canceled += instance.OnDebugToggle;
                 }
             }
         }
@@ -2007,6 +2080,7 @@ namespace Inputs
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
             void OnNavigateBookmarks(InputAction.CallbackContext context);
             void OnToggleBook(InputAction.CallbackContext context);
+            void OnDebugToggle(InputAction.CallbackContext context);
         }
     }
 }

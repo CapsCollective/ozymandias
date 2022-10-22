@@ -20,6 +20,8 @@ public static class UnityGraphicsBullshit
     private static FieldInfo Cascade2Split_FieldInfo;
     private static FieldInfo Cascade4Split_FieldInfo;
     private static FieldInfo SoftShadowsEnabled_FieldInfo;
+    private static FieldInfo MainLightMaxShadowDistance_FieldInfo;
+    private static FieldInfo RenderScale_FieldInfo;
 
     static UnityGraphicsBullshit()
     {
@@ -33,6 +35,8 @@ public static class UnityGraphicsBullshit
         Cascade2Split_FieldInfo = pipelineAssetType.GetField("m_Cascade2Split", flags);
         Cascade4Split_FieldInfo = pipelineAssetType.GetField("m_Cascade4Split", flags);
         SoftShadowsEnabled_FieldInfo = pipelineAssetType.GetField("m_SoftShadowsSupported", flags);
+        MainLightMaxShadowDistance_FieldInfo = pipelineAssetType.GetField("m_ShadowDistance", flags);
+        RenderScale_FieldInfo = pipelineAssetType.GetField("m_RenderScale", flags);
     }
 
 
@@ -76,5 +80,17 @@ public static class UnityGraphicsBullshit
     {
         get => (bool)SoftShadowsEnabled_FieldInfo.GetValue(GraphicsSettings.currentRenderPipeline);
         set => SoftShadowsEnabled_FieldInfo.SetValue(GraphicsSettings.currentRenderPipeline, value);
+    }
+
+    public static float MaxShadowDistance
+    {
+        get => (float)MainLightMaxShadowDistance_FieldInfo.GetValue(GraphicsSettings.currentRenderPipeline);
+        set => MainLightMaxShadowDistance_FieldInfo.SetValue(GraphicsSettings.currentRenderPipeline, value);
+    }
+
+    public static float RenderScale
+    {
+        get => (float)RenderScale_FieldInfo.GetValue(GraphicsSettings.currentRenderPipeline);
+        set => RenderScale_FieldInfo.SetValue(GraphicsSettings.currentRenderPipeline, value);
     }
 }
