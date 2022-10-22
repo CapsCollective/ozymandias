@@ -51,10 +51,7 @@ namespace Structures
         private void Awake()
         {
             _meshCompute = (ComputeShader)Resources.Load("SectionCompute");
-            _usesShader = _meshCompute != null && 
-                          (Application.platform == RuntimePlatform.WindowsPlayer || 
-                           Application.platform == RuntimePlatform.WindowsEditor ||
-                           Application.platform == RuntimePlatform.Switch);
+            _usesShader = _meshCompute != null && SystemInfo.supportsComputeShaders;
             GetComponent<Renderer>().material.SetInt(HasGrass, hasGrass ? 1 : 0);
         }
 
