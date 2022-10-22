@@ -191,11 +191,11 @@ namespace Structures
                 SelectedStructure = null;
                 HoveredStructure = null;
             };
-            foreach(var rd in PlatformManager.Instance.Gameplay.GetPlatformAssets().RendererData.rendererFeatures)
+            foreach(var rd in Manager.PlatformManager.Gameplay.GetPlatformAssets().RendererData.rendererFeatures)
             {
                 if (rd is OutlineRenderFeature)
                 {
-                    Debug.Log(PlatformManager.Instance.Gameplay.GetPlatformAssets().RendererData.name);
+                    Debug.Log(Manager.PlatformManager.Gameplay.GetPlatformAssets().RendererData.name);
                     _outline = rd as OutlineRenderFeature;
                     break;
                 }
@@ -235,7 +235,7 @@ namespace Structures
         // Returns the building the cursor is hovering over if exists
         private Structure Hovered()
         {
-            return PlatformManager.Instance.Gameplay.GetHoveredStructure(_cam, collisionMask);
+            return Manager.PlatformManager.Gameplay.GetHoveredStructure(_cam, collisionMask);
         }
         
         private void ToggleSelect()

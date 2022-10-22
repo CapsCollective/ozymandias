@@ -250,7 +250,7 @@ namespace Structures
             }
             GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
 
-            if (GetComponent<MeshCollider>() == null && PlatformManager.Instance.Gameplay.GenerateColliders)
+            if (GetComponent<MeshCollider>() == null && Manager.PlatformManager.Gameplay.GenerateColliders)
             {
                 MeshCollider mc = gameObject.AddComponent<MeshCollider>();
                 mc.convex = true;

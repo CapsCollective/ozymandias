@@ -103,80 +103,90 @@ namespace Managers
     [Serializable]
     public class SaveFile
     {
-        public StatDetails stats;
-        public List<AdventurerDetails> adventurers; 
-        public List<QuestDetails> quests;
-        public EventQueueDetails eventQueue;
-        public CardDetails cards;
-        public StructureDetails structures;
-        public AchievementDetails achievements;
-        public Dictionary<Guild, RequestDetails> requests;
-        public UpgradeDetails upgrades;
-        public string version;
+        public class SaveData
+        {
+            public StatDetails stats;
+            public List<AdventurerDetails> adventurers;
+            public List<QuestDetails> quests;
+            public EventQueueDetails eventQueue;
+            public CardDetails cards;
+            public StructureDetails structures;
+            public AchievementDetails achievements;
+            public Dictionary<Guild, RequestDetails> requests;
+            public UpgradeDetails upgrades;
+            public string version;
+        }
 
-        private static readonly string SaveFilePath = PlatformManager.Instance.FileSystem.GetSaveFilePath();
-        private static readonly string BackupFilePath = PlatformManager.Instance.FileSystem.GetBackupFilePath();
+        protected static string SaveFilePath() => Manager.PlatformManager.FileSystem.GetSaveFilePath();
+        protected static string BackupFilePath() => Manager.PlatformManager.FileSystem.GetBackupFilePath();
 
         public static void SaveState(bool overwriteBackup = true)
         {
             if (Tutorial.Tutorial.Active) return; // No saving during tutorial
             OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
-            new SaveFile().Save(overwriteBackup);
+            Manager.PlatformManager.FileSystem.SaveFile.Save(overwriteBackup);
         }
         
         public static void LoadState()
         {
-            new SaveFile().Load();
+            Manager.PlatformManager.FileSystem.SaveFile.Load();
         }
 
-        public static void Delete()
+        public static void DeleteState()
         {
-            File.Delete(SaveFilePath);
+            Manager.PlatformManager.FileSystem.SaveFile.Delete();
         }
 
-        public void Save(bool overwriteBackup)
+        public virtual void Delete()
         {
-            if (File.Exists(SaveFilePath) && overwriteBackup) File.WriteAllLines(BackupFilePath, File.ReadAllLines(SaveFilePath));
+            File.Delete(SaveFilePath());
+        }
 
-            version = Application.version;
-            structures = Manager.Structures.Save();
-            cards = Manager.Cards.Save();
-            achievements = Manager.Achievements.Save();
+        public virtual void Save(bool overwriteBackup)
+        {
+            if (File.Exists(SaveFilePath()) && overwriteBackup) File.WriteAllLines(BackupFilePath(), File.ReadAllLines(SaveFilePath()));
+            var data = new SaveData();
+
+            data.version = Application.version;
+            data.structures = Manager.Structures.Save();
+            data.cards = Manager.Cards.Save();
+            data.achievements = Manager.Achievements.Save();
             
             if (Manager.State.IsGameOver)
             {
-                stats = new StatDetails
+                data.stats = new StatDetails
                 {
                     turnCounter = 0 // Reset game
                 };
             }
             else
             {
-                stats = Manager.Stats.Save();
-                adventurers = Manager.Adventurers.Save();
-                quests = Manager.Quests.Save();
-                eventQueue = Manager.EventQueue.Save();
+                data.stats = Manager.Stats.Save();
+                data.adventurers = Manager.Adventurers.Save();
+                data.quests = Manager.Quests.Save();
+                data.eventQueue = Manager.EventQueue.Save();
             }
 
-            //achievements = Manager.Achievements.Save();
-            requests = Manager.Requests.Save();
-            upgrades = Manager.Upgrades.Save();
-            File.WriteAllText(SaveFilePath, JsonConvert.SerializeObject(this));
+            data.achievements = Manager.Achievements.Save();
+            data.requests = Manager.Requests.Save();
+            data.upgrades = Manager.Upgrades.Save();
+            File.WriteAllText(SaveFilePath(), JsonConvert.SerializeObject(data));
         }
 
-        public void Load()
+        public virtual void Load()
         {
-            try
+            SaveData data = new SaveData();
+            if (File.Exists(SaveFilePath()))
             {
-                string saveJson = File.ReadAllText(SaveFilePath);
-                JsonConvert.PopulateObject(saveJson, this);
+                string saveJson = File.ReadAllText(SaveFilePath());
+                JsonConvert.PopulateObject(saveJson, data);
                 
-                if (version != Application.version)
+                if (data.version != Application.version)
                 {
-                    Debug.LogWarning("Save file from previous version " + version);
+                    Debug.LogWarning("Save file from previous version " + data.version);
                 }
             }
-            catch
+            else
             {
                 Debug.LogWarning("Save.json not found, starting tutorial");
                 Tutorial.Tutorial.Active = true;
@@ -186,19 +196,19 @@ namespace Managers
                 Manager.Structures.SpawnTutorialRuins();
             }
             
-            Manager.Achievements.Load(achievements);
-            Manager.Upgrades.Load(upgrades);
-            Manager.Cards.Load(cards);
-            Manager.Stats.Load(stats);
-            Manager.Structures.Load(structures);
+            Manager.Achievements.Load(data.achievements);
+            Manager.Upgrades.Load(data.upgrades);
+            Manager.Cards.Load(data.cards);
+            Manager.Stats.Load(data.stats);
+            Manager.Structures.Load(data.structures);
             if(Manager.Structures.Count == 0) Manager.Map.FillGrid();
-            Manager.EventQueue.Load(eventQueue);
-            Manager.Requests.Load(requests);
+            Manager.EventQueue.Load(data.eventQueue);
+            Manager.Requests.Load(data.requests);
             
             // If continuing a game
             if (Manager.Stats.TurnCounter == 0) return;
-            Manager.Adventurers.Load(adventurers);
-            Manager.Quests.Load(quests);
+            Manager.Adventurers.Load(data.adventurers);
+            Manager.Quests.Load(data.quests);
         }
     }
 }

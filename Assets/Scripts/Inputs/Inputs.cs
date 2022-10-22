@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem.Users;
+using static Managers.GameManager;
 
 namespace Inputs
 {
@@ -107,7 +108,7 @@ namespace Inputs
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;
-            ControlScheme =  PlayerInput.controlSchemes[PlatformManager.Instance.Input.GetDefaultControlScheme()];
+            ControlScheme =  PlayerInput.controlSchemes[Manager.PlatformManager.Input.GetDefaultControlScheme()];
             PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
         }
 

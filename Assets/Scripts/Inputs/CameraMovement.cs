@@ -168,7 +168,7 @@ namespace Inputs
 
         public TweenerCore<Vector3,Vector3,VectorOptions> MoveTo(Vector3 pos, float duration = 0.5f)
         {
-            return FreeLook.Follow.transform.DOMove(pos, duration);
+            return FreeLook.Follow.transform.DOMove(pos + Vector3.up, duration);
         }
         
         public struct CameraMove
