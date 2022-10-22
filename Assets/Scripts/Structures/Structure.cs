@@ -91,9 +91,25 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++)
             {
                 _sections[i].Init(Occupied[i]);
-                _sections[i].SetRoofColor(quest.colour);
+                //_sections[i].SetRoofColor(quest.colour);
                 _sectionRenderers.Add(_sections[i]._meshFilter);
             }
+
+            var meshrenderer = gameObject.AddComponent<MeshRenderer>();
+            var meshfilter = gameObject.AddComponent<MeshFilter>();
+            meshrenderer.material = buildingMaterial;
+            meshrenderer.material.SetColor("_RoofColor", quest.colour);
+
+            CombineInstance[] combine = new CombineInstance[_sectionRenderers.Count];
+            for (int i = 0; i < combine.Length; i++)
+            {
+                combine[i].mesh = _sectionRenderers[i].sharedMesh;
+                combine[i].transform = transform.worldToLocalMatrix * _sectionRenderers[i].transform.localToWorldMatrix;
+
+                // Just disable anything to do with rendering so collision stays the same
+                _sections[i].meshRenderer.enabled = false;
+            }
+            GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
 
             if (!Manager.State.Loading) AnimateCreate();
         }
@@ -282,7 +298,18 @@ namespace Structures
             newSection.SetRoofColor(Quest.colour);
             newSection.Init(newCell);
             _sectionRenderers.Add(newSection.GetComponent<MeshFilter>());
-            
+
+            CombineInstance[] combine = new CombineInstance[_sectionRenderers.Count];
+            for (int i = 0; i < combine.Length; i++)
+            {
+                combine[i].mesh = _sectionRenderers[i].sharedMesh;
+                combine[i].transform = transform.worldToLocalMatrix * _sectionRenderers[i].transform.localToWorldMatrix;
+
+                // Just disable anything to do with rendering so collision stays the same
+                _sections[i].meshRenderer.enabled = false;
+            }
+            GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+
             if (Occupied.Count == 4) Notification.OnNotification.Invoke("A camp is growing dangerously large!", Manager.questIcon, 3); 
         }
 
