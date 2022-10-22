@@ -205,7 +205,11 @@ namespace Cards
                 hand[cardIndex].AnimateSelected();
                 hand[cardIndex].Toggle.isOn = true;
             }
-            else _toggleGroup.SetAllTogglesOff();
+            else
+            {
+                _toggleGroup.SetAllTogglesOff();
+                ClearCells();
+            }
         }
 
         #endregion
@@ -227,10 +231,9 @@ namespace Cards
             if (!Manager.Cards.SelectedCard || IsOverUi)
             {
                 _hoveredCell = null;
-                ClearCells(); 
                 return;
             }
-            
+
             Cell closest = ClosestCellToCursor;
             if (closest == null || !closest.Active || (_prevRotation == _rotation && _hoveredCell == closest && _prevCardIndex == _selectedCardIndex)) return;
             _hoveredCell = closest;

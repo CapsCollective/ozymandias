@@ -9,7 +9,7 @@ namespace Utilities
 {
     public class Algorithms : MonoBehaviour
     {
-        public static IEnumerator ConvexHullAsync(List<Vertex> included, Graph<Vertex> graph, Action<List<Vertex>> callback)
+        public static void ConvexHullAsync(List<Vertex> included, Graph<Vertex> graph, Action<List<Vertex>> callback)
         {
             List<Vertex> path = new List<Vertex>();
 
@@ -45,10 +45,22 @@ namespace Utilities
 
             Dictionary<Vertex, List<Vertex>> toInclude = new Dictionary<Vertex, List<Vertex>>();
 
-            Graph<Vertex> dupGraph = new Graph<Vertex>(graph);
-            for (int i = dupGraph.Count - 1; i >= 0; i--)
-                if (!included.Select(vertex => vertex.Id).Contains(dupGraph.Data[i].Id))
-                    dupGraph.Remove(dupGraph.Data[i].Id);
+            Graph<Vertex> dupGraph = new Graph<Vertex>();
+            foreach (var item in included)
+            {
+                List<int> adjacents = graph.GetAdjacent(item.Id);
+                List<int> newAdjacents = new List<int>();
+                foreach (var a in adjacents)
+                {
+                    foreach (var v in included)
+                    {
+                        if (a == v.Id) newAdjacents.Add(a);
+                    }
+                }
+                dupGraph.Add(graph.GetData(item.Id), newAdjacents, item.Id);
+            }
+
+
 
             for (int i = 0; i < path.Count - 1; i++)
             {
@@ -67,7 +79,7 @@ namespace Utilities
             }
 
             callback?.Invoke(path);
-            yield return new WaitForEndOfFrame();
+            //yield return new WaitForEndOfFrame();
         }
 
         public static List<Vertex> AStar(Graph<Vertex> set, Vertex root, Vertex target, int iterationLimit = 2000)
@@ -104,8 +116,9 @@ namespace Utilities
                     break;
                 }
 
-                foreach (Vertex neighbour in set.GetAdjacentData(current.Id))
+                foreach (int neighbourID in set.GetAdjacent(current.Id))
                 {
+                    Vertex neighbour = set.GetData(neighbourID);
                     if (!neighbour.Active) continue;
 
                     float gCost = Vector3.Distance(neighbour, root);

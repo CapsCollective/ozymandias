@@ -6,6 +6,7 @@ using Structures;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
+using NaughtyAttributes;
 using static Managers.GameManager;
 
 namespace Map
@@ -102,7 +103,6 @@ namespace Map
             roadMesh.sharedMesh = null;
         }
 
-
         #region Querying
         // Gets the closest cell by world position
         public Cell GetClosestCell(Vector3 worldPosition) =>
@@ -144,18 +144,23 @@ namespace Map
         #endregion
 
         #region Functionality
+        List<Vector2> uv = new List<Vector2>();
+        Vector2 newUV = new Vector2();
         public void Highlight(IEnumerable<Cell> cells, HighlightState state)
         {
-            Vector2[] uv = gridMesh.sharedMesh.uv;
+            gridMesh.sharedMesh.GetUVs(0, uv);
 
             foreach (Cell cell in cells)
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertexIndex in layout.GetUVs(cell))
-                    uv[vertexIndex].x = (int) state / 2f;
+                {
+                    newUV = new Vector2((int)state / 2f, uv[vertexIndex].y);
+                    uv[vertexIndex] = newUV;
+                }
             }
 
-            gridMesh.sharedMesh.uv = uv;
+            gridMesh.sharedMesh.SetUVs(0, uv);
         }
 
         // Sets the rotation of all cells to be uniformly oriented
@@ -171,7 +176,7 @@ namespace Map
         
         public void CreateRoad(List<Cell> cells)
         {
-            StartCoroutine(layout.CreateRoad(cells, roadMesh));
+            layout.CreateRoad(cells, roadMesh);
         }
         #endregion
     }
