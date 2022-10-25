@@ -54,6 +54,8 @@ namespace Platform
     
     public class InputDelegate : PlatformDelegate
     {
+        public virtual void AddExtraBinds(ref Inputs.PlayerInputs inputs) { }
+
         public virtual int GetDefaultControlScheme()
         {
             return 0;

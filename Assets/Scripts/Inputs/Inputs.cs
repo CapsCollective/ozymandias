@@ -19,7 +19,8 @@ namespace Inputs
         public Transform WorldSpaceCursor;
 
         // Player Input
-        public PlayerInputs PlayerInput { get; }
+        private PlayerInputs _playerInputs;
+        public PlayerInputs PlayerInput { get => _playerInputs; }
         private InputAction MouseMoved { get; }
         public Vector2 MousePosition 
         {
@@ -61,7 +62,7 @@ namespace Inputs
 
         public Inputs()
         {
-            PlayerInput = new PlayerInputs();
+            _playerInputs = new PlayerInputs();
 
             MouseMoved = PlayerInput.Player.MousePosition;
             LeftMouse = PlayerInput.Player.LeftMouse;
@@ -103,7 +104,9 @@ namespace Inputs
             ReturnToTown = PlayerInput.Player.ReturnToTown;
             OnScreenshot = PlayerInput.Player.Screenshot;
             OnDebugToggle = PlayerInput.UI.DebugToggle;
-            
+
+            Manager.PlatformManager.Input.AddExtraBinds(ref _playerInputs);
+
             PlayerInput.UI.Enable();
             PlayerInput.Player.Enable();
 
