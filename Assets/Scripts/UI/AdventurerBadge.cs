@@ -26,7 +26,7 @@ namespace UI
 
             if (value != _oldValue)
             {
-                TriggerTicker(value - _oldValue);
+                TriggerTicker(value - _oldValue, value);
                 _oldValue = value;
             }
 
@@ -36,21 +36,22 @@ namespace UI
                 _oldSatisfaction = satisfaction;
             }
             
-            count.text = value.ToString();
-            
             Color color = satisfaction - value > 0 ? Colors.Green : Colors.Red;
             color.a = Math.Abs(satisfaction - value) / 5f;
             glow.color = color;
         }
 
-        private void TriggerTicker(int amount)
+        private void TriggerTicker(int amount, int total)
         {
             countTicker.text = (amount > 0 ? "+" : Colors.RedText) + amount + (amount > 0 ? "" : Colors.EndText);
             countTicker.enabled = true;
             countTicker.alpha = 1;
             countTicker.rectTransform.localPosition = new Vector3(0, -110, 0);
             countTicker.DOFade(0, 1f).SetDelay(1f);
-            countTicker.rectTransform.DOLocalMove(new Vector3(0,-60,0), 1f).SetDelay(1f);
+            countTicker.rectTransform
+                .DOLocalMove(new Vector3(0,-60,0), 1f)
+                .SetDelay(1f)
+                .OnComplete(() => count.text = total.ToString());
         }
         
         private void PunchBadge()

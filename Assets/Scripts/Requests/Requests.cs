@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Managers;
 using Requests.Templates;
+using UI;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -18,9 +19,8 @@ namespace Requests
 
         private void Awake()
         {
-            State.OnEnterState += (_) =>
+            State.OnNextTurnBegin += () =>
             {
-                if (!Manager.State.NextTurn) return;
                 foreach (KeyValuePair<Guild, Request> request in _requests)
                 {
                     if (request.Value == null)
@@ -43,6 +43,12 @@ namespace Requests
         {
             _requests[guild].Complete();
             Manager.Upgrades.GuildTokens[guild] += _requests[guild].Tokens;
+            int purchasable = Manager.Upgrades.TotalPurchasable;
+            if (purchasable > 0) Manager.Notifications.Display(
+                $"You have {purchasable} upgrades available for purchase", 
+                delay: 5f,
+                onClick: () => Manager.Book.Open(Book.BookPage.Upgrades)
+            );
             Manager.Upgrades.Display();
             _requests[guild] = null;
             displays[guild].Request = null;

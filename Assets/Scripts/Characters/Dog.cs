@@ -34,7 +34,7 @@ namespace Characters
             OnDogPet?.Invoke();
             _particleSystem.Play();
             Manager.Jukebox.PlayBark();
-            Notification.OnNotification.Invoke("You pet a dog!", icon, 0);
+            Manager.Notifications.Display("You pet a dog!", icon);
         }
     
         private void OnDestroy()

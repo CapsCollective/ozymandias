@@ -12,12 +12,12 @@ namespace Requests.Templates
 
         public override void Start()
         {
-            State.OnNextTurnEnd += CheckHappy;
+            State.OnNewTurn += CheckHappy;
         }
         
         public override void Complete()
         {
-            State.OnNextTurnEnd -= CheckHappy;
+            State.OnNewTurn -= CheckHappy;
         }
 
         private void CheckHappy()

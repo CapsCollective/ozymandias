@@ -42,6 +42,8 @@ namespace Events
         private string _newspaperTitle;
         private Canvas _canvas;
 
+        private bool _nextTurn;
+
         private enum ButtonState
         {
             Close,
@@ -69,6 +71,7 @@ namespace Events
         {
             Open();
             if (Random.Range(0, 5) == 2) Manager.Jukebox.PlayMorning(); // 1/5 chance to play sound
+            _nextTurn = true;
         }
 
         public void UpdateDisplay(List<Event> events, List<string> descriptions)
@@ -161,7 +164,12 @@ namespace Events
                         Manager.State.EnterState(GameState.InGame);
                         OnClosed?.Invoke();
                         OnNextClosed?.Invoke();
-                        SaveFile.SaveState(); // Save here so state only locks in after paper is closed
+                        if (_nextTurn)
+                        {
+                            _nextTurn = false;
+                            State.OnNewTurn?.Invoke();
+                            SaveFile.SaveState(); // Save here so state only locks in after paper is closed
+                        }
                         UpdateUi();
                     }
                     OnNextClosed = null;

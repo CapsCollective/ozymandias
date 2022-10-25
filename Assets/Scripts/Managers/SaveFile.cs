@@ -76,7 +76,8 @@ namespace Managers
     [Serializable]
     public struct CardDetails
     {
-        public List<BuildingType> deck, unlocked, playable, discoverable;
+        public List<BuildingType> deck, unlocked, playable;
+        public int discoveriesRemaining;
     }
     
     [Serializable]
@@ -123,7 +124,7 @@ namespace Managers
         public static void SaveState(bool overwriteBackup = true)
         {
             if (Tutorial.Tutorial.Active) return; // No saving during tutorial
-            OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
+            if (overwriteBackup) Manager.Notifications.Display("Game Saved", Manager.saveIcon);
             Manager.PlatformManager.FileSystem.SaveFile.Save(overwriteBackup);
         }
         

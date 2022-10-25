@@ -13,12 +13,12 @@ namespace Requests.Templates
 
         public override void Start()
         {
-            State.OnNextTurnEnd += CheckUpset;
+            State.OnNewTurn += CheckUpset;
         }
         
         public override void Complete()
         {
-            State.OnNextTurnEnd -= CheckUpset;
+            State.OnNewTurn -= CheckUpset;
         }
 
         private void CheckUpset()

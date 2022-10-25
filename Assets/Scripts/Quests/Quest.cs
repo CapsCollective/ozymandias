@@ -13,7 +13,6 @@ using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
 using Random = UnityEngine.Random;
-using String = Utilities.String;
 
 namespace Quests
 {
@@ -32,7 +31,6 @@ namespace Quests
             {3, 0.55f},
             {4, 0.4f}
         };
-
 
         public static Action<Quest> OnQuestStarted;
         
@@ -71,7 +69,7 @@ namespace Quests
             BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (10f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 10f);
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
-            State.OnNextTurnEnd += OnNewTurn;
+            State.OnNewTurn += OnNewTurn;
 
             if (location == Location.Grid)
             {
@@ -99,7 +97,7 @@ namespace Quests
         {
             if (location == Location.Grid) ClearBuilding();
             else ResetLocation();
-            State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
+            State.OnNewTurn -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
         
         private void SetLocation()
@@ -110,6 +108,7 @@ namespace Quests
         
         private void ResetLocation()
         {
+            if (Structure == null) return;
             Structure.Quest = null;
             Structure = null;
         }
@@ -169,6 +168,7 @@ namespace Quests
 
         private void ClearBuilding()
         {
+            if (Structure == null) return;
             Structure.Destroy();
             Structure = null;
         }
@@ -209,7 +209,7 @@ namespace Quests
 
         public void Load(QuestDetails details)
         {
-            State.OnNextTurnEnd += OnNewTurn;
+            State.OnNewTurn += OnNewTurn;
             BaseCost = details.cost;
             TurnsLeft = details.turnsLeft;
 
@@ -226,6 +226,7 @@ namespace Quests
         [Button("Add")]
         public void DebugAdd()
         {
+            if (Structure != null) return;
             Manager.Quests.Add(this);
         }
         
