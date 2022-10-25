@@ -24,10 +24,7 @@ namespace Structures
             set
             {
                 _selected = value;
-                //foreach (MeshFilter r in _sectionRenderers)
-                //{
                 gameObject.layer = _selected ? LayerMask.NameToLayer("Selected") : LayerMask.NameToLayer("Grid Terrain");
-                //}
             }
         }
         public bool IsBuilding => StructureType == StructureType.Building;
@@ -91,7 +88,6 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++)
             {
                 _sections[i].Init(Occupied[i]);
-                //_sections[i].SetRoofColor(quest.colour);
                 _sectionRenderers.Add(_sections[i]._meshFilter);
             }
 

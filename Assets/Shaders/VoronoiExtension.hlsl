@@ -10,7 +10,6 @@ float2 VoronoiHash(float2 p)
 
 float Voronoi(float2 v, float time, float smoothness)
 {
-#if defined(CLOUDS_ENABLED)
 	float2 n = floor(v);
 	float2 f = frac(v);
 	float F1 = 8.0;
@@ -33,8 +32,6 @@ float Voronoi(float2 v, float time, float smoothness)
 		}
 	}
 	return F1;
-#endif
-	return 0;
 }
 
 void Voronoii_float(float2 v, float time, float smoothness, inout float Out)
