@@ -29,7 +29,6 @@ namespace Grass
         void Start()
         {
             Managers.State.OnLoadingEnd += () => GrassNeedsUpdate = true;
-            Structures.Structures.OnBuild += (s) => GrassNeedsUpdate = true;
             Structures.Structures.OnDestroyed += (s) => GrassNeedsUpdate = true;
             OnGrassQualityChange += UpdateVFX;
         }

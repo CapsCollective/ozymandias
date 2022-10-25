@@ -269,6 +269,8 @@ namespace Structures
                 mc.sharedMesh = GetComponent<MeshFilter>().sharedMesh;
             }
 
+            Grass.GrassEffectController.GrassNeedsUpdate = true;
+
             //Debug.Log($"{gameObject.name} merged sections!");
         }
 
