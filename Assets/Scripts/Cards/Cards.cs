@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Cards
 {
@@ -85,8 +86,27 @@ namespace Cards
             Select.OnClear += structure =>
             {
                 // Gets more likely to discover buildings as ruins get cleared until non remain
-                if (DiscoveriesRemaining <= 0 || !structure.IsRuin) return;
+                if (!structure.IsRuin) return;
+                if (Discoverable.Count <= 0)
+                {
+                    if (Random.Range(0,4) == 0) Manager.Notifications.Display(
+                        "No unlocked cards to discover in ruins",
+                        notificationIcon, 3,
+                        () => Manager.Book.Open(Book.BookPage.Reports)
+                    );
+                    return;
+                }
+                if (DiscoveriesRemaining <= 0)
+                {
+                    if (Random.Range(0,4) == 0) Manager.Notifications.Display(
+                        "No card discoveries remaining, upgrade to find more",
+                        notificationIcon, 3,
+                        () => Manager.Book.Open(Book.BookPage.Upgrades)
+                    );
+                    return;
+                }
                 Unlock(Discoverable.SelectRandom(), true);
+                DiscoveriesRemaining--;
                 Manager.Notifications.Display($"Card rediscovered from ruins! ({DiscoveriesRemaining} remaining)", notificationIcon, 3);
             };
             State.OnNewGame += () =>
