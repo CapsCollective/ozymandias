@@ -50,6 +50,8 @@ namespace Utilities
             {"([^s]+)$", "$1s"},
         };
         
+        private static Dictionary<string, string> PluralCache = new Dictionary<string, string>();
+        
         public static string Pluralise(string word, int count)
         {
             return count == 1 ? word : Pluralise(word);
@@ -57,32 +59,44 @@ namespace Utilities
 
         public static string Pluralise(string word)
         {
+            // Try find plural in cache
+            if (PluralCache.ContainsKey(word))
+            {
+                return PluralCache[word];
+            }
+
             // Discard empty words
             if (word.Length <= 0) return word;
             
             // Lowercase the word for search purposes
             var searchWord = word.ToLower();
-            
-            // Check for non-pluralising word
-            if(UncountableWords.FindIndex(s => s == searchWord) >= 0) return word;
-            
-            // Check for irregular plurals
-            if (IrregularPluralRules.TryGetValue(searchWord, out var plural))
+
+            var plural = word;
+            if(UncountableWords.FindIndex(s => s == searchWord) >= 0)
             {
-                return word.Substring(0, 1) + plural.Substring(1);
+                // Non-pluralising words
             }
-
-            // Regex check for regular plurals
-            foreach (var kv in RegularPluralRules)
+            else if (IrregularPluralRules.TryGetValue(searchWord, out var pluralised))
             {
-                Regex findPattern = new Regex(kv.Key);
+                // Irregular plurals
+                plural = word[..1] + pluralised[1..];
+            }
+            else
+            {
+                // Regular plurals
+                foreach (var kv in RegularPluralRules)
+                {
+                    Regex findPattern = new Regex(kv.Key);
 
-                if (!findPattern.IsMatch(searchWord)) continue;
-
-                return Regex.Replace(word, kv.Key, kv.Value);
+                    if (!findPattern.IsMatch(searchWord)) continue;
+                
+                    plural = Regex.Replace(word, kv.Key, kv.Value);
+                    break;
+                }   
             }
             
-            // Failed to pluralise word
+            // Cache the found word
+            PluralCache[word] = plural;
             return word;
         }
     }
