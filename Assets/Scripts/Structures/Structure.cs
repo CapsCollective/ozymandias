@@ -332,10 +332,12 @@ namespace Structures
             ParticleSystem.Play();
             if (playSound) Manager.Jukebox.PlayBuild();
         }
-        
+
+        [ContextMenu("To Ruin")]
         public void ToRuin()
         {
             StructureType = StructureType.Ruins;
+            GetComponent<MeshRenderer>().enabled = false;
             foreach (Section section in _sections)
             {
                 section.ToRuin();
