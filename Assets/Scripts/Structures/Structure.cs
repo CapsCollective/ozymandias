@@ -260,13 +260,14 @@ namespace Structures
                 // Just disable anything to do with rendering so collision stays the same
                 _sections[i].meshRenderer.enabled = false;
             }
-            GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            meshFilter.mesh.CombineMeshes(combine);
 
-            if (GetComponent<MeshCollider>() == null && Manager.PlatformManager.Gameplay.GenerateColliders)
+            if (GetComponent<MeshCollider>() is MeshCollider mc && Manager.PlatformManager.Gameplay.GenerateColliders)
             {
-                MeshCollider mc = gameObject.AddComponent<MeshCollider>();
+                mc.sharedMesh = meshFilter.sharedMesh;
                 mc.convex = true;
-                mc.sharedMesh = GetComponent<MeshFilter>().sharedMesh;
+                mc.enabled = true;
             }
 
             Grass.GrassEffectController.GrassNeedsUpdate = true;
