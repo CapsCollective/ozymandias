@@ -1,7 +1,7 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
-static const int numThreads = 128;
+static const int numThreads = 64;
 
 RWStructuredBuffer<float3> sectionBuffer;
 RWStructuredBuffer<float3> vertexBuffer;
