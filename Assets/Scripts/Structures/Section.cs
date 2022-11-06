@@ -127,7 +127,7 @@ namespace Structures
                 _meshCompute.SetFloat("heightFactor", HeightFactor);
                 _meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
 
-                _meshCompute.Dispatch(0, Mathf.CeilToInt(planePositions.Length / 64.0f), 1, 1);
+                _meshCompute.Dispatch(0, Mathf.FloorToInt(planePositions.Length / 64.0f), 1, 1);
 
                 UnityEngine.Rendering.AsyncGPUReadback.Request(vertexBuffer, (c) =>
                 {
