@@ -272,6 +272,12 @@ namespace Structures
 
             Grass.GrassEffectController.GrassNeedsUpdate = true;
 
+            for (int i = 0; i < _sections.Count; i++)
+            {
+                // Reset for later
+                _sections[i].finishedGenerating = false;
+            }
+
             //Debug.Log($"{gameObject.name} merged sections!");
         }
 
@@ -337,10 +343,11 @@ namespace Structures
         public void ToRuin()
         {
             StructureType = StructureType.Ruins;
-            GetComponent<MeshRenderer>().enabled = false;
+            //GetComponent<MeshRenderer>().enabled = false;
             foreach (Section section in _sections)
             {
                 section.ToRuin();
+                section.onGenerationComplete += MergeSections;
             }
         }
         
