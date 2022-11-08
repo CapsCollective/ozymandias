@@ -103,7 +103,12 @@ namespace Inputs
             DialogueNext = PlayerInput.Player.DialogueNext;
             ReturnToTown = PlayerInput.Player.ReturnToTown;
             OnScreenshot = PlayerInput.Player.Screenshot;
-            OnDebugToggle = PlayerInput.UI.DebugToggle;
+            
+            // Debug
+            if (Debug.isDebugBuild)
+            {
+                OnDebugToggle = PlayerInput.UI.DebugToggle;
+            }
 
             Manager.PlatformManager.Input.AddExtraBinds(ref _playerInputs);
 

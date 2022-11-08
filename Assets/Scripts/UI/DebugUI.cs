@@ -33,10 +33,15 @@ namespace UI {
 
         public void Start()
         {
+            if (!Debug.isDebugBuild)
+            {
+                EnableDebugDisplay(false);
+                return;
+            }
+
             frameCount = new float[300];
             camFreeLook = Camera.main.GetComponent<CinemachineFreeLook>();
             Manager.Inputs.OnDebugToggle.performed += ToggleDebug;
-            debugUI.SetActive(false);
 
             settings.Add("MainLightShadows", UnityGraphicsBullshit.MainLightCastShadows);
             settings.Add("ShadowDistance", UnityGraphicsBullshit.MaxShadowDistance);
@@ -48,7 +53,14 @@ namespace UI {
             settings.Add("SoftShadows", UnityGraphicsBullshit.SoftShadowsEnabled);
             settings.Add("FogStartDist", RenderSettings.fogEndDistance);
             UpdateText(false);
-            settingsText.gameObject.SetActive(false);
+
+            EnableDebugDisplay(false);
+        }
+
+        private void EnableDebugDisplay(bool enable)
+        {
+            debugUI.SetActive(enable);
+            settingsText.gameObject.SetActive(enable);
         }
 
         private void Update()
