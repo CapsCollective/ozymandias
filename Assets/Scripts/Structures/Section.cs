@@ -51,7 +51,9 @@ namespace Structures
         private void Awake()
         {
             _meshCompute = (ComputeShader)Resources.Load("SectionCompute");
-            _usesShader = _meshCompute != null && SystemInfo.supportsComputeShaders;
+            _usesShader = _meshCompute != null && SystemInfo.supportsComputeShaders &&
+                          Application.platform != RuntimePlatform.OSXEditor &&
+                          Application.platform != RuntimePlatform.OSXPlayer;
             GetComponent<Renderer>().material.SetInt(HasGrass, hasGrass ? 1 : 0);
         }
 
@@ -102,77 +104,74 @@ namespace Structures
             }
         }
 
-
         private void Fit()
         {
-            // Retrieve the section data
+            // Retrieve the section data and calculate new vertex positions
             SectionData sectionData = Manager.Structures.BuildingCache[FileName];
-
-            // Calculate new vertex positions
             Vector3[] planePositions = new Vector3[MeshFilter.mesh.vertexCount];
 
-            if (_usesShader)
+            if (_usesShader) ComputePlanePositionsViaShader(sectionData, planePositions);
+            else ComputePlanePositionsManually(sectionData, planePositions);
+        }
+
+        private void ComputePlanePositionsViaShader(SectionData sectionData, Vector3[] planePositions)
+        {
+            ComputeBuffer sectionBuffer = new ComputeBuffer(sectionData.VertexCoordinates.Length, sizeof(float) * 3);
+            ComputeBuffer vertexBuffer = new ComputeBuffer(planePositions.Length, sizeof(float) * 3);
+            ComputeBuffer cornerBuffer = new ComputeBuffer(_cellCorners.Count, sizeof(float) * 3);
+            sectionBuffer.SetData(sectionData.VertexCoordinates);
+            vertexBuffer.SetData(planePositions);
+            cornerBuffer.SetData(_cellCorners);
+
+            _meshCompute.SetBuffer(0, "sectionBuffer", sectionBuffer);
+            _meshCompute.SetBuffer(0, "vertexBuffer", vertexBuffer);
+            _meshCompute.SetBuffer(0, "cornerBuffer", cornerBuffer);
+            _meshCompute.SetMatrix("worldToObjectMatrix", transform.worldToLocalMatrix);
+            _meshCompute.SetFloat("heightFactor", HeightFactor);
+            _meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
+
+            _meshCompute.Dispatch(0, Mathf.CeilToInt(planePositions.Length / 64.0f), 1, 1);
+
+            UnityEngine.Rendering.AsyncGPUReadback.Request(vertexBuffer, (c) =>
             {
-                ComputeBuffer sectionBuffer = new ComputeBuffer(sectionData.VertexCoordinates.Length, sizeof(float) * 3);
-                ComputeBuffer vertexBuffer = new ComputeBuffer(planePositions.Length, sizeof(float) * 3);
-                ComputeBuffer cornerBuffer = new ComputeBuffer(_cellCorners.Count, sizeof(float) * 3);
-                sectionBuffer.SetData(sectionData.VertexCoordinates);
-                vertexBuffer.SetData(planePositions);
-                cornerBuffer.SetData(_cellCorners);
-            
-                _meshCompute.SetBuffer(0, "sectionBuffer", sectionBuffer);
-                _meshCompute.SetBuffer(0, "vertexBuffer", vertexBuffer);
-                _meshCompute.SetBuffer(0, "cornerBuffer", cornerBuffer);
-                _meshCompute.SetMatrix("worldToObjectMatrix", transform.worldToLocalMatrix);
-                _meshCompute.SetFloat("heightFactor", HeightFactor);
-                _meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
+                if (c.hasError) return;
+                planePositions = c.GetData<Vector3>().ToArray();
 
-                _meshCompute.Dispatch(0, Mathf.CeilToInt(planePositions.Length / 64.0f), 1, 1);
+                sectionBuffer.Release();
+                vertexBuffer.Release();
+                cornerBuffer.Release();
 
-                UnityEngine.Rendering.AsyncGPUReadback.Request(vertexBuffer, (c) =>
-                {
-                    if (c.hasError)
-                    {
-                        Debug.Log("Compute Error");
-                        return;
-                    }
-
-                    // Apply morphed vertices to Mesh Filter
-                    MeshFilter.mesh.SetVertices(c.GetData<Vector3>());
-                    MeshFilter.mesh.RecalculateNormals();
-                    MeshFilter.mesh.RecalculateBounds();
-
-                    sectionBuffer.Release();
-                    vertexBuffer.Release();
-                    cornerBuffer.Release();
-                    finishedGenerating = true;
-                    onGenerationComplete?.Invoke();
-                });
-
-            }
-            else
+                RecalculateMesh(planePositions);
+            });
+        }
+        
+        private void ComputePlanePositionsManually(SectionData sectionData, Vector3[] planePositions)
+        {
+            Transform t = transform;
+            for (int i = 0; i < planePositions.Length; i++)
             {
-                Transform t = transform;
-                for (int i = 0; i < planePositions.Length; i++)
+                Vector3 CalculateMesh()
                 {
-                    Vector3 CalculateMesh()
-                    {
-                        Vector3 i0 = Vector3.Lerp(_cellCorners[0], _cellCorners[3], sectionData[i].x);
-                        Vector3 i1 = Vector3.Lerp(_cellCorners[1], _cellCorners[2], sectionData[i].x);
-                        return Vector3.Lerp(i0, i1, sectionData[i].z);
-                    }
-
-                    planePositions[i] = t.InverseTransformPoint(CalculateMesh());
-                    planePositions[i].y += HeightFactor * sectionData[i].y;
+                    Vector3 i0 = Vector3.Lerp(_cellCorners[0], _cellCorners[3], sectionData[i].x);
+                    Vector3 i1 = Vector3.Lerp(_cellCorners[1], _cellCorners[2], sectionData[i].x);
+                    return Vector3.Lerp(i0, i1, sectionData[i].z);
                 }
 
-                MeshFilter.mesh.SetVertices(planePositions);
-                MeshFilter.mesh.RecalculateNormals();
-                MeshFilter.mesh.RecalculateBounds();
-
-                finishedGenerating = true;
-                onGenerationComplete?.Invoke();
+                planePositions[i] = t.InverseTransformPoint(CalculateMesh());
+                planePositions[i].y += HeightFactor * sectionData[i].y;
             }
+            RecalculateMesh(planePositions);
+        }
+
+        private void RecalculateMesh(Vector3[] planePositions)
+        {
+            // Apply morphed vertices to Mesh Filter
+            MeshFilter.mesh.SetVertices(planePositions);
+            MeshFilter.mesh.RecalculateNormals();
+            MeshFilter.mesh.RecalculateBounds();
+
+            finishedGenerating = true;
+            onGenerationComplete?.Invoke();
         }
 
         public void SetRoofColor(Color color)
