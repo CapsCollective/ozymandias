@@ -270,8 +270,6 @@ namespace Structures
                 mc.enabled = true;
             }
 
-            Grass.GrassEffectController.GrassNeedsUpdate = true;
-
             for (int i = 0; i < _sections.Count; i++)
             {
                 // Reset for later
@@ -335,6 +333,10 @@ namespace Structures
         {
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
+            StartCoroutine(Algorithms.DelayCall(0.01f, () =>
+            {
+                Grass.GrassEffectController.GrassNeedsUpdate = true;
+            }));
             ParticleSystem.Play();
             if (playSound) Manager.Jukebox.PlayBuild();
         }
