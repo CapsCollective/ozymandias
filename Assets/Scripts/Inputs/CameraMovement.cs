@@ -3,6 +3,7 @@ using Cinemachine;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -92,6 +93,8 @@ namespace Inputs
 
         private void Update()
         {
+            if (Globals.RestartingGame) return;
+            
             // Depth of Field stuff
             dofVolume.weight = Mathf.Lerp(1, 0, FreeLook.m_YAxis.Value);
             

@@ -204,6 +204,8 @@ namespace Structures
 
         private void Update()
         {
+            if (Globals.RestartingGame) return;
+            
             // Don't hover new buildings while a building or card is selected, the camera is moving, or in the UI
             if (SelectedStructure || CameraMovement.IsMoving || IsSelectionDisabled() || Tutorial.Tutorial.DisableSelect)
             {

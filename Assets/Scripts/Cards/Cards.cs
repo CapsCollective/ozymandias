@@ -228,6 +228,8 @@ namespace Cards
 
         private void Update()
         {
+            if (Globals.RestartingGame) return;
+            
             if (!Manager.Cards.SelectedCard || IsOverUi)
             {
                 Manager.Map.Highlight(_selectedCells, HighlightState.Inactive);
