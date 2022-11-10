@@ -116,7 +116,7 @@ namespace Managers
         
         public static void ResetGameSave()
         {
-            SaveFile.Delete();
+            SaveFile.DeleteState();
             RestartGame();
         }
     }
@@ -127,6 +127,7 @@ namespace Managers
         public static GameManager Manager { get; internal set; }
         
         // All Managers/ Universal Controllers
+        public Platform.PlatformManager PlatformManager { get; private set; }
         public Achievements Achievements { get; private set; }
         public Inputs.Inputs Inputs { get; private set; }
         public State State { get; private set; }
@@ -149,6 +150,7 @@ namespace Managers
         private void Awake()
         {
             Manager = this;
+            PlatformManager = new Platform.PlatformManager();
             Random.InitState((int)DateTime.Now.Ticks);
             Inputs = new Inputs.Inputs();
 
@@ -196,11 +198,13 @@ namespace Managers
         {
             if (Inputs.UsingController) EventSystem.current.SetSelectedGameObject(g);
         }
-        public static bool IsOverUi => EventSystem.current.IsPointerOverGameObject(); // TODO: Fix/ suppress the warning from this
+
+        public static bool IsOverUi => Manager.PlatformManager.Gameplay.IsOverUI(EventSystem.current);
+
         #endregion
 
         #region Balancing Constants
-        
+
         public const int TerrainBaseCost = 5;
         public const float TerrainCostScale = 1.15f;
         public const int RuinsBaseCost = 20;
@@ -210,10 +214,10 @@ namespace Managers
         public const int BaseStatMultiplier = 5;
         public const int StartingSalary = 10;
         
-        #endregion
+#endregion
 
-        #region Debug
-        #if UNITY_EDITOR
+#region Debug
+#if UNITY_EDITOR
 
         public bool skipIntro;
         public bool disableOutline;
@@ -269,6 +273,12 @@ namespace Managers
             State.EnterState(GameState.NextTurn);
         }
 
+        [Button("Take Screenshot")]
+        public void Screenshot()
+        {
+            ScreenCapture.CaptureScreenshot($"Screenshots/FTRM_{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.png");
+        }
+        
         [Button("Reset Achievements")]
         public void ResetAchievements()
         {

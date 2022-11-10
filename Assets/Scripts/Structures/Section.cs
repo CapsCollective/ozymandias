@@ -10,6 +10,7 @@ using static Managers.GameManager;
 
 namespace Structures
 {
+
     [RequireComponent(typeof(MeshFilter))]
     public class Section : MonoBehaviour
     {
@@ -32,12 +33,15 @@ namespace Structures
         public bool randomRotations;
         public Vector2 randomScale = Vector2.one;
         public bool hasGrass = true;
+        public System.Action onGenerationComplete;
+        public bool finishedGenerating = false;
 
-        [SerializeField] private List<Mesh> meshVariants; 
+        [SerializeField] private List<Mesh> meshVariants;
+        public MeshRenderer meshRenderer;
         
         private List<Vector3> _cellCorners;
         private ComputeShader _meshCompute;
-        private MeshFilter _meshFilter;
+        public MeshFilter _meshFilter;
         private bool _usesShader;
         private static readonly int HasGrass = Shader.PropertyToID("_HasGrass");
         private static readonly int RoofColor = Shader.PropertyToID("_RoofColor");
@@ -47,9 +51,9 @@ namespace Structures
         private void Awake()
         {
             _meshCompute = (ComputeShader)Resources.Load("SectionCompute");
-            _usesShader = _meshCompute != null && 
-                          (Application.platform == RuntimePlatform.WindowsPlayer || 
-                           Application.platform == RuntimePlatform.WindowsEditor);
+            _usesShader = _meshCompute != null && SystemInfo.supportsComputeShaders &&
+                          Application.platform != RuntimePlatform.OSXEditor &&
+                          Application.platform != RuntimePlatform.OSXPlayer;
             GetComponent<Renderer>().material.SetInt(HasGrass, hasGrass ? 1 : 0);
         }
 
@@ -100,42 +104,50 @@ namespace Structures
             }
         }
 
-
         private void Fit()
         {
-            // Retrieve the section data
+            // Retrieve the section data and calculate new vertex positions
             SectionData sectionData = Manager.Structures.BuildingCache[FileName];
-
-            // Calculate new vertex positions
             Vector3[] planePositions = new Vector3[MeshFilter.mesh.vertexCount];
 
-            if (_usesShader)
-            {
-                ComputeBuffer sectionBuffer = new ComputeBuffer(sectionData.VertexCoordinates.Length, sizeof(float) * 3);
-                ComputeBuffer vertexBuffer = new ComputeBuffer(planePositions.Length, sizeof(float) * 3);
-                ComputeBuffer cornerBuffer = new ComputeBuffer(_cellCorners.Count, sizeof(float) * 3);
-                sectionBuffer.SetData(sectionData.VertexCoordinates);
-                vertexBuffer.SetData(planePositions);
-                cornerBuffer.SetData(_cellCorners);
-            
-                _meshCompute.SetBuffer(0, "sectionBuffer", sectionBuffer);
-                _meshCompute.SetBuffer(0, "vertexBuffer", vertexBuffer);
-                _meshCompute.SetBuffer(0, "cornerBuffer", cornerBuffer);
-                _meshCompute.SetFloat("heightFactor", HeightFactor);
-                _meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
+            if (_usesShader) ComputePlanePositionsViaShader(sectionData, planePositions);
+            else ComputePlanePositionsManually(sectionData, planePositions);
+        }
 
-                if(planePositions.Length / 512 > 0)
-                    _meshCompute.Dispatch(0, planePositions.Length / 512, 8, 1);
-                else
-                    _meshCompute.Dispatch(0, 1, 8, 1);
-            
-                vertexBuffer.GetData(planePositions);
+        private void ComputePlanePositionsViaShader(SectionData sectionData, Vector3[] planePositions)
+        {
+            ComputeBuffer sectionBuffer = new ComputeBuffer(sectionData.VertexCoordinates.Length, sizeof(float) * 3);
+            ComputeBuffer vertexBuffer = new ComputeBuffer(planePositions.Length, sizeof(float) * 3);
+            ComputeBuffer cornerBuffer = new ComputeBuffer(_cellCorners.Count, sizeof(float) * 3);
+            sectionBuffer.SetData(sectionData.VertexCoordinates);
+            vertexBuffer.SetData(planePositions);
+            cornerBuffer.SetData(_cellCorners);
+
+            _meshCompute.SetBuffer(0, "sectionBuffer", sectionBuffer);
+            _meshCompute.SetBuffer(0, "vertexBuffer", vertexBuffer);
+            _meshCompute.SetBuffer(0, "cornerBuffer", cornerBuffer);
+            _meshCompute.SetMatrix("worldToObjectMatrix", transform.worldToLocalMatrix);
+            _meshCompute.SetFloat("heightFactor", HeightFactor);
+            _meshCompute.SetInt("vertexCount", sectionData.VertexCoordinates.Length);
+
+            _meshCompute.Dispatch(0, Mathf.CeilToInt(planePositions.Length / 64.0f), 1, 1);
+
+            UnityEngine.Rendering.AsyncGPUReadback.Request(vertexBuffer, (c) =>
+            {
+                if (c.hasError) return;
+                planePositions = c.GetData<Vector3>().ToArray();
 
                 sectionBuffer.Release();
                 vertexBuffer.Release();
                 cornerBuffer.Release();
-            }
 
+                RecalculateMesh(planePositions);
+            });
+        }
+        
+        private void ComputePlanePositionsManually(SectionData sectionData, Vector3[] planePositions)
+        {
+            Transform t = transform;
             for (int i = 0; i < planePositions.Length; i++)
             {
                 Vector3 CalculateMesh()
@@ -145,21 +157,21 @@ namespace Structures
                     return Vector3.Lerp(i0, i1, sectionData[i].z);
                 }
 
-                planePositions[i] = transform.InverseTransformPoint(
-                    _usesShader ? planePositions[i] : CalculateMesh());
+                planePositions[i] = t.InverseTransformPoint(CalculateMesh());
                 planePositions[i].y += HeightFactor * sectionData[i].y;
             }
+            RecalculateMesh(planePositions);
+        }
 
+        private void RecalculateMesh(Vector3[] planePositions)
+        {
             // Apply morphed vertices to Mesh Filter
-            MeshFilter.mesh.vertices = planePositions;
-
+            MeshFilter.mesh.SetVertices(planePositions);
             MeshFilter.mesh.RecalculateNormals();
             MeshFilter.mesh.RecalculateBounds();
-            MeshFilter.mesh.RecalculateTangents();
-        
-            MeshCollider mc = gameObject.AddComponent<MeshCollider>();
-            mc.sharedMesh = MeshFilter.sharedMesh;
-            mc.convex = true;
+
+            finishedGenerating = true;
+            onGenerationComplete?.Invoke();
         }
 
         public void SetRoofColor(Color color)
@@ -176,17 +188,24 @@ namespace Structures
                 return;
             }
             MeshFilter.mesh = ruinedModel;
-            GetComponent<MeshRenderer>().material.SetFloat("_Exponent", 1);
+            meshRenderer.material.SetFloat("_Exponent", 1);
             Fit();
+        }
+
+        [Button("Get Mesh Renderer")]
+        public void GetMeshRenderer()
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+            _meshFilter = GetComponent<MeshFilter>();
         }
 
         [Button("Save Deform Coordinates to Text File")]
         public void Save()
         {
+            #if UNITY_EDITOR
             SectionData sectionData = new SectionData(MeshFilter);
             File.WriteAllText(FilePath + ".json", JsonUtility.ToJson(sectionData));
 
-            #if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();
             #endif
         }

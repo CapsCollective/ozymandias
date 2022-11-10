@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1263116729105003458}
   - component: {fileID: 1263116729105003456}
+  - component: {fileID: -1921734403415951430}
   m_Layer: 27
-  m_Name: Guild Hall
+  m_Name: Structure Prefab
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2671144749209713300}
   m_Father: {fileID: 0}
@@ -44,42 +46,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9150d8031cae2bf4484e2e3368c0f60e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: The central hub of every adventuring settlement. Place it down to
-    get your town started!
-  icon: {fileID: 21300000, guid: d7fbb6f1c33fca8438196919716c5f63, type: 3}
-  type: 2
-  stats:
-    list: []
-    keyCollision: 0
-  baseCost: 0
-  roofColor: {r: 0.34901962, g: 0.21176471, b: 0.12156863, a: 0}
-  scaleSpeed: 4
-  sections:
-  - prefab: {fileID: 8716396363306372237, guid: 1dc4446b4b03982438099a0d44492f92,
-      type: 3}
-    directions: 
-    clockwiseRotations: 2
-  - prefab: {fileID: 2442090315632762313, guid: 80998b140892d6a44a32e4dbf6f2f7d4,
-      type: 3}
-    directions: 01000000
-    clockwiseRotations: 0
-  - prefab: {fileID: 5850422358800233842, guid: 38657a287d6de024381e7c64e752e014,
-      type: 3}
-    directions: 00000000
-    clockwiseRotations: 2
-  - prefab: {fileID: 4430338829548512258, guid: f5fd97c996e5e5f4ebffd867cfb0b0f1,
-      type: 3}
-    directions: 02000000
-    clockwiseRotations: 1
-  - prefab: {fileID: 9154215088064386976, guid: 8450d50933641034a9db10f4fd4bf47f,
-      type: 3}
-    directions: 0100000000000000
-    clockwiseRotations: 3
-  - prefab: {fileID: 3970598131823282281, guid: 6ac9d36253fcaa245ac16d5bb5c14c4a,
-      type: 3}
-    directions: 0100000002000000
-    clockwiseRotations: 0
-  indestructible: 0
+  _particleSystem: {fileID: 1212390862906882457}
+  fixedPosition: 0
+  forestMaterial: {fileID: 2100000, guid: e00270734ffb99d46919b7b1dcb83672, type: 2}
+  buildingMaterial: {fileID: 2100000, guid: 48c4957b94fb24645b1104420b431e1d, type: 2}
+--- !u!64 &-1921734403415951430
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263116729105003461}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &715950391720861106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,6 +133,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12d0a700c7644d94a89df10437686996, type: 3}
+--- !u!198 &1212390862906882457 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1818563672942617643, guid: 12d0a700c7644d94a89df10437686996,
+    type: 3}
+  m_PrefabInstance: {fileID: 715950391720861106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2671144749209713300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3242133139914073894, guid: 12d0a700c7644d94a89df10437686996,

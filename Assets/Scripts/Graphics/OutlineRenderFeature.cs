@@ -34,7 +34,10 @@ public class OutlineRenderFeature : ScriptableRendererFeature
         {
             this.profilerTag = profilerTag;
             OutlineBuffer = new CommandBuffer { name = profilerTag };
-            instancedMaterial = new Material(pSettings.material);
+            if (pSettings.material != null)
+            {
+                instancedMaterial = new Material(pSettings.material);
+            }
             settings = pSettings;
         }
 
@@ -61,11 +64,9 @@ public class OutlineRenderFeature : ScriptableRendererFeature
         // You don't have to call ScriptableRenderContext.submit, the render pipeline will call it at specific points in the pipeline.
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            //if (!Application.isPlaying) return;
-            //if (renderingData.cameraData.isSceneViewCamera) return;
+            if (instancedMaterial == null) return;
             if (renderingData.cameraData.targetTexture != null) return;
             CommandBuffer cmd = CommandBufferPool.Get(profilerTag);
-            //cmd.DrawRendererList(context.CreateRendererList(desc));
             instancedMaterial.SetColor("_Color", settings.color);
             instancedMaterial.SetFloat("_Scale", settings.scale);
             instancedMaterial.SetFloat("_Threshold", settings.threshold);
@@ -90,13 +91,14 @@ public class OutlineRenderFeature : ScriptableRendererFeature
     public override void Create()
     {
         m_ScriptablePass = new OutlineRenderPass(settings, "Outline");
-        m_ScriptablePass.renderPassEvent = settings.passEvent;
     }
 
     // Here you can inject one or multiple render passes in the renderer.
     // This method is called when setting up the renderer once per-camera.
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
+        m_ScriptablePass.settings.color = settings.color;
+        m_ScriptablePass.renderPassEvent = settings.passEvent;
         renderer.EnqueuePass(m_ScriptablePass);
     }
 }

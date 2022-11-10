@@ -156,18 +156,44 @@ namespace Map
 
         public Cell GetClosest(Vector3 unitPos)
         {
-            const float maxDist = 1f;
-            Cell closest = null;
-            float minDist = float.MaxValue;
-            foreach (Cell cell in CellGraph.Data)
+            // Pseudo A* I guess?
+            const int CenterCell = 514;
+            float curDist = 1000;
+            Cell curCell = CellGraph.GetData(CenterCell);
+            for (int i = 0; i < 100; i++)
             {
-                float distance;
-                if (!((distance = Vector3.Distance(unitPos, cell.Centre)) < minDist)) continue;
-                minDist = distance;
-                closest = cell;
+                Cell prevCell = curCell;
+                foreach (int x in curCell.Neighbours)
+                {
+                    float dist = Vector3.Distance(CellGraph.GetData(x).CachedCenter, unitPos);
+                    if (dist < curDist)
+                    {
+                        curDist = dist;
+                        curCell = CellGraph.GetData(x);
+                    }
+                }
+                if (prevCell.IsEqual(curCell.Id)) break;
             }
 
-            return minDist < maxDist ? closest : null;
+            return curCell;
+        }
+
+        [Button("Get All Neighbours")]
+        public void GetallNeighbours()
+        {
+            foreach(Cell c in CellGraph.Data)
+            {
+                c.Neighbours = CellGraph.GetAdjacent(c.Id);
+            }
+        }
+
+        [Button("Cache Center")]
+        public void CacheCenter()
+        {
+            foreach (Cell c in CellGraph.Data)
+            {
+                c.CachedCenter = c.Centre;
+            }
         }
 
         public List<Cell> GetNeighbours(Cell cell)
@@ -465,7 +491,7 @@ namespace Map
         #endregion 
         #region Roads
         
-        public IEnumerator CreateRoad(List<Cell> cells, MeshFilter mesh)
+        public void CreateRoad(List<Cell> cells, MeshFilter mesh)
         {
             // TODO: Finding the perimeter can be made easier by making a ring around the cells 
             List<Vertex> vertices = GetVertices(cells);
@@ -487,11 +513,8 @@ namespace Map
             // Create a perimeter path around the included vertices
             var perimeter = new List<Vertex>();
             
-            Task task = Task.StartCoroutineAsync(Manager,
-                Algorithms.ConvexHullAsync(vertices, VertexGraph, e => perimeter = e));
+            Algorithms.ConvexHullAsync(vertices, VertexGraph, e => perimeter = e);
             
-            yield return Manager.StartCoroutine(task.Wait());
-
             // Create a road linking the perimeter to the existing road graph
             if (RoadGraph.Count > 0 && perimeter.Count > 0)
             {
@@ -520,7 +543,7 @@ namespace Map
             AddRoad(perimeter);
             mesh.sharedMesh = GenerateRoadMesh();
             Grass.GrassEffectController.GrassNeedsUpdate = true;
-            yield return new WaitForEndOfFrame();
+            //yield return new WaitForEndOfFrame();
         }
 
         public void ClearRoad(MeshFilter mesh)

@@ -13,9 +13,10 @@ namespace Map
         [field: SerializeField] public bool Active { get; set; }
         [field: SerializeField] public bool WaterFront { get; set; }
         [field: SerializeField] public List<Vertex> Vertices { get; set; }
+        public List<int> Neighbours = new List<int>();
         public Structure Occupant { get; set; }
         public int Rotation { get; set; }
-        
+        public Vector3 CachedCenter;        
         public Vector3 Centre => (Vertices[0] + Vertices[1] + Vertices[2] + Vertices[3]) / 4;
         public Vector3 WorldSpace => Quaternion.Euler(90f, 0f, 30f) * Centre;
         public bool Occupied => Occupant;
@@ -76,6 +77,11 @@ namespace Map
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public bool IsEqual(int otherID)
+        {
+            return this.Id == otherID;
         }
     }
 }

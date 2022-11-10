@@ -46,6 +46,7 @@ namespace Structures
         [SerializeField] private ScaleSpeed scaleSpeed;
         
         public Color roofColor;
+        public bool hasGrass = true;
         public List<SectionInfo> sections;
         public bool starter;
         

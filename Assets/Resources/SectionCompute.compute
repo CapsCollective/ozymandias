@@ -1,25 +1,26 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
-// Create a RenderTexture with enableRandomWrite flag and set it
-// with cs.SetTexture
+static const int numThreads = 64;
+
 RWStructuredBuffer<float3> sectionBuffer;
 RWStructuredBuffer<float3> vertexBuffer;
 RWStructuredBuffer<float3> cornerBuffer;
+float4x4 worldToObjectMatrix;
 float heightFactor;
 int vertexCount;
 
-[numthreads(1024,1,1)]
+[numthreads(numThreads,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
-    // TODO: insert actual code here!
-
+    // Average the position of the vertices between all the corners
     float3 i0 = lerp(cornerBuffer[0], cornerBuffer[3], sectionBuffer[id.x].x);
     float3 i1 = lerp(cornerBuffer[1], cornerBuffer[2], sectionBuffer[id.x].x);
     float3 i2 = lerp(i0, i1, sectionBuffer[id.x].z);
 
-    vertexBuffer[id.x] = i2;
-    //vertexBuffer[i].y += heightFactor * sectionBuffer[i].y;
-    
-    //Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+    // Do a world to object matrix multiplication
+    float3 invPos = mul(worldToObjectMatrix, float4(i2, 1.0f)).xyz;
+    // Scale the height with our input height
+    invPos.y += heightFactor * sectionBuffer[id.x].y;
+    vertexBuffer[id.x] = invPos;
 }

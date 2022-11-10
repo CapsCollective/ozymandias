@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem.Users;
+using static Managers.GameManager;
 
 namespace Inputs
 {
@@ -18,7 +19,8 @@ namespace Inputs
         public Transform WorldSpaceCursor;
 
         // Player Input
-        public PlayerInputs PlayerInput { get; }
+        private PlayerInputs _playerInputs;
+        public PlayerInputs PlayerInput { get => _playerInputs; }
         private InputAction MouseMoved { get; }
         public Vector2 MousePosition 
         {
@@ -56,10 +58,11 @@ namespace Inputs
         public InputAction ToggleTooltips { get; }
         public InputAction NavigateTooltips { get; }
         public InputAction OnScreenshot{ get; }
+        public InputAction OnDebugToggle{ get; }
 
         public Inputs()
         {
-            PlayerInput = new PlayerInputs();
+            _playerInputs = new PlayerInputs();
 
             MouseMoved = PlayerInput.Player.MousePosition;
             LeftMouse = PlayerInput.Player.LeftMouse;
@@ -101,11 +104,19 @@ namespace Inputs
             ReturnToTown = PlayerInput.Player.ReturnToTown;
             OnScreenshot = PlayerInput.Player.Screenshot;
             
+            // Debug
+            if (Debug.isDebugBuild)
+            {
+                OnDebugToggle = PlayerInput.UI.DebugToggle;
+            }
+
+            Manager.PlatformManager.Input.AddExtraBinds(ref _playerInputs);
+
             PlayerInput.UI.Enable();
             PlayerInput.Player.Enable();
 
             InputUser.onChange += InputUser_onChange;
-            ControlScheme =  PlayerInput.controlSchemes[PlatformManager.Instance.Input.GetDefaultControlScheme()];
+            ControlScheme =  PlayerInput.controlSchemes[Manager.PlatformManager.Input.GetDefaultControlScheme()];
             PlayerInput.bindingMask = InputBinding.MaskByGroup(ControlScheme.bindingGroup);
         }
 

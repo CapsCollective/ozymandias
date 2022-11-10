@@ -26,7 +26,7 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -41,6 +41,10 @@ Material:
     - _BandTex:
         m_Texture: {fileID: 2800000, guid: b9cb4384db173ab46a731371cc9f0625, type: 3}
         m_Scale: {x: 0.01, y: 0.02}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: ea0286e6eed566042be2862481a3191f, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
@@ -122,6 +126,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecularMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -152,16 +160,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
     - _AlphaDistance: 2.5
     - _AlphaFalloff: 5
     - _Autumn: 0
     - _AutumnHueInfluence: 0.35
+    - _Blend: 0
     - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
     - _ColVariance: 0.15
+    - _Cull: 2
     - _Cutoff: 0.5
+    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DistanceScale: 20
     - _DstBlend: 0
+    - _EnvironmentReflections: 1
     - _FarLineWidth1: 0.05
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -177,9 +192,11 @@ Material:
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _RimOffset: 0.6
     - _RimPower: 0
     - _ShadowOffsetFloat: 0.5
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _Snow: 0
     - _SpecLerpAmount: 0
@@ -189,10 +206,12 @@ Material:
     - _Spring: 1
     - _SpringHueInfluence: 0.4
     - _SrcBlend: 1
+    - _Surface: 0
     - _UVSec: 0
     - _WindSpeed: 0.25
     - _WindStrength: 0.01
     - _Winter: 0
+    - _WorkflowMode: 1
     - _ZWrite: 1
     - __dirty: 1
     - _dabs_rotate: 15
@@ -204,12 +223,14 @@ Material:
     - _AutumnCol2: {r: 0.7264151, g: 0.5261532, b: 0.18845676, a: 1}
     - _Autumn_Color_1: {r: 0.48235294, g: 0.12156863, b: 0.043137256, a: 0}
     - _Autumn_Color_2: {r: 0.7254902, g: 0.5254902, b: 0.1882353, a: 0}
-    - _Color: {r: 0.22208786, g: 0.42999998, b: 0.25043952, a: 1}
+    - _BaseColor: {r: 0.15417925, g: 0.277, b: 0.1672453, a: 1}
+    - _Color: {r: 0.15417922, g: 0.27699995, b: 0.16724527, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
     - _RimTint: {r: 0.0036044938, g: 0.5902472, b: 0.764151, a: 0}
     - _SnowColor: {r: 0.7980598, g: 0.87504065, b: 0.9245283, a: 1}
     - _Snow_Color: {r: 0.8, g: 0.8745098, b: 0.9254902, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Spec_Color: {r: 1, g: 1, b: 1, a: 0}
     - _SpringCol1: {r: 0.09104524, g: 0.3018868, b: 0, a: 1}
     - _SpringCol2: {r: 0.03321823, g: 0.4716981, b: 0, a: 1}

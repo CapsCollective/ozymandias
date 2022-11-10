@@ -54,6 +54,15 @@ namespace Map
             return id;
         }
 
+        public int Add(T toAdd, List<int> adjacencyMap, int ownId = -1)
+        {
+            bool useOwnId = ownId != -1;
+            int id = useOwnId ? ownId : _nextId++;
+            DataMap.Add(id, toAdd);
+            AdjacencyMap.Add(id, adjacencyMap);
+            return id;
+        }
+
         public void Remove(int id)
         {
             foreach (int id2 in AdjacencyMap[id])
@@ -117,12 +126,12 @@ namespace Map
             if (AdjacencyMap.ContainsKey(id)) return AdjacencyMap[id];
             throw new Exception("Node queried is not contained in the adjacency map.");
         }
-        
+
         public List<T> GetAdjacentData(int id)
         {
             return GetAdjacent(id).Select(x => DataMap[x]).ToList();
         }
-        
+
         // Recursive depth first search
         public List<List<int>> Search(int start, int end, int limit, bool direct)
         {

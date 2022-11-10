@@ -7,6 +7,7 @@ using Quests;
 using UI;
 using UnityEngine;
 using Utilities;
+using Platform;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
 
@@ -23,10 +24,7 @@ namespace Structures
             set
             {
                 _selected = value;
-                foreach (MeshFilter r in _sectionRenderers)
-                {
-                    r.gameObject.layer = _selected ? LayerMask.NameToLayer("Selected") : LayerMask.NameToLayer("Grid Terrain");
-                }
+                gameObject.layer = _selected ? LayerMask.NameToLayer("Selected") : LayerMask.NameToLayer("Grid Terrain");
             }
         }
         public bool IsBuilding => StructureType == StructureType.Building;
@@ -52,13 +50,15 @@ namespace Structures
         private int _rootId; // Cell id of the building root
         private int _rotation;
         private List<Section> _sections = new List<Section>();
-        private ParticleSystem _particleSystem;
         private ParticleSystem ParticleSystem => _particleSystem
             ? _particleSystem
             : _particleSystem = GetComponentInChildren<ParticleSystem>();
         private List<MeshFilter> _sectionRenderers = new List<MeshFilter>();
+        [SerializeField] private ParticleSystem _particleSystem;
         [SerializeField] private bool fixedPosition;
-        
+        [SerializeField] private Material forestMaterial;
+        [SerializeField] private Material buildingMaterial;
+
         private void Awake()
         {
             if (!fixedPosition) return;
@@ -88,9 +88,24 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++)
             {
                 _sections[i].Init(Occupied[i]);
-                _sections[i].SetRoofColor(quest.colour);
-                _sectionRenderers.Add(_sections[i].GetComponent<MeshFilter>());
+                _sectionRenderers.Add(_sections[i]._meshFilter);
             }
+
+            var meshrenderer = gameObject.AddComponent<MeshRenderer>();
+            var meshfilter = gameObject.AddComponent<MeshFilter>();
+            meshrenderer.material = buildingMaterial;
+            meshrenderer.material.SetColor("_RoofColor", quest.colour);
+
+            CombineInstance[] combine = new CombineInstance[_sectionRenderers.Count];
+            for (int i = 0; i < combine.Length; i++)
+            {
+                combine[i].mesh = _sectionRenderers[i].sharedMesh;
+                combine[i].transform = transform.worldToLocalMatrix * _sectionRenderers[i].transform.localToWorldMatrix;
+
+                // Just disable anything to do with rendering so collision stays the same
+                _sections[i].meshRenderer.enabled = false;
+            }
+            GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
 
             if (!Manager.State.Loading) AnimateCreate();
         }
@@ -144,8 +159,25 @@ namespace Structures
             for (int i = 0; i < _sections.Count; i++) 
             {
                 _sections[i].Init(Occupied[i]);
-                _sectionRenderers.Add(_sections[i].GetComponent<MeshFilter>());
+                _sectionRenderers.Add(_sections[i]._meshFilter);
             }
+
+            var meshrenderer = gameObject.AddComponent<MeshRenderer>();
+            var meshfilter = gameObject.AddComponent<MeshFilter>();
+
+            CombineInstance[] combine = new CombineInstance[_sectionRenderers.Count];
+            for (int i = 0; i < combine.Length; i++)
+            {
+                combine[i].mesh = _sectionRenderers[i].sharedMesh;
+                combine[i].transform = transform.worldToLocalMatrix * _sectionRenderers[i].transform.localToWorldMatrix;
+
+                // Just disable anything to do with rendering so collision stays the same
+                _sections[i].meshRenderer.enabled = false;
+            }
+
+            meshfilter.mesh = new Mesh();
+            meshrenderer.material = forestMaterial;
+            meshfilter.mesh.CombineMeshes(combine);
 
             if (!Manager.State.Loading) AnimateCreate(false); // TODO: Animate check (just not during loading???)
         }
@@ -187,22 +219,70 @@ namespace Structures
                 .Select(section => Instantiate(section.prefab, transform).GetComponent<Section>())
                 .ToList();
 
+            var meshrenderer = gameObject.AddComponent<MeshRenderer>();
+            var meshfilter = gameObject.AddComponent<MeshFilter>();
+
+            meshfilter.mesh = new Mesh();
+            meshrenderer.material = buildingMaterial;
+            meshrenderer.material.SetColor("_RoofColor", blueprint.roofColor);
+            meshrenderer.material.SetInt("_HasGrass", blueprint.hasGrass ? 1 : 0);
+
             for (int i = 0; i < _sections.Count; i++)
             {
-                _sections[i].Init(Occupied[i], true, isRuin, Blueprint.sections[i].clockwiseRotations);
-                _sections[i].SetRoofColor(Blueprint.roofColor);
                 // Add the renderer for all sections to a list for outline highlighting
-                _sectionRenderers.Add(_sections[i].transform.GetComponent<MeshFilter>());
+                _sectionRenderers.Add(_sections[i]._meshFilter);
+                // Wait for compute generation to finish
+                _sections[i].onGenerationComplete += MergeSections;
+                _sections[i].Init(Occupied[i], true, isRuin, Blueprint.sections[i].clockwiseRotations);
             }
-
+               
             if (!Manager.State.Loading) AnimateCreate();
             return true;
+        }
+
+        // Runs for every section
+        public void MergeSections()
+        {
+            // Loop through all sections so see which are finished
+            // If the section is done, stop listening to event
+            for (int i = 0; i < _sections.Count; i++)
+            {
+                if (!_sections[i].finishedGenerating) return;
+                else _sections[i].onGenerationComplete -= MergeSections;
+            }
+            //Debug.Log("Done generating!");
+            CombineInstance[] combine = new CombineInstance[_sectionRenderers.Count];
+            for (int i = 0; i < combine.Length; i++)
+            {
+                combine[i].mesh = _sectionRenderers[i].sharedMesh;
+                combine[i].transform = transform.worldToLocalMatrix * _sectionRenderers[i].transform.localToWorldMatrix;
+
+                // Just disable anything to do with rendering so collision stays the same
+                _sections[i].meshRenderer.enabled = false;
+            }
+            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            meshFilter.mesh.CombineMeshes(combine);
+
+            if (GetComponent<MeshCollider>() is MeshCollider mc && Manager.PlatformManager.Gameplay.GenerateColliders)
+            {
+                mc.sharedMesh = meshFilter.sharedMesh;
+                mc.convex = true;
+                mc.enabled = true;
+            }
+
+            for (int i = 0; i < _sections.Count; i++)
+            {
+                // Reset for later
+                _sections[i].finishedGenerating = false;
+            }
+
+            //Debug.Log($"{gameObject.name} merged sections!");
         }
 
         public void Destroy()
         {
             foreach (Cell cell in Occupied) cell.Occupant = null;
-            
+
             ChangeParticleSystemParent();
             ParticleSystem.Play();
             transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => Destroy(gameObject));
@@ -221,7 +301,18 @@ namespace Structures
             newSection.SetRoofColor(Quest.colour);
             newSection.Init(newCell);
             _sectionRenderers.Add(newSection.GetComponent<MeshFilter>());
-            
+
+            CombineInstance[] combine = new CombineInstance[_sectionRenderers.Count];
+            for (int i = 0; i < combine.Length; i++)
+            {
+                combine[i].mesh = _sectionRenderers[i].sharedMesh;
+                combine[i].transform = transform.worldToLocalMatrix * _sectionRenderers[i].transform.localToWorldMatrix;
+
+                // Just disable anything to do with rendering so collision stays the same
+                _sections[i].meshRenderer.enabled = false;
+            }
+            GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+
             if (Occupied.Count == 4) Notification.OnNotification.Invoke("A camp is growing dangerously large!", Manager.questIcon, 3); 
         }
 
@@ -242,15 +333,21 @@ namespace Structures
         {
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
+            StartCoroutine(Algorithms.DelayCall(0.01f, () =>
+            {
+                Grass.GrassEffectController.GrassNeedsUpdate = true;
+            }));
             ParticleSystem.Play();
             if (playSound) Manager.Jukebox.PlayBuild();
         }
-        
+
+        [ContextMenu("To Ruin")]
         public void ToRuin()
         {
             StructureType = StructureType.Ruins;
             foreach (Section section in _sections)
             {
+                section.onGenerationComplete += MergeSections;
                 section.ToRuin();
             }
         }

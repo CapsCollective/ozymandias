@@ -1,3 +1,5 @@
+#if UNITY_STANDALONE
+
 using System.Collections.Generic;
 using Reports;
 using Steamworks;
@@ -88,4 +90,5 @@ namespace Platform
         }
     }
 }
+#endif
 

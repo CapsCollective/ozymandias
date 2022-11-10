@@ -5,6 +5,7 @@ using Cards;
 using DG.Tweening;
 using Inputs;
 using Managers;
+using Platform;
 using Quests;
 using TMPro;
 using UnityEngine;
@@ -45,7 +46,7 @@ namespace Structures
         [SerializeField] private TextMeshProUGUI bonusText;
         [SerializeField] private List<Sprite> chevronSizes;
         [SerializeField] private Utilities.SerializedDictionary<Stat, Sprite> statIcons;
-        [SerializeField] private UniversalRendererData rendererData;
+        [SerializeField] private PlatformAssets rendererData;
         
         private OutlineRenderFeature _outline;
         private Canvas _canvas;
@@ -190,10 +191,11 @@ namespace Structures
                 SelectedStructure = null;
                 HoveredStructure = null;
             };
-            foreach(var rd in rendererData.rendererFeatures)
+            foreach(var rd in Manager.PlatformManager.Gameplay.GetPlatformAssets().RendererData.rendererFeatures)
             {
                 if (rd is OutlineRenderFeature)
                 {
+                    Debug.Log(Manager.PlatformManager.Gameplay.GetPlatformAssets().RendererData.name);
                     _outline = rd as OutlineRenderFeature;
                     break;
                 }
@@ -202,6 +204,8 @@ namespace Structures
 
         private void Update()
         {
+            if (Globals.RestartingGame) return;
+            
             // Don't hover new buildings while a building or card is selected, the camera is moving, or in the UI
             if (SelectedStructure || CameraMovement.IsMoving || IsSelectionDisabled() || Tutorial.Tutorial.DisableSelect)
             {
@@ -233,10 +237,7 @@ namespace Structures
         // Returns the building the cursor is hovering over if exists
         private Structure Hovered()
         {
-            //Ray ray = Manager.Inputs.GetMouseRay(_cam);
-            //Physics.Raycast(ray, out RaycastHit hit, 200f, collisionMask);
-            var hit = Manager.Inputs.GetRaycast(_cam, 200f, collisionMask);
-            return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
+            return Manager.PlatformManager.Gameplay.GetHoveredStructure(_cam, collisionMask);
         }
         
         private void ToggleSelect()

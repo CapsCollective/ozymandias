@@ -61,7 +61,7 @@ namespace Reports
 
         public void Start()
         {
-            PlatformManager.Instance.Achievements.Initialise();
+            Manager.PlatformManager.Achievements.Initialise();
             
             Dog.OnDogPet += () => UnlockAchievement(Achievement.PetDog);
             Fishing.OnFishCaught += () => UnlockAchievement(Achievement.CaughtFish);
@@ -144,23 +144,23 @@ namespace Reports
             Unlocked.Add(achievement);
             
             // Handle Steam unlock if Steam API is active
-            PlatformManager.Instance.Achievements.UnlockAchievement(achievement);
+            Manager.PlatformManager.Achievements.UnlockAchievement(achievement);
         }
         
         private void UpdateStat(Milestone stat, int value)
         {
             Milestones[stat] = value;
-            PlatformManager.Instance.Achievements.UpdateStat(stat, value);
+            Manager.PlatformManager.Achievements.UpdateStat(stat, value);
         }
         
         private static void UpdateProgress(Milestone stat, Achievement achievement, int value)
         {
-            PlatformManager.Instance.Achievements.UpdateProgress(stat, achievement, value);
+            Manager.PlatformManager.Achievements.UpdateProgress(stat, achievement, value);
         }
         
         public static void ResetAll()
         {
-            PlatformManager.Instance.Achievements.ResetAll();
+            Manager.PlatformManager.Achievements.ResetAll();
         }
 
         public AchievementDetails Save()

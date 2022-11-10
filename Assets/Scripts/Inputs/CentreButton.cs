@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
@@ -53,6 +54,8 @@ namespace Inputs
 
         private void Update()
         {
+            if (Globals.RestartingGame) return;
+            
             if (Manager.Inputs.ReturnToTown.phase == UnityEngine.InputSystem.InputActionPhase.Started)
                 maskImage.fillAmount = Mathf.InverseLerp(0, 0.4f, _interactTimer += Time.deltaTime);
 
