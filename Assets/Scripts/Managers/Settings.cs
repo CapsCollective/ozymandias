@@ -8,6 +8,8 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Utilities;
+using static Managers.GameManager;
 
 namespace Managers
 {
@@ -26,8 +28,8 @@ namespace Managers
         public AudioMixer audioMixer;
         [SerializeField] private Slider musicSlider,ambienceSlider, sfxSlider;
 
-        // Fullscreen
-        [SerializeField] private Toggle fullscreenToggle, shadowToggle, grassToggle, dofToggle, vsyncToggle, aoToggle;
+        // Graphics Toggles
+        [SerializeField] private Toggle fullscreenToggle, shadowToggle, grassToggle, dofToggle, vsyncToggle, aoToggle, colorblindToggle;
 
         // Post Processing
         [SerializeField] private VolumeProfile dofProfile, postProcess;
@@ -82,6 +84,11 @@ namespace Managers
             ToggleAO(getAOToggle);
             aoToggle.isOn = getAOToggle;
             aoToggle.onValueChanged.AddListener(ToggleAO);
+            
+            bool getColorblindToggle = Convert.ToBoolean(PlayerPrefs.GetInt("colorblind", 0));
+            ToggleColorblind(getColorblindToggle);
+            colorblindToggle.isOn = getColorblindToggle;
+            colorblindToggle.onValueChanged.AddListener(ToggleColorblind);
             
             // Setup audio sliders
             musicSlider.maxValue = 1f;
@@ -144,6 +151,12 @@ namespace Managers
         private void ToggleAO(bool toggle)
         {
             rendererData.rendererFeatures[0].SetActive(toggle);   
+        }
+
+        private void ToggleColorblind(bool toggle)
+        {
+            Colors.ColorBlind = toggle;
+            if (Manager.State.InMenu) UpdateUi(); 
         }
         #endregion
         
