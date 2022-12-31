@@ -19,14 +19,15 @@ namespace Cards
         
         private void Awake()
         {
-            State.OnLoadingEnd += Display;
             State.OnEnterState += _ => ScrollActive = false;
             scrollRect.enabled = true;
             scrollbar.value = 0;
             
             // Update list on card unlock
+            State.OnLoadingEnd += Display;
             Cards.OnUnlock += (_,_) => Display();
             State.OnNewGame += Display;
+            Settings.OnToggleColorBlind += _ => Display();
         }
 
         private void Update()

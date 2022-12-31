@@ -15,8 +15,9 @@ namespace Managers
 {
     public class Settings : UIController
     {
-        public static Action<int, int> NewResolution;
-
+        public static Action<int, int> OnNewResolution;
+        public static Action<bool> OnToggleColorBlind;
+        
         // Misc
         public TextMeshProUGUI versionText;
 
@@ -114,7 +115,7 @@ namespace Managers
             Resolution resolution = _resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             PlayerPrefs.SetInt("resolution", resolutionIndex);
-            NewResolution?.Invoke(resolution.width, resolution.height);
+            OnNewResolution?.Invoke(resolution.width, resolution.height);
         }
         
         private void ToggleFullScreen(bool toggle)
@@ -159,7 +160,12 @@ namespace Managers
         private void ToggleColorblind(bool toggle)
         {
             Colors.ColorBlind = toggle;
-            if (Manager.State.InMenu) UpdateUi(); 
+            if (Manager.State.InMenu)
+            {
+                UpdateUi();
+                OnToggleColorBlind?.Invoke(toggle);
+            }
+            
             Shader.SetGlobalColor(Inactive, Colors.GridInactive);
             Shader.SetGlobalColor(Active, Colors.GridActive);
             Shader.SetGlobalColor(Invalid, Colors.GridInvalid);

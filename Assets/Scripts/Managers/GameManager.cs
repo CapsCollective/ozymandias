@@ -47,7 +47,7 @@ namespace Managers
             // Reset all static events and data
             GameManager.Manager = null;
             GameManager.OnUpdateUI = null;
-            Settings.NewResolution = null;
+            Settings.OnNewResolution = null;
             UIController.OnUIOpen = null;
             UIController.OnUIClose = null;
             State.OnEnterState = null;
