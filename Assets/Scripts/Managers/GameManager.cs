@@ -63,7 +63,6 @@ namespace Managers
             Adventurers.Adventurers.OnAdventurerRemoved = null;
             global::Cards.Cards.OnCardSelected = null;
             global::Cards.Cards.OnUnlock = null;
-            global::Cards.Cards.OnDiscoverRuin = null;
             global::Cards.Cards.OnBuildingRotate = null;
             CardsBookList.ScrollActive = false;
             UnlockDisplay.OnUnlockDisplayed = null;
@@ -222,8 +221,9 @@ namespace Managers
 
 #region Debug
 #if UNITY_EDITOR
-
+        [Header("Debug")]
         public bool skipIntro;
+        public bool skipTutorial;
         public bool disableOutline;
         public Blueprint debugBuilding;
         public int debugFramerate = 30;

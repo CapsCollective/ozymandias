@@ -190,11 +190,16 @@ namespace Managers
             else
             {
                 Debug.LogWarning("Save.json not found, starting tutorial");
-                Tutorial.Tutorial.Active = true;
-                Tutorial.Tutorial.DisableSelect = true;
-                Tutorial.Tutorial.DisableNextTurn = true;
-
-                Manager.Structures.SpawnTutorialRuins();
+                
+#if UNITY_EDITOR
+                if (!Manager.skipTutorial)
+#endif
+                {
+                    Tutorial.Tutorial.Active = true;
+                    Tutorial.Tutorial.DisableSelect = true;
+                    Tutorial.Tutorial.DisableNextTurn = true;
+                    Manager.Structures.SpawnTutorialRuins();
+                }
             }
             
             Manager.Achievements.Load(data.achievements);

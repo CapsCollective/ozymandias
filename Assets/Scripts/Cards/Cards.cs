@@ -17,8 +17,7 @@ namespace Cards
     public class Cards : MonoBehaviour
     {
         public static Action<Card> OnCardSelected;
-        public static Action<Blueprint> OnUnlock;
-        public static Action OnDiscoverRuin;
+        public static Action<Blueprint, bool> OnUnlock;
         public static Action OnBuildingRotate;
 
         [SerializeField] private List<Blueprint> all;
@@ -291,15 +290,14 @@ namespace Cards
         
         #endregion
         
-        public bool Unlock(Blueprint blueprint, bool isRuin = false)
+        public bool Unlock(Blueprint blueprint, bool fromRuin = false)
         {
             if (Playable.Contains(blueprint)) return false;
             if (!Unlocked.Contains(blueprint)) Unlocked.Add(blueprint);
             Playable.Add(blueprint);
             Deck.Add(blueprint); // Add to deck so it shows up faster
             
-            OnUnlock?.Invoke(blueprint);
-            if (isRuin) OnDiscoverRuin?.Invoke();
+            OnUnlock?.Invoke(blueprint, fromRuin);
             return true;
         }
 

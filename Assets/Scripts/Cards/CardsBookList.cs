@@ -25,7 +25,7 @@ namespace Cards
             scrollbar.value = 0;
             
             // Update list on card unlock
-            Cards.OnUnlock += _ => Display();
+            Cards.OnUnlock += (_,_) => Display();
             State.OnNewGame += Display;
         }
 

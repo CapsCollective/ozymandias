@@ -31,9 +31,14 @@ namespace Cards
             _canvas = GetComponent<Canvas>();
             _originalPos = cardDisplay.transform.localPosition;
             
-            Cards.OnUnlock += _buildings.Push;
-            Cards.OnDiscoverRuin += CheckUnlockCard;
+            Cards.OnUnlock += (blueprint, fromRuin) =>
+            {
+                _buildings.Push(blueprint);
+                if (fromRuin) CheckUnlockCard();
+            };
+            
             Newspaper.OnClosed += CheckUnlockCard;
+            
             Manager.Inputs.LeftClick.performed += _ =>
             {
                 if (!Tutorial.Tutorial.ShowShade && !Tutorial.Tutorial.DisableSelect) Close();
@@ -64,8 +69,8 @@ namespace Cards
             cardTransform.DOLocalMove(_originalPos, animateInDuration)
                 .OnComplete(() => text.DOFade(1.0f, 0.5f));
         }
-        
-        public void Close()
+
+        private void Close()
         {
             if (_transitioning || !_canvas.enabled) return;
             _transitioning = true;

@@ -89,7 +89,7 @@ namespace Reports
                 if (quest.IsRadiant) UpdateStat(Milestone.CampsCleared, Milestones[Milestone.CampsCleared] + 1);
             };
 
-            Cards.Cards.OnUnlock += _ =>
+            Cards.Cards.OnUnlock += (_,_) =>
             {
                 // Card-based progress achievements 
                 int currentCards = Manager.Cards.UnlockedCards;
