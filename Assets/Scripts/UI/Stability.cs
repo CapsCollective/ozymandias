@@ -15,6 +15,7 @@ namespace UI
         private const float BarLength = 560f;
         private const float Height = 25;
         private int _oldDefence, _oldThreat;
+        private float _linearOldStability, _linearStability;
         private bool _running;
         
         protected override void UpdateUi()
@@ -42,7 +43,16 @@ namespace UI
             }
             
             float width = BarLength * (100 - Mathf.Max(Manager.Stats.Stability, 0)) / 100f;
-            threatBar.DOSizeDelta(new Vector2(width, Height), 0.5f);
+            float target = Manager.Stats.Stability / 100.0f;
+            float stability = _linearStability;
+            DOTween.To(() => stability, x => stability = x, target, 0.5f).OnUpdate(() =>
+            {
+                Shader.SetGlobalFloat("Stability", stability);
+            }).OnComplete(() =>
+            {
+                Shader.SetGlobalFloat("Stability", stability);
+                _linearStability = stability;
+            });
 
             direction.enabled = change != 0 && Manager.Stats.Stability > 0;
             direction.rectTransform.DOAnchorPosX(Mathf.Clamp(-width-30f, -520,-120), 0.5f);
