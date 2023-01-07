@@ -11,8 +11,10 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
+            if (!quest.IsActive) return false;
+            
             _assigned = quest.AssignedCount;
-            _threat = quest.Structure.SectionCount;
+            if (quest.Structure) _threat = quest.Structure.SectionCount;
             quest.Complete();
             return true;
         }

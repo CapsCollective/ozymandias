@@ -8,13 +8,16 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Utilities;
+using static Managers.GameManager;
 
 namespace Managers
 {
     public class Settings : UIController
     {
-        public static Action<int, int> NewResolution;
-
+        public static Action<int, int> OnNewResolution;
+        public static Action<bool> OnToggleColorBlind;
+        
         // Misc
         public TextMeshProUGUI versionText;
 
@@ -26,12 +29,15 @@ namespace Managers
         public AudioMixer audioMixer;
         [SerializeField] private Slider musicSlider,ambienceSlider, sfxSlider;
 
-        // Fullscreen
-        [SerializeField] private Toggle fullscreenToggle, shadowToggle, grassToggle, dofToggle, vsyncToggle, aoToggle;
+        // Graphics Toggles
+        [SerializeField] private Toggle fullscreenToggle, shadowToggle, grassToggle, dofToggle, vsyncToggle, aoToggle, colorblindToggle;
 
         // Post Processing
         [SerializeField] private VolumeProfile dofProfile, postProcess;
         [SerializeField] private UniversalRendererData rendererData;
+        private static readonly int Active = Shader.PropertyToID("_Active");
+        private static readonly int Invalid = Shader.PropertyToID("_Invalid");
+        private static readonly int Inactive = Shader.PropertyToID("_Inactive");
 
         // Needs to be Start, not Awake for mixer values to apply - Ben
         private void Start()
@@ -83,6 +89,11 @@ namespace Managers
             aoToggle.isOn = getAOToggle;
             aoToggle.onValueChanged.AddListener(ToggleAO);
             
+            bool getColorblindToggle = Convert.ToBoolean(PlayerPrefs.GetInt("colorblind", 0));
+            ToggleColorblind(getColorblindToggle);
+            colorblindToggle.isOn = getColorblindToggle;
+            colorblindToggle.onValueChanged.AddListener(ToggleColorblind);
+            
             // Setup audio sliders
             musicSlider.maxValue = 1f;
             musicSlider.onValueChanged.AddListener(SetMusicVolume);
@@ -104,7 +115,7 @@ namespace Managers
             Resolution resolution = _resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             PlayerPrefs.SetInt("resolution", resolutionIndex);
-            NewResolution?.Invoke(resolution.width, resolution.height);
+            OnNewResolution?.Invoke(resolution.width, resolution.height);
         }
         
         private void ToggleFullScreen(bool toggle)
@@ -144,6 +155,20 @@ namespace Managers
         private void ToggleAO(bool toggle)
         {
             rendererData.rendererFeatures[0].SetActive(toggle);   
+        }
+
+        private void ToggleColorblind(bool toggle)
+        {
+            Colors.ColorBlind = toggle;
+            if (Manager.State.InMenu)
+            {
+                UpdateUi();
+                OnToggleColorBlind?.Invoke(toggle);
+            }
+            
+            Shader.SetGlobalColor(Inactive, Colors.GridInactive);
+            Shader.SetGlobalColor(Active, Colors.GridActive);
+            Shader.SetGlobalColor(Invalid, Colors.GridInvalid);
         }
         #endregion
         

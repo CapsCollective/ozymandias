@@ -39,6 +39,7 @@ namespace Upgrades
 
         public int UpgradesPurchased => _upgrades.Count(upgrade => upgrade.Value.level != 0);
         public int TotalUpgrades => _upgrades.Count;
+        public int TotalPurchasable => _upgrades.Count(pair => pair.Value.gameObject.activeSelf && !pair.Value.LevelMaxed && Affordable(pair.Value.Costs));
 
         private void Awake()
         {
@@ -61,6 +62,8 @@ namespace Upgrades
                 GuildTokens[cost.Key] -= cost.Value;
             }
 
+            if (_selected == root) Manager.Cards.DiscoveriesRemaining++;
+            
             _selected.level++;
             Display();
             DisplayDetails(_selected);

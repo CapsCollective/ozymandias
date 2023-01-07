@@ -10,14 +10,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Cards
 {
     public class Cards : MonoBehaviour
     {
         public static Action<Card> OnCardSelected;
-        public static Action<Blueprint> OnUnlock;
-        public static Action OnDiscoverRuin;
+        public static Action<Blueprint, bool> OnUnlock;
         public static Action OnBuildingRotate;
 
         [SerializeField] private List<Blueprint> all;
@@ -65,13 +65,16 @@ namespace Cards
         public List<Blueprint> All => all; // All playable (excludes guild hall)
         public Blueprint GuildHall => guildHall;
         private List<Blueprint> Deck { get; set; } // Remaining cards in the deck
-        private List<Blueprint> Unlocked { get; set; } // Unlocked across all playthroughs
+        private List<Blueprint> Unlocked { get; set; } // Unlocked across all playthroughs (not including starters)
         private List<Blueprint> Playable { get; set; } // Currently playable (both starter and unlocked/ discovered)
-        private List<Blueprint> Discoverable { get; set; } // Cards discoverable in ruins
+        private List<Blueprint> Starters => All.Where(b => b.starter).ToList();
+        private List<Blueprint> Discoverable => Unlocked.Where(c => !Playable.Contains(c)).ToList();
+        public bool IsPlayable(Blueprint blueprint) => Playable.Contains(blueprint);
         public bool IsUnlocked(Blueprint blueprint) => Unlocked.Contains(blueprint);
-        public bool IsDiscoverable(Blueprint blueprint) => Discoverable.Contains(blueprint);
         public Blueprint Find(BuildingType type) => type == BuildingType.GuildHall ? GuildHall : All.Find(blueprint => blueprint.type == type);
         public int UnlockedCards => Unlocked.Count;
+        public int DiscoveriesRemaining { get; set; } 
+        
         #endregion
         
         private void Awake()
@@ -82,16 +85,34 @@ namespace Cards
             Select.OnClear += structure =>
             {
                 // Gets more likely to discover buildings as ruins get cleared until non remain
-                if (Discoverable.Count == 0 || !structure.IsRuin /*|| Random.Range(0, Manager.Structures.Ruins) > Discoverable.Count*/) return;
-
-                Unlock(Discoverable.PopRandom(), true);
-                Notification.OnNotification.Invoke($"Card rediscovered from ruins! ({Discoverable.Count} remaining)", notificationIcon, 3);
+                if (!structure.IsRuin) return;
+                if (Discoverable.Count <= 0)
+                {
+                    if (Random.Range(0,4) == 0) Manager.Notifications.Display(
+                        "No unlocked cards to discover in ruins",
+                        notificationIcon, 3,
+                        () => Manager.Book.Open(Book.BookPage.Reports)
+                    );
+                    return;
+                }
+                if (DiscoveriesRemaining <= 0)
+                {
+                    if (Random.Range(0,4) == 0) Manager.Notifications.Display(
+                        "No card discoveries remaining, upgrade to find more",
+                        notificationIcon, 3,
+                        () => Manager.Book.Open(Book.BookPage.Upgrades)
+                    );
+                    return;
+                }
+                Unlock(Discoverable.SelectRandom(), true);
+                DiscoveriesRemaining--;
+                Manager.Notifications.Display($"Card rediscovered from ruins! ({DiscoveriesRemaining} remaining)", notificationIcon, 3);
             };
             State.OnNewGame += () =>
             {
-                Playable = All.Where(b => b.starter).ToList();
+                Playable = Starters;
                 Deck = new List<Blueprint>(Playable); // Start fresh with a new shuffle
-                Discoverable = Unlocked.RandomSelection(Mathf.Min(Manager.Upgrades.GetLevel(UpgradeType.Discoveries), Unlocked.Count));
+                DiscoveriesRemaining = Manager.Upgrades.GetLevel(UpgradeType.Discoveries);
                 InitCards();
             };
             State.OnLoadingEnd += InitCards;
@@ -269,15 +290,14 @@ namespace Cards
         
         #endregion
         
-        public bool Unlock(Blueprint blueprint, bool isRuin = false)
+        public bool Unlock(Blueprint blueprint, bool fromRuin = false)
         {
             if (Playable.Contains(blueprint)) return false;
             if (!Unlocked.Contains(blueprint)) Unlocked.Add(blueprint);
             Playable.Add(blueprint);
             Deck.Add(blueprint); // Add to deck so it shows up faster
             
-            OnUnlock?.Invoke(blueprint);
-            if (isRuin) OnDiscoverRuin?.Invoke();
+            OnUnlock?.Invoke(blueprint, fromRuin);
             return true;
         }
 
@@ -285,7 +305,6 @@ namespace Cards
         {
             Deck = new List<Blueprint>(All);
             Playable = new List<Blueprint>(All);
-            Discoverable = new List<Blueprint>();
         }
 
         public CardDetails Save()
@@ -295,7 +314,7 @@ namespace Cards
                 deck = Deck.Select(x => x.type).ToList(),
                 unlocked = Unlocked.Select(x => x.type).ToList(),
                 playable = Playable.Select(x => x.type).ToList(),
-                discoverable = Discoverable.Select(x => x.type).ToList()
+                discoveriesRemaining = DiscoveriesRemaining
             };
         }
         
@@ -304,8 +323,8 @@ namespace Cards
             Deck = cards.deck?.Select(Find).ToList() ?? new List<Blueprint>();
             Unlocked = cards.unlocked?.Select(Find).ToList() ?? new List<Blueprint>();
             Playable = cards.playable?.Select(Find).ToList() ?? new List<Blueprint>();
-            if(Playable == null || Playable.Count == 0) Playable = All.Where(b => b.starter).ToList(); // Set for new game
-            Discoverable = cards.discoverable?.Select(Find).ToList() ?? new List<Blueprint>();
+            DiscoveriesRemaining = cards.discoveriesRemaining;
+            if (Playable == null || Playable.Count == 0) Playable = Starters; // Set for new game
         }
 
         #if UNITY_EDITOR

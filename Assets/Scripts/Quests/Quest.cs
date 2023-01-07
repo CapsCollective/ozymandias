@@ -8,17 +8,30 @@ using Map;
 using NaughtyAttributes;
 using Structures;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
 using Random = UnityEngine.Random;
-using String = Utilities.String;
 
 namespace Quests
 {
     [CreateAssetMenu]
     public class Quest : ScriptableObject
     {
+        private readonly Dictionary<int,float> CostScale = new Dictionary<int, float>
+        {
+            {-4, 3f},
+            {-3, 2.5f},
+            {-2, 2f},
+            {-1, 1.5f},
+            {0, 1f},
+            {1, 0.85f},
+            {2, 0.7f},
+            {3, 0.55f},
+            {4, 0.4f}
+        };
+
         public static Action<Quest> OnQuestStarted;
         
         public string title;
@@ -27,9 +40,9 @@ namespace Quests
         public Sprite image;
         public Color colour;
         
-        public int adventurers = 2;
         [Range(0.5f, 3f)] public float wealthMultiplier = 1.5f; // How many turns worth of gold to send, sets cost when created.
-        [Range(3, 6)] public int baseTurns = 3; // How many turns worth of gold to send, sets cost when created.
+        [FormerlySerializedAs("adventurers")] [Range(3,8)] public int baseAdventurers = 2;
+        [FormerlySerializedAs("baseTurns")] [Range(3, 6)] public int baseDuration = 3; // How many turns worth of gold to send, sets cost when created.
         public Location location;
         public Event completeEvent; // Keep empty if randomly chosen
 
@@ -46,12 +59,9 @@ namespace Quests
         
         // Flyer Properties
         // The base number of adventurers to send on a grid quest before any tiles are cleared
-        private const int BaseAdventurers = 2;
-        public int MinAdventurers => BaseAdventurers + 1;
-        public int MaxAdventurers => BaseAdventurers + Structure.SectionCount;
-        public int ScaledCost(float scale) => (int) (scale * BaseCost);
-        public int ScaledTurns(float scale) => Mathf.CeilToInt(baseTurns / scale);
-        public string ScaledReward(int adventurerCount) => IsRadiant ? $"{(adventurerCount == MaxAdventurers ? "All": (adventurerCount - BaseAdventurers).ToString())} {(adventurerCount > 3 ? String.Pluralise("space") : "space")} cleared" : reward;
+        public int BaseAdventurers => IsRadiant ? 2 + Structure.SectionCount : baseAdventurers;
+        public int ScaledCost(int scale) => (int) (BaseCost * CostScale[scale]);
+        public string RewardDescription => IsRadiant ? $"Clear camp (-{Structure.SectionCount} threat)" : reward;
         public int AssignedCount => _assigned.Count;
         
         public void Add()
@@ -59,7 +69,7 @@ namespace Quests
             BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (10f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 10f);
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
-            State.OnNextTurnEnd += OnNewTurn;
+            State.OnNewTurn += OnNewTurn;
 
             if (location == Location.Grid)
             {
@@ -87,7 +97,7 @@ namespace Quests
         {
             if (location == Location.Grid) ClearBuilding();
             else ResetLocation();
-            State.OnNextTurnEnd -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
+            State.OnNewTurn -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
         }
         
         private void SetLocation()
@@ -98,15 +108,16 @@ namespace Quests
         
         private void ResetLocation()
         {
+            if (Structure == null) return;
             Structure.Quest = null;
             Structure = null;
         }
 
-        public void Begin(float costScale, int adventurersUsed)
+        public void Begin(int adventurersOffset, int durationOffset)
         {
-            TurnsLeft = ScaledTurns(costScale);
-            Manager.Stats.Spend(ScaledCost(costScale));
-            _assigned.AddRange(Manager.Adventurers.Assign(this, adventurersUsed));
+            TurnsLeft = baseDuration + durationOffset;
+            Manager.Stats.Spend(ScaledCost(adventurersOffset + durationOffset));
+            _assigned.AddRange(Manager.Adventurers.Assign(this, BaseAdventurers + adventurersOffset));
             OnQuestStarted?.Invoke(this);
             UpdateUi();
         }
@@ -114,8 +125,7 @@ namespace Quests
         public void Complete()
         {
             Quests.OnQuestCompleted?.Invoke(this);
-            if (!IsRadiant || AssignedCount >= BaseAdventurers + Structure.SectionCount) Manager.Quests.Remove(this);
-            else Structure.Shrink(AssignedCount - BaseAdventurers);
+            Manager.Quests.Remove(this);
             _assigned.ForEach(a => a.assignedQuest = null);
             _assigned.Clear();
             TurnsLeft = -1;
@@ -158,6 +168,7 @@ namespace Quests
 
         private void ClearBuilding()
         {
+            if (Structure == null) return;
             Structure.Destroy();
             Structure = null;
         }
@@ -198,7 +209,7 @@ namespace Quests
 
         public void Load(QuestDetails details)
         {
-            State.OnNextTurnEnd += OnNewTurn;
+            State.OnNewTurn += OnNewTurn;
             BaseCost = details.cost;
             TurnsLeft = details.turnsLeft;
 
@@ -215,6 +226,7 @@ namespace Quests
         [Button("Add")]
         public void DebugAdd()
         {
+            if (Structure != null) return;
             Manager.Quests.Add(this);
         }
         

@@ -3,27 +3,30 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities;
 
 namespace UI
 {
     public class Notification : MonoBehaviour
     {
-        public static Action<string, Sprite, float> OnNotification;
-
+        private const float FadeInTime = 1f;
+        private const float FadeOutTime = 2f;
+        
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private Image icon;
         [SerializeField] private CanvasGroup canvasGroup;
         
-        private void Awake()
+        public void Display(string description, Sprite sprite, float delay, Action onClick)
         {
-            OnNotification += (description, sprite, delay) =>
+            if (onClick != null) GetComponent<Button>().onClick.AddListener(onClick.Invoke);
+            text.text = description;
+            if (sprite) icon.sprite = sprite;
+            canvasGroup.DOFade(1, FadeInTime).OnComplete(() =>
             {
-                text.text = description;
-                icon.sprite = sprite;
-                canvasGroup.alpha = 1;
-                canvasGroup.DOFade(0, 2f).SetDelay(delay);
-            };
+                canvasGroup.DOFade(0, FadeOutTime).SetDelay(delay).OnComplete(() =>
+                {
+                    Destroy(gameObject);
+                });
+            });
         }
     }
 }

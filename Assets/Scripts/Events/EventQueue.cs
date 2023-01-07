@@ -103,15 +103,15 @@ namespace Events
                 // 20% chance to start a new story while no other is active
                 if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
                 {
-                    Flags[Flag.StoryActive] = true;
-                    // Pick a story that isn't for an already unlocked/ discoverable building
+                    // Pick a story that isn't for an already playable building
                     while (true)
                     {
                         Event story = PickRandom(EventType.Story);
                         if (story == null) break; // Catch case for if there are no stories
                         
-                        if (story.blueprintToUnlock == null || !Manager.Cards.IsDiscoverable(story.blueprintToUnlock))
+                        if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock))
                         {
+                            Flags[Flag.StoryActive] = true;
                             eventPool.Add(story);
                             Debug.Log($"Story chosen: {story}");
                             break;

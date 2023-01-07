@@ -13,22 +13,23 @@ namespace UI
 {
     public class Book : MonoBehaviour
     {
-        [System.Serializable]
+        [Serializable]
         private class BookGroup
         {
             public CanvasGroup canvasGroup;
             public Button bookRibbon;
         }
 
-        private enum BookPage
+        public enum BookPage
         {
-            Settings,
-            Reports,
-            Upgrades
+            Settings = 0,
+            Guide = 1,
+            Reports = 2,
+            Upgrades = 3,
         }
 
-        const float DEFAULT_RIBBON_HEIGHT = 160f;
-        const float EXPANDED_RIBBON_HEIGHT = 200f;
+        const float DEFAULT_RIBBON_HEIGHT = 128;
+        const float EXPANDED_RIBBON_HEIGHT = 180f;
         
         // Public fields
         public static Action OnOpened;
@@ -37,14 +38,12 @@ namespace UI
         private static readonly Vector3 PunchScale = Vector3.one * 0.5f;
         
         [SerializeField] private Canvas canvas;
-        [SerializeField] private Button 
-            closeButton, 
+
+        [SerializeField] private Button
+            closeButton,
             quitButton,
             clearSaveButton,
-            introSettingsButton,
-            settingsRibbon,
-            reportsRibbon,
-            upgradesRibbon;
+            introSettingsButton;
         [SerializeField] private Slider sfxSlider;
         [SerializeField] private GameObject clearSaveText, confirmClearText, finalClearText;
         [SerializeField] private float animateInDuration = .5f;
@@ -79,7 +78,6 @@ namespace UI
                 // Enable or disable the quit to menu button to avoid the raycaster affecting
                 // other pages in the book
                 // TODO this needs a second menu state available for in-menu/game vs in-menu/intro
-                _changingPage = true;
                 bool enableQuit = _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings;
                 quitButton.gameObject.SetActive(enableQuit);
                 quitButton.interactable = enableQuit;
@@ -99,10 +97,10 @@ namespace UI
                         mode = Navigation.Mode.Explicit
                     };
                 }
+                if (value == BookPage.Reports) CardsBookList.ScrollActive = true;
 
                 if (_page == value) return;
-
-                if (value == BookPage.Reports) CardsBookList.ScrollActive = true;
+                _changingPage = true;
                 
                 Manager.Jukebox.PlayPageTurn();
 
@@ -145,9 +143,10 @@ namespace UI
                 else ConfirmingDelete++;
             });
             
-            settingsRibbon.onClick.AddListener(() => Page = BookPage.Settings);
-            reportsRibbon.onClick.AddListener(() => Page = BookPage.Reports);
-            upgradesRibbon.onClick.AddListener(() => Page = BookPage.Upgrades);
+            foreach ((BookPage page, BookGroup group) in pages)
+            {
+                group.bookRibbon.onClick.AddListener(() => Page = page);
+            }
 
             var rt = pages[_page].bookRibbon.transform as RectTransform;
             rt.sizeDelta = new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT);
@@ -191,8 +190,15 @@ namespace UI
             transform.localPosition = ClosePos;
         }
 
-        private void Open()
+        public void Open(BookPage page)
         {
+            Page = page;
+            Open();
+        }
+        
+        public void Open()
+        {
+            if (!Manager.State.InGame && !Manager.State.InIntro) return;
             _transitioning = true;
             _closeState = Manager.State.Current;
             _fromGame = Manager.State.InGame;
@@ -217,7 +223,7 @@ namespace UI
             Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }
 
-        private void Close()
+        public void Close()
         {
             ConfirmingDelete = 0;
             _transitioning = true;
@@ -240,7 +246,7 @@ namespace UI
         {
             if (_changingPage) return;
             var val = -(int)obj.ReadValue<float>();
-            var newPage = Mathf.Abs(((int)_page + val + 3) % 3);
+            var newPage = Mathf.Abs(((int)_page + val + 4) % 4);
             Page = (BookPage)newPage;
         }
 

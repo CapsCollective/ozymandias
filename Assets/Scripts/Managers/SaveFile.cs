@@ -76,7 +76,8 @@ namespace Managers
     [Serializable]
     public struct CardDetails
     {
-        public List<BuildingType> deck, unlocked, playable, discoverable;
+        public List<BuildingType> deck, unlocked, playable;
+        public int discoveriesRemaining;
     }
     
     [Serializable]
@@ -123,7 +124,7 @@ namespace Managers
         public static void SaveState(bool overwriteBackup = true)
         {
             if (Tutorial.Tutorial.Active) return; // No saving during tutorial
-            OnNotification.Invoke("Game Saved", Manager.saveIcon, 0);
+            if (overwriteBackup) Manager.Notifications.Display("Game Saved", Manager.saveIcon);
             Manager.PlatformManager.FileSystem.SaveFile.Save(overwriteBackup);
         }
         
@@ -189,11 +190,16 @@ namespace Managers
             else
             {
                 Debug.LogWarning("Save.json not found, starting tutorial");
-                Tutorial.Tutorial.Active = true;
-                Tutorial.Tutorial.DisableSelect = true;
-                Tutorial.Tutorial.DisableNextTurn = true;
-
-                Manager.Structures.SpawnTutorialRuins();
+                
+#if UNITY_EDITOR
+                if (!Manager.skipTutorial)
+#endif
+                {
+                    Tutorial.Tutorial.Active = true;
+                    Tutorial.Tutorial.DisableSelect = true;
+                    Tutorial.Tutorial.DisableNextTurn = true;
+                    Manager.Structures.SpawnTutorialRuins();
+                }
             }
             
             Manager.Achievements.Load(data.achievements);

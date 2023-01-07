@@ -13,7 +13,7 @@ namespace Structures
 
         private void OnEnable()
         {
-            Managers.Settings.NewResolution += OnNewResolution;
+            Managers.Settings.OnNewResolution += OnNewResolution;
             cam = GetComponent<Camera>();
             outlineRT = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.RFloat);
             outlineRT.useMipMap = false;
@@ -33,7 +33,7 @@ namespace Structures
 
         private void OnDisable()
         {
-            Managers.Settings.NewResolution -= OnNewResolution;
+            Managers.Settings.OnNewResolution -= OnNewResolution;
             outlineRT.Release();
             cam.targetTexture = null;
         }

@@ -117,6 +117,7 @@ namespace Managers
             State.OnNewGame += OnNewGame;
             State.OnNextTurnBegin += OnNextTurnBegin;
             State.OnNextTurnEnd += OnNextTurnEnd;
+            State.OnNewTurn += OnNewTurn;
             Structures.Structures.OnGuildHallDemolished += () => Stability = 0;
         }
 
@@ -170,14 +171,10 @@ namespace Managers
                     Modifiers[stat.Key].RemoveAt(i);
                 }
             }
-            
-            // Pattern so it only calls for the close to save for the new turn 
-            Newspaper.OnNextClosed += NewTurnClosed; 
         }
 
-        private void NewTurnClosed()
+        private void OnNewTurn()
         {
-            Debug.Log("Closing for new turn");
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
             {
                 switch (stat)

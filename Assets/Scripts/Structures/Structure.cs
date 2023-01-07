@@ -313,7 +313,11 @@ namespace Structures
             }
             GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
 
-            if (Occupied.Count == 4) Notification.OnNotification.Invoke("A camp is growing dangerously large!", Manager.questIcon, 3); 
+            if (Occupied.Count % 4 == 0) Manager.Notifications.Display(
+                "A camp is growing dangerously large!", 
+                Manager.questIcon, 5, 
+                () => Manager.Camera.MoveTo(newCell.WorldSpace)
+            ); 
         }
 
         public void Shrink(int count)

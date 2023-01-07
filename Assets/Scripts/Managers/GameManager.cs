@@ -47,7 +47,7 @@ namespace Managers
             // Reset all static events and data
             GameManager.Manager = null;
             GameManager.OnUpdateUI = null;
-            Settings.NewResolution = null;
+            Settings.OnNewResolution = null;
             UIController.OnUIOpen = null;
             UIController.OnUIClose = null;
             State.OnEnterState = null;
@@ -56,13 +56,13 @@ namespace Managers
             State.OnGameEnd = null;
             State.OnNextTurnBegin = null;
             State.OnNextTurnEnd = null;
-            Events.Newspaper.OnClosed = null;
-            Events.Newspaper.OnNextClosed = null;
-            global::Adventurers.Adventurers.OnAdventurerJoin = null;
-            global::Adventurers.Adventurers.OnAdventurerRemoved = null;
+            State.OnNewTurn = null;
+            Newspaper.OnClosed = null;
+            Newspaper.OnNextClosed = null;
+            Adventurers.Adventurers.OnAdventurerJoin = null;
+            Adventurers.Adventurers.OnAdventurerRemoved = null;
             global::Cards.Cards.OnCardSelected = null;
             global::Cards.Cards.OnUnlock = null;
-            global::Cards.Cards.OnDiscoverRuin = null;
             global::Cards.Cards.OnBuildingRotate = null;
             CardsBookList.ScrollActive = false;
             UnlockDisplay.OnUnlockDisplayed = null;
@@ -103,8 +103,7 @@ namespace Managers
             Tutorial.Tutorial.ShowShade = false;
             Book.OnOpened = null;
             BookButton.OnClicked = null;
-            Notification.OnNotification = null;
-            global::Upgrades.Upgrades.OnUpgradePurchased = null;
+            Upgrades.Upgrades.OnUpgradePurchased = null;
             ClickOnButtonDown.OnUIClick = null;
             
             // Kill all active tweens
@@ -146,6 +145,8 @@ namespace Managers
         public CursorSelect Cursor { get; private set; }
         public GameHud GameHud { get; private set; }
         public IntroHud IntroHud { get; private set; }
+        public Notifications Notifications { get; private set; }
+        public Book Book { get; private set; }
 
         private void Awake()
         {
@@ -171,6 +172,8 @@ namespace Managers
             Cursor = FindObjectOfType<CursorSelect>();
             GameHud = FindObjectOfType<GameHud>();
             IntroHud = FindObjectOfType<IntroHud>();
+            Notifications = FindObjectOfType<Notifications>();
+            Book = FindObjectOfType<Book>();
         }
         #endregion
         
@@ -218,8 +221,9 @@ namespace Managers
 
 #region Debug
 #if UNITY_EDITOR
-
+        [Header("Debug")]
         public bool skipIntro;
+        public bool skipTutorial;
         public bool disableOutline;
         public Blueprint debugBuilding;
         public int debugFramerate = 30;
@@ -271,6 +275,12 @@ namespace Managers
         public void NextTurn()
         {
             State.EnterState(GameState.NextTurn);
+        }
+        
+        [Button("Test Notification")]
+        public void TestNotification()
+        {
+            Notifications.Display("Test Notification " + Random.Range(0,10), saveIcon, 2f);
         }
 
         [Button("Take Screenshot")]

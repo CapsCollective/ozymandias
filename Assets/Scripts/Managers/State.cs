@@ -64,8 +64,9 @@ namespace Managers
         public static Action OnNewGame;
         public static Action OnLoadingEnd;
         public static Action OnGameEnd;
-        public static Action OnNextTurnBegin;
-        public static Action OnNextTurnEnd;
+        public static Action OnNextTurnBegin; // The start of the new turn animation
+        public static Action OnNextTurnEnd; // The end (once the newspaper is up)
+        public static Action OnNewTurn; // Once the newspaper is closed and a new turn starts
 
         private void Start()
         {

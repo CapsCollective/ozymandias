@@ -8,7 +8,6 @@ using DG.Tweening;
 using Events;
 using Inputs;
 using Managers;
-using NaughtyAttributes;
 using Quests;
 using Reports;
 using Structures;
@@ -52,6 +51,8 @@ namespace Tutorial
 
         private GameState _exitState = GameState.InGame;
         private Action _exitAction = null;
+
+        private bool _firstCardUnlock;
         
         #region Dialogue
         
@@ -78,6 +79,8 @@ namespace Tutorial
             //State.OnGameEnd += StartUpgradesDescription;
             UnlockDisplay.OnUnlockDisplayed += StartUnlockDescription;
             Quests.Quests.OnCampAdded += StartCampsDescription;
+            
+            State.OnLoadingEnd += () => _firstCardUnlock = Manager.Cards.UnlockedCards == 0;
         }
 
         private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame, Action exitAction = null, bool showShade = false)
@@ -208,7 +211,6 @@ namespace Tutorial
 
         #region Section Callbacks
 
-        [Button("Start Tutorial")]
         private void StartTutorial()
         {
             if (!Active) return;
@@ -428,7 +430,8 @@ namespace Tutorial
         
         private void StartUnlockDescription()
         {
-            if (Manager.Cards.UnlockedCards != 1) return;
+            if (!_firstCardUnlock) return;
+            _firstCardUnlock = false;
             
             // Workaround to make sure the selection is not active immediately after clicking next
             // (to stop controllers closing the card on exiting tutorial)

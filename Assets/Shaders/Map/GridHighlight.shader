@@ -3,11 +3,8 @@
     Properties
     {
         _Mask ("Mask Texture", 2D) = "white" {}
-		_Inactive ("Inactive Color", Color) = (1, 1, 1, 1)
-		_Active ("Active Color", Color) = (1, 1, 1, 1)
-		_Invalid ("Invalid Color", Color) = (1, 1, 1, 1)
 
-		_Origin ("World-Space Effect Origin", Vector) = (0, 0, 0, 0)
+        _Origin ("World-Space Effect Origin", Vector) = (0, 0, 0, 0)
 		_Radius ("World-Space Effect Radius", Float) = 10
 		_Exponent ("Exponent", Float) = 1
     }

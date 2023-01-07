@@ -25,7 +25,7 @@ namespace UI
 
             Requests.Requests.OnRequestCompleted += guild =>
             {
-                if (Manager.Upgrades.GuildTokens[guild] >= 2)
+                if (Manager.Upgrades.TotalPurchasable > 0)
                 {
                     notification.SetActive(true);
                 }

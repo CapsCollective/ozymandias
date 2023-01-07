@@ -5,15 +5,23 @@ namespace Utilities
 {
     public static class Colors
     {
+        public static bool ColorBlind { get; set; }
+        
         public static readonly Color CardLight = new Color(0.94f, 0.93f, 0.86f);
         public static readonly Color CardDark = new Color(0.16f, 0.13f, 0.07f);
-        public static readonly Color Green = new Color(0,0.7f,0.1f);
-        public static readonly Color Red = new Color(0.9f,0,0);
+
+        public static Color GridInactive => new Color(0.2f, 0.2f, 0.2f, 0.2f);
+        public static Color GridActive => ColorBlind ? new Color32(255,194,10,153) : new Color(0,0.7f,0.1f, 0.6f);
+        public static Color GridInvalid => ColorBlind ? new Color32(12,123,220,153) : new Color(0.9f, 0, 0, 0.6f);
+        
+        public static Color Green => ColorBlind ? new Color32(255,194,10,255) : new Color(0,0.7f,0.1f);
+        public static Color Red => ColorBlind ? new Color32(12,123,220,255) : new Color(0.9f, 0, 0);
         public static readonly Color CostActive = new Color(0.8f,0.6f,0.2f);
         public static readonly Color CostInactive = new Color(0.85f,0.85f,0.85f);
-        public const string GreenText = "<color=#007000ff>";
-        public const string RedText = "<color=#820000ff>";
-        public const string EndText = "</color>";
+
+        public static string GreenText => ColorBlind ? "" : "<color=#007000ff>";
+        public static string RedText => ColorBlind ? "" : "<color=#820000ff>";
+        public static string EndText => ColorBlind ? "" :"</color>";
 
         public static readonly Dictionary<Stat, Color> StatColours = new Dictionary<Stat, Color>
         {
