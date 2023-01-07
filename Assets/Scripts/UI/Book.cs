@@ -22,10 +22,10 @@ namespace UI
 
         public enum BookPage
         {
-            Settings,
-            Reports,
-            Upgrades,
-            Guide
+            Settings = 0,
+            Guide = 1,
+            Reports = 2,
+            Upgrades = 3,
         }
 
         const float DEFAULT_RIBBON_HEIGHT = 128;
@@ -246,7 +246,7 @@ namespace UI
         {
             if (_changingPage) return;
             var val = -(int)obj.ReadValue<float>();
-            var newPage = Mathf.Abs(((int)_page + val + 3) % 3);
+            var newPage = Mathf.Abs(((int)_page + val + 4) % 4);
             Page = (BookPage)newPage;
         }
 
