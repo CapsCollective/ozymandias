@@ -63,22 +63,6 @@ namespace UI {
             settingsText.gameObject.SetActive(enable);
         }
 
-        private void Update()
-        {
-            if (toggleFPS)
-            {
-                frameCount[frames] = Time.deltaTime;
-                frames += 1;
-                timer += Time.deltaTime;
-                if (timer > DEBUG_UPDATE_TIME)
-                {
-                    timer = 0;
-                    fps = CalculateFPS();
-                    frames = 0;
-                }
-            }
-        }
-
         private void UpdateText(bool updateValues = true)
         {
             if (updateValues)
@@ -100,17 +84,6 @@ namespace UI {
                 sb.AppendLine($"{kvp.Key}: {kvp.Value}");
             }
             settingsText.text = sb.ToString();
-        }
-
-        private float CalculateFPS()
-        {
-            float total = 0;
-            for (int i = 0; i < frames; i++)
-            {
-                total += frameCount[i];
-                frameCount[i] = 0;
-            }
-            return frames / total;
         }
 
         private void ToggleDebug(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -224,12 +197,6 @@ namespace UI {
         {
             RenderSettings.fogEndDistance = f;
             UpdateText();
-        }
-
-        private void OnGUI()
-        {
-            if (toggleFPS)
-                GUILayout.Label($"FPS: {fps}");
         }
     }
 }
