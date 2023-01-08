@@ -160,12 +160,12 @@ namespace Managers
             dofProfile.TryGet<DepthOfField>(out var dof);
             dof.focusDistance.value = dofFocalDist;
 
+            loadingShadeCanvasGroup.alpha = 1;
             // Reveal the CC logo screen
-            loadingShadeCanvasGroup.DOFade(0.0f, 0.5f).SetDelay(0.5f)
-                .OnComplete(() =>
-                {
-                    StartCoroutine(LoadGame());
-                });
+            loadingShadeCanvasGroup
+                .DOFade(0.0f, 0.5f)
+                .SetDelay(0.5f)
+                .OnComplete(() => StartCoroutine(LoadGame()));
         }
 
         private IEnumerator LoadGame()
@@ -174,20 +174,17 @@ namespace Managers
             Manager.Jukebox.PlayKeystrokes();
             
             var loadTime = Time.time;
-            print("Start time: " + loadTime);
+            print("Loading Start frame: " + Time.frameCount);
             yield return StartCoroutine(SaveFile.LoadState());
-            print("Finished time: " + Time.time);
+            print("Loading Finished frame: " + Time.frameCount);
             OnLoadingEnd?.Invoke();
             
             // Hold the loading screen open for a minimum of 4 seconds
             loadTime = 4 - (Time.time - loadTime);
             if (loadTime > 0)
             {
-                print("Waiting for " + loadTime);
                 yield return new WaitForSeconds(loadTime);
             }
-            
-            print("Timer Finished");
             
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 0.5f).OnComplete(() => loadingCanvas.enabled = false);

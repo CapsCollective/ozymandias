@@ -30,18 +30,19 @@ namespace Map
         //Procedurally places buildings
         public IEnumerator FillGrid()
         {
-            Debug.Log("Starting Fill Grid: " + Time.time);
-
+            const int maxStructuresPerFrame = 30;
+            int countPerFrame = 0;
+            
             //TODO: Pick a spawn cell from a list of 'safe' placements, avoid building trees in cell within a distance of the hall, Store the cell 
-            int count = 0;
             foreach (Cell cell in CellGraph.Data.Where(cell => cell.Active))
             {
                 if (cell.Occupied) continue;
-                count++;
                 Manager.Structures.AddTerrain(cell.Id);
+                
+                if (++countPerFrame < maxStructuresPerFrame) continue;
+                countPerFrame = 0;
                 yield return null;
             }
-            Debug.Log("Finish Fill Grid: " + Time.time + ", Added " + count);
 
             // Play a single build sound for all terrain to avoid "pop"
             if (!Manager.State.Loading) Manager.Jukebox.PlayBuild();

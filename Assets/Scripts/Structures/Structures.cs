@@ -249,23 +249,28 @@ namespace Structures
         
         private IEnumerator LoadCoroutine(StructureDetails details)
         {
-            print("Started Loading Buildings: " + Time.time);
+            const int maxStructuresPerFrame = 30;
+            int countPerFrame = 0;
+            
             foreach (BuildingDetails building in details.buildings ?? new List<BuildingDetails>())
             {
                 Blueprint blueprint = Manager.Cards.Find(building.type);
                 if (!blueprint) Debug.LogError(
                     "Blueprint of type \"" + building.type + "\" could not be found." + 
                     "It may not yet be available to the player.");
-                AddBuilding(
-                    blueprint, 
-                    building.rootId, building.rotation, building.isRuin);
+                AddBuilding(blueprint, building.rootId, building.rotation, building.isRuin);
 
+                if (++countPerFrame < maxStructuresPerFrame) continue;
+                countPerFrame = 0;
                 yield return null;
             }
 
             foreach (TerrainDetails terrain in details.terrain ?? new List<TerrainDetails>())
             {
                 AddTerrain(terrain.rootId, terrain.sectionCount);
+                
+                if (++countPerFrame < maxStructuresPerFrame) continue;
+                countPerFrame = 0;
                 yield return null;
             }
             
@@ -278,8 +283,6 @@ namespace Structures
                 TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
             }
             
-            print("Finished Loading Structures: " + Time.time);
-
             CheckAdjacencyBonuses(); // Checks at end of load so it doesn't repeat
         }
     }
