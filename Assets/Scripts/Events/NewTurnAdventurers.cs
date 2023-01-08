@@ -28,7 +28,6 @@ namespace Events
             }
 
             bool displayNewTurnAdventurers = anyChanged && !Manager.State.IsGameOver;
-            print(displayNewTurnAdventurers);
             newAdventurersTitle.SetActive(displayNewTurnAdventurers);
             gameObject.SetActive(displayNewTurnAdventurers);
             newAdventurersSeparator.SetActive(displayNewTurnAdventurers);

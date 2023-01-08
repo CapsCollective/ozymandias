@@ -195,7 +195,6 @@ namespace Structures
             {
                 if (rd is OutlineRenderFeature)
                 {
-                    Debug.Log(Manager.PlatformManager.Gameplay.GetPlatformAssets().RendererData.name);
                     _outline = rd as OutlineRenderFeature;
                     break;
                 }

@@ -6,7 +6,6 @@ using Structures;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
-using NaughtyAttributes;
 using static Managers.GameManager;
 
 namespace Map
@@ -169,9 +168,9 @@ namespace Map
             layout.Align(cells, rotation);
         }
 
-        public void FillGrid()
+        public Coroutine FillGrid()
         {
-            layout.FillGrid();
+            return StartCoroutine(layout.FillGrid());
         }
         
         public void CreateRoad(List<Cell> cells)

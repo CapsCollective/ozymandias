@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
 using Map;
-using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -124,7 +124,6 @@ namespace Structures
 
         public void AddTerrain(int rootId, int sectionCount = -1)
         {
-            if (Manager.Map.GetCell(rootId).Occupied) return; 
             Structure structure = Instantiate(structurePrefab, transform).GetComponent<Structure>();
             structure.CreateTerrain(rootId, sectionCount);
             _terrain.Add(structure);
@@ -243,8 +242,14 @@ namespace Structures
             };
         }
 
-        public void Load(StructureDetails details)
+        public Coroutine Load(StructureDetails details)
         {
+            return StartCoroutine(LoadCoroutine(details));
+        }
+        
+        private IEnumerator LoadCoroutine(StructureDetails details)
+        {
+            print("Started Loading Buildings: " + Time.time);
             foreach (BuildingDetails building in details.buildings ?? new List<BuildingDetails>())
             {
                 Blueprint blueprint = Manager.Cards.Find(building.type);
@@ -254,10 +259,16 @@ namespace Structures
                 AddBuilding(
                     blueprint, 
                     building.rootId, building.rotation, building.isRuin);
+
+                yield return null;
             }
 
             foreach (TerrainDetails terrain in details.terrain ?? new List<TerrainDetails>())
+            {
                 AddTerrain(terrain.rootId, terrain.sectionCount);
+                yield return null;
+            }
+            
             Structure guildHall = _buildings.Find(structure => structure.Blueprint.type == BuildingType.GuildHall);
             if (guildHall)
                 TownCentre = guildHall.Occupied[0].WorldSpace;
@@ -267,6 +278,8 @@ namespace Structures
                 TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
             }
             
+            print("Finished Loading Structures: " + Time.time);
+
             CheckAdjacencyBonuses(); // Checks at end of load so it doesn't repeat
         }
     }

@@ -1,22 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Platform;
 using Reports;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
 using EventType = Utilities.EventType;
-using static UI.Notification;
 
 namespace Managers
 {
     [Serializable]
     public struct StatDetails
     {
-        public int wealth, turnCounter, stability, baseThreat, longestRun, maxAdventurers, campsCleared, townsDestroyed, buildingsBuilt, ruinsDemolished;
-        public HashSet<Secret> secrets;
+        public int wealth, turnCounter, stability, baseThreat;
         public Dictionary<Stat, List<Stats.Modifier>> modifiers;
         public Dictionary<Stat, List<int>> statHistory;
         public Dictionary<Guild, List<int>> adventurerHistory;
@@ -128,9 +126,9 @@ namespace Managers
             Manager.PlatformManager.FileSystem.SaveFile.Save(overwriteBackup);
         }
         
-        public static void LoadState()
+        public static IEnumerator LoadState()
         {
-            Manager.PlatformManager.FileSystem.SaveFile.Load();
+            return Manager.PlatformManager.FileSystem.SaveFile.Load();
         }
 
         public static void DeleteState()
@@ -174,7 +172,7 @@ namespace Managers
             File.WriteAllText(SaveFilePath(), JsonConvert.SerializeObject(data));
         }
 
-        public virtual void Load()
+        public virtual IEnumerator Load()
         {
             SaveData data = new SaveData();
             if (File.Exists(SaveFilePath()))
@@ -206,15 +204,17 @@ namespace Managers
             Manager.Upgrades.Load(data.upgrades);
             Manager.Cards.Load(data.cards);
             Manager.Stats.Load(data.stats);
-            Manager.Structures.Load(data.structures);
-            if(Manager.Structures.Count == 0) Manager.Map.FillGrid();
+            yield return Manager.Structures.Load(data.structures);
+            if (Manager.Structures.Count == 0) yield return Manager.Map.FillGrid();
             Manager.EventQueue.Load(data.eventQueue);
             Manager.Requests.Load(data.requests);
             
             // If continuing a game
-            if (Manager.Stats.TurnCounter == 0) return;
-            Manager.Adventurers.Load(data.adventurers);
-            Manager.Quests.Load(data.quests);
+            if (Manager.Stats.TurnCounter != 0)
+            {
+                Manager.Adventurers.Load(data.adventurers);
+                Manager.Quests.Load(data.quests);
+            }
         }
     }
 }

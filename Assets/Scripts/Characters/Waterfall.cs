@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
 using NaughtyAttributes;
-using UI;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;

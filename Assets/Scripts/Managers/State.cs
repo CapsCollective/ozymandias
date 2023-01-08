@@ -174,13 +174,21 @@ namespace Managers
             Manager.Jukebox.PlayKeystrokes();
             
             var loadTime = Time.time;
-            SaveFile.LoadState();
+            print("Start time: " + loadTime);
+            yield return StartCoroutine(SaveFile.LoadState());
+            print("Finished time: " + Time.time);
             OnLoadingEnd?.Invoke();
             
             // Hold the loading screen open for a minimum of 4 seconds
             loadTime = 4 - (Time.time - loadTime);
-            if (loadTime > 0) yield return new WaitForSeconds(loadTime);
-
+            if (loadTime > 0)
+            {
+                print("Waiting for " + loadTime);
+                yield return new WaitForSeconds(loadTime);
+            }
+            
+            print("Timer Finished");
+            
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 0.5f).OnComplete(() => loadingCanvas.enabled = false);
             

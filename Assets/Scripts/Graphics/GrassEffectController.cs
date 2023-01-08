@@ -35,7 +35,6 @@ namespace Grass
 
         private void UpdateVFX(GrassQualitySettings obj)
         {
-            Debug.Log(obj);
             _grassEffect.SetInt("Quality", (int)obj);
             _grassEffect.Reinit();
         }
