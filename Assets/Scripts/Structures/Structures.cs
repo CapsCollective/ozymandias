@@ -5,6 +5,7 @@ using System.Linq;
 using Managers;
 using Map;
 using UnityEngine;
+using UnityEngine.Profiling;
 using Utilities;
 using static Managers.GameManager;
 using Object = UnityEngine.Object;
@@ -45,12 +46,12 @@ namespace Structures
         {
             State.OnNewGame += () => { if (!Tutorial.Tutorial.Active) SpawnGuildHall(); };
             State.OnGameEnd += RemoveAll;
-            
-            var buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
-            foreach(Object o1 in buildingsText)
+            Debug.Break();
+            var buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset)).Cast<TextAsset>().ToArray();
+            Debug.Log(buildingsText);
+            foreach(TextAsset building in buildingsText)
             {
-                TextAsset o = (TextAsset) o1; // Explicit cast to avoid cast from Object to object above
-                BuildingCache.Add(o.name, JsonUtility.FromJson<Section.SectionData>(o.text));
+                BuildingCache.Add(building.name, JsonUtility.FromJson<Section.SectionData>(building.text));
             }
         }
 
