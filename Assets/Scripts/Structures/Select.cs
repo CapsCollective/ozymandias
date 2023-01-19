@@ -177,10 +177,11 @@ namespace Structures
             Manager.Inputs.LeftClick.performed += _ => ToggleSelect();
             Manager.Inputs.RightClick.performed += _ => Deselect();
             
+            Manager.Inputs.DemolishBuilding.started += _ => { InputRumble.OnPlayRumble(RumbleType.DestroyBuilding); };
             Manager.Inputs.DemolishBuilding.performed += _ => { if(SelectedStructure && !SelectedStructure.IsQuest) Interact(); };
             Manager.Inputs.DemolishBuilding.canceled += _ => 
             {
-                InputHelper.OnStopRumble();
+                InputRumble.OnStopRumble();
                 _interactTimer = 0;
                 maskImage.fillAmount = 0;
             };
@@ -221,7 +222,6 @@ namespace Structures
                     (!SelectedStructure.IsQuest && Manager.Inputs.DemolishBuilding.phase == InputActionPhase.Started ||
                     SelectedStructure.IsQuest && Manager.Inputs.SelectQuest.phase == InputActionPhase.Started))
                 {
-                    InputHelper.OnPlayRumble(RumbleType.DestroyBuilding);
                     maskImage.fillAmount = Mathf.InverseLerp(0, 0.4f, _interactTimer += Time.deltaTime);
                 }
                 return;

@@ -20,8 +20,6 @@ namespace Inputs
         public static EventSystem EventSystem;
         public static Action<GameObject> OnNewSelection;
         public static Action<bool> OnToggleCursor;
-        public static Action<RumbleType> OnPlayRumble;
-        public static Action OnStopRumble;
         public static Dictionary<GameObject, Vector2> CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
 
         [SerializeField] private RectTransform selectionHelper;
@@ -35,31 +33,6 @@ namespace Inputs
         private GameObject lastSelectedGameObject;
         private Dictionary<GameState, GameObject> previousSelections = new Dictionary<GameState, GameObject>();
         private Tween tween;
-
-        [SerializeField] private InputRumble inputRumble;
-        [SerializeField] private RumbleType rumbleTest;
-        private Coroutine rumbleCoroutine;
-
-        [Button("Test Rumble")]
-        private void TestRumble()
-        {
-            StartCoroutine(inputRumble.Rumble(rumbleTest));
-        }
-
-        public void PlayRumble(RumbleType rumble)
-        {
-            rumbleCoroutine = StartCoroutine(inputRumble.Rumble(rumble));
-        }
-
-        public void StopRumble()
-        {
-            if (inputRumble.IsRumbling)
-            {
-                StopCoroutine(rumbleCoroutine);
-                InputSystem.ResetHaptics();
-                rumbleCoroutine = null;
-            }
-        }
 
         // Start is called before the first frame update
         void Start()
@@ -88,8 +61,6 @@ namespace Inputs
             HelperActive = false;
 
             OnToggleCursor += ToggleUICursor;
-            OnPlayRumble += PlayRumble;
-            OnStopRumble += StopRumble;
         }
 
         private void Update()
