@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Inputs;
 using Managers;
 using Map;
 using Structures;
@@ -186,6 +187,7 @@ namespace Cards
             SelectedCard.Replace();
             if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
             SelectedCard = null;
+            InputHelper.OnPlayRumble(RumbleType.PlaceBuilding);
         }
 
         private void LateUpdate()
