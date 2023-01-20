@@ -174,9 +174,7 @@ namespace Managers
             Manager.Jukebox.PlayKeystrokes();
             
             var loadTime = Time.time;
-            print("Loading Start frame: " + Time.frameCount);
             yield return StartCoroutine(SaveFile.LoadState());
-            print("Loading Finished frame: " + Time.frameCount);
             OnLoadingEnd?.Invoke();
             
             // Hold the loading screen open for a minimum of 4 seconds

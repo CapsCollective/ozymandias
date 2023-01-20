@@ -43,7 +43,8 @@ namespace UI
             closeButton,
             quitButton,
             clearSaveButton,
-            introSettingsButton;
+            introSettingsButton,
+            introUpgradesButton;
         [SerializeField] private Slider sfxSlider;
         [SerializeField] private GameObject clearSaveText, confirmClearText, finalClearText;
         [SerializeField] private float animateInDuration = .5f;
@@ -128,7 +129,11 @@ namespace UI
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
             introSettingsButton.onClick.AddListener(() =>
             {
-                if (Manager.State.InIntro) Open();
+                if (Manager.State.InIntro) Open(BookPage.Settings);
+            });
+            introUpgradesButton.onClick.AddListener(() =>
+            {
+                if (Manager.State.InIntro) Open(BookPage.Upgrades);
             });
             closeButton.onClick.AddListener(Close);
             quitButton.onClick.AddListener(() =>
