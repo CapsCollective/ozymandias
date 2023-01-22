@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,10 @@ namespace UI
         [SerializeField] private RectTransform threatBar, defenceBadge, threatBadge;
         [SerializeField] private Image direction;
         [SerializeField] private TextMeshProUGUI defenceCount, threatCount;
-        private const float BarLength = 560f;
+        private const float BarStart = 55f;
+        private const float BarLength = 530f;
+        private const float DirectionArrowStart = 105f;
+        private const float DirectionArrowEnd = 535f;
         private const float Height = 25;
         private int _oldDefence, _oldThreat;
         private float _linearOldStability, _linearStability;
@@ -42,7 +46,7 @@ namespace UI
                 _oldThreat = threat;
             }
             
-            float width = BarLength * (100 - Mathf.Max(Manager.Stats.Stability, 0)) / 100f;
+            float width = BarLength * (Mathf.Max(Manager.Stats.Stability, 0)) / 100f;
             float target = Manager.Stats.Stability / 100.0f;
             float stability = _linearStability;
             DOTween.To(() => stability, x => stability = x, target, 0.5f).OnUpdate(() =>
@@ -54,8 +58,9 @@ namespace UI
                 _linearStability = stability;
             });
 
+            Shader.SetGlobalFloat("StabilityIntensity", Mathf.Abs(change) / 15.0f);
             direction.enabled = change != 0 && Manager.Stats.Stability > 0;
-            direction.rectTransform.DOAnchorPosX(Mathf.Clamp(-width-30f, -520,-120), 0.5f);
+            direction.rectTransform.DOAnchorPosX(Mathf.Clamp(BarStart + width, DirectionArrowStart, DirectionArrowEnd), 0.5f);
             direction.rectTransform.DORotate(new Vector3(0,0, change > 0 ? 90: -90), 0.5f);
             direction.sprite = chevrons[Mathf.Clamp(Mathf.Abs(change) / 5, 0, 2)];
         }

@@ -227,6 +227,8 @@ namespace Managers
         public bool disableOutline;
         public Blueprint debugBuilding;
         public int debugFramerate = 30;
+        [Range(0, 100)]
+        public int stability = 50;
         [Button("Set Building")]
         public void SetBuilding()
         {
@@ -322,6 +324,13 @@ namespace Managers
         public void SetFramerate()
         {
             Application.targetFrameRate = debugFramerate;
+        }
+
+        [Button("Set Stability")]
+        public void SetStability()
+        {
+            Stats.Stability = stability;
+            UpdateUi();
         }
         #endif
         #endregion
