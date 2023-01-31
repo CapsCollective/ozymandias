@@ -105,8 +105,8 @@ namespace Upgrades
                 {
                     purchaseBox.costs[guild].SetActive(true);
                     TextMeshProUGUI text = purchaseBox.costs[guild].GetComponentInChildren<TextMeshProUGUI>();
-                    text.text = upgrade.Costs[guild].ToString();
-                    text.color = GuildTokens[guild] >= upgrade.Costs[guild] ? Colors.CardLight : Colors.Red;
+                    text.text = $"{GuildTokens[guild]}/{upgrade.Costs[guild]}";
+                    text.color = GuildTokens[guild] >= upgrade.Costs[guild] ? Colors.CardLight : Colors.LightRed;
                 }
                 else
                 {

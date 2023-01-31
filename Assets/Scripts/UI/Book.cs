@@ -39,12 +39,7 @@ namespace UI
         
         [SerializeField] private Canvas canvas;
 
-        [SerializeField] private Button
-            closeButton,
-            quitButton,
-            clearSaveButton,
-            introSettingsButton,
-            introUpgradesButton;
+        [SerializeField] private Button closeButton, quitButton, clearSaveButton;
         [SerializeField] private Slider sfxSlider;
         [SerializeField] private GameObject clearSaveText, confirmClearText, finalClearText;
         [SerializeField] private float animateInDuration = .5f;
@@ -100,41 +95,41 @@ namespace UI
                 }
                 if (value == BookPage.Reports) CardsBookList.ScrollActive = true;
 
-                if (_page == value) return;
-                _changingPage = true;
-                
-                Manager.Jukebox.PlayPageTurn();
-
-                pages[_page].canvasGroup.interactable = false;
-                pages[_page].canvasGroup.blocksRaycasts = false;
-                var rt = pages[_page].bookRibbon.transform as RectTransform;
-                rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, DEFAULT_RIBBON_HEIGHT), 0.15f);
-                pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
-                pages[_page].canvasGroup.DOFade(0, 0.2f).OnComplete(() =>
+                if (_page == value)
                 {
-                    _page = value;
-                    pages[_page].canvasGroup.DOFade(1f, 0.2f);
+                    pages[_page].canvasGroup.alpha = 1;
                     pages[_page].canvasGroup.interactable = true;
                     pages[_page].canvasGroup.blocksRaycasts = true;
-                    pages[_page].canvasGroup.GetComponent<UIController>()?.OnOpen();
+                }
+                else
+                {
+                    _changingPage = true;
+                
+                    Manager.Jukebox.PlayPageTurn();
+
+                    pages[_page].canvasGroup.interactable = false;
+                    pages[_page].canvasGroup.blocksRaycasts = false;
                     var rt = pages[_page].bookRibbon.transform as RectTransform;
-                    rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT), 0.15f);
-                    _changingPage = false;
-                });
+                    rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, DEFAULT_RIBBON_HEIGHT), 0.15f);
+                    pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
+                    pages[_page].canvasGroup.DOFade(0, 0.2f).OnComplete(() =>
+                    {
+                        _page = value;
+                        pages[_page].canvasGroup.DOFade(1f, 0.2f);
+                        pages[_page].canvasGroup.interactable = true;
+                        pages[_page].canvasGroup.blocksRaycasts = true;
+                        pages[_page].canvasGroup.GetComponent<UIController>()?.OnOpen();
+                        var rt = pages[_page].bookRibbon.transform as RectTransform;
+                        rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT), 0.15f);
+                        _changingPage = false;
+                    });
+                }
             }
         }
         
         private void Start()
         {
             _closeButtonCanvas = closeButton.GetComponent<CanvasGroup>();
-            introSettingsButton.onClick.AddListener(() =>
-            {
-                if (Manager.State.InIntro) Open(BookPage.Settings);
-            });
-            introUpgradesButton.onClick.AddListener(() =>
-            {
-                if (Manager.State.InIntro) Open(BookPage.Upgrades);
-            });
             closeButton.onClick.AddListener(Close);
             quitButton.onClick.AddListener(() =>
             {
@@ -165,14 +160,12 @@ namespace UI
             RequestDisplay.OnNotificationClicked += () =>
             {
                 if (!Manager.State.InGame) return;
-                Page = BookPage.Upgrades;
-                Open();
+                Open(BookPage.Upgrades);
             };
 
             Tutorial.Tutorial.ShowBook += () =>
             {
-                Page = BookPage.Upgrades;
-                Open();
+                Open(BookPage.Upgrades);
             };
 
             Manager.Inputs.ToggleBook.performed += _ =>
@@ -200,8 +193,8 @@ namespace UI
             Page = page;
             Open();
         }
-        
-        public void Open()
+
+        private void Open()
         {
             if (!Manager.State.InGame && !Manager.State.InIntro) return;
             _transitioning = true;
@@ -228,7 +221,7 @@ namespace UI
             Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }
 
-        public void Close()
+        private void Close()
         {
             ConfirmingDelete = 0;
             _transitioning = true;

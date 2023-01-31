@@ -16,6 +16,7 @@ namespace Utilities
         
         public static Color Green => ColorBlind ? new Color32(255,194,10,255) : new Color(0,0.7f,0.1f);
         public static Color Red => ColorBlind ? new Color32(12,123,220,255) : new Color(0.9f, 0, 0);
+        public static Color LightRed => ColorBlind ? new Color32(12,123,220,255) : new Color(1f, 0.1f, 0.1f);
         public static readonly Color CostActive = new Color(0.8f,0.6f,0.2f);
         public static readonly Color CostInactive = new Color(0.85f,0.85f,0.85f);
 

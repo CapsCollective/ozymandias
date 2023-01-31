@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class Spinner : MonoBehaviour
+namespace UI
 {
-    void Update()
+    public class Spinner : MonoBehaviour
     {
-        transform.Rotate(0,0,-1);
+        void Update()
+        {
+            transform.Rotate(0,0,-1);
+        }
     }
 }
