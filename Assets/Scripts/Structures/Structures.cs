@@ -5,10 +5,8 @@ using System.Linq;
 using Managers;
 using Map;
 using UnityEngine;
-using UnityEngine.Profiling;
 using Utilities;
 using static Managers.GameManager;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Structures
