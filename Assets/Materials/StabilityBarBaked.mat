@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UIAnimations
-  m_Shader: {fileID: 4800000, guid: a54d27790d2f6d44ab7b914cfb0e055f, type: 3}
+  m_Name: StabilityBarBaked
+  m_Shader: {fileID: 4800000, guid: 4f03d735bb536af4caa0ddf355c7b65f, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample1:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 25ea221a6588e294da36199c9287ac8c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -38,56 +38,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _1241251: -0.1
-    - _BarSmoothing: 0.9
-    - _BarWidth: 0.5
-    - _BarWidthMax: 24
-    - _BarWidthMin: 2
     - _ColorMask: 15
-    - _Cutoff: 0.9
-    - _Cutoff2: -306.2
-    - _DefenseOffset: 1.4
-    - _DefenseShadingOffset: 0.11
-    - _DefenseSize: 1
-    - _FLoat4: 0.75
-    - _Float0: 0
-    - _Float1: 0.05
-    - _Float10: -0.5
-    - _Float3: 14.4
-    - _Float4: 5.4
-    - _Float5: 4
-    - _Float6: 4
-    - _Float7: 0.2
-    - _Float8: 4
-    - _Float9: 0.58
-    - _PanSpeed: 0.15
-    - _ShadingAngle: -56.21
-    - _ShadingAngle1: -60
-    - _ShadingAngle2: -49.61
-    - _ShadingFract: 4
-    - _ShadingMultiplier: 0.2
-    - _ShadingPower: -10.9
-    - _Shadow1: 0
-    - _Shadow2: 0
-    - _ShadowMask: -1
-    - _SliderMax: 0.875
-    - _SliderMin: 0.075
-    - _SliderValue: 1
-    - _Stability: 0.584
+    - _Float1: 0.025
+    - _Float2: 0
+    - _Float4: 0.087
+    - _Float5: 1.17
+    - _Float6: 0.91
+    - _LineBlur: 0.01
+    - _NoiseAmplitude: 0.025
+    - _PanSpeed: 0.1
+    - _ShadingMultiplier: 1.5
+    - _SliderMax: 1
+    - _SliderMin: 0
+    - _Stability: 1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _ThreatOffset: 24.6
-    - _ThreatShadingOffset: -0.33
-    - _ThreatSize: 1
     - _UseUIAlphaClip: 0
-    - _YShadingOffset: 0.54
-    - _YShadingPower: 3
-    - __dirty: 0
+    - _XPanSpeed: 0.15
+    - _YPanSpeed: 0.1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DefenseColor: {r: 0, g: 0.34962347, b: 0.702, a: 1}
-    - _ThreatColor: {r: 0.7924528, g: 0, b: 0, a: 1}
+    - _DefenseColor: {r: 0, g: 0.26499987, b: 0.53, a: 1}
+    - _NoiseScale: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _ThreatColor: {r: 0.482, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
