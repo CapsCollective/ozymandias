@@ -13,6 +13,8 @@ namespace Upgrades
 {
     public class Upgrades: MonoBehaviour
     {
+        const int UpgradeBoxCutoffY = -70;
+
         public static Action<UpgradeType> OnUpgradePurchased;
         public bool BoxOpen { get; private set; }
 
@@ -82,7 +84,7 @@ namespace Upgrades
 
             _selected = upgrade;
             purchaseBox.transform.pivot = new Vector2(0.5f, 1.1f);
-            if(upgrade.transform.localPosition.y < -80) purchaseBox.transform.pivot = new Vector2(0.5f, -0.1f);
+            if (upgrade.transform.localPosition.y < UpgradeBoxCutoffY) purchaseBox.transform.pivot = new Vector2(0.5f, -0.1f);
             purchaseBox.transform.position = upgrade.transform.position;
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);
