@@ -178,7 +178,7 @@ MonoBehaviour:
   delay: 0.2
   type: 14
   navigationDirections:
-    up: {fileID: 8866108516797247841}
+    up: {fileID: 0}
     down: {fileID: 8866108516797247841}
     left: {fileID: 765770303453454117}
     right: {fileID: 0}
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.801, g: 0.88060004, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: -5, y: -5, z: -5, w: -5}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -429,7 +429,7 @@ MonoBehaviour:
   delay: 0.2
   type: 5
   navigationDirections:
-    up: {fileID: 0}
+    up: {fileID: 7999429748900330698}
     down: {fileID: 0}
     left: {fileID: 3108383547447431341}
     right: {fileID: 6113066247763457439}
@@ -579,7 +579,7 @@ MonoBehaviour:
   delay: 0.2
   type: 13
   navigationDirections:
-    up: {fileID: 6113066247763457439}
+    up: {fileID: 0}
     down: {fileID: 6113066247763457439}
     left: {fileID: 0}
     right: {fileID: 7034835482713423924}
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.8, b: 0.8, a: 0.5019608}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: -5, y: -5, z: -5, w: -5}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -921,8 +921,9 @@ GameObject:
   - component: {fileID: 9060585318347621619}
   - component: {fileID: 1375697738052000133}
   - component: {fileID: 4799217193086383968}
+  - component: {fileID: 7999429748900330698}
   m_Layer: 5
-  m_Name: Shimmer
+  m_Name: Stability Shimmer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -970,7 +971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -986,6 +987,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7999429748900330698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4624003892560672039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 200, y: -210, z: 0}
+  pivot: {x: 0, y: 1}
+  delay: 0.2
+  type: 8
+  navigationDirections:
+    up: {fileID: 0}
+    down: {fileID: 6321508604590232775}
+    left: {fileID: 7034835482713423924}
+    right: {fileID: 765770303453454117}
 --- !u!1 &4723518835248575674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,7 +1144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 92882f31e67ae804f86211fa3c6355cd, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1147,11 +1169,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8068118530465328100}
-  - component: {fileID: 3640998013696695792}
   - component: {fileID: 4672158540706708037}
   - component: {fileID: 4669321670767456870}
   m_Layer: 5
-  m_Name: ThreatCrystal Ball
+  m_Name: Threat Crystal Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1177,27 +1198,6 @@ RectTransform:
   m_AnchoredPosition: {x: -39.1, y: 10.5}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3640998013696695792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5817689481279716124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 0, y: -210, z: 0}
-  pivot: {x: 0, y: 1}
-  delay: 0.2
-  type: 14
-  navigationDirections:
-    up: {fileID: 8866108516797247841}
-    down: {fileID: 8866108516797247841}
-    left: {fileID: 765770303453454117}
-    right: {fileID: 0}
 --- !u!222 &4672158540706708037
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.68235296, b: 0.68235296, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1457,11 +1457,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5864074676074292583}
-  - component: {fileID: 2811346805516829641}
   - component: {fileID: 1837262835147551749}
   - component: {fileID: 5696112508134696646}
   m_Layer: 5
-  m_Name: DefenseCrystal Ball
+  m_Name: Defense Crystal Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1487,27 +1486,6 @@ RectTransform:
   m_AnchoredPosition: {x: 20.6, y: 10.5}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2811346805516829641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7552992319305841652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 819b91aab1dad1344a8343684aa655aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 0, y: -210, z: 0}
-  pivot: {x: 0, y: 1}
-  delay: 0.2
-  type: 14
-  navigationDirections:
-    up: {fileID: 8866108516797247841}
-    down: {fileID: 8866108516797247841}
-    left: {fileID: 765770303453454117}
-    right: {fileID: 0}
 --- !u!222 &1837262835147551749
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1530,7 +1508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.681, g: 0.76797694, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2184,7 +2162,7 @@ PrefabInstance:
         type: 3}
       propertyPath: navigationDirections.up
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7999429748900330698}
     - target: {fileID: 6983716728732076297, guid: 65e7e1aca38263c4080ae5c46a1ba2a7,
         type: 3}
       propertyPath: navigationDirections.left
@@ -2387,7 +2365,7 @@ PrefabInstance:
         type: 3}
       propertyPath: navigationDirections.up
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7999429748900330698}
     - target: {fileID: 6983716728732076297, guid: 65e7e1aca38263c4080ae5c46a1ba2a7,
         type: 3}
       propertyPath: navigationDirections.left
@@ -2585,7 +2563,7 @@ PrefabInstance:
         type: 3}
       propertyPath: navigationDirections.up
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7999429748900330698}
     - target: {fileID: 6983716728732076297, guid: 65e7e1aca38263c4080ae5c46a1ba2a7,
         type: 3}
       propertyPath: navigationDirections.left
