@@ -94,7 +94,7 @@ namespace Managers
         public int BaseThreat { get; set; }
         public int Threat => BaseThreat + ModifiersTotal[Stat.Threat] + Manager.Quests.RadiantQuestCellCount + ScarecrowThreat;
 
-        public int Stability { get; private set; } // Percentage of how far along the threat is.
+        public int Stability { get; set; } // Percentage of how far along the threat is.
 
         public int TurnCounter { get; set; }
         
