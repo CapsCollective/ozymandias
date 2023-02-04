@@ -1,10 +1,13 @@
 using System;
 using DG.Tweening;
+using Reports;
 using Requests.Templates;
 using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
+using static Managers.GameManager;
 
 namespace Requests
 {
@@ -49,9 +52,9 @@ namespace Requests
         
         protected override void UpdateUi()
         {
-            if (Tutorial.Tutorial.Active)
+            if (Manager.Upgrades.TotalPurchasable == 0 && !Manager.Upgrades.IsUnlocked(UpgradeType.Discoveries))
             {
-                _bookDisplay.description.text = "Complete Tutorial";
+                _bookDisplay.description.text = "Finish first game";
                 _bookDisplay.count.text = "";
                 _bookDisplay.tokens.text = "x1";
                 _bookDisplay.slider.gameObject.SetActive(false);
@@ -60,7 +63,7 @@ namespace Requests
             {
                 _bookDisplay.description.text = "Nothings here yet!";
                 _bookDisplay.count.text = "";
-                _bookDisplay.tokens.text = "x0";
+                _bookDisplay.tokens.text = "";
                 _bookDisplay.slider.gameObject.SetActive(false);
             }
             else

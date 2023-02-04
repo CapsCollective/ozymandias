@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Reports;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -101,28 +102,29 @@ namespace Events
                 if (!Tutorial.Tutorial.Active && (random == 0 || random < lead)) eventPool.Add(PickRandom(EventType.Radiant));
 
                 // 20% chance to start a new story while no other is active
-                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
-                {
-                    // Pick a story that isn't for an already playable building
-                    while (true)
-                    {
-                        Event story = PickRandom(EventType.Story);
-                        if (story == null) break; // Catch case for if there are no stories
-                        
-                        if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock))
-                        {
-                            Flags[Flag.StoryActive] = true;
-                            eventPool.Add(story);
-                            Debug.Log($"Story chosen: {story}");
-                            break;
-                        }
-                        Debug.Log($"Story invalid: {story}, picking another");
-                    }
-                }
+                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0) eventPool.Add(PickRandomStory());
             }
 
             while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
+        }
+
+        private Event PickRandomStory()
+        {
+            // Pick a story that isn't for an already playable building
+            while (true)
+            {
+                Event story = PickRandom(EventType.Story);
+                if (story == null) return null; // Catch case for if there are no stories
+                        
+                if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock))
+                {
+                    Flags[Flag.StoryActive] = true;
+                    Debug.Log($"Story chosen: {story}");
+                    return story;
+                }
+                Debug.Log($"Story invalid: {story}, picking another");
+            }
         }
         
         private Event PickRandom(EventType type)
@@ -180,7 +182,9 @@ namespace Events
 
         public void AddRequest(Guild guild)
         {
-            if (Random.Range(0, 5) != 0) return; // Random spawn chance so a new request doesnt come right away
+            // Don't spawn during first game
+            // Random spawn chance so a new request doesnt come right away
+            if (Manager.Achievements.Milestones[Milestone.TownsDestroyed] == 0 || Random.Range(0, 5) != 0) return; 
             Add(PickRandom(_requestMap[guild]));
         }
         

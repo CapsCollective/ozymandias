@@ -9,6 +9,8 @@ namespace UI
 {
     public class IntroHud : UIController
     {
+        public static bool DisableOpen = false;
+        
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform title, buttons, socials;
         [SerializeField] private Button playButton, creditsButton, quitButton, settingsButton, upgradesButton;
@@ -74,6 +76,7 @@ namespace UI
         
         public void Show(bool animate = true)
         {
+            if (DisableOpen) return;
             OnOpen();
             Show(new List<HudObject>(_hudValuesMap.Keys), animate);
         }

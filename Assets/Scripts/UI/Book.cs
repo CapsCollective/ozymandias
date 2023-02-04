@@ -45,9 +45,10 @@ namespace UI
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
         [SerializeField] private SerializedDictionary<BookPage, BookGroup> pages;
-        private GameState _closeState; // The state the book will enter when 
+        private GameState _closeState; // The state the book will enter when closed
         private bool _isOpen, _transitioning, _changingPage;
         private bool _fromGame; // TODO this state cache must be removed, please do not use it
+        private bool _disableNavigation = false;
         private CanvasGroup _closeButtonCanvas;
 
         private int _confirmDeleteStep;
@@ -66,64 +67,61 @@ namespace UI
         [SerializeField] private ExtendedDropdown resDropdown;
         
         private BookPage _page = BookPage.Settings;
-        private BookPage Page
+        private void SetPage(BookPage page)
         {
-            set
+            ConfirmingDelete = 0;
+            // Enable or disable the quit to menu button to avoid the raycaster affecting
+            // other pages in the book
+            // TODO this needs a second menu state available for in-menu/game vs in-menu/intro
+            bool enableQuit = _fromGame && !Tutorial.Tutorial.Active && page == BookPage.Settings;
+            quitButton.gameObject.SetActive(enableQuit);
+            quitButton.interactable = enableQuit;
+            quitButton.enabled = enableQuit;
+            
+            bool enableClear = !_fromGame && !Tutorial.Tutorial.Active && page == BookPage.Settings;
+            clearSaveButton.gameObject.SetActive(enableClear);
+            clearSaveButton.interactable = enableClear;
+            clearSaveButton.enabled = enableClear;
+
+            if (page == BookPage.Settings)
             {
-                ConfirmingDelete = 0;
-                // Enable or disable the quit to menu button to avoid the raycaster affecting
-                // other pages in the book
-                // TODO this needs a second menu state available for in-menu/game vs in-menu/intro
-                bool enableQuit = _fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings;
-                quitButton.gameObject.SetActive(enableQuit);
-                quitButton.interactable = enableQuit;
-                quitButton.enabled = enableQuit;
-                
-                bool enableClear = !_fromGame && !Tutorial.Tutorial.Active && value == BookPage.Settings;
-                clearSaveButton.gameObject.SetActive(enableClear);
-                clearSaveButton.interactable = enableClear;
-                clearSaveButton.enabled = enableClear;
-
-                if (value == BookPage.Settings)
+                sfxSlider.navigation = new Navigation
                 {
-                    sfxSlider.navigation = new Navigation
-                    {
-                        selectOnDown = _fromGame ? quitButton : clearSaveButton,
-                        selectOnUp = sfxSlider.navigation.selectOnUp,
-                        mode = Navigation.Mode.Explicit
-                    };
-                }
-                if (value == BookPage.Reports) CardsBookList.ScrollActive = true;
+                    selectOnDown = _fromGame ? quitButton : clearSaveButton,
+                    selectOnUp = sfxSlider.navigation.selectOnUp,
+                    mode = Navigation.Mode.Explicit
+                };
+            }
+            if (page == BookPage.Reports) CardsBookList.ScrollActive = true;
 
-                if (_page == value)
+            if (_page == page)
+            {
+                pages[_page].canvasGroup.alpha = 1;
+                pages[_page].canvasGroup.interactable = true;
+                pages[_page].canvasGroup.blocksRaycasts = true;
+            }
+            else
+            {
+                _changingPage = true;
+            
+                Manager.Jukebox.PlayPageTurn();
+
+                pages[_page].canvasGroup.interactable = false;
+                pages[_page].canvasGroup.blocksRaycasts = false;
+                var rt = pages[_page].bookRibbon.transform as RectTransform;
+                rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, DEFAULT_RIBBON_HEIGHT), 0.15f);
+                pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
+                pages[_page].canvasGroup.DOFade(0, 0.2f).OnComplete(() =>
                 {
-                    pages[_page].canvasGroup.alpha = 1;
+                    pages[_page].canvasGroup.DOFade(1f, 0.2f);
                     pages[_page].canvasGroup.interactable = true;
                     pages[_page].canvasGroup.blocksRaycasts = true;
-                }
-                else
-                {
-                    _changingPage = true;
-                
-                    Manager.Jukebox.PlayPageTurn();
-
-                    pages[_page].canvasGroup.interactable = false;
-                    pages[_page].canvasGroup.blocksRaycasts = false;
+                    pages[_page].canvasGroup.GetComponent<UIController>()?.OnOpen();
                     var rt = pages[_page].bookRibbon.transform as RectTransform;
-                    rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, DEFAULT_RIBBON_HEIGHT), 0.15f);
-                    pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
-                    pages[_page].canvasGroup.DOFade(0, 0.2f).OnComplete(() =>
-                    {
-                        _page = value;
-                        pages[_page].canvasGroup.DOFade(1f, 0.2f);
-                        pages[_page].canvasGroup.interactable = true;
-                        pages[_page].canvasGroup.blocksRaycasts = true;
-                        pages[_page].canvasGroup.GetComponent<UIController>()?.OnOpen();
-                        var rt = pages[_page].bookRibbon.transform as RectTransform;
-                        rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT), 0.15f);
-                        _changingPage = false;
-                    });
-                }
+                    rt.DOSizeDelta(new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT), 0.15f);
+                    _changingPage = false;
+                });
+                _page = page;
             }
         }
         
@@ -145,7 +143,7 @@ namespace UI
             
             foreach ((BookPage page, BookGroup group) in pages)
             {
-                group.bookRibbon.onClick.AddListener(() => Page = page);
+                group.bookRibbon.onClick.AddListener(() => SetPage(page));
             }
 
             var rt = pages[_page].bookRibbon.transform as RectTransform;
@@ -153,18 +151,13 @@ namespace UI
 
             BookButton.OnClicked += (toUnlocks) =>
             {
-                if (toUnlocks) Page = BookPage.Upgrades;
+                if (toUnlocks) SetPage(BookPage.Upgrades);
                 Open();
             };
             
             RequestDisplay.OnNotificationClicked += () =>
             {
                 if (!Manager.State.InGame) return;
-                Open(BookPage.Upgrades);
-            };
-
-            Tutorial.Tutorial.ShowBook += () =>
-            {
                 Open(BookPage.Upgrades);
             };
 
@@ -190,17 +183,17 @@ namespace UI
 
         public void Open(BookPage page)
         {
-            Page = page;
+            SetPage(page);
             Open();
         }
 
         private void Open()
         {
-            if (!Manager.State.InGame && !Manager.State.InIntro) return;
+            if (!Manager.State.InGame && !Manager.State.InIntro && !Manager.State.InDialogue) return;
             _transitioning = true;
             _closeState = Manager.State.Current;
             _fromGame = Manager.State.InGame;
-            Page = _page; // Update the current page settings
+            SetPage(_page); // Update the current page settings
             Manager.State.EnterState(GameState.InMenu);
             canvas.enabled = true;
             transform.DOPunchScale(PunchScale, animateInDuration, 0, 0);
@@ -240,17 +233,31 @@ namespace UI
             Manager.Inputs.NavigateBookmark.performed -= OnNavigateBookmark_performed;
         }
 
+        public void DisableNavigation()
+        {
+            _disableNavigation = true;
+            foreach ((BookPage page, BookGroup group) in pages) group.bookRibbon.interactable = page == _page;
+            closeButton.interactable = false;
+        }
+        
+        public void EnableNavigation()
+        {
+            _disableNavigation = false;
+            foreach ((BookPage page, BookGroup group) in pages) group.bookRibbon.interactable = true;
+            closeButton.interactable = true;
+        }
+        
         private void OnNavigateBookmark_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (_changingPage) return;
+            if (_changingPage || _disableNavigation) return;
             var val = -(int)obj.ReadValue<float>();
             var newPage = Mathf.Abs(((int)_page + val + 4) % 4);
-            Page = (BookPage)newPage;
+            SetPage((BookPage)newPage);
         }
 
         private void Toggle()
         {
-            if (_transitioning) return;
+            if (_transitioning || _disableNavigation) return;
             if (_isOpen) Close();
             else Open();
         }

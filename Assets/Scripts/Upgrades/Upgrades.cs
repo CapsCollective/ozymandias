@@ -83,8 +83,8 @@ namespace Upgrades
             }
 
             _selected = upgrade;
-            purchaseBox.transform.pivot = new Vector2(0.5f, 1.1f);
-            if (upgrade.transform.localPosition.y < UpgradeBoxCutoffY) purchaseBox.transform.pivot = new Vector2(0.5f, -0.1f);
+            purchaseBox.transform.pivot = new Vector2(0.5f, 1.05f);
+            if (upgrade.transform.localPosition.y < UpgradeBoxCutoffY) purchaseBox.transform.pivot = new Vector2(0.5f, -0.05f);
             purchaseBox.transform.position = upgrade.transform.position;
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);

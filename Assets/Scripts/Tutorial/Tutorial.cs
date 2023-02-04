@@ -32,9 +32,6 @@ namespace Tutorial
     public class Tutorial : MonoBehaviour
     {
         public static bool Active, DisableSelect, DisableNextTurn, ShowShade;
-
-        // (Ben) I Don't love this architecture, but not sure a better way without making book public
-        public static Action ShowBook;
         
         [SerializeField] private SerializedDictionary<GuidePose, Sprite> poses;
         
@@ -52,7 +49,7 @@ namespace Tutorial
         private GameState _exitState = GameState.InGame;
         private Action _exitAction = null;
 
-        private bool _firstCardUnlock;
+        private bool _firstCardUnlock, _firstTownDestroyed;
         
         #region Dialogue
         
@@ -76,11 +73,15 @@ namespace Tutorial
             next.onClick.AddListener(NextLine);
             
             State.OnNewGame += StartTutorial;
-            //State.OnGameEnd += StartUpgradesDescription;
             UnlockDisplay.OnUnlockDisplayed += StartUnlockDescription;
             Quests.Quests.OnCampAdded += StartCampsDescription;
-            
-            State.OnLoadingEnd += () => _firstCardUnlock = Manager.Cards.UnlockedCards == 0;
+            State.OnEnterState += StartUpgradesDescription;
+
+            State.OnLoadingEnd += () =>
+            {
+                _firstCardUnlock = Manager.Cards.UnlockedCards == 0; 
+                _firstTownDestroyed = Manager.Achievements.Milestones[Milestone.TownsDestroyed] == 0;
+            };
         }
 
         private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame, Action exitAction = null, bool showShade = false)
@@ -409,10 +410,6 @@ namespace Tutorial
             Manager.Camera.MoveTo(Manager.Structures.TownCentre).OnComplete(() => DisableSelect = false);
             
             Active = false;
-            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
-            {
-                ++Manager.Upgrades.GuildTokens[guild];
-            }
             Manager.Upgrades.Display();
             SaveFile.SaveState(false);
         }
@@ -448,32 +445,54 @@ namespace Tutorial
                 true);
         }
         
-        /*private void StartUpgradesDescription()
+        private void StartUpgradesDescription(GameState state)
         {
-            if (Manager.Upgrades.GetLevel(UpgradeType.Discoveries) > 0) return;
-            
-            DisableIntroMenu = true;
-            
-            //TODO: Write Proper dialogue
-            ShowDialogue(new List<Line> {
-                new Line("Camp gone! It's all ruins now", GuidePose.Neutral),
-                new Line("Cards gone too!"),
-                new Line("Here upgrades!", GuidePose.PointingUp, ShowBook.Invoke),
-                new Line("Let me give you points", GuidePose.Neutral, AddTokens),
-                new Line("Dialogue Finished", GuidePose.Neutral, EndUpgradesDescription),
-            });
+            if (state != GameState.InIntro || !_firstTownDestroyed || Manager.Achievements.Milestones[Milestone.TownsDestroyed] != 1) return;
+            _firstTownDestroyed = false;
 
-            void EndUpgradesDescription()
+            
+            IntroHud.DisableOpen = true;
+            ShowDialogue(new List<Line> {
+                new Line("Well... It all fell to ruins. Don't worry, these things happen, it's really just a matter of time.", GuidePose.Neutral),
+                new Line("We can always start again, build in the same deadly forest, hope for the best. I think they call it 'failing forward'."),
+                new Line("The good news is, you've attracted some attention, the good kind this time!", GuidePose.FingerGuns),
+                new Line("While you were busy getting a town blown up, I was reaching out some to some old friends, letting them know about our little venture.")
+            }, GameState.InIntro, OpenBook);
+            
+            void OpenBook()
             {
-                DisableIntroMenu = true;
-                Manager.IntroHud.Show();
+                Manager.Book.Open(Book.BookPage.Upgrades);
+                Manager.Book.DisableNavigation();
+                ShowDialogue(new List<Line> {
+                    new Line("Each guild has agreed to help us out, if we do what they want, of course.", GuidePose.PointingUp),
+                    new Line("I've cashed in a few favours, should be enough to get you your first upgrade, the rest is on you.", onNext: AddTokens),
+                    new Line("If you come across any of your old ruins, that upgrade will let you rediscover previously unlocked cards.", GuidePose.Neutral),
+                    new Line("Keep checking the newspaper, some requests will start coming in soon."),
+                    new Line("With their support, you might even be able to make it a whole year before it all falls apart!", GuidePose.FingerGuns, EndUpgradesDescription),
+                }, GameState.InMenu, showShade: true);
             }
             
             void AddTokens()
             {
                 foreach (Guild guild in Enum.GetValues(typeof(Guild))) Manager.Upgrades.GuildTokens[guild]++;
+                Manager.Upgrades.Display();
+                UpdateUi();
             }
-        }*/
+            
+            void EndUpgradesDescription()
+            {
+                IntroHud.DisableOpen = false;
+                Upgrades.Upgrades.OnUpgradePurchased += EndUpgradesTutorial;
+            }
+            
+            void EndUpgradesTutorial(UpgradeType upgradeType)
+            {
+                Manager.Book.EnableNavigation();
+                SaveFile.SaveState(false);
+                print("Enable Navigation");
+                Upgrades.Upgrades.OnUpgradePurchased -= EndUpgradesTutorial;
+            }
+        }
         
         #endregion
     }
