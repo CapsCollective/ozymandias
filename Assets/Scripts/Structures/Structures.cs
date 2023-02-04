@@ -18,7 +18,7 @@ namespace Structures
         public static Action OnGuildHallDemolished;
 
         [Serializable] private struct Location { public int root, rotation; }
-        
+
         [SerializeField] private GameObject rockSection, treeSection, structurePrefab;
         [SerializeField] private Material outlineMaterial;
         [SerializeField] private Location dockLocation;
@@ -35,19 +35,17 @@ namespace Structures
         public GameObject RockSection => rockSection;
         public GameObject StructurePrefab => structurePrefab;
         public Material OutlineMaterial => outlineMaterial;
-        
+
         private Location SpawnLocation { get; set; }
         public Vector3 TownCentre { get; private set; }
         public Vector3 Dock => Manager.Map.GetCell(dockLocation.root).WorldSpace;
-        
+
         private void Awake()
         {
             State.OnNewGame += () => { if (!Tutorial.Tutorial.Active) SpawnGuildHall(); };
             State.OnGameEnd += RemoveAll;
-            Debug.Break();
             var buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset)).Cast<TextAsset>().ToArray();
-            Debug.Log(buildingsText);
-            foreach(TextAsset building in buildingsText)
+            foreach (TextAsset building in buildingsText)
             {
                 BuildingCache.Add(building.name, JsonUtility.FromJson<Section.SectionData>(building.text));
             }
@@ -57,17 +55,17 @@ namespace Structures
         {
             return _buildings.Sum(b => (b.Stats.ContainsKey(stat) ? b.Stats[stat] : 0) + (b.Bonus == stat ? 1 : 0));
         }
-        
+
         public int GetCount(BuildingType type)
         {
             return _buildings.Count(x => x.Blueprint.type == type);
         }
-        
+
         public Structure GetRandom(BuildingType type)
         {
             return _buildings.Where(x => x.Blueprint.type == type).ToList().SelectRandom();
         }
-        
+
         public float GetClosestDistance(Vector3 position)
         {
             // Find distance of closest building to the camera
@@ -92,22 +90,22 @@ namespace Structures
                 closestBuilding = building;
                 closestDistance = distance;
             }
-    
+
             return closestBuilding;
-        } 
+        }
 
         public Cell RandomCell => _buildings.SelectRandom().Occupied.SelectRandom();
 
         public bool AddBuilding(Blueprint blueprint, int rootId, int rotation = 0, bool isRuin = false)
         {
             Structure structure = Instantiate(structurePrefab, transform).GetComponent<Structure>();
-            
+
             if (!structure.CreateBuilding(blueprint, rootId, rotation, isRuin))
             {
                 Destroy(structure.gameObject);
                 return false;
             }
-            
+
             // Add to correct collection for querying
             if (structure.IsRuin) _ruins.Add(structure);
             else _buildings.Add(structure);
@@ -127,7 +125,7 @@ namespace Structures
             structure.CreateTerrain(rootId, sectionCount);
             _terrain.Add(structure);
         }
-        
+
         public void Remove(Structure structure)
         {
             if (structure.Blueprint && structure.Blueprint.type == BuildingType.GuildHall)
@@ -136,15 +134,15 @@ namespace Structures
                 Manager.State.EnterState(GameState.NextTurn);
                 OnGuildHallDemolished?.Invoke();
             }
-            
+
             if (structure.IsTerrain) _terrain.Remove(structure);
             else if (structure.IsRuin) _ruins.Remove(structure);
             else _buildings.Remove(structure);
-            
+
             structure.Destroy();
             CheckAdjacencyBonuses();
             OnDestroyed?.Invoke(structure);
-            if(!Manager.State.Loading) UpdateUi();
+            if (!Manager.State.Loading) UpdateUi();
         }
 
         public string Remove(BuildingType type)
@@ -206,7 +204,7 @@ namespace Structures
             {
                 Vector3 position = Vector3.MoveTowards(building.transform.position, TownCentre, -Random.Range(6f, 10f));
                 Cell cell = Manager.Map.GetClosestCell(position);
-                if (cell != null  && cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
+                if (cell != null && cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
                 {
                     return cell.Id;
                 }
@@ -216,9 +214,9 @@ namespace Structures
             //TODO: A backup better than this
             return Random.Range(200, 1200);
         }
-        
+
         private Location NewSpawnLocation() => spawnLocations.SelectRandom();
-        
+
         public void SpawnGuildHall()
         {
             foreach (Cell cell in Manager.Map.GetCells(TownCentre, 4).Where(cell => cell.Occupied && cell.Occupant.IsTerrain)) Remove(cell.Occupant);
@@ -245,17 +243,17 @@ namespace Structures
         {
             return StartCoroutine(LoadCoroutine(details));
         }
-        
+
         private IEnumerator LoadCoroutine(StructureDetails details)
         {
             const int maxStructuresPerFrame = 30;
             int countPerFrame = 0;
-            
+
             foreach (BuildingDetails building in details.buildings ?? new List<BuildingDetails>())
             {
                 Blueprint blueprint = Manager.Cards.Find(building.type);
                 if (!blueprint) Debug.LogError(
-                    "Blueprint of type \"" + building.type + "\" could not be found." + 
+                    "Blueprint of type \"" + building.type + "\" could not be found." +
                     "It may not yet be available to the player.");
                 AddBuilding(blueprint, building.rootId, building.rotation, building.isRuin);
 
@@ -267,12 +265,12 @@ namespace Structures
             foreach (TerrainDetails terrain in details.terrain ?? new List<TerrainDetails>())
             {
                 AddTerrain(terrain.rootId, terrain.sectionCount);
-                
+
                 if (++countPerFrame < maxStructuresPerFrame) continue;
                 countPerFrame = 0;
                 yield return null;
             }
-            
+
             Structure guildHall = _buildings.Find(structure => structure.Blueprint.type == BuildingType.GuildHall);
             if (guildHall)
                 TownCentre = guildHall.Occupied[0].WorldSpace;
@@ -281,7 +279,7 @@ namespace Structures
                 SpawnLocation = Tutorial.Tutorial.Active ? spawnLocations[0] : NewSpawnLocation();
                 TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
             }
-            
+
             CheckAdjacencyBonuses(); // Checks at end of load so it doesn't repeat
         }
     }
