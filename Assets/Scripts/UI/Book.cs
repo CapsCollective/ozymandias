@@ -6,7 +6,6 @@ using Managers;
 using Requests;
 using Structures;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -179,6 +178,14 @@ namespace UI
                 Close();
             };
 
+            Manager.Inputs.NavigateBookmark.performed += obj => 
+            {
+                if (!_isOpen || _changingPage || _disableNavigation) return;
+                var val = -(int)obj.ReadValue<float>();
+                var newPage = Mathf.Abs(((int)_page + val + 4) % 4);
+                SetPage((BookPage)newPage);
+            };
+
             // Position it as closed on start
             transform.localPosition = ClosePos;
         }
@@ -213,11 +220,11 @@ namespace UI
                     if (_page == BookPage.Reports) CardsBookList.ScrollActive = true;
                     OnOpened?.Invoke();
                 });
-            Manager.Inputs.NavigateBookmark.performed += OnNavigateBookmark_performed;
         }
 
         private void Close()
         {
+            if (_disableNavigation) return;
             ConfirmingDelete = 0;
             _transitioning = true;
             closeButton.gameObject.SetActive(false); 
@@ -232,16 +239,8 @@ namespace UI
                     Manager.State.EnterState(_closeState);
                 });
             pages[_page].canvasGroup.GetComponent<UIController>()?.OnClose();
-            Manager.Inputs.NavigateBookmark.performed -= OnNavigateBookmark_performed;
         }
 
-        public void DisableNavigation()
-        {
-            _disableNavigation = true;
-            foreach ((BookPage page, BookGroup group) in pages) group.bookRibbon.interactable = page == _page;
-            closeButton.interactable = false;
-        }
-        
         public void EnableNavigation()
         {
             _disableNavigation = false;
@@ -249,17 +248,16 @@ namespace UI
             closeButton.interactable = true;
         }
         
-        private void OnNavigateBookmark_performed(InputAction.CallbackContext obj)
+        public void DisableNavigation()
         {
-            if (_changingPage || _disableNavigation) return;
-            var val = -(int)obj.ReadValue<float>();
-            var newPage = Mathf.Abs(((int)_page + val + 4) % 4);
-            SetPage((BookPage)newPage);
+            _disableNavigation = true;
+            foreach ((BookPage page, BookGroup group) in pages) group.bookRibbon.interactable = page == _page;
+            closeButton.interactable = false;
         }
 
         private void Toggle()
         {
-            if (_transitioning || _disableNavigation) return;
+            if (_transitioning) return;
             if (_isOpen) Close();
             else Open();
         }

@@ -76,7 +76,7 @@ namespace Upgrades
 
         public void Select(Upgrade upgrade)
         {
-            if (_selected == upgrade)
+            if (!Manager.State.InMenu || _selected == upgrade)
             {
                 Deselect();
                 return;

@@ -174,15 +174,6 @@ namespace Inputs
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dialogue Next"",
-                    ""type"": ""Button"",
-                    ""id"": ""93f5370f-21ac-4d13-9ca7-8da09db794b7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Open Quests"",
                     ""type"": ""Button"",
                     ""id"": ""8b1ac4ed-a3ef-464a-a3a5-d1155e3eac19"",
@@ -733,28 +724,6 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3fa2d1b9-9baf-47b3-b528-eee9ad2458b9"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Mouse and Keyboard"",
-                    ""action"": ""Dialogue Next"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2fcd4368-51f4-4c47-8e15-4ee192c4d6c4"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Dialogue Next"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""91c3013d-b8d3-4242-af40-90b410536afb"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -1023,6 +992,15 @@ namespace Inputs
                     ""name"": ""DebugToggle"",
                     ""type"": ""Button"",
                     ""id"": ""264416ca-3abf-4f4f-b799-815cd34dfe20"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dialogue Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""2fa0a702-7271-4448-a54a-e62232a8e16a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1535,6 +1513,28 @@ namespace Inputs
                     ""action"": ""DebugToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41706961-71e3-4795-8c20-82296b5b9925"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Dialogue Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc41ff38-575f-4656-91d4-776ee16b6d53"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Dialogue Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1587,7 +1587,6 @@ namespace Inputs
             m_Player_NavigateCards = m_Player.FindAction("Navigate Cards", throwIfNotFound: true);
             m_Player_SelectCardIndex = m_Player.FindAction("Select Card Index", throwIfNotFound: true);
             m_Player_Screenshot = m_Player.FindAction("Screenshot", throwIfNotFound: true);
-            m_Player_DialogueNext = m_Player.FindAction("Dialogue Next", throwIfNotFound: true);
             m_Player_OpenQuests = m_Player.FindAction("Open Quests", throwIfNotFound: true);
             m_Player_OpenNewspaper = m_Player.FindAction("Open Newspaper", throwIfNotFound: true);
             m_Player_DemolishBuilding = m_Player.FindAction("Demolish Building", throwIfNotFound: true);
@@ -1611,6 +1610,7 @@ namespace Inputs
             m_UI_NavigateBookmarks = m_UI.FindAction("Navigate Bookmarks", throwIfNotFound: true);
             m_UI_ToggleBook = m_UI.FindAction("Toggle Book", throwIfNotFound: true);
             m_UI_DebugToggle = m_UI.FindAction("DebugToggle", throwIfNotFound: true);
+            m_UI_DialogueNext = m_UI.FindAction("Dialogue Next", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1686,7 +1686,6 @@ namespace Inputs
         private readonly InputAction m_Player_NavigateCards;
         private readonly InputAction m_Player_SelectCardIndex;
         private readonly InputAction m_Player_Screenshot;
-        private readonly InputAction m_Player_DialogueNext;
         private readonly InputAction m_Player_OpenQuests;
         private readonly InputAction m_Player_OpenNewspaper;
         private readonly InputAction m_Player_DemolishBuilding;
@@ -1714,7 +1713,6 @@ namespace Inputs
             public InputAction @NavigateCards => m_Wrapper.m_Player_NavigateCards;
             public InputAction @SelectCardIndex => m_Wrapper.m_Player_SelectCardIndex;
             public InputAction @Screenshot => m_Wrapper.m_Player_Screenshot;
-            public InputAction @DialogueNext => m_Wrapper.m_Player_DialogueNext;
             public InputAction @OpenQuests => m_Wrapper.m_Player_OpenQuests;
             public InputAction @OpenNewspaper => m_Wrapper.m_Player_OpenNewspaper;
             public InputAction @DemolishBuilding => m_Wrapper.m_Player_DemolishBuilding;
@@ -1779,9 +1777,6 @@ namespace Inputs
                     @Screenshot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
                     @Screenshot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
                     @Screenshot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenshot;
-                    @DialogueNext.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
-                    @DialogueNext.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
-                    @DialogueNext.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDialogueNext;
                     @OpenQuests.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenQuests;
                     @OpenQuests.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenQuests;
                     @OpenQuests.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenQuests;
@@ -1855,9 +1850,6 @@ namespace Inputs
                     @Screenshot.started += instance.OnScreenshot;
                     @Screenshot.performed += instance.OnScreenshot;
                     @Screenshot.canceled += instance.OnScreenshot;
-                    @DialogueNext.started += instance.OnDialogueNext;
-                    @DialogueNext.performed += instance.OnDialogueNext;
-                    @DialogueNext.canceled += instance.OnDialogueNext;
                     @OpenQuests.started += instance.OnOpenQuests;
                     @OpenQuests.performed += instance.OnOpenQuests;
                     @OpenQuests.canceled += instance.OnOpenQuests;
@@ -1901,6 +1893,7 @@ namespace Inputs
         private readonly InputAction m_UI_NavigateBookmarks;
         private readonly InputAction m_UI_ToggleBook;
         private readonly InputAction m_UI_DebugToggle;
+        private readonly InputAction m_UI_DialogueNext;
         public struct UIActions
         {
             private @PlayerInputs m_Wrapper;
@@ -1919,6 +1912,7 @@ namespace Inputs
             public InputAction @NavigateBookmarks => m_Wrapper.m_UI_NavigateBookmarks;
             public InputAction @ToggleBook => m_Wrapper.m_UI_ToggleBook;
             public InputAction @DebugToggle => m_Wrapper.m_UI_DebugToggle;
+            public InputAction @DialogueNext => m_Wrapper.m_UI_DialogueNext;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1970,6 +1964,9 @@ namespace Inputs
                     @DebugToggle.started -= m_Wrapper.m_UIActionsCallbackInterface.OnDebugToggle;
                     @DebugToggle.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnDebugToggle;
                     @DebugToggle.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnDebugToggle;
+                    @DialogueNext.started -= m_Wrapper.m_UIActionsCallbackInterface.OnDialogueNext;
+                    @DialogueNext.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnDialogueNext;
+                    @DialogueNext.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnDialogueNext;
                 }
                 m_Wrapper.m_UIActionsCallbackInterface = instance;
                 if (instance != null)
@@ -2016,6 +2013,9 @@ namespace Inputs
                     @DebugToggle.started += instance.OnDebugToggle;
                     @DebugToggle.performed += instance.OnDebugToggle;
                     @DebugToggle.canceled += instance.OnDebugToggle;
+                    @DialogueNext.started += instance.OnDialogueNext;
+                    @DialogueNext.performed += instance.OnDialogueNext;
+                    @DialogueNext.canceled += instance.OnDialogueNext;
                 }
             }
         }
@@ -2056,7 +2056,6 @@ namespace Inputs
             void OnNavigateCards(InputAction.CallbackContext context);
             void OnSelectCardIndex(InputAction.CallbackContext context);
             void OnScreenshot(InputAction.CallbackContext context);
-            void OnDialogueNext(InputAction.CallbackContext context);
             void OnOpenQuests(InputAction.CallbackContext context);
             void OnOpenNewspaper(InputAction.CallbackContext context);
             void OnDemolishBuilding(InputAction.CallbackContext context);
@@ -2081,6 +2080,7 @@ namespace Inputs
             void OnNavigateBookmarks(InputAction.CallbackContext context);
             void OnToggleBook(InputAction.CallbackContext context);
             void OnDebugToggle(InputAction.CallbackContext context);
+            void OnDialogueNext(InputAction.CallbackContext context);
         }
     }
 }

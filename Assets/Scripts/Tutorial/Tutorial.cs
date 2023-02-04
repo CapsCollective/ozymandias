@@ -111,9 +111,9 @@ namespace Tutorial
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
             Manager.GameHud.Show(GameHud.HudObject.MenuBar);
+            blocker.SetActive(false);
             Manager.State.EnterState(_exitState);
             _exitAction?.Invoke();
-            blocker.SetActive(false);
         }
 
         private void NextLine()
@@ -439,10 +439,7 @@ namespace Tutorial
                 new Line("This building will be added to your cards, at least until they all get lost in the ruins of your town..."),
                 new Line("But fear not! Check the upgrades page in your book to purchase the ability to rediscover them from the ruins of your previous towns."),
                 new Line("Discovering more buildings might just give us the edge to lasting a little longer out here...")
-            },
-                GameState.InMenu,
-                () => StartCoroutine(Algorithms.DelayCall(0.5f, () => DisableSelect = false)),
-                true);
+            }, GameState.InMenu, () => StartCoroutine(Algorithms.DelayCall(0.5f, () => DisableSelect = false)), true);
         }
         
         private void StartUpgradesDescription(GameState state)

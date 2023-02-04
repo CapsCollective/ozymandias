@@ -80,6 +80,7 @@ namespace Inputs
             Close = PlayerInput.UI.Cancel;
             OpenNewspaper = PlayerInput.Player.OpenNewspaper;
             OpenQuests = PlayerInput.Player.OpenQuests;
+            DialogueNext = PlayerInput.UI.DialogueNext;
 
             // Tooltips
             ToggleTooltips = PlayerInput.Player.ToggleTooltips;
@@ -98,7 +99,6 @@ namespace Inputs
 
             // Misc
             NextTurn = PlayerInput.Player.NextTurn;
-            DialogueNext = PlayerInput.Player.DialogueNext;
             ReturnToTown = PlayerInput.Player.ReturnToTown;
             OnScreenshot = PlayerInput.Player.Screenshot;
             
