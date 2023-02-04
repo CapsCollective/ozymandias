@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Grass;
 using Managers;
 using Map;
 using Quests;
-using UI;
 using UnityEngine;
 using Utilities;
-using Platform;
 using static Managers.GameManager;
-using Random = UnityEngine.Random;
 
 namespace Structures
 {
@@ -339,7 +337,7 @@ namespace Structures
             transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
             StartCoroutine(Algorithms.DelayCall(0.01f, () =>
             {
-                Grass.GrassEffectController.GrassNeedsUpdate = true;
+                GrassEffectController.GrassNeedsUpdate = true;
             }));
             ParticleSystem.Play();
             if (playSound) Manager.Jukebox.PlayBuild();

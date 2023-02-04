@@ -1,6 +1,9 @@
+using Inputs;
+using Managers;
 using Reports;
 using Structures;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static Managers.GameManager;
 
 namespace Platform
@@ -54,7 +57,7 @@ namespace Platform
     
     public class InputDelegate : PlatformDelegate
     {
-        public virtual void AddExtraBinds(ref Inputs.PlayerInputs inputs) { }
+        public virtual void AddExtraBinds(ref PlayerInputs inputs) { }
 
         public virtual int GetDefaultControlScheme()
         {
@@ -64,11 +67,11 @@ namespace Platform
     
     public class FileSystemDelegate : PlatformDelegate
     {
-        public Managers.SaveFile SaveFile;
+        public SaveFile SaveFile;
 
         public FileSystemDelegate()
         {
-            SaveFile = new Managers.SaveFile();
+            SaveFile = new SaveFile();
         }
 
         public virtual string GetSaveFilePath()
@@ -96,7 +99,7 @@ namespace Platform
             return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
         }
 
-        public virtual bool IsOverUI(UnityEngine.EventSystems.EventSystem eventSystem)
+        public virtual bool IsOverUI(EventSystem eventSystem)
         {
             return eventSystem.IsPointerOverGameObject();
         }

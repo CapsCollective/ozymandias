@@ -10,7 +10,6 @@ using Quests;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -45,7 +44,7 @@ namespace Structures
         [SerializeField] private EffectBadge bonusBadge;
         [SerializeField] private TextMeshProUGUI bonusText;
         [SerializeField] private List<Sprite> chevronSizes;
-        [SerializeField] private Utilities.SerializedDictionary<Stat, Sprite> statIcons;
+        [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
         [SerializeField] private PlatformAssets rendererData;
         
         private OutlineRenderFeature _outline;

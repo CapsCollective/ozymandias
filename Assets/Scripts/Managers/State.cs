@@ -5,9 +5,10 @@ using Cinemachine;
 using DG.Tweening;
 using Inputs;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
 
@@ -93,7 +94,7 @@ namespace Managers
 
         private void Update()
         {
-            if (InGame && Manager.Inputs.NextTurn.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+            if (InGame && Manager.Inputs.NextTurn.phase == InputActionPhase.Started)
                 nextTurnMask.fillAmount = Mathf.InverseLerp(0, 0.4f, _nextTurnTimer += Time.deltaTime);
         }
 

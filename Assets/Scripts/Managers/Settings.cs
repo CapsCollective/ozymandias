@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Grass;
 using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
 
@@ -134,7 +135,7 @@ namespace Managers
         
         private void ToggleGrass(bool toggle)
         {
-            Grass.GrassEffectController.ChangeGrassQuality(toggle);
+            GrassEffectController.ChangeGrassQuality(toggle);
             PlayerPrefs.SetInt("grass", Convert.ToInt32(toggle));
         }
 

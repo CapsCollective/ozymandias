@@ -1,9 +1,10 @@
 using System;
-using DG.Tweening;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 using Structures;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
 
@@ -229,12 +230,12 @@ namespace Quests
             _closeButtonCanvas.DOFade(display && !Manager.Inputs.UsingController ? 1.0f : 0.0f, 0.2f);
         }
 
-        private void OpenQuests_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void OpenQuests_performed(InputAction.CallbackContext obj)
         {
             Close();
         }
 
-        private void NavigateFlyers(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void NavigateFlyers(InputAction.CallbackContext obj)
         {
             SwapDir dir = (SwapDir)obj.ReadValue<float>();
             ChangeQuest(dir);

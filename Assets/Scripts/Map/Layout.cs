@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Grass;
 using NaughtyAttributes;
 using Structures;
 using UnityEngine;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
 
 namespace Map
@@ -550,7 +550,7 @@ namespace Map
             // Add the perimeter to RoadGraph
             AddRoad(perimeter);
             mesh.sharedMesh = GenerateRoadMesh();
-            Grass.GrassEffectController.GrassNeedsUpdate = true;
+            GrassEffectController.GrassNeedsUpdate = true;
             //yield return new WaitForEndOfFrame();
         }
 

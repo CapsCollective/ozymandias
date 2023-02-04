@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Events;
 using UnityEngine;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
+using Event = Events.Event;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -44,7 +44,7 @@ namespace Managers
             Stat.Spending
         };
 
-        [SerializeField] private SerializedDictionary<Guild, Events.Event> excessEvents;
+        [SerializeField] private SerializedDictionary<Guild, Event> excessEvents;
 
         public int StatMultiplier(Stat stat) => _baseStats.Contains(stat) ? BaseStatMultiplier : 1;
 

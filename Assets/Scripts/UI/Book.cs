@@ -4,7 +4,9 @@ using DG.Tweening;
 using Inputs;
 using Managers;
 using Requests;
+using Structures;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -167,7 +169,7 @@ namespace UI
                 {
                     Manager.Cards.SelectCard(-1);
                 }
-                else if (Structures.Select.Instance.SelectedStructure != null) Structures.Select.Instance.SelectedStructure = null;
+                else if (Select.Instance.SelectedStructure != null) Select.Instance.SelectedStructure = null;
                 else if (Manager.State.InGame || Manager.State.InIntro || (Manager.State.InMenu && _isOpen)) Toggle();
             };
 
@@ -247,7 +249,7 @@ namespace UI
             closeButton.interactable = true;
         }
         
-        private void OnNavigateBookmark_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void OnNavigateBookmark_performed(InputAction.CallbackContext obj)
         {
             if (_changingPage || _disableNavigation) return;
             var val = -(int)obj.ReadValue<float>();

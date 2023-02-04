@@ -6,8 +6,8 @@ using Reports;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
-using Random = UnityEngine.Random;
 using EventType = Utilities.EventType;
+using Random = UnityEngine.Random;
 
 namespace Events
 {

@@ -8,6 +8,7 @@ using Events;
 using Grass;
 using Inputs;
 using NaughtyAttributes;
+using Platform;
 using Quests;
 using Reports;
 using Requests;
@@ -20,6 +21,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Utilities;
+using Event = Events.Event;
 using Random = UnityEngine.Random;
 
 namespace Managers
@@ -61,9 +63,9 @@ namespace Managers
             Newspaper.OnNextClosed = null;
             Adventurers.Adventurers.OnAdventurerJoin = null;
             Adventurers.Adventurers.OnAdventurerRemoved = null;
-            global::Cards.Cards.OnCardSelected = null;
-            global::Cards.Cards.OnUnlock = null;
-            global::Cards.Cards.OnBuildingRotate = null;
+            Cards.Cards.OnCardSelected = null;
+            Cards.Cards.OnUnlock = null;
+            Cards.Cards.OnBuildingRotate = null;
             CardsBookList.ScrollActive = false;
             UnlockDisplay.OnUnlockDisplayed = null;
             Dog.OnDogPet = null;
@@ -77,26 +79,25 @@ namespace Managers
             CameraMovement.OnZoom = null;
             CameraMovement.IsMoving = false;
             CentreButton.OnWorldEdge = null;
-            global::Inputs.Inputs.OnControlChange = null;
+            Inputs.Inputs.OnControlChange = null;
             InputHelper.OnNewSelection = null;
             InputHelper.OnToggleCursor = null;
             InputHelper.CursorOffsetOverrides = new Dictionary<GameObject, Vector2>();
             Quest.OnQuestStarted = null;
             QuestButton.OnClicked = null;
-            global::Quests.Quests.OnQuestCompleted = null;
-            global::Quests.Quests.OnQuestAdded = null;
-            global::Quests.Quests.OnCampAdded = null;
-            global::Quests.Quests.OnQuestRemoved = null;
+            Quests.Quests.OnQuestCompleted = null;
+            Quests.Quests.OnQuestAdded = null;
+            Quests.Quests.OnCampAdded = null;
+            Quests.Quests.OnQuestRemoved = null;
             RequestDisplay.OnNotificationClicked = null;
-            global::Requests.Requests.OnRequestCompleted = null;
+            Requests.Requests.OnRequestCompleted = null;
             Seasons.Seasons.Instance = null;
             Select.OnClear = null;
             Select.OnQuestSelected = null;
             Select.Instance = null;
-            global::Structures.Structures.OnBuild = null;
-            global::Structures.Structures.OnDestroyed = null;
-            global::Structures.Structures.OnGuildHallDemolished = null;
-            Tutorial.Tutorial.ShowBook = null;
+            Structures.Structures.OnBuild = null;
+            Structures.Structures.OnDestroyed = null;
+            Structures.Structures.OnGuildHallDemolished = null;
             Tutorial.Tutorial.Active = false;
             Tutorial.Tutorial.DisableSelect = false;
             Tutorial.Tutorial.DisableNextTurn = false;
@@ -126,7 +127,7 @@ namespace Managers
         public static GameManager Manager { get; internal set; }
         
         // All Managers/ Universal Controllers
-        public Platform.PlatformManager PlatformManager { get; private set; }
+        public PlatformManager PlatformManager { get; private set; }
         public Achievements Achievements { get; private set; }
         public Inputs.Inputs Inputs { get; private set; }
         public State State { get; private set; }
@@ -151,7 +152,7 @@ namespace Managers
         private void Awake()
         {
             Manager = this;
-            PlatformManager = new Platform.PlatformManager();
+            PlatformManager = new PlatformManager();
             Random.InitState((int)DateTime.Now.Ticks);
             Inputs = new Inputs.Inputs();
 
@@ -179,10 +180,10 @@ namespace Managers
         
         #region Asset Repository
 
-        [SerializeField] private List<Events.Event> allEvents;
+        [SerializeField] private List<Event> allEvents;
         [SerializeField] private List<Quest> allQuests;
         [SerializeField] private List<Request> allRequests;
-        public List<Events.Event> AllEvents => allEvents;
+        public List<Event> AllEvents => allEvents;
         public List<Quest> AllQuests => allQuests;
         public List<Request> AllRequests => allRequests;
         public Sprite saveIcon, questIcon;
@@ -313,7 +314,7 @@ namespace Managers
         public void LoadAssets()
         {
             allEvents = AssetDatabase.FindAssets("t:event").Select(guid => 
-                AssetDatabase.LoadAssetAtPath<Events.Event>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+                AssetDatabase.LoadAssetAtPath<Event>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
             allQuests = AssetDatabase.FindAssets("t:quest").Select(guid => 
                 AssetDatabase.LoadAssetAtPath<Quest>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
             allRequests = AssetDatabase.FindAssets("t:request").Select(guid => 

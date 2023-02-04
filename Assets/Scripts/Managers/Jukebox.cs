@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -9,8 +8,8 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Audio;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {

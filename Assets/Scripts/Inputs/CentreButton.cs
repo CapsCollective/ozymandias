@@ -4,7 +4,7 @@ using DG.Tweening;
 using Managers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static Managers.GameManager;
 
@@ -56,7 +56,7 @@ namespace Inputs
         {
             if (Globals.RestartingGame) return;
             
-            if (Manager.Inputs.ReturnToTown.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+            if (Manager.Inputs.ReturnToTown.phase == InputActionPhase.Started)
                 maskImage.fillAmount = Mathf.InverseLerp(0, 0.4f, _interactTimer += Time.deltaTime);
 
             float townDist = -Manager.Camera.FreeLook.Follow.position.z;

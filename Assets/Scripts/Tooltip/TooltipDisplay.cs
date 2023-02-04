@@ -4,10 +4,10 @@ using DG.Tweening;
 using Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utilities;
 using static Managers.GameManager;
 using String = Utilities.String;
-using UnityEngine.InputSystem;
 
 namespace Tooltip
 {

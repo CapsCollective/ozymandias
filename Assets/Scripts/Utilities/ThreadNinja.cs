@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace Utilities
         public void Reset()
         {
             // Reset method not supported by iterator;
-            throw new System.NotSupportedException(
+            throw new NotSupportedException(
                 "Not support calling Reset() on iterator.");
         }
         #endregion
@@ -232,7 +233,7 @@ namespace Utilities
                     GotoState(RunningState.Done);
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 UnityEngine.Debug.LogError(string.Format("{0}\n{1}", ex.Message, ex.StackTrace));
             }

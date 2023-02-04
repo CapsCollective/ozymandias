@@ -5,7 +5,6 @@ using Reports;
 using Steamworks;
 using Steamworks.NET;
 using UnityEngine;
-using static Managers.GameManager;
 
 namespace Platform
 {

@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Map;
 using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Structures
 {
@@ -33,7 +36,7 @@ namespace Structures
         public bool randomRotations;
         public Vector2 randomScale = Vector2.one;
         public bool hasGrass = true;
-        public System.Action onGenerationComplete;
+        public Action onGenerationComplete;
         public bool finishedGenerating = false;
 
         [SerializeField] private List<Mesh> meshVariants;
@@ -132,7 +135,7 @@ namespace Structures
 
             _meshCompute.Dispatch(0, Mathf.CeilToInt(planePositions.Length / 64.0f), 1, 1);
 
-            UnityEngine.Rendering.AsyncGPUReadback.Request(vertexBuffer, (c) =>
+            AsyncGPUReadback.Request(vertexBuffer, (c) =>
             {
                 if (c.hasError) return;
                 planePositions = c.GetData<Vector3>().ToArray();
@@ -206,7 +209,7 @@ namespace Structures
             SectionData sectionData = new SectionData(MeshFilter);
             File.WriteAllText(FilePath + ".json", JsonUtility.ToJson(sectionData));
 
-            UnityEditor.AssetDatabase.Refresh();
+            AssetDatabase.Refresh();
             #endif
         }
 
@@ -215,11 +218,11 @@ namespace Structures
         {
             SectionData sectionData = new SectionData(mf);
             File.WriteAllText(Directory + mf.sharedMesh.name + ".json", JsonUtility.ToJson(sectionData));
-            UnityEditor.AssetDatabase.Refresh();
+            AssetDatabase.Refresh();
         }
         #endif
 
-        [System.Serializable]
+        [Serializable]
         public class SectionData
         {
             public Vector3[] VertexCoordinates;

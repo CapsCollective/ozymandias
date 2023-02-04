@@ -5,7 +5,7 @@ using Map;
 using NaughtyAttributes;
 using Quests;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Characters
@@ -101,7 +101,7 @@ namespace Characters
             Vertex endVert = Manager.Map.GetClosestCell(questPos).Vertices[cellIdx];
 
             // Generate path regardless of roads
-            var naivePath = Utilities.Algorithms.AStar(
+            var naivePath = Algorithms.AStar(
                 Manager.Map.Layout.VertexGraph, startVert, endVert);
                 
             // Iterate backwards through the path until finding a vertex in
@@ -117,7 +117,7 @@ namespace Characters
             forestPath.Reverse();
                 
             // Generate path from start to end of road
-            var roadPath = Utilities.Algorithms.AStar(
+            var roadPath = Algorithms.AStar(
                 Manager.Map.Layout.RoadGraph, 
                 startVert, lastVert);
                 

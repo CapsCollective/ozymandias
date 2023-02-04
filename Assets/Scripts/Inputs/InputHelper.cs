@@ -1,12 +1,13 @@
-using Managers;
 using System;
 using System.Collections.Generic;
+using Cinemachine;
+using DG.Tweening;
+using Managers;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utilities;
-using DG.Tweening;
-using UI;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -48,7 +49,7 @@ namespace Inputs
                 HelperActive = b;
             };
 
-            worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
+            worldSpaceCursor = GetComponent<CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
             HelperActive = false;

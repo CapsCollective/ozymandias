@@ -1,12 +1,11 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.RendererUtils;
 using UnityEngine.Rendering.Universal;
 
 public class OutlineRenderFeature : ScriptableRendererFeature
 {
-    [System.Serializable]
+    [Serializable]
     public class Settings
     {
         public Material material;

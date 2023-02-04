@@ -1,4 +1,5 @@
 ﻿using System;
+using Inputs;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -39,7 +40,7 @@ namespace Quests
             sendButton.onClick.AddListener(() =>
             {
                 if (!Manager.State.InMenu) return;
-                Inputs.InputHelper.OnToggleCursor?.Invoke(false);
+                InputHelper.OnToggleCursor?.Invoke(false);
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();
                 OnStartClicked?.Invoke((int)adventurerSlider.value, (int)durationSlider.value);
@@ -136,7 +137,7 @@ namespace Quests
         public override void OnOpen()
         {
             base.OnOpen();
-            Inputs.InputHelper.OnToggleCursor?.Invoke(!_quest.IsActive);
+            InputHelper.OnToggleCursor?.Invoke(!_quest.IsActive);
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Managers;
+using Structures;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -28,7 +28,7 @@ namespace Grass
         // Start is called before the first frame update
         void Start()
         {
-            Managers.State.OnLoadingEnd += () => GrassNeedsUpdate = true;
+            State.OnLoadingEnd += () => GrassNeedsUpdate = true;
             Structures.Structures.OnDestroyed += (s) => GrassNeedsUpdate = true;
             OnGrassQualityChange += UpdateVFX;
         }
@@ -45,7 +45,7 @@ namespace Grass
             OnGrassQualityChange?.Invoke(GrassQuality);
         }
 
-        public void UpdateTexture(Structures.Structure s)
+        public void UpdateTexture(Structure s)
         {
             _grassCam.enabled = true;
             _grassRT.Update();

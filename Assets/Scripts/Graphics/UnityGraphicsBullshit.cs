@@ -2,9 +2,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-
 using ShadowResolution = UnityEngine.Rendering.Universal.ShadowResolution;
-
 
 /// <summary>
 /// Enables getting/setting URP graphics settings properties that don't have built-in getters and setters.

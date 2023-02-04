@@ -1,6 +1,5 @@
 using System;
 using Managers;
-using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;

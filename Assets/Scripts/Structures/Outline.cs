@@ -1,8 +1,5 @@
+using Managers;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using System.Collections.Generic;
-using System;
 
 namespace Structures
 {
@@ -13,7 +10,7 @@ namespace Structures
 
         private void OnEnable()
         {
-            Managers.Settings.OnNewResolution += OnNewResolution;
+            Settings.OnNewResolution += OnNewResolution;
             cam = GetComponent<Camera>();
             outlineRT = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.RFloat);
             outlineRT.useMipMap = false;
@@ -33,7 +30,7 @@ namespace Structures
 
         private void OnDisable()
         {
-            Managers.Settings.OnNewResolution -= OnNewResolution;
+            Settings.OnNewResolution -= OnNewResolution;
             outlineRT.Release();
             cam.targetTexture = null;
         }
