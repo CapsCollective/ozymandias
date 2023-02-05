@@ -51,6 +51,10 @@ namespace Reports
         
         PurchaseOneUpgrade = 19,
         PurchaseAllUpgrades = 20,
+        
+        TownsDestroyed10 = 21,
+        Ruins100 = 22,
+        Buildings1000 = 23
     }
 
     public class Achievements : MonoBehaviour
