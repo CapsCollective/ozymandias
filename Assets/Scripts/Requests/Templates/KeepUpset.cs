@@ -8,7 +8,7 @@ namespace Requests.Templates
     {
         public Guild targetGuild;
         public override string Description => 
-            $"Keep {String.Pluralise(targetGuild.ToString())} Upset for {Required} Turns";
+            $"Keep {targetGuild.ToString().Pluralise()} Upset for {Required} Turns";
         protected override int RequiredScaled => 2 * Tokens;
 
         public override void Start()

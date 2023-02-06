@@ -19,6 +19,6 @@ namespace Events.Outcomes
         protected override string Description => customDescription != "" ?
             $"{Colors.GreenText}{customDescription}{Colors.EndText}" :
             $"{Colors.GreenText}{guild} request completed, {_tokens} " +
-            $"{String.Pluralise("token", _tokens)} rewarded.{Colors.EndText}";
+            $"{"token".Pluralise(_tokens)} rewarded.{Colors.EndText}";
     }
 }

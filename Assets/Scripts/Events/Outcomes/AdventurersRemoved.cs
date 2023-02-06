@@ -23,7 +23,7 @@ namespace Events.Outcomes
         protected override string Description => customDescription != "" ?
             $"{Colors.RedText}{customDescription}{Colors.EndText}" :
             $"{Colors.RedText}{count} " +
-            $"{String.Pluralise("adventurer", count)} " +
+            $"{"adventurer".Pluralise(count)} " +
             $"{(count == 1 ? "has" : "have")} " +
             $"{(kill ? "been struck down" : "fled the town")}.{Colors.EndText}";
     }

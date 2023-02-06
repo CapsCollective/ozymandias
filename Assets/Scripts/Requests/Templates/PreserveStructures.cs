@@ -7,7 +7,7 @@ namespace Requests.Templates
     {
         public StructureType structureType;
         public override string Description => 
-            $"Build {Required} {String.Pluralise("Building", Required)} " +
+            $"Build {Required} {"Building".Pluralise(Required)} " +
             $"Without Clearing {(structureType == StructureType.Terrain ? "Forest" : "Ruins")}";
         protected override int RequiredScaled => (structureType == StructureType.Terrain ? 10 : 20) * Tokens;
 

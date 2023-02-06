@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 namespace Events.Outcomes
 {
@@ -29,9 +30,9 @@ namespace Events.Outcomes
             {
                 bool res = outcome.Execute();
             
-                if (res && outcome.Description != "") description += "• " + outcome.Description + "\n";
+                if (res && outcome.Description != "") description += outcome.Description.ListItem();
             }
-            return description.TrimEnd('\n');
+            return description.TrimStart('\n');
         }
     }
 }

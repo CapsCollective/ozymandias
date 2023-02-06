@@ -5,7 +5,6 @@ using Cards;
 using DG.Tweening;
 using Inputs;
 using Managers;
-using Platform;
 using Quests;
 using TMPro;
 using UnityEngine;
@@ -45,7 +44,6 @@ namespace Structures
         [SerializeField] private TextMeshProUGUI bonusText;
         [SerializeField] private List<Sprite> chevronSizes;
         [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
-        [SerializeField] private PlatformAssets rendererData;
         
         private OutlineRenderFeature _outline;
         private Canvas _canvas;
@@ -115,6 +113,7 @@ namespace Structures
                         costText.text = "";
                         questTitleText.text = SelectedStructure.Quest ? SelectedStructure.Quest.Title : "No Quests Here";
                         buttonCanvasGroup.DOFade(SelectedStructure.Quest ? 1 : 0.7f, 0.5f);
+                        DisableEffects();
                         break;
                     case StructureType.Building:
                         questTitleText.text = "";
@@ -147,6 +146,7 @@ namespace Structures
                             alpha = Manager.Stats.Wealth >= cost ? 1 : 0.7f;
                         }
                         buttonCanvasGroup.DOFade(alpha, 0.5f);
+                        DisableEffects();
                         break;
                 }
             }
@@ -296,29 +296,35 @@ namespace Structures
                 badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
                 
-                badges[i].badge.Description = 
-                    $"{(effects[i].Value > 0 ? "+" : "")}" +
-                    $"{effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key)} " +
-                    $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
+                int scaledValue = effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key);
+                badges[i].badge.Description =
+                    $"{scaledValue.WithSign()} {effects[i].Key.ToString()}" +
+                    " Satisfaction".Conditional((int)effects[i].Key < 5);
             }
-            
             
             if (!SelectedStructure.Bonus.HasValue) return;
             bonusBadge.badge.Description = 
-                $"+{Manager.Stats.StatMultiplier(SelectedStructure.Bonus.Value)} {SelectedStructure.Bonus.ToString()}{((int)SelectedStructure.Bonus < 5 ? " Satisfaction" : "")}";
+                $"+{Manager.Stats.StatMultiplier(SelectedStructure.Bonus.Value)} {SelectedStructure.Bonus.ToString()}" +
+                " Satisfaction".Conditional((int)SelectedStructure.Bonus < 5);
             
-            bonusBadge.transform.localPosition = new Vector2(0, -320);
+            bonusBadge.transform.localPosition = new Vector2(0, -250);
             
             const float delay = 0.5f;
             bonusBadge.canvasGroup.DOFade(1, 1f).SetDelay(delay);
             bonusBadge.transform
-                .DOLocalMove(new Vector2(0, -270), 1f)
+                .DOLocalMove(new Vector2(0, -200), 1f)
                 .SetDelay(delay)
                 .OnStart(() => {
                     bonusBadge.icon.sprite = statIcons[SelectedStructure.Bonus.Value];
                     bonusBadge.background.color = Colors.StatColours[SelectedStructure.Bonus.Value];
                     bonusText.text = SelectedStructure.Blueprint.adjacencyConfig.Description;
                 });
+        }
+
+        private void DisableEffects()
+        {
+            badges.ForEach(badge => badge.canvasGroup.gameObject.SetActive(false));
+            bonusBadge.canvasGroup.gameObject.SetActive(false);
         }
         
         private void HideEffects()

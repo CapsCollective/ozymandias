@@ -5,7 +5,7 @@ namespace Requests.Templates
 {
     public sealed class CompleteQuests : Request
     {
-        public override string Description => $"Complete {Required} {String.Pluralise("Quest", Required)}";
+        public override string Description => $"Complete {Required} {"Quest".Pluralise(Required)}";
         protected override int RequiredScaled => Tokens;
 
         public override void Start()

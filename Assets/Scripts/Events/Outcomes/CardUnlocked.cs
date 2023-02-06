@@ -16,7 +16,7 @@ namespace Events.Outcomes
         }
 
         protected override string Description => $"{Colors.GreenText}" +
-                                                 $"{String.Pluralise(blueprint.name)}" +
+                                                 $"{blueprint.name.Pluralise()}" +
                                                  $" have been unlocked.{Colors.EndText}";
     }
 }

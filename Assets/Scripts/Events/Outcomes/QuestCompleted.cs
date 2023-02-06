@@ -20,9 +20,9 @@ namespace Events.Outcomes
         }
         
         protected override string Description => 
-            $"{Colors.GreenText}Quest completed: {quest.Title}. " +
-            (quest.IsRadiant ? $"Threat reduced by {_threat} and " : "") +
-            $"{_assigned} {String.Pluralise("Adventurer", _assigned)} " +
+            $"{Colors.GreenText}Quest completed: {quest.Title}." +
+            $"\nThreat reduced by {_threat} and ".Conditional(quest.IsRadiant) +
+            $"{_assigned} {"Adventurer".Pluralise(_assigned)} " +
             $"{(_assigned == 1 ? "has" : "have")} " +
             $"returned.{Colors.EndText}";
     }

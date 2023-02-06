@@ -10,14 +10,13 @@ namespace UI
     public class Stability : UiUpdater
     {
         [SerializeField] private Sprite[] chevrons;
-        [SerializeField] private RectTransform threatBar, defenceBadge, threatBadge;
+        [SerializeField] private RectTransform defenceBadge, threatBadge;
         [SerializeField] private Image direction;
         [SerializeField] private TextMeshProUGUI defenceCount, threatCount;
         private const float BarStart = 55f;
         private const float BarLength = 530f;
-        private const float DirectionArrowStart = 105f;
-        private const float DirectionArrowEnd = 535f;
-        private const float Height = 25;
+        private const float DirectionArrowStart = 115f;
+        private const float DirectionArrowEnd = 525f;
         private int _oldDefence, _oldThreat;
         private float _linearOldStability, _linearStability;
         private bool _running;

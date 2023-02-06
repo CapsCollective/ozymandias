@@ -20,9 +20,10 @@ namespace Utilities
         public static readonly Color CostActive = new Color(0.8f,0.6f,0.2f);
         public static readonly Color CostInactive = new Color(0.85f,0.85f,0.85f);
 
-        public static string GreenText => ColorBlind ? "" : "<color=#007000ff>";
-        public static string RedText => ColorBlind ? "" : "<color=#820000ff>";
+        public static string GreenText => "<color=#007000ff>".Conditional(!ColorBlind);
+        public static string RedText => "<color=#820000ff>".Conditional(!ColorBlind);
         public static string EndText => ColorBlind ? "" :"</color>";
+        public static string StatusColor(this string s, bool isPositive) => (isPositive ? GreenText : RedText) + s + EndText;
 
         public static readonly Dictionary<Stat, Color> StatColours = new Dictionary<Stat, Color>
         {

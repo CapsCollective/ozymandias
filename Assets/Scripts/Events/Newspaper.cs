@@ -103,7 +103,7 @@ namespace Events
             
             int cost = (int)(_choiceEvent.choices[choice].costScale * Manager.Stats.WealthPerTurn);
             choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text =
-                _choiceEvent.choices[choice].name + (cost != 0 ? $"\n(Spend {cost} of {Manager.Stats.Wealth} Wealth)" : "");
+                _choiceEvent.choices[choice].name + $"\n(Spend {cost} of {Manager.Stats.Wealth} Wealth)".Conditional(cost != 0);
             choiceList[choice].GetComponent<Button>().interactable = cost == 0 || Manager.Stats.Wealth >= cost;
         }
     

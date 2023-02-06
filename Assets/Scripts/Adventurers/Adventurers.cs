@@ -26,7 +26,7 @@ namespace Adventurers
         public int Removable => _adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
 
         public IEnumerable<Adventurer> List => _adventurers
-            .OrderByDescending(x => x.assignedQuest ? x.assignedQuest.Title : "")
+            .OrderByDescending(x => x.assignedQuest.Title.Conditional(x.assignedQuest))
             .ThenByDescending(x => x.turnJoined);
         
         private void Awake()
