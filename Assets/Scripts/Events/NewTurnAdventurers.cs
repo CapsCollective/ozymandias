@@ -12,7 +12,6 @@ namespace Events
     {
         [SerializeField] private SerializedDictionary<Guild, TextMeshProUGUI> adventurerCounts;
         [SerializeField] private GameObject newAdventurersTitle, newAdventurersSeparator;
-        //[SerializeField] private TextMeshProUGUI defenceCounts;
         protected override void UpdateUi()
         {
             if (Manager.State.InGame) return;
@@ -38,7 +37,7 @@ namespace Events
             adventurerCounts[guild].text = difference switch
             {
                 > 0 => "+" + difference,
-                < 0 => Colors.RedText + difference + Colors.EndText,
+                < 0 => difference.ToString().StatusColor(-1),
                 _ => ""
             };
         }

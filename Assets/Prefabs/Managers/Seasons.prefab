@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depthOfSeason: 1
-  debugTurn: 0
   transitionTime: 2
   weathers:
     list:
@@ -522,6 +522,8 @@ MonoBehaviour:
           m_NumAlphaKeys: 2
     keyCollision: 0
   sunTransform: {fileID: 0}
-  skyMaterial: {fileID: 0}
+  skyMaterial: {fileID: 2100000, guid: de0da697f8d34f04785714316d7db321, type: 2}
   sun: {fileID: 0}
   glowflies: {fileID: 0}
+  debugSeason: 0
+  debugTime: 0

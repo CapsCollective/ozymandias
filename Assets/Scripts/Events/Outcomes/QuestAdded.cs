@@ -23,6 +23,9 @@ namespace Events.Outcomes
             { Location.Mountains, "through the mountains" },
         };
 
-        protected override string Description => customDescription != "" ? customDescription : $"New quest added {LocationDescriptors[quest.location]}: {quest.Title}.";
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"New {(quest.IsRadiant ? "enemy camp" : "quest")} added {LocationDescriptors[quest.location]}: {quest.Title}."
+        ).StatusColor(quest.IsRadiant ? -1 : 0);
     }
 }

@@ -20,11 +20,9 @@ namespace Events.Outcomes
             return true;
         }
 
-        protected override string Description => customDescription != "" ?
-            $"{Colors.RedText}{customDescription}{Colors.EndText}" :
-            $"{Colors.RedText}{count} " +
-            $"{"adventurer".Pluralise(count)} " +
-            $"{(count == 1 ? "has" : "have")} " +
-            $"{(kill ? "been struck down" : "fled the town")}.{Colors.EndText}";
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"{count} {"adventurer".Pluralise(count)} {(count == 1 ? "has" : "have")} {(kill ? "been struck down" : "fled the town")}."
+        ).StatusColor(-1);
     }
 }

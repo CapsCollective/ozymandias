@@ -43,7 +43,7 @@ namespace UI
 
         private void TriggerTicker(int amount, int total)
         {
-            countTicker.text = (amount > 0 ? "+" : Colors.RedText) + amount + (amount > 0 ? "" : Colors.EndText);
+            countTicker.text = amount.WithSign().StatusColor(amount < 0 ? -1 : 0);
             countTicker.enabled = true;
             countTicker.alpha = 1;
             countTicker.rectTransform.localPosition = new Vector3(0, -110, 0);

@@ -34,11 +34,9 @@ namespace Events.Outcomes
             "taken up residence.", "joined the fight!", "found a new home.", "started questing."
         };
 
-        protected override string Description => customDescription != "" ?
-            $"{Colors.GreenText}{customDescription}{Colors.EndText}" :
-            $"{Colors.GreenText}{adventurers.Count + count} "+
-            $"{"adventurer".Pluralise(adventurers.Count)} " +
-            $"{(adventurers.Count == 1 ? "has" : "have")} " +
-            $"{Descriptors.SelectRandom()}{Colors.EndText}";
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"{adventurers.Count + count} {"adventurer".Pluralise(adventurers.Count)} {(adventurers.Count == 1 ? " has" : " have")} {Descriptors.SelectRandom()}"
+        ).StatusColor(1);
     }
 }

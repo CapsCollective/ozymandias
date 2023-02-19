@@ -44,15 +44,15 @@ namespace Upgrades
         private bool SingleUnlock => maxLevel == 1;
         
         public string Description => 
-            $"{description}\n\n" + LevelText + EffectText.Conditional(SingleUnlock);
+            $"{description}\n\n{LevelText}{EffectText.Conditional(!SingleUnlock)} {effect}";
         private string LevelText => SingleUnlock ? 
-            level == 0 ? "Locked: " : "Unlocked: " : 
-            $"Level: {level}{$"/{maxLevel}".Conditional(HasLevelCap)}";
+            level == 0 ? "Locked:" : "Unlocked:" : 
+            $"Level {level}{$"/{maxLevel}".Conditional(HasLevelCap)}";
 
-        private string EffectText => 
-            $"{baseEffect + level * multiplier}{"%".Conditional(percentage)}" +
-            $"→{baseEffect + (level + 1) * multiplier}{"%".Conditional(percentage)}".Conditional(level < maxLevel || maxLevel == -1) + 
-            effect;
+        private string EffectText =>
+            $"\n{baseEffect + level * multiplier}{"%".Conditional(percentage)}" +
+            $" <voffset=2>→</voffset> {baseEffect + (level + 1) * multiplier}{"%".Conditional(percentage)}"
+                .Conditional(level < maxLevel || maxLevel == -1);
 
         private void Awake()
         {

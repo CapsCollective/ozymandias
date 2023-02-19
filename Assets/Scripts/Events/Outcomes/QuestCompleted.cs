@@ -19,11 +19,10 @@ namespace Events.Outcomes
             return true;
         }
         
-        protected override string Description => 
-            $"{Colors.GreenText}Quest completed: {quest.Title}." +
-            $"\nThreat reduced by {_threat} and ".Conditional(quest.IsRadiant) +
-            $"{_assigned} {"Adventurer".Pluralise(_assigned)} " +
-            $"{(_assigned == 1 ? "has" : "have")} " +
-            $"returned.{Colors.EndText}";
+        protected override string Description => (
+            $"Quest completed: {quest.Title}." +
+            $"\n{String.StatWithIcon(Stat.Threat)} reduced by {_threat} and".Conditional(quest.IsRadiant) +
+            $" {_assigned} {"Adventurer".Pluralise(_assigned)} {(_assigned == 1 ? "has" : "have")} returned."
+        ).StatusColor(1);
     }
 }

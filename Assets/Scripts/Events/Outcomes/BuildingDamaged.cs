@@ -23,8 +23,9 @@ namespace Events.Outcomes
                 .OnComplete(() => Manager.Structures.Remove(type));
         }
 
-        protected override string Description => customDescription != "" ?
-            $"{Colors.RedText}{customDescription}{Colors.EndText}" :
-            $"{Colors.RedText}A {type.ToString()} has been destroyed.{Colors.EndText}";
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"A {type.ToString()} has been destroyed."
+        ).StatusColor(-1);
     }
 }

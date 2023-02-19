@@ -27,21 +27,10 @@ namespace Events.Outcomes
             return true;
         }
 
-        protected override string Description
-        {
-            get
-            {
-                string color = amount > 0 ? Colors.GreenText : Colors.RedText;
-                if (customDescription != "") return $"{color}{customDescription}{Colors.EndText}";
-                
-                string desc = color + statToChange + ((int)statToChange < 5 ? " Satisfaction" : "");
-                
-                if (amount > 0) desc += " has increased by " + amount;
-                else desc += " has decreased by " + Mathf.Abs(amount);
-            
-                if (turns != -1) desc += " for " + turns + " turns " + reason + ".";
-                return desc + "</color>";
-            }
-        }
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"{String.StatWithIcon(statToChange)} has {(amount > 0 ? "increased" : "decreased")} by {Mathf.Abs(amount)}" +
+            $" for {turns} turns {reason}.".Conditional(turns != -1)
+        ).StatusColor(amount);
     }
 }

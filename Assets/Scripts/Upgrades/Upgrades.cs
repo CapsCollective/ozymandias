@@ -26,7 +26,7 @@ namespace Upgrades
         {
             public RectTransform transform;
             public Canvas canvas;
-            public GameObject costBox;
+            public GameObject costBox, purchaseButtonContainer;
             public TextMeshProUGUI title, description;
             public SerializedDictionary<Guild, GameObject> costs;
             public Button purchaseButton, deselectButton;
@@ -97,7 +97,7 @@ namespace Upgrades
             purchaseBox.title.text = upgrade.title;
             purchaseBox.description.text = upgrade.Description;
 
-            purchaseBox.purchaseButton.gameObject.SetActive(!upgrade.LevelMaxed);
+            purchaseBox.purchaseButtonContainer.SetActive(!upgrade.LevelMaxed);
             purchaseBox.costBox.gameObject.SetActive(!upgrade.LevelMaxed);
             purchaseBox.purchaseButton.interactable = Affordable(upgrade.Costs);
 
@@ -107,8 +107,8 @@ namespace Upgrades
                 {
                     purchaseBox.costs[guild].SetActive(true);
                     TextMeshProUGUI text = purchaseBox.costs[guild].GetComponentInChildren<TextMeshProUGUI>();
-                    text.text = $"{GuildTokens[guild]}/{upgrade.Costs[guild]}";
-                    text.color = GuildTokens[guild] >= upgrade.Costs[guild] ? Colors.CardLight : Colors.LightRed;
+                    bool affordable = GuildTokens[guild] >= upgrade.Costs[guild];
+                    text.text = $"{GuildTokens[guild].ToString().StatusColor(affordable ? 0: -1, true)}/{upgrade.Costs[guild]}";
                 }
                 else
                 {

@@ -121,14 +121,10 @@ namespace Quests
                 bool enoughAdventurers = Manager.Adventurers.Removable > adventurers;
                 bool enoughMoney = Manager.Stats.Wealth >= cost;
                 statsText.text =
-                    (enoughAdventurers ? "" : Colors.RedText) + 
-                    "Adventurers: " + adventurers +
-                    (enoughAdventurers ? "" : Colors.EndText) +
-                    "\nDuration: " + duration + " Turns" +
-                    (enoughMoney ? "" : Colors.RedText) +
-                    "\nCost: " + cost +
-                    (enoughMoney ? "" : Colors.EndText) +
-                    "\nReward: " + quest.RewardDescription;
+                    $"Adventurers: {adventurers}".StatusColor(enoughAdventurers ? 0 : -1) +
+                    $"\nDuration: {duration} Turns" +
+                    $"\nCost: {cost}".StatusColor(enoughMoney ? 0 : -1) +
+                    $"\nReward: {quest.RewardDescription}";
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
             }

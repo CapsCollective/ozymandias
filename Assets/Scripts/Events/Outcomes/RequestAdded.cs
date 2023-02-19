@@ -1,4 +1,5 @@
 ﻿using Requests.Templates;
+using Utilities;
 using static Managers.GameManager;
 
 namespace Events.Outcomes
@@ -12,6 +13,6 @@ namespace Events.Outcomes
             Manager.Requests.Add(request);
             return true;
         }
-        protected override string Description => customDescription != "" ? customDescription : $"{request.guild} request added: {request.Description}.";
+        protected override string Description => customDescription != "" ? customDescription : $"{String.GuildWithIcon(request.guild)} request added: {request.Description}.";
     }
 }

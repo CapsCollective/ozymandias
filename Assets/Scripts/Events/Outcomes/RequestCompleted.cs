@@ -16,9 +16,9 @@ namespace Events.Outcomes
             return true;
         }
 
-        protected override string Description => customDescription != "" ?
-            $"{Colors.GreenText}{customDescription}{Colors.EndText}" :
-            $"{Colors.GreenText}{guild} request completed, {_tokens} " +
-            $"{"token".Pluralise(_tokens)} rewarded.{Colors.EndText}";
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"{String.GuildWithIcon(guild)} request completed, {_tokens} {"token".Pluralise(_tokens)} rewarded."
+        ).StatusColor(1);
     }
 }

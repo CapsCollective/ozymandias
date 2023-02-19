@@ -16,6 +16,6 @@ namespace Events.Outcomes
             return true;
         }
 
-        protected override string Description => $"{Colors.RedText}+{Amount} threat to the town.{Colors.EndText}";
+        protected override string Description => $"+{Amount} {String.StatWithIcon(Stat.Threat)} to the town.".StatusColor(-1);
     }
 }

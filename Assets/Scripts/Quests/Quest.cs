@@ -13,6 +13,7 @@ using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
 using Random = UnityEngine.Random;
+using String = Utilities.String;
 
 namespace Quests
 {
@@ -61,7 +62,7 @@ namespace Quests
         // The base number of adventurers to send on a grid quest before any tiles are cleared
         public int BaseAdventurers => IsRadiant ? 2 + Structure.SectionCount : baseAdventurers;
         public int ScaledCost(int scale) => (int) (BaseCost * CostScale[scale]);
-        public string RewardDescription => IsRadiant ? $"Clear camp (-{Structure.SectionCount} threat)" : reward;
+        public string RewardDescription => IsRadiant ? $"-{Structure.SectionCount} {String.StatWithIcon(Stat.Threat)}" : reward;
         public int AssignedCount => _assigned.Count;
         
         public void Add()
