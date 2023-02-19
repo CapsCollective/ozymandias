@@ -141,7 +141,7 @@ namespace Tooltip
 
         private void DeactivateTooltips()
         {
-            _selectedTooltip.OnPointerExit(null);
+            if(IsVisible()) _selectedTooltip.OnPointerExit(null);
             NavigationActive = false;
         }
 

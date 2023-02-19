@@ -9,6 +9,8 @@ namespace Tooltip
 {
     public class TooltipPlacement : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
+        public static Action OnTooltipClosed;
+
         [SerializeField] private Vector3 position;
         [SerializeField] private Vector2 pivot;
         [SerializeField] private float delay = 0.2f;
@@ -56,6 +58,7 @@ namespace Tooltip
             _mouseTimer = delay;
             Manager.Tooltip.Fade(0);
             transform.DOScale(1.0f, 0.3f);
+            OnTooltipClosed?.Invoke();
         }
     }
 }

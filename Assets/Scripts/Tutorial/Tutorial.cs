@@ -12,6 +12,7 @@ using Quests;
 using Reports;
 using Structures;
 using TMPro;
+using Tooltip;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -222,8 +223,8 @@ namespace Tutorial
                 new Line("Oh! Are you the replacement regional manager that head office was gonna send down?"),
                 new Line("You know what, don't answer that, you are now.", GuidePose.Dismissive),
                 new Line("I could never run it myself, too much paperwork. But if you were to run the town and leave me to... clean.. then maybe we could work something out.", GuidePose.Neutral), // Should point a 'thinking' pose
-                new Line("Let's start you off by showing you around the place...", GuidePose.FingerGuns, StartCameraObjectives)
-            });
+                new Line("Let's start you off by showing you around the place...", GuidePose.FingerGuns)
+            }, exitAction: StartCameraObjectives);
         }
         
         private void StartCameraObjectives()
@@ -267,8 +268,8 @@ namespace Tutorial
                 new Line("Ok, now that's out of the way let's get this show on the road!", GuidePose.Neutral),
                 new Line("There's a few ruins that you can clear to make some space for some new buildings."),
                 new Line("You can do it by selecting the ruin, and then the clear button. Then, you can select a card, and place it in the spot!"),
-                new Line("Space can be tight when building in the forest, so make sure to rotate the buildings to fit everything in.", onNext: StartBuildingObjectives)
-            });
+                new Line("Space can be tight when building in the forest, so make sure to rotate the buildings to fit everything in.")
+            }, exitAction: StartBuildingObjectives);
         }
         
         private void StartBuildingObjectives()
@@ -343,8 +344,7 @@ namespace Tutorial
                 new Line("There are 5 adventuring guilds, each with their own needs. The happier they are, the more likely an adventurer from that guild will join each turn."),
                 new Line("Your town also needs housing, which gives a chance to spawn random adventurers, and food, which gives a modifier to all guilds satisfaction."),
                 new Line("As your population grows, you'll need to keep building to keep everyone happy."),
-                new Line("Try attracting some adventurers now!", onNext: StartAdventurerObjectives)
-            });
+            }, exitAction: StartAdventurerObjectives);
         }
         
         private void StartAdventurerObjectives()
@@ -361,14 +361,14 @@ namespace Tutorial
             {
                 CreateObjective("Go To Next Turn"),
                 CreateObjective("Read The News"),
-                CreateObjective("Attract Adventurers", 5),
+                CreateObjective($"Check Tooltips\n({(Manager.Inputs.UsingController ? "L3" : "Hover over stats")})"),
             };
             _onObjectivesComplete = EndTutorialDialogue;
             ShowObjectives();
 
-            Adventurers.Adventurers.OnAdventurerJoin += AdventurerJoin;
             State.OnNextTurnBegin += NextTurn;
             Newspaper.OnNextClosed += ReadNews;
+            TooltipPlacement.OnTooltipClosed += CheckTooltips;
 
             void NextTurn()
             {
@@ -381,11 +381,10 @@ namespace Tutorial
                 CompleteObjective(_currentObjectives[1]);
             }
             
-            void AdventurerJoin(Adventurer adventurer)
+            void CheckTooltips()
             {
-                if (!_currentObjectives[2].Increment()) return;
-                Adventurers.Adventurers.OnAdventurerJoin -= AdventurerJoin;
-                Newspaper.OnNextClosed += () => CompleteObjective(_currentObjectives[2]);
+                TooltipPlacement.OnTooltipClosed -= CheckTooltips;
+                CompleteObjective(_currentObjectives[2]);
             }
         }
 
