@@ -33,7 +33,10 @@ namespace Cards
         private void Update()
         {
             if (!ScrollActive) return;
-            scrollbar.value += Manager.Inputs.Scroll.ReadValue<Vector2>().y * speed * Time.deltaTime;
+            
+            if (scrollbar.value < 0) scrollbar.value = 0;
+            else if (scrollbar.value > 1) scrollbar.value = 1;
+            else scrollbar.value += Manager.Inputs.Scroll.ReadValue<Vector2>().y * speed * Time.deltaTime;
         }
 
         private void Display()
