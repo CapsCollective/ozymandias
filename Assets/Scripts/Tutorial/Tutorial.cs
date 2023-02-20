@@ -407,9 +407,9 @@ namespace Tutorial
             // (to stop controllers selecting structures on exiting tutorial)
             DisableSelect = true;
             Manager.Camera.MoveTo(Manager.Structures.TownCentre).OnComplete(() => DisableSelect = false);
-            
+            Manager.EventQueue.AddTutorialEndEvents();
+
             Active = false;
-            Manager.Upgrades.Display();
             SaveFile.SaveState(false);
         }
 

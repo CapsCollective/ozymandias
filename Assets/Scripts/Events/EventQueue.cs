@@ -16,7 +16,7 @@ namespace Events
         private const int MinQueueEvents = 3; // The minimum events in the queue to store
         
         [SerializeField] private Event openingEvent;
-        [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents;
+        [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents, tutorialEndEvents;
         
         private Newspaper _newspaper;
         
@@ -33,6 +33,10 @@ namespace Events
 
         public Dictionary<Flag, bool> Flags = new Dictionary<Flag, bool>();
 
+        private bool TypeNotInQueue(EventType type) =>
+            _others.All(e => e.type != type) &&
+            _headliners.All(e => e.type != type);
+        
         private void Awake()
         {
             State.OnNewGame += () =>
@@ -86,23 +90,28 @@ namespace Events
             List<Event> eventPool = new List<Event>();
 
             int randomSpawnChance = Manager.Stats.RandomSpawnChance;
-            if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-            else if(Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            if (randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+            else if (Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
             // Let them gain some adventurers to start
             if (Manager.Adventurers.Count >= 3)
             {
+                // Stability change per turn, each enemy camp counts for an extra 5
                 int lead = Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, -10, 10);
                 
                 // Scale from 100% down to 50% threat spawn if falling behind by up to 10
-                if(Random.Range(0,20) > -lead) eventPool.Add(PickRandom(EventType.Threat));
+                // Prevent multiple threat events from happening in a single turn
+                if (TypeNotInQueue(EventType.Threat) && Random.Range(0,20) > -lead)
+                    eventPool.Add(PickRandom(EventType.Threat));
                 
                 // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
                 int random = Random.Range(0, 20);
-                if (!Tutorial.Tutorial.Active && (random == 0 || random < lead)) eventPool.Add(PickRandom(EventType.Radiant));
+                if (!Tutorial.Tutorial.Active && TypeNotInQueue(EventType.Radiant) && (random == 0 || random < lead))
+                    eventPool.Add(PickRandom(EventType.Radiant));
 
                 // 20% chance to start a new story while no other is active
-                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0) eventPool.Add(PickRandomStory());
+                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
+                    eventPool.Add(PickRandomStory());
             }
 
             while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
@@ -164,6 +173,12 @@ namespace Events
         public void AddGameOverEvents()
         {
             foreach (Event e in supportWithdrawnEvents) Add(e, true);
+        }
+
+        public void AddTutorialEndEvents()
+        {
+            foreach (Event e in tutorialEndEvents) Add(e, true);
+            Add(PickRandom(EventType.Threat));
         }
 
         public void AddGuildHallDestroyedEvents()

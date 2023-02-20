@@ -156,7 +156,7 @@ namespace Cards
         {
             hand[0].Blueprint = Find(BuildingType.Herbalist);
             hand[0].Blueprint.Free = true;
-            hand[1].Blueprint = Find(BuildingType.Watchtower);
+            hand[1].Blueprint = Find(BuildingType.Tavern);
             hand[1].Blueprint.Free = true;
             hand[2].Blueprint = Find(BuildingType.Inn);
             hand[2].Blueprint.Free = true;
