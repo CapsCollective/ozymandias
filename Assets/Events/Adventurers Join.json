@@ -1,0 +1,394 @@
+[
+	{
+		"name": "not-shrek-1",
+		"headline": "Local Ogre Files Formal Complaint",
+		"article": "A formal complaint has been made to the guild today by a reclusive ogre, that too many adventurers have been traipsing through his swamp.",
+		"image": "ogre",
+		"type": "AdventurersJoin",
+		"choices":
+		[
+			{
+				"name": "Strike up a Bargain",
+				"outcomes":
+				[
+					{
+						"type": "ChainEvent",
+						"customDescription": "The ogre agrees to go on a quest in order to claim the land as his",
+						"nextEvent":
+						{
+							"name": "not-shrek-2",
+							"headline": "The Ogre Returns!",
+							"article": "After going through what can only be described as a 'classical hero's journey with a post-modern twist', the ogre returns triumphant. However, realising he no longer wants to be left alone, asks to join your town.",
+							"image": "ogre",
+							"type": "Other",
+							"outcomes":
+							[
+								{
+									"type": "AdventurersAdded",
+									"count": 1,
+									"guild": "Brawler",
+									"anyGuild": false
+								}
+							]
+						}
+					}
+				]
+			},
+			{
+				"name": "Leave Him Be",
+				"outcomes":
+				[
+					{
+						"type": "FlavourText",
+						"customDescription": "The ogre thanks you with some surprisingly delicious sludge"
+					},
+					{
+						"type": "ModifierAdded",
+						"modifier":
+						{
+							"toChange": "Food",
+							"amount": 10,
+							"turns": -1,
+							"reason": "from the Ogre's Sludge"
+						}
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "crystal-golem",
+		"headline": "A Crystal Golem",
+		"article": "A strange being made entirely out of animated crystal joins our town today. They claim to be from the deepest cavern, underneath the mountains.",
+		"image": "minerals",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Brawler",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "qualifying-tragedy",
+		"headline": "Qualifying Tragedy",
+		"article": "After years of tragic events, a local man has received the amazing news that his traumatic backstory finally qualifies him for a role in the adventurers guild.",
+		"image": "shattered-heart",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Brawler",
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "goat-man",
+		"headline": "The Grass is Ethereal on the Other Side",
+		"article": "A portal in space opened up today, only for a strange goat-man to fall out. He claims his powers are fuelled by the delicious grass our dimension has. He has agreed to stay and protect our town.",
+		"image": "hoof",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Outrider",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "pirate-captain",
+		"headline": "Pier Pressure",
+		"article": "Someone washed ashore today, claiming to be a fearsome pirate captain from across the seas, his ship lost to him. His crew mutinied after one claimed to have seen a terrifying monster in the depths of the ocean, causing hysteria, and begging to return to land.",
+		"image": "pirate-captain",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"customDescription": "They join the fight to fund a new ship. +1 Outrider (<sprite=1>)",
+				"count": 1,
+				"guild": "Outrider",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "trial-by-monster",
+		"headline": "Trial by Monster",
+		"article": "Local guard manages to actually survive their first encounter with a monster in a shock to everyone! This is unprecedented and they have quickly started their official adventurer training.",
+		"image": "adventurer",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Outrider",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "bad-bard",
+		"headline": "New Bard In Town!",
+		"article": "Known around the lands for his experimental spoken word music, and stories about the stars. The reviews are in: <i>\"He's really bad.\"</i>",
+		"image": "music-spell",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Performer",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "drunken-master",
+		"headline": "The Drunken Master",
+		"article": "A true change of heart today, as the town drunk made the revelation he is an excellent combatant while drunk during a bar fight. He vows after his hangover dies down, he’s decided to turn his life around and join the adventures guild, on the provision he’s given a steady supply of beer.",
+		"image": "satisfaction",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Performer",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "tenacious-duo",
+		"headline": "The Greatest Adventurers in the World",
+		"article": "Hailing from a far away land, and famed with having defeated a demon in single combat, this tenacious duo are also accomplished musicians, able to play 'serious licks' on any lute. These hero's of legend did not come to our humble town, but their two biggest fans did, describing themselves as a 'just a tribute'.",
+		"image": "pick-of-destiny",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 2,
+				"guild": "Performer",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "diviner-scam",
+		"headline": "The Chosen One (of Many)",
+		"article": "Three villagers have committed to going on a holy quest after receiving pamphlets in the mail, claiming they are the chosen one. The goal of their quest is unknown, but involves leaving a portion of their earnings in an unmarked bag on the outside of town, and converting as many followers to do the same. The origin of these pamphlets are unknown but were sent to nearly every home over the night.",
+		"image": "stabbed-note",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 3,
+				"guild": "Diviner",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "magic-orb",
+		"headline": "The Orb of Awakening",
+		"article": "Local innkeeper Veronica Stalwart has gained supernatural powers after she touched an orb containing the soul of a long dead god while cleaning. \"I promise to use these powers for good, no matter WHAT the being inside of me says!\" quotes Veronica.",
+		"image": "crystal-ball",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Arcanist",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "street-urchin",
+		"headline": "Cunning Teen Join Guild!",
+		"article": "A street urchin has been taken on as the apprentices of a local Arcanist after successfully stealing her spell book in a daring heist. Why this mage wishes to train a thief is unknown, but we here don't ask questions.",
+		"image": "hooded-figure",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"guild": "Arcanist",
+				"anyGuild": false
+			}
+		]
+	},
+	{
+		"name": "bee-team",
+		"headline": "Bringing Out the Bee-Team",
+		"article": "We welcome to our town today the 'Beautiful Bee Balladeers', an glamorous insect themed travelling theatre troupe, who have sworn an oath to defend our town, claiming <i>\"this land is rich in pollen, and must be protected at all costs.\"</i>",
+		"image": "bee",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"customDescription": "Beetrice, Bernie, and Boiland Bee are protecting the Swarm! (+3 Adventurers)",
+				"count": 3,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "boring",
+		"headline": "Just a Normal Party",
+		"article": "A group of bland looking adventurers walk into town today. When questioned, they have no quirks, no strange backstory. They're just, here? <i>\"Look, we can't ALL be funny and unique, can we?\"</i>, the party leader says, in an incredibly monotone voice.",
+		"image": "three-friends",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"customDescription": "The three of them take up the most basic rooms they can find. (+3 Adventurers)",
+				"count": 3,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "fae",
+		"headline": "Some Folksy Fae",
+		"article": "Some Fae have found their way to our town today, with a can do attitude and a magical tie with the spirit world",
+		"image": "fairy",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 2,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "holiday-heroes",
+		"headline": "Holiday Heroes",
+		"article": "A heroic couple are looking for a holiday home, and after hearing the good word about the questing and adventure around these parts have decided to settle here.",
+		"image": "lovers",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 2,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "dragon-born-1",
+		"headline": "Dragon Born Wonder",
+		"article": "A wonderous being has walked in to town today, a man with the features of a dragon!. Wearing a trenchcoat and fedora, he has attracted the interest of the whole town.",
+		"image": "dragon-head",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "ChainEvent",
+				"customDescription": "The dragonborn hero stays...",
+				"nextEvent": {
+					"name": "dragon-born-2",
+					"headline": "Tipping the Scales",
+					"article": "Outrage today, as the local Dragonborn wonder has been revealed to just be 2 kobolds in a trenchcoat after dropping their fedora only to catch it with the second kobolds hand. They claim to be just as effective adventurers despite their stature and wish to prove themselves. Only time will tell.",
+					"image": "dragon-head",
+					"type": "AdventurersJoin",
+					"outcomes":
+					[
+						{
+							"type": "AdventurersAdded",
+							"customDescription": "The secret second kobold joins. +1 Adventurer",
+							"count": 1,
+							"anyGuild": true
+						}
+					]
+				}
+			},
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "lost-and-found",
+		"headline": "Lost and Found",
+		"article": "Some good news today as a band of lost adventurers have stumbled onto our town. They claim to have to come from a far away land somewhere east of here, but what, we aren't good enough? This is your home now!",
+		"image": "forest",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 2,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "gobliniest-human",
+		"headline": "World's Gobliniest Human",
+		"article": "A great disturbance to village life yesterday as the goblin alarm was raised and a supposed threat was apprehended by town guards, after extensive interrogation and scrying village officials came to the conclusion that it was in fact not a goblin but instead just a very short, ugly, slightly green man. Regardless, he's joined the adventuring guild.",
+		"image": "troll",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "sasq-watch",
+		"headline": "Sasq-Watch",
+		"article": "An adventurer came to our town, claiming to be tracking an illusive huge footed creature, and have decided to stay until they have solid proof. While many doubt it’s existence, due to the low quality of sketches drawn, the team claim they are accurate, and the beast is just blurry.",
+		"image": "sasquatch",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"count": 1,
+				"anyGuild": true
+			}
+		]
+	},
+	{
+		"name": "adventure-zone",
+		"headline": "A Zone for Adventure",
+		"article": "Three hero's refering to themselves as 'Tres Horny Boys' have stumbled into our area, claiming to be from another world. <i>\"I don't know if we're licenced for being here\"</i> quotes the parties Diviner Merle.",
+		"image": "adventure-zone",
+		"type": "AdventurersJoin",
+		"outcomes":
+		[
+			{
+				"type": "AdventurersAdded",
+				"customDescription": "Taako, Magnus, and Merle settle in (+3 Adventurers)",
+				"count": 3,
+				"anyGuild": true
+			}
+		]
+	}
+]

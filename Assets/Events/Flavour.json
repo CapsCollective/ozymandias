@@ -119,13 +119,8 @@
       },
       {
         "type": "AdventurersAdded",
-        "adventurers":
-        [
-          {
-            "name": "Long Lost Twin",
-            "anyGuild": true
-          }
-        ]
+        "count": 1,
+        "anyGuild": true
       }
     ]
   },
@@ -150,7 +145,7 @@
           "toChange": "Spending",
           "amount": -5,
           "turns": 3,
-          "reason": "from bucket head robberies"
+          "reason": "from Bucket Head Robberies"
         }
       }
     ]
@@ -160,6 +155,31 @@
     "headline": "Little Guy spotted in Town",
     "article": "Don't even worry about it, he's just like, a cool little guy, a little dude. He's not hurting anyone, don't even sweat.",
     "image": "meeple",
+    "type": "Flavour"
+  },
+  {
+    "name": "living-wood",
+    "headline": "Magic Wood Found in Nearby Forest!",
+    "article": "Silkhelm, otherwise known as ‘Living Wood’ has been discovered. This supernaturally strong wood is lucrative, so if you've got an axe free, get chopping! Warning, faint screaming may be heard, and should be ignored.",
+    "image": "tree-face",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "FlavourText",
+        "customDescription": "We've made a tidy profit selling all this <i>wood</i>..."
+      },
+      {
+        "type": "WealthAdded",
+        "turnAmount": 0.3
+      }
+    ]
+  },
+  {
+    "name": "protagonist",
+    "headline": "\"But I'm The Protagonist\"",
+    "article": "Local adventurer has come to the shocking realisation that this world might not actually be entirely in service of their grand heroes journey. \"I thought I was the main character! And now there's all these people telling me they have their own lives when I'm not here? Honestly I appreciate the immersion factor, but this is unacceptable!\"",
+    "image": "shattered-heart",
     "type": "Flavour"
   }
 ]

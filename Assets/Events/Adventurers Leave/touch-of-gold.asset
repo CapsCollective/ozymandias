@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6090100619192575081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: Both adventurers have been lost
+  count: 2
+  kill: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: touch-of-gold
+  m_EditorClassIdentifier: 
+  headline: Touch of Gold
+  article: A disgruntled adventurer looking to make quick buck has blessed your people
+    with gold... Made of those same people! One of our heroic adventurers jumped
+    on the madman, turning themselves into gold, and crushing them in the process.
+    Try as we might, we couldn't unfreeze the lost. We mourn as we melt and sell
+    off all this new gold we found.
+  image: {fileID: 21300000, guid: 6cda73374cfad4743a0e8f30d5984f28, type: 3}
+  type: 5
+  headliner: 0
+  outcomes:
+  - {fileID: -6090100619192575081}
+  - {fileID: 6176135429227215519}
+  - {fileID: 5785931980733063250}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &5785931980733063250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  turnsWorth: 0.5
+--- !u!114 &6176135429227215519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: On the upside, we got some gold!

@@ -36,7 +36,10 @@ namespace Events.Outcomes
 
         protected override string Description => (
             customDescription != "" ? customDescription :
-            $"{adventurers.Count + count} {"adventurer".Pluralise(adventurers.Count)} {(adventurers.Count == 1 ? " has" : " have")} {Descriptors.SelectRandom()}"
+            $"{adventurers.Count + count} " +
+            $"{(anyGuild ? "Adventurer".Pluralise(adventurers.Count + count) : String.GuildWithIcon(guild, adventurers.Count + count))} " +
+            $"{(adventurers.Count == 1 ? "has" : "have")} " +
+            $"{Descriptors.SelectRandom()}"
         ).StatusColor(1);
     }
 }

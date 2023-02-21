@@ -32,6 +32,7 @@ namespace Structures
     {
         private enum ScaleSpeed
         {
+            UltraSlow = 10,
             Slow = 4,
             Medium = 3,
             Fast = 2,
@@ -53,11 +54,10 @@ namespace Structures
         public AdjacencyConfiguration adjacencyConfig;
 
         public bool Free { get; set; }
-        private const float BuildingCostScale = 1.45f;
+        private const float BuildingCostScale = 1.8f;
         private const float BaseRefundPercentage = 5f; // Representing 50%
         
-        public int ScaledCost => Free ? 0 :
-            (int)(baseCost * Mathf.Pow(BuildingCostScale, Manager.Structures.GetCount(type) * 4 / (float)scaleSpeed));
+        public int ScaledCost => Free ? 0 : (int)(baseCost * Mathf.Pow(BuildingCostScale, Manager.Structures.GetCount(type) * 8 / (4 + (float)scaleSpeed)));
         public int Refund =>
             (int)(baseCost * Mathf.Pow(BuildingCostScale, (Manager.Structures.GetCount(type) - 1) * 4 / (float)scaleSpeed) *
                 (BaseRefundPercentage + Manager.Upgrades.GetLevel(UpgradeType.Refund)) / 10f);

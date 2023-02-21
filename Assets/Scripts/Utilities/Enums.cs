@@ -67,7 +67,8 @@
         OutriderRequest = 9,
         PerformerRequest = 10,
         DivinerRequest = 11,
-        ArcanistRequest = 12
+        ArcanistRequest = 12,
+        Merchant = 13
     }
 
     public enum OutcomeType
@@ -87,7 +88,8 @@
         RequestAdded,
         RequestCompleted,
         ThreatAdded,
-        SetFlag
+        SetFlag,
+        WealthAdded
     }
 
     public enum RequestType

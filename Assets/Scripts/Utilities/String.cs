@@ -120,6 +120,7 @@ namespace Utilities
         public static string WithSign(this int count) => (count > 0 ? "+" : "") + count;
 
         public static string GuildWithIcon(Guild guild) => $"{guild} (<sprite={(int)guild}>)";
+        public static string GuildWithIcon(Guild guild, int count) => $"{guild.ToString().Pluralise(count)} (<sprite={(int)guild}>)";
 
         public static string StatWithIcon(Stat stat) => 
             $"{(stat == Stat.Spending ? "Wealth per turn" : stat)}{" Satisfaction".Conditional((int)stat < 5)} (<sprite={(int)stat}>)";

@@ -68,6 +68,9 @@ namespace Events
             // Flags
             public Flag flag;
             public bool value;
+            
+            // Wealth
+            public float turnsWorth;
         }
         
         [Serializable] private struct ChoiceConfig
@@ -199,6 +202,10 @@ namespace Events
                         outcome = ScriptableObject.CreateInstance<SetFlag>();
                         ((SetFlag)outcome).flag = config.flag;
                         ((SetFlag)outcome).value = config.value;
+                        break;
+                    case OutcomeType.WealthAdded:
+                        outcome = ScriptableObject.CreateInstance<WealthAdded>();
+                        ((WealthAdded)outcome).turnsWorth = config.turnsWorth;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

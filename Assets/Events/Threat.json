@@ -12,7 +12,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 4
+        "baseAmount": 5
       }
     ]
   },
@@ -29,7 +29,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 4
       }
     ]
   },
@@ -42,11 +42,11 @@
     "outcomes": [
       {
         "type": "FlavourText",
-        "customDescription": "We don't know how much longer we can let it be.."
+        "customDescription": "We don't know how much longer we can let it be..."
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 4
       }
     ]
   },
@@ -59,11 +59,20 @@
     "outcomes": [
       {
         "type": "FlavourText",
-        "customDescription": "The beast will be fed for another year"
+        "customDescription": "The beast will be fed for another year..."
       },
       {
         "type": "ThreatAdded",
         "baseAmount": 4
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Food",
+          "amount": -10,
+          "turns": 2,
+          "reason": "from the Feeding Day Festivities"
+        }
       }
     ]
   },
@@ -80,7 +89,16 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Performer",
+          "amount": -3,
+          "turns": 3,
+          "reason": "from the Annoying Humming Lights"
+        }
       }
     ]
   },
@@ -98,7 +116,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       }
     ]
   },
@@ -115,7 +133,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       }
     ]
   },
@@ -137,7 +155,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       }
     ]
   },
@@ -154,7 +172,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 4
       }
     ]
   },
@@ -167,7 +185,16 @@
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 4
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Brawler",
+          "amount": -3,
+          "turns": 3,
+          "reason": "from the Mimic Weaponry"
+        }
       }
     ]
   },
@@ -196,35 +223,30 @@
   {
     "name": "crypto-miners",
     "headline": "Crypt-O Miners",
-    "article": "A new alternative currency has taken a hold of the town, along with it a series of grave robberies. Human bones, known to the community 'Crypt-O' is a popular component for many Necromancers, and the sudden uptick in trade has given them an interest in our town...",
+    "article": "A new alternative currency has taken a hold of the town, along with it a series of grave robberies. Human bones, known to the community as 'Crypt-O' is a popular component for many Necromancers, and the sudden uptick in trade has given them an interest in our town...",
     "image": "cultist",
     "type": "Threat",
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 4
+        "baseAmount": 5
       },
       {
-        "type": "ModifierAdded",
-        "modifier": {
-          "toChange": "Spending",
-          "amount": 20,
-          "turns": 3,
-          "reason": "from Crypt-O miners"
-        }
+        "type": "WealthAdded",
+        "turnsWorth": 0.3
       }
     ]
   },
   {
     "name": "bird-size",
     "headline": "Birds Incite Panic!",
-    "article": "The town erupted into a panic today, when a townsperson noticed the size disparity between them and the birds flying overhead. \"It's not something you really notice until it's pointed out, but WOW they could just pick one of us up with ease!\"",
+    "article": "The town erupted into a panic today, when a towns-person noticed the size disparity between them and the birds flying overhead. \"It's not something you really notice until it's pointed out, but WOW they could just pick one of us up with ease!\"",
     "image": "bird",
     "type": "Threat",
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       }
     ]
   },
@@ -241,7 +263,7 @@
         "outcomes": [
           {
             "type": "FlavourText",
-            "customDescription": "The adventurers start griding for experience"
+            "customDescription": "The adventurers start griding for experience."
           },
           {
             "type": "ModifierAdded",
@@ -263,7 +285,7 @@
           },
           {
             "type": "ThreatAdded",
-            "baseAmount": 2
+            "baseAmount": 4
           }
         ]
       }
@@ -282,20 +304,15 @@
         [
           {
             "type": "FlavourText",
-            "customDescription": "The sirens gladly part with the loose gold they've found in the clothes of their prey."
+            "customDescription": "The sirens gladly part with the loose gold they've found in the clothes of their prey..."
           },
           {
             "type": "ThreatAdded",
             "baseAmount": 4
           },
           {
-            "type": "ModifierAdded",
-            "modifier": {
-              "toChange": "Spending",
-              "amount": 10,
-              "turns": 5,
-              "reason": "from Siren Buskers"
-            }
+            "type": "WealthAdded",
+            "turnsWorth": 0.4
           }
         ]
       },
@@ -317,7 +334,7 @@
             "modifier": {
               "toChange": "Performer",
               "amount": 3,
-              "turns": 5,
+              "turns": 4,
               "reason": "from clearing the Sirens"
             }
           }
@@ -334,7 +351,122 @@
     "outcomes": [
       {
         "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "alcohol-shortage",
+    "headline": "Alcohol Shortage Causes Riots",
+    "article": "Sobriety rates have never been higher, as a recent hops shortage has dried up our taverns. <i>\"There's too much blood in our alcohol stream!\"</i> groans local adventurers who can't fight due to the collective hangovers.",
+    "image": "hops",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Use Fruits to Make Wine",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The Brawlers breath a drunken sigh of relief..."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Food",
+              "amount": -20,
+              "turns": 4,
+              "reason": "from Fermenting Fruits"
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": 2,
+              "turns": 4,
+              "reason": "from Fermenting Fruits"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Order a Shipment from Far Away",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "It's going to take a while to get here, and local monsters have taken advantage of the situation..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 4
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Diviner",
+              "amount": 2,
+              "turns": 4,
+              "reason": "from Forced Sobriety"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bread-swords",
+    "headline": "Bread-y for War!",
+    "article": "The famous illiterate adventuring group \"The Unreadables\" was found in a tough spot going up against a water elemental, while arming themselves to the teeth with baguettes and brioches after mistaking the local bakery for a blacksmith.",
+    "image": "bread",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "It thinks we're an easy and tasty target now..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "kill": true
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "murder-mystery",
+    "headline": "A Not-So Mysterious Murder Mystery",
+    "article": "Authorities still on the lookout for the culprits of the Dark Manor murders, after being fooled by the kitschy bed and breakfast spot into participating in an \"immersive murder-mystery extravaganza\" event late last week.",
+    "image": "reaper-scythe",
+    "type": "Threat",
+    "outcomes": [
+
+      {
+        "type": "AdventurersRemoved",
+        "count": 3,
+        "kill": true,
+        "customDescription": "3 Adventurers have been reported missing..."
+      },
+      {
+        "type": "ThreatAdded",
         "baseAmount": 2
+      }
+    ]
+  },
+  {
+    "name": "snakes",
+    "headline": "The Plane of Snakes",
+    "article": "A tear in reality has opened up, with snakes flooding out into the town square. Townsfolk are advised to avoid the affected area while we get these snakes off our material plane.",
+    "image": "snake",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
       }
     ]
   }

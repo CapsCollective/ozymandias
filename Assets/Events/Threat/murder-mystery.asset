@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7467957906753891380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 2
+--- !u!114 &-299351814687640915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: 3 Adventurers have been reported missing...
+  count: 3
+  kill: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: murder-mystery
+  m_EditorClassIdentifier: 
+  headline: A Not-So Mysterious Murder Mystery
+  article: Authorities still on the lookout for the culprits of the Dark Manor murders,
+    after being fooled by the kitschy bed and breakfast spot into participating in
+    an "immersive murder-mystery extravaganza" event late last week.
+  image: {fileID: 21300000, guid: 4029bdd85a4c6cf4e9f80072be3166d3, type: 3}
+  type: 7
+  headliner: 0
+  outcomes:
+  - {fileID: -299351814687640915}
+  - {fileID: -7467957906753891380}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

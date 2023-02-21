@@ -188,7 +188,7 @@ namespace Tooltip
             switch (config.Stat)
             {
                 case Stat.Housing:
-                    int housingSpawnRate = Manager.Stats.RandomSpawnChance;
+                    int housingSpawnRate = Manager.Stats.HousingSpawnChance;
                     details.text =
                         $"{stat} {String.StatWithIcon(Stat.Housing)} for {adventurers} Adventurers in town" +
                         $"{FormattedBuildingString(Stat.Housing)}" +
@@ -271,7 +271,7 @@ namespace Tooltip
                         FormattedFoodModifierString +
                         FormattedModifierString(statType) +
                         $"\n\n{diff.WithSign()} Satisfaction {Surplus(diff >= 0)}".Center() +
-                        $"\n{spawnChance}% {guildName} spawn chance per turn".Center();
+                        $"\n{Mathf.Abs(spawnChance)}%{"(max)".Conditional(spawnChance == Manager.Stats.MaxSpawnChance)} {guildName} {(spawnChance >= 0 ? "spawn" : "leave")} chance per turn".Center();
                     break;
             }
         }

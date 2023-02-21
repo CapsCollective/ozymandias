@@ -72,15 +72,11 @@ namespace Managers
             return GetStat(stat) - Manager.Adventurers.Available;
         }
 
-        public int SpawnChance(Guild guild)
-        {
-            return Mathf.Clamp(
-                (GetSatisfaction(guild) + 5) * 5, 
-                0, 50 + 10 * Manager.Upgrades.GetLevel(UpgradeType.MaxAdventurerSpawn)
-            );
-        }
+        public int MaxSpawnChance => 50 + 10 * Manager.Upgrades.GetLevel(UpgradeType.MaxAdventurerSpawn);
         
-        public int RandomSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
+        public int SpawnChance(Guild guild) => Mathf.Clamp(GetSatisfaction(guild) * 10, -100, MaxSpawnChance);
+        
+        public int HousingSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
         
         public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
 
@@ -150,7 +146,11 @@ namespace Managers
             // Spawn adventurers based on satisfaction
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
-                if (Random.Range(0, 100) < SpawnChance(guild)) Manager.Adventurers.Add(guild);
+                int spawnRoll = Random.Range(0, 100);
+                int spawnChance = SpawnChance(guild);
+                if (spawnRoll < spawnChance) Manager.Adventurers.Add(guild);
+                else if (spawnRoll < -spawnChance) Manager.Adventurers.Remove(false, guild);
+                
                 if (GetSatisfaction(guild) >= 10) Manager.EventQueue.Add(excessEvents[guild], true);
             }
             UpdateUi();

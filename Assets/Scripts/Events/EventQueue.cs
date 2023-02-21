@@ -15,7 +15,7 @@ namespace Events
     {
         private const int MinQueueEvents = 3; // The minimum events in the queue to store
         
-        [SerializeField] private Event openingEvent;
+        [SerializeField] private Event openingEvent, summerEvent, autumnEvent, winterEvent;
         [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents, tutorialEndEvents;
         
         private Newspaper _newspaper;
@@ -49,6 +49,22 @@ namespace Events
             State.OnGameEnd += () =>
             {
                 foreach (Flag flag in Enum.GetValues(typeof(Flag))) Flags[flag] = false;
+            };
+
+            State.OnNextTurnBegin += () =>
+            {
+                switch (Manager.Stats.TurnCounter)
+                {
+                    case 14:
+                        Add(summerEvent, true);
+                        break;
+                    case 29:
+                        Add(autumnEvent, true);
+                        break;
+                    case 44:
+                        Add(winterEvent, true);
+                        break;
+                }
             };
 
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
@@ -89,26 +105,30 @@ namespace Events
         {
             List<Event> eventPool = new List<Event>();
 
-            int randomSpawnChance = Manager.Stats.RandomSpawnChance;
-            if (randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-            else if (Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            int housingSpawnChance = Manager.Stats.HousingSpawnChance;
+            if (housingSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+            else if (TypeNotInQueue(EventType.AdventurersJoin) && Random.Range(0,4) < housingSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
             // Let them gain some adventurers to start
             if (Manager.Adventurers.Count >= 3)
             {
                 // Stability change per turn, each enemy camp counts for an extra 5
-                int lead = Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, -10, 10);
+                int lead = Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat, -10, 10);
                 
                 // Scale from 100% down to 50% threat spawn if falling behind by up to 10
                 // Prevent multiple threat events from happening in a single turn
                 if (TypeNotInQueue(EventType.Threat) && Random.Range(0,20) > -lead)
                     eventPool.Add(PickRandom(EventType.Threat));
                 
-                // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
-                int random = Random.Range(0, 20);
+                // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (66% spawn chance) 
+                int random = Random.Range(0, 15);
                 if (!Tutorial.Tutorial.Active && TypeNotInQueue(EventType.Radiant) && (random == 0 || random < lead))
                     eventPool.Add(PickRandom(EventType.Radiant));
 
+                // Scales merchant spawn by how much wealth the player has saved up, ranging from 10% to 50% for > 4x wealth per turn
+                if (TypeNotInQueue(EventType.Merchant) && Random.Range(0f,8f) < Mathf.Clamp((float)Manager.Stats.Wealth / Manager.Stats.WealthPerTurn, 0, 4f)) 
+                    eventPool.Add(PickRandom(EventType.Merchant));
+                
                 // 20% chance to start a new story while no other is active
                 if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
                     eventPool.Add(PickRandomStory());
@@ -178,7 +198,7 @@ namespace Events
         public void AddTutorialEndEvents()
         {
             foreach (Event e in tutorialEndEvents) Add(e, true);
-            Add(PickRandom(EventType.Threat));
+            Add(PickRandom(EventType.Threat), true);
         }
 
         public void AddGuildHallDestroyedEvents()
@@ -198,9 +218,13 @@ namespace Events
         public void AddRequest(Guild guild)
         {
             // Don't spawn during first game
+            // Only allows one in the queue at a time
             // Random spawn chance so a new request doesnt come right away
-            if (Manager.Achievements.Milestones[Milestone.TownsDestroyed] == 0 || Random.Range(0, 5) != 0) return; 
-            Add(PickRandom(_requestMap[guild]));
+            if (
+                Manager.Achievements.Milestones[Milestone.TownsDestroyed] > 0 &&
+                _others.All(e => (int)e.type < (int)EventType.BrawlerRequest || (int)e.type > (int)EventType.ArcanistRequest) &&
+                Random.Range(0, 3) == 0
+            ) Add(PickRandom(_requestMap[guild]));
         }
         
         public EventQueueDetails Save()

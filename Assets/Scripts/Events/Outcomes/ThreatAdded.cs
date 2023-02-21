@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
+using String = Utilities.String;
 
 namespace Events.Outcomes
 {
     public class ThreatAdded : Outcome
     {
         public int baseAmount;
-
-        private int Amount => Mathf.RoundToInt(baseAmount * (1 + Manager.Stats.TurnCounter / ThreatScaling));
+        
+        private int Amount => Mathf.RoundToInt(Mathf.Sign(baseAmount) * (Mathf.Abs(baseAmount) + Mathf.FloorToInt(Manager.Stats.TurnCounter / ThreatScaling)));
 
         protected override bool Execute()
         {
@@ -16,6 +17,6 @@ namespace Events.Outcomes
             return true;
         }
 
-        protected override string Description => $"+{Amount} {String.StatWithIcon(Stat.Threat)} to the town.".StatusColor(-1);
+        protected override string Description => $"{Amount.WithSign()} {String.StatWithIcon(Stat.Threat)} to the town.".StatusColor(-Amount);
     }
 }

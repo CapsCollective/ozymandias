@@ -22,14 +22,14 @@
             "image": "rabbit"
           },
           "baseTurns": 3,
-          "wealthMultiplier": 1.7
+          "wealthMultiplier": 1.5
         }
       }
     ]
   },
   {
     "name": "dryad-commune",
-    "headline": "Dryad Commune",
+    "headline": "Dryad Commune Definitely a Real Threat",
     "article": "A group of nature loving dryads have formed a commune near our industrious town. Rumour has it they have terrible mind controlling powers, spreading troublesome ideas like 'equality', and 'not burning the very world we live in'. Their very existence is a threat to us!",
     "image": "flowers",
     "type": "Radiant",
@@ -57,7 +57,7 @@
   },
   {
     "name": "sentient-campsites",
-    "headline": "Mimics",
+    "headline": "Mimics Hidden in Camp",
     "article": "We've heard of some mimics closing in on our town, they seem to be setting up a campsite nearby. Knowing mimics, they could be hiding anywhere in the camp, so we must tread carefully.",
     "image": "mimic-chest",
     "type": "Radiant",
@@ -91,14 +91,19 @@
     "choices": [
       {
         "name": "Accept their terms",
+        "cost": 1.4,
         "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "The well funded trolls increase trade in town..."
+          },
           {
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Spending",
-              "amount": -20,
-              "turns": -1,
-              "reason": "from the Troll Tolls"
+              "amount": 20,
+              "turns": 4,
+              "reason": "from the Troll Trade"
             }
           }
         ]
@@ -122,10 +127,96 @@
                 "image": "troll"
               },
               "baseTurns": 4,
-              "wealthMultiplier": 1.4
+              "wealthMultiplier": 1.0
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "goblins",
+    "headline": "Chanting Camps Causes Chaos",
+    "article": "Some Goblins were spotted nearby the town, and residents have been kept up all night by horrid sounds of some rhythmic ritual they seem to be performing. We might be able to work outs what's going on in there, or just pay them to leave.",
+    "image": "goblin-camp",
+    "type": "Radiant",
+    "choices": [
+      {
+        "name": "Infiltrate the Camp!",
+        "outcomes": [
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "goblins-quest",
+              "location": "Grid",
+              "title": "Investigate Goblin Camp",
+              "description": "We need to put a stop to whatever going with that chanting",
+              "image": "goblin-camp",
+              "colour": "#3F7233",
+              "completedEvent": {
+                "name": "goblins-completed",
+                "headline": "Goblin Festival Busted!",
+                "article": "Our scouts to report that the ritualistic chants were just an experimental music festival. After our narcs were discovered, the goblins have disbanded due to their <i>\"harshed vibes, bro\"</i> to take their horrible music elsewhere.",
+                "image": "goblin-camp"
+              },
+              "baseTurns": 7,
+              "wealthMultiplier": 0.6
+            }
+          }
+        ]
+      },
+      {
+        "name": "Pay Them Off",
+        "cost": 0.3,
+        "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "They realise you're a pushover, but leave you be, for now..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "kobolds",
+    "headline": "Kobold Mining Camp Spotted",
+    "article": "Kobolds have taken over a nearby mine, and were seen nibbling on the minerals. They were then chased back to town while the Kobolds yelled at them to get off their property.",
+    "image": "gold-mine",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "kobolds-quest",
+          "location": "Grid",
+          "title": "Clear Out Mining Camp",
+          "description": "Take back the mine from these vicious Kobolds",
+          "image": "gold-mine",
+          "colour": "#EDF8EA",
+          "completedEvent": {
+            "name": "kobolds-completed",
+            "headline": "This Mine is MINE!",
+            "article": "The adventurers sabotaged the Kobold operations, and have taken the mine back! As celebration the victorious party has converted the Kobolds crude explosives into fireworks and are hosting a celebration.",
+            "image": "firework-rocket",
+            "outcomes": [
+              {
+                "type": "ModifierAdded",
+                "modifier": {
+                  "toChange": "Spending",
+                  "amount": 15,
+                  "turns": -1,
+                  "reason": "from the Reclaimed Mine"
+                }
+              }
+            ]
+          },
+          "baseTurns": 8,
+          "wealthMultiplier": 0.6
+        }
       }
     ]
   }

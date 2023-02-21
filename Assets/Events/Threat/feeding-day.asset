@@ -1,6 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8689586248150626978
+--- !u!114 &-4528563250283530760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 6
+  amount: -10
+  turns: 2
+  reason: from the Feeding Day Festivities
+--- !u!114 &-185153088711358018
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,21 +29,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: The beast will be fed for another year
---- !u!114 &-7573920018293371807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 4
+  customDescription: The beast will be fed for another year...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,7 +52,22 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: -8689586248150626978}
-  - {fileID: -7573920018293371807}
+  - {fileID: -185153088711358018}
+  - {fileID: 5360240339998366531}
+  - {fileID: -4528563250283530760}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &5360240339998366531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 4

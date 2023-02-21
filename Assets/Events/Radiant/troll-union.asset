@@ -1,6 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1319189571673623849
+--- !u!114 &-6145608514671009766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Accept their terms
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -918428466342833432}
+  - {fileID: -3605946135532608667}
+  costScale: 0
+--- !u!114 &-3605946135532608667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,9 +30,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   statToChange: 7
-  amount: -10
-  turns: -1
-  reason: from the Troll Tolls
+  amount: 20
+  turns: 4
+  reason: from the Troll Trade
+--- !u!114 &-918428466342833432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The well funded trolls increase trade in town...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,10 +68,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 3786432004286810036}
-  - {fileID: 9004198238162734405}
+  - {fileID: -6145608514671009766}
+  - {fileID: 834958364615951394}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3786432004286810036
+--- !u!114 &834958364615951394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,12 +81,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Accept their terms
+  m_Name: Refuse their demands
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -1319189571673623849}
+  - {fileID: 6249513795727060089}
   costScale: 0
---- !u!114 &5875539164191265910
+--- !u!114 &6249513795727060089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,18 +100,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: feaa160205c0a9e40983076f308890f7, type: 2}
---- !u!114 &9004198238162734405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse their demands
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5875539164191265910}
-  costScale: 0

@@ -83,7 +83,7 @@ namespace Adventurers
             if (!Manager.State.Loading) OnAdventurerJoin?.Invoke(created);
         }
 
-        public bool Remove(bool kill) //Removes a random adventurer, ensuring they aren't special
+        public bool Remove(bool kill) // Removes a random adventurer, ensuring they aren't special
         {
             List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
             if (removable.Count == 0) return false;
@@ -92,7 +92,20 @@ namespace Adventurers
 
             OnAdventurerRemoved?.Invoke(toRemove, kill);
             _adventurers.Remove(toRemove);
-            if (kill) toRemove.transform.parent = graveyard.transform; //I REALLY hope we make use of this at some point
+            if (kill) toRemove.transform.parent = graveyard.transform;
+            else Destroy(toRemove);
+            return true;
+        }
+        public bool Remove(bool kill, Guild guild) // Removes a random adventurer from a guild, ensuring they aren't special
+        {
+            List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial) && x.guild == guild).ToList();
+            if (removable.Count == 0) return false;
+            int randomIndex = Random.Range(0, removable.Count);
+            Adventurer toRemove = removable[randomIndex];
+
+            OnAdventurerRemoved?.Invoke(toRemove, kill);
+            _adventurers.Remove(toRemove);
+            if (kill) toRemove.transform.parent = graveyard.transform;
             else Destroy(toRemove);
             return true;
         }
