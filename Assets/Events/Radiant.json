@@ -21,6 +21,7 @@
             "article": "The recaptured princess is now awaiting trial for raising a bloodthirsty militia of furry friends. Speculation indicates that she'll be locked up in The Tower, an asylum for runaway princesses.",
             "image": "rabbit"
           },
+          "adventurers": 2,
           "baseTurns": 3,
           "wealthMultiplier": 1.5
         }
@@ -49,8 +50,9 @@
             "article": "Evidence strongly supports they were going to destroy our way of life any day now.",
             "image": "flowers"
           },
+          "adventurers": 5,
           "baseTurns": 5,
-          "wealthMultiplier": 0.8
+          "wealthMultiplier": 0.6
         }
       }
     ]
@@ -76,6 +78,7 @@
             "article": "Our adventurers barely made it out of the mimic camps, as they were investigating the content of a tent, teeth appeared around the opening, trapping the adventurer in the tent's maw. It was only the quick reflexes of a fellow adventurer poking at it with a stick that freed them to fight another day.",
             "image": "mimic-chest"
           },
+          "adventurers": 3,
           "baseTurns": 6,
           "wealthMultiplier": 0.7
         }
@@ -91,7 +94,7 @@
     "choices": [
       {
         "name": "Accept their terms",
-        "cost": 1.4,
+        "costScale": 1.4,
         "outcomes": [
           {
             "type": "FlavourText",
@@ -126,8 +129,9 @@
                 "article": "Following the picket-busting crackdown on Moh'rgen Mork'hol's union headquarters, bridge-trolls across the land have backed down on their demand for tariff rate hikes.",
                 "image": "troll"
               },
+              "adventurers": 4,
               "baseTurns": 4,
-              "wealthMultiplier": 1.0
+              "wealthMultiplier": 0.8
             }
           }
         ]
@@ -159,15 +163,16 @@
                 "article": "Our scouts to report that the ritualistic chants were just an experimental music festival. After our narcs were discovered, the goblins have disbanded due to their <i>\"harshed vibes, bro\"</i> to take their horrible music elsewhere.",
                 "image": "goblin-camp"
               },
+              "adventurers": 3,
               "baseTurns": 7,
-              "wealthMultiplier": 0.6
+              "wealthMultiplier": 0.4
             }
           }
         ]
       },
       {
         "name": "Pay Them Off",
-        "cost": 0.3,
+        "costScale": 0.3,
         "outcomes": [
           {
             "type": "FlavourText",
@@ -196,7 +201,7 @@
           "title": "Clear Out Mining Camp",
           "description": "Take back the mine from these vicious Kobolds",
           "image": "gold-mine",
-          "colour": "#EDF8EA",
+          "colour": "#7B6490",
           "completedEvent": {
             "name": "kobolds-completed",
             "headline": "This Mine is MINE!",
@@ -214,6 +219,7 @@
               }
             ]
           },
+          "adventurers": 2,
           "baseTurns": 8,
           "wealthMultiplier": 0.6
         }

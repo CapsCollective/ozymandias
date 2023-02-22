@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8903724195078258630
+--- !u!114 &-6090960687714567469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,7 +15,20 @@ MonoBehaviour:
   customDescription: 
   count: 1
   kill: 1
---- !u!114 &-7173800227063466684
+--- !u!114 &-5629941312913190721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: It thinks we're an easy and tasty target now...
+--- !u!114 &-1422690218117593285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28,7 +41,7 @@ MonoBehaviour:
   m_Name: ThreatAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  baseAmount: 3
+  baseAmount: 4
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,21 +62,8 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: 2649986102779784550}
-  - {fileID: -8903724195078258630}
-  - {fileID: -7173800227063466684}
+  - {fileID: -5629941312913190721}
+  - {fileID: -6090960687714567469}
+  - {fileID: -1422690218117593285}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2649986102779784550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: It thinks we're an easy and tasty target now...

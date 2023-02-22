@@ -100,8 +100,8 @@ namespace Cards
                 .OnComplete(() =>
                 {
                     Blueprint = Manager.Cards.NewCard();
-                    // 5% for a free card per upgrade level
-                    Blueprint.Free = Random.Range(0, 20) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
+                    // 1% for a free card per upgrade level
+                    Blueprint.Free = Random.Range(0, 100) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
                     UpdateUi();
                     if (!Manager.State.InGame)
                     {

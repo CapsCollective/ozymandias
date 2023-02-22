@@ -1,6 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6396208292785334533
+--- !u!114 &-6553896740340279095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The purpose of these lights are still to be determined
+--- !u!114 &-2294206395139678013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -35,12 +48,12 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: 7098398141728024078}
-  - {fileID: -6396208292785334533}
-  - {fileID: 5059599710366210211}
+  - {fileID: -6553896740340279095}
+  - {fileID: -2294206395139678013}
+  - {fileID: 6780876203874435960}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &5059599710366210211
+--- !u!114 &6780876203874435960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,16 +70,3 @@ MonoBehaviour:
   amount: -3
   turns: 3
   reason: from the Annoying Humming Lights
---- !u!114 &7098398141728024078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The purpose of these lights are still to be determined

@@ -19,6 +19,7 @@
   },
   {
     "name": "game-over-1",
+    "headliner": true,
     "headline": "Adventurers Guild Pulls Support from town",
     "article": "Due the overwhelming threat of the local area, the adventures guild has retreated out of the town. Unfortunately this means it's only a matter of time now until something comes along and wipes us out. I'd recommend starting to run now.",
     "image": "demolish",
@@ -43,10 +44,16 @@
   },
   {
     "name": "guild-hall-destroyed",
+    "headliner": true,
     "headline": "Insane Town Mayor Destroys own Guild Hall",
     "article": "Outrage today, as our iconic town guild hall has been demolished in a fit of madness by our newly deposed mayor. Such an insult to the adventurers guild has not gone unnoticed, and all support from local adventurers has been pulled out of the town. It's only a matter of time now before this place gets overrun, and this reporter is getting out of here!",
     "image": "demolish",
-    "type": "Other"
+    "type": "Other",
+    "outcomes": [
+      {
+        "type": "GameOver"
+      }
+    ]
   },
   {
     "name": "summer-start",

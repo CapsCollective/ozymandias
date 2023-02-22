@@ -78,7 +78,7 @@ namespace Managers
         
         public int HousingSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
         
-        public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
+        public int FoodModifier => GetSatisfaction(Stat.Food)/10;
 
         public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) *
             Manager.Adventurers.Available + GetStat(Stat.Spending) + StartingSalary; // 5 gold per adventurer plus spending, 3 if in tailor story
@@ -139,7 +139,11 @@ namespace Managers
         private void OnNextTurnBegin()
         {
             Stability += Defence - Threat;
-            if (Stability > 100) Stability = 100;
+            if (Stability > 100)
+            {
+                Manager.EventQueue.AddThreat();
+                Stability = 100;
+            }
             Wealth += WealthPerTurn;
             TurnCounter++;
 

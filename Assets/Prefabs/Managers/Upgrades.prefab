@@ -12563,17 +12563,17 @@ PrefabInstance:
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
       propertyPath: effect
-      value: chance for free card
+      value: chance for a free card
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
       propertyPath: maxLevel
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
       propertyPath: multiplier
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
@@ -12583,7 +12583,7 @@ PrefabInstance:
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
       propertyPath: description
-      value: +5% chance for a new card to be free to place
+      value: Chance on draw for a card to be free
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
@@ -12622,8 +12622,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
+      propertyPath: costs.list.Array.data[3].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
+      propertyPath: costs.list.Array.data[4].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
       propertyPath: costs.list.Array.data[0].Value
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
@@ -12634,6 +12644,16 @@ PrefabInstance:
         type: 3}
       propertyPath: costs.list.Array.data[2].Value
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
+      propertyPath: costs.list.Array.data[3].Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
+      propertyPath: costs.list.Array.data[4].Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
@@ -12652,17 +12672,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
-      propertyPath: levelScale.list.Array.data[0].Value
+      propertyPath: levelScale.list.Array.data[3].Key
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
+      propertyPath: levelScale.list.Array.data[4].Key
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
+      propertyPath: levelScale.list.Array.data[0].Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
       propertyPath: levelScale.list.Array.data[1].Value
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
         type: 3}
       propertyPath: levelScale.list.Array.data[2].Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
+      propertyPath: levelScale.list.Array.data[3].Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146185110239418234, guid: 28336f698d371944c86590ba60b09984,
+        type: 3}
+      propertyPath: levelScale.list.Array.data[4].Value
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

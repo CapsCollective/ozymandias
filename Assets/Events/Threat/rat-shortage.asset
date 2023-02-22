@@ -1,19 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5675829689565451052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The adventurers start griding for experience.
---- !u!114 &-4233153240771444177
+--- !u!114 &-8453976507808071436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,8 +13,35 @@ MonoBehaviour:
   m_Name: ThreatAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  baseAmount: 4
---- !u!114 &-3834330054738624362
+  baseAmount: 5
+--- !u!114 &-5420161480259224040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The adventurers start griding for experience.
+--- !u!114 &-4890999758941105596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: Oh no, the mice are too strong and escaped! We'll have to hunt
+    them down...
+--- !u!114 &-3418140557439548614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,38 +58,6 @@ MonoBehaviour:
   amount: 3
   turns: 3
   reason: from the Rat XP Boost
---- !u!114 &-1880082583129094126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Train up mice to be strong like rats
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 7115303065590753120}
-  - {fileID: -4233153240771444177}
-  costScale: 0
---- !u!114 &-1063180651419790337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Buy the rats
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -5675829689565451052}
-  - {fileID: -3834330054738624362}
-  costScale: 0.8
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,10 +79,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -1063180651419790337}
-  - {fileID: -1880082583129094126}
+  - {fileID: 9077035080261546861}
+  - {fileID: 7590674764025320741}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &7115303065590753120
+--- !u!114 &7590674764025320741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,8 +91,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Train up mice to be strong like rats
   m_EditorClassIdentifier: 
-  customDescription: Oh no, the mice are too strong and escaped! We'll have to hunt
-    them down...
+  outcomes:
+  - {fileID: -4890999758941105596}
+  - {fileID: -8453976507808071436}
+  costScale: 0
+--- !u!114 &9077035080261546861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Buy the rats
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -5420161480259224040}
+  - {fileID: -3418140557439548614}
+  costScale: 1.1

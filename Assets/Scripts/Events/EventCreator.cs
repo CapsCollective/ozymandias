@@ -27,6 +27,7 @@ namespace Events
             public EventType? type;
             public List<ChoiceConfig> choices;
             public List<OutcomeConfig> outcomes;
+            public bool headliner;
         }
         
         [Serializable] private struct OutcomeConfig
@@ -124,6 +125,7 @@ namespace Events
                 root.article = config.article;
                 root.image = LoadSprite(config.image);
                 root.type = config.type ?? EventType.Other;
+                root.headliner = config.headliner;
                 AssetDatabase.CreateAsset(root, $"Assets/Events/{folder}/{root.name}.asset");
                 
                 root.outcomes = config.outcomes != null ? 

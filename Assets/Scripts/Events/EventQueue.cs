@@ -215,6 +215,11 @@ namespace Events
             { Guild.Arcanist, EventType.ArcanistRequest }
         };
 
+        public void AddThreat()
+        {
+            Add(PickRandom(EventType.Threat), true);
+        }
+        
         public void AddRequest(Guild guild)
         {
             // Don't spawn during first game

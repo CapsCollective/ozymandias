@@ -321,12 +321,11 @@ namespace Tooltip
         {
             return foodMod switch
             {
-                2 => "There are daily feasts",
-                1 => "The adventurers are well fed",
-                0 => "The town is getting by",
-                -1 => "Rations have taken effect",
-                -2 => "People are starving",
-                _ => ""
+                >=  2 => "There are daily feasts",
+                    1 => "The adventurers are well fed",
+                    0 => "The town is getting by",
+                   -1 => "Rations have taken effect",
+                <= -2 => "People are starving",
             };
         }
 
@@ -351,8 +350,8 @@ namespace Tooltip
         {
             return spawnRate switch
             {
-                3 => "High",
-                2 => "Medium",
+                3 => "Max",
+                2 => "High",
                 1 => "Low",
                 0 => "No",
                 _ => ""

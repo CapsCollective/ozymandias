@@ -1,23 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7586299913680169037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 4
-  amount: -3
-  turns: 3
-  reason: from the Gargoyles
---- !u!114 &-290237882245610248
+--- !u!114 &-4568372976337413865
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,7 +13,7 @@ MonoBehaviour:
   m_Name: ThreatAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  baseAmount: 2
+  baseAmount: 3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,7 +35,24 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: -290237882245610248}
-  - {fileID: -7586299913680169037}
+  - {fileID: -4568372976337413865}
+  - {fileID: 8933497900175634621}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &8933497900175634621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 4
+  amount: -3
+  turns: 3
+  reason: from the Gargoyles

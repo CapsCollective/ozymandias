@@ -9,7 +9,7 @@ namespace Events.Outcomes
     {
         public int baseAmount;
         
-        private int Amount => Mathf.RoundToInt(Mathf.Sign(baseAmount) * (Mathf.Abs(baseAmount) + Mathf.FloorToInt(Manager.Stats.TurnCounter / ThreatScaling)));
+        private int Amount => Mathf.FloorToInt(Mathf.Sign(baseAmount) * (Mathf.Abs(baseAmount) + (Manager.Stats.TurnCounter / ThreatScaling)));
 
         protected override bool Execute()
         {

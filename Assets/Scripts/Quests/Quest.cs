@@ -42,8 +42,8 @@ namespace Quests
         public Color colour;
         
         [Range(0.5f, 3f)] public float wealthMultiplier = 1.5f; // How many turns worth of gold to send, sets cost when created.
-        [FormerlySerializedAs("adventurers")] [Range(3,8)] public int baseAdventurers = 2;
-        [FormerlySerializedAs("baseTurns")] [Range(3, 6)] public int baseDuration = 3; // How many turns worth of gold to send, sets cost when created.
+        [Range(2, 8)] public int baseAdventurers = 2;
+        [Range(3, 6)] public int baseDuration = 3; // How many turns worth of gold to send, sets cost when created.
         public Location location;
         public Event completeEvent; // Keep empty if randomly chosen
 
@@ -60,7 +60,7 @@ namespace Quests
         
         // Flyer Properties
         // The base number of adventurers to send on a grid quest before any tiles are cleared
-        public int BaseAdventurers => IsRadiant ? 2 + Structure.SectionCount : baseAdventurers;
+        public int BaseAdventurers => IsRadiant ? baseAdventurers + Structure.SectionCount : baseAdventurers;
         public int ScaledCost(int scale) => (int) (BaseCost * CostScale[scale]);
         public string RewardDescription => IsRadiant ? $"-{Structure.SectionCount} {String.StatWithIcon(Stat.Threat)}" : reward;
         public int AssignedCount => _assigned.Count;

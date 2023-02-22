@@ -1,6 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8210669092293936630
+--- !u!114 &-6533608181138841066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 5
+--- !u!114 &-2106750141573286642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,62 +27,11 @@ MonoBehaviour:
   m_Name: Order a Shipment from Far Away
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -4877142787468887902}
-  - {fileID: 7207319226476287607}
-  - {fileID: -7780323880448631899}
+  - {fileID: -712542911679796127}
+  - {fileID: -6533608181138841066}
+  - {fileID: 8743267278898780231}
   costScale: 0
---- !u!114 &-7780323880448631899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 3
-  amount: 2
-  turns: 4
-  reason: from Forced Sobriety
---- !u!114 &-7408505503347013057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 0
-  amount: 2
-  turns: 4
-  reason: from Fermenting Fruits
---- !u!114 &-5752804597631538256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 6
-  amount: -20
-  turns: 4
-  reason: from Fermenting Fruits
---- !u!114 &-5274385928458195488
+--- !u!114 &-778838593660584968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,11 +44,11 @@ MonoBehaviour:
   m_Name: Use Fruits to Make Wine
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 1745399722130531337}
-  - {fileID: -5752804597631538256}
-  - {fileID: -7408505503347013057}
+  - {fileID: 9202201625669253913}
+  - {fileID: 2668753974823187649}
+  - {fileID: 4113735430051271765}
   costScale: 0
---- !u!114 &-4877142787468887902
+--- !u!114 &-712542911679796127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,10 +83,61 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -5274385928458195488}
-  - {fileID: -8210669092293936630}
+  - {fileID: -778838593660584968}
+  - {fileID: -2106750141573286642}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1745399722130531337
+--- !u!114 &2668753974823187649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 6
+  amount: -20
+  turns: 4
+  reason: from Fermenting Fruits
+--- !u!114 &4113735430051271765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 0
+  amount: 2
+  turns: 4
+  reason: from Fermenting Fruits
+--- !u!114 &8743267278898780231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 3
+  amount: 2
+  turns: 4
+  reason: from Forced Sobriety
+--- !u!114 &9202201625669253913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,17 +150,3 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: The Brawlers breath a drunken sigh of relief...
---- !u!114 &7207319226476287607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 4
