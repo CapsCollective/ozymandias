@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
+--- !u!114 &-9033789517590297163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,26 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: water-brewery-completed
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
-  headline: Hops to it, Then!
-  article: Returning from the orc camp, the adventurers recount that all seemed lost
-    when they were caught and the Orcs started to descend on them. However, once
-    they explained they were looking for beer, all hostilities dropped, and the chieftain
-    was more than happy to hand over his personal starter kit and send them on their
-    way. They may be bloodthirsty monsters who have waged a ceaseless war on us,
-    but they DO respect the art of brewing!
-  image: {fileID: 21300000, guid: 48f78c6f6714f0443abc6267d46dfcfc, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 657656711497143621}
-  - {fileID: 4241830570714415490}
-  - {fileID: 5636801580692948233}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &657656711497143621
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: 069014ef131bda64282ad80f63699ec7, type: 2}
+--- !u!114 &-6961046796805399826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,21 +29,7 @@ MonoBehaviour:
   customDescription: It's more drinkable than that well water, for sure.
   flag: 0
   value: 0
---- !u!114 &4241830570714415490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: 069014ef131bda64282ad80f63699ec7, type: 2}
---- !u!114 &5636801580692948233
+--- !u!114 &-3789534811169479310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,3 +43,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: water-brewery-completed
+  m_EditorClassIdentifier: 
+  headline: Hops to it, Then!
+  article: 'Returning from the orc camp, the adventurers recount that all seemed
+    lost when they were caught and the Orcs started to descend on them. However,
+    once they explained they were <b>looking for beer</b>, all hostilities dropped,
+    and the chieftain was more than happy to hand over his personal starter kit and
+    send them on their way.
+
+
+    They may be bloodthirsty monsters who have waged
+    a ceaseless war on us, but they DO respect the art of brewing!'
+  image: {fileID: 21300000, guid: 48f78c6f6714f0443abc6267d46dfcfc, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -6961046796805399826}
+  - {fileID: -9033789517590297163}
+  - {fileID: -3789534811169479310}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

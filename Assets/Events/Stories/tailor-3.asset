@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2747349494577878772
+--- !u!114 &-8588558184259776797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,7 +13,22 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: Oh well you're no fun!
---- !u!114 &-1911885561997392207
+--- !u!114 &-7853192070137582076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse the offer
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -8588558184259776797}
+  costScale: 0
+--- !u!114 &-7053670497388874828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,11 +41,11 @@ MonoBehaviour:
   m_Name: Sell the loot boxes
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 3141228001622021515}
-  - {fileID: -336357621641398177}
-  - {fileID: 5980883417608155747}
+  - {fileID: -269139188939694945}
+  - {fileID: 8787860255944811473}
+  - {fileID: 3083916262312520033}
   costScale: 0
---- !u!114 &-336357621641398177
+--- !u!114 &-269139188939694945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,11 +54,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 5
+  customDescription: It turns out the 'surprise' was explosives...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,31 +71,25 @@ MonoBehaviour:
   m_Name: tailor-3
   m_EditorClassIdentifier: 
   headline: Loot Boxes
-  article: Someone has come around and is offering a potential solution to our lack
-    of vanity items, loot boxes. "I mean, I literally fill these boxes with garbage,
-    but there's a surprise in every one!" The ethics are questionable, but lucrative.
+  article: 'Someone has come around and is offering a potential solution to our lack
+    of <b>cosmetic items</b>, loot boxes.
+
+
+    <i>"I mean, I literally fill these
+    boxes with garbage, but there''s a surprise in every one!"</i>
+
+
+    The ethics
+    are questionable, but lucrative.'
   image: {fileID: 21300000, guid: e6ba93ea00339b24cb9b2610a801aae2, type: 3}
   type: 0
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -1911885561997392207}
-  - {fileID: 7639912149149078096}
+  - {fileID: -7053670497388874828}
+  - {fileID: -7853192070137582076}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3141228001622021515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: It turns out the 'surprise' was explosives.
---- !u!114 &5980883417608155747
+--- !u!114 &3083916262312520033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,13 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: Somehow, they're still selling like wildfire (+50 spending for
-    5 turns).
+  customDescription: Somehow, they're still selling like wildfire. +50 Wealth per
+    turn (<sprite=7>) for 5 turns).
   statToChange: 7
   amount: 50
   turns: 5
   reason: from Loot Boxes
---- !u!114 &7639912149149078096
+--- !u!114 &8787860255944811473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,9 +116,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse the offer
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -2747349494577878772}
-  costScale: 0
+  customDescription: 
+  baseAmount: 5

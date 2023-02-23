@@ -1,88 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8214679552540674236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: '"I''m glad you are so welcoming, I hope to see you all soon..."
-    the woman exclaims before bursting into a pile of delicious cakes.'
---- !u!114 &-4044302846417886483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: abdf78be0bb67e84c9dcc67d69a260e2, type: 2}
-  toFront: 0
---- !u!114 &-3727063306402073345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 5
---- !u!114 &-3123163020449483980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Turn her away
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5589894239619428356}
-  costScale: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: bakery-2
-  m_EditorClassIdentifier: 
-  headline: Let Them Eat Cake
-  article: A kindly old woman appears "I heard you're needing food darling, I offer
-    you this delicious cake, if you just let me in."
-  image: {fileID: 21300000, guid: f2f3dc184dcde0c4297894c2506424d4, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -4044302846417886483}
-  choices:
-  - {fileID: 6165102880471340455}
-  - {fileID: -3123163020449483980}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &3310076761498985845
+--- !u!114 &-9152261248446279577
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,8 +16,8 @@ MonoBehaviour:
   statToChange: 6
   amount: 50
   turns: 5
-  reason: from the witches cakes
---- !u!114 &5589894239619428356
+  reason: from the Witches Cakes
+--- !u!114 &-6525469616924698496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,12 +26,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  customDescription: '"I hope you all starve!" the woman shrieks as she bursts into
-    a pile of rotten, inedible, cake.'
---- !u!114 &6165102880471340455
+  customDescription: 
+  baseAmount: 5
+--- !u!114 &-1012622923293902795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +44,94 @@ MonoBehaviour:
   m_Name: Let her in
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -8214679552540674236}
-  - {fileID: -3727063306402073345}
-  - {fileID: 3310076761498985845}
+  - {fileID: 5907025857108154725}
+  - {fileID: -6525469616924698496}
+  - {fileID: -9152261248446279577}
   costScale: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: bakery-2
+  m_EditorClassIdentifier: 
+  headline: Let Them Eat Cake
+  article: 'A kindly old woman appears, carrying with her a delicious looking assortment
+    of cakes and pies.
+
+
+    <i>"I heard you''re needing food darling, dealing with
+    those <b>dastardly scarecrows</b>. I offer you these delicious cakes, if you
+    just let me in..."</i>'
+  image: {fileID: 21300000, guid: f2f3dc184dcde0c4297894c2506424d4, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 9080314220390766050}
+  choices:
+  - {fileID: -1012622923293902795}
+  - {fileID: 8840625754987235761}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &91516500927201100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: <i>"I hope you all starve!"</i> the woman shrieks as she bursts
+    into a pile of rotten, inedible, cake.
+--- !u!114 &5907025857108154725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: <i>"I'm glad you are so welcoming, eat up!"</i> the woman exclaims
+    before bursting into a pile of delicious cakes herself, mixing in with the others...
+--- !u!114 &8840625754987235761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Turn her away
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 91516500927201100}
+  costScale: 0
+--- !u!114 &9080314220390766050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: abdf78be0bb67e84c9dcc67d69a260e2, type: 2}
+  toFront: 0

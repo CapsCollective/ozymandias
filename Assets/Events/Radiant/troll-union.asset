@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
+--- !u!114 &-5874628876824643006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,23 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: troll-union
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
   m_EditorClassIdentifier: 
-  headline: Trolling for Tariffs
-  article: Amid rising tensions between local merchants and the bridge-troll union,
-    faction official Moh'rgen Mork'hol has threatened to lock down bridges along
-    several strategic trade routes in an effort to raise minimum toll rates for union
-    members. Refusing of these tolls may lead to a strike.
-  image: {fileID: 21300000, guid: cb374d44b70eb2b4e8cabaccb595d26e, type: 3}
-  type: 6
-  headliner: 0
-  outcomes: []
-  choices:
-  - {fileID: 918779649927441182}
-  - {fileID: 7530073894525686128}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &225344453261583805
+  customDescription: 
+  quest: {fileID: 11400000, guid: feaa160205c0a9e40983076f308890f7, type: 2}
+--- !u!114 &-1442711493802871910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Accept their terms
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -977881434600429787}
+  - {fileID: -473378663835683445}
+  costScale: 1.4
+--- !u!114 &-977881434600429787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,7 +43,7 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: The well funded trolls increase trade in town...
---- !u!114 &754458610707704676
+--- !u!114 &-473378663835683445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +60,7 @@ MonoBehaviour:
   amount: 20
   turns: 4
   reason: from the Troll Trade
---- !u!114 &918779649927441182
+--- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,14 +69,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Accept their terms
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: troll-union
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 225344453261583805}
-  - {fileID: 754458610707704676}
-  costScale: 1.4
---- !u!114 &7530073894525686128
+  headline: Trolling for Tariffs
+  article: Amid rising tensions between local merchants and the bridge-troll union,
+    faction official <b>Moh'rgen Mork'hol</b> has threatened to lock down bridges
+    along several strategic trade routes in an effort to raise minimum toll rates
+    for union members. Refusing of these tolls may lead to a strike.
+  image: {fileID: 21300000, guid: cb374d44b70eb2b4e8cabaccb595d26e, type: 3}
+  type: 6
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -1442711493802871910}
+  - {fileID: 5005984240799851595}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &5005984240799851595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,19 +98,5 @@ MonoBehaviour:
   m_Name: Refuse their demands
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 8213785632671427977}
+  - {fileID: -5874628876824643006}
   costScale: 0
---- !u!114 &8213785632671427977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: feaa160205c0a9e40983076f308890f7, type: 2}

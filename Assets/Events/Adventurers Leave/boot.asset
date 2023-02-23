@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: boot
   m_EditorClassIdentifier: 
   headline: Angry Adventurers Get the Boot
-  article: After a punchup in an <b>overcrowded</b> local tavern, the owner, wielding
+  article: After a punch-up in an <b>overcrowded</b> local tavern, the owner, wielding
     his magical boots of kickening, launched the offenders through the tavern roof
-    and out of this town for good. Unfortunetly, the tavern was destroyed from the
+    and out of this town for good. Unfortunately, the tavern was destroyed from the
     force.
   image: {fileID: 21300000, guid: c54c94b000211194e8045c1ba3a94c8f, type: 3}
   type: 5
   headliner: 0
   outcomes:
-  - {fileID: 5051707492355809877}
-  - {fileID: 4939796305058202521}
+  - {fileID: 2600328767213661332}
+  - {fileID: 864134549266402190}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &4939796305058202521
+--- !u!114 &864134549266402190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,8 +38,10 @@ MonoBehaviour:
   m_Name: BuildingDamaged
   m_EditorClassIdentifier: 
   customDescription: 
-  type: 2
---- !u!114 &5051707492355809877
+  buildingType: 2
+  anyBuildingType: 0
+  demolishAll: 0
+--- !u!114 &2600328767213661332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

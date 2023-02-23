@@ -51,6 +51,7 @@ namespace Events
 
             // Building Damaged
             public BuildingType buildingType;
+            public bool demolishAll, anyBuildingType;
             
             // Card Unlock blueprint
             public string blueprint;
@@ -176,7 +177,9 @@ namespace Events
                         break;
                     case OutcomeType.BuildingDamaged:
                         outcome = ScriptableObject.CreateInstance<BuildingDamaged>();
-                        ((BuildingDamaged)outcome).type = config.buildingType;
+                        ((BuildingDamaged)outcome).buildingType = config.buildingType;
+                        ((BuildingDamaged)outcome).anyBuildingType = config.anyBuildingType;
+                        ((BuildingDamaged)outcome).demolishAll = config.demolishAll;
                         break;
                     case OutcomeType.CardUnlocked:
                         outcome = ScriptableObject.CreateInstance<CardUnlocked>();
@@ -348,7 +351,7 @@ namespace Events
                             ((KeepUpset)request).targetGuild = config.targetGuild;
                             break;
                         default:
-                            Debug.LogError("Request type not found: " + config.type);
+                            Debug.LogError("Request buildingType not found: " + config.type);
                             return;
                     }
                     request.guild = guild;
@@ -435,6 +438,8 @@ namespace Events
         
         private static Blueprint LoadBlueprint(string name)
         {
+            var blueprint = AssetDatabase.LoadAssetAtPath<Blueprint>($"Assets/Blueprints/{name}.asset");
+            Debug.Log(blueprint);
             return AssetDatabase.LoadAssetAtPath<Blueprint>($"Assets/Blueprints/{name}.asset");
         }
         

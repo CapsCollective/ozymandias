@@ -1,22 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7745950680798551176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>The lack of minerals has caused a weapons shortage.
-    (-5 defence until this is resolved).</color>
-  flag: 3
-  value: 1
---- !u!114 &-2402813390923612946
+--- !u!114 &-6769982715906276269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,33 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 2790ba994bd69c54e853cff79c45c625, type: 2}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: jeweller-2
-  m_EditorClassIdentifier: 
-  headline: A Strike in the Mines!
-  article: The Dwarves are up in arms about the newly imposed child labour laws.
-    "It's all well and good for YOUR children to not work, but it takes us 50 years
-    to grow up! We're made from birth to be workers!" the miners representative said,
-    right before proclaiming a halt to all trade with us.
-  image: {fileID: 21300000, guid: 45eb79c94e7878d49af89bbc99942e62, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -7745950680798551176}
-  - {fileID: 8150396997587675867}
-  - {fileID: -2402813390923612946}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &8150396997587675867
+--- !u!114 &-3658669942895826248
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,3 +29,49 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: b4414e73bf99cde468f3e25318591360, type: 2}
   toFront: 0
+--- !u!114 &-2824162929959009122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: <color=#820000ff>The lack of minerals has caused a weapons shortage.
+    -5 Defence (<sprite=8>) until this is resolved.</color>
+  flag: 3
+  value: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: jeweller-2
+  m_EditorClassIdentifier: 
+  headline: A Strike in the Mines!
+  article: 'The <b>dwarves</b> are up in arms about the newly imposed child labour
+    laws.
+
+
+    <i>"It''s all well and good for YOUR children to not work, but it
+    takes us 50 years to grow up! We''re made from birth to be workers!"</i> the
+    miners representative said, right before proclaiming a halt to all trade with
+    us.'
+  image: {fileID: 21300000, guid: 45eb79c94e7878d49af89bbc99942e62, type: 3}
+  type: 0
+  headliner: 1
+  outcomes:
+  - {fileID: -2824162929959009122}
+  - {fileID: -3658669942895826248}
+  - {fileID: -6769982715906276269}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

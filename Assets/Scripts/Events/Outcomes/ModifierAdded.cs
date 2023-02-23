@@ -29,7 +29,7 @@ namespace Events.Outcomes
 
         protected override string Description => (
             customDescription != "" ? customDescription :
-            $"{String.StatWithIcon(statToChange)} has {(amount > 0 ? "increased" : "decreased")} by {Mathf.Abs(amount)}" +
+            $"{amount.WithSign()} {String.StatWithIcon(statToChange)}" +
             $" for {turns} turns {reason}.".Conditional(turns != -1)
         ).StatusColor(amount);
     }

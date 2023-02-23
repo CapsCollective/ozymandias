@@ -1,6 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7636538193942076571
+--- !u!114 &-799202681297077443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Cut Off Trade
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -523803170184498902}
+  - {fileID: 4344565081450211857}
+  costScale: 0
+--- !u!114 &-523803170184498902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,37 +30,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Without their mineral supply, we'll have to substitute our weapons
     with wood.
---- !u!114 &-4376330657797478729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
-  toFront: 0
---- !u!114 &-2664347756009125487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Impose Child Labour Laws
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 4111013199188709072}
-  - {fileID: -4376330657797478729}
-  costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,19 +43,23 @@ MonoBehaviour:
   m_Name: jeweller-1
   m_EditorClassIdentifier: 
   headline: Dwarven Minors
-  article: Reports have come in that the dwarves in the nearby mountains have been
-    working their children in the mines. Their leader sent out a memo explaining
-    "They're so tiny, they can fit in the little gaps where all the good stuff is."
-    GuildCo's PR department have forbid us from trading with them if this continues.
+  article: 'Reports have come in that the <b>dwarves</b> in the nearby mountains
+    have been working their children in the mines. Their leader sent out a memo explaining
+    <i>"They''re so tiny, they can fit in the little gaps where all the good stuff
+    is!"</i>
+
+
+    GuildCo''s PR department have forbid us from trading with them
+    if this continues.'
   image: {fileID: 21300000, guid: 43a05df69ee8da049a40f0a110a1ece0, type: 3}
   type: 3
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -2664347756009125487}
-  - {fileID: 4190421209651907111}
+  - {fileID: 6377350385890328605}
+  - {fileID: -799202681297077443}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &4111013199188709072
+--- !u!114 &1625921680721808145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,23 +74,7 @@ MonoBehaviour:
   customDescription: We'll have to see how they respond...
   flag: 0
   value: 1
---- !u!114 &4190421209651907111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Let Them Continue
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -7636538193942076571}
-  - {fileID: 9040888334635306556}
-  costScale: 0
---- !u!114 &9040888334635306556
+--- !u!114 &4344565081450211857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,6 +88,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   statToChange: 8
-  amount: -5
+  amount: -3
   turns: -1
   reason: from the Wooden Weapons
+--- !u!114 &6377350385890328605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Impose Child Labour Laws
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 1625921680721808145}
+  - {fileID: 6616317523404950880}
+  costScale: 0
+--- !u!114 &6616317523404950880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
+  toFront: 0

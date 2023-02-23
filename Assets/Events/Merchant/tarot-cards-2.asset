@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8595536933993754622
+--- !u!114 &-8756343379636977708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: I Don't Need to See My Future
   m_EditorClassIdentifier: 
-  customDescription: '"Your future will come, whether you are aware of it or not."'
---- !u!114 &-7360902464770224001
+  outcomes:
+  - {fileID: -1913112373432656900}
+  costScale: 0
+--- !u!114 &-6265081956470115108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,15 +24,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: The Hierophant
   m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 3
-  amount: 2
-  turns: -1
-  reason: from the Hierophant's Vision
---- !u!114 &-4460171633006288892
+  outcomes:
+  - {fileID: -283871206785405932}
+  - {fileID: 4926089002654146840}
+  costScale: 0.3
+--- !u!114 &-4114352950750302916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,27 +40,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: The Devil
   m_EditorClassIdentifier: 
-  customDescription: You touch it, and have a vision of the wonders of the universe
-    being unravelled...
---- !u!114 &-4443936742847174740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: 
-  count: 1
-  kill: 1
---- !u!114 &-1998111373540373562
+  outcomes:
+  - {fileID: 2976824133577951011}
+  - {fileID: 1410375476049053284}
+  - {fileID: -3561374712992515660}
+  costScale: 0.3
+--- !u!114 &-3561374712992515660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,24 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   turnsWorth: 1.3
---- !u!114 &-1568386091201214785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 4
-  amount: 2
-  turns: -1
-  reason: from the Magician's Vision
---- !u!114 &-1018027336035484947
+--- !u!114 &-1913112373432656900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,9 +74,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: You touch it, and have a vision of a lost adventurer wandering
-    into the middle of a crossroads, blinking away, and in their place a sack of
-    gold. A bargain made...
+  customDescription: '"Your future will come, whether you are aware of it or not."'
+--- !u!114 &-283871206785405932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: You touch it, and have a vision of a divine beacon, leading
+    the way...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,43 +109,12 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 8690122708333268151}
-  - {fileID: 2793530906335088220}
-  - {fileID: 6201857634280482576}
-  - {fileID: 2666730669668245565}
+  - {fileID: -4114352950750302916}
+  - {fileID: -6265081956470115108}
+  - {fileID: 1311080764698053029}
+  - {fileID: -8756343379636977708}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2666730669668245565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: I Don't Need to See My Future
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -8595536933993754622}
-  costScale: 0
---- !u!114 &2793530906335088220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: The Hierophant
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 8836094562910689937}
-  - {fileID: -7360902464770224001}
-  costScale: 0.3
---- !u!114 &6201857634280482576
+--- !u!114 &1311080764698053029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,10 +127,10 @@ MonoBehaviour:
   m_Name: The Magician
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -4460171633006288892}
-  - {fileID: -1568386091201214785}
+  - {fileID: 6249685617194214079}
+  - {fileID: 4039395013384721559}
   costScale: 0.3
---- !u!114 &8690122708333268151
+--- !u!114 &1410375476049053284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,15 +139,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: The Devil
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -1018027336035484947}
-  - {fileID: -4443936742847174740}
-  - {fileID: -1998111373540373562}
-  costScale: 0.3
---- !u!114 &8836094562910689937
+  customDescription: 
+  count: 1
+  kill: 1
+--- !u!114 &2976824133577951011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,5 +157,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: You touch it, and have a vision of a divine beacon, leading
-    the way...
+  customDescription: You touch it, and have a vision of a lost adventurer wandering
+    into the middle of a crossroads, blinking away, and in their place a sack of
+    gold. A bargain made...
+--- !u!114 &4039395013384721559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 4
+  amount: 2
+  turns: -1
+  reason: from the Magician's Vision
+--- !u!114 &4926089002654146840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 3
+  amount: 2
+  turns: -1
+  reason: from the Hierophant's Vision
+--- !u!114 &6249685617194214079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: You touch it, and have a vision of the wonders of the universe
+    being unravelled...

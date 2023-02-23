@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4946655505323001447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 13ab3f39d09cab547b83e408e02485af, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,20 +13,40 @@ MonoBehaviour:
   m_Name: tailor-2
   m_EditorClassIdentifier: 
   headline: Foolish Fashion Fixation!
-  article: Adventurers are spending exorbitant amounts on vanity items, but not with
-    us! "What's the purpose of life if I can't wear a cool hat?", an adventurer yelled
-    whilst showing off their exclusive unicorn skin fedora. If we don't start making
-    clothes soon, our town will go bankrupt!
+  article: 'Adventurers are spending exorbitant amounts on <b>cosmetic items</b>,
+    but not with us!
+
+
+    <i>"What''s the purpose of life if I can''t wear a cool
+    hat?"</i>, an adventurer yelled whilst showing off their exclusive unicorn skin
+    fedora.
+
+
+    If we don''t start making clothes soon, our town will go bankrupt!'
   image: {fileID: 21300000, guid: 2c5b363d495c0fd4c9eb5ce98859614b, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 6266289298133563086}
-  - {fileID: 2972630583442278485}
-  - {fileID: -4946655505323001447}
+  - {fileID: 6501048869823259790}
+  - {fileID: 3861097442476229561}
+  - {fileID: 872920807559636819}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2972630583442278485
+--- !u!114 &872920807559636819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 13ab3f39d09cab547b83e408e02485af, type: 2}
+--- !u!114 &3861097442476229561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +61,7 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: dc8c4ee26d1693040a13620293857e19, type: 2}
   toFront: 0
---- !u!114 &6266289298133563086
+--- !u!114 &6501048869823259790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,6 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>-2 spending per adventurer until this is resolved.</color>
+  customDescription: <color=#820000ff>-2 Wealth (<sprite=7>) per adventurer until
+    this is resolved.</color>
   flag: 2
   value: 1

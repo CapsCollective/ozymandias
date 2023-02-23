@@ -102,7 +102,7 @@ namespace Managers
             return true;
         }
 
-        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 2 : 0;
+        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 3 : 0;
         public int MineStrikePenalty => Manager.EventQueue.Flags[Flag.MineStrike] ? -5 : 0;
         
         #endregion

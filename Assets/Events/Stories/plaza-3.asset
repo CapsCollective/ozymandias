@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4756226841921329278
+--- !u!114 &-8259104917568024271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,7 +17,22 @@ MonoBehaviour:
   count: 3
   guild: 2
   anyGuild: 0
---- !u!114 &-2821571890466611417
+--- !u!114 &-7674401244450023312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: They've given us some designs for a public performance space.
+  flag: 0
+  value: 0
+--- !u!114 &-7160076832783200269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,36 +59,22 @@ MonoBehaviour:
   m_Name: plaza-3
   m_EditorClassIdentifier: 
   headline: Pay Day for Cirque Du Slay
-  article: A resolution has been struck with the Cirque Du Slay, with Gol and co
-    agreeing to return, as long as we construct new 'safe spaces' for them to perform
-    their acts. With the correct precautions in place, they will be able to juggle
-    all the fireballs they desire, providing entertainment to the town.
+  article: A resolution has been struck with the Cirque Du Slay, with <b>Gol and
+    Co.</b> agreeing to return, as long as we construct new <i>'safe spaces'</i>
+    for them to perform their acts. With the correct precautions in place, they will
+    be able to juggle all the fireballs they desire, providing entertainment to the
+    town.
   image: {fileID: 21300000, guid: 90e21c5bcf2bbd943ba5d924814e5b96, type: 3}
   type: 0
-  headliner: 0
+  headliner: 1
   outcomes:
-  - {fileID: -4756226841921329278}
-  - {fileID: 448246881506749920}
-  - {fileID: -2821571890466611417}
-  - {fileID: 1081444410342170134}
+  - {fileID: -8259104917568024271}
+  - {fileID: -7674401244450023312}
+  - {fileID: -7160076832783200269}
+  - {fileID: 5842515720320628831}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &448246881506749920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: They've given us some designs for a public performance space.
-  flag: 0
-  value: 0
---- !u!114 &1081444410342170134
+--- !u!114 &5842515720320628831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

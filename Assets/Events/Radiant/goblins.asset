@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5340956464005117185
+--- !u!114 &-8416407093333907801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: Pay Them Off
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 2071008920096391323}
-  - {fileID: 6457060485441972976}
+  - {fileID: -3876854535703484977}
+  - {fileID: 4781947126498103697}
   costScale: 0.3
---- !u!114 &-229315011736294863
+--- !u!114 &-7292783256559862936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Infiltrate the Camp!
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -5193539226202989657}
+  costScale: 0
+--- !u!114 &-5193539226202989657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,6 +45,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 5e42c665f6caf6341b22b1c544810084, type: 2}
+--- !u!114 &-3876854535703484977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: They realise you're a pushover, but leave you be, for now...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,46 +71,18 @@ MonoBehaviour:
   m_Name: goblins
   m_EditorClassIdentifier: 
   headline: Chanting Camps Causes Chaos
-  article: Some Goblins were spotted nearby the town, and residents have been kept
-    up all night by horrid sounds of some rhythmic ritual they seem to be performing.
+  article: Some <b>goblins</b> were spotted nearby the town, and residents have been
+    kept up all night by horrid sounds of some rhythmic ritual they seem to be performing.
     We might be able to work outs what's going on in there, or just pay them to leave.
   image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
   type: 6
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 4414999244049271130}
-  - {fileID: -5340956464005117185}
+  - {fileID: -7292783256559862936}
+  - {fileID: -8416407093333907801}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2071008920096391323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: They realise you're a pushover, but leave you be, for now...
---- !u!114 &4414999244049271130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Infiltrate the Camp!
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -229315011736294863}
-  costScale: 0
---- !u!114 &6457060485441972976
+--- !u!114 &4781947126498103697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,4 +95,4 @@ MonoBehaviour:
   m_Name: ThreatAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  baseAmount: 2
+  baseAmount: 1

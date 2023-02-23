@@ -1,33 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8453976507808071436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 5
---- !u!114 &-5420161480259224040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The adventurers start griding for experience.
---- !u!114 &-4890999758941105596
+--- !u!114 &-8997387362244566400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +14,90 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Oh no, the mice are too strong and escaped! We'll have to hunt
     them down...
---- !u!114 &-3418140557439548614
+--- !u!114 &-1981964325809169202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Buy the rats
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 7485544693392505562}
+  - {fileID: 9021917785740109635}
+  costScale: 1.1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: rat-shortage
+  m_EditorClassIdentifier: 
+  headline: Rat Shortage
+  article: Troubles for low level adventures today as queues backing up all the way
+    through the sewer due to a rat shortage. A traveling salesman conveniently is
+    offering to sell the town <i>"some rats he found."</i>
+  image: {fileID: 21300000, guid: 065c6f25d0e9b5a469ea0ab99596fd49, type: 3}
+  type: 7
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -1981964325809169202}
+  - {fileID: 1340259754029378715}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &1340259754029378715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Train up mice to be strong like rats
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -8997387362244566400}
+  - {fileID: 4249326453564833874}
+  costScale: 0
+--- !u!114 &4249326453564833874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 5
+--- !u!114 &7485544693392505562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The adventurers start griding for experience.
+--- !u!114 &9021917785740109635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,59 +114,3 @@ MonoBehaviour:
   amount: 3
   turns: 3
   reason: from the Rat XP Boost
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: rat-shortage
-  m_EditorClassIdentifier: 
-  headline: Rat Shortage
-  article: Troubles for low level adventures today as queues backing up all the way
-    through the sewer due to a rat shortage. A traveling salesman conveniently is
-    offering to sell the town some rats he found."
-  image: {fileID: 21300000, guid: 065c6f25d0e9b5a469ea0ab99596fd49, type: 3}
-  type: 7
-  headliner: 0
-  outcomes: []
-  choices:
-  - {fileID: 9077035080261546861}
-  - {fileID: 7590674764025320741}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &7590674764025320741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Train up mice to be strong like rats
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -4890999758941105596}
-  - {fileID: -8453976507808071436}
-  costScale: 0
---- !u!114 &9077035080261546861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Buy the rats
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -5420161480259224040}
-  - {fileID: -3418140557439548614}
-  costScale: 1.1

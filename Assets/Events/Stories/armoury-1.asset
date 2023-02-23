@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7691590658183412191
+--- !u!114 &-7412741694558810287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,37 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: AdventurersAdded
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: Red and Mr. Woodsman find a home in town
-  adventurers:
-  - name: Red
-    guild: 1
-    isSpecial: 0
-    turnJoined: 0
-  - name: Mr. Woodsman
-    guild: 0
-    isSpecial: 0
-    turnJoined: 0
-  count: 0
-  guild: 0
-  anyGuild: 0
---- !u!114 &-2205766799761415530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 0d8e2b38730ac5b42b0e50aafa3f390a, type: 2}
-  toFront: 0
+  customDescription: There's just something in their eyes...
+  flag: 0
+  value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,18 +30,18 @@ MonoBehaviour:
   headline: Starry Eyed and Bushy Tailed
   article: A pair of adventurers have stumbled out of the forest in the early hours
     of the morning, calling themselves 'Red' and 'Mr. Woodsman'. They claim not to
-    know how they got here, but have vague memories of being chased by a hideous
-    hairy beast.
+    know how they got here, but have vague memories of being chased by a <b>hideous
+    hairy beast</b>.
   image: {fileID: 21300000, guid: 283d2c6bb8faa9b408ec5f5434240ddd, type: 3}
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: -7691590658183412191}
-  - {fileID: 8386676098553373101}
-  - {fileID: -2205766799761415530}
+  - {fileID: 2146795056348998468}
+  - {fileID: -7412741694558810287}
+  - {fileID: 3075055326169369253}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &8386676098553373101
+--- !u!114 &2146795056348998468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,9 +50,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
   m_EditorClassIdentifier: 
-  customDescription: There's just something in their eyes...
-  flag: 0
-  value: 1
+  customDescription: Red and Mr. Woodsman find a home in town. +2 Adventurers
+  adventurers:
+  - name: Red
+    guild: 1
+    isSpecial: 0
+    turnJoined: 0
+  - name: Mr. Woodsman
+    guild: 0
+    isSpecial: 0
+    turnJoined: 0
+  count: 0
+  guild: 0
+  anyGuild: 0
+--- !u!114 &3075055326169369253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 0d8e2b38730ac5b42b0e50aafa3f390a, type: 2}
+  toFront: 0

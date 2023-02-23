@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Adventurers;
 using Cards;
 using DG.Tweening;
 using Events;
@@ -191,7 +190,7 @@ namespace Tutorial
         
         private void ShowObjectives()
         {
-            objectives.DOAnchorPosX(-230, 0.5f);
+            objectives.DOAnchorPosX(-250, 0.5f);
         }
 
         private void HideObjectives()

@@ -1,47 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: tannery-4
-  m_EditorClassIdentifier: 
-  headline: Former Foes Now Skin-Tight
-  article: An emotional day for many as vampires and vampire hunters finally called
-    a truce to the ongoing bloodbath, in order to peruse the latest shipment of leather
-    goods. "We're not so different, you and I." one vampire mused, to which a hunter
-    replied "eh, I s'pose you're right; you like your steak rare, I like it wooden".
-    The once immortal enemies, now sworn allies bonded in leather.
-  image: {fileID: 21300000, guid: bd0215ef5eb4bdf4b8830098aefec6ae, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 8795457666008732270}
-  - {fileID: 9002111137672532207}
-  - {fileID: 3807602436384683668}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &3807602436384683668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: b101971ab3451e34fb6999039996b80f, type: 2}
---- !u!114 &8795457666008732270
+--- !u!114 &-6862952915747256327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,7 +15,7 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 0
---- !u!114 &9002111137672532207
+--- !u!114 &-355363310207357172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,3 +29,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   blueprint: {fileID: 11400000, guid: 5e22b42b41b30e64f8a565d67992210f, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: tannery-4
+  m_EditorClassIdentifier: 
+  headline: Former Foes Now Skin-Tight
+  article: 'An emotional day for many as <b>vampires and vampire hunters</b> finally
+    called a truce to the ongoing bloodbath, in order to peruse the latest shipment
+    of leather goods.
+
+
+    <i>"We''re not so different, you and I."</i> one vampire
+    mused, to which a hunter replied <i>"eh, I s''pose you''re right; you like your
+    steak rare, I like it wooden"</i>.
+
+
+    The once immortal enemies, now sworn
+    allies, bound in leather.'
+  image: {fileID: 21300000, guid: bd0215ef5eb4bdf4b8830098aefec6ae, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -6862952915747256327}
+  - {fileID: -355363310207357172}
+  - {fileID: 6582156661685384432}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &6582156661685384432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: b101971ab3451e34fb6999039996b80f, type: 2}

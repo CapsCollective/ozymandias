@@ -161,7 +161,7 @@ namespace Events
             if (_availablePools[type].Count == 0)
             {
                 Debug.Log($"Shuffling {type} events");
-                if (_usedPools[type].Count == 0) return null; // Catch case for if there are no events of this type
+                if (_usedPools[type].Count == 0) return null; // Catch case for if there are no events of this buildingType
                 
                 //Shuffle events back in
                 _availablePools[type] = new List<Event>(_usedPools[type]);

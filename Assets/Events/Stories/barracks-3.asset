@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8280048863820514217
+--- !u!114 &-8691684261169975295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
   m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: b948849505ce4734598bccb5bddd8220, type: 2}
---- !u!114 &-3827246147016353759
+  customDescription: The General has moved in. +1 Adventurer
+  adventurers: []
+  count: 1
+  guild: 0
+  anyGuild: 1
+--- !u!114 &-5245564271301878517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,20 +32,6 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 0
---- !u!114 &-3630288786163793810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 1f66b978e5eee814fb42daee85a2b7f6, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,17 +45,49 @@ MonoBehaviour:
   m_Name: barracks-3
   m_EditorClassIdentifier: 
   headline: Barracking for the Normal Folks!
-  article: The questing party has returned with the former General, who, while in
-    no fighting shape, immediately started criticising the towns "pathetic excuse
-    for a town guard", and barking orders. His first request is establishing some
-    barracks for training. Adventurers are happily going along with this charade,
-    at least it'll give them some slightly sturdier cannon fodder.
+  article: 'The questing party has returned with the former general, who, while in
+    no fighting shape, immediately started criticising the towns <i>"pathetic excuse
+    for a <b>town guard</b>"</i>, and barking orders.
+
+
+    Adventurers are happily
+    going along with this charade, at least it''ll give them some slightly sturdier
+    cannon fodder. His first order is establishing some barracks for training.'
   image: {fileID: 21300000, guid: b4f126b026aabf846980238feea3a505, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -3827246147016353759}
-  - {fileID: -8280048863820514217}
-  - {fileID: -3630288786163793810}
+  - {fileID: -5245564271301878517}
+  - {fileID: 6272184258625236061}
+  - {fileID: -8691684261169975295}
+  - {fileID: 1155984880303703659}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &1155984880303703659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 1f66b978e5eee814fb42daee85a2b7f6, type: 2}
+--- !u!114 &6272184258625236061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: b948849505ce4734598bccb5bddd8220, type: 2}

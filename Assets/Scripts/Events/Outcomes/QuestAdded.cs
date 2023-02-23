@@ -25,7 +25,8 @@ namespace Events.Outcomes
 
         protected override string Description => (
             customDescription != "" ? customDescription :
-            $"New {(quest.IsRadiant ? "enemy camp" : "quest")} added {LocationDescriptors[quest.location]}: {quest.Title}."
+            $"New {(quest.IsRadiant ? "enemy camp" : "quest")} added {LocationDescriptors[quest.location]}: {quest.Title}." +
+            $"\n+1 {String.StatWithIcon(Stat.Threat)} per turn until cleared.".Conditional(quest.IsRadiant)
         ).StatusColor(quest.IsRadiant ? -1 : 0);
     }
 }

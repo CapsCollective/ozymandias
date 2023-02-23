@@ -1,42 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8205395141244036793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: AdventurersAdded
-  m_EditorClassIdentifier: 
-  customDescription: Gol Brojan has started performing (+1 Performer)
-  adventurers:
-  - name: Gol Brojan
-    guild: 1
-    isSpecial: 0
-    turnJoined: 0
-  count: 0
-  guild: 0
-  anyGuild: 0
---- !u!114 &-6175067996608744997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 4b64f9dc7ca546e4aae38d77bd0b1d46, type: 2}
-  toFront: 0
---- !u!114 &-1320734381955395577
+--- !u!114 &-7214984696457363233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,6 +15,27 @@ MonoBehaviour:
   customDescription: We should keep an eye on this one...
   flag: 0
   value: 1
+--- !u!114 &-4993793680920375615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: Gol Brojan has set up his circus. +1 Performer (<sprite=2>)
+  adventurers:
+  - name: Gol Brojan
+    guild: 2
+    isSpecial: 0
+    turnJoined: 0
+  count: 0
+  guild: 0
+  anyGuild: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,16 +49,31 @@ MonoBehaviour:
   m_Name: plaza-1
   m_EditorClassIdentifier: 
   headline: Performance With an Edge!
-  article: A controversial new performer, Gol Brojan has joined the town today. He's
-    stirred up the other performers, claiming they're 'too safe', with his act involving
-    dangerous stunts, giving the audience knives to throw at him during his routine.
-    The influence he has on our town remains to be seen.
+  article: A controversial new performer, <b>Gol Brojan</b> has joined the town today.
+    He's stirred up the other performers, claiming they're 'too safe', with his act
+    involving dangerous stunts, giving the audience knives to throw at him during
+    his routine. The influence he has on our town remains to be seen.
   image: {fileID: 21300000, guid: 5d0f7f6c090797546920b994f1db7e48, type: 3}
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: -1320734381955395577}
-  - {fileID: -8205395141244036793}
-  - {fileID: -6175067996608744997}
+  - {fileID: -7214984696457363233}
+  - {fileID: -4993793680920375615}
+  - {fileID: 7023672257590231199}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &7023672257590231199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 4b64f9dc7ca546e4aae38d77bd0b1d46, type: 2}
+  toFront: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8934391767387227630
+--- !u!114 &-5865609565557944239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: The Outriders have agreed that it's only fair to take turns
-    using it for their subterfuge.
---- !u!114 &-5522588264710694203
+  customDescription: 
+  statToChange: 3
+  amount: 4
+  turns: -1
+  reason: from the Whip of Penance
+--- !u!114 &-5744186740376157743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27,7 +30,24 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: '"Alrighty, I''ll come back another time!"'
---- !u!114 &-5188382187270033632
+--- !u!114 &-1113370569208540273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 1
+  amount: 4
+  turns: -1
+  reason: from the Cloak of Invisibility
+--- !u!114 &-940794870860728607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,13 +57,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Cloak of Invisibility
+  m_Name: Rat on a stick
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -8934391767387227630}
-  - {fileID: 3978496962934997241}
-  costScale: 0.9
---- !u!114 &-4226160209006594617
+  - {fileID: 7638146922679679645}
+  - {fileID: -394442421889067760}
+  costScale: 1.1
+--- !u!114 &-394442421889067760
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,36 +80,6 @@ MonoBehaviour:
   amount: 20
   turns: -1
   reason: from the Forest Cheese
---- !u!114 &-1847680073198220717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Rat on a stick
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5230133429511482328}
-  - {fileID: -4226160209006594617}
-  costScale: 1.1
---- !u!114 &-1059717679702045516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: This will make the Diviners self-flagellation parties much more
-    exciting.
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,29 +101,12 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -1847680073198220717}
-  - {fileID: 811034367277550978}
-  - {fileID: -5188382187270033632}
-  - {fileID: 3141364861347265114}
+  - {fileID: -940794870860728607}
+  - {fileID: 1163105741347606065}
+  - {fileID: 8471587099836280897}
+  - {fileID: 6123575410644036055}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &755848447373929096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 3
-  amount: 4
-  turns: -1
-  reason: from the Whip of Penance
---- !u!114 &811034367277550978
+--- !u!114 &1163105741347606065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,10 +119,24 @@ MonoBehaviour:
   m_Name: Whip of Penance
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -1059717679702045516}
-  - {fileID: 755848447373929096}
+  - {fileID: 6845865167926291325}
+  - {fileID: -5865609565557944239}
   costScale: 0.9
---- !u!114 &3141364861347265114
+--- !u!114 &2294066774605069014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The Outriders have agreed that it's only fair to take turns
+    using it for their subterfuge.
+--- !u!114 &6123575410644036055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,9 +149,9 @@ MonoBehaviour:
   m_Name: Nah, None for Me
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -5522588264710694203}
+  - {fileID: -5744186740376157743}
   costScale: 0
---- !u!114 &3978496962934997241
+--- !u!114 &6845865167926291325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,15 +160,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 1
-  amount: 4
-  turns: -1
-  reason: from the Cloak of Invisibility
---- !u!114 &5230133429511482328
+  customDescription: This will make the Diviners self-flagellation parties much more
+    exciting.
+--- !u!114 &7638146922679679645
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,3 +179,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: This 'magical' item points you in the direction of forest cheese,
     a very real and very tasty thing.
+--- !u!114 &8471587099836280897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Cloak of Invisibility
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 2294066774605069014}
+  - {fileID: -1113370569208540273}
+  costScale: 0.9

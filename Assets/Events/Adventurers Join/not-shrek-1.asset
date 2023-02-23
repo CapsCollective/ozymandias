@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4374105556334919440
+--- !u!114 &-8900060141703190950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,7 +13,24 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: The ogre thanks you with some surprisingly delicious sludge
---- !u!114 &-3192018077740457046
+--- !u!114 &-4875137644677914600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 6
+  amount: 10
+  turns: -1
+  reason: from the Ogre's Sludge
+--- !u!114 &-3663809627685796776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,7 +46,7 @@ MonoBehaviour:
     as his
   next: {fileID: 11400000, guid: 4f8eb553767a97e40ad8869c8b975e8c, type: 2}
   toFront: 0
---- !u!114 &-448114015804010224
+--- !u!114 &-2451846794298421818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,11 +56,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Leave him be
+  m_Name: Strike up a Bargain
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -4374105556334919440}
-  - {fileID: 7635147570276002120}
+  - {fileID: -3663809627685796776}
+  costScale: 0
+--- !u!114 &-1666112477660619896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Leave Him Be
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -8900060141703190950}
+  - {fileID: -4875137644677914600}
   costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -65,38 +97,6 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 8910388769328387187}
-  - {fileID: -448114015804010224}
+  - {fileID: -2451846794298421818}
+  - {fileID: -1666112477660619896}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &7635147570276002120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 6
-  amount: 10
-  turns: -1
-  reason: from the Ogre's Sludge
---- !u!114 &8910388769328387187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Strike up a bargain
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -3192018077740457046}
-  costScale: 0

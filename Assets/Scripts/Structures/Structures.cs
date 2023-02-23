@@ -61,9 +61,18 @@ namespace Structures
             return _buildings.Count(x => x.Blueprint.type == type);
         }
 
+        public List<Structure> GetAll(BuildingType type)
+        {
+            return _buildings.Where(x => x.Blueprint.type == type).ToList();
+        }
+        
+        public Structure GetRandom()
+        {
+            return _buildings.Where(x => x.Blueprint.type != BuildingType.GuildHall).ToList().SelectRandom();
+        }
         public Structure GetRandom(BuildingType type)
         {
-            return _buildings.Where(x => x.Blueprint.type == type).ToList().SelectRandom();
+            return GetAll(type).SelectRandom();
         }
 
         public float GetClosestDistance(Vector3 position)
