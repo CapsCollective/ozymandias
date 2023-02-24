@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8903222695063978035
+--- !u!114 &-7037153387922577438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,14 +9,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
-  m_Name: BuildingDamaged
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  buildingType: 9
-  anyBuildingType: 0
-  demolishAll: 0
---- !u!114 &-8872493948973286271
+  customDescription: You touch it, and have a vision of the burning power of your
+    righteous quest turning away those who would do you harm...
+--- !u!114 &-6257018138820584770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: The Fool
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -5215713082841351916}
+  - {fileID: 2927213051989456561}
+  costScale: 0.3
+--- !u!114 &-5871061586442060027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: '"Those who are blind to the future are not protected by it"'
+--- !u!114 &-5215713082841351916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,23 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: You touch it, and have a vision of merriment spreading across
     your town...
---- !u!114 &-5708840902797032410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: The Tower
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 1668603712332937150}
-  - {fileID: -8903222695063978035}
-  costScale: 0.3
---- !u!114 &-4364538273871921168
+--- !u!114 &-1238084629944941386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,21 +71,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: -3
---- !u!114 &-2316534636681178038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: No Readings for Me
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 1227247461542414885}
-  costScale: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,12 +91,12 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 61754275500378071}
-  - {fileID: -5708840902797032410}
-  - {fileID: 4322884517164536496}
-  - {fileID: -2316534636681178038}
+  - {fileID: 298340699268131566}
+  - {fileID: 6958950840001514230}
+  - {fileID: -6257018138820584770}
+  - {fileID: 4958479269214639971}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &61754275500378071
+--- !u!114 &298340699268131566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,53 +109,10 @@ MonoBehaviour:
   m_Name: Justice
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 8575261864649459265}
-  - {fileID: -4364538273871921168}
+  - {fileID: -7037153387922577438}
+  - {fileID: -1238084629944941386}
   costScale: 0.3
---- !u!114 &1227247461542414885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: '"Those who are blind to the future are not protected by it"'
---- !u!114 &1668603712332937150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: You touch it, and have a vision of a tower blowing up. You probably
-    should have seen this coming...
---- !u!114 &4322884517164536496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: The Fool
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -8872493948973286271}
-  - {fileID: 6266277033775328607}
-  costScale: 0.3
---- !u!114 &6266277033775328607
+--- !u!114 &2927213051989456561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,7 +129,7 @@ MonoBehaviour:
   amount: 2
   turns: -1
   reason: from the Fool's Vision
---- !u!114 &8575261864649459265
+--- !u!114 &3101027830792857387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,5 +141,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: You touch it, and have a vision of the burning power of your
-    righteous quest turning away those who would do you harm...
+  customDescription: You touch it, and have a vision of a tower blowing up. You probably
+    should have seen this coming...
+--- !u!114 &3491322450314124010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
+  m_Name: BuildingDamaged
+  m_EditorClassIdentifier: 
+  customDescription: 
+  buildingType: 9
+  anyBuildingType: 0
+  demolishAll: 0
+--- !u!114 &4958479269214639971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: No Readings for Me
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -5871061586442060027}
+  costScale: 0
+--- !u!114 &6958950840001514230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: The Tower
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 3101027830792857387}
+  - {fileID: 3491322450314124010}
+  costScale: 0.3

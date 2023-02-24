@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8395861643584781872
+--- !u!114 &-6172356949702381770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,40 +17,7 @@ MonoBehaviour:
   amount: 2
   turns: 5
   reason: from Dragon Fireproofing
---- !u!114 &-7439740202582015666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Ignore the Warnings
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -1218560963623189651}
-  - {fileID: -4616713016791989116}
-  costScale: 0
---- !u!114 &-4616713016791989116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 0
-  amount: 2
-  turns: 3
-  reason: from Ignoring the Dragons
---- !u!114 &-1218560963623189651
+--- !u!114 &-422494422363878130
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,10 +54,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 7077670452503618870}
-  - {fileID: -7439740202582015666}
+  - {fileID: 5655021634141928048}
+  - {fileID: 8258385344510700443}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &966354007375560525
+--- !u!114 &3438748820583615193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,7 +70,7 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: We'll be prepared for another year...
---- !u!114 &6641036189459304625
+--- !u!114 &5556733127391608218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +87,7 @@ MonoBehaviour:
   amount: -2
   turns: 3
   reason: from 'Useless' Fireproofing
---- !u!114 &7077670452503618870
+--- !u!114 &5655021634141928048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +100,40 @@ MonoBehaviour:
   m_Name: Invest in Fireproofing
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 966354007375560525}
-  - {fileID: -8395861643584781872}
-  - {fileID: 6641036189459304625}
+  - {fileID: 3438748820583615193}
+  - {fileID: -6172356949702381770}
+  - {fileID: 5556733127391608218}
   costScale: 0.8
+--- !u!114 &8258385344510700443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Ignore the Warnings
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -422494422363878130}
+  - {fileID: 8904024082926287673}
+  costScale: 0
+--- !u!114 &8904024082926287673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 0
+  amount: 2
+  turns: 3
+  reason: from Ignoring the Dragons

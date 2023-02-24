@@ -23,8 +23,6 @@ namespace Adventurers
         public int Count => _adventurers.Count;
         public int Available => _adventurers.Count(x => !x.assignedQuest);
         public int Unavailable => _adventurers.Count(x => x.assignedQuest);
-        public int Removable => _adventurers.Count(x => !x.assignedQuest && !x.isSpecial);
-
         public IEnumerable<Adventurer> List => _adventurers
             .OrderByDescending(x => x.assignedQuest.Title.Conditional(x.assignedQuest))
             .ThenByDescending(x => x.turnJoined);
@@ -41,12 +39,12 @@ namespace Adventurers
         
         public Adventurer Assign(Quest quest)
         {
-            List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
-            if (removable.Count == 0) return null;
+            List<Adventurer> available = _adventurers.Where(x => !x.assignedQuest).ToList();
+            if (available.Count == 0) return null;
 
-            int randomIndex = Random.Range(0, removable.Count);
-            removable[randomIndex].assignedQuest = quest;
-            return removable[randomIndex];
+            int randomIndex = Random.Range(0, available.Count);
+            available[randomIndex].assignedQuest = quest;
+            return available[randomIndex];
         }
         
         public List<Adventurer> Assign(Quest quest, int adventurerCount)
@@ -83,10 +81,10 @@ namespace Adventurers
             if (!Manager.State.Loading) OnAdventurerJoin?.Invoke(created);
         }
 
-        public bool Remove(bool kill) // Removes a random adventurer, ensuring they aren't special
+        public void Remove(bool kill) // Removes a random adventurer, ensuring they aren't special
         {
-            List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial)).ToList();
-            if (removable.Count == 0) return false;
+            List<Adventurer> removable = _adventurers.Where(x => !x.assignedQuest).ToList();
+            if (removable.Count == 0) return;
             int randomIndex = Random.Range(0, removable.Count);
             Adventurer toRemove = removable[randomIndex];
 
@@ -94,12 +92,11 @@ namespace Adventurers
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform;
             else Destroy(toRemove);
-            return true;
         }
-        public bool Remove(bool kill, Guild guild) // Removes a random adventurer from a guild, ensuring they aren't special
+        public void Remove(bool kill, Guild guild) // Removes a random adventurer from a guild
         {
-            List<Adventurer> removable = _adventurers.Where(x => !(x.assignedQuest || x.isSpecial) && x.guild == guild).ToList();
-            if (removable.Count == 0) return false;
+            List<Adventurer> removable = _adventurers.Where(x => !x.assignedQuest && x.guild == guild).ToList();
+            if (removable.Count == 0) return;
             int randomIndex = Random.Range(0, removable.Count);
             Adventurer toRemove = removable[randomIndex];
 
@@ -107,7 +104,6 @@ namespace Adventurers
             _adventurers.Remove(toRemove);
             if (kill) toRemove.transform.parent = graveyard.transform;
             else Destroy(toRemove);
-            return true;
         }
 
         public bool Remove(string adventurerName, bool kill) // Deletes an adventurer by name

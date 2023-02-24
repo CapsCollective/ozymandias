@@ -1,6 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8469068099047139426
+--- !u!114 &-3570987417182102084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 4
+--- !u!114 &-3147109972881770498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,68 +29,8 @@ MonoBehaviour:
   customDescription: It took 3 adventurers lives to wipe out their nest.
   count: 3
   kill: 0
---- !u!114 &-6411258997324798341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 2
-  amount: 3
-  turns: 4
-  reason: from clearing the Sirens
---- !u!114 &-4586162297204010553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 4
---- !u!114 &-3089216719220730350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Put a Stop to Them
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 8806659957354352915}
-  - {fileID: -8469068099047139426}
-  - {fileID: -6411258997324798341}
-  costScale: 0
---- !u!114 &-230222251604206972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
-  m_Name: WealthAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  turnsWorth: 0.4
+  guild: 0
+  anyGuild: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,10 +53,44 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 7584695526000423179}
-  - {fileID: -3089216719220730350}
+  - {fileID: 4931543587225456057}
+  - {fileID: 1067454140611925593}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &7584695526000423179
+--- !u!114 &1067454140611925593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Put a Stop to Them
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 7431945578824607648}
+  - {fileID: -3147109972881770498}
+  - {fileID: 4770553027009668455}
+  costScale: 0
+--- !u!114 &4770553027009668455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 2
+  amount: 3
+  turns: 4
+  reason: from clearing the Sirens
+--- !u!114 &4931543587225456057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,25 +103,11 @@ MonoBehaviour:
   m_Name: Introduce a Busking Tax
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 9109150731673626938}
-  - {fileID: -4586162297204010553}
-  - {fileID: -230222251604206972}
+  - {fileID: 5036707288897877255}
+  - {fileID: -3570987417182102084}
+  - {fileID: 8815425803835320561}
   costScale: 0
---- !u!114 &8806659957354352915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: Clearing their nest was a deadly affair, but the performers
-    are glad they're now the centre of attention again.
---- !u!114 &9109150731673626938
+--- !u!114 &5036707288897877255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,3 +121,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: The sirens gladly part with the loose gold they've found in
     the clothes of their prey...
+--- !u!114 &7431945578824607648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: Clearing their nest was a deadly affair, but the performers
+    are glad they're now the centre of attention again.
+--- !u!114 &8815425803835320561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  turnsWorth: 0.4

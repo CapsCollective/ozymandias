@@ -1,19 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5358366012030632697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: It's nice to have rich friends for once...
---- !u!114 &-4448438908019429709
+--- !u!114 &-3786798790519531093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,14 +28,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headline: The Pauper is a Princess!
   article: We received an envoy from a far away kingdom today, with the good news
-    that the commoner who recently vanished by a trickster merchant was in fact turned
-    into a princess! She's sent a generous offer in exchange for us sending us all
-    her stuff.
+    that the commoner who recently vanished into a <b>mirror</b> by a trickster merchant
+    was in fact turned into a princess! She's sent a generous offer in exchange for
+    us sending us all her stuff.
   image: {fileID: 21300000, guid: f1f255b0367a85d4f8fe728a9c9179ab, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -5358366012030632697}
-  - {fileID: -4448438908019429709}
+  - {fileID: 2030501316371085284}
+  - {fileID: -3786798790519531093}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &2030501316371085284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: It's nice to have rich friends for once...

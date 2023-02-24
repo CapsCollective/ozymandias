@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8680439348533676177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: 2 adventurers blast off again!
+  count: 2
+  kill: 0
+  guild: 0
+  anyGuild: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21,11 +38,11 @@ MonoBehaviour:
   type: 5
   headliner: 0
   outcomes:
-  - {fileID: 2600328767213661332}
-  - {fileID: 864134549266402190}
+  - {fileID: -8680439348533676177}
+  - {fileID: 8986007623322316020}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &864134549266402190
+--- !u!114 &8986007623322316020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,18 +58,3 @@ MonoBehaviour:
   buildingType: 2
   anyBuildingType: 0
   demolishAll: 0
---- !u!114 &2600328767213661332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: 2 adventurers blast off again!
-  count: 2
-  kill: 0

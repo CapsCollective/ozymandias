@@ -38,7 +38,7 @@ namespace Events.Outcomes
             customDescription != "" ? customDescription :
             $"{adventurers.Count + count} " +
             $"{(anyGuild ? "Adventurer".Pluralise(adventurers.Count + count) : String.GuildWithIcon(guild, adventurers.Count + count))} " +
-            $"{(adventurers.Count == 1 ? "has" : "have")} " +
+            $"{(adventurers.Count + count == 1 ? "has" : "have")} " +
             $"{Descriptors.SelectRandom()}"
         ).StatusColor(1);
     }

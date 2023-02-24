@@ -1,6 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8522524599304544833
+--- !u!114 &-8106000196044054784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse the Offer
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 6001822230364154210}
+  costScale: 0
+--- !u!114 &-5782584216758233755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The scraggly Brawler looks in the mirror to see a dashing hero.
+    Before your eyes they transform! They are adored by their fellow Brawlers.
+--- !u!114 &-5222804351073360463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,7 +44,7 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: b13b2847623794842b6d065adba603de, type: 2}
   toFront: 0
---- !u!114 &-7702956610770250836
+--- !u!114 &-4836059127361810467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27,69 +56,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: These books will keep the Arcanists busy (+3 satisfaction)
-  statToChange: 4
+  customDescription: 
+  statToChange: 0
   amount: 3
   turns: -1
-  reason: the Mirror World Books
---- !u!114 &-5460557657437384913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The merchant shrugs, walks right into the mirror, and both of
-    them blink away in a puff of smoke.
---- !u!114 &-5131370936788121617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The Arcanist studies the mirror, before seeing stacks of books
-    start to pour out of the mirror in front of them.
---- !u!114 &-4430932651496367368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send an Arcanist
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -5131370936788121617}
-  - {fileID: -7702956610770250836}
-  costScale: 0.7
---- !u!114 &-3428892681199680671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: A commoner steps forward, and stares in the mirror to see a
-    princess, only to blink away a moment later. I wonder if they'll come back?
+  reason: from the Magic Mirror
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,12 +82,12 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 2215627697044352140}
-  - {fileID: -4430932651496367368}
-  - {fileID: 1309015553164573428}
-  - {fileID: 5406991076337443048}
+  - {fileID: 4773229332043045370}
+  - {fileID: 4225359310041004684}
+  - {fileID: 557874584625959698}
+  - {fileID: -8106000196044054784}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1309015553164573428
+--- !u!114 &557874584625959698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,13 +97,60 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send a villager
+  m_Name: Send a Villager
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -3428892681199680671}
-  - {fileID: -8522524599304544833}
+  - {fileID: 8041514720240048560}
+  - {fileID: -5222804351073360463}
   costScale: 0.5
---- !u!114 &2215627697044352140
+--- !u!114 &3013694174083862869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: These books will keep the Arcanists busy (+3 satisfaction)
+  statToChange: 4
+  amount: 3
+  turns: -1
+  reason: the Mirror World Books
+--- !u!114 &4225359310041004684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send an Arcanist
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 4693719194913361491}
+  - {fileID: 3013694174083862869}
+  costScale: 0.7
+--- !u!114 &4693719194913361491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The Arcanist studies the mirror, before seeing stacks of books
+    start to pour out of the mirror in front of them.
+--- !u!114 &4773229332043045370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,10 +163,10 @@ MonoBehaviour:
   m_Name: Send a Brawler
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 4059209266792100301}
-  - {fileID: 5805126502168533732}
+  - {fileID: -5782584216758233755}
+  - {fileID: -4836059127361810467}
   costScale: 0.7
---- !u!114 &4059209266792100301
+--- !u!114 &6001822230364154210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,9 +178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: The scraggly Brawler looks in the mirror to see a dashing hero.
-    Before your eyes they transform! They are adored by their fellow Brawlers.
---- !u!114 &5406991076337443048
+  customDescription: The merchant shrugs, walks right into the mirror, and both of
+    them blink away in a puff of smoke.
+--- !u!114 &8041514720240048560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,26 +189,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse the offer
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -5460557657437384913}
-  costScale: 0
---- !u!114 &5805126502168533732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 0
-  amount: 3
-  turns: -1
-  reason: from the Magic Mirror
+  customDescription: A commoner steps forward, and stares in the mirror to see a
+    princess, only to blink away a moment later. I wonder if they'll come back?

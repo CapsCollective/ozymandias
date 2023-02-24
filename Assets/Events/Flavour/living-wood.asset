@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2869749491540686866
+--- !u!114 &-2768631771042119909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
   m_EditorClassIdentifier: 
-  customDescription: We've made a tidy profit selling all this <i>wood</i>...
+  customDescription: 
+  turnsWorth: 0.3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33,11 +34,11 @@ MonoBehaviour:
   type: 2
   headliner: 0
   outcomes:
-  - {fileID: -2869749491540686866}
-  - {fileID: 2035064494786243863}
+  - {fileID: 1675532336715496627}
+  - {fileID: -2768631771042119909}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2035064494786243863
+--- !u!114 &1675532336715496627
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,8 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
-  m_Name: WealthAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  turnsWorth: 0
+  customDescription: We've made a tidy profit selling all this <i>wood</i>...

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8792802790636048354
+--- !u!114 &-6562475915498332939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: '"Alrighty, I''ll come back another time!"'
---- !u!114 &-5664267129876845507
+  customDescription: These magic beans energise adventurers when made into a bitter
+    potion. We've been awake for 3 days and never felt better!
+--- !u!114 &-6529326133691979762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,15 +23,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 8
-  amount: 3
-  turns: -1
-  reason: from the Energising Beans
---- !u!114 &-4521516558579873945
+  customDescription: This will make the Diviners self-flagellation parties much more
+    exciting.
+--- !u!114 &-4514320557940107389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: The Cute Lute
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 4954398658604040526}
+  - {fileID: -3739000548624479795}
+  costScale: 0.7
+--- !u!114 &-4495170976140891749
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,9 +57,9 @@ MonoBehaviour:
   m_Name: I'm Good for Now
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -8792802790636048354}
+  - {fileID: 8025418889593536673}
   costScale: 0
---- !u!114 &-4408489850108590275
+--- !u!114 &-3739000548624479795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,11 +68,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: This little lute plays the most adorable songs. The performers
-    love to sing along.
+  customDescription: 
+  statToChange: 2
+  amount: 3
+  turns: -1
+  reason: from the Cute Lute
+--- !u!114 &-1421630024068466288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Magic Beans
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -6562475915498332939}
+  - {fileID: 2524155934965716716}
+  costScale: 1.3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,12 +113,12 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 2689297769190211244}
-  - {fileID: 5028537251580490740}
-  - {fileID: 2711881876506120966}
-  - {fileID: -4521516558579873945}
+  - {fileID: -1421630024068466288}
+  - {fileID: 3144507976573022972}
+  - {fileID: -4514320557940107389}
+  - {fileID: -4495170976140891749}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &972542758649712221
+--- !u!114 &574999788656432817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,87 +131,11 @@ MonoBehaviour:
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 2
+  statToChange: 3
   amount: 4
   turns: -1
-  reason: from the Cute Lute
---- !u!114 &2689297769190211244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Magic Beans
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 4431892183221816853}
-  - {fileID: -5664267129876845507}
-  costScale: 1.3
---- !u!114 &2711881876506120966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Orb of Slope Detection
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 3090709312986649458}
-  - {fileID: 5794965983007428653}
-  costScale: 0.7
---- !u!114 &3090709312986649458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: This mystical object shifts itself to the lowest point of any
-    surface. The brawlers are mystified by it's power and play with it endlessly...
---- !u!114 &4431892183221816853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: These magic beans energise adventurers when made into a bitter
-    potion. We've been awake for 3 days and never felt better!
---- !u!114 &5028537251580490740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: The Cute Lute
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -4408489850108590275}
-  - {fileID: 972542758649712221}
-  costScale: 0.9
---- !u!114 &5794965983007428653
+  reason: from the Whip of Penance
+--- !u!114 &2524155934965716716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,7 +148,50 @@ MonoBehaviour:
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 0
+  statToChange: 8
   amount: 3
   turns: -1
-  reason: from the Orb of Slope Detection
+  reason: from the Energising Beans
+--- !u!114 &3144507976573022972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Whip of Penance
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -6529326133691979762}
+  - {fileID: 574999788656432817}
+  costScale: 0.9
+--- !u!114 &4954398658604040526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: This little lute plays the most adorable songs. The performers
+    love to sing along.
+--- !u!114 &8025418889593536673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: '"Alrighty, I''ll come back another time!"'

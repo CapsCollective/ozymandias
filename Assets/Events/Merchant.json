@@ -38,41 +38,41 @@
         ]
       },
       {
-        "name": "Chest of Hoarding",
-        "costScale": 1.2,
+        "name": "Rat on a Stick",
+        "costScale": 1.1,
         "outcomes":
         [
           {
             "type": "FlavourText",
-            "customDescription": "The chest contains a massive empty space. Adventurers decide to move into the free real-estate."
+            "customDescription": "This 'magical' item points you in the direction of forest cheese, a very real and very tasty thing."
           },
           {
             "type": "ModifierAdded",
             "modifier": {
-              "toChange": "Housing",
+              "toChange": "Food",
               "amount": 20,
               "turns": -1,
-              "reason": "from the Chest of Hoarding"
+              "reason": "from the Forest Cheese"
             }
           }
         ]
       },
       {
-        "name": "Magic Mushrooms",
-        "costScale": 0.7,
+        "name": "Orb of Slope Detection",
+        "costScale": 0.5,
         "outcomes":
         [
           {
             "type": "FlavourText",
-            "customDescription": "The Arcanists say these glowing fungi helps them see into other dimensions, we assume this helps their magical research."
+            "customDescription": "This mystical object shifts itself to the lowest point of any surface. The brawlers are mystified by it's power and play with it endlessly..."
           },
           {
             "type": "ModifierAdded",
             "modifier": {
-              "toChange": "Arcanist",
-              "amount": 3,
+              "toChange": "Brawler",
+              "amount": 2,
               "turns": -1,
-              "reason": "from the Magic Mushrooms"
+              "reason": "from the Orb of Slope Detection"
             }
           }
         ]
@@ -117,8 +117,28 @@
         ]
       },
       {
-        "name": "The Cute Lute",
+        "name": "Whip of Penance",
         "costScale": 0.9,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "This will make the Diviners self-flagellation parties much more exciting."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Diviner",
+              "amount": 4,
+              "turns": -1,
+              "reason": "from the Whip of Penance"
+            }
+          }
+        ]
+      },
+      {
+        "name": "The Cute Lute",
+        "costScale": 0.7,
         "outcomes":
         [
           {
@@ -129,29 +149,9 @@
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Performer",
-              "amount": 4,
-              "turns": -1,
-              "reason": "from the Cute Lute"
-            }
-          }
-        ]
-      },
-      {
-        "name": "Orb of Slope Detection",
-        "costScale": 0.7,
-        "outcomes":
-        [
-          {
-            "type": "FlavourText",
-            "customDescription": "This mystical object shifts itself to the lowest point of any surface. The brawlers are mystified by it's power and play with it endlessly..."
-          },
-          {
-            "type": "ModifierAdded",
-            "modifier": {
-              "toChange": "Brawler",
               "amount": 3,
               "turns": -1,
-              "reason": "from the Orb of Slope Detection"
+              "reason": "from the Cute Lute"
             }
           }
         ]
@@ -176,41 +176,21 @@
     "type": "Merchant",
     "choices": [
       {
-        "name": "Rat on a stick",
-        "costScale": 1.1,
+        "name": "Chest of Hoarding",
+        "costScale": 1.2,
         "outcomes":
         [
           {
             "type": "FlavourText",
-            "customDescription": "This 'magical' item points you in the direction of forest cheese, a very real and very tasty thing."
+            "customDescription": "The chest contains a massive empty space. Adventurers decide to move into the free real-estate."
           },
           {
             "type": "ModifierAdded",
             "modifier": {
-              "toChange": "Food",
+              "toChange": "Housing",
               "amount": 20,
               "turns": -1,
-              "reason": "from the Forest Cheese"
-            }
-          }
-        ]
-      },
-      {
-        "name": "Whip of Penance",
-        "costScale": 0.9,
-        "outcomes":
-        [
-          {
-            "type": "FlavourText",
-            "customDescription": "This will make the Diviners self-flagellation parties much more exciting."
-          },
-          {
-            "type": "ModifierAdded",
-            "modifier": {
-              "toChange": "Diviner",
-              "amount": 4,
-              "turns": -1,
-              "reason": "from the Whip of Penance"
+              "reason": "from the Chest of Hoarding"
             }
           }
         ]
@@ -231,6 +211,26 @@
               "amount": 4,
               "turns": -1,
               "reason": "from the Cloak of Invisibility"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Magic Mushrooms",
+        "costScale": 0.5,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The Arcanists say these glowing fungi helps them see into other dimensions, we assume this helps their magical research."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Arcanist",
+              "amount": 2,
+              "turns": -1,
+              "reason": "from the Magic Mushrooms"
             }
           }
         ]
@@ -296,7 +296,7 @@
         ]
       },
       {
-        "name": "Send a villager",
+        "name": "Send a Villager",
         "costScale": 0.5,
         "outcomes":
         [
@@ -309,7 +309,7 @@
             "nextEvent": {
               "name": "mirror-mirror-2",
               "headline": "The Pauper is a Princess!",
-              "article": "We received an envoy from a far away kingdom today, with the good news that the commoner who recently vanished by a trickster merchant was in fact turned into a princess! She's sent a generous offer in exchange for us sending us all her stuff.",
+              "article": "We received an envoy from a far away kingdom today, with the good news that the commoner who recently vanished into a <b>mirror</b> by a trickster merchant was in fact turned into a princess! She's sent a generous offer in exchange for us sending us all her stuff.",
               "image": "tiara",
               "outcomes": [
                 {
@@ -326,7 +326,7 @@
         ]
       },
       {
-        "name": "Refuse the offer",
+        "name": "Refuse the Offer",
         "outcomes":
         [
           {
@@ -480,6 +480,87 @@
           {
             "type": "FlavourText",
             "customDescription": "\"Your future will come, whether you are aware of it or not.\""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "mercenaries",
+    "headline": "Mercenaries Arrive",
+    "article": "A pack of wayward mercenaries arrived, hearing there's coin to be made. They've offered to join our fight or",
+    "image": "effectiveness",
+    "type": "Merchant",
+    "choices": [
+      {
+        "name": "Hire Mercenaries",
+        "costScale": 1.0,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "They pour out their wagon, ready to fight..."
+          },
+          {
+            "type": "AdventurersAdded",
+            "count": 5,
+            "anyGuild": true
+          }
+        ]
+      },
+      {
+        "name": "Set Traps",
+        "costScale": 0.8,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "These traps should keep the monsters from getting 'too' close..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": -3
+          }
+        ]
+      },
+      {
+        "name": "Go Hunting",
+        "costScale": 0.6,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "They go out looking for whatever food they can find..."
+          },
+          {
+            "type": "ChainEvent",
+            "nextEvent": {
+              "name": "mercenaries-hunting",
+              "headline": "Mercenaries Return With Food!",
+              "article": "Those mercenaries we sent out have returned with some rations that should keep us going a while longer.",
+              "image": "boar",
+              "outcomes": [
+                {
+                  "type": "ModifierAdded",
+                  "modifier": {
+                    "toChange": "Food",
+                    "amount": 10,
+                    "turns": -1,
+                    "reason": "from the Mercenaries Hunting"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "We Don't Need Any Help",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "Fine, I guess we'll come back after the monsters have roughed you up a little, see if you need our help then."
           }
         ]
       }

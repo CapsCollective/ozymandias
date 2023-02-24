@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9029404320754272347
+--- !u!114 &-8933184223211883846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,26 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
-  m_Name: RequestCompleted
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  guild: 3
---- !u!114 &-8410982262975611349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
-  m_Name: RequestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  guild: 1
---- !u!114 &-8388045538397212553
+  customDescription: '"Alrighty, I''ll come back another time!"'
+--- !u!114 &-6284344558429825204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,13 +23,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Magic Mushrooms
+  m_Name: Orb of Slope Detection
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -3322914642885211318}
-  - {fileID: 2334749129653699795}
-  costScale: 0.7
---- !u!114 &-7882292418504164864
+  - {fileID: -4672826655926269812}
+  - {fileID: -3246193848255153715}
+  costScale: 0.5
+--- !u!114 &-5962798348566774311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: This 'magical' item points you in the direction of forest cheese,
+    a very real and very tasty thing.
+--- !u!114 &-4672826655926269812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: This mystical object shifts itself to the lowest point of any
+    surface. The brawlers are mystified by it's power and play with it endlessly...
+--- !u!114 &-3246193848255153715
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,39 +70,11 @@ MonoBehaviour:
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 5
-  amount: 20
+  statToChange: 0
+  amount: 2
   turns: -1
-  reason: from the Chest of Hoarding
---- !u!114 &-5109265901489878182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The chest contains a massive empty space. Adventurers decide
-    to move into the free real-estate.
---- !u!114 &-3322914642885211318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The Arcanists say these glowing fungi helps them see into other
-    dimensions, we assume this helps their magical research.
---- !u!114 &-3126576605343195531
+  reason: from the Orb of Slope Detection
+--- !u!114 &-151538941897411210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,16 +84,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Debt Forgiveness
+  m_Name: Rat on a Stick
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 8489052194433886236}
-  - {fileID: 5818518895195941705}
-  - {fileID: -8410982262975611349}
-  - {fileID: 3804241283612550926}
-  - {fileID: -9029404320754272347}
-  - {fileID: 4828012094389515612}
-  costScale: 3.5
+  - {fileID: -5962798348566774311}
+  - {fileID: 1408833287256220703}
+  costScale: 1.1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,57 +111,12 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -3126576605343195531}
-  - {fileID: 8640881831461396549}
-  - {fileID: -8388045538397212553}
-  - {fileID: 703234998993763578}
+  - {fileID: 1098243154329338877}
+  - {fileID: -151538941897411210}
+  - {fileID: -6284344558429825204}
+  - {fileID: 4181573296309491723}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &703234998993763578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Nothing Today Thanks!
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 2098576708835907060}
-  costScale: 0
---- !u!114 &2098576708835907060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: '"Alrighty, I''ll come back another time!"'
---- !u!114 &2334749129653699795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 4
-  amount: 3
-  turns: -1
-  reason: from the Magic Mushrooms
---- !u!114 &3804241283612550926
+--- !u!114 &254851377222629054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,8 +129,45 @@ MonoBehaviour:
   m_Name: RequestCompleted
   m_EditorClassIdentifier: 
   customDescription: 
-  guild: 2
---- !u!114 &4828012094389515612
+  guild: 3
+--- !u!114 &1098243154329338877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Debt Forgiveness
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 3256088933951835704}
+  - {fileID: 2720991499325056791}
+  - {fileID: 2885426090917256219}
+  - {fileID: 5567985523131128884}
+  - {fileID: 254851377222629054}
+  - {fileID: 2628033172017161532}
+  costScale: 3.5
+--- !u!114 &1408833287256220703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 6
+  amount: 20
+  turns: -1
+  reason: from the Forest Cheese
+--- !u!114 &2628033172017161532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   guild: 4
---- !u!114 &5818518895195941705
+--- !u!114 &2720991499325056791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,7 +195,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   guild: 0
---- !u!114 &8489052194433886236
+--- !u!114 &2885426090917256219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 1
+--- !u!114 &3256088933951835704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Due to a 'paperwork error' all the guilds requests have been
     marked as complete.
---- !u!114 &8640881831461396549
+--- !u!114 &4181573296309491723
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,9 +233,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Chest of Hoarding
+  m_Name: Nothing Today Thanks!
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -5109265901489878182}
-  - {fileID: -7882292418504164864}
-  costScale: 1.2
+  - {fileID: -8933184223211883846}
+  costScale: 0
+--- !u!114 &5567985523131128884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 2

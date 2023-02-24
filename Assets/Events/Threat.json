@@ -111,6 +111,7 @@
     "outcomes": [
       {
         "type": "AdventurersRemoved",
+        "anyGuild": true,
         "count": 2,
         "kill": true
       },
@@ -327,6 +328,7 @@
           {
             "type": "AdventurersRemoved",
             "count": 3,
+            "anyGuild": true,
             "customDescription": "It took 3 adventurers lives to wipe out their nest."
           },
           {
@@ -429,6 +431,7 @@
       {
         "type": "AdventurersRemoved",
         "count": 1,
+        "anyGuild": true,
         "kill": true
       },
       {
@@ -448,6 +451,7 @@
       {
         "type": "AdventurersRemoved",
         "count": 2,
+        "anyGuild": true,
         "kill": true,
         "customDescription": "2 Adventurers have been reported missing..."
       },
@@ -543,6 +547,80 @@
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "markets-destroyed",
+    "headline": "Collateral Catastrophe",
+    "article": "An elaborate chase of a thief through the city lasting hours caused every single cart in a marketplace to be knocked over during the pursuit. Pots, rare spices, and cabbages alike were tossed up in the air one by one during this cinematic pursuit.",
+    "image": "Buildings/Markets",
+    "outcomes": [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Markets"
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "guild": "Outrider",
+        "kill": false,
+        "customDescription": "The offending Outrider (<sprite=1>) was banished from the town..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "library-destroyed",
+    "headline": "Best Left Unread",
+    "article": "A local arcanist uncovered a dangerous book in the local library this morning, looking for a magical remedy for a clogged sink. Upon opening the book <i>'The Endless Drain'</i>, it contained a vortex that sucked everything in the vicinity up.",
+    "image": "book",
+    "type": "Threat",
+    "outcomes":
+    [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Library",
+        "customDescription": "The Library was sucked into the vortex..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "guild": "Arcanist",
+        "kill": true,
+        "customDescription": "The Arcanist (<sprite=4>) was sucked into the vortex..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "shrine-destroyed",
+    "headline": "My Name is Ozymandias",
+    "article": "A group of radical diviners have decided that the best way for their gods to be immortalised is by making their shrines symbolic and poignant ruins, the fast way...",
+    "image": "Buildings/Shrine",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Shrine",
+        "customDescription": "The Shrine just has the feet now..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "guild": "Arcanist",
+        "kill": true,
+        "customDescription": "One of the Diviners (<sprite=3>) was poetically crushed under their own symbolism..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
       }
     ]
   }

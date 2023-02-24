@@ -74,7 +74,7 @@ namespace Inputs
             previousSelections[Manager.State.Current] = obj;
             
             selectionHelper.SetParent(obj.transform);
-            selectionHelper.anchoredPosition = CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero;
+            selectionHelper.DOAnchorPos(CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero, 0.3f);
             selectionHelper.localScale = Vector3.one;
             selectionHelper.eulerAngles = Vector3.zero;
         }
