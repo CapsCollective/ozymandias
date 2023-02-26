@@ -61,10 +61,10 @@ namespace Tooltip
             }},
             {TooltipType.Arcanist, new TooltipConfig {
                 Title = "Arcanists",
-                Description = "Arcanists pluck from the very fabric of reality in weird, wonderful, and most " +
-                              "importantly, profitable ways. They are eccentric scholars who enjoy isolation and the " +
+                Description = "Arcanists pluck from the fabric of reality in weird, wonderful, and most " +
+                              "importantly, profitable ways. These eccentric scholars enjoy isolation and the " +
                               "pursuit of arcane knowledge. It is recommended their magic is controlled to prevent " +
-                              "*REDACTED*, and *SUPER REDACTED*.",
+                              "<b>REDACTED</b>, and <b>SUPER REDACTED</b>.",
                 Stat = Stat.Arcanist
             }},
             {TooltipType.Housing, new TooltipConfig {
