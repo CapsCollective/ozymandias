@@ -30,16 +30,15 @@ namespace Map
         //Procedurally places buildings
         public IEnumerator FillGrid()
         {
-            const int maxStructuresPerFrame = 30;
             int countPerFrame = 0;
             
             //TODO: Pick a spawn cell from a list of 'safe' placements, avoid building trees in cell within a distance of the hall, Store the cell 
-            foreach (Cell cell in CellGraph.Data.Where(cell => cell.Active))
+            foreach (Cell cell in CellGraph.Data.OrderBy(c => Vector3.Distance(c.WorldSpace, Manager.Structures.TownCentre)).Where(cell => cell.Active))
             {
                 if (cell.Occupied) continue;
                 Manager.Structures.AddTerrain(cell.Id);
                 
-                if (++countPerFrame < maxStructuresPerFrame) continue;
+                if (++countPerFrame < Manager.MaxStructuresPerFrame) continue;
                 countPerFrame = 0;
                 yield return null;
             }

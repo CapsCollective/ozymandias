@@ -238,7 +238,7 @@ namespace Tooltip
                     break;
                 case Stat.Stability:
                     int change = Manager.Stats.Defence - Manager.Stats.Threat;
-                    int turnsUntilDestruction = change >= 0 ? 0 : (-Manager.Stats.Stability / change) + 1;
+                    int turnsUntilDestruction = change >= 0 ? 0 : ((Manager.Stats.Stability - 1) / -change) + 1;
                     details.text = (
                         $"{Manager.Stats.Stability}/100 Town Stability" +
                         $"\n{change.WithSign()} next turn ({Manager.Stats.Defence} Defence - {Manager.Stats.Threat} Threat)" + 
@@ -246,15 +246,15 @@ namespace Tooltip
                     ).Center();
                     break;
                 case Stat.Spending:
-                    int wealthFromAdventurers = (Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) * adventurers;
                     details.text = 
                         $"{Manager.Stats.WealthPerTurn} {String.StatWithIcon(Stat.Spending)}".Center() +
-                        ($"+{wealthFromAdventurers} from {adventurers} Adventurers in town" + 
-                         "\n(-2 spending per adventurer due to cosmetics)".Conditional(Manager.EventQueue.Flags[Flag.Cosmetics])
+                        ($"+{(Manager.EventQueue.Flags[Flag.Cosmetics] ? 0 : adventurers)}" +
+                         $"/{Manager.Adventurers.Count}".Conditional(Manager.Adventurers.Unavailable > 0) +
+                         " from Adventurers in town" +
+                         "\n(No spending from adventurers due to Cosmetic Craze)".Conditional(Manager.EventQueue.Flags[Flag.Cosmetics])
                         ).ListItem() +
-                        $"+{StartingSalary} Starting Salary".ListItem() +
+                        $"+{StartingSalary + Manager.Stats.GetUpgradeMod(Stat.Spending) * BaseStatMultiplier} Starting Salary".ListItem() +
                         FormattedBuildingString(Stat.Spending) +
-                        FormattedUpgradeString(Stat.Spending) +
                         FormattedModifierString(Stat.Spending);
                     break; 
                 default: // Stat for a guild

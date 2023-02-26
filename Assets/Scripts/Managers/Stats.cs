@@ -80,8 +80,7 @@ namespace Managers
         
         public int FoodModifier => GetSatisfaction(Stat.Food)/10;
 
-        public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) *
-            Manager.Adventurers.Available + GetStat(Stat.Spending) + StartingSalary; // 5 gold per adventurer plus spending, 3 if in tailor story
+        public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 0 : Manager.Adventurers.Available) + GetStat(Stat.Spending) + StartingSalary;
     
         public int Wealth { get;  set; }
 
@@ -122,7 +121,7 @@ namespace Managers
             TurnCounter = 1;
             BaseThreat = 0;
             Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
-            Wealth = Tutorial.Tutorial.Active ? 0 : 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
+            Wealth = Tutorial.Tutorial.Active ? 0 : StartingWealth + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 10;
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
             {
                 ModifiersTotal[stat] = 0;
@@ -155,7 +154,7 @@ namespace Managers
                 if (spawnRoll < spawnChance) Manager.Adventurers.Add(guild);
                 else if (spawnRoll < -spawnChance) Manager.Adventurers.Remove(false, guild);
                 
-                if (GetSatisfaction(guild) >= 10) Manager.EventQueue.Add(excessEvents[guild], true);
+                if (GetSatisfaction(guild) >= 20) Manager.EventQueue.Add(excessEvents[guild], true);
             }
             UpdateUi();
         }

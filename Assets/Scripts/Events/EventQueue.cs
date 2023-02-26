@@ -96,7 +96,11 @@ namespace Events
         
             _current.Add(PickRandom(EventType.Advert));
 
-            foreach (Event e in _current) _outcomeDescriptions.Add(e.Execute());
+            foreach (Event e in _current)
+            {
+                Debug.Log("Processing " + e.type);
+                _outcomeDescriptions.Add(e.Execute());
+            }
         
             _newspaper.UpdateDisplay(_current, _outcomeDescriptions);
         }
@@ -112,17 +116,14 @@ namespace Events
             // Let them gain some adventurers to start
             if (Manager.Adventurers.Count >= 3)
             {
-                // Stability change per turn, each enemy camp counts for an extra 5
-                int lead = Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat, -20, 15);
-                
                 // Scale from 100% down to 0% threat spawn if falling behind by up to 20
                 // Prevent multiple threat events from happening in a single turn
-                if (TypeNotInQueue(EventType.Threat) && Random.Range(0,20) > -lead)
+                if (TypeNotInQueue(EventType.Threat) && Random.Range(-10, 10) < Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat, -10, 10))
                     eventPool.Add(PickRandom(EventType.Threat));
                 
-                // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 15 (75% spawn chance) 
-                int random = Random.Range(0, 20);
-                if (!Tutorial.Tutorial.Active && TypeNotInQueue(EventType.Radiant) && (random == 0 || random < lead))
+                // Chance increases with stability, and decreases with count of active quests 
+                int random = Random.Range(0, 150 + Manager.Quests.RadiantCount * 100);
+                if (!Tutorial.Tutorial.Active && TypeNotInQueue(EventType.Radiant) && random < Manager.Stats.Stability)
                     eventPool.Add(PickRandom(EventType.Radiant));
 
                 // Scales merchant spawn by how much wealth the player has saved up, ranging from 10% to 50% for > 5x wealth per turn
@@ -130,7 +131,7 @@ namespace Events
                     eventPool.Add(PickRandom(EventType.Merchant));
                 
                 // 20% chance to start a new story while no other is active
-                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
+                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && TypeNotInQueue(EventType.Story) && Random.Range(0, 5) == 0)
                     eventPool.Add(PickRandomStory());
             }
 

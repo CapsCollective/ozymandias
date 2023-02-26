@@ -43,7 +43,6 @@ namespace Structures
         private void Awake()
         {
             State.OnNewGame += () => { if (!Tutorial.Tutorial.Active) SpawnGuildHall(); };
-            State.OnGameEnd += RemoveAll;
             var buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset)).Cast<TextAsset>().ToArray();
             foreach (TextAsset building in buildingsText)
             {
@@ -167,12 +166,12 @@ namespace Structures
             _buildings.ForEach(building => building.CheckAdjacencyBonus());
         }
 
-        private void RemoveAll()
+        public IEnumerator ResetGrid()
         {
-            int count = 0;
-            List<Structure> dupList = new List<Structure>(_buildings);
-            dupList.Reverse(); // Reverse processing order so its more likely the furthest out buildings become ruins
-            dupList.ForEach(building =>
+            int countPerFrame = 0;
+            int newRuinsCount = 0;
+            List<Structure> dupList = _buildings.OrderByDescending(b => Vector3.Distance(b.transform.position, TownCentre)).ToList();
+            foreach (Structure building in dupList)
             {
                 if (building.Blueprint.type != BuildingType.GuildHall &&
                     building.Blueprint.type != BuildingType.Farm &&
@@ -183,15 +182,22 @@ namespace Structures
                     building.Blueprint.type != BuildingType.BathHouse &&
                     building.Blueprint.type != BuildingType.Monastery &&
                     building.Blueprint.type != BuildingType.FightingRing &&
-                    Random.Range(0, count) == 0
+                    Random.Range(0, newRuinsCount) == 0
                 )
                 {
                     ToRuin(building);
-                    count++;
+                    newRuinsCount++;
                 }
                 else building.Destroy();
-            });
+                
+                if (++countPerFrame < Manager.MaxStructuresPerFrame) continue;
+                countPerFrame = 0;
+                yield return null;
+            }
+            
             _buildings.Clear();
+            yield return Manager.Map.FillGrid();
+            
             SpawnLocation = NewSpawnLocation();
             TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
         }
@@ -255,7 +261,6 @@ namespace Structures
 
         private IEnumerator LoadCoroutine(StructureDetails details)
         {
-            const int maxStructuresPerFrame = 30;
             int countPerFrame = 0;
 
             foreach (BuildingDetails building in details.buildings ?? new List<BuildingDetails>())
@@ -266,7 +271,7 @@ namespace Structures
                     "It may not yet be available to the player.");
                 AddBuilding(blueprint, building.rootId, building.rotation, building.isRuin);
 
-                if (++countPerFrame < maxStructuresPerFrame) continue;
+                if (++countPerFrame < Manager.MaxStructuresPerFrame) continue;
                 countPerFrame = 0;
                 yield return null;
             }
@@ -275,7 +280,7 @@ namespace Structures
             {
                 AddTerrain(terrain.rootId, terrain.sectionCount);
 
-                if (++countPerFrame < maxStructuresPerFrame) continue;
+                if (++countPerFrame < Manager.MaxStructuresPerFrame) continue;
                 countPerFrame = 0;
                 yield return null;
             }

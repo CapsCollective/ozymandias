@@ -205,12 +205,14 @@ namespace Managers
             Manager.Cards.Load(data.cards);
             Manager.Stats.Load(data.stats);
             yield return Manager.Structures.Load(data.structures);
-            if (Manager.Structures.Count == 0) yield return Manager.Map.FillGrid();
             Manager.EventQueue.Load(data.eventQueue);
             Manager.Requests.Load(data.requests);
             
-            // If continuing a game
-            if (Manager.Stats.TurnCounter != 0)
+            if (Manager.Stats.TurnCounter == 0)
+            {
+                yield return Manager.Map.FillGrid();
+            }
+            else
             {
                 Manager.Adventurers.Load(data.adventurers);
                 Manager.Quests.Load(data.quests);

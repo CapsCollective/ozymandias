@@ -209,16 +209,18 @@ namespace Managers
 
         #region Balancing Constants
 
-        public const int TerrainBaseCost = 7;
-        public const float TerrainCostScale = 1.15f;
-        public const int RuinsBaseCost = 30;
+        public const float TerrainBaseCost = 1.3f;
+        public const float TerrainCostScale = 1.2f;
+        public const int RuinsBaseCost = 7;
         public const float RuinsCostScale = 1.07f;
-        public const int WealthPerAdventurer = 5;
         public const float ThreatScaling = 15f; // How many turns to add 1 to the base threat
         public const int BaseStatMultiplier = 5;
         public const int StartingSalary = 10;
+        public const int StartingWealth = 20;
         
-#endregion
+        public int MaxStructuresPerFrame => State.Loading ? 30 : 4;
+
+        #endregion
 
 #region Debug
 #if UNITY_EDITOR

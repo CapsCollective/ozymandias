@@ -339,7 +339,7 @@
               "type": "SetFlag",
               "flag": "Cosmetics",
               "value": true,
-              "customDescription": "<color=#820000ff>-2 Wealth (<sprite=7>) per adventurer until this is resolved.</color>"
+              "customDescription": "<color=#820000ff>No Wealth (<sprite=7>) from adventurers until this is resolved.</color>"
             },
             {
               "type": "ChainEvent",
@@ -395,7 +395,7 @@
                 "adventurers": 6,
                 "baseTurns": 7,
                 "wealthMultiplier": 1.1,
-                "reward": "Remove modifier: -2 Wealth (<sprite=7>) per adventurer",
+                "reward": "Remove modifier: No Wealth (<sprite=7>) from adventurers",
                 "completedEvent": {
                   "name": "tailor-4",
                   "headline": "\"It's all about those dances, now!\"",
@@ -406,7 +406,7 @@
                       "type": "SetFlag",
                       "flag": "Cosmetics",
                       "value": false,
-                      "customDescription": "<color=#007000ff>Adventurers are now fully spending in our town again!</color>"
+                      "customDescription": "<color=#007000ff>Adventurers are now spending in our town again!</color>"
                     },
                     {
                       "type": "SetFlag",
@@ -475,6 +475,7 @@
                           },
                           {
                             "type": "AdventurersRemoved",
+                            "anyGuild": true,
                             "kill": true,
                             "count": 3
                           },
@@ -701,6 +702,7 @@
           "outcomes": [
             {
               "type": "AdventurersRemoved",
+              "anyGuild": true,
               "count": 3,
               "kill": true
             },
@@ -801,6 +803,7 @@
       {
         "type": "AdventurersRemoved",
         "count": 2,
+        "anyGuild": true,
         "kill": true,
         "customDescription": "Two adventurers were amongst the casualties."
       },

@@ -126,7 +126,7 @@ namespace Managers
                     InMenuInit();
                     break;
                 case GameState.EndGame:
-                    EndGameInit();
+                    StartCoroutine(EndGameInit());
                     break;
                 case GameState.ToCredits:
                     ToCreditsInit();
@@ -321,10 +321,10 @@ namespace Managers
             
         }
         
-        private void EndGameInit()
+        private IEnumerator EndGameInit()
         {
             OnGameEnd?.Invoke();
-            Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
+            yield return Manager.Structures.ResetGrid();
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
             

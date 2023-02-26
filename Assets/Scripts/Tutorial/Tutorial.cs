@@ -327,7 +327,7 @@ namespace Tutorial
 
             void ShowGameUi()
             {
-                Manager.Stats.Wealth = 100;
+                Manager.Stats.Wealth = StartingWealth;
                 Manager.GameHud.Show(new List<GameHud.HudObject>()
                 {
                     GameHud.HudObject.TopBar,
