@@ -49,7 +49,7 @@ namespace Cards
                 _selectedCardIndex = hand.FindIndex(card => card == value);
 
                 _selectedCard = value;
-                if(_selectedCard && _selectedCard.Toggle.IsInteractable()) Manager.Map.Flood();
+                if (_selectedCard && _selectedCard.Toggle.IsInteractable()) Manager.Map.Flood();
                 else Manager.Map.Drain();
                 
                 Manager.Cursor.Current = _selectedCard ? CursorType.Build : CursorType.Pointer;
@@ -253,12 +253,13 @@ namespace Cards
             
             if (!Manager.Cards.SelectedCard || IsOverUi)
             {
-                Manager.Map.Highlight(_selectedCells, HighlightState.Inactive);
+                ClearCells();
                 _hoveredCell = null;
                 return;
             }
 
             Cell closest = ClosestCellToCursor;
+            // Return if target cell, rotation, or card selected hasn't changed
             if (closest == null || !closest.Active || (_prevRotation == _rotation && _hoveredCell == closest && _prevCardIndex == _selectedCardIndex)) return;
             _hoveredCell = closest;
             _prevRotation = _rotation;
@@ -267,6 +268,7 @@ namespace Cards
             ClearCells();
             _selectedCells = Manager.Map.GetCells(Manager.Cards.SelectedCard.Blueprint.sections, closest.Id, _rotation);
             _cellsValid = Cell.IsValid(_selectedCells);
+            Manager.Map.Highlight(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint), HighlightState.Valid);
             Manager.Map.Highlight(_selectedCells, _cellsValid ? HighlightState.Valid : HighlightState.Invalid);
 
             // Badge Showing
@@ -284,7 +286,7 @@ namespace Cards
 
         private void ClearCells()
         {
-            Manager.Map.Highlight(_selectedCells, HighlightState.Inactive);
+            Manager.Map.ClearHighlight();
             _selectedCells.Clear();
         }
         

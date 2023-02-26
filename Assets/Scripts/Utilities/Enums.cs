@@ -140,7 +140,8 @@
     {
         Inactive,
         Valid,
-        Invalid
+        Invalid,
+        Highlighted
     }
     
     public enum Direction

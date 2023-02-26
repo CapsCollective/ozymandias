@@ -151,6 +151,11 @@ namespace Map
             return CellGraph.GetData(id);
         }
 
+        public List<Cell> GetCells()
+        {
+            return CellGraph.Data;
+        }
+
         public List<Cell> GetCells(Vector3 worldPosition, float worldRadius)
         {
             return CellGraph.Data.Where(cell => Vector3.Distance(cell.WorldSpace, worldPosition) < worldRadius).ToList();

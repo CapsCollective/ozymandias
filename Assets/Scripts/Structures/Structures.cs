@@ -161,6 +161,42 @@ namespace Structures
             return structure.name;
         }
 
+        public List<Cell> GetAdjacencyBonusCells(Blueprint blueprint)
+        {
+            AdjacencyConfiguration config = blueprint.adjacencyConfig;
+            if(!config.hasBonus || !Manager.Upgrades.IsUnlocked(config.upgrade)) return new List<Cell>();
+
+            if (config.specialCheck)
+            {
+                if (config.structureType == StructureType.Ruins)
+                    return _ruins.SelectMany(b => Manager.Map.GetValidAdjacencies(b)).Distinct().ToList();
+                
+                if (config.structureType == StructureType.Terrain)
+                    return _terrain.SelectMany(b => Manager.Map.GetValidAdjacencies(b)).Distinct().ToList();
+                
+                switch (blueprint.type)
+                {
+                    case BuildingType.Farm:
+                        return Manager.Map.GetCellsNextToTwoFarms();
+                    case BuildingType.BathHouse:
+                        return Manager.Map.GetCellsByWater();
+                    case BuildingType.Monastery:
+                    case BuildingType.Watchtower:
+                        return Manager.Map.GetCellsWithNoNeighbours();
+                }
+            }
+            else
+            {
+                return _buildings
+                    .Where(b => b.Blueprint.type == config.neighbourType)
+                    .SelectMany(b => Manager.Map.GetValidAdjacencies(b))
+                    .Distinct()
+                    .ToList();
+            }
+
+            return new List<Cell>();
+        }
+        
         public void CheckAdjacencyBonuses()
         {
             _buildings.ForEach(building => building.CheckAdjacencyBonus());

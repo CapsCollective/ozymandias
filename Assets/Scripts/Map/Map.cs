@@ -128,6 +128,21 @@ namespace Map
                     .Where(occupant => occupant && occupant != structure) // Exclude null values and self
                 ).Distinct().ToList();
 
+        public List<Cell> GetValidAdjacencies(Structure structure) =>
+            structure.Occupied.SelectMany(cell => GetNeighbours(cell).Where(n => n.Active && !n.Occupied)).Distinct().ToList();
+
+        public List<Cell> GetCellsByWater() => layout.GetCells().Where(c => c.WaterFront && !c.Occupied).ToList();
+
+        public List<Cell> GetCellsNextToTwoFarms() => 
+            layout.GetCells().Where(c => !c.Occupied && GetNeighbours(c)
+                .Where(n => n.Occupied && n.Occupant.IsBuilding && n.Occupant.Blueprint.type == BuildingType.Farm)
+                .Select(n => n.Occupant)
+                .Distinct()
+                .Count() >= 2
+            ).ToList();
+        
+        public List<Cell> GetCellsWithNoNeighbours() => layout.GetCells().Where(c => !c.Occupied && !GetNeighbours(c).Any(n => n.Occupied && n.Occupant.IsBuilding)).ToList();
+        
         public List<Vector3> GetCornerPositions(Cell cell)
         {
             List<Vector3> corners = new List<Vector3>(4);
@@ -145,6 +160,7 @@ namespace Map
         #region Functionality
         List<Vector2> uv = new List<Vector2>();
         Vector2 newUV = new Vector2();
+        private bool hasHighlights = false;
         public void Highlight(IEnumerable<Cell> cells, HighlightState state)
         {
             gridMesh.sharedMesh.GetUVs(0, uv);
@@ -153,13 +169,27 @@ namespace Map
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertexIndex in layout.GetUVs(cell))
-                {
-                    newUV = new Vector2((int)state / 2f, uv[vertexIndex].y);
-                    uv[vertexIndex] = newUV;
-                }
+                    uv[vertexIndex] = new Vector2((int)state / 2f, uv[vertexIndex].y);;
             }
 
             gridMesh.sharedMesh.SetUVs(0, uv);
+            hasHighlights = true;
+        }
+        
+        public void ClearHighlight()
+        {
+            if (!hasHighlights) return;
+            gridMesh.sharedMesh.GetUVs(0, uv);
+
+            foreach (Cell cell in layout.GetCells())
+            {
+                if (cell == null || !cell.Active) continue;
+                foreach (int vertexIndex in layout.GetUVs(cell))
+                    uv[vertexIndex] = new Vector2((int)HighlightState.Inactive / 2f, uv[vertexIndex].y);
+            }
+
+            gridMesh.sharedMesh.SetUVs(0, uv);
+            hasHighlights = false;
         }
 
         // Sets the rotation of all cells to be uniformly oriented
