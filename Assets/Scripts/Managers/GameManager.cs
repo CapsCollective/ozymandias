@@ -213,7 +213,7 @@ namespace Managers
         public const float TerrainCostScale = 1.2f;
         public const int RuinsBaseCost = 7;
         public const float RuinsCostScale = 1.07f;
-        public const float ThreatScaling = 15f; // How many turns to add 1 to the base threat
+        public const float ThreatScaling = 10f; // How many turns to add 1 to the base threat
         public const int BaseStatMultiplier = 5;
         public const int StartingSalary = 10;
         public const int StartingWealth = 20;

@@ -158,38 +158,39 @@ namespace Map
         #endregion
 
         #region Functionality
-        List<Vector2> uv = new List<Vector2>();
-        Vector2 newUV = new Vector2();
-        private bool hasHighlights = false;
+
+        private readonly List<Vector2> _uv = new List<Vector2>();
+        // Vector2 newUV = new Vector2();
+        private bool _hasHighlights;
         public void Highlight(IEnumerable<Cell> cells, HighlightState state)
         {
-            gridMesh.sharedMesh.GetUVs(0, uv);
+            gridMesh.sharedMesh.GetUVs(0, _uv);
 
             foreach (Cell cell in cells)
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertexIndex in layout.GetUVs(cell))
-                    uv[vertexIndex] = new Vector2((int)state / 2f, uv[vertexIndex].y);;
+                    _uv[vertexIndex] = new Vector2((int)state / 2f, _uv[vertexIndex].y);;
             }
 
-            gridMesh.sharedMesh.SetUVs(0, uv);
-            hasHighlights = true;
+            gridMesh.sharedMesh.SetUVs(0, _uv);
+            _hasHighlights = true;
         }
         
         public void ClearHighlight()
         {
-            if (!hasHighlights) return;
-            gridMesh.sharedMesh.GetUVs(0, uv);
+            if (!_hasHighlights) return;
+            gridMesh.sharedMesh.GetUVs(0, _uv);
 
             foreach (Cell cell in layout.GetCells())
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertexIndex in layout.GetUVs(cell))
-                    uv[vertexIndex] = new Vector2((int)HighlightState.Inactive / 2f, uv[vertexIndex].y);
+                    _uv[vertexIndex] = new Vector2((int)HighlightState.Inactive / 2f, _uv[vertexIndex].y);
             }
 
-            gridMesh.sharedMesh.SetUVs(0, uv);
-            hasHighlights = false;
+            gridMesh.sharedMesh.SetUVs(0, _uv);
+            _hasHighlights = false;
         }
 
         // Sets the rotation of all cells to be uniformly oriented

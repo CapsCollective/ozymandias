@@ -81,7 +81,7 @@ namespace Adventurers
             if (!Manager.State.Loading) OnAdventurerJoin?.Invoke(created);
         }
 
-        public void Remove(bool kill) // Removes a random adventurer, ensuring they aren't special
+        public void Remove(bool kill) // Removes a random adventurer
         {
             List<Adventurer> removable = _adventurers.Where(x => !x.assignedQuest).ToList();
             if (removable.Count == 0) return;

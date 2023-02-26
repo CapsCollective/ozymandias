@@ -13,6 +13,9 @@ namespace Structures
 {
     public class Structure : MonoBehaviour
     {
+        private static readonly int RoofColor = Shader.PropertyToID("_RoofColor");
+        private static readonly int HasGrass = Shader.PropertyToID("_HasGrass");
+        
         public Blueprint Blueprint { get; private set; } // Left Blank for terrain and quest structures
         public StructureType StructureType { get; private set; }
         public Quest Quest { get; set; }
@@ -108,7 +111,7 @@ namespace Structures
             if (!Manager.State.Loading) AnimateCreate();
         }
 
-        public void CreateTerrain(int rootId, int sectionCount = -1)
+        public void CreateTerrain(int rootId, int sectionCount = 4)
         {
             Random.InitState(rootId); // Init random with the id so it's the same each time
             
@@ -121,33 +124,23 @@ namespace Structures
             };
            
             name = "Forest";
-            Occupied = Manager.Map.GetCells(terrainSections, rootId);
+            Occupied = Manager.Map.GetCells(terrainSections, rootId).Take(sectionCount).Where(Cell.IsValid).Distinct().ToList();
             StructureType = StructureType.Terrain;
             _rootId = rootId;
             _rotation = 0;
 
-            Vector3 centre = new Vector3();
-            int cellCount = 0;
-            centre = Occupied
-                .TakeWhile(cell => 
-                    Cell.IsValid(cell) && 
-                    !Occupied.GetRange(0, cellCount).Contains(cell) && // No looping around
-                    cellCount++ != sectionCount
-                ).Aggregate(centre, (current, cell) => current + cell.Centre);
-
-            if (cellCount == 0)
+            if (Occupied.Count == 0)
             {
                 Destroy(gameObject);
                 return;
             }
-            centre /= cellCount;
-            transform.position = Manager.Map.transform.TransformPoint(centre); // Center rotated to get world position
+
+            transform.position = Algorithms.CenterPosition(Occupied.Select(o => o.WorldSpace).ToList());
             
-            Occupied = Occupied.GetRange(0, cellCount); // Limit cells
             foreach (Cell cell in Occupied) cell.Occupant = this;
 
             _sections = Enumerable
-                .Range(0, cellCount)
+                .Range(0, Occupied.Count)
                 .Select(i => Instantiate(
                     Random.Range(0, 5) == 0 ? 
                     Manager.Structures.RockSection :
@@ -160,8 +153,8 @@ namespace Structures
                 _sectionRenderers.Add(_sections[i]._meshFilter);
             }
 
-            var meshrenderer = gameObject.AddComponent<MeshRenderer>();
-            var meshfilter = gameObject.AddComponent<MeshFilter>();
+            MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
+            MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
 
             CombineInstance[] combine = new CombineInstance[_sectionRenderers.Count];
             for (int i = 0; i < combine.Length; i++)
@@ -173,9 +166,9 @@ namespace Structures
                 _sections[i].meshRenderer.enabled = false;
             }
 
-            meshfilter.mesh = new Mesh();
-            meshrenderer.material = forestMaterial;
-            meshfilter.mesh.CombineMeshes(combine);
+            meshFilter.mesh = new Mesh();
+            meshRenderer.material = forestMaterial;
+            meshFilter.mesh.CombineMeshes(combine);
 
             if (!Manager.State.Loading) AnimateCreate(false); // TODO: Animate check (just not during loading???)
         }
@@ -193,16 +186,9 @@ namespace Structures
                 if (o.Occupied) Manager.Structures.Remove(o.Occupant);
             });
 
-            // Get the centre and count of all valid cells
-            Vector3 centre = new Vector3();
-            int cellCount = 0;
-            centre = Occupied
-                .TakeWhile(cell => Cell.IsValid(cell) && !Occupied.GetRange(0, cellCount++).Contains(cell))
-                .Aggregate(centre, (current, cell) => current + cell.Centre);
+            if(!Cell.IsValid(Occupied) || !Manager.Stats.Spend(Blueprint.ScaledCost)) return false;
 
-            if (cellCount != Occupied.Count || !Manager.Stats.Spend(Blueprint.ScaledCost)) return false;
-            centre /= cellCount;
-            transform.position = Manager.Map.transform.TransformPoint(centre);
+            transform.position = Algorithms.CenterPosition(Occupied.Select(o => o.WorldSpace).ToList());
             
             if (!isRuin) Manager.Map.CreateRoad(Occupied);
             Manager.Map.Align(Occupied, rotation); // Align vertices to rotate the building sections in the right direction
@@ -222,8 +208,8 @@ namespace Structures
 
             meshfilter.mesh = new Mesh();
             meshrenderer.material = buildingMaterial;
-            meshrenderer.material.SetColor("_RoofColor", blueprint.roofColor);
-            meshrenderer.material.SetInt("_HasGrass", blueprint.hasGrass ? 1 : 0);
+            meshrenderer.material.SetColor(RoofColor, blueprint.roofColor);
+            meshrenderer.material.SetInt(HasGrass, blueprint.hasGrass ? 1 : 0);
 
             for (int i = 0; i < _sections.Count; i++)
             {

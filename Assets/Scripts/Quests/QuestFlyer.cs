@@ -69,24 +69,9 @@ namespace Quests
 
             if (quest.IsActive)
             {
-                var turnText = "Will return in " + quest.TurnsLeft;
-
-                switch (quest.TurnsLeft)
-                {
-                    case 0:
-                        turnText = "Returning today";
-                        break;
-                    case 1:
-                        turnText += " turn";
-                        break;
-                    default:
-                        turnText += " turns";
-                        break;
-                }
-
                 adventurersText.text = "Adventurers: " + quest.AssignedCount;
-                durationText.text = turnText;
-                rewardText.text = "";
+                durationText.text = quest.TurnsLeft <= 1 ? "Returning today" : $"Will return in {quest.TurnsLeft} turns";
+                rewardText.text = quest.RewardDescription;
                 costText.text = "";
             }
             else

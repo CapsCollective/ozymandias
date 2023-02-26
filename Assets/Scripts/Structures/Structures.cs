@@ -127,7 +127,7 @@ namespace Structures
             return true;
         }
 
-        public void AddTerrain(int rootId, int sectionCount = -1)
+        public void AddTerrain(int rootId, int sectionCount = 4)
         {
             Structure structure = Instantiate(structurePrefab, transform).GetComponent<Structure>();
             structure.CreateTerrain(rootId, sectionCount);

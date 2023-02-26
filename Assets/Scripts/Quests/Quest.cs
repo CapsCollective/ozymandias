@@ -178,13 +178,12 @@ namespace Quests
         {
             if (IsActive)
             {
-                if (TurnsLeft <= 1)
+                if (--TurnsLeft <= 1)
                 {
                     if (completeEvent) Manager.EventQueue.Add(completeEvent, true);
                     else Debug.LogError("Quest was completed with no event.");
                 }
                 Debug.Log($"Quest in progress: {title}. {TurnsLeft} turns remaining.");
-                TurnsLeft--;
             }
             else if (
                 IsRadiant &&

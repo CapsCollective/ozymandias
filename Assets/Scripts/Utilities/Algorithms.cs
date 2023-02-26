@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Map;
 using UnityEngine;
 
@@ -149,6 +150,13 @@ namespace Utilities
             callback?.Invoke();
         }
 
+        public static Vector3 CenterPosition(List<Vector3> positions)
+        {
+            Vector3 center = new Vector3();
+            center = positions.Aggregate(center, (current, position) => current + position);
+            return center / positions.Count;
+        } 
+        
         private readonly struct Costs
         {
             public float FCost { get; }
