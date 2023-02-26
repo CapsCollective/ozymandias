@@ -43,6 +43,8 @@ namespace Upgrades
         public int TotalUpgrades => _upgrades.Count;
         public int TotalPurchasable => _upgrades.Count(pair => pair.Value.gameObject.activeSelf && !pair.Value.LevelMaxed && Affordable(pair.Value.Costs));
 
+        public bool AnyAdjacencies => _upgrades.Any(pair => pair.Value.SingleUnlock && pair.Value.LevelMaxed);
+        
         private void Awake()
         {
             purchaseBox.purchaseButton.onClick.AddListener(Purchase);

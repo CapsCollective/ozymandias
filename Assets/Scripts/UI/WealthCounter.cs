@@ -22,8 +22,6 @@ namespace UI
         // Update is called once per frame
         protected override void UpdateUi()
         {
-            if (Manager.State.InMenu) return;
-
             if (_previousSpending != Manager.Stats.GetStat(Stat.Spending))
             {
                 PunchBadge();

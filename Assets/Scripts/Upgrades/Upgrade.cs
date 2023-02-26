@@ -41,7 +41,7 @@ namespace Upgrades
         public bool HasLevelCap => maxLevel != -1;
         public bool LevelMaxed => HasLevelCap && level >= maxLevel;
         public bool Unlocked => level > 0;
-        private bool SingleUnlock => maxLevel == 1;
+        public bool SingleUnlock => maxLevel == 1;
         
         public string Description => 
             $"{description}\n\n{LevelText}{EffectText.Conditional(!SingleUnlock)} {effect}";

@@ -3,6 +3,7 @@ using Cards;
 using DG.Tweening;
 using Inputs;
 using Managers;
+using NaughtyAttributes;
 using Requests;
 using Structures;
 using UnityEngine;
@@ -51,6 +52,11 @@ namespace UI
         private bool _fromGame; // TODO this state cache must be removed, please do not use it
         private bool _disableNavigation = false;
         private CanvasGroup _closeButtonCanvas;
+
+        [Header("Adjacency Bonuses")]
+        private static readonly Vector2 AdjacencyClosedPos = new Vector2(-70,37);
+        private static readonly Vector2 AdjacencyOpenPos = new Vector2(180,37);
+        [SerializeField] private RectTransform adjacencyBonuses;
 
         private int _confirmDeleteStep;
         private int ConfirmingDelete
@@ -150,6 +156,11 @@ namespace UI
             var rt = pages[_page].bookRibbon.transform as RectTransform;
             rt.sizeDelta = new Vector2(rt.sizeDelta.x, EXPANDED_RIBBON_HEIGHT);
 
+            Upgrades.Upgrades.OnUpgradePurchased += _ =>
+            {
+                if (Manager.Upgrades.AnyAdjacencies) adjacencyBonuses.DOAnchorPos(AdjacencyOpenPos, 0.5f);
+            };
+            
             BookButton.OnClicked += (toUnlocks) =>
             {
                 if (toUnlocks) SetPage(BookPage.Upgrades);
@@ -218,6 +229,9 @@ namespace UI
                     pages[_page].canvasGroup.GetComponent<UIController>().OnOpen();
                     _changingPage = false;
                     if (_page == BookPage.Reports) CardsBookList.ScrollActive = true;
+
+                    if (Manager.Upgrades.AnyAdjacencies) adjacencyBonuses.DOAnchorPos(AdjacencyOpenPos, 0.5f);
+
                     OnOpened?.Invoke();
                 });
         }
@@ -228,7 +242,8 @@ namespace UI
             ConfirmingDelete = 0;
             _transitioning = true;
             closeButton.gameObject.SetActive(false); 
-            Manager.SelectUi(null);          
+            Manager.SelectUi(null);
+            adjacencyBonuses.DOAnchorPos(AdjacencyClosedPos, 0.3f);
             transform.DOPunchScale(PunchScale, animateOutDuration, 0, 0);
             transform.DOLocalMove(ClosePos, animateOutDuration)
                 .OnComplete(() =>
