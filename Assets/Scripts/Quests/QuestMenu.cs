@@ -195,9 +195,7 @@ namespace Quests
             DisplayMoveButtons(false);
             Manager.State.EnterState(GameState.InMenu);
             Manager.Jukebox.PlayScrunch();
-            var hasSingleQuest = Current.Count == 1;
-            nextButton.gameObject.SetActive(!hasSingleQuest);
-            previousButton.gameObject.SetActive(!hasSingleQuest);
+            prevNextButtons.gameObject.SetActive(Current.Count > 1);
             _canvas.enabled = true;
             OpenFlyer.transform.eulerAngles = _offScreenRot;
             OpenFlyer.transform

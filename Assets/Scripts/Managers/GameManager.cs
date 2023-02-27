@@ -203,7 +203,11 @@ namespace Managers
             if (Inputs.UsingController) EventSystem.current.SetSelectedGameObject(g);
         }
 
-        public static bool IsOverUi => Manager.PlatformManager.Gameplay.IsOverUI(EventSystem.current);
+        public static bool IsOverUi;
+        public void Update()
+        {
+            IsOverUi = Manager.PlatformManager.Gameplay.IsOverUI(EventSystem.current);
+        }
 
         #endregion
 

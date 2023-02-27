@@ -80,6 +80,7 @@ namespace Inputs
         {
             if (context.started)
             {
+                if (IsOverUi) return;
                 leftClick = true;
                 lastDrag = Manager.Inputs.MousePosition;
             }

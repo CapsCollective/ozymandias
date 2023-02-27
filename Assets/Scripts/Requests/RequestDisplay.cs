@@ -109,6 +109,7 @@ namespace Requests
 
         private void ShowNotification()
         {
+            if (Request == null) return;
             // Cancel any current tweens in case updates trigger twice in quick succession
             DOTween.Kill(_notificationDisplay);
             DOTween.Kill(_notificationCanvasGroup);

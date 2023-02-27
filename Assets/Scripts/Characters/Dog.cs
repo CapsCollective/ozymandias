@@ -28,6 +28,8 @@ namespace Characters
 
         private void PatCheck(InputAction.CallbackContext obj)
         {
+            if (IsOverUi) return;
+            
             var hit = Manager.Inputs.GetRaycast(_cam, 1000, 1);
             if (hit.collider != _collider) return;
             OnDogPet?.Invoke();

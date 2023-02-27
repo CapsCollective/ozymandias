@@ -25,7 +25,7 @@ namespace Characters
             Manager.Inputs.LeftClick.performed += _ =>
             {
                 Ray ray = _cam.ScreenPointToRay(Manager.Inputs.MousePosition);
-                if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider) return;
+                if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider || IsOverUi) return;
                 Separate();
             };
         }

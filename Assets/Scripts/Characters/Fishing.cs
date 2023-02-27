@@ -44,6 +44,8 @@ namespace Characters
 
         private void FishCheck(InputAction.CallbackContext obj)
         {
+            if (IsOverUi) return;
+            
             if (_fishing)
             {
                 if (_fishCaught)

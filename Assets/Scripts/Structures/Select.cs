@@ -118,10 +118,15 @@ namespace Structures
                     case StructureType.Building:
                         questTitleText.text = "";
                         nameText.text = SelectedStructure.name;
-                        if (SelectedStructure.Blueprint.type == BuildingType.GuildHall)
+                        if (Tutorial.Tutorial.Active)
                         {
-                            costText.text = Tutorial.Tutorial.Active ? "Disabled" : "Destroy?";
-                            buttonCanvasGroup.DOFade(Tutorial.Tutorial.Active ? 0.7f : 1, 0.5f);
+                            costText.text = "Disabled";
+                            buttonCanvasGroup.DOFade(0.7f, 0.5f);
+                        }
+                        else if (SelectedStructure.Blueprint.type == BuildingType.GuildHall)
+                        {
+                            costText.text = "Destroy?";
+                            buttonCanvasGroup.DOFade(1, 0.5f);
                         }
                         else
                         {
@@ -368,9 +373,8 @@ namespace Structures
             
             if (SelectedStructure.IsQuest) return SelectedStructure.Quest;
             
-            // Guard against destroying terrain and guild hall in tutorial
-            if (Tutorial.Tutorial.Active && (SelectedStructure.IsTerrain || SelectedStructure.IsGuildHall))
-                return false;
+            // Guard against destroying anything besides ruins in the tutorial
+            if (Tutorial.Tutorial.Active && !SelectedStructure.IsRuin) return false;
             return Manager.Stats.Wealth >= SelectedStructureCost();
         }
 
