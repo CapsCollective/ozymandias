@@ -24,6 +24,8 @@ namespace Tooltip
 
         [SerializeField] private TooltipPlacement defaultTooltip;
         private TooltipPlacement _selectedTooltip;
+
+        public static Action<bool> OnTooltipDisplay;
         public bool NavigationActive { get; private set; }
 
         const float FadeDuration = 0.3f;
@@ -143,6 +145,7 @@ namespace Tooltip
         {
             if(IsVisible()) _selectedTooltip.OnPointerExit(null);
             NavigationActive = false;
+            OnTooltipDisplay?.Invoke(NavigationActive);
         }
 
         private void ToggleTooltips(InputAction.CallbackContext obj)
@@ -150,6 +153,8 @@ namespace Tooltip
             if (!Manager.State.InGame) return;
             Manager.Cards.SelectCard(-1);
             NavigationActive = !NavigationActive;
+            OnTooltipDisplay?.Invoke(NavigationActive);
+
             if (NavigationActive) _selectedTooltip.OnPointerEnter(null);
             else _selectedTooltip.OnPointerExit(null);
         }
