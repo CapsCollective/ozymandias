@@ -175,8 +175,8 @@ namespace Quests
              .OnComplete(() => 
              {
                  t.transform
-                     .DOLocalRotate(new Vector3(0, 0, 0), AnimateAcrossDuration/2)
-                     .SetDelay(AnimateInDuration/2);
+                     .DOLocalRotate(new Vector3(0, 0, 0), AnimateAcrossDuration/3)
+                     .SetDelay(AnimateInDuration/3);
                 });
         }
 

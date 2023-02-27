@@ -56,6 +56,12 @@ namespace Cards
             cardHighlight.DOFade(isOn ? 1 : 0, 0.5f);
         }
 
+        public void FlashCostRed()
+        {
+            cost.DOColor(Colors.Red, 0.3f)
+                .OnComplete(() => cost.DOColor(Colors.CostInactive, 0.3f));
+        }
+
         public void UpdateDetails(Blueprint blueprint, bool interactable = true)
         {
             if (interactable)

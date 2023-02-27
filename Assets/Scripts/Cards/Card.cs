@@ -22,6 +22,7 @@ namespace Cards
         private RectTransform _rectTransform;
         private bool _isPointerOverCard;
         public bool IsReplacing { get; private set; }
+        public bool Interactable { get; private set; }
         
         private void Start()
         {
@@ -29,39 +30,39 @@ namespace Cards
             Toggle = GetComponent<Toggle>();
             _rectTransform = GetComponent<RectTransform>();
             _initialPosition = _rectTransform.localPosition;
-            _dropPosition = _initialPosition - _rectTransform.transform.up * 250;
+            _dropPosition = _initialPosition - _rectTransform.transform.up * 260;
         }
 
         protected override void UpdateUi()
         {
             // Set toggle interactable
-            Toggle.interactable = Blueprint && Blueprint.ScaledCost <= Manager.Stats.Wealth;
-            if (Toggle.isOn && !Toggle.interactable)
+            Interactable = Blueprint && Blueprint.ScaledCost <= Manager.Stats.Wealth;
+            if (Toggle.isOn && !Interactable)
             {
                 // Unselect the card if un-interactable
                 Toggle.isOn = false;
                 cardDisplay.SetHighlight(false);
             }
 
-            cardDisplay.UpdateDetails(Blueprint, Toggle.interactable);
+            cardDisplay.UpdateDetails(Blueprint, Interactable);
         }
 
         public void ToggleSelect(bool isOn)
         {
-            if (Toggle.interactable) cardDisplay.SetHighlight(isOn);
-
             if (IsReplacing) return;
 
-            if (isOn) Manager.Cards.SelectedCard = this;
-            else
+            if (Interactable) cardDisplay.SetHighlight(isOn);
+            else if (isOn)
             {
-                // Deselect if not changing to another card
-                if (Manager.Cards.SelectedCard == this) Manager.Cards.SelectedCard = null;
+                transform.DOShakeRotation(0.5f, new Vector3(0,0,2));
+                cardDisplay.FlashCostRed();
             }
+
+            if (isOn) Manager.Cards.SelectedCard = this;
+            else if (Manager.Cards.SelectedCard == this) Manager.Cards.SelectedCard = null;
             
             // Animate the selection for the input type
-            var selected = Manager.Inputs.UsingController ? isOn : _isPointerOverCard;
-            if (selected) AnimateSelected();
+            if (Manager.Inputs.UsingController ? isOn : _isPointerOverCard) AnimateSelected();
             else AnimateDeselected();
         }
         
@@ -80,7 +81,10 @@ namespace Cards
         public void Drop()
         {
             if(_rectTransform.localPosition != _dropPosition)
-                _rectTransform.DOLocalMove(_dropPosition, 0.5f).SetEase(tweenEase);
+                _rectTransform
+                    .DOLocalMove(_dropPosition, 0.5f)
+                    .SetEase(tweenEase)
+                    .OnComplete(() => _rectTransform.localEulerAngles = Vector3.zero);
         }
         
         public void Pop()
@@ -95,13 +99,13 @@ namespace Cards
             Toggle.isOn = false;
             IsReplacing = true;
             _rectTransform
-                .DOLocalMove(_initialPosition - _rectTransform.transform.up * 250, 0.5f)
+                .DOLocalMove(_dropPosition, 0.5f)
                 .SetEase(tweenEase)
                 .OnComplete(() =>
                 {
+                    _rectTransform.localEulerAngles = Vector3.zero;
                     Blueprint = Manager.Cards.NewCard();
-                    // 1% for a free card per upgrade level
-                    Blueprint.Free = Random.Range(0, 100) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
+
                     UpdateUi();
                     if (!Manager.State.InGame)
                     {
@@ -125,7 +129,7 @@ namespace Cards
         {
             if (!_rectTransform) return;
             var move = _initialPosition;
-            if (Toggle.isOn) move += _rectTransform.transform.up * highlightMultiplier;
+            if (Toggle.isOn && Interactable) move += _rectTransform.transform.up * highlightMultiplier;
             ApplyTween(move, Vector3.one, 0.5f);
         }
 

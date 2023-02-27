@@ -49,10 +49,10 @@ namespace Cards
                 _selectedCardIndex = hand.FindIndex(card => card == value);
 
                 _selectedCard = value;
-                if (_selectedCard && _selectedCard.Toggle.IsInteractable()) Manager.Map.Flood();
+                if (_selectedCard && _selectedCard.Interactable) Manager.Map.Flood();
                 else Manager.Map.Drain();
                 
-                Manager.Cursor.Current = _selectedCard ? CursorType.Build : CursorType.Pointer;
+                Manager.Cursor.Current = _selectedCard && _selectedCard.Interactable ? CursorType.Build : CursorType.Pointer;
                 OnCardSelected?.Invoke(_selectedCard);
                 _lastBadge = -1;
                 _currentBadge = -1;
@@ -148,6 +148,8 @@ namespace Cards
             {
                 if (Deck.Count == 0) Deck = new List<Blueprint>(Playable);
                 Blueprint card = Deck.PopRandom();
+                // 1% for a free card per upgrade level
+                card.Free = Random.Range(0, 100) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
                 if (!hand.Select(c => c.Blueprint).Contains(card)) return card;
             }
         }
@@ -169,10 +171,10 @@ namespace Cards
         
         private void PlaceBuilding(InputAction.CallbackContext obj)
         {
-            if (!SelectedCard || !_cellsValid || IsOverUi) return;
+            if (!SelectedCard || !_cellsValid || IsOverUi || !SelectedCard.Interactable) return;
             PlacingBuilding = true;
             Blueprint blueprint = SelectedCard.Blueprint;
-            if (hand[_selectedCardIndex].Toggle.IsInteractable()) SelectedCard.Replace();
+            SelectedCard.Replace();
             if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
             SelectedCard = null;
         }
@@ -198,6 +200,7 @@ namespace Cards
         
         public void DeselectCards(InputAction.CallbackContext obj)
         {
+            _toggleGroup.SetAllTogglesOff();
             if (_selectedCardIndex == -1) return;
             SelectCard(-1);
         }
