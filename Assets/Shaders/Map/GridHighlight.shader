@@ -1,4 +1,4 @@
-﻿Shader "Grid/GridHighlight"
+﻿ Shader "Grid/GridHighlight"
 {
     Properties
     {
@@ -57,7 +57,7 @@
             fixed4 frag (const v2f i) : SV_Target
             {
                 fixed4 mask = tex2D(_Mask, i.uv);
-            	const float4 col = lerp(lerp(_Invalid, _Inactive, mask.r > 0.5), _Active, mask.g > 0.5);
+                const float4 col = mask;// lerp(lerp(_Invalid, _Inactive, mask.r > 0.5), _Active, mask.g > 0.5);
 
                 const float dist = distance(i.worldPos, _Origin);
                 const float effect = pow(saturate(dist / _Radius), _Exponent);

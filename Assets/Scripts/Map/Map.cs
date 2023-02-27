@@ -170,7 +170,7 @@ namespace Map
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertexIndex in layout.GetUVs(cell))
-                    _uv[vertexIndex] = new Vector2((int)state / 2f, _uv[vertexIndex].y);;
+                    _uv[vertexIndex] = new Vector2((int)state / 3f, _uv[vertexIndex].y);;
             }
 
             gridMesh.sharedMesh.SetUVs(0, _uv);
@@ -186,7 +186,7 @@ namespace Map
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertexIndex in layout.GetUVs(cell))
-                    _uv[vertexIndex] = new Vector2((int)HighlightState.Inactive / 2f, _uv[vertexIndex].y);
+                    _uv[vertexIndex] = new Vector2((int)HighlightState.Inactive / 3f, _uv[vertexIndex].y);
             }
 
             gridMesh.sharedMesh.SetUVs(0, _uv);
