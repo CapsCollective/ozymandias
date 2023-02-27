@@ -114,16 +114,16 @@ namespace Events
             else if (TypeNotInQueue(EventType.AdventurersJoin) && Random.Range(0,5) < housingSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
             // Let them gain some adventurers to start
-            if (Manager.Adventurers.Count >= 3)
+            if (Manager.Adventurers.Count >= 5)
             {
-                // Scale from 100% down to 0% threat spawn if falling behind by up to 20
+                // Scale from 100% down to 0% threat spawn if falling behind by up to 20 or leading by up to 10
                 // Prevent multiple threat events from happening in a single turn
-                if (TypeNotInQueue(EventType.Threat) && Random.Range(-10, 10) < Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat, -10, 10))
+                if (TypeNotInQueue(EventType.Threat) && Random.Range(-20, 10) < Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat, -20, 10))
                     eventPool.Add(PickRandom(EventType.Threat));
                 
-                // Chance increases with stability, and decreases with count of active quests 
-                int random = Random.Range(0, 150 + Manager.Quests.RadiantCount * 100);
-                if (!Tutorial.Tutorial.Active && TypeNotInQueue(EventType.Radiant) && random < Manager.Stats.Stability)
+                // Chance increases with stability, and decreases with count of active quests
+                int random = Random.Range(0, 100 + Manager.Quests.RadiantCount * 100);
+                if (!Tutorial.Tutorial.Active && TypeNotInQueue(EventType.Radiant) && random < Manager.Stats.Stability - 50)
                     eventPool.Add(PickRandom(EventType.Radiant));
 
                 // Scales merchant spawn by how much wealth the player has saved up, ranging from 10% to 50% for > 5x wealth per turn

@@ -18,7 +18,12 @@ namespace Events.Outcomes
         
         protected override bool Execute()
         {
-            if (!anyBuildingType && Manager.Structures.GetCount(buildingType) == 0) return false;
+            if (!anyBuildingType && Manager.Structures.GetCount(buildingType) == 0)
+            {
+                UnityEngine.Debug.LogWarning($"No {(anyBuildingType ? "Building" : buildingType.ToString()).Pluralise()} to destroy");
+                return false;
+            }
+            
             _toDestroy = anyBuildingType ? Manager.Structures.GetRandom() : Manager.Structures.GetRandom(buildingType);
             _buildingType = _toDestroy.Blueprint.type;
             Newspaper.OnNextClosed += DestroyBuilding;

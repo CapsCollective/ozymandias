@@ -15,7 +15,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            if (!Manager.Stats.Modifiers.ContainsKey(statToChange)) return false;
+            if (!Manager.Stats.Modifiers.ContainsKey(statToChange))
+            {
+                UnityEngine.Debug.LogWarning($"{statToChange} is not included in modifiers");
+                return false;
+            }
         
             Manager.Stats.Modifiers[statToChange].Add(new Stats.Modifier
             {

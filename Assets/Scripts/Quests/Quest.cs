@@ -54,7 +54,7 @@ namespace Quests
         public string Description => description;
         public int TurnsLeft { get; private set; }
         public Structure Structure { get; private set; }
-        public bool IsActive => TurnsLeft != -1;
+        public bool IsActive => _assigned.Count > 0;
         public bool IsRadiant => location is Location.Grid;
         private int BaseCost { get; set; }
         
@@ -62,7 +62,7 @@ namespace Quests
         // The base number of adventurers to send on a grid quest before any tiles are cleared
         public int BaseAdventurers => IsRadiant ? baseAdventurers + Structure.SectionCount : baseAdventurers;
         public int ScaledCost(int scale) => (int) (BaseCost * CostScale[scale]);
-        public string RewardDescription => IsRadiant ? $"-{Structure.SectionCount} {String.StatWithIcon(Stat.Threat)}" : reward;
+        public string RewardDescription => IsRadiant ? $"Reward: -{Structure.SectionCount} {String.StatWithIcon(Stat.Threat)}" : reward;
         public int AssignedCount => _assigned.Count;
         
         public void Add()
@@ -216,7 +216,7 @@ namespace Quests
             if (location == Location.Grid) CreateBuilding(details.occupied);
             else SetLocation();
             
-            if (!IsActive) return;
+            if (details.assigned == null || details.assigned.Count == 0) return;
             foreach (string adventurerName in details.assigned) 
                 _assigned.Add(Manager.Adventurers.Assign(this, adventurerName));
         }

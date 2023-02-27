@@ -13,11 +13,13 @@ namespace Quests
     public class QuestMenu : MonoBehaviour
     {
         [SerializeField] private Button closeButton, nextButton, previousButton;
+        [SerializeField] private CanvasGroup prevNextButtons;
         [SerializeField] private QuestFlyer[] flyers;
         
-        [SerializeField] private float animateAcrossDuration = 0.5f;
-        [SerializeField] private float animateInDuration = .5f;
-        [SerializeField] private float animateOutDuration = .75f;
+        private const float AnimateAcrossDuration = 0.75f;
+        private const float AnimateInDuration = 0.75f;
+        private const float AnimateOutDuration = 0.75f;
+        private const float AnimatePrevNextFadeDuration = 0.25f;
 
         private bool _inAnim;
         private int _openFlyer;
@@ -132,42 +134,57 @@ namespace Quests
             DisplayMoveButtons(false);
             SwapFlyers(dir, SelectedQuest);
             Manager.Jukebox.PlayScrunch();
-            FocusStructure(SelectedQuest.Structure);
         }
 
         private void SwapFlyers(SwapDir dir, Quest selectedQuest)
         {
             const float offset = 1500;
-            var nextStartX = dir == SwapDir.Left ? offset : -offset;
+            float nextStartX = dir == SwapDir.Left ? offset : -offset;
 
             QuestFlyer currentFlyer = OpenFlyer;
             QuestFlyer nextFlyer = ClosedFlyer;
-
+            
+            currentFlyer.OnClose();
+            nextFlyer.UpdateContent(selectedQuest);
+            nextFlyer.transform.localPosition = new Vector3(nextStartX, 0, 0);
+            _openFlyer = CycleIdx(_openFlyer, FlyerCount, dir);
+            
             currentFlyer.transform
-                .DOLocalMove(new Vector3(-nextStartX, 0, 0), animateAcrossDuration)
+                .DOLocalMove(new Vector3(-nextStartX, 0, 0), AnimateAcrossDuration)
+                .SetDelay(AnimatePrevNextFadeDuration)
+                .OnStart(() =>
+                {
+                    FocusStructure(selectedQuest.Structure);
+                    PunchRotation(currentFlyer.transform, (int)dir);
+                    PunchRotation(nextFlyer.transform, (int)dir);
+                    nextFlyer.gameObject.SetActive(true);
+                    nextFlyer.transform.DOLocalMove(Vector3.zero, AnimateAcrossDuration);
+                })
                 .OnComplete(() =>
                 {
+                    nextFlyer.OnOpen();
                     DisplayMoveButtons(true);
                     currentFlyer.gameObject.SetActive(false);
                     _inAnim = false;
                 });
-            currentFlyer.OnClose();
-            
-            nextFlyer.UpdateContent(selectedQuest);
-            nextFlyer.transform.localPosition = new Vector3(nextStartX, 0, 0);
-            nextFlyer.transform
-                .DOLocalMove(Vector3.zero, animateAcrossDuration)
-                .OnStart(() => nextFlyer.gameObject.SetActive(true))
-                .OnComplete(() => nextFlyer.OnOpen());
+        }
 
-            _openFlyer = CycleIdx(_openFlyer, FlyerCount, dir);
+        private static void PunchRotation(Transform t, int dir)
+        {
+            t.DOLocalRotate(new Vector3(0, 0, dir * -5), AnimateAcrossDuration/2)
+             .OnComplete(() => 
+             {
+                 t.transform
+                     .DOLocalRotate(new Vector3(0, 0, 0), AnimateAcrossDuration/2)
+                     .SetDelay(AnimateInDuration/2);
+                });
         }
 
         private static void FocusStructure(Structure structure)
         {
             Vector3 buildingPos = structure.transform.position;
-            buildingPos.y = 1.0f;
-            Manager.Camera.MoveTo(buildingPos, 0.5f);
+            buildingPos.y = 0f;
+            Manager.Camera.MoveTo(buildingPos, AnimateAcrossDuration);
         }
 
         private void Open()
@@ -184,7 +201,7 @@ namespace Quests
             _canvas.enabled = true;
             OpenFlyer.transform.eulerAngles = _offScreenRot;
             OpenFlyer.transform
-                .DOLocalMove(Vector3.zero, animateInDuration)
+                .DOLocalMove(Vector3.zero, AnimateInDuration)
                 .OnStart(() => OpenFlyer.gameObject.SetActive(true))
                 .OnComplete(() =>
                 {
@@ -195,7 +212,7 @@ namespace Quests
                     Manager.Inputs.Close.performed += OpenQuests_performed;
                     if (Current.Count > 1) Manager.Inputs.NavigateBookmark.performed += NavigateFlyers;
                 });
-            OpenFlyer.transform.DOLocalRotate(Vector3.zero, animateInDuration);
+            OpenFlyer.transform.DOLocalRotate(Vector3.zero, AnimateInDuration);
         }
 
         private void Close()
@@ -207,9 +224,9 @@ namespace Quests
             DisplayCloseButton(false);
             DisplayMoveButtons(false);
             OpenFlyer.OnClose();
-            OpenFlyer.transform.DOLocalMove(_offScreenPos, animateOutDuration);
+            OpenFlyer.transform.DOLocalMove(_offScreenPos, AnimateOutDuration);
             OpenFlyer.transform
-                .DOLocalRotate(_offScreenRot, animateOutDuration)
+                .DOLocalRotate(_offScreenRot, AnimateOutDuration)
                 .OnComplete(() =>
                 {
                     _canvas.enabled = false;
@@ -221,8 +238,7 @@ namespace Quests
         private void DisplayMoveButtons(bool display)
         {
             var alpha = display ? 1.0f : 0.0f;
-            nextButton.image.DOFade(alpha, 0.2f);
-            previousButton.image.DOFade(alpha, 0.2f);
+            prevNextButtons.DOFade(alpha, AnimatePrevNextFadeDuration);
         }
         
         private void DisplayCloseButton(bool display)

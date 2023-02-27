@@ -31,6 +31,8 @@ namespace Quests
         // If a location is far enough away from the other quests
         private const int MinDistance = 3;
 
+        public bool IsActive(Quest quest) => Current.Contains(quest);
+        
         public bool FarEnoughAway(Vector3 position)
         {
             return Current
@@ -45,7 +47,7 @@ namespace Quests
         
         public bool Add(Quest q)
         {
-            if (Current.Contains(q)) return false;
+            if (IsActive(q)) return false;
             Current.Add(q);
             q.Add();
             OnQuestAdded?.Invoke(q);

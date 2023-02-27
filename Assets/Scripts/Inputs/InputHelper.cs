@@ -74,7 +74,11 @@ namespace Inputs
             previousSelections[Manager.State.Current] = obj;
             
             selectionHelper.SetParent(obj.transform);
-            selectionHelper.DOAnchorPos(CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero, 0.3f);
+            // Only animate if close so it doesn't fly in
+            if (Vector2.Distance(selectionHelper.position, obj.transform.position) > 400)
+                selectionHelper.anchoredPosition = CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero;
+            else
+                selectionHelper.DOAnchorPos(CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero, 0.3f);
             selectionHelper.localScale = Vector3.one;
             selectionHelper.eulerAngles = Vector3.zero;
         }

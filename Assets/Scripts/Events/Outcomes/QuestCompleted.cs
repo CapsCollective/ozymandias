@@ -11,7 +11,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            if (!quest.IsActive) return false;
+            if (!quest.IsActive)
+            {
+                UnityEngine.Debug.LogWarning("Quest not active: " + quest.name);
+                return false;
+            }
             
             _assigned = quest.AssignedCount;
             if (quest.Structure) _threat = quest.Structure.SectionCount;

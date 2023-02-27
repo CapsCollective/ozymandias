@@ -11,12 +11,12 @@ namespace Requests.Templates
 
         public override void Start()
         {
-            Select.OnClear += CheckClear;
+            Structures.Structures.OnDestroyed += CheckClear;
         }
         
         public override void Complete()
         {
-            Select.OnClear -= CheckClear;
+            Structures.Structures.OnDestroyed -= CheckClear;
         }
 
         private void CheckClear(Structure structure)

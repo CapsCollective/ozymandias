@@ -10,7 +10,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            if (!Manager.Requests.HasRequest(guild)) return false;
+            if (!Manager.Requests.HasRequest(guild))
+            {
+                UnityEngine.Debug.LogWarning($"{guild} has no active request to complete");
+                return false;
+            }
             _tokens = Manager.Requests.TokenCount(guild);
             Newspaper.OnNextClosed += () => Manager.Requests.Remove(guild);
             return true;

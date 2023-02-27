@@ -91,7 +91,7 @@ namespace Quests
                 bool enoughMoney = Manager.Stats.Wealth >= cost;
                 adventurersText.text = $"Adventurers: {adventurers}/{Manager.Adventurers.Available}".StatusColor(enoughAdventurers ? 0 : -1);
                 durationText.text = $"Duration: {duration} {"turn".Pluralise(duration)}";
-                rewardText.text = $"Reward: {quest.RewardDescription}";
+                rewardText.text = quest.RewardDescription;
                 costText.text = $"Cost: {cost}/{Manager.Stats.Wealth} {String.StatIcon(Stat.Spending)}".StatusColor(enoughMoney ? 0 : -1);
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;

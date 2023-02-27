@@ -61,7 +61,11 @@ namespace UI
             direction.enabled = change != 0 && Manager.Stats.Stability > 0;
             direction.rectTransform.DOAnchorPosX(Mathf.Clamp(BarStart + width, DirectionArrowStart, DirectionArrowEnd), 0.5f);
             direction.rectTransform.DORotate(new Vector3(0,0, change > 0 ? 90: -90), 0.5f);
-            direction.sprite = chevrons[Mathf.Clamp(Mathf.Abs(change) / 5, 0, 2)];
+
+            int chevronIndex = 0;
+            if (Mathf.Abs(change) > 5) chevronIndex = 1;
+            if (Mathf.Abs(change) > 15) chevronIndex = 2;
+            direction.sprite = chevrons[chevronIndex];
         }
         
         private void PunchBadge(RectTransform badge)

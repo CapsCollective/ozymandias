@@ -148,7 +148,7 @@ namespace Tooltip
         private void ToggleTooltips(InputAction.CallbackContext obj)
         {
             if (!Manager.State.InGame) return;
-            
+            Manager.Cards.SelectCard(-1);
             NavigationActive = !NavigationActive;
             if (NavigationActive) _selectedTooltip.OnPointerEnter(null);
             else _selectedTooltip.OnPointerExit(null);

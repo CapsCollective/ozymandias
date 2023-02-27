@@ -18,7 +18,11 @@ namespace Events.Outcomes
                 Manager.Adventurers.Available :
                 Manager.Adventurers.GetCount(guild, true);
             
-            if (removable <= count) return false;
+            if (removable < count)
+            {
+                UnityEngine.Debug.LogWarning($"{removable} adventurers unremovable, only {count} available");
+                return false;
+            }
 
             for (int i = 0; i < count; i++)
             {

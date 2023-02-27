@@ -11,6 +11,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
+            if (Manager.Quests.IsActive(quest))
+            {
+                UnityEngine.Debug.LogWarning("Quest already active: " + quest.name);
+                return false;
+            }
             Newspaper.OnNextClosed += () => Manager.Quests.Add(quest);
             return true;
         }

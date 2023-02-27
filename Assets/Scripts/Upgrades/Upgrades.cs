@@ -13,7 +13,7 @@ namespace Upgrades
 {
     public class Upgrades: MonoBehaviour
     {
-        const int UpgradeBoxCutoffY = -70;
+        const int UpgradeBoxCutoffY = -60;
 
         public static Action<UpgradeType> OnUpgradePurchased;
         public bool BoxOpen { get; private set; }

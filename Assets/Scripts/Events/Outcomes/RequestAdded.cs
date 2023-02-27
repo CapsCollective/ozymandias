@@ -10,6 +10,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
+            if (Manager.Requests.HasRequest(request.guild))
+            {
+                UnityEngine.Debug.LogWarning($"{request.guild} already has an active request");
+                return false;
+            }
             Manager.Requests.Add(request);
             return true;
         }

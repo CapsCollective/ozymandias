@@ -218,7 +218,7 @@ namespace Structures
                     building.Blueprint.type != BuildingType.BathHouse &&
                     building.Blueprint.type != BuildingType.Monastery &&
                     building.Blueprint.type != BuildingType.FightingRing &&
-                    Random.Range(0, newRuinsCount) == 0
+                    Random.Range(0, newRuinsCount + 1) == 0
                 )
                 {
                     ToRuin(building);
@@ -253,7 +253,7 @@ namespace Structures
 
             foreach (Structure building in furthestBuildings)
             {
-                Vector3 position = Vector3.MoveTowards(building.transform.position, TownCentre, -Random.Range(6f, 10f));
+                Vector3 position = Vector3.MoveTowards(building.transform.position, TownCentre, -Random.Range(3f, 10f));
                 Cell cell = Manager.Map.GetClosestCell(position);
                 if (cell != null && cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
                 {
