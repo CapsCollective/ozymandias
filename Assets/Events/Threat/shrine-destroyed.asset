@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6707321277311577564
+--- !u!114 &-2037451398437191388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18,22 +18,6 @@ MonoBehaviour:
   kill: 1
   guild: 0
   anyGuild: 0
---- !u!114 &-6324260678054043398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
-  m_Name: BuildingDamaged
-  m_EditorClassIdentifier: 
-  customDescription: The Shrine just has the feet now...
-  buildingType: 4
-  anyBuildingType: 0
-  demolishAll: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,12 +38,12 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: -6324260678054043398}
-  - {fileID: -6707321277311577564}
-  - {fileID: 4206445374964793880}
+  - {fileID: 4837966852479763751}
+  - {fileID: -2037451398437191388}
+  - {fileID: 3120441807173746029}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &4206445374964793880
+--- !u!114 &3120441807173746029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,3 +57,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 1
+--- !u!114 &4837966852479763751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
+  m_Name: BuildingDamaged
+  m_EditorClassIdentifier: 
+  customDescription: The Shrine just has the feet now...
+  buildingType: 4
+  anyBuildingType: 0
+  demolishAll: 0

@@ -1,33 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: dryad-commune
-  m_EditorClassIdentifier: 
-  headline: Dryad Commune Definitely a Real Threat
-  article: 'A group of nature loving dryads have formed a commune near our industrious
-    town. Rumour has it they have terrible mind controlling powers, spreading troublesome
-    ideas like <i>''equality''</i>, and <i>''not burning the very world we live in''</i>.
-
-
-    Their
-    very existence is a threat to us!'
-  image: {fileID: 21300000, guid: 4add54d72c462bf42a06b72699287c84, type: 3}
-  type: 6
-  headliner: 0
-  outcomes:
-  - {fileID: 2149139651186869215}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &2149139651186869215
+--- !u!114 &-7022243559344371883
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,3 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 7b54bbdcb56ac6049a4e417641964974, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: dryad-commune
+  m_EditorClassIdentifier: 
+  headline: Dryad Commune Definitely a Real Threat
+  article: 'A group of nature loving <b>dryads</b> have formed a commune near our
+    industrious town. Rumour has it they have terrible mind controlling powers, spreading
+    troublesome ideas like <i>''equality''</i>, and <i>''not burning the very world
+    we live in''</i>.
+
+
+    Their very existence is a threat to us!'
+  image: {fileID: 21300000, guid: 4add54d72c462bf42a06b72699287c84, type: 3}
+  type: 6
+  headliner: 0
+  outcomes:
+  - {fileID: -7022243559344371883}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

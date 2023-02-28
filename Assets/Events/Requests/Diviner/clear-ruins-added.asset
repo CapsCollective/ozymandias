@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4393364264279176916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068e6582b34a4d43a994376b4d046ac8, type: 3}
-  m_Name: Added Outcome
-  m_EditorClassIdentifier: 
-  customDescription: 
-  request: {fileID: 11400000, guid: 55d63525a4b93ed46a754931acb4b3db, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,12 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headline: Clear Ruins
   article: The diviners are requesting that you... erase of some the ruins around
-    the place, stating "the past describes a bunch of stuff we'd rather people forget,
-    no point keeping them around, right?".
-  image: {fileID: 0}
+    the place, stating <i>"the past describes a bunch of stuff we'd rather people
+    forget, no point keeping them around, right?"</i>.
+  image: {fileID: 21300000, guid: ece09353c35df334e82da80df9d758f5, type: 3}
   type: 11
   headliner: 0
   outcomes:
-  - {fileID: -4393364264279176916}
+  - {fileID: 2807724706295944357}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &2807724706295944357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068e6582b34a4d43a994376b4d046ac8, type: 3}
+  m_Name: Added Outcome
+  m_EditorClassIdentifier: 
+  customDescription: 
+  request: {fileID: 11400000, guid: 55d63525a4b93ed46a754931acb4b3db, type: 2}

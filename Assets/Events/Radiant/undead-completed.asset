@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8928846359912524392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: The necromancer joins your town. +1 Arcanist (<sprite=4>)
+  adventurers: []
+  count: 1
+  guild: 4
+  anyGuild: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: undead-completed
+  m_EditorClassIdentifier: 
+  headline: Necromancer Actually Pretty Cool
+  article: After smashing their way through the skeleton army, our adventurers confronted
+    the necromancer, who was just hanging out with his new undead friends. After
+    spending time chatting, the necromancer agreed to return the dead to their rest
+    if they could come hang out in the town.
+  image: {fileID: 21300000, guid: 94774db291ee7784d8d49347b5f94be1, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -8928846359912524392}
+  - {fileID: 8909838450811294971}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &8909838450811294971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 72396b790eae4f9429a2187d41249091, type: 2}

@@ -1,28 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: clear-terrain-completed
-  m_EditorClassIdentifier: 
-  headline: No More Nature
-  article: Performers are happy now that all that horrible nature has been cleared
-    out. "There, now everyone will have to pay to watch us instead."
-  image: {fileID: 21300000, guid: 112c029ea8b986e4ebc35dfc188b0627, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 345237068053698484}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &345237068053698484
+--- !u!114 &-3692842681510646930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36,3 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   guild: 2
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: clear-terrain-completed
+  m_EditorClassIdentifier: 
+  headline: No More Nature
+  article: 'Performers are happy now that all that horrible nature has been cleared
+    out.
+
+
+    <i>"There, now everyone will have to pay to watch us instead."</i>'
+  image: {fileID: 21300000, guid: 112c029ea8b986e4ebc35dfc188b0627, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -3692842681510646930}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

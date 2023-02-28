@@ -1,30 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: upset-arcanists-added
-  m_EditorClassIdentifier: 
-  headline: Hazing Rituals
-  article: Performers have insisted we 'haze' the arcanists, by bullying them and
-    taking away the things they like. "We just want them to loosen up a little, get
-    away from those books and come party with us! And what's a little teasing gonna
-    do, anyway..."
-  image: {fileID: 21300000, guid: ce9421bb6059f71469cd784849621d1f, type: 3}
-  type: 10
-  headliner: 0
-  outcomes:
-  - {fileID: 5709908276136682220}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &5709908276136682220
+--- !u!114 &-1690961794756866285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,3 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   request: {fileID: 11400000, guid: 52fbafe620c7c0a4d8e8227288741c77, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: upset-arcanists-added
+  m_EditorClassIdentifier: 
+  headline: Hazing Rituals
+  article: 'Performers have insisted we ''haze'' the arcanists, by bullying them
+    and taking away the things they like.
+
+
+    <i>"We just want them to loosen up
+    a little, get away from those books and come party with us! And what''s a little
+    teasing gonna do, anyway..."</i>'
+  image: {fileID: 21300000, guid: ce9421bb6059f71469cd784849621d1f, type: 3}
+  type: 10
+  headliner: 0
+  outcomes:
+  - {fileID: -1690961794756866285}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

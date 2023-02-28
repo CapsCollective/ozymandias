@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6172356949702381770
+--- !u!114 &-6634040533725766427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 8
+  statToChange: 0
   amount: 2
   turns: 5
-  reason: from Dragon Fireproofing
---- !u!114 &-422494422363878130
+  reason: from Ignoring the Dragons
+--- !u!114 &-2672869552895034053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,10 +54,43 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 5655021634141928048}
-  - {fileID: 8258385344510700443}
+  - {fileID: 2544858758375341932}
+  - {fileID: 4800941920160389156}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3438748820583615193
+--- !u!114 &2544858758375341932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Invest in Fireproofing
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5458479811793319461}
+  - {fileID: 8696599681661155517}
+  - {fileID: 6362384400497382224}
+  costScale: 0.8
+--- !u!114 &4800941920160389156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Ignore the Warnings
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -2672869552895034053}
+  - {fileID: -6634040533725766427}
+  costScale: 0
+--- !u!114 &5458479811793319461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,7 +103,7 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: We'll be prepared for another year...
---- !u!114 &5556733127391608218
+--- !u!114 &6362384400497382224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,42 +118,9 @@ MonoBehaviour:
   customDescription: 
   statToChange: 0
   amount: -2
-  turns: 3
+  turns: 5
   reason: from 'Useless' Fireproofing
---- !u!114 &5655021634141928048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Invest in Fireproofing
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 3438748820583615193}
-  - {fileID: -6172356949702381770}
-  - {fileID: 5556733127391608218}
-  costScale: 0.8
---- !u!114 &8258385344510700443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Ignore the Warnings
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -422494422363878130}
-  - {fileID: 8904024082926287673}
-  costScale: 0
---- !u!114 &8904024082926287673
+--- !u!114 &8696599681661155517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 0
+  statToChange: 8
   amount: 2
-  turns: 3
-  reason: from Ignoring the Dragons
+  turns: 5
+  reason: from Dragon Fireproofing

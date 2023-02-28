@@ -70,7 +70,7 @@
         "modifier": {
           "toChange": "Food",
           "amount": -10,
-          "turns": 2,
+          "turns": 5,
           "reason": "from the Feeding Day Festivities"
         }
       }
@@ -96,7 +96,7 @@
         "modifier": {
           "toChange": "Performer",
           "amount": -3,
-          "turns": 3,
+          "turns": 5,
           "reason": "from the Annoying Humming Lights"
         }
       }
@@ -150,7 +150,7 @@
         "modifier": {
           "toChange": "Spending",
           "amount": -10,
-          "turns": 3,
+          "turns": 5,
           "reason": "from the Marching Bandits"
         }
       },
@@ -193,7 +193,7 @@
         "modifier": {
           "toChange": "Brawler",
           "amount": -3,
-          "turns": 3,
+          "turns": 5,
           "reason": "from the Mimic Weaponry"
         }
       }
@@ -215,7 +215,7 @@
         "modifier": {
           "toChange": "Arcanist",
           "amount": -3,
-          "turns": 3,
+          "turns": 5,
           "reason": "from the Gargoyles"
         }
       }
@@ -337,7 +337,7 @@
             "modifier": {
               "toChange": "Performer",
               "amount": 3,
-              "turns": 4,
+              "turns": 5,
               "reason": "from clearing the Sirens"
             }
           }
@@ -378,7 +378,7 @@
             "modifier": {
               "toChange": "Food",
               "amount": -20,
-              "turns": 4,
+              "turns": 5,
               "reason": "from Fermenting Fruits"
             }
           },
@@ -387,7 +387,7 @@
             "modifier": {
               "toChange": "Brawler",
               "amount": 2,
-              "turns": 4,
+              "turns": 5,
               "reason": "from Fermenting Fruits"
             }
           }
@@ -410,7 +410,7 @@
             "modifier": {
               "toChange": "Diviner",
               "amount": 2,
-              "turns": 4,
+              "turns": 5,
               "reason": "from Forced Sobriety"
             }
           }
@@ -505,7 +505,7 @@
             "modifier": {
               "toChange": "Brawler",
               "amount": -2,
-              "turns": 3,
+              "turns": 5,
               "reason": "from 'Useless' Fireproofing"
             }
           }
@@ -543,7 +543,7 @@
             "modifier": {
               "toChange": "Brawler",
               "amount": 2,
-              "turns": 3,
+              "turns": 5,
               "reason": "from Ignoring the Dragons"
             }
           }
@@ -622,6 +622,55 @@
       {
         "type": "ThreatAdded",
         "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "herbalist-destroyed",
+    "headline": "Soil Eater",
+    "article": "A herbalist was the centre of a sudden curse of rot this morning, draining all the life from the garden and surrounding fields. Luckily the curse had not spread too far before the source was identified and extracted, a rare <i>soul eater</i> herb, which will suck all life out of any soil they grow in unless grown in their own pot. Recent ordinances have dropped the restrictions of the growth of this plant, so who knows when the next slip up may be?",
+    "image": "Buildings/Herbalist",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Herbalist"
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Food",
+          "amount": -10,
+          "turns": 5,
+          "reason": "from the Cursed Soil"
+        }
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "frog",
+    "headline": "Frog Fraud",
+    "article": "A shape-changing monster disguised as a frog has been reported eating an adventurer before escaping today. The party claimed it lured them in claiming to be royalty trapped in the body of a frog, requiring a kiss to be freed. When close enough, the creature then extended its mouth and ate the poor adventurer whole.",
+    "image": "frog-prince",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Be on the lookout for any royal frogs..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "anyGuild": true,
+        "kill": true
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
       }
     ]
   }

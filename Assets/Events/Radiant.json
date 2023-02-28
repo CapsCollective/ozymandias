@@ -2,7 +2,7 @@
   {
     "name": "woodland-creatures",
     "headline": "Princess Out for Revenge",
-    "article": "A captured princess, tired of waiting for rescue, broke free, befriended nearby woodland creatures, and trained them into a deadly army. Now, she's out for revenge against the town for forgetting about her.\n\nGuildCo. correspondent reports <i>\"We think her ransom note got caught in our spam filter.\"</i>",
+    "article": "A <b>captured princess</b>, tired of waiting for rescue, broke free, befriended nearby woodland creatures, and trained them into a deadly army. Now, she's out for revenge against the town for forgetting about her.\n\nGuildCo. correspondent reports <i>\"We think her ransom note got caught in our spam filter.\"</i>",
     "image": "rabbit",
     "type": "Radiant",
     "outcomes": [
@@ -18,7 +18,7 @@
           "completedEvent": {
             "name": "woodland-creatures-completed",
             "headline": "Princess Re-captured",
-            "article": "The recaptured princess is now awaiting trial for raising a bloodthirsty militia of furry friends. Speculation indicates that she'll be locked up in <i>'The Tower'</i>, an asylum for runaway princesses.",
+            "article": "The <b>recaptured princess</b> is now awaiting trial for raising a bloodthirsty militia of furry friends. Speculation indicates that she'll be locked up in <i>'The Tower'</i>, an asylum for runaway princesses.",
             "image": "rabbit"
           },
           "adventurers": 2,
@@ -31,7 +31,7 @@
   {
     "name": "dryad-commune",
     "headline": "Dryad Commune Definitely a Real Threat",
-    "article": "A group of nature loving dryads have formed a commune near our industrious town. Rumour has it they have terrible mind controlling powers, spreading troublesome ideas like <i>'equality'</i>, and <i>'not burning the very world we live in'</i>.\n\nTheir very existence is a threat to us!",
+    "article": "A group of nature loving <b>dryads</b> have formed a commune near our industrious town. Rumour has it they have terrible mind controlling powers, spreading troublesome ideas like <i>'equality'</i>, and <i>'not burning the very world we live in'</i>.\n\nTheir very existence is a threat to us!",
     "image": "flowers",
     "type": "Radiant",
     "outcomes": [
@@ -47,7 +47,7 @@
           "completedEvent": {
             "name": "dryad-commune-completed",
             "headline": "Dryad Commune Burned Down",
-            "article": "Evidence strongly supports they were going to destroy our way of life any day now.",
+            "article": "Evidence strongly supports those hippy <b>dryads</b> were going to destroy our way of life any day now.",
             "image": "flowers"
           },
           "adventurers": 5,
@@ -60,7 +60,7 @@
   {
     "name": "sentient-campsites",
     "headline": "Mimics Hidden in Camp",
-    "article": "We've heard of some mimics closing in on our town, they seem to be setting up a campsite nearby. Knowing mimics, they could be hiding anywhere in the camp, so we must tread carefully.",
+    "article": "We've heard of some <b>mimics</b> closing in on our town, they seem to be setting up a campsite nearby. Knowing mimics, they could be hiding anywhere in the camp, so we must tread carefully.",
     "image": "mimic-chest",
     "type": "Radiant",
     "outcomes": [
@@ -75,7 +75,7 @@
           "completedEvent": {
             "name": "sentient-campsites-completed",
             "headline": "Sentient Campsites",
-            "article": "Our adventurers barely made it out of the mimic camps, as they were investigating the content of a tent, teeth appeared around the opening, trapping the adventurer in the tent's maw. It was only the quick reflexes of a fellow adventurer poking at it with a stick that freed them to fight another day.",
+            "article": "Our adventurers barely made it out of the <b>mimic</b> camps, as they were investigating the content of a tent, teeth appeared around the opening, trapping the adventurer in the tent's maw. It was only the quick reflexes of a fellow adventurer poking at it with a stick that freed them to fight another day.",
             "image": "mimic-chest"
           },
           "adventurers": 3,
@@ -141,7 +141,7 @@
   {
     "name": "goblins",
     "headline": "Chanting Camps Causes Chaos",
-    "article": "Some <b>goblins</b> were spotted nearby the town, and residents have been kept up all night by horrid sounds of some rhythmic ritual they seem to be performing. We might be able to work outs what's going on in there, or just pay them to leave.",
+    "article": "Some <b>goblins</b> were spotted nearby the town, and residents have been kept up all night by horrid sounds of some rhythmic ritual they seem to be performing. We might be able to work outs what's going on in there, or just ignore them and hope it goes away.",
     "image": "goblin-camp",
     "type": "Radiant",
     "choices": [
@@ -160,7 +160,7 @@
               "completedEvent": {
                 "name": "goblins-completed",
                 "headline": "Goblin Festival Busted!",
-                "article": "Our scouts to report that the ritualistic chants were just an experimental music festival. After our narcs were discovered, the goblins have disbanded due to their <i>\"harshed vibes, bro\"</i> to take their horrible music elsewhere.",
+                "article": "Our scouts to report that the ritualistic chants were just an experimental music festival. After our narcs were discovered, the <b>goblins</b> have disbanded due to their <i>\"harshed vibes, bro\"</i> to take their horrible music elsewhere.",
                 "image": "goblin-camp"
               },
               "adventurers": 3,
@@ -171,12 +171,20 @@
         ]
       },
       {
-        "name": "Pay Them Off",
-        "costScale": 0.3,
+        "name": "Ignore the Chanting",
         "outcomes": [
           {
             "type": "FlavourText",
-            "customDescription": "They realise you're a pushover, but leave you be, for now..."
+            "customDescription": "The distracting chanting continues for a few days, but they eventually move on for now..."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Arcanist",
+              "amount": -3,
+              "turns": 5,
+              "reason": "from the Goblin Chanting"
+            }
           },
           {
             "type": "ThreatAdded",
@@ -189,7 +197,7 @@
   {
     "name": "kobolds",
     "headline": "Kobold Mining Camp Spotted",
-    "article": "<b>Kobolds</b> have taken over a nearby mine, and were seen nibbling on the minerals. They were then chased back to town while the Kobolds yelled at them to get off their property.",
+    "article": "<b>Kobolds</b> have taken over a nearby mine, and were seen nibbling on the minerals. They were then chased back to town while the kobolds yelled at them to get off their property.",
     "image": "gold-mine",
     "type": "Radiant",
     "outcomes": [
@@ -205,7 +213,7 @@
           "completedEvent": {
             "name": "kobolds-completed",
             "headline": "This Mine is MINE!",
-            "article": "The adventurers sabotaged the Kobold operations, and have taken the mine back! As celebration the victorious party has converted the Kobolds crude explosives into fireworks and are hosting a celebration.",
+            "article": "The adventurers sabotaged the <b>kobold</b> operations, and have taken the mine back! As celebration the victorious party has converted the kobolds crude explosives into fireworks and are hosting a celebration.",
             "image": "firework-rocket",
             "outcomes": [
               {
@@ -220,8 +228,108 @@
             ]
           },
           "adventurers": 2,
-          "baseTurns": 8,
+          "baseTurns": 7,
           "wealthMultiplier": 0.6
+        }
+      }
+    ]
+  },
+  {
+    "name": "kidnapping",
+    "headline": "A Raider's Ransom",
+    "article": "Two adventurers have been kidnapped by raiders while scouting! We've received a ransom note stabbed to a watchtower. Do we pay for their return, or hunt down these raiders?",
+    "image": "stabbed-note",
+    "type": "Radiant",
+    "choices": [
+      {
+        "name": "Track Down the Kidnappers",
+        "outcomes": [
+          {
+            "type": "AdventurersRemoved",
+            "anyGuild": true,
+            "count": 2,
+            "customDescription": "Two adventurers have been kidnapped!"
+          },
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "kidnapping-quest",
+              "location": "Grid",
+              "title": "Recover the Kidnapped Adventurers",
+              "description": "Raiders have kidnapped our adventurers, we need to rescue them!",
+              "image": "spikes",
+              "colour": "#D71709",
+              "completedEvent": {
+                "name": "kidnapping-completed",
+                "headline": "Rescue Raiders",
+                "article": "Our adventuring party has returned successfully, recovering our kidnapped adventurers, and destroying the raiders camp.",
+                "image": "spikes",
+                "outcomes": [
+                  {
+                    "type": "AdventurersAdded",
+                    "anyGuild": true,
+                    "count": 2,
+                    "customDescription": "The 2 kidnapped adventurers have also returned"
+                  }
+                ]
+              },
+              "adventurers": 3,
+              "baseTurns": 4,
+              "wealthMultiplier": 0.5
+            }
+          }
+        ]
+      },
+      {
+        "name": "Pay The Ransom",
+        "costScale": 0.5,
+        "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "They realise you're a pushover, but return your adventurers, for now..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "undead",
+    "headline": "Necromaniac!",
+    "article": "A maniacal <b>necromancer</b> has started raising the dead outside our town. Time for us to start smashing some skeletons!",
+    "image": "raise-zombie",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "undead-quest",
+          "location": "Grid",
+          "title": "Stop the Undead Horde",
+          "description": "Take back the mine from these vicious kobolds",
+          "image": "raise-zombie",
+          "colour": "#2C0C42",
+          "completedEvent": {
+            "name": "undead-completed",
+            "headline": "Necromancer Actually Pretty Cool",
+            "article": "After smashing their way through the skeleton army, our adventurers confronted the necromancer, who was just hanging out with his new undead friends. After spending time chatting, the necromancer agreed to return the dead to their rest if they could come hang out in the town.",
+            "image": "raise-zombie",
+            "outcomes": [
+              {
+                "type": "AdventurersAdded",
+                "count": 1,
+                "guild": "Arcanist",
+                "anyGuild": false,
+                "customDescription": "The necromancer joins your town. +1 Arcanist (<sprite=4>)"
+              }
+            ]
+          },
+          "adventurers": 3,
+          "baseTurns": 4,
+          "wealthMultiplier": 1.1
         }
       }
     ]

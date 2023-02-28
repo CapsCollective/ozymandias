@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4950761214627256484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 5e42c665f6caf6341b22b1c544810084, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,26 +28,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headline: Goblin Festival Busted!
   article: Our scouts to report that the ritualistic chants were just an experimental
-    music festival. After our narcs were discovered, the goblins have disbanded due
-    to their <i>"harshed vibes, bro"</i> to take their horrible music elsewhere.
+    music festival. After our narcs were discovered, the <b>goblins</b> have disbanded
+    due to their <i>"harshed vibes, bro"</i> to take their horrible music elsewhere.
   image: {fileID: 21300000, guid: c567d25858132544b9925a2b9b97a664, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 6687475560433699240}
+  - {fileID: -4950761214627256484}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &6687475560433699240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 5e42c665f6caf6341b22b1c544810084, type: 2}

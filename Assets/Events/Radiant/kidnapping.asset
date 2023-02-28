@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7313867477300710355
+--- !u!114 &-8013058637696872840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,12 +10,56 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Give them gold!
+  m_Name: Track Down the Kidnappers
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 5545346726731176053}
-  - {fileID: 8378561573087509010}
-  cost: 0
+  - {fileID: 7266038307355900384}
+  - {fileID: -4742458622250220685}
+  costScale: 0
+--- !u!114 &-4742458622250220685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: b210f1afcd893c944a742a29ef63bcae, type: 2}
+--- !u!114 &-3844499895811156500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Pay The Ransom
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -3722888919309454953}
+  - {fileID: 295334488203904291}
+  costScale: 0.5
+--- !u!114 &-3722888919309454953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: They realise you're a pushover, but return your adventurers,
+    for now...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,20 +70,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: Bandit Choice
+  m_Name: kidnapping
   m_EditorClassIdentifier: 
-  headline: A Bandit's Choice
-  article: There's bandits waiting outside the town. They demand blood and/or gold.
-    Residents are terrified and want the mayor to help!
-  image: {fileID: 21300000, guid: e7d5437ef76a2734c949ee2be7a59f9f, type: 3}
-  type: 0
+  headline: A Raider's Ransom
+  article: Two adventurers have been kidnapped by raiders while scouting! We've received
+    a ransom note stabbed to a watchtower. Do we pay for their return, or hunt down
+    these raiders?
+  image: {fileID: 21300000, guid: e4bde4d579a1d474e966e6d2637ff5cf, type: 3}
+  type: 6
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -7313867477300710355}
-  - {fileID: 4640629024430833221}
+  - {fileID: -8013058637696872840}
+  - {fileID: -3844499895811156500}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &4640629024430833221
+--- !u!114 &295334488203904291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,14 +93,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Give them blood!
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5528356659286630414}
-  - {fileID: 5287400093947506050}
-  cost: 0
---- !u!114 &5287400093947506050
+  customDescription: 
+  baseAmount: 2
+--- !u!114 &7266038307355900384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,52 +108,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: Remove Adventurers(Clone)
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: 1 Adventurer has been struck down!
-  count: 0
-  kill: 1
---- !u!114 &5528356659286630414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: Flavour Text(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: We sent a champion to fight for us. They threw back the body
-    and went on their merry way.
---- !u!114 &5545346726731176053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: Flavour Text(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: We've agreed to pay them to keep away.
---- !u!114 &8378561573087509010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: Stat Change(Clone)
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 7
-  amount: -10
-  turns: 3
-  reason: paying off the raiders
+  customDescription: Two adventurers have been kidnapped!
+  count: 2
+  kill: 0
+  guild: 0
+  anyGuild: 0

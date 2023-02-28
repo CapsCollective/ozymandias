@@ -275,7 +275,7 @@ namespace Events
             
             public BuildingType buildingType;
             public StructureType structureType;
-            public bool allowAny;
+            public bool allowAny, requireKill;
             public Guild targetGuild;
         }
         
@@ -322,6 +322,7 @@ namespace Events
                             break;
                         case RequestType.LoseAdventurers:
                             request = ScriptableObject.CreateInstance<LoseAdventurers>();
+                            ((LoseAdventurers)request).requireKill = config.requireKill;
                             break;
                         case RequestType.ConstructBuildings:
                             request = ScriptableObject.CreateInstance<ConstructBuildings>();

@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1741628959306279353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: The offending Outrider (<sprite=1>) was banished from the town...
+  count: 1
+  kill: 0
+  guild: 0
+  anyGuild: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21,29 +38,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 1663545101744497395}
-  - {fileID: 1580999064555154240}
-  - {fileID: 7040511567550649716}
+  - {fileID: 3199106944261689141}
+  - {fileID: -1741628959306279353}
+  - {fileID: 7623628580580844885}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1580999064555154240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: The offending Outrider (<sprite=1>) was banished from the town...
-  count: 1
-  kill: 0
-  guild: 0
-  anyGuild: 0
---- !u!114 &1663545101744497395
+--- !u!114 &3199106944261689141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,7 +59,7 @@ MonoBehaviour:
   buildingType: 10
   anyBuildingType: 0
   demolishAll: 0
---- !u!114 &7040511567550649716
+--- !u!114 &7623628580580844885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

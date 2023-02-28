@@ -1,6 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3570987417182102084
+--- !u!114 &-9163807981245791680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The sirens gladly part with the loose gold they've found in
+    the clothes of their prey...
+--- !u!114 &-8269333369475986461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,23 +28,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 4
---- !u!114 &-3147109972881770498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: It took 3 adventurers lives to wipe out their nest.
-  count: 3
-  kill: 1
-  guild: 0
-  anyGuild: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,10 +50,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 4931543587225456057}
-  - {fileID: 1067454140611925593}
+  - {fileID: 6816009105301187304}
+  - {fileID: 633128112178980406}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1067454140611925593
+--- !u!114 &633128112178980406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,11 +66,11 @@ MonoBehaviour:
   m_Name: Put a Stop to Them
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 7431945578824607648}
-  - {fileID: -3147109972881770498}
-  - {fileID: 4770553027009668455}
+  - {fileID: 3485282000773976123}
+  - {fileID: 5510069104930334368}
+  - {fileID: 2150900896303232357}
   costScale: 0
---- !u!114 &4770553027009668455
+--- !u!114 &2150900896303232357
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,40 +85,9 @@ MonoBehaviour:
   customDescription: 
   statToChange: 2
   amount: 3
-  turns: 4
+  turns: 5
   reason: from clearing the Sirens
---- !u!114 &4931543587225456057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Introduce a Busking Tax
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5036707288897877255}
-  - {fileID: -3570987417182102084}
-  - {fileID: 8815425803835320561}
-  costScale: 0
---- !u!114 &5036707288897877255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The sirens gladly part with the loose gold they've found in
-    the clothes of their prey...
---- !u!114 &7431945578824607648
+--- !u!114 &3485282000773976123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,7 +101,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Clearing their nest was a deadly affair, but the performers
     are glad they're now the centre of attention again.
---- !u!114 &8815425803835320561
+--- !u!114 &5510069104930334368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: It took 3 adventurers lives to wipe out their nest.
+  count: 3
+  kill: 1
+  guild: 0
+  anyGuild: 0
+--- !u!114 &6816009105301187304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Introduce a Busking Tax
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -9163807981245791680}
+  - {fileID: -8269333369475986461}
+  - {fileID: 8473445102446221385}
+  costScale: 0
+--- !u!114 &8473445102446221385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
