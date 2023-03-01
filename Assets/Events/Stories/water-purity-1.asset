@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6513479167718455720
+--- !u!114 &-8063675627690921418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Search for the Brewing Supplies
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 6206661775768384288}
+  - {fileID: 1034407250212018084}
   costScale: 0
---- !u!114 &-936149405895112327
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-5936415117877290255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,12 +27,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Search for the Fountain of Purity
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 6144793023355559313}
-  costScale: 0
+  customDescription: 
+  quest: {fileID: 11400000, guid: 9578e165128e4434294471903c2775d2, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,12 +61,26 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 893250257242628714}
+  - {fileID: 5706363060022457779}
   choices:
-  - {fileID: -936149405895112327}
-  - {fileID: -6513479167718455720}
+  - {fileID: 8998144307672270909}
+  - {fileID: -8063675627690921418}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &893250257242628714
+--- !u!114 &1034407250212018084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}
+--- !u!114 &5706363060022457779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,7 +95,7 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 1
---- !u!114 &6144793023355559313
+--- !u!114 &8998144307672270909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,22 +104,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Search for the Fountain of Purity
   m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 9578e165128e4434294471903c2775d2, type: 2}
---- !u!114 &6206661775768384288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}
+  outcomes:
+  - {fileID: -5936415117877290255}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0

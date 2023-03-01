@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5908165771501135899
+--- !u!114 &-3930037798262098009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
   m_EditorClassIdentifier: 
-  customDescription: We've decided to grind up all this grain to make bread.
-  flag: 0
-  value: 0
---- !u!114 &-2874225707701499942
+  customDescription: 
+  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
+--- !u!114 &-3515608090365877541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,27 +54,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -2874225707701499942}
-  - {fileID: -5908165771501135899}
-  - {fileID: 6969440979077435809}
-  - {fileID: 1044434409464722553}
+  - {fileID: -3515608090365877541}
+  - {fileID: 5337064667425447220}
+  - {fileID: 1481889873632273248}
+  - {fileID: -3930037798262098009}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1044434409464722553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
---- !u!114 &6969440979077435809
+--- !u!114 &1481889873632273248
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,3 +74,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
+--- !u!114 &5337064667425447220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: We've decided to grind up all this grain to make bread.
+  flag: 0
+  value: 0

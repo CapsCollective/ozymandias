@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8691684261169975295
+--- !u!114 &-5370818505827300776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,15 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: AdventurersAdded
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
-  customDescription: The General has moved in. +1 Adventurer
-  adventurers: []
-  count: 1
-  guild: 0
-  anyGuild: 1
---- !u!114 &-5245564271301878517
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: b948849505ce4734598bccb5bddd8220, type: 2}
+--- !u!114 &-5069827382940570264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 1f66b978e5eee814fb42daee85a2b7f6, type: 2}
+--- !u!114 &-5028442080996281501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,13 +68,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -5245564271301878517}
-  - {fileID: 6272184258625236061}
-  - {fileID: -8691684261169975295}
-  - {fileID: 1155984880303703659}
+  - {fileID: -5028442080996281501}
+  - {fileID: -5370818505827300776}
+  - {fileID: 3764592627945953325}
+  - {fileID: -5069827382940570264}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1155984880303703659
+--- !u!114 &3764592627945953325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,22 +83,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
   m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 1f66b978e5eee814fb42daee85a2b7f6, type: 2}
---- !u!114 &6272184258625236061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: b948849505ce4734598bccb5bddd8220, type: 2}
+  customDescription: The General has moved in. +1 Adventurer
+  adventurers: []
+  count: 1
+  guild: 0
+  anyGuild: 1

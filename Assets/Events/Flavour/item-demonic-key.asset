@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: item-demonic-key
+  m_EditorClassIdentifier: 
+  headline: Mysterious Key Appears!
+  article: A strange key appeared in the pocket of an adventurer overnight. They
+    have no recollection of obtaining it, but now everyone is curious about finding
+    its lock.
+  image: {fileID: 21300000, guid: ffdecca65d5ac8149a2544df20c1b026, type: 3}
+  type: 2
+  headliner: 0
+  outcomes:
+  - {fileID: 4251705874498173607}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &4251705874498173607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: It glows with a demonic aura... I wonder what it opens?
+  flag: 4
+  value: 1

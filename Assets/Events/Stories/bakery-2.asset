@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9152261248446279577
+--- !u!114 &-6626777648305582404
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,7 +17,22 @@ MonoBehaviour:
   amount: 50
   turns: 5
   reason: from the Witches Cakes
---- !u!114 &-6525469616924698496
+--- !u!114 &-5320998999873895812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: abdf78be0bb67e84c9dcc67d69a260e2, type: 2}
+  toFront: 0
+--- !u!114 &-3522840031618538831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 5
---- !u!114 &-1012622923293902795
+--- !u!114 &-2582180040100693604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,14 +55,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Let her in
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5907025857108154725}
-  - {fileID: -6525469616924698496}
-  - {fileID: -9152261248446279577}
-  costScale: 0
+  customDescription: <i>"I'm glad you are so welcoming, eat up!"</i> the woman exclaims
+    before bursting into a pile of delicious cakes herself, mixing in with the others...
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,12 +84,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 9080314220390766050}
+  - {fileID: -5320998999873895812}
   choices:
-  - {fileID: -1012622923293902795}
-  - {fileID: 8840625754987235761}
+  - {fileID: 3492375632079900992}
+  - {fileID: 8210854256137784426}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &91516500927201100
+--- !u!114 &309393729855492440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: <i>"I hope you all starve!"</i> the woman shrieks as she bursts
     into a pile of rotten, inedible, cake.
---- !u!114 &5907025857108154725
+--- !u!114 &3492375632079900992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,12 +112,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Let her in
   m_EditorClassIdentifier: 
-  customDescription: <i>"I'm glad you are so welcoming, eat up!"</i> the woman exclaims
-    before bursting into a pile of delicious cakes herself, mixing in with the others...
---- !u!114 &8840625754987235761
+  outcomes:
+  - {fileID: -2582180040100693604}
+  - {fileID: -3522840031618538831}
+  - {fileID: -6626777648305582404}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &8210854256137784426
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,20 +136,8 @@ MonoBehaviour:
   m_Name: Turn her away
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 91516500927201100}
+  - {fileID: 309393729855492440}
   costScale: 0
---- !u!114 &9080314220390766050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: abdf78be0bb67e84c9dcc67d69a260e2, type: 2}
-  toFront: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0

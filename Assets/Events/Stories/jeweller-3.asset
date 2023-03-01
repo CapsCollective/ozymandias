@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8067840951429573974
+--- !u!114 &-7850538832432752545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send in Adventurers
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 4764806822631983820}
-  - {fileID: 5185323681727232042}
-  - {fileID: 422507784668411782}
-  costScale: 0
---- !u!114 &-3054394163077329569
+  customDescription: We could only find garden gnomes, who promptly caused a cave-in
+    to a valuable gold vein.
+--- !u!114 &-3988900165565587049
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,11 +27,14 @@ MonoBehaviour:
   m_Name: Send in Gnomes
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 864933024234512650}
-  - {fileID: 6801572029320451573}
-  - {fileID: 1518506078669118813}
+  - {fileID: -7850538832432752545}
+  - {fileID: 3615311009655233834}
+  - {fileID: 6012724672190425842}
   costScale: 0
---- !u!114 &-535433758823711218
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-1866242290248852930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,6 +47,24 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: The dwarves gloat, knowing you couldn't find anyone better.
+--- !u!114 &-1412668453536702190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: We still managed to get some metals out. +4 Defence (<sprite=8>)
+    for 3 turns.
+  statToChange: 8
+  amount: 4
+  turns: 3
+  reason: from Adventurer Scabs
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,11 +90,11 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -8067840951429573974}
-  - {fileID: -3054394163077329569}
-  - {fileID: 661127045913714723}
+  - {fileID: 7899596792819953949}
+  - {fileID: -3988900165565587049}
+  - {fileID: 3463025220131472910}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &422507784668411782
+--- !u!114 &3153760432169492478
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,16 +103,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: We still managed to get some metals out. +4 Defence (<sprite=8>)
-    for 3 turns.
-  statToChange: 8
-  amount: 4
-  turns: 3
-  reason: from Adventurer Scabs
---- !u!114 &661127045913714723
+  customDescription: 
+  count: 3
+  kill: 1
+  guild: 0
+  anyGuild: 1
+--- !u!114 &3463025220131472910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,9 +124,12 @@ MonoBehaviour:
   m_Name: Don't Send Anyone
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -535433758823711218}
+  - {fileID: -1866242290248852930}
   costScale: 0
---- !u!114 &864933024234512650
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &3615311009655233834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,12 +138,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: We could only find garden gnomes, who promptly caused a cave-in
-    to a valuable gold vein.
---- !u!114 &1518506078669118813
+  customDescription: 
+  statToChange: 7
+  amount: -15
+  turns: -1
+  reason: from Mine Cave-in
+--- !u!114 &6012724672190425842
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +164,7 @@ MonoBehaviour:
   amount: 4
   turns: 3
   reason: from Gnome Scabs
---- !u!114 &4764806822631983820
+--- !u!114 &6998472060197444885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Our inexperienced townsfolk only worked for a day until a lethal
     cave-in caused them to flee.
---- !u!114 &5185323681727232042
+--- !u!114 &7899596792819953949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,26 +187,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send in Adventurers
   m_EditorClassIdentifier: 
-  customDescription: 
-  count: 3
-  kill: 1
---- !u!114 &6801572029320451573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 7
-  amount: -15
-  turns: -1
-  reason: from Mine Cave-in
+  outcomes:
+  - {fileID: 6998472060197444885}
+  - {fileID: 3153760432169492478}
+  - {fileID: -1412668453536702190}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0

@@ -1,28 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: mercenaries-hunting
-  m_EditorClassIdentifier: 
-  headline: Mercenaries Return With Food!
-  article: Those mercenaries we sent out have returned with some rations that should
-    keep us going a while longer.
-  image: {fileID: 21300000, guid: a8cacaa0fad571a4eb66fd8fa3e5a846, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 2100453823255147312}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &2100453823255147312
+--- !u!114 &-8772422962841740094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,3 +17,25 @@ MonoBehaviour:
   amount: 10
   turns: -1
   reason: from the Mercenaries Hunting
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: mercenaries-hunting
+  m_EditorClassIdentifier: 
+  headline: Mercenaries Return With Food!
+  article: Those <b>mercenaries</b> we sent out have returned with some rations that
+    should keep us going a while longer.
+  image: {fileID: 21300000, guid: a8cacaa0fad571a4eb66fd8fa3e5a846, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -8772422962841740094}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2995978860234828301
+--- !u!114 &-1266826789299801778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
-  m_Name: BuildingDamaged
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: The Library was sucked into the vortex...
-  buildingType: 5
-  anyBuildingType: 0
-  demolishAll: 0
+  customDescription: The Arcanist (<sprite=4>) was sucked into the vortex...
+  count: 1
+  kill: 1
+  guild: 4
+  anyGuild: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37,12 +38,12 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: -2995978860234828301}
-  - {fileID: 7195620666503258850}
-  - {fileID: 284555482722494968}
+  - {fileID: 3079588620312760648}
+  - {fileID: -1266826789299801778}
+  - {fileID: 1387021541299208051}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &284555482722494968
+--- !u!114 &1387021541299208051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,7 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 1
---- !u!114 &7195620666503258850
+--- !u!114 &3079588620312760648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,11 +66,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
+  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
+  m_Name: BuildingDamaged
   m_EditorClassIdentifier: 
-  customDescription: The Arcanist (<sprite=4>) was sucked into the vortex...
-  count: 1
-  kill: 1
-  guild: 0
-  anyGuild: 0
+  customDescription: The Library was sucked into the vortex...
+  buildingType: 5
+  anyBuildingType: 0
+  demolishAll: 0

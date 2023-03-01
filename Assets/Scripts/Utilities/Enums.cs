@@ -89,7 +89,10 @@
         RequestCompleted,
         ThreatAdded,
         SetFlag,
-        WealthAdded
+        WealthAdded,
+        WealthAddedRandom,
+        TerrainRemoved,
+        SetStability,
     }
 
     public enum RequestType
@@ -232,7 +235,11 @@
         StoryActive,
         Scarecrows,
         Cosmetics,
-        MineStrike
+        MineStrike,
+        DemonicKey,
+        GoldenKey,
+        InstructionManual,
+        BottomlessFlask
     }
 
     public enum Secret

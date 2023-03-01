@@ -122,7 +122,7 @@ namespace Managers
         public static void SaveState(bool overwriteBackup = true)
         {
             if (Tutorial.Tutorial.Active) return; // No saving during tutorial
-            if (overwriteBackup) Manager.Notifications.Display("Game Saved", Manager.saveIcon);
+            if (overwriteBackup) Manager.Notifications.Display("Game Saved", Manager.saveIcon, 0);
             Manager.PlatformManager.FileSystem.SaveFile.Save(overwriteBackup);
         }
         

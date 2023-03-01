@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1741628959306279353
+--- !u!114 &-6849403464139848610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
+  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
+  m_Name: BuildingDamaged
   m_EditorClassIdentifier: 
-  customDescription: The offending Outrider (<sprite=1>) was banished from the town...
-  count: 1
-  kill: 0
-  guild: 0
-  anyGuild: 0
+  customDescription: 
+  buildingType: 10
+  anyBuildingType: 0
+  demolishAll: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,12 +37,12 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 3199106944261689141}
-  - {fileID: -1741628959306279353}
-  - {fileID: 7623628580580844885}
+  - {fileID: -6849403464139848610}
+  - {fileID: 356972173441390387}
+  - {fileID: 7529379062926547489}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3199106944261689141
+--- !u!114 &356972173441390387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,14 +51,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
-  m_Name: BuildingDamaged
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: 
-  buildingType: 10
-  anyBuildingType: 0
-  demolishAll: 0
---- !u!114 &7623628580580844885
+  customDescription: The offending Outrider (<sprite=1>) was banished from the town...
+  count: 1
+  kill: 0
+  guild: 1
+  anyGuild: 0
+--- !u!114 &7529379062926547489
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,6 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6316271777326760160
+--- !u!114 &-6522404575753641671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: <color=#820000ff>+3 Threat (<sprite=9>) per Farm until this
+    is resolved...</color>
+  flag: 1
+  value: 1
+--- !u!114 &-1767885736860861647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,13 +55,13 @@ MonoBehaviour:
   type: 3
   headliner: 1
   outcomes:
-  - {fileID: 3899726314381365119}
-  - {fileID: 3216371870437708709}
-  - {fileID: -6316271777326760160}
-  - {fileID: 2357779122751137354}
+  - {fileID: -6522404575753641671}
+  - {fileID: 7512708388125655969}
+  - {fileID: -1767885736860861647}
+  - {fileID: 1067541890030997822}
   choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &2357779122751137354
+  blueprintToUnlock: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
+--- !u!114 &1067541890030997822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,7 +76,7 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
   toFront: 0
---- !u!114 &3216371870437708709
+--- !u!114 &7512708388125655969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,19 +92,3 @@ MonoBehaviour:
   buildingType: 8
   anyBuildingType: 0
   demolishAll: 1
---- !u!114 &3899726314381365119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>+3 Threat (<sprite=9>) per Farm until this
-    is resolved...</color>
-  flag: 1
-  value: 1

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: hivemind-completed
+  m_EditorClassIdentifier: 
+  headline: Hysterical Hivemind
+  article: 'Our adventurers return from a distress call to a nearby settlement. Unfortunately,
+    the camp was already completely taken over by a <b>hivemind</b> that spread from
+    a nearby elder-brain.
+
+
+    "We got there and everything was fine until we realised
+    everyone was speaking in unison."
+
+
+    At least the adventurers burnt down the
+    town before any of them could escape, although the trip home was full of shifty
+    eyes, and accusatory <i>''jinxes''</i>.'
+  image: {fileID: 21300000, guid: b41cc507af47a584b88686f1cdf64479, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 8691298712776685528}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &8691298712776685528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: a17391711e74a1e4fac2c8e7d6de8374, type: 2}

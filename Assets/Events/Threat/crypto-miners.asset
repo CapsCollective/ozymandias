@@ -1,6 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7197759582131841998
+--- !u!114 &-6041914502692277786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  turnsWorth: 0.3
+--- !u!114 &-1249658072563844891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -35,21 +49,7 @@ MonoBehaviour:
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: -7197759582131841998}
-  - {fileID: 3136938975335846104}
+  - {fileID: -1249658072563844891}
+  - {fileID: -6041914502692277786}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3136938975335846104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
-  m_Name: WealthAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  turnsWorth: 0.3

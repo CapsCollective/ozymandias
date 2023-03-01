@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9033789517590297163
+--- !u!114 &-6247036444808564448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
   m_EditorClassIdentifier: 
   customDescription: 
-  blueprint: {fileID: 11400000, guid: 069014ef131bda64282ad80f63699ec7, type: 2}
---- !u!114 &-6961046796805399826
+  quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}
+--- !u!114 &-1070935528962110864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,20 +29,6 @@ MonoBehaviour:
   customDescription: It's more drinkable than that well water, for sure.
   flag: 0
   value: 0
---- !u!114 &-3789534811169479310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
-  m_EditorClassIdentifier: 
-  customDescription: 
-  quest: {fileID: 11400000, guid: 2153a24dbe1770444815f5c8a63f5d13, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,8 +55,22 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -6961046796805399826}
-  - {fileID: -9033789517590297163}
-  - {fileID: -3789534811169479310}
+  - {fileID: -1070935528962110864}
+  - {fileID: 2187797695734069483}
+  - {fileID: -6247036444808564448}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &2187797695734069483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: 069014ef131bda64282ad80f63699ec7, type: 2}

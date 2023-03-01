@@ -114,7 +114,7 @@ namespace Events
             else if (TypeNotInQueue(EventType.AdventurersJoin) && Random.Range(0,5) < housingSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
             // Let them gain some adventurers to start
-            if (Manager.Adventurers.Count >= 5)
+            if (Manager.Adventurers.Available >= 5)
             {
                 // Scale from 100% down to 0% threat spawn if falling behind by up to 20 or leading by up to 10
                 // Prevent multiple threat events from happening in a single turn
@@ -135,7 +135,7 @@ namespace Events
                     eventPool.Add(PickRandomStory());
             }
 
-            while (eventPool.Count < 2) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
+            while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
         }
 
@@ -153,7 +153,7 @@ namespace Events
                     Debug.Log($"Story chosen: {story}");
                     return story;
                 }
-                Debug.Log($"Story invalid: {story}, picking another");
+                Debug.LogWarning($"Story invalid: {story}, picking another");
             }
         }
         

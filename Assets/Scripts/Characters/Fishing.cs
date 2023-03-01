@@ -51,7 +51,7 @@ namespace Characters
                 if (_fishCaught)
                 {
                     OnFishCaught?.Invoke();
-                    Manager.Notifications.Display("You caught a fish!", icon);
+                    Manager.Notifications.Display("Secret Unlocked: You caught a fish!", icon);
                     Manager.Stats.Wealth += 1;
                     UpdateUi();
                 }

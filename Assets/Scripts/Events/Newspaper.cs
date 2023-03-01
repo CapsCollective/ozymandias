@@ -104,19 +104,25 @@ namespace Events
             UpdateUi();
         }
 
-        private void SetChoiceActive(int choice, bool active)
+        private void SetChoiceActive(int choiceI, bool active)
         {
-            choiceList[choice].button.gameObject.SetActive(active);
+            ChoiceButton choiceButton = choiceList[choiceI];
+            choiceButton.button.gameObject.SetActive(active);
             if (!active) return;
-            
-            int cost = (int)(_choiceEvent.choices[choice].costScale * Manager.Stats.WealthPerTurn);
+
+            Choice choice = _choiceEvent.choices[choiceI];
+            int cost = (int)(choice.costScale * Manager.Stats.WealthPerTurn);
             bool hasCost = cost != 0;
 
-            choiceList[choice].description.text = _choiceEvent.choices[choice].name +
-                $"\n(Spend {cost} / {Manager.Stats.Wealth} {String.StatIcon(Stat.Spending)})".Conditional(hasCost);
-            //choiceList[choice].cost.gameObject.SetActive(hasCost);
-            //choiceList[choice].cost.text = cost.ToString();
-            choiceList[choice].button.interactable = !hasCost || Manager.Stats.Wealth >= cost;
+            bool isLocked = choice.requiresItem && !Manager.EventQueue.Flags[choice.requiredItem];
+            bool alreadyPurchased = choice.disableRepurchase && Manager.EventQueue.Flags[choice.requiredItem];
+            
+            choiceButton.description.text = choice.name +
+                $"\n(Spend {cost} / {Manager.Stats.Wealth} {String.StatIcon(Stat.Spending)})".Conditional(hasCost && !alreadyPurchased) +
+                "\n(Item Not Owned)".Conditional(isLocked) +
+                "\n(Item Already Owned)".Conditional(alreadyPurchased);
+            
+            choiceButton.button.interactable = !isLocked && !alreadyPurchased && (!hasCost || Manager.Stats.Wealth >= cost);
         }
     
         public void OnChoiceSelected(int choice)

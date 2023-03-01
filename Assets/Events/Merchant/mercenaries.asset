@@ -1,34 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9207743908098431809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 5a5d9d835543ae04d99799748e1c64fa, type: 2}
-  toFront: 0
---- !u!114 &-4351666346660261765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: They pour out their wagon, ready to fight...
---- !u!114 &-3898139170754958301
+--- !u!114 &-8543156646398936565
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Fine, I guess we'll come back after the monsters have roughed
     you up a little, see if you need our help then.
---- !u!114 &-3509280960617215072
+--- !u!114 &-8305050158384755945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,12 +24,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: We Don't Need Any Help
+  m_Name: Hire Mercenaries
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -3898139170754958301}
-  costScale: 0
---- !u!114 &-2509673765200840970
+  - {fileID: -3478804747468484472}
+  - {fileID: -7372878411967575532}
+  costScale: 1
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-7496592652800367921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,68 +42,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Go Hunting
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 6781979381072282392}
-  - {fileID: -9207743908098431809}
-  costScale: 0.6
---- !u!114 &-2170207013464739340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: These traps should keep the monsters from getting 'too' close...
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: mercenaries
-  m_EditorClassIdentifier: 
-  headline: Mercenaries Arrive
-  article: A pack of wayward mercenaries arrived, hearing there's coin to be made.
-    They've offered to join our fight or
-  image: {fileID: 21300000, guid: 623e4ee89c8862145b587df54074bce0, type: 3}
-  type: 13
-  headliner: 0
-  outcomes: []
-  choices:
-  - {fileID: 7206070820230664498}
-  - {fileID: 898919384487858856}
-  - {fileID: -2509673765200840970}
-  - {fileID: -3509280960617215072}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &898919384487858856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Set Traps
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -2170207013464739340}
-  - {fileID: 4669770614939364011}
-  costScale: 0.8
---- !u!114 &4497616604280385025
+  customDescription: 
+  baseAmount: -2
+--- !u!114 &-7372878411967575532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +64,7 @@ MonoBehaviour:
   count: 5
   guild: 0
   anyGuild: 1
---- !u!114 &4669770614939364011
+--- !u!114 &-3478804747468484472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,12 +73,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: -3
---- !u!114 &6781979381072282392
+  customDescription: They pour out their wagon, ready to fight...
+--- !u!114 &-1808652396418479867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: We Don't Need Any Help
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -8543156646398936565}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: mercenaries
+  m_EditorClassIdentifier: 
+  headline: Mercenaries Arrive
+  article: A pack of wayward mercenaries arrived, hearing there's coin to be made.
+    They've offered to join our fight or help out in the forest nearby.
+  image: {fileID: 21300000, guid: 623e4ee89c8862145b587df54074bce0, type: 3}
+  type: 13
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -8305050158384755945}
+  - {fileID: 7181638371717955074}
+  - {fileID: 8623026437702503819}
+  - {fileID: -1808652396418479867}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &384732721274559068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +133,35 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: They go out looking for whatever food they can find...
---- !u!114 &7206070820230664498
+--- !u!114 &6516888685171024848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 5a5d9d835543ae04d99799748e1c64fa, type: 2}
+  toFront: 0
+--- !u!114 &6602064639873729187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: These traps should keep the monsters from getting 'too' close...
+--- !u!114 &7181638371717955074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,9 +171,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Hire Mercenaries
+  m_Name: Set Traps
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -4351666346660261765}
-  - {fileID: 4497616604280385025}
-  costScale: 1
+  - {fileID: 6602064639873729187}
+  - {fileID: -7496592652800367921}
+  costScale: 0.8
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &8623026437702503819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Go Hunting
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 384732721274559068}
+  - {fileID: 6516888685171024848}
+  costScale: 0.6
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0

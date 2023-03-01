@@ -88,7 +88,7 @@ namespace Cards
                 if (!structure.IsRuin) return;
                 if (Discoverable.Count <= 0)
                 {
-                    if (Random.Range(0,4) == 0) Manager.Notifications.Display(
+                    if (!Tutorial.Tutorial.Active && Random.Range(0,4) == 0) Manager.Notifications.Display(
                         "No unlocked cards to discover in ruins",
                         notificationIcon, 3,
                         () => Manager.Book.Open(Book.BookPage.Reports)

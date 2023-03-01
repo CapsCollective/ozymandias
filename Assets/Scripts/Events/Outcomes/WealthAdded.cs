@@ -9,7 +9,7 @@ namespace Events.Outcomes
     {
         public float turnsWorth;
 
-        public int Amount => Mathf.RoundToInt(Manager.Stats.WealthPerTurn * turnsWorth);
+        private int Amount => Mathf.RoundToInt(Manager.Stats.WealthPerTurn * turnsWorth);
         protected override bool Execute()
         {
             Manager.Stats.Wealth += Mathf.RoundToInt(Manager.Stats.WealthPerTurn * turnsWorth);

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8953320977162888376
+--- !u!114 &-6451920604216352971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 45a1d671e33a3154a8b316666c50bb75, type: 2}
-  toFront: 0
+  customDescription: Two adventurers were amongst the casualties.
+  count: 2
+  kill: 1
+  guild: 0
+  anyGuild: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,27 +38,12 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 3053340952154672217}
-  - {fileID: 3224637788680228186}
-  - {fileID: -8953320977162888376}
+  - {fileID: -6451920604216352971}
+  - {fileID: 308326760644110167}
+  - {fileID: 6935157673497781672}
   choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &3053340952154672217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: Two adventurers were amongst the casualties.
-  count: 2
-  kill: 1
---- !u!114 &3224637788680228186
+  blueprintToUnlock: {fileID: 11400000, guid: 5e22b42b41b30e64f8a565d67992210f, type: 2}
+--- !u!114 &308326760644110167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,3 +58,18 @@ MonoBehaviour:
   customDescription: The vampire hunters stay to continue their 'audit'...
   flag: 0
   value: 1
+--- !u!114 &6935157673497781672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 45a1d671e33a3154a8b316666c50bb75, type: 2}
+  toFront: 0

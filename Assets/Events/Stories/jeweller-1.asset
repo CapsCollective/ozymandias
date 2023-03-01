@@ -1,6 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-799202681297077443
+--- !u!114 &-6819880831164179837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: We'll have to see how they respond...
+  flag: 0
+  value: 1
+--- !u!114 &-5351448584011420939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
+  toFront: 0
+--- !u!114 &-3670793961339618756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 8
+  amount: -3
+  turns: -1
+  reason: from the Wooden Weapons
+--- !u!114 &-1068478421546592405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,23 +60,12 @@ MonoBehaviour:
   m_Name: Cut Off Trade
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -523803170184498902}
-  - {fileID: 4344565081450211857}
+  - {fileID: 1803915907485965003}
+  - {fileID: -3670793961339618756}
   costScale: 0
---- !u!114 &-523803170184498902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: Without their mineral supply, we'll have to substitute our weapons
-    with wood.
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,10 +92,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 6377350385890328605}
-  - {fileID: -799202681297077443}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &1625921680721808145
+  - {fileID: 7697242508220057561}
+  - {fileID: -1068478421546592405}
+  blueprintToUnlock: {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}
+--- !u!114 &1803915907485965003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,30 +104,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: We'll have to see how they respond...
-  flag: 0
-  value: 1
---- !u!114 &4344565081450211857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 8
-  amount: -3
-  turns: -1
-  reason: from the Wooden Weapons
---- !u!114 &6377350385890328605
+  customDescription: Without their mineral supply, we'll have to substitute our weapons
+    with wood.
+--- !u!114 &7697242508220057561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,21 +122,9 @@ MonoBehaviour:
   m_Name: Impose Child Labour Laws
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 1625921680721808145}
-  - {fileID: 6616317523404950880}
+  - {fileID: -6819880831164179837}
+  - {fileID: -5351448584011420939}
   costScale: 0
---- !u!114 &6616317523404950880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 706c1bcedaed82048aa4f9cb2d354c1d, type: 2}
-  toFront: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0

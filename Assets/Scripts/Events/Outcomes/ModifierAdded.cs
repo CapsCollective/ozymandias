@@ -33,8 +33,9 @@ namespace Events.Outcomes
 
         protected override string Description => (
             customDescription != "" ? customDescription :
-            $"{amount.WithSign()} {String.StatWithIcon(statToChange)}" +
-            $" for {turns} turns {reason}.".Conditional(turns != -1)
+            $"{amount.WithSign()} {String.StatWithIcon(statToChange)} " +
+            $"for {turns} turns ".Conditional(turns != -1) + 
+            reason + "."
         ).StatusColor(amount);
     }
 }

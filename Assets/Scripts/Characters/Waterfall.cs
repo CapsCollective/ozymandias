@@ -36,7 +36,7 @@ namespace Characters
             if (_open) return;
             _open = true;
             OnOpened?.Invoke();
-            Manager.Notifications.Display("What's behind that waterfall?", icon);
+            Manager.Notifications.Display("Secret Unlocked: What's behind that waterfall?", icon);
 
             left.DOLocalMoveX(1f, 1f);
             right.DOLocalMoveX(-1f, 1f);

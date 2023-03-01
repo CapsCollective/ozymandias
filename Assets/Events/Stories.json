@@ -1,40 +1,12 @@
 ﻿[
   {
-    "name": "time-loop-1",
-    "headline": "Local Reporter Stuck in a Time Loop!",
-    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please report back.",
-    "image": "empty-hourglass",
-    "type": "Story",
-    "outcomes": [
-      {
-        "type": "ChainEvent",
-        "nextEvent": {
-          "name": "time-loop-2",
-          "headline": "Local Reporter Stuck in a Time Loop!",
-          "article": "Seriously, it's been three days now, I don't what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
-          "image": "empty-hourglass",
-          "outcomes": [
-            {
-              "type": "ChainEvent",
-              "nextEvent": {
-                "name": "time-loop-3",
-                "headline": "Reporter Doesn't Know How Dates Work",
-                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
-                "image": "empty-hourglass"
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  {
     "name": "bakery-1",
     "headline": "Scarecrows!",
     "article": "Farmers have awoken to a shock, as their <b>scarecrows</b> have up and started walking about! They have become territorial of their fields to anyone trying to harvest the produce.\n\nLocal monster experts recommend <i>\"Burning it all down first chance you get.\"</i>",
     "type": "Story",
     "image": "scarecrow",
     "headliner": true,
+    "blueprintToUnlock": "Bakery",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -160,6 +132,7 @@
     "article": "A controversial new performer, <b>Gol Brojan</b> has joined the town today. He's stirred up the other performers, claiming they're 'too safe', with his act involving dangerous stunts, giving the audience knives to throw at him during his routine. The influence he has on our town remains to be seen.",
     "type": "Story",
     "image": "drama-masks",
+    "blueprintToUnlock": "Plaza",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -221,7 +194,7 @@
                       "type": "AdventurersAdded",
                       "count": 3,
                       "guild": "Performer",
-                      "customDescription": "Gol and his supporters rejoin the town (+3 Performers)."
+                      "customDescription": "Gol and his supporters rejoin the town. +3 Performers (<sprite=2>)"
                     },
                     {
                       "type": "SetFlag",
@@ -248,6 +221,7 @@
     "article": "Our scouts have reported to us that the traveling merchant has picked up an <b>intriguing new scroll</b>, and is on the way to our town now. ",
     "image": "old-wagon",
     "type": "Story",
+    "blueprintToUnlock": "Monastery",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -319,6 +293,7 @@
     "article": "Visitors from a nearby settlement have come by, wearing <b>flashy clothes and hats</b>. We've learned that a tailor has been designing unique clothes that our adventurers will seemingly pay any price to own.",
     "type": "Story",
     "image": "top-hat",
+    "blueprintToUnlock": "Tailor",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -432,6 +407,7 @@
     "article": "Reports have come in that the <b>dwarves</b> in the nearby mountains have been working their children in the mines. Their leader sent out a memo explaining <i>\"They're so tiny, they can fit in the little gaps where all the good stuff is!\"</i>\n\nGuildCo's PR department have forbid us from trading with them if this continues.",
     "type": "Story",
     "image": "war-pick",
+    "blueprintToUnlock": "Jeweller",
     "choices": [
       {
         "name": "Impose Child Labour Laws",
@@ -599,6 +575,7 @@
     "article": "A pair of adventurers have stumbled out of the forest in the early hours of the morning, calling themselves 'Red' and 'Mr. Woodsman'. They claim not to know how they got here, but have vague memories of being chased by a <b>hideous hairy beast</b>.",
     "type": "Story",
     "image": "hooded-figure",
+    "blueprintToUnlock": "Armoury",
     "outcomes": [
       {
         "type": "AdventurersAdded",
@@ -685,6 +662,7 @@
     "article": "For the third time this week, our townsfolk have submitted a formal complaint of adventurers coming into their stores and destroying their precious pots and vases in the pursuit of hidden treasure.\n\n<i>\"We've had enough! We're forming our own guild!\"</i> the newly formed <b>'League of Normal Folk</b> declared to no one in particular.",
     "type": "Story",
     "image": "broken-pottery",
+    "blueprintToUnlock": "Armoury",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -754,6 +732,7 @@
     "article": "Rumours there is a <b>wicked witch</b> in the outskirts that is cursing our town. One adventurer claims the witch made his sword fragile and blunt, another has been given a terrible hangover absolutely unrelated to a night of heavy drinking.\n\nThese angry adventurers wish to bring the witch to trial, but we want to hear her side first...",
     "type": "Story",
     "image": "uprising",
+    "blueprintToUnlock": "Enchanter",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -799,6 +778,7 @@
     "article": "Tragedy unfolded at a local inn last night, as regional vampire cosplay and literature organisation, The Undead Poets Society, held their annual gala dinner, only to be brutally slain by a leather-clad, rag-tag team of <b>vampire hunters</b> who embarrassingly mistook them for the real deal.",
     "type": "Story",
     "image": "resting-vampire",
+    "blueprintToUnlock": "Tannery",
     "outcomes": [
       {
         "type": "AdventurersRemoved",
@@ -878,6 +858,7 @@
     "article": "Up from the under-city, the rats have risen up, and with them a <b>deadly disease</b>!\n\n<i>\"Ve have been downtrodden, but non more! Ve shall unite as one voice!\"</i>\n\nThey may infect the whole town if we're not careful, we need to lock down right away!",
     "type": "Story",
     "image": "rat",
+    "blueprintToUnlock": "Apothecary",
     "choices": [
       {
         "name": "Enforce lockdowns",
@@ -1019,6 +1000,7 @@
     "article": "A <b>strange map</b> was found pinned to the town notice board this morning, with a note attached.\n\n<i>\"This map will set you on a journey, leading to untold riches!\"</i>\n\nThe legitimacy of this claim is yet to be proven, and nobody has come forward as the source of this quest, but we can probably check it out.",
     "type": "Story",
     "image": "map",
+    "blueprintToUnlock": "Cartographer",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -1244,6 +1226,180 @@
               ]
             }
           ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "time-loop-1",
+    "headline": "Local Reporter Stuck in a Time Loop!",
+    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please report back.",
+    "image": "empty-hourglass",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "time-loop-2",
+          "headline": "Local Reporter Stuck in a Time Loop!",
+          "article": "Seriously, it's been three days now, I don't what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
+          "image": "empty-hourglass",
+          "outcomes": [
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "time-loop-3",
+                "headline": "Reporter Doesn't Know How Dates Work",
+                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
+                "image": "empty-hourglass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "macguffins-1",
+    "headline": "The Search for Plot Contrivances",
+    "article": "A local prophet has spoken again of the mysterious <b>MacGuffins</b> and their importance to our story. We don't fully understand what they do, but apparently we must set off on a voyage to find them immediately!",
+    "image": "puzzle",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "macguffins-1-quest",
+          "location": "Dock",
+          "title": "Hunt for the MacGuffins",
+          "description": "They're important for the plot",
+          "image": "puzzle",
+          "adventurers": 4,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.3,
+          "completedEvent": {
+            "name": "macguffins-1-completed",
+            "headline": "MacGuffins Form Powerful Artifact",
+            "article": "Our adventurers have returned, <b>MacGuffins</b> in hand. When pieced together, the <b>MacGuffins</b> form a conveniently powerful defensive weapon, that will keep us safe (for like 3 days before it's never brought up again)",
+            "image": "puzzle",
+            "outcomes": [
+              {
+                "type": "SetFlag",
+                "flag": "StoryActive",
+                "value": false
+              },
+              {
+                "type": "ModifierAdded",
+                "modifier": {
+                  "toChange": "Defence",
+                  "amount": 3,
+                  "turns": -1,
+                  "reason": "from the MacGuffin Defence System"
+                }
+              }
+
+            ]
+          }          
+        }
+      }
+    ]
+  },
+  {
+    "name": "macguffins-2",
+    "headline": "MacGuffin Craze",
+    "article": "The hottest new word around town is <b>MacGuffin</b>', and everyone wants to get their hands on one! Nobody is actually entirely sure what they are, but we know that we will sail to the ends of the earth to get them!",
+    "image": "smitten",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "macguffins-2-quest",
+          "location": "Dock",
+          "title": "Hunt for the MacGuffins",
+          "description": "They're the new craze around town",
+          "image": "smitten",
+          "adventurers": 4,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.3,
+          "completedEvent": {
+            "name": "macguffins-2-completed",
+            "headline": "The Cutest MacGuffins You've Ever Seen!",
+            "article": "Our adventuring party has returned, <b>MacGuffins</b> in hand, and it's the new craze around town. People are flooding the stores trying to get their hands on these things! We still don't fully understand their use, or where they came from, but they're so exclusive <b>I must have one!</b>",
+            "image": "smitten",
+            "outcomes": [
+              {
+                "type": "SetFlag",
+                "flag": "StoryActive",
+                "value": false
+              },
+              {
+                "type": "ModifierAdded",
+                "modifier": {
+                  "toChange": "Spending",
+                  "amount": 25,
+                  "turns": -1,
+                  "reason": "from the MacGuffin Craze"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "macguffins-3",
+    "headline": "What is this 'MacGuffin?'",
+    "article": "Rumours are spreading of a mysterious 'MacGuffin'. Is it a person, is it an artifact? Either way, we must set sail and find it!",
+    "image": "puzzle",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "macguffins-3-quest",
+          "location": "Dock",
+          "title": "Hunt for 'MacGuffin'",
+          "description": "They must be important...",
+          "image": "puzzle",
+          "adventurers": 4,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.3,
+          "completedEvent": {
+            "name": "macguffins-3-completed",
+            "headline": "We found a Dwarf Instead",
+            "article": "Returning from their fetch quest, our adventuring party on the search for the mysterious and confusingly named MacGuffins has instead captured a Dwarf by the name of Greg MacGuffin. In a statement this morning, Greg said <i>\"untie me and I'll stay, just please don't put me back in the bag of holding!\"</i>",
+            "image": "dwarf-face",
+            "outcomes": [
+              {
+                "type": "SetFlag",
+                "flag": "StoryActive",
+                "value": false
+              },
+              {
+                "type": "AdventurersAdded",
+                "count": 1,
+                "anyGuild": true,
+                "customDescription": "Mr. MacGuffin joins the town. +1 Adventurer"
+              }
+            ]
+          }
         }
       }
     ]

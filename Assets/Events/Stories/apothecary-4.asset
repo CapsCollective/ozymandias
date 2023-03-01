@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6026448857887054932
+--- !u!114 &-8611401576535271975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,12 +43,25 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 4720187578300673653}
-  - {fileID: -6026448857887054932}
-  - {fileID: 2390138444966956606}
+  - {fileID: 1146887038638801389}
+  - {fileID: -8611401576535271975}
+  - {fileID: 4486012911759402594}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2390138444966956606
+--- !u!114 &1146887038638801389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The rat plague is solved?
+--- !u!114 &4486012911759402594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,16 +75,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   blueprint: {fileID: 11400000, guid: f615080d3cd449e4b8959e1aed05f9fd, type: 2}
---- !u!114 &4720187578300673653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The rat plague is solved?

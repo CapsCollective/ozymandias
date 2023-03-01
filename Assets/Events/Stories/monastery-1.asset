@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5553980869310591442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: You should start saving up...
+  flag: 0
+  value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19,26 +34,11 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 46210032595033996}
-  - {fileID: 3488153733979011038}
+  - {fileID: -5553980869310591442}
+  - {fileID: 2825207850692888683}
   choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &46210032595033996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: You should start saving up...
-  flag: 0
-  value: 1
---- !u!114 &3488153733979011038
+  blueprintToUnlock: {fileID: 11400000, guid: 1e49bdfd9848d18478bde803ac073dcf, type: 2}
+--- !u!114 &2825207850692888683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

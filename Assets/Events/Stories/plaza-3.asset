@@ -1,23 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8259104917568024271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: AdventurersAdded
-  m_EditorClassIdentifier: 
-  customDescription: Gol and his supporters rejoin the town (+3 Performers).
-  adventurers: []
-  count: 3
-  guild: 2
-  anyGuild: 0
---- !u!114 &-7674401244450023312
+--- !u!114 &-6771519839080214458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32,7 +15,7 @@ MonoBehaviour:
   customDescription: They've given us some designs for a public performance space.
   flag: 0
   value: 0
---- !u!114 &-7160076832783200269
+--- !u!114 &-1918918669453237091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +24,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
   m_EditorClassIdentifier: 
   customDescription: 
-  blueprint: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
+  quest: {fileID: 11400000, guid: d860dd06eda3a2f43beca7e50efa1cf9, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,13 +51,13 @@ MonoBehaviour:
   type: 0
   headliner: 1
   outcomes:
-  - {fileID: -8259104917568024271}
-  - {fileID: -7674401244450023312}
-  - {fileID: -7160076832783200269}
-  - {fileID: 5842515720320628831}
+  - {fileID: 735459916730092320}
+  - {fileID: -6771519839080214458}
+  - {fileID: 7374246223341277187}
+  - {fileID: -1918918669453237091}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &5842515720320628831
+--- !u!114 &735459916730092320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,8 +66,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: Gol and his supporters rejoin the town. +3 Performers (<sprite=2>)
+  adventurers: []
+  count: 3
+  guild: 2
+  anyGuild: 0
+--- !u!114 &7374246223341277187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: d860dd06eda3a2f43beca7e50efa1cf9, type: 2}
+  blueprint: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}

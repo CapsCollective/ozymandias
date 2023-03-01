@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8424565748013082523
+--- !u!114 &-7587760315732971281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: 5e42c665f6caf6341b22b1c544810084, type: 2}
---- !u!114 &-2842629324825645591
+  statToChange: 4
+  amount: -3
+  turns: 5
+  reason: from the Goblin Chanting
+--- !u!114 &-927717343173883551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27,10 +30,13 @@ MonoBehaviour:
   m_Name: Ignore the Chanting
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 9218315314917662164}
-  - {fileID: 9087414258231593220}
-  - {fileID: 4335544230906135286}
+  - {fileID: 7201574024593718603}
+  - {fileID: -7587760315732971281}
+  - {fileID: 778286793155585581}
   costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,10 +59,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 1776269689730175425}
-  - {fileID: -2842629324825645591}
+  - {fileID: 760794889170752485}
+  - {fileID: -927717343173883551}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1776269689730175425
+--- !u!114 &760794889170752485
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,9 +75,12 @@ MonoBehaviour:
   m_Name: Infiltrate the Camp!
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -8424565748013082523}
+  - {fileID: 1115811911822454215}
   costScale: 0
---- !u!114 &4335544230906135286
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &778286793155585581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 1
---- !u!114 &9087414258231593220
+--- !u!114 &1115811911822454215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,15 +103,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 4
-  amount: -3
-  turns: 5
-  reason: from the Goblin Chanting
---- !u!114 &9218315314917662164
+  quest: {fileID: 11400000, guid: 5e42c665f6caf6341b22b1c544810084, type: 2}
+--- !u!114 &7201574024593718603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

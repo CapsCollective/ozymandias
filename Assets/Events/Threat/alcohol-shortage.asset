@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8987649287020752423
+--- !u!114 &-9101582116410990176
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Use a Bottomless Flask
   m_EditorClassIdentifier: 
-  customDescription: The Brawlers breath a drunken sigh of relief...
---- !u!114 &-6365930061894726627
+  outcomes:
+  - {fileID: 799121174803165822}
+  - {fileID: -1622262916048402105}
+  - {fileID: 7938291779523346196}
+  costScale: 0
+  requiresItem: 1
+  disableRepurchase: 0
+  requiredItem: 7
+--- !u!114 &-6538680920147730397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,15 +29,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Use Fruits to Make Wine
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 721993463000876833}
+  - {fileID: 2152494410992119698}
+  - {fileID: 3992336716526162023}
+  - {fileID: 729433879179232347}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-5006509491278013896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 3
-  amount: 2
-  turns: 5
-  reason: from Forced Sobriety
---- !u!114 &-5121902635916344656
+  baseAmount: 5
+--- !u!114 &-1622262916048402105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,26 +69,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   statToChange: 0
-  amount: 2
+  amount: 1
   turns: 5
-  reason: from Fermenting Fruits
---- !u!114 &-506752139063882868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Use Fruits to Make Wine
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -8987649287020752423}
-  - {fileID: 4750953342738826829}
-  - {fileID: -5121902635916344656}
-  costScale: 0
+  reason: from Flowing Liquor
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,10 +96,55 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -506752139063882868}
-  - {fileID: 885208747952710059}
+  - {fileID: -9101582116410990176}
+  - {fileID: -6538680920147730397}
+  - {fileID: 2113729473415342512}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &885208747952710059
+--- !u!114 &721993463000876833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The adventurers breath a drunken sigh of relief...
+--- !u!114 &729433879179232347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 2
+  amount: 1
+  turns: 5
+  reason: from Fermenting Fruits
+--- !u!114 &799121174803165822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: It took a while to figure out how to drain the flask into the
+    pipes, but we've got liquor flowing again!
+--- !u!114 &2113729473415342512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,11 +157,14 @@ MonoBehaviour:
   m_Name: Order a Shipment from Far Away
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 6642803669718433053}
-  - {fileID: 8659584125677126918}
-  - {fileID: -6365930061894726627}
+  - {fileID: 5880102050459614361}
+  - {fileID: -5006509491278013896}
+  - {fileID: 8320585718825494295}
   costScale: 0
---- !u!114 &4750953342738826829
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &2152494410992119698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,10 +178,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   statToChange: 6
-  amount: -20
+  amount: -25
   turns: 5
   reason: from Fermenting Fruits
---- !u!114 &6642803669718433053
+--- !u!114 &3992336716526162023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 0
+  amount: 1
+  turns: 5
+  reason: from Fermenting Fruits
+--- !u!114 &5880102050459614361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: It's going to take a while to get here, and local monsters have
     taken advantage of the situation...
---- !u!114 &8659584125677126918
+--- !u!114 &7938291779523346196
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,8 +221,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  baseAmount: 5
+  statToChange: 2
+  amount: 1
+  turns: 5
+  reason: from Flowing Liquor
+--- !u!114 &8320585718825494295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 3
+  amount: 2
+  turns: 5
+  reason: from Forced Sobriety

@@ -153,14 +153,6 @@ namespace Structures
             if (!Manager.State.Loading) UpdateUi();
         }
 
-        public string Remove(BuildingType type)
-        {
-            Structure structure = _buildings.Find(b => b.Blueprint.type == type);
-            if (structure == null) return null;
-            Remove(structure);
-            return structure.name;
-        }
-
         public List<Cell> GetAdjacencyBonusCells(Blueprint blueprint)
         {
             AdjacencyConfiguration config = blueprint.adjacencyConfig;
@@ -268,6 +260,18 @@ namespace Structures
 
         private Location NewSpawnLocation() => spawnLocations.SelectRandom();
 
+        public void RemoveRandomNearbyTerrain()
+        {
+            List<Structure> nearby = Manager.Map
+                .GetCells(TownCentre, 12)
+                .Where(cell => cell.Occupied && cell.Occupant.IsTerrain)
+                .Select(cell => cell.Occupant)
+                .Distinct()
+                .ToList();
+
+            for (int i = 0; i < 8 && nearby.Count > 0; i++) Remove(nearby.PopRandom());
+        }
+        
         public void SpawnGuildHall()
         {
             foreach (Cell cell in Manager.Map.GetCells(TownCentre, 4).Where(cell => cell.Occupied && cell.Occupant.IsTerrain)) Remove(cell.Occupant);

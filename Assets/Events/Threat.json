@@ -264,7 +264,7 @@
         "outcomes": [
           {
             "type": "FlavourText",
-            "customDescription": "The adventurers start griding for experience."
+            "customDescription": "The adventurers start griding for experience..."
           },
           {
             "type": "ModifierAdded",
@@ -282,7 +282,7 @@
         "outcomes": [
           {
             "type": "FlavourText",
-            "customDescription": "Oh no, the mice are too strong and escaped! We'll have to hunt them down..."
+            "customDescription": "Oh no, the mice have grown too strong and escaped! We'll have to hunt them down..."
           },
           {
             "type": "ThreatAdded",
@@ -295,7 +295,7 @@
   {
     "name": "sirens",
     "headline": "Tourist Death Trap",
-    "article": "A flock of sirens has moved in a nearby cove by our shores, their alluring song bringing unaware tourists to their nest to be consumed. The performers have been sulking all week, claiming they've been upstaged. While deadly, the beaches have never been more active...",
+    "article": "A flock of sirens has moved in a nearby cove by our shores, their alluring song bringing unaware tourists to their nest to be consumed. The performers have been sulking all week, claiming they've been upstaged. While deadly, the beaches have never been more lively...",
     "image": "mermaid",
     "type": "Threat",
     "choices": [
@@ -308,12 +308,12 @@
             "customDescription": "The sirens gladly part with the loose gold they've found in the clothes of their prey..."
           },
           {
-            "type": "ThreatAdded",
-            "baseAmount": 4
-          },
-          {
             "type": "WealthAdded",
             "turnsWorth": 0.4
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 4
           }
         ]
       },
@@ -366,18 +366,48 @@
     "type": "Threat",
     "choices": [
       {
+        "name": "Use a Bottomless Flask",
+        "requiredItem": "BottomlessFlask",
+        "requiresItem": true,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "It took a while to figure out how to drain the flask into the pipes, but we've got liquor flowing again!"
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": 1,
+              "turns": 5,
+              "reason": "from Flowing Liquor"
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 1,
+              "turns": 5,
+              "reason": "from Flowing Liquor"
+            }
+          }
+        ]
+      },
+      {
         "name": "Use Fruits to Make Wine",
         "outcomes":
         [
           {
             "type": "FlavourText",
-            "customDescription": "The Brawlers breath a drunken sigh of relief..."
+            "customDescription": "The adventurers breath a drunken sigh of relief..."
           },
           {
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Food",
-              "amount": -20,
+              "amount": -25,
               "turns": 5,
               "reason": "from Fermenting Fruits"
             }
@@ -386,7 +416,16 @@
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Brawler",
-              "amount": 2,
+              "amount": 1,
+              "turns": 5,
+              "reason": "from Fermenting Fruits"
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 1,
               "turns": 5,
               "reason": "from Fermenting Fruits"
             }
@@ -484,7 +523,7 @@
     "choices": [
       {
         "name": "Invest in Fireproofing",
-        "costScale": 0.8,
+        "costScale": 1,
         "outcomes":
         [
           {
@@ -671,6 +710,40 @@
       {
         "type": "ThreatAdded",
         "baseAmount": 4
+      }
+    ]
+  },
+  {
+    "name": "behind-you",
+    "headline": "Caution!",
+    "article": "If you're reading this, it's right behind you.\n\nJust keep reading and don't look, and it'll go away eventually...",
+    "image": "eyes",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "That's it, no sudden movements..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "laughing-forest",
+    "headline": "Laughter From the Forests",
+    "article": "Local reporter is requesting whoever is going into the forests late at night to cackle insistently please stop, or a least do it further away.",
+    "image": "forest",
+    "type": "Flavour",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "You hear them too, don't you?"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
       }
     ]
   }

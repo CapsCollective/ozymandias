@@ -28,6 +28,7 @@ namespace Events
             public List<ChoiceConfig> choices;
             public List<OutcomeConfig> outcomes;
             public bool headliner;
+            public string blueprintToUnlock;
         }
         
         [Serializable] private struct OutcomeConfig
@@ -80,6 +81,8 @@ namespace Events
             public string name;
             public List<OutcomeConfig> outcomes;
             public float costScale;
+            public bool requiresItem, disableRepurchase;
+            public Flag requiredItem;
         }
         
         [Serializable] private struct QuestConfig
@@ -127,6 +130,7 @@ namespace Events
                 root.image = LoadSprite(config.image);
                 root.type = config.type ?? EventType.Other;
                 root.headliner = config.headliner;
+                root.blueprintToUnlock = LoadBlueprint(config.blueprintToUnlock);
                 AssetDatabase.CreateAsset(root, $"Assets/Events/{folder}/{root.name}.asset");
                 
                 root.outcomes = config.outcomes != null ? 
@@ -174,6 +178,8 @@ namespace Events
                         outcome = ScriptableObject.CreateInstance<AdventurersRemoved>();
                         ((AdventurersRemoved)outcome).count = config.count;
                         ((AdventurersRemoved)outcome).kill = config.kill;
+                        ((AdventurersRemoved)outcome).guild = config.guild;
+                        ((AdventurersRemoved)outcome).anyGuild = config.anyGuild;
                         break;
                     case OutcomeType.BuildingDamaged:
                         outcome = ScriptableObject.CreateInstance<BuildingDamaged>();
@@ -212,6 +218,16 @@ namespace Events
                         outcome = ScriptableObject.CreateInstance<WealthAdded>();
                         ((WealthAdded)outcome).turnsWorth = config.turnsWorth;
                         break;
+                    case OutcomeType.WealthAddedRandom: 
+                        outcome = ScriptableObject.CreateInstance<WealthAddedRandom>();
+                        break;
+                    case OutcomeType.TerrainRemoved:
+                        outcome = ScriptableObject.CreateInstance<TerrainRemoved>();
+                        break;
+                    case OutcomeType.SetStability:
+                        outcome = ScriptableObject.CreateInstance<SetStability>();
+                        ((SetStability)outcome).amount = config.amount;
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -227,6 +243,9 @@ namespace Events
                 Choice choice = ScriptableObject.CreateInstance<Choice>();
                 choice.name = config.name;
                 choice.costScale = config.costScale;
+                choice.requiresItem = config.requiresItem;
+                choice.disableRepurchase = config.disableRepurchase; 
+                choice.requiredItem = config.requiredItem;
                 choice.outcomes = config.outcomes.Select(outcomeConfig => CreateOutcome(outcomeConfig, root)).ToList();
                 AssetDatabase.AddObjectToAsset(choice, root);
                 return choice;

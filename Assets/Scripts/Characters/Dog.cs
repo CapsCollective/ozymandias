@@ -35,7 +35,7 @@ namespace Characters
             OnDogPet?.Invoke();
             _particleSystem.Play();
             Manager.Jukebox.PlayBark();
-            Manager.Notifications.Display("You pet a dog!", icon);
+            Manager.Notifications.Display("Secret Unlocked: You pet a dog!", icon);
         }
     
         private void OnDestroy()
