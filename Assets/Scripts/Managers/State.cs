@@ -100,6 +100,7 @@ namespace Managers
 
         public void EnterState(GameState state)
         {
+            Debug.Log($"State: Entering {_state}");
             _state = state;
             OnEnterState?.Invoke(_state);
             switch (_state)
@@ -135,7 +136,6 @@ namespace Managers
                     InCreditsInit();
                     break;
             }
-            Debug.Log(_state);
         }
 
         private void LoadingInit()

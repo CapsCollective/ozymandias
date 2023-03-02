@@ -14,9 +14,11 @@ namespace Events.Outcomes
         [Button]
         protected override bool Execute()
         {
+            if (!blueprint) return false;
+            
             _isAlreadyUnlocked = Manager.Cards.IsPlayable(blueprint);
-            if (!_isAlreadyUnlocked) return _isAlreadyUnlocked || blueprint && Manager.Cards.Unlock(blueprint);
-            Manager.Stats.Wealth += Manager.Stats.WealthPerTurn * 3;
+            if (_isAlreadyUnlocked) Manager.Stats.Wealth += Manager.Stats.WealthPerTurn * 3;
+            else Manager.Cards.Unlock(blueprint);
             return true;
         }
 

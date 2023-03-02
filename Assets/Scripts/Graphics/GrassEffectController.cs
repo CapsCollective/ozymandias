@@ -59,7 +59,6 @@ namespace Grass
 
             if (GrassNeedsUpdate)
             {
-                Debug.Log("Updating Grass");
                 UpdateTexture(null);
                 GrassNeedsUpdate = false;
             }

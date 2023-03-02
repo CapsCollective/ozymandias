@@ -75,6 +75,8 @@ namespace Requests
                 _bookDisplay.count.text = "";
                 _bookDisplay.tokens.text = "";
                 _bookDisplay.slider.gameObject.SetActive(false);
+                _notificationDisplay.slider.value = 0;
+                _oldCompleted = 0;
             }
             else
             {
@@ -84,11 +86,6 @@ namespace Requests
                 _bookDisplay.slider.gameObject.SetActive(true);
                 _bookDisplay.slider.value = (float)Request.Completed / Request.Required;
 
-                if (Request.Completed == 0) {
-                    _oldCompleted = 0; // Reset for new requests
-                    _notificationDisplay.slider.value = 0;
-                }
-                
                 if (Request.Completed == _oldCompleted) return;
                 _oldCompleted = Request.Completed;
                 

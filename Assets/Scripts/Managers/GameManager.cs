@@ -206,6 +206,7 @@ namespace Managers
         public static bool IsOverUi;
         public void Update()
         {
+            if (Globals.RestartingGame) return;
             IsOverUi = Manager.PlatformManager.Gameplay.IsOverUI(EventSystem.current);
         }
 
@@ -226,8 +227,9 @@ namespace Managers
 
         #endregion
 
-#region Debug
 #if UNITY_EDITOR
+        #region Debug
+        
         [Header("Debug")]
         public bool skipIntro;
         public bool skipTutorial;
@@ -339,7 +341,7 @@ namespace Managers
             Stats.Stability = stability;
             UpdateUi();
         }
-        #endif
         #endregion
+#endif
     }
 }

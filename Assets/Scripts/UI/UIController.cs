@@ -30,7 +30,7 @@ namespace UI
 
         public virtual void OnOpen()
         {
-            Debug.Log("Opened " + name);
+            Debug.Log("UI: Opened " + name);
             if (!isOpen)
             {
                 Inputs.Inputs.OnControlChange += ControllerFocus;
@@ -41,7 +41,7 @@ namespace UI
 
         public virtual void OnClose()
         {
-            Debug.Log("Closed " + name);
+            Debug.Log("UI: Closed " + name);
             if (isOpen)
             {
                 Inputs.Inputs.OnControlChange -= ControllerFocus;

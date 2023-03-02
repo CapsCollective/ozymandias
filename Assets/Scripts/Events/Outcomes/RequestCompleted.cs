@@ -12,7 +12,7 @@ namespace Events.Outcomes
         {
             if (!Manager.Requests.HasRequest(guild))
             {
-                UnityEngine.Debug.LogWarning($"{guild} has no active request to complete");
+                UnityEngine.Debug.LogWarning($"Events: {guild} has no active request to complete");
                 return false;
             }
             _tokens = Manager.Requests.TokenCount(guild);

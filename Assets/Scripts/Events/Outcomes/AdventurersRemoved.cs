@@ -20,7 +20,7 @@ namespace Events.Outcomes
             
             if (removable < count)
             {
-                UnityEngine.Debug.LogWarning($"{removable} adventurers unremovable, only {count} available");
+                UnityEngine.Debug.LogWarning($"Events: {removable} adventurers unremovable, only {count} available");
                 return false;
             }
 

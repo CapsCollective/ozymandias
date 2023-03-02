@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Events;
+using Managers;
 using Structures;
 using TMPro;
 using UnityEngine;
@@ -87,6 +88,7 @@ namespace Cards
                     {
                         _canvas.enabled = false;
                         Manager.State.EnterState(GameState.InGame);
+                        SaveFile.SaveState(false);
                     }
                     _transitioning = false;
                 });

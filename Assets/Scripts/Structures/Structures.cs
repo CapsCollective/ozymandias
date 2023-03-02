@@ -253,7 +253,7 @@ namespace Structures
                 }
             }
 
-            Debug.LogError("Couldn't find valid location for quest");
+            Debug.LogWarning("Quests: Couldn't find valid location for quest");
             //TODO: A backup better than this
             return Random.Range(200, 1200);
         }
@@ -270,6 +270,7 @@ namespace Structures
                 .ToList();
 
             for (int i = 0; i < 8 && nearby.Count > 0; i++) Remove(nearby.PopRandom());
+            SaveFile.SaveState(false);
         }
         
         public void SpawnGuildHall()

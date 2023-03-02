@@ -12,7 +12,7 @@ namespace Events.Outcomes
         {
             if (Manager.Requests.HasRequest(request.guild))
             {
-                UnityEngine.Debug.LogWarning($"{request.guild} already has an active request");
+                UnityEngine.Debug.LogWarning($"Events: {request.guild} already has an active request");
                 return false;
             }
             Manager.Requests.Add(request);

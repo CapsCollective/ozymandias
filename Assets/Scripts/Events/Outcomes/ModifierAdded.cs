@@ -17,7 +17,7 @@ namespace Events.Outcomes
         {
             if (!Manager.Stats.Modifiers.ContainsKey(statToChange))
             {
-                UnityEngine.Debug.LogWarning($"{statToChange} is not included in modifiers");
+                UnityEngine.Debug.LogWarning($"Events: {statToChange} is not included in modifiers");
                 return false;
             }
         

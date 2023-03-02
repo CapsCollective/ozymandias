@@ -75,7 +75,7 @@ namespace Quests
                 Quest q = Manager.AllQuests.Find(match => details.name == match.name);
                 if (q == null)
                 {
-                    Debug.LogWarning("Quest Not Found: " + details.name);
+                    Debug.LogWarning("Quests: Cannot find quest - " + details.name);
                     continue;
                 }
                 Current.Add(q);

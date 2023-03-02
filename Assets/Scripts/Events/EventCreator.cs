@@ -458,8 +458,6 @@ namespace Events
         
         private static Blueprint LoadBlueprint(string name)
         {
-            var blueprint = AssetDatabase.LoadAssetAtPath<Blueprint>($"Assets/Blueprints/{name}.asset");
-            Debug.Log(blueprint);
             return AssetDatabase.LoadAssetAtPath<Blueprint>($"Assets/Blueprints/{name}.asset");
         }
         

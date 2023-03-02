@@ -20,7 +20,7 @@ namespace Events.Outcomes
         {
             if (!anyBuildingType && Manager.Structures.GetCount(buildingType) == 0)
             {
-                UnityEngine.Debug.LogWarning($"No {(anyBuildingType ? "Building" : buildingType.ToString()).Pluralise()} to destroy");
+                UnityEngine.Debug.LogWarning($"Events: No {(anyBuildingType ? "Building" : buildingType.ToString()).Pluralise()} to destroy");
                 return false;
             }
             

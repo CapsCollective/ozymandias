@@ -13,7 +13,7 @@ namespace Events.Outcomes
         {
             if (Manager.Quests.IsActive(quest))
             {
-                UnityEngine.Debug.LogWarning("Quest already active: " + quest.name);
+                UnityEngine.Debug.LogWarning("Events: Quest already active - " + quest.name);
                 return false;
             }
             Newspaper.OnNextClosed += () => Manager.Quests.Add(quest);

@@ -484,7 +484,6 @@ namespace Tutorial
             {
                 Manager.Book.EnableNavigation();
                 SaveFile.SaveState(false);
-                print("Enable Navigation");
                 Upgrades.Upgrades.OnUpgradePurchased -= EndUpgradesTutorial;
             }
         }

@@ -98,7 +98,7 @@ namespace Events
 
             foreach (Event e in _current)
             {
-                Debug.Log("Processing " + e.type);
+                Debug.Log($"Events: Processing {e.type} - {e.name}");
                 _outcomeDescriptions.Add(e.Execute());
             }
         
@@ -150,10 +150,9 @@ namespace Events
                 if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock))
                 {
                     Flags[Flag.StoryActive] = true;
-                    Debug.Log($"Story chosen: {story}");
                     return story;
                 }
-                Debug.LogWarning($"Story invalid: {story}, picking another");
+                Debug.LogWarning($"Events: {story.name} story invalid, picking another");
             }
         }
         
@@ -161,8 +160,8 @@ namespace Events
         {
             if (_availablePools[type].Count == 0)
             {
-                Debug.Log($"Shuffling {type} events");
-                if (_usedPools[type].Count == 0) return null; // Catch case for if there are no events of this buildingType
+                Debug.Log($"Events: Shuffling {type}");
+                if (_usedPools[type].Count == 0) return null; // Catch case for if there are no events of this type
                 
                 //Shuffle events back in
                 _availablePools[type] = new List<Event>(_usedPools[type]);
@@ -261,7 +260,7 @@ namespace Events
                 Event e = Manager.AllEvents.Find(match => eventName == match.name);
                 if (e == null)
                 {
-                    Debug.LogWarning("Event Not Found: " + eventName);
+                    Debug.LogWarning($"Events: {eventName} not found");
                     continue;
                 }
                 _headliners.AddLast(e);
@@ -272,7 +271,7 @@ namespace Events
                 Event e = Manager.AllEvents.Find(match => eventName == match.name);
                 if (e == null)
                 {
-                    Debug.LogWarning("Event Not Found: " + eventName);
+                    Debug.LogWarning($"Events: {eventName} not found");
                     continue;
                 }
                 _others.AddLast(e);

@@ -12,11 +12,11 @@ namespace Events.Outcomes
         {
             if (Manager.EventQueue.Flags[flag] == value)
             {
-                UnityEngine.Debug.LogWarning($"Flag {flag} already set to {value}");
+                UnityEngine.Debug.LogWarning($"Events: Flag {flag} already set to {value}");
                 return false;
             }
             
-            UnityEngine.Debug.Log($"Setting flag {flag} to {value}");
+            UnityEngine.Debug.Log($"Events: Setting flag {flag} to {value}");
             Manager.EventQueue.Flags[flag] = value;
             return true;
         }

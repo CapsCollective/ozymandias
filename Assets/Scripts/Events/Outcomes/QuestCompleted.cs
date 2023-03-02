@@ -13,7 +13,7 @@ namespace Events.Outcomes
         {
             if (!quest.IsActive)
             {
-                UnityEngine.Debug.LogWarning("Quest not active: " + quest.name);
+                UnityEngine.Debug.LogWarning("Events: Quest not active - " + quest.name);
                 return false;
             }
             

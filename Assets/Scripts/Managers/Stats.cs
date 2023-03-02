@@ -156,6 +156,8 @@ namespace Managers
                 
                 if (GetSatisfaction(guild) >= 20) Manager.EventQueue.Add(excessEvents[guild], true);
             }
+            
+            Debug.Log($"Stats: Starting turn {TurnCounter}");
             UpdateUi();
         }
         
@@ -163,15 +165,16 @@ namespace Managers
         {
             if (Stability <= 0) Manager.EventQueue.AddGameOverEvents();
         
-            foreach (var stat in Modifiers)
+            foreach ((Stat stat, List<Modifier> mods) in Modifiers)
             {
-                for (int i = stat.Value.Count-1; i >= 0; i--)
+                for (int i = mods.Count-1; i >= 0; i--)
                 {
+                    Modifier mod = mods[i];
                     // -1 means infinite modifier
-                    if (Modifiers[stat.Key][i].turnsLeft == -1 || --Modifiers[stat.Key][i].turnsLeft > 0) continue;
-                    Debug.Log("Removing Stat: " + stat.Key);
-                    ModifiersTotal[stat.Key] -= Modifiers[stat.Key][i].amount;
-                    Modifiers[stat.Key].RemoveAt(i);
+                    if (mod.turnsLeft == -1 || --mod.turnsLeft > 0) continue;
+                    Debug.Log($"Stats: Removing modifier {mod.amount.WithSign()} {stat} {mod.reason}");
+                    ModifiersTotal[stat] -= Modifiers[stat][i].amount;
+                    Modifiers[stat].RemoveAt(i);
                 }
             }
         }

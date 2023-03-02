@@ -293,15 +293,14 @@ namespace Cards
         
         #endregion
         
-        public bool Unlock(Blueprint blueprint, bool fromRuin = false)
+        public void Unlock(Blueprint blueprint, bool fromRuin = false)
         {
-            if (Playable.Contains(blueprint)) return false;
+            if (Playable.Contains(blueprint)) return;
             if (!Unlocked.Contains(blueprint)) Unlocked.Add(blueprint);
             Playable.Add(blueprint);
             Deck.Add(blueprint); // Add to deck so it shows up faster
             
             OnUnlock?.Invoke(blueprint, fromRuin);
-            return true;
         }
 
         public void UnlockAll()
