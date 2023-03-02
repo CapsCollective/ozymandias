@@ -5,6 +5,7 @@ using Managers;
 using Structures;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 using Utilities;
 using static Managers.GameManager;
 
@@ -15,7 +16,8 @@ namespace Map
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int Effect = Shader.PropertyToID("_Effect");
         private static readonly int Origin = Shader.PropertyToID("_Origin");
-        
+        private static readonly int GridOpacity = Shader.PropertyToID("_GridOpacity");
+
         public LayerMask layerMask;
         [SerializeField] private MeshFilter gridMesh, roadMesh;
         [SerializeField] private Layout layout;
@@ -25,6 +27,14 @@ namespace Map
         private Camera _cam;
         private float _radius;
         private Color _effectColor;
+
+        private readonly Dictionary<HighlightState, Color32> ColorStates = new Dictionary<HighlightState, Color32>()
+        {
+            { HighlightState.Inactive, Colors.GridInactive },
+            { HighlightState.Valid, Colors.GridActive },
+            { HighlightState.Invalid, Colors.GridInvalid},
+            { HighlightState.Highlighted, Colors.GridHighlighted },
+        };
 
         #region Fill Animation
 
@@ -159,38 +169,39 @@ namespace Map
 
         #region Functionality
 
-        private readonly List<Vector2> _uv = new List<Vector2>();
-        // Vector2 newUV = new Vector2();
         private bool _hasHighlights;
         public void Highlight(IEnumerable<Cell> cells, HighlightState state)
         {
-            gridMesh.sharedMesh.GetUVs(0, _uv);
+            var colors = gridMesh.sharedMesh.colors32;
 
             foreach (Cell cell in cells)
             {
                 if (cell == null || !cell.Active) continue;
-                foreach (int vertexIndex in layout.GetUVs(cell))
-                    _uv[vertexIndex] = new Vector2((int)state / 3f, _uv[vertexIndex].y);;
+                foreach (int vertIndex in layout.GetUVs(cell))
+                {
+                    colors[vertIndex] = ColorStates[state];
+                }
             }
 
-            gridMesh.sharedMesh.SetUVs(0, _uv);
+            gridMesh.sharedMesh.SetColors(colors);
             _hasHighlights = true;
         }
         
         public void ClearHighlight()
         {
-            if (!_hasHighlights) return;
-            gridMesh.sharedMesh.GetUVs(0, _uv);
+            var colors = gridMesh.sharedMesh.colors32;
 
             foreach (Cell cell in layout.GetCells())
             {
                 if (cell == null || !cell.Active) continue;
-                foreach (int vertexIndex in layout.GetUVs(cell))
-                    _uv[vertexIndex] = new Vector2((int)HighlightState.Inactive / 3f, _uv[vertexIndex].y);
+                foreach (int vertIndex in layout.GetUVs(cell))
+                {
+                    colors[vertIndex] = ColorStates[HighlightState.Inactive];
+                }
             }
 
-            gridMesh.sharedMesh.SetUVs(0, _uv);
-            _hasHighlights = false;
+            gridMesh.sharedMesh.SetColors(colors);
+            _hasHighlights = true;
         }
 
         // Sets the rotation of all cells to be uniformly oriented

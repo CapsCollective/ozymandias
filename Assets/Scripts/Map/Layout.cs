@@ -51,7 +51,7 @@ namespace Map
         
         private Vertex RandomBoundaryVertex => VertexGraph.Data.Where(v => v.Boundary).ToList().SelectRandom();
 
-        private List<Vertex> GetVertices(List<Cell> cells)
+        public List<Vertex> GetVertices(List<Cell> cells)
         {
             List<Vertex> vertices = new List<Vertex>();
             foreach (Cell cell in cells)
@@ -458,6 +458,7 @@ namespace Map
             List<Vector3> vertices = new List<Vector3>(CellGraph.Count * 4); // 4 per cells
             List<Vector2> uv = new List<Vector2>(CellGraph.Count * 4); // Match vertices
             List<int> triangles = new List<int>(CellGraph.Count * 6); // 2 triangles per cell
+            List<Color32> colors = new List<Color32>(CellGraph.Count * 4); // Match vertices
 
             foreach (Cell cell in CellGraph.Data.Where(cell => cell.Active)) // Only draw active cells 
             {
@@ -466,6 +467,7 @@ namespace Map
                 {
                     vertices.Add(cell.Vertices[i] + (cell.Centre - cell.Vertices[i]).normalized * lineWeight / 100f);
                     uv.Add(debug && cell.WaterFront ? new Vector2(1, 0) : Vector2.zero); // Set to base or invalid if a 'safe' cell
+                    colors.Add(Colors.GridInactive);
                 }
                 UVMap.Add(cell, Enumerable.Range( vertices.Count - 4, 4).ToList());
 
@@ -481,7 +483,8 @@ namespace Map
             return new Mesh {
                 vertices = vertices.ToArray(),
                 uv = uv.ToArray(),
-                triangles = triangles.ToArray()
+                triangles = triangles.ToArray(),
+                colors32 = colors.ToArray(),
             };
         }
 
