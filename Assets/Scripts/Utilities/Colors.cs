@@ -10,9 +10,12 @@ namespace Utilities
         public static readonly Color CardLight = new Color(0.94f, 0.93f, 0.86f);
         public static readonly Color CardDark = new Color(0.16f, 0.13f, 0.07f);
 
-        public static Color GridInactive => new Color(0.2f, 0.2f, 0.2f, 0.2f);
-        public static Color GridActive => ColorBlind ? new Color32(12,123,220,153) : new Color(0,0.7f,0.1f, 0.6f);
-        public static Color GridInvalid => ColorBlind ? new Color32(255,194,10,153) : new Color(0.9f, 0, 0, 0.6f);
+        public static byte GridInactiveOpacity = 51;
+        public static byte GridOpacity = 153;
+        public static Color GridInactive => new Color(51, 51, 51, GridInactiveOpacity);
+        public static Color GridActive => ColorBlind ? new Color32(12,123,220, GridOpacity) : new Color32(0, 179, 26, GridOpacity);
+        public static Color GridInvalid => ColorBlind ? new Color32(255,194,10, GridOpacity) : new Color32(230, 0, 0, GridOpacity);
+        public static Color GridHighlighted => ColorBlind ? new Color32(235, 204, 52, GridOpacity) : new Color32(235, 204, 52, GridOpacity);
         
         public static Color Green => ColorBlind ? new Color32(12,123,220,255) : new Color(0,0.7f,0.1f);
         public static Color Red => ColorBlind ? new Color32(255,194,10,255) : new Color(1f, 0.1f, 0.1f);

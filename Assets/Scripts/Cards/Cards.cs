@@ -269,7 +269,7 @@ namespace Cards
             ClearCells();
             _selectedCells = Manager.Map.GetCells(Manager.Cards.SelectedCard.Blueprint.sections, closest.Id, _rotation);
             _cellsValid = Cell.IsValid(_selectedCells);
-            Manager.Map.Highlight(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint), HighlightState.Valid);
+            Manager.Map.Highlight(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint), HighlightState.Highlighted);
             Manager.Map.Highlight(_selectedCells, _cellsValid ? HighlightState.Valid : HighlightState.Invalid);
 
             // Badge Showing

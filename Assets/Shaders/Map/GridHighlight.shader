@@ -1,4 +1,4 @@
-﻿Shader "Grid/GridHighlight"
+﻿ Shader "Grid/GridHighlight"
 {
     Properties
     {
@@ -27,6 +27,7 @@
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
             struct v2f
@@ -34,6 +35,7 @@
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
 				float3 worldPos : TEXCOORD1;
+                float4 color : COLOR;
             };
 
             sampler2D _Mask;
@@ -44,6 +46,7 @@
 			float4 _Origin;
 			float _Radius;
 			float _Exponent;
+            float _GridOpacity;
             
             v2f vert (appdata v)
             {
@@ -51,13 +54,14 @@
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.color = v.color;
                 return o;
             }
 
             fixed4 frag (const v2f i) : SV_Target
             {
                 fixed4 mask = tex2D(_Mask, i.uv);
-            	const float4 col = lerp(lerp(_Invalid, _Inactive, mask.r > 0.5), _Active, mask.g > 0.5);
+                const float4 col = i.color;
 
                 const float dist = distance(i.worldPos, _Origin);
                 const float effect = pow(saturate(dist / _Radius), _Exponent);
