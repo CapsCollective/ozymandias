@@ -187,7 +187,7 @@ namespace Cards
 
         private void RotateBuilding(InputAction.CallbackContext obj)
         {
-            if (!Manager.Cards.SelectedCard) return;
+            if (!SelectedCard) return;
             OnBuildingRotate?.Invoke();
             _rotation = (_rotation + (int)Mathf.Sign(obj.ReadValue<float>()) + 4) % 4; // + 4 to offset negatives
         }
@@ -252,7 +252,7 @@ namespace Cards
         {
             if (Globals.RestartingGame) return;
             
-            if (!Manager.Cards.SelectedCard || IsOverUi)
+            if (!SelectedCard)
             {
                 ClearCells();
                 _hoveredCell = null;
@@ -262,14 +262,18 @@ namespace Cards
             Cell closest = ClosestCellToCursor;
             // Return if target cell, rotation, or card selected hasn't changed
             if (closest == null || !closest.Active || (_prevRotation == _rotation && _hoveredCell == closest && _prevCardIndex == _selectedCardIndex)) return;
-            _hoveredCell = closest;
-            _prevRotation = _rotation;
             
             // Wipe previously highlighted cells
             ClearCells();
-            _selectedCells = Manager.Map.GetCells(Manager.Cards.SelectedCard.Blueprint.sections, closest.Id, _rotation);
-            _cellsValid = Cell.IsValid(_selectedCells);
             Manager.Map.Highlight(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint), HighlightState.Highlighted);
+
+            if (IsOverUi) return;
+            
+            _hoveredCell = closest;
+            _prevRotation = _rotation;
+            
+            _selectedCells = Manager.Map.GetCells(SelectedCard.Blueprint.sections, closest.Id, _rotation);
+            _cellsValid = Cell.IsValid(_selectedCells);
             Manager.Map.Highlight(_selectedCells, _cellsValid ? HighlightState.Valid : HighlightState.Invalid);
 
             // Badge Showing

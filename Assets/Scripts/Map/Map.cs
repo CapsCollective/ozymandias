@@ -5,7 +5,6 @@ using Managers;
 using Structures;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 using Utilities;
 using static Managers.GameManager;
 
@@ -13,10 +12,13 @@ namespace Map
 {
     public class Map : MonoBehaviour
     {
+        private const float FloodDuration = 0.75f;
+        private const float DrainDuration = 0.75f;
+        
+        private static readonly int GrassClipFill = Shader.PropertyToID("_Grass_Clip_Fill");
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int Effect = Shader.PropertyToID("_Effect");
         private static readonly int Origin = Shader.PropertyToID("_Origin");
-        private static readonly int GridOpacity = Shader.PropertyToID("_GridOpacity");
 
         public LayerMask layerMask;
         [SerializeField] private MeshFilter gridMesh, roadMesh;
@@ -28,13 +30,7 @@ namespace Map
         private float _radius;
         private Color _effectColor;
 
-        private readonly Dictionary<HighlightState, Color32> ColorStates = new Dictionary<HighlightState, Color32>()
-        {
-            { HighlightState.Inactive, Colors.GridInactive },
-            { HighlightState.Valid, Colors.GridActive },
-            { HighlightState.Invalid, Colors.GridInvalid},
-            { HighlightState.Highlighted, Colors.GridHighlighted },
-        };
+        private Dictionary<HighlightState, Color32> _colorStates;
 
         #region Fill Animation
 
@@ -46,22 +42,20 @@ namespace Map
             _meshRenderer.material.SetFloat(Radius, 0);
             _meshRenderer.material.SetColor(Effect, new Color(0, 0.3f, 0, 0));
         }
-
         public void Drain()
         {
             if (!_flooded) return;
             UpdateEffectOrigin();
             _flooded = false;
-            DOTween.To(() => _radius, x => _radius = x, 0, 0.5f)
+            DOTween.To(() => _radius, x => _radius = x, 0, DrainDuration)
+                .SetEase(Ease.OutCirc)
                 .OnUpdate(() =>
                 {
                     _meshRenderer.material.SetFloat(Radius, _radius);
-                    Shader.SetGlobalFloat("_Grass_Clip_Fill", _radius / 70.0f);
+                    Shader.SetGlobalFloat(GrassClipFill, _radius / 70.0f);
                 });
-            //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
-            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0f), 0.5f)
-                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
-                //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
+            /*DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0f), DrainDuration)
+                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));*/
         }
 
         public void Flood()
@@ -69,16 +63,15 @@ namespace Map
             if (_flooded) return;
             UpdateEffectOrigin();
             _flooded = true;
-            DOTween.To(() => _radius, x => _radius = x, 70, 0.5f)
+            DOTween.To(() => _radius, x => _radius = x, 70, FloodDuration)
+                .SetEase(Ease.InCirc)
                 .OnUpdate(() =>
                 {
                     _meshRenderer.material.SetFloat(Radius, _radius);
-                    Shader.SetGlobalFloat("_Grass_Clip_Fill", _radius / 70.0f);
+                    Shader.SetGlobalFloat(GrassClipFill, _radius / 70.0f);
                 });
-                //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
-            DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0.5f), 0.5f)
-                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));
-                //.OnComplete(() => Grass.DrawGrassInstanced.GrassNeedsUpdate = true);
+            /*DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0.5f), FloodDuration)
+                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));*/
         }
 
         private void UpdateEffectOrigin()
@@ -95,6 +88,7 @@ namespace Map
         {
             State.OnGameEnd += () => layout.ClearRoad(roadMesh);
             GenerateMesh();
+            UpdateHighlightColors();
         }
 
         public void GenerateMesh(bool debug = false)
@@ -169,17 +163,31 @@ namespace Map
 
         #region Functionality
 
-        private bool _hasHighlights;
-        public void Highlight(IEnumerable<Cell> cells, HighlightState state)
+        public void UpdateHighlightColors()
         {
-            var colors = gridMesh.sharedMesh.colors32;
+            _colorStates = new Dictionary<HighlightState, Color32>()
+            {
+                { HighlightState.Inactive, Colors.GridInactive },
+                { HighlightState.Valid, Colors.GridActive },
+                { HighlightState.Invalid, Colors.GridInvalid },
+                { HighlightState.Highlighted, Colors.GridHighlighted },
+            };
+        }
+        
+        private bool _hasHighlights;
+
+        public void Highlight(List<Cell> cells, HighlightState state)
+        {
+            if (cells.Count == 0) return;
+            
+            Color32[] colors = gridMesh.sharedMesh.colors32;
 
             foreach (Cell cell in cells)
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertIndex in layout.GetUVs(cell))
                 {
-                    colors[vertIndex] = ColorStates[state];
+                    colors[vertIndex] = _colorStates[state];
                 }
             }
 
@@ -189,19 +197,7 @@ namespace Map
         
         public void ClearHighlight()
         {
-            var colors = gridMesh.sharedMesh.colors32;
-
-            foreach (Cell cell in layout.GetCells())
-            {
-                if (cell == null || !cell.Active) continue;
-                foreach (int vertIndex in layout.GetUVs(cell))
-                {
-                    colors[vertIndex] = ColorStates[HighlightState.Inactive];
-                }
-            }
-
-            gridMesh.sharedMesh.SetColors(colors);
-            _hasHighlights = true;
+            if (_hasHighlights) Highlight(layout.GetCells(), HighlightState.Inactive);
         }
 
         // Sets the rotation of all cells to be uniformly oriented

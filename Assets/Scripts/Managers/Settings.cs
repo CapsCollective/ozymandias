@@ -166,10 +166,8 @@ namespace Managers
                 UpdateUi();
                 OnToggleColorBlind?.Invoke(toggle);
             }
-            
-            Shader.SetGlobalColor(Inactive, Colors.GridInactive);
-            Shader.SetGlobalColor(Active, Colors.GridActive);
-            Shader.SetGlobalColor(Invalid, Colors.GridInvalid);
+
+            Manager.Map.UpdateHighlightColors();
         }
         #endregion
         

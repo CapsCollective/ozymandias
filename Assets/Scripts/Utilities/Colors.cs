@@ -10,19 +10,18 @@ namespace Utilities
         public static readonly Color CardLight = new Color(0.94f, 0.93f, 0.86f);
         public static readonly Color CardDark = new Color(0.16f, 0.13f, 0.07f);
 
-        public static byte GridInactiveOpacity = 51;
-        public static byte GridOpacity = 153;
-        public static Color32 GridInactive => new Color32(51, 51, 51, GridInactiveOpacity);
-        public static Color32 GridActive => ColorBlind ? new Color32(12,123,220, GridOpacity) : new Color32(0, 179, 26, GridOpacity);
-        public static Color32 GridInvalid => ColorBlind ? new Color32(255,194,10, GridOpacity) : new Color32(230, 0, 0, GridOpacity);
-        public static Color32 GridHighlighted => ColorBlind ? new Color32(235, 204, 52, GridOpacity) : new Color32(235, 204, 52, GridOpacity);
+        private const byte GridActiveOpacity = 150;
+        public static Color32 GridInactive = new Color32(50, 50, 50, 40);
+        public static Color32 GridHighlighted = new Color32(180, 150, 0, GridActiveOpacity);
+        public static Color32 GridActive => ColorBlind ? new Color32(15,100,200, GridActiveOpacity) : new Color32(0, 160, 15, GridActiveOpacity);
+        public static Color32 GridInvalid = new Color32(150, 0, 0, GridActiveOpacity);
         
-        public static Color Green => ColorBlind ? new Color32(12,123,220,255) : new Color(0,0.7f,0.1f);
-        public static Color Red => ColorBlind ? new Color32(255,194,10,255) : new Color(1f, 0.1f, 0.1f);
+        public static Color Green => ColorBlind ? new Color32(15,100,200,255) : new Color32(0, 160, 15, 255);
+        public static Color Red = new Color(0.9f, 0.1f, 0.1f);
         public static readonly Color CostActive = new Color(0.8f,0.6f,0.2f);
         public static readonly Color CostInactive = new Color(0.85f,0.85f,0.85f);
 
-        private const string GreenHex = "#007000ff";
+        private static string GreenHex => ColorBlind ? "#0C7BDCff" : "#007000ff";
         private const string RedHex = "#820000ff";
         private const string LightRedHex = "#FF1111ff";
 
@@ -39,7 +38,7 @@ namespace Utilities
         /// -1 or less ➔ Red
         /// </param>
         public static string StatusColor(this string s, int status, bool lightRed = false) => 
-            ColorBlind || status == 0 ? s : TextColor(status > 0 ? GreenHex : lightRed ? LightRedHex : RedHex) + s + EndTextColor;
+            status == 0 ? s : TextColor(status > 0 ? GreenHex : lightRed ? LightRedHex : RedHex) + s + EndTextColor;
         public static string Color(this string s, string colorHex) => TextColor(colorHex) + s + EndTextColor;
         public static string Color(this string s, Color color) => TextColor(color) + s + EndTextColor;
 
