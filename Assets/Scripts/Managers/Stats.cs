@@ -120,7 +120,7 @@ namespace Managers
         {
             TurnCounter = 1;
             BaseThreat = 0;
-            Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
+            Stability = 50; // + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
             Wealth = Tutorial.Tutorial.Active ? 0 : StartingWealth + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 10;
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
             {
