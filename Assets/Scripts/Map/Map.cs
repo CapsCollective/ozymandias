@@ -31,6 +31,8 @@ namespace Map
         private Color _effectColor;
 
         private Dictionary<HighlightState, Color32> _colorStates;
+        private List<Cell> _highlitCells = new List<Cell>();
+        private List<Cell> _adjacencyBonuses = new List<Cell>();
 
         #region Fill Animation
 
@@ -83,7 +85,7 @@ namespace Map
         }
         
         #endregion
-        
+
         private void Start()
         {
             State.OnGameEnd += () => layout.ClearRoad(roadMesh);
@@ -181,9 +183,19 @@ namespace Map
             if (cells.Count == 0) return;
             
             Color32[] colors = gridMesh.sharedMesh.colors32;
+            _highlitCells = new List<Cell>();
+            //foreach (Cell cell in _adjacencyBonuses)
+            //{
+            //    if (cell == null || !cell.Active) continue;
+            //    foreach (int vertIndex in layout.GetUVs(cell))
+            //    {
+            //        colors[vertIndex] = _colorStates[HighlightState.Highlighted];
+            //    }
+            //}
 
             foreach (Cell cell in cells)
             {
+                _highlitCells.Add(cell);
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertIndex in layout.GetUVs(cell))
                 {
@@ -194,10 +206,47 @@ namespace Map
             gridMesh.sharedMesh.SetColors(colors);
             _hasHighlights = true;
         }
-        
+
+        public void SetAdjacencyBonuses(List<Cell> cells)
+        {
+            if (cells.Count == 0) return;
+            Color32[] colors = gridMesh.sharedMesh.colors32;
+            _highlitCells = new List<Cell>();
+            foreach (Cell cell in _adjacencyBonuses)
+            {
+                if (cell == null || !cell.Active) continue;
+                foreach (int vertIndex in layout.GetUVs(cell))
+                {
+                    colors[vertIndex] = _colorStates[HighlightState.Inactive];
+                }
+            }
+            gridMesh.sharedMesh.SetColors(colors);
+            _adjacencyBonuses = cells;
+        }
+
+        public void HighlightAdjacencyBonuses()
+        {
+            Color32[] colors = gridMesh.sharedMesh.colors32;
+            _highlitCells = new List<Cell>();
+            foreach (Cell cell in _adjacencyBonuses)
+            {
+                if (cell == null || !cell.Active) continue;
+                foreach (int vertIndex in layout.GetUVs(cell))
+                {
+                    Debug.Log($"{vertIndex} // {cell.Vertices[0].Id}");
+                    colors[vertIndex] = _colorStates[HighlightState.Highlighted];
+                }
+            }
+            gridMesh.sharedMesh.SetColors(colors);
+        }
+
         public void ClearHighlight()
         {
-            if (_hasHighlights) Highlight(layout.GetCells(), HighlightState.Inactive);
+            if (_hasHighlights)
+            {
+                Highlight(_highlitCells, HighlightState.Inactive);
+                _hasHighlights = false;
+            }
         }
 
         // Sets the rotation of all cells to be uniformly oriented
