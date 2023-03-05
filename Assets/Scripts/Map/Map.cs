@@ -184,14 +184,6 @@ namespace Map
             
             Color32[] colors = gridMesh.sharedMesh.colors32;
             _highlitCells = new List<Cell>();
-            //foreach (Cell cell in _adjacencyBonuses)
-            //{
-            //    if (cell == null || !cell.Active) continue;
-            //    foreach (int vertIndex in layout.GetUVs(cell))
-            //    {
-            //        colors[vertIndex] = _colorStates[HighlightState.Highlighted];
-            //    }
-            //}
 
             foreach (Cell cell in cells)
             {
@@ -233,7 +225,6 @@ namespace Map
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertIndex in layout.GetUVs(cell))
                 {
-                    Debug.Log($"{vertIndex} // {cell.Vertices[0].Id}");
                     colors[vertIndex] = _colorStates[HighlightState.Highlighted];
                 }
             }
