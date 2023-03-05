@@ -48,20 +48,7 @@ namespace Map
             }
             if (cell == null) return false;
             
-            foreach (Vertex vertex in cell.Vertices)
-            {
-                bool contains = false;
-
-                foreach (Vertex otherVertex in other.Vertices)
-                {
-                    if (vertex == otherVertex)
-                        contains = true;
-                }
-
-                if (!contains) return false;
-            }
-
-            return true;
+            return cell.Id == other.Id;
         }
 
         public static bool operator !=(Cell cell, Cell other)

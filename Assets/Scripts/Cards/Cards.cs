@@ -49,11 +49,19 @@ namespace Cards
                 _selectedCardIndex = hand.FindIndex(card => card == value);
 
                 _selectedCard = value;
-                if (_selectedCard && _selectedCard.Interactable) Manager.Map.Flood();
-                else Manager.Map.Drain();
+                if (_selectedCard && _selectedCard.Interactable)
+                {
+                    Manager.Map.SetAdjacencyBonuses(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint));
+                    Manager.Map.Flood();
+                }
+                else
+                {
+                    Manager.Map.Drain();
+                }
                 
                 Manager.Cursor.Current = _selectedCard && _selectedCard.Interactable ? CursorType.Build : CursorType.Pointer;
                 OnCardSelected?.Invoke(_selectedCard);
+                
                 _lastBadge = -1;
                 _currentBadge = -1;
             }
@@ -241,8 +249,6 @@ namespace Cards
         {
             get
             {
-                //Ray ray = Manager.Inputs.GetMouseRay(_cam);
-                //Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
                 var hit = Manager.Inputs.GetRaycast(_cam, 200f, layerMask);
                 return Manager.Map.GetClosestCell(hit.point);
             }
@@ -265,9 +271,9 @@ namespace Cards
             
             // Wipe previously highlighted cells
             ClearCells();
-            if (Manager.Upgrades.IsUnlocked(UpgradeType.VisibleAdjacencyBonuses))
-                Manager.Map.Highlight(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint), HighlightState.Highlighted);
 
+            Manager.Map.HighlightAdjacencyBonuses();
+            
             if (IsOverUi) return;
             
             _hoveredCell = closest;
