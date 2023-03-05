@@ -213,6 +213,8 @@
         Plaza, // + Guild Hall: Town Centre - Spending
         Tailor, // + Tannery: Stylish Armour - Performers
         Tannery, // + Hunting Lodge: Extra Padded Armour - Defence
+        // More Abilities
+        VisibleAdjacencyBonuses
     }
     
     public enum CursorType

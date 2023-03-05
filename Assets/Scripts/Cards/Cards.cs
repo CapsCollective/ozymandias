@@ -265,7 +265,8 @@ namespace Cards
             
             // Wipe previously highlighted cells
             ClearCells();
-            Manager.Map.Highlight(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint), HighlightState.Highlighted);
+            if (Manager.Upgrades.IsUnlocked(UpgradeType.VisibleAdjacencyBonuses))
+                Manager.Map.Highlight(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint), HighlightState.Highlighted);
 
             if (IsOverUi) return;
             
