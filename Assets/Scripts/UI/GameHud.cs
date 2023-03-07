@@ -14,6 +14,8 @@ namespace UI
 {
     public class GameHud : MonoBehaviour
     {
+        public static Action<bool> OnTogglePhotoMode;
+
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform topBar, menuBar, rightButtons, cards;
         [SerializeField] private CanvasGroup menuBarGroup, rightGameGroup;
@@ -58,9 +60,13 @@ namespace UI
 
             Manager.Inputs.TogglePhotoMode.performed += obj =>
             {
-                Debug.Log("Photo Mode " + !PhotoModeEnabled);
                 if (!Manager.State.InGame) return;
                 SetPhotoMode(!PhotoModeEnabled);
+            };
+            Manager.Inputs.Close.performed += obj =>
+            {
+                if (!Manager.State.InGame) return;
+                SetPhotoMode(false);
             };
 
 #if UNITY_EDITOR
@@ -92,9 +98,17 @@ namespace UI
 
         private void SetPhotoMode(bool modeEnabled)
         {
+            if (PhotoModeEnabled == modeEnabled) return;
+            
             PhotoModeEnabled = modeEnabled;
-            if (PhotoModeEnabled) Hide();
+            if (PhotoModeEnabled)
+            {
+                Manager.Cards.DeselectCards();
+                Hide();
+            }
             else Show();
+            
+            OnTogglePhotoMode?.Invoke(modeEnabled);
         }
         
         public void Hide(bool animate = true)

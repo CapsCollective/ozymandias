@@ -132,10 +132,10 @@ namespace Cards
             Manager.Inputs.LeftClick.performed += PlaceBuilding;
             Manager.Inputs.RotateBuilding.performed += RotateBuilding;
             Manager.Inputs.SelectCards.performed += SelectCards;
-            Manager.Inputs.DeselectCards.performed += DeselectCards;
+            Manager.Inputs.DeselectCards.performed += _ => DeselectCards();
             Manager.Inputs.NavigateCards.performed += NavigateCards;
             Manager.Inputs.SelectCardIndex.performed += SelectCardIndex;
-            State.OnEnterState += (_) =>
+            State.OnEnterState += _ =>
             {
                 _toggleGroup.SetAllTogglesOff();
                 if (Manager.State.InGame) PopCards();
@@ -206,7 +206,7 @@ namespace Cards
             SelectCard(_prevCardIndex);
         }
         
-        public void DeselectCards(InputAction.CallbackContext obj)
+        public void DeselectCards()
         {
             _toggleGroup.SetAllTogglesOff();
             if (_selectedCardIndex == -1) return;
@@ -227,7 +227,7 @@ namespace Cards
         
         public void SelectCard(int cardIndex)
         {
-            if (cardIndex == _selectedCardIndex || Tutorial.Tutorial.DisableSelect || !Manager.State.InGame || Manager.Tooltip.NavigationActive) return;
+            if (Manager.GameHud.PhotoModeEnabled || cardIndex == _selectedCardIndex || Tutorial.Tutorial.DisableSelect || !Manager.State.InGame || Manager.Tooltip.NavigationActive) return;
 
             if (cardIndex >= 0)
             {

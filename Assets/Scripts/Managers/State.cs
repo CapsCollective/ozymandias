@@ -75,7 +75,7 @@ namespace Managers
             
             Manager.Inputs.NextTurn.performed += _ =>
             {
-                if (InGame && !Tutorial.Tutorial.DisableNextTurn) EnterState(GameState.NextTurn);
+                if (!Manager.GameHud.PhotoModeEnabled && InGame && !Tutorial.Tutorial.DisableNextTurn) EnterState(GameState.NextTurn);
                 _nextTurnTimer = 0;
                 nextTurnMask.fillAmount = 0;
             };

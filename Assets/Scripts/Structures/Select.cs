@@ -7,6 +7,7 @@ using Inputs;
 using Managers;
 using Quests;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -188,6 +189,8 @@ namespace Structures
                 _interactTimer = 0;
                 maskImage.fillAmount = 0;
             };
+
+            GameHud.OnTogglePhotoMode += _ => Deselect();
             
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
             State.OnEnterState += (_) =>

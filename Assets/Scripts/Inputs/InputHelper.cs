@@ -49,6 +49,11 @@ namespace Inputs
                 HelperActive = b;
             };
 
+            GameHud.OnTogglePhotoMode += modeEnabled =>
+            {
+                if (Manager.Inputs.UsingController) ToggleWorldCursor(!modeEnabled);
+            };
+            
             worldSpaceCursor = GetComponent<CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
@@ -99,7 +104,6 @@ namespace Inputs
             previousSelections[state] = null;
         }
 
-        // I'll fill this up with stuff when I can.
         private void StateChecks(GameState state)
         {
             if (Manager.Inputs.UsingController)
@@ -124,7 +128,7 @@ namespace Inputs
                         HelperActive = false;
                         break;
                     case GameState.InGame:
-                        ToggleWorldCursor(true); 
+                        ToggleWorldCursor(true);
                         HelperActive = false;
                         break;
                     case GameState.NextTurn:
@@ -145,12 +149,12 @@ namespace Inputs
 
         private void ToggleWorldCursor(bool toggle)
         {
-            var renderer = worldSpaceCursor.GetComponentInChildren<Renderer>();
+            Renderer cursor = worldSpaceCursor.GetComponentInChildren<Renderer>();
             float tweenTo = toggle ? 0.5f : 0.0f;
             float tweenFrom = toggle ? 0.0f : 0.5f;
             tween = DOTween.To(() => tweenFrom, y => tweenFrom = y, tweenTo, 0.25f).OnUpdate(() =>
             {
-                renderer.material.SetFloat("_Opacity", tweenFrom);
+                cursor.material.SetFloat("_Opacity", tweenFrom);
             });
         }
 

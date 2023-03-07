@@ -95,6 +95,7 @@ namespace Platform
 
         public virtual Structure GetHoveredStructure(Camera camera, LayerMask collisionMask)
         {
+            if (Manager.GameHud.PhotoModeEnabled) return null;
             var hit = Manager.Inputs.GetRaycast(camera, 200f, collisionMask);
             return hit.collider ? hit.collider.GetComponentInParent<Structure>() : null;
         }

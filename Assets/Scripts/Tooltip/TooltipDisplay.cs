@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;
@@ -137,6 +138,7 @@ namespace Tooltip
             Manager.Inputs.Close.performed += _ => DeactivateTooltips(); 
             Inputs.Inputs.OnControlChange += _ => DeactivateTooltips();
             State.OnEnterState += _ => DeactivateTooltips();
+            GameHud.OnTogglePhotoMode += _ => DeactivateTooltips();
 
             Manager.Inputs.NavigateTooltips.performed += NavigateTooltips;
         }
@@ -150,7 +152,7 @@ namespace Tooltip
 
         private void ToggleTooltips(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame) return;
+            if (!Manager.State.InGame || Manager.GameHud.PhotoModeEnabled) return;
             Manager.Cards.SelectCard(-1);
             NavigationActive = !NavigationActive;
             OnTooltipDisplay?.Invoke(NavigationActive);
