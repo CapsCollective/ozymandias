@@ -18,6 +18,8 @@ namespace UI
         [SerializeField] private RectTransform topBar, menuBar, rightButtons, cards;
         [SerializeField] private CanvasGroup menuBarGroup, rightGameGroup;
 
+        public bool PhotoModeEnabled { get; private set; }
+        
         public enum HudObject
         {
             TopBar,
@@ -54,6 +56,13 @@ namespace UI
 
             State.OnEnterState += OnNewState;
 
+            Manager.Inputs.TogglePhotoMode.performed += obj =>
+            {
+                Debug.Log("Photo Mode " + !PhotoModeEnabled);
+                if (!Manager.State.InGame) return;
+                SetPhotoMode(!PhotoModeEnabled);
+            };
+
 #if UNITY_EDITOR
             Manager.Inputs.OnScreenshot.performed += obj => { TakeScreenshot(); };
 #endif
@@ -61,6 +70,9 @@ namespace UI
 
         private void OnNewState(GameState state)
         {
+            if (Manager.State.Loading) return;
+            SetPhotoMode(false);
+            
             switch (state)
             {
                 case GameState.InGame:
@@ -78,6 +90,13 @@ namespace UI
             }
         }
 
+        private void SetPhotoMode(bool modeEnabled)
+        {
+            PhotoModeEnabled = modeEnabled;
+            if (PhotoModeEnabled) Hide();
+            else Show();
+        }
+        
         public void Hide(bool animate = true)
         {
             Hide(new List<HudObject>(_hudValuesMap.Keys), animate);

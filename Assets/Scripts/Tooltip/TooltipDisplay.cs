@@ -162,8 +162,8 @@ namespace Tooltip
         private void NavigateTooltips(InputAction.CallbackContext obj)
         {
             if (!NavigationActive) return;
-
-            Vector2 direction = Manager.Inputs.NavigateTooltips.ReadValue<Vector2>();
+            
+            Vector2 direction = obj.action.ReadValue<Vector2>();
             _selectedTooltip.OnPointerExit(null);
 
             if (Mathf.RoundToInt(direction.y) == 1 && _selectedTooltip.navigationDirections.up)

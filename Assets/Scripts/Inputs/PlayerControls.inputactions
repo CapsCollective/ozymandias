@@ -211,6 +211,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Toggle Photo Mode",
+                    "type": "Button",
+                    "id": "c5baae9c-bf61-4ed2-a743-2312848597a6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -838,6 +847,28 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Demolish Building",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df9be59b-45d5-47c5-b339-986492ad10eb",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Toggle Photo Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a040cca0-f619-4e58-a855-bba4c0c27798",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
+                    "action": "Toggle Photo Mode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

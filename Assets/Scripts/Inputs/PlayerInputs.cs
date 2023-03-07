@@ -235,6 +235,15 @@ namespace Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Toggle Photo Mode"",
+                    ""type"": ""Button"",
+                    ""id"": ""c5baae9c-bf61-4ed2-a743-2312848597a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -862,6 +871,28 @@ namespace Inputs
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Demolish Building"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df9be59b-45d5-47c5-b339-986492ad10eb"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Toggle Photo Mode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a040cca0-f619-4e58-a855-bba4c0c27798"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse and Keyboard"",
+                    ""action"": ""Toggle Photo Mode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1594,6 +1625,7 @@ namespace Inputs
             m_Player_ReturnToTown = m_Player.FindAction("Return To Town", throwIfNotFound: true);
             m_Player_ToggleTooltips = m_Player.FindAction("Toggle Tooltips", throwIfNotFound: true);
             m_Player_NavigateTooltips = m_Player.FindAction("Navigate Tooltips", throwIfNotFound: true);
+            m_Player_TogglePhotoMode = m_Player.FindAction("Toggle Photo Mode", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1693,6 +1725,7 @@ namespace Inputs
         private readonly InputAction m_Player_ReturnToTown;
         private readonly InputAction m_Player_ToggleTooltips;
         private readonly InputAction m_Player_NavigateTooltips;
+        private readonly InputAction m_Player_TogglePhotoMode;
         public struct PlayerActions
         {
             private @PlayerInputs m_Wrapper;
@@ -1720,6 +1753,7 @@ namespace Inputs
             public InputAction @ReturnToTown => m_Wrapper.m_Player_ReturnToTown;
             public InputAction @ToggleTooltips => m_Wrapper.m_Player_ToggleTooltips;
             public InputAction @NavigateTooltips => m_Wrapper.m_Player_NavigateTooltips;
+            public InputAction @TogglePhotoMode => m_Wrapper.m_Player_TogglePhotoMode;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1798,6 +1832,9 @@ namespace Inputs
                     @NavigateTooltips.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateTooltips;
                     @NavigateTooltips.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateTooltips;
                     @NavigateTooltips.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNavigateTooltips;
+                    @TogglePhotoMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePhotoMode;
+                    @TogglePhotoMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePhotoMode;
+                    @TogglePhotoMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePhotoMode;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1871,6 +1908,9 @@ namespace Inputs
                     @NavigateTooltips.started += instance.OnNavigateTooltips;
                     @NavigateTooltips.performed += instance.OnNavigateTooltips;
                     @NavigateTooltips.canceled += instance.OnNavigateTooltips;
+                    @TogglePhotoMode.started += instance.OnTogglePhotoMode;
+                    @TogglePhotoMode.performed += instance.OnTogglePhotoMode;
+                    @TogglePhotoMode.canceled += instance.OnTogglePhotoMode;
                 }
             }
         }
@@ -2063,6 +2103,7 @@ namespace Inputs
             void OnReturnToTown(InputAction.CallbackContext context);
             void OnToggleTooltips(InputAction.CallbackContext context);
             void OnNavigateTooltips(InputAction.CallbackContext context);
+            void OnTogglePhotoMode(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
