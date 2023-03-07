@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2145024111733191087}
+  - component: {fileID: 2484062230464948866}
   - component: {fileID: 3056663790667841034}
   - component: {fileID: 977145656854366912}
   - component: {fileID: 6476106631601565421}
-  - component: {fileID: 2484062230464948866}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Mine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,6 +35,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2484062230464948866
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625650739557788437}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.4319944, y: 2.7848086, z: 3.2177143}
+  m_Center: {x: 0.48209906, y: 1.3614357, z: 0.012188852}
 --- !u!33 &3056663790667841034
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -101,16 +114,3 @@ MonoBehaviour:
   fixedPosition: 1
   forestMaterial: {fileID: 0}
   buildingMaterial: {fileID: 0}
---- !u!65 &2484062230464948866
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625650739557788437}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 7.4319944, y: 2.7848086, z: 3.2177143}
-  m_Center: {x: 0.48209906, y: 1.3614357, z: 0.012188852}
