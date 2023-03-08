@@ -466,9 +466,12 @@ namespace Map
                 for (int i = 0; i < 4; i++)
                 {
                     vertices.Add(cell.Vertices[i] + (cell.Centre - cell.Vertices[i]).normalized * lineWeight / 100f);
-                    uv.Add(debug && cell.WaterFront ? new Vector2(1, 0) : Vector2.zero); // Set to base or invalid if a 'safe' cell
                     colors.Add(Colors.GridInactive);
                 }
+                uv.Add(new Vector2(0, 0));
+                uv.Add(new Vector2(0, 1));
+                uv.Add(new Vector2(1, 1));
+                uv.Add(new Vector2(1, 0));
                 UVMap.Add(cell, Enumerable.Range( vertices.Count - 4, 4).ToList());
 
                 List<int> trianglesForCell = new List<int>{
