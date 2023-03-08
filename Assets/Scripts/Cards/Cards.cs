@@ -51,8 +51,8 @@ namespace Cards
                 _selectedCard = value;
                 if (_selectedCard && _selectedCard.Interactable)
                 {
-                    Manager.Map.SetAdjacencyBonuses(Manager.Structures.GetAdjacencyBonusCells(_selectedCard.Blueprint));
                     Manager.Map.Flood();
+                    Manager.Map.SetHighlightedPlacements(_selectedCard.Blueprint);
                 }
                 else
                 {
@@ -272,7 +272,7 @@ namespace Cards
             // Wipe previously highlighted cells
             ClearCells();
 
-            Manager.Map.HighlightAdjacencyBonuses();
+            Manager.Map.HighlightPlacement();
             
             if (IsOverUi) return;
             

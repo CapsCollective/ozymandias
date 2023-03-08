@@ -12,6 +12,11 @@ namespace Map
 {
     public class Map : MonoBehaviour
     {
+        public LayerMask layerMask;
+        [SerializeField] private MeshFilter gridMesh, roadMesh;
+        [SerializeField] private Layout layout;
+        
+        #region Fill Animation
         private const float FloodDuration = 0.75f;
         private const float DrainDuration = 0.75f;
         
@@ -19,22 +24,11 @@ namespace Map
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int Effect = Shader.PropertyToID("_Effect");
         private static readonly int Origin = Shader.PropertyToID("_Origin");
-
-        public LayerMask layerMask;
-        [SerializeField] private MeshFilter gridMesh, roadMesh;
-        [SerializeField] private Layout layout;
-
+        
         private bool _flooded;
+        private float _radius;
         private MeshRenderer _meshRenderer;
         private Camera _cam;
-        private float _radius;
-        private Color _effectColor;
-
-        private Dictionary<HighlightState, Color32> _colorStates;
-        private List<Cell> _highlightCells = new List<Cell>();
-        private List<Cell> _adjacencyBonuses = new List<Cell>();
-
-        #region Fill Animation
 
         private void Awake()
         {
@@ -56,8 +50,6 @@ namespace Map
                     _meshRenderer.material.SetFloat(Radius, _radius);
                     Shader.SetGlobalFloat(GrassClipFill, _radius / 70.0f);
                 });
-            /*DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0f), DrainDuration)
-                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));*/
         }
 
         public void Flood()
@@ -72,8 +64,6 @@ namespace Map
                     _meshRenderer.material.SetFloat(Radius, _radius);
                     Shader.SetGlobalFloat(GrassClipFill, _radius / 70.0f);
                 });
-            /*DOTween.To(() => _effectColor, x => _effectColor = x, new Color(0, 0.3f, 0, 0.5f), FloodDuration)
-                .OnUpdate(() => _meshRenderer.material.SetColor(Effect, _effectColor));*/
         }
 
         private void UpdateEffectOrigin()
@@ -86,6 +76,7 @@ namespace Map
         
         #endregion
         
+        #region Mesh
         private void Start()
         {
             State.OnGameEnd += () => layout.ClearRoad(roadMesh);
@@ -107,7 +98,8 @@ namespace Map
             gridMesh.sharedMesh = null;
             roadMesh.sharedMesh = null;
         }
-
+        #endregion
+        
         #region Querying
         // Gets the closest cell by world position
         public Cell GetClosestCell(Vector3 worldPosition) =>
@@ -163,7 +155,11 @@ namespace Map
         
         #endregion
 
-        #region Functionality
+        #region Highlighting
+        private Dictionary<HighlightState, Color32> _colorStates;
+        private List<Cell> _selectedCells = new List<Cell>();
+        private readonly List<Cell> _highlightedCells = new List<Cell>();
+        private bool _hasHighlights;
 
         public void UpdateHighlightColors()
         {
@@ -176,18 +172,13 @@ namespace Map
             };
         }
         
-        private bool _hasHighlights;
-
         public void Highlight(List<Cell> cells, HighlightState state)
         {
             if (cells.Count == 0) return;
-            
             Color32[] colors = gridMesh.sharedMesh.colors32;
-            _highlightCells = new List<Cell>();
 
             foreach (Cell cell in cells)
             {
-                _highlightCells.Add(cell);
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertIndex in layout.GetUVs(cell))
                 {
@@ -196,15 +187,15 @@ namespace Map
             }
 
             gridMesh.sharedMesh.SetColors(colors);
+            _selectedCells = cells;
             _hasHighlights = true;
         }
 
-        public void SetAdjacencyBonuses(List<Cell> cells)
+        public void SetHighlightedPlacements(Blueprint blueprint)
         {
-            if (cells.Count == 0) return;
+            // Remove previous highlights
             Color32[] colors = gridMesh.sharedMesh.colors32;
-            _highlightCells = new List<Cell>();
-            foreach (Cell cell in _adjacencyBonuses)
+            foreach (Cell cell in _highlightedCells)
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertIndex in layout.GetUVs(cell))
@@ -213,14 +204,22 @@ namespace Map
                 }
             }
             gridMesh.sharedMesh.SetColors(colors);
-            _adjacencyBonuses = cells;
+            
+            _highlightedCells.Clear();
+            
+            if (Manager.Upgrades.IsUnlocked(UpgradeType.VisibleAdjacencyBonuses))
+                _highlightedCells.AddRange(Manager.Structures.GetAdjacencyBonusCells(blueprint));
+
+            if (Tutorial.Tutorial.DisableNextTurn)
+                _highlightedCells.AddRange(layout.GetCells().Where(c => c.Active && (!c.Occupied || c.Occupant.IsRuin)));
         }
 
-        public void HighlightAdjacencyBonuses()
+        public void HighlightPlacement()
         {
+            if (_highlightedCells.Count == 0) return;
+            
             Color32[] colors = gridMesh.sharedMesh.colors32;
-            _highlightCells = new List<Cell>();
-            foreach (Cell cell in _adjacencyBonuses)
+            foreach (Cell cell in _highlightedCells)
             {
                 if (cell == null || !cell.Active) continue;
                 foreach (int vertIndex in layout.GetUVs(cell))
@@ -234,10 +233,12 @@ namespace Map
         public void ClearHighlight()
         {
             if (!_hasHighlights) return;
-            Highlight(_highlightCells, HighlightState.Inactive);
+            Highlight(_selectedCells, HighlightState.Inactive);
             _hasHighlights = false;
         }
+        #endregion
 
+        #region Placement
         // Sets the rotation of all cells to be uniformly oriented
         public void Align(List<Cell> cells, int rotation)
         {
