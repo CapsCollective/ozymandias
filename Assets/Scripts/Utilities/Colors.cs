@@ -11,7 +11,7 @@ namespace Utilities
         public static readonly Color CardDark = new Color(0.16f, 0.13f, 0.07f);
 
         private const byte GridActiveOpacity = 150;
-        public static Color32 GridInactive = new Color32(50, 50, 50, 40);
+        public static Color32 GridInactive = new Color32(20, 20, 20, 40);
         public static Color32 GridHighlighted = new Color32(180, 150, 0, GridActiveOpacity);
         public static Color32 GridActive => ColorBlind ? new Color32(15,100,200, GridActiveOpacity) : new Color32(0, 160, 15, GridActiveOpacity);
         public static Color32 GridInvalid = new Color32(150, 0, 0, GridActiveOpacity);
