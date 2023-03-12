@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4095498923337351837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: We've made some money off all these extra items...
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: wolf-loot-drops
+  m_EditorClassIdentifier: 
+  headline: Loot From Strange Places
+  article: 'In a mysterious turn of events, local adventurers have started finding
+    coins, health potions, and even a whole sword on the bodies of the local wolf
+    population! Where and how these wolves are keeping this loot is a mystery, but
+    it''s hunting season!
+
+
+    The outrider''s guild has expressed concerns for
+    the dipping wolf populations following this news: <i>"We all want loot, but we
+    must remember to allow for the appropriate respawn rate."</i>'
+  image: {fileID: 21300000, guid: 7062cec7f802e6246838bba1a759ac0c, type: 3}
+  type: 2
+  headliner: 0
+  outcomes:
+  - {fileID: -4095498923337351837}
+  - {fileID: 3679515324729310749}
+  - {fileID: 4116871617153010062}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &3679515324729310749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  turnsWorth: 0.4
+--- !u!114 &4116871617153010062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 1
+  amount: -1
+  turns: 3
+  reason: from Wolf Overhunting

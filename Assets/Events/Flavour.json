@@ -22,14 +22,14 @@
   },
   {
     "name": "floating-rogue",
-    "headline": "Rogue Light?",
+    "headline": "Rogue, Light?",
     "article": "Local rogue Elon Stealemlots was seen floating above the town today, after reportedly drinking a potion of levitation. I swear, it's something new with this guy every day.",
     "image": "potion-ball",
     "type": "Flavour"
   },
   {
     "name": "gemstones",
-    "headline": "Could Eating Gemstones Give you Magic Powers?",
+    "headline": "Could Eating Gemstones Give You Magic Powers?",
     "article": "Local Witchdoctor and magic expert says: <i>\"What? No. Don't do that!\"</i>\n\nBut you're not fooling me, Mr Magic... Not again. ",
     "image": "minerals",
     "type": "Flavour"
@@ -145,8 +145,27 @@
     ]
   },
   {
+    "name": "diviner-dating",
+    "headline": " Blind Date With a God",
+    "article": "A local gathering of priests have established a new matchmaking service for pairing lost individuals with prospective deities. The process has been an acclaimed success, seeing a 50% increase in attendance of religious events. Gra'kthuk the Bloody had this to say: <i>\"I was so lost until I was introduced to Xanthilox the Eater of Souls, God of Incandescent Rage. I feel like my purpose has been renewed in this world!\"</i>",
+    "image": "twin",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Diviner",
+          "amount": 2,
+          "turns": 3,
+          "reason": "from Biblical Blind Dating"
+        }
+      }
+    ]
+  },
+  {
     "name": "little-guy",
-    "headline": "Little Guy spotted in Town",
+    "headline": "Little Guy Spotted in Town",
     "article": "Don't even worry about it, he's just like, a cool little guy, a little dude. He's not hurting anyone, don't even sweat.",
     "image": "meeple",
     "type": "Flavour"
@@ -166,6 +185,33 @@
       {
         "type": "WealthAdded",
         "turnsWorth": 0.3
+      }
+    ]
+  },
+  {
+    "name": "wolf-loot-drops",
+    "headline": "Loot From Strange Places",
+    "article": "In a mysterious turn of events, local adventurers have started finding coins, health potions, and even a whole sword on the bodies of the local wolf population! Where and how these wolves are keeping this loot is a mystery, but it's hunting season!\n\nThe outrider's guild has expressed concerns for the dipping wolf populations following this news: <i>\"We all want loot, but we must remember to allow for the appropriate respawn rate.\"</i>",
+    "image": "tree-face",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "FlavourText",
+        "customDescription": "We've made some money off all these extra items..."
+      },
+      {
+        "type": "WealthAdded",
+        "turnsWorth": 0.4
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Outrider",
+          "amount": -1,
+          "turns": 3,
+          "reason": "from Wolf Overhunting"
+        }
       }
     ]
   },
