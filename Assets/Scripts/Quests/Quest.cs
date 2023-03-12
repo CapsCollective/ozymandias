@@ -67,7 +67,7 @@ namespace Quests
         
         public void Add()
         {
-            BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (10f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 10f);
+            BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (20f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 20f);
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
             State.OnNewTurn += OnNewTurn;
