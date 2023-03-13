@@ -21,16 +21,9 @@
     "type": "Flavour"
   },
   {
-    "name": "floating-rogue",
-    "headline": "Rogue, Light?",
-    "article": "Local rogue Elon Stealemlots was seen floating above the town today, after reportedly drinking a potion of levitation. I swear, it's something new with this guy every day.",
-    "image": "potion-ball",
-    "type": "Flavour"
-  },
-  {
     "name": "gemstones",
     "headline": "Could Eating Gemstones Give You Magic Powers?",
-    "article": "Local Witchdoctor and magic expert says: <i>\"What? No. Don't do that!\"</i>\n\nBut you're not fooling me, Mr Magic... Not again. ",
+    "article": "Local Witchdoctor and magic expert says: <i>\"What? No. Don't do that!\"</i>\n\nBut you're not fooling me, Mr Magic... Not again.",
     "image": "minerals",
     "type": "Flavour"
   },
@@ -84,6 +77,41 @@
     "type": "Flavour"
   },
   {
+    "name": "banned-spells-1",
+    "headline": "Banned Spells Announcement",
+    "article": "Due to health and safety concerns, the following spells can no longer be cast:\n •  Ceaseless Bees\n •  Reverse Breathing\n •  Wall of Meat",
+    "image": "scroll-quill",
+    "type": "Flavour"
+  },
+  {
+    "name": "banned-spells-2",
+    "headline": "Conjuration Castings are Cancelled",
+    "article": "Certain spells are banned from casting following an ethics review:\n •  Greater Summon Gnome\n •  Conjure Friend\n •  Summon Greater Gnome",
+    "image": "scroll-quill",
+    "type": "Flavour"
+  },
+  {
+    "name": "banned-spells-3",
+    "headline": "Royal Spell Bans",
+    "article": "Following a royal decree, the following spells have been banned from non-authorized use:\n •  Zone of Tax Evasion\n •  Repress Trauma\n •  Powerword Gaslight",
+    "image": "scroll-quill",
+    "type": "Flavour"
+  },
+  {
+    "name": "banned-spells-4",
+    "headline": "Spells Deemed Useless",
+    "article": "Following a review by the arcanists guild, these spells have been deemed non-viable for public use:\n •  Retroactive Foresight\n •  Lightvision\n •  Intangible Shield",
+    "image": "scroll-quill",
+    "type": "Flavour"
+  },
+  {
+    "name": "banned-spells-5",
+    "headline": "Secret Spells Banned",
+    "article": "The unknown order has alerted us to immediately stop any casting, and learning, of these spells:\n •  Manipulate Skin\n •  Speak with Houseplant\n •  Counter-Manipulate Skin",
+    "image": "scroll-quill",
+    "type": "Flavour"
+  },
+  {
     "name": "rat-rave",
     "headline": "Perplexing Piper Party",
     "article": "Children have been seen disappearing at night, in a trance. After some exploration, adventurers discovered that they have been attending a nightly rat rave.",
@@ -98,10 +126,10 @@
     "type": "Flavour"
   },
   {
-    "name": "tooth-fairy",
-    "headline": "The Tooth Hurts",
-    "article": "A warning to any parents out there, urge your children against putting loose teeth under their pillows for the Tooth fairies. While they seem whimsical and wondrous, they are in fact just the larval stage of the far more deadly 'Bone fairy'. Hide your teeth! It's better to starve them before they get too strong.",
-    "image": "fairy",
+    "name": "little-guy",
+    "headline": "Little Guy Spotted in Town",
+    "article": "Don't even worry about it, he's just like, a cool little guy, a little dude. He's not hurting anyone, don't even sweat.",
+    "image": "meeple",
     "type": "Flavour"
   },
   {
@@ -145,8 +173,72 @@
     ]
   },
   {
+    "name": "gorath-1",
+    "headline": "Why Townsfolk HATE This Rogue!",
+    "article": "Brave adventurer, dashing rogue, usual suspect, and professional idiot are just some of the terms used to describe <b>Gorath</b> by both himself and others. We all know why it is that we hate him, so there's no need to elaborate on the topic, but man, I hate that guy so much!",
+    "image": "hooded-figure",
+    "type": "Flavour"
+  },
+  {
+    "name": "gorath-2",
+    "headline": "Rogue, Light?",
+    "article": "Local rogue <b>Gorath</b> was seen floating above the town today, taunting a pack of brawlers just out of reach after reportedly drinking a potion of levitation. I swear, it's something new with this guy every day...",
+    "image": "potion-ball",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Brawler",
+          "amount": -1,
+          "turns": 3,
+          "reason": "from the Taunting Floating Rogue"
+        }
+      }
+    ]
+  },
+  {
+    "name": "gorath-3",
+    "headline": "Eighth Time's a Charm",
+    "article": "Local screw-up, <b>Gorath the Rogue</b>, has fallen into the town well for the eighth time this season, once again attempting to pilfer coins after mistaking it for a wishing well. Diviners are very angry about having to use Gorath-flavoured water in their rituals.",
+    "image": "hooded-figure",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Diviner",
+          "amount": -1,
+          "turns": 3,
+          "reason": "from the Gorath Water"
+        }
+      }
+    ]
+  },
+  {
+    "name": "gorath-4",
+    "headline": "The Rogue Who Stole Afternoon Tea",
+    "article": "Well know scoundrel, <b>Gorath</b>, made off with the whole town's lunch yesterday in an act of whimsical foolishness. The town had gathered for a traditional afternoon feast, when their picnic basket of holding had been stolen. Gorath claims he just wanted a cookie and it slipped into a nearby portal.",
+    "image": "hooded-figure",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Food",
+          "amount": -5,
+          "turns": 3,
+          "reason": "from the Missing Picnic Basket"
+        }
+      }
+    ]
+  },
+  {
     "name": "diviner-dating",
-    "headline": " Blind Date With a God",
+    "headline": "Blind Date With a God",
     "article": "A local gathering of priests have established a new matchmaking service for pairing lost individuals with prospective deities. The process has been an acclaimed success, seeing a 50% increase in attendance of religious events. Gra'kthuk the Bloody had this to say: <i>\"I was so lost until I was introduced to Xanthilox the Eater of Souls, God of Incandescent Rage. I feel like my purpose has been renewed in this world!\"</i>",
     "image": "twin",
     "type": "Flavour",
@@ -164,11 +256,23 @@
     ]
   },
   {
-    "name": "little-guy",
-    "headline": "Little Guy Spotted in Town",
-    "article": "Don't even worry about it, he's just like, a cool little guy, a little dude. He's not hurting anyone, don't even sweat.",
-    "image": "meeple",
-    "type": "Flavour"
+    "name": "licenced-spells",
+    "headline": "Licence-Free Spells!",
+    "article": "Why spend all that extra gold on name-brand spells like <i>'Malecrax's Sycthe, Lenny's Lil House, or Talia's Horrific Chuckles'</i> when you can get our generic spells of similar quality for less!",
+    "image": "scroll-quill",
+    "type": "Flavour",
+    "outcomes":
+    [
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Arcanist",
+          "amount": 2,
+          "turns": 3,
+          "reason": "from Licence-Free Spells"
+        }
+      }
+    ]
   },
   {
     "name": "living-wood",
