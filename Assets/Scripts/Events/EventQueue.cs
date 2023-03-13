@@ -48,6 +48,17 @@ namespace Events
             
             State.OnGameEnd += () =>
             {
+                new List<EventType>
+                {
+                    EventType.AdventurersJoin,
+                    EventType.AdventurersLeave,
+                    EventType.Advert,
+                    EventType.Flavour,
+                    EventType.Threat,
+                    EventType.Radiant,
+                    EventType.Merchant
+                }.ForEach(Shuffle);
+                
                 foreach (Flag flag in Enum.GetValues(typeof(Flag))) Flags[flag] = false;
             };
 
@@ -81,6 +92,8 @@ namespace Events
             _current.Clear();
             _outcomeDescriptions.Clear();
         
+            if (_others.Count < MinQueueEvents) AddRandomSelection();
+            
             if (_headliners.Count > 0)
             {
                 _current.Add(_headliners.First.Value);
@@ -89,7 +102,6 @@ namespace Events
 
             while (_current.Count < 3)
             {
-                if (_others.Count < MinQueueEvents) { AddRandomSelection(); continue; }
                 _current.Add(_others.First.Value);
                 _others.RemoveFirst();
             }
@@ -130,12 +142,12 @@ namespace Events
                 if (TypeNotInQueue(EventType.Merchant) && Random.Range(0f,10f) < Mathf.Clamp((float)Manager.Stats.Wealth / Manager.Stats.WealthPerTurn, 0, 5f)) 
                     eventPool.Add(PickRandom(EventType.Merchant));
                 
-                // 20% chance to start a new story while no other is active
-                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && TypeNotInQueue(EventType.Story) && Random.Range(0, 5) == 0)
+                // 25% chance to start a new story while no other is active
+                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && TypeNotInQueue(EventType.Story) && Random.Range(0, 100) <= 25)
                     eventPool.Add(PickRandomStory());
             }
 
-            while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
+            while (eventPool.Count < MinQueueEvents) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
         }
 
@@ -147,26 +159,23 @@ namespace Events
                 Event story = PickRandom(EventType.Story);
                 if (story == null) return null; // Catch case for if there are no stories
                         
-                if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock))
-                {
-                    Flags[Flag.StoryActive] = true;
-                    return story;
-                }
+                if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock)) return story;
+                
                 Debug.LogWarning($"Events: {story.name} story invalid, picking another");
             }
+        }
+
+        private void Shuffle(EventType type)
+        {
+            Debug.Log($"Events: Shuffling {type}");
+            _availablePools[type] = new List<Event>(_usedPools[type]);
+            _usedPools[type].Clear();
         }
         
         private Event PickRandom(EventType type)
         {
-            if (_availablePools[type].Count == 0)
-            {
-                Debug.Log($"Events: Shuffling {type}");
-                if (_usedPools[type].Count == 0) return null; // Catch case for if there are no events of this type
-                
-                //Shuffle events back in
-                _availablePools[type] = new List<Event>(_usedPools[type]);
-                _usedPools[type].Clear();
-            }
+            if (_availablePools[type].Count == 0) Shuffle(type);
+            
             Event e = _availablePools[type].PopRandom();
             
             _usedPools[type].Add(e);

@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Events
 {
@@ -20,5 +22,18 @@ namespace Events
             outcomeText.text += outcome;
             outcomeText.gameObject.SetActive(!outcome.Equals(""));
         }
+        
+#if UNITY_EDITOR
+        [Header("Debug")]
+        [SerializeField] private Event debugEvent;
+        [SerializeField] private Image articleImage;
+        
+        [Button]
+        private void SetDebugEvent()
+        {
+            SetEvent(debugEvent, "");
+            articleImage.sprite = debugEvent.image;
+        }
+#endif
     }
 }
