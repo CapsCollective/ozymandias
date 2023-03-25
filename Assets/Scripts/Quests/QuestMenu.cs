@@ -12,23 +12,29 @@ namespace Quests
 {
     public class QuestMenu : MonoBehaviour
     {
-        [SerializeField] private Button closeButton, nextButton, previousButton;
-        [SerializeField] private CanvasGroup prevNextButtons;
         [SerializeField] private QuestFlyer[] flyers;
+        [SerializeField] private Button closeButton, nextButton, previousButton;
+        
+        [SerializeField] private GameObject navButtonPrefab;
+        [SerializeField] private CanvasGroup navButtonsCanvasGroup;
+        [SerializeField] private Transform navButtonsContainer;
         
         private const float AnimateAcrossDuration = 0.75f;
         private const float AnimateInDuration = 0.75f;
         private const float AnimateOutDuration = 0.75f;
-        private const float AnimatePrevNextFadeDuration = 0.25f;
+        private const float AnimateNavItemsFade = 0.25f;
+        private const float AnimateNavItemScale = 0.25f;
+
 
         private bool _inAnim;
         private int _openFlyer;
-        private int _selectedQuest;
+        private int _selectedQuestIndex;
         private CanvasGroup _closeButtonCanvas;
         private Canvas _canvas;
 
         private readonly Vector3 _offScreenPos = new Vector3(-500, 1500, 0);
         private readonly Vector3 _offScreenRot = new Vector3(0, 0, 40);
+        private readonly Vector3 _onScreenPos = new Vector3(0, 50, 0);
 
         private const int FlyerCount = 2;
 
@@ -40,17 +46,8 @@ namespace Quests
 
         private Quest SelectedQuest
         {
-            get => Current.Count > 0 ? Current[_selectedQuest % Current.Count] : null;
-
-            set
-            {
-                for (var i = 0; i < Current.Count; i++)
-                {
-                    if (Current[i] != value) continue;
-                    _selectedQuest = i;
-                    break;
-                }
-            }
+            get => Current.Count > 0 ? Current[_selectedQuestIndex % Current.Count] : null;
+            set => _selectedQuestIndex = Current.IndexOf(value);
         }
 
         private QuestFlyer OpenFlyer => flyers[_openFlyer];
@@ -59,7 +56,7 @@ namespace Quests
 
         private bool _opened;
 
-        EventHandler handler;
+        private readonly Dictionary<Quest, QuestNavButton> _navButtons = new Dictionary<Quest, QuestNavButton>();
 
         private void Start()
         {
@@ -91,6 +88,19 @@ namespace Quests
                 FocusStructure(SelectedQuest.Structure);
                 Open();
             };
+
+            Quests.OnQuestAdded += (quest) =>
+            {
+                QuestNavButton navButton = Instantiate(navButtonPrefab, navButtonsContainer).GetComponent<QuestNavButton>();
+                navButton.UpdateDisplay(quest, () => ChangeQuest(quest));
+                _navButtons.Add(quest, navButton);
+            };
+            
+            Quests.OnQuestRemoved += (quest) =>
+            {
+                Destroy(_navButtons[quest].gameObject);
+                _navButtons.Remove(quest);
+            };
             
             foreach (QuestFlyer flyer in flyers)
             {
@@ -118,7 +128,6 @@ namespace Quests
             
             // Hide buttons on start
             DisplayCloseButton(false);
-            DisplayMoveButtons(false);
         }
 
         private static int CycleIdx(int idx, int collectionLength, SwapDir dir)
@@ -126,12 +135,19 @@ namespace Quests
             return (idx + (int)dir + collectionLength) % collectionLength; // Loop on positive or negative overflow
         }
 
+        private void ChangeQuest(Quest quest)
+        {
+            if (_inAnim) return;
+            _inAnim = true;
+            SelectedQuest = quest;
+            SwapFlyers(SwapDir.Right, SelectedQuest);
+            Manager.Jukebox.PlayScrunch();
+        }
         private void ChangeQuest(SwapDir dir)
         {
             if (_inAnim) return;
             _inAnim = true;
-            _selectedQuest = CycleIdx(_selectedQuest, Current.Count, dir);
-            DisplayMoveButtons(false);
+            _selectedQuestIndex = CycleIdx(_selectedQuestIndex, Current.Count, dir);
             SwapFlyers(dir, SelectedQuest);
             Manager.Jukebox.PlayScrunch();
         }
@@ -146,24 +162,24 @@ namespace Quests
             
             currentFlyer.OnClose();
             nextFlyer.UpdateContent(selectedQuest);
-            nextFlyer.transform.localPosition = new Vector3(nextStartX, 0, 0);
+            nextFlyer.transform.localPosition = new Vector3(nextStartX, 50, 0);
             _openFlyer = CycleIdx(_openFlyer, FlyerCount, dir);
+
+            UpdateNavButtonsScale();
             
             currentFlyer.transform
-                .DOLocalMove(new Vector3(-nextStartX, 0, 0), AnimateAcrossDuration)
-                .SetDelay(AnimatePrevNextFadeDuration)
+                .DOLocalMove(new Vector3(-nextStartX,50, 0), AnimateAcrossDuration)
                 .OnStart(() =>
                 {
                     FocusStructure(selectedQuest.Structure);
                     PunchRotation(currentFlyer.transform, (int)dir);
                     PunchRotation(nextFlyer.transform, (int)dir);
                     nextFlyer.gameObject.SetActive(true);
-                    nextFlyer.transform.DOLocalMove(Vector3.zero, AnimateAcrossDuration);
+                    nextFlyer.transform.DOLocalMove(_onScreenPos, AnimateAcrossDuration);
                 })
                 .OnComplete(() =>
                 {
                     nextFlyer.OnOpen();
-                    DisplayMoveButtons(true);
                     currentFlyer.gameObject.SetActive(false);
                     _inAnim = false;
                 });
@@ -192,19 +208,18 @@ namespace Quests
             if (_opened) return;
             _opened = true;
             DisplayCloseButton(false);
-            DisplayMoveButtons(false);
             Manager.State.EnterState(GameState.InMenu);
             Manager.Jukebox.PlayScrunch();
-            prevNextButtons.gameObject.SetActive(Current.Count > 1);
+            navButtonsCanvasGroup.gameObject.SetActive(Current.Count > 1);
+            UpdateNavButtonsScale();
             _canvas.enabled = true;
             OpenFlyer.transform.eulerAngles = _offScreenRot;
             OpenFlyer.transform
-                .DOLocalMove(Vector3.zero, AnimateInDuration)
+                .DOLocalMove(_onScreenPos, AnimateInDuration)
                 .OnStart(() => OpenFlyer.gameObject.SetActive(true))
                 .OnComplete(() =>
                 {
                     OpenFlyer.OnOpen();
-                    DisplayMoveButtons(true);
                     DisplayCloseButton(true);
                     Manager.Inputs.OpenQuests.performed += OpenQuests_performed;
                     Manager.Inputs.Close.performed += OpenQuests_performed;
@@ -220,7 +235,6 @@ namespace Quests
             Manager.Inputs.Close.performed -= OpenQuests_performed;
             if (Current.Count > 1) Manager.Inputs.NavigateBookmark.performed -= NavigateFlyers;
             DisplayCloseButton(false);
-            DisplayMoveButtons(false);
             OpenFlyer.OnClose();
             OpenFlyer.transform.DOLocalMove(_offScreenPos, AnimateOutDuration);
             OpenFlyer.transform
@@ -233,15 +247,16 @@ namespace Quests
                 });
         }
 
-        private void DisplayMoveButtons(bool display)
+        private void UpdateNavButtonsScale()
         {
-            var alpha = display ? 1.0f : 0.0f;
-            prevNextButtons.DOFade(alpha, AnimatePrevNextFadeDuration);
+            foreach ((Quest quest, QuestNavButton nav) in _navButtons)
+                nav.transform.DOScale(SelectedQuest == quest ? 1.2f : 1, AnimateNavItemScale);
         }
-        
+
         private void DisplayCloseButton(bool display)
         {
-            _closeButtonCanvas.DOFade(display && !Manager.Inputs.UsingController ? 1.0f : 0.0f, 0.2f);
+            navButtonsCanvasGroup.DOFade(display ? 1.0f : 0.0f, AnimateNavItemsFade);
+            _closeButtonCanvas.DOFade(display ? 1.0f : 0.0f, AnimateNavItemsFade);
         }
 
         private void OpenQuests_performed(InputAction.CallbackContext obj)

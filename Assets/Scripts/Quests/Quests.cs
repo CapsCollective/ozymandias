@@ -45,22 +45,28 @@ namespace Quests
             State.OnGameEnd += OnGameEnd;
         }
         
-        public bool Add(Quest q)
+        public void Add(Quest q)
         {
-            if (IsActive(q)) return false;
+            if (IsActive(q))
+            {
+                Debug.LogWarning($"Quest: {q.name} is already active");
+                return;
+            }
             Current.Add(q);
-            q.Add();
+            if(!Manager.State.Loading) q.Add();
             OnQuestAdded?.Invoke(q);
-            return true;
         }
 
-        public bool Remove(Quest q)
+        public void Remove(Quest q)
         {
-            if (!Current.Contains(q)) return false;
+            if (!Current.Contains(q))
+            {
+                Debug.LogWarning($"Quest: {q.name} is is not active");
+                return;
+            }
             Current.Remove(q);
             q.Remove();
             OnQuestRemoved?.Invoke(q);
-            return true;
         }
 
         public List<QuestDetails> Save()
@@ -78,7 +84,7 @@ namespace Quests
                     Debug.LogWarning("Quests: Cannot find quest - " + details.name);
                     continue;
                 }
-                Current.Add(q);
+                Add(q);
                 q.Load(details);
             }
         }
