@@ -21,12 +21,12 @@ namespace Utilities
         public static readonly Color CostActive = new Color(0.8f,0.6f,0.2f);
         public static readonly Color CostInactive = new Color(0.85f,0.85f,0.85f);
 
-        private static string GreenHex => ColorBlind ? "#0C7BDCff" : "#007000ff";
-        private const string RedHex = "#820000ff";
-        private const string LightRedHex = "#FF1111ff";
+        private static string GreenHex => ColorBlind ? "#0029ADFF" : "#007000FF";
+        private const string RedHex = "#820000FF";
+        private const string LightRedHex = "#FF1111FF";
 
         private const string EndTextColor = "</color>";
-        private static string TextColor(string colorHex) => $"<color={colorHex}>".Conditional(!ColorBlind);
+        private static string TextColor(string colorHex) => $"<color={colorHex}>";
         private static string TextColor(Color color) => $"<color={ColorUtility.ToHtmlStringRGB(color)}>";
 
         /// <summary>
