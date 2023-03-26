@@ -25,8 +25,8 @@ namespace Events
             _others = new LinkedList<Event>();
 
         private readonly Dictionary<EventType, List<Event>>
-            _availablePools = new Dictionary<EventType, List<Event>>(), //Events to randomly add to the queue
-            _usedPools = new Dictionary<EventType, List<Event>>(); //Events already run but will be re-added on a shuffle
+            _availablePools = new Dictionary<EventType, List<Event>>(), // Events to randomly add to the queue
+            _usedPools = new Dictionary<EventType, List<Event>>(); // Events already run but will be re-added on a shuffle
     
         private readonly List<Event> _current = new List<Event>(4);
         private readonly List<string> _outcomeDescriptions = new List<string>(4);
@@ -168,7 +168,7 @@ namespace Events
         private void Shuffle(EventType type)
         {
             Debug.Log($"Events: Shuffling {type}");
-            _availablePools[type] = new List<Event>(_usedPools[type]);
+            _availablePools[type].AddRange(_usedPools[type]);
             _usedPools[type].Clear();
         }
         

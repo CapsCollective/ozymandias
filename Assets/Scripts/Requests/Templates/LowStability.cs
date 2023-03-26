@@ -5,8 +5,8 @@ namespace Requests.Templates
 {
     public sealed class LowStability : Request
     {
-        public override string Description => $"Keep Stability Bellow 30% for {Required} Turns";
-        protected override int RequiredScaled => 2 * Tokens;
+        public override string Description => $"Keep Stability Below 30% for {Required} Turns";
+        protected override int RequiredScaled => 2 + Tokens;
 
         public override void Start()
         {

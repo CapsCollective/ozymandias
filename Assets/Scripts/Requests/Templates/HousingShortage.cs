@@ -6,7 +6,7 @@ namespace Requests.Templates
 {
     public sealed class HousingShortage : Request
     {
-        public override string Description => $"Maintain a Housing Shortage Bellow -20 for {Required} Turns";
+        public override string Description => $"Maintain a Housing Shortage Below -20 for {Required} Turns";
         protected override int RequiredScaled => Tokens * 2;
 
         public override void Start()
