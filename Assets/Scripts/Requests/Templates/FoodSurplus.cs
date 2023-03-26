@@ -7,7 +7,7 @@ namespace Requests.Templates
     public sealed class FoodSurplus : Request
     {
         public override string Description => $"Maintain a Food Surplus Above 20 for {Required} Turns";
-        protected override int RequiredScaled => 1 + Tokens * 2;
+        protected override int RequiredScaled => Tokens * 2;
 
         public override void Start()
         {
