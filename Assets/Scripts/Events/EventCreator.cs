@@ -370,6 +370,24 @@ namespace Events
                             request = ScriptableObject.CreateInstance<KeepUpset>();
                             ((KeepUpset)request).targetGuild = config.targetGuild;
                             break;
+                        case RequestType.FoodSurplus:
+                            request = ScriptableObject.CreateInstance<FoodSurplus>();
+                            break;
+                        case RequestType.HousingShortage:
+                            request = ScriptableObject.CreateInstance<HousingShortage>();
+                            break;
+                        case RequestType.LowStability:
+                            request = ScriptableObject.CreateInstance<LowStability>();
+                            break;
+                        case RequestType.MaxStability:
+                            request = ScriptableObject.CreateInstance<MaxStability>();
+                            break;
+                        case RequestType.ConstructBuildingsInTurn:
+                            request = ScriptableObject.CreateInstance<ConstructBuildingsInTurn>();
+                            break;
+                        case RequestType.DiscoverCards:
+                            request = ScriptableObject.CreateInstance<DiscoverCards>();
+                            break;
                         default:
                             Debug.LogError("Request buildingType not found: " + config.type);
                             return;

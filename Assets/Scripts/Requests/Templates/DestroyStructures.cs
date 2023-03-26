@@ -7,9 +7,7 @@ namespace Requests.Templates
     {
         public StructureType structureType;
 
-        public override string Description => 
-            $"Destroy {Required} " +
-            $"{(structureType == StructureType.Terrain ? "Forest" : "Ruin").Pluralise(Required)}";
+        public override string Description => $"Destroy {Required} {(structureType == StructureType.Terrain ? "Forest" : "Ruins")}";
         
         protected override int RequiredScaled => (structureType == StructureType.Terrain ? 20 : 2) * Tokens;
 

@@ -95,7 +95,7 @@ namespace Managers
         
         public bool Spend(int amount)
         {
-            if (Manager.State.Loading) return true; //Don't spend money when loading
+            if (Manager.State.Loading || Tutorial.Tutorial.DisableNextTurn) return true; //Don't spend money when loading
             if (Wealth < amount) return false;
             Wealth -= amount;
             return true;

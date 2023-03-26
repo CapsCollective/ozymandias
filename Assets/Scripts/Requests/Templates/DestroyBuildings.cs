@@ -5,9 +5,10 @@ namespace Requests.Templates
 {
     public sealed class DestroyBuildings : Request
     {
+        public bool allowAny;
         public BuildingType buildingType;
         public override string Description => $"Destroy {Required} {buildingType.ToString().Pluralise(Required)}";
-        protected override int RequiredScaled => Tokens;
+        protected override int RequiredScaled => (allowAny ? 2 : 1) * Tokens;
 
         public override void Start()
         {
@@ -21,7 +22,7 @@ namespace Requests.Templates
 
         private void CheckClear(Structure structure)
         {
-            if (structure.IsBuilding && structure.Blueprint.type == buildingType) Completed++;
+            if (structure.IsBuilding && (allowAny || structure.Blueprint.type == buildingType)) Completed++;
         }
     }
 }

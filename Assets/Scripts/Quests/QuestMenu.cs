@@ -137,7 +137,7 @@ namespace Quests
 
         private void ChangeQuest(Quest quest)
         {
-            if (_inAnim) return;
+            if (_inAnim || quest == SelectedQuest) return;
             _inAnim = true;
             SelectedQuest = quest;
             SwapFlyers(SwapDir.Right, SelectedQuest);

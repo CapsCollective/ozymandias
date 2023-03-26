@@ -106,8 +106,12 @@
         CompleteQuests,
         KeepHappy,
         KeepUpset,
-        HoardWealth,
-        AcquireWealth
+        FoodSurplus,
+        HousingShortage,
+        LowStability,
+        MaxStability,
+        ConstructBuildingsInTurn,
+        DiscoverCards
     }
 
     public enum Guild

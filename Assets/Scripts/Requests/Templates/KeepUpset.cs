@@ -7,9 +7,8 @@ namespace Requests.Templates
     public sealed class KeepUpset : Request
     {
         public Guild targetGuild;
-        public override string Description => 
-            $"Keep {targetGuild.ToString().Pluralise()} Upset for {Required} Turns";
-        protected override int RequiredScaled => 2 * Tokens;
+        public override string Description => $"Keep {targetGuild.ToString().Pluralise()} Upset for {Required} Turns";
+        protected override int RequiredScaled => Tokens * 2;
 
         public override void Start()
         {
