@@ -1,5 +1,4 @@
-using NaughtyAttributes;
-using System.Collections;
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -119,3 +118,4 @@ public class SplineGeometryGenerator : MonoBehaviour
     //    }
     //}
 }
+#endif
