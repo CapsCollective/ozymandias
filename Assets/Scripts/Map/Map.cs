@@ -24,7 +24,8 @@ namespace Map
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int Effect = Shader.PropertyToID("_Effect");
         private static readonly int Origin = Shader.PropertyToID("_Origin");
-        
+        private static readonly int CamOrigin = Shader.PropertyToID("_CamOrigin");
+
         private bool _flooded;
         private float _radius;
         private MeshRenderer _meshRenderer;
@@ -71,6 +72,7 @@ namespace Map
             var ray = Manager.Inputs.GetMouseRay(_cam);
             Physics.Raycast(ray, out RaycastHit hit);
 
+            Shader.SetGlobalVector(CamOrigin, hit.point);
             _meshRenderer.material.SetVector(Origin, hit.point);
         }
         
