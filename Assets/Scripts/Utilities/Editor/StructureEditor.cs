@@ -37,6 +37,14 @@ public class StructureEditor : Editor
 
                 go.GetComponent<MeshRenderer>().enabled = false;
             }
+            else if ((selections[i] as GameObject).GetComponentInChildren<MeshFilter>() is not null)
+            {
+                var meshh = (selections[i] as GameObject).GetComponentInChildren<MeshFilter>();
+                combine[i].mesh = meshh.sharedMesh;
+                combine[i].transform = structure.transform.worldToLocalMatrix * go.transform.localToWorldMatrix;
+
+                meshh.GetComponent<MeshRenderer>().enabled = false;
+            }
         }
 
         MeshFilter meshFilter;
@@ -46,7 +54,7 @@ public class StructureEditor : Editor
             structure.gameObject.AddComponent<MeshRenderer>();
         }
 
-        meshFilter.mesh.CombineMeshes(combine);
+        meshFilter.sharedMesh.CombineMeshes(combine);
         SaveToAsset();
     }
 
@@ -56,6 +64,8 @@ public class StructureEditor : Editor
         if (string.IsNullOrEmpty(path)) return;
 
         path = FileUtil.GetProjectRelativePath(path);
+
+        AssetDatabase.DeleteAsset(path);
 
         AssetDatabase.CreateAsset(((Structure)target).GetComponent<MeshFilter>().mesh, path);
         AssetDatabase.SaveAssets();
