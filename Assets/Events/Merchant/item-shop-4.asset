@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8788968314960816584
+--- !u!114 &-5474761044278002393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 1c235772bb4f9b847814e56a3cd9ed61, type: 2}
-  toFront: 0
---- !u!114 &-8623613751773614555
+  customDescription: The chest contains a massive, empty space. Adventurers decide
+    to move into the free real-estate.
+--- !u!114 &-4970587279845698601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,16 +23,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: No Items for Me!
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5420496012425519869}
-  costScale: 0
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &-8376474087473643439
+  customDescription: It looks like control words for some strange mechanism...
+  flag: 6
+  value: 1
+--- !u!114 &-2356981495104261397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,7 +46,7 @@ MonoBehaviour:
   amount: 20
   turns: -1
   reason: from the Chest of Hoarding
---- !u!114 &-6594413475289345375
+--- !u!114 &-390981321341019042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,12 +56,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Magic Mushrooms
+  m_Name: No Items for Me!
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 3549655777503334062}
-  - {fileID: 3919705276421364129}
-  costScale: 0.5
+  - {fileID: 6143195882308786452}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-377622877469968960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Instruction Manual
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -4970587279845698601}
+  costScale: 1.3
+  requiresItem: 0
+  disableRepurchase: 1
+  requiredItem: 6
+--- !u!114 &-5619299751551056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Chest of Hoarding
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -5474761044278002393}
+  - {fileID: -2356981495104261397}
+  costScale: 1.2
   requiresItem: 0
   disableRepurchase: 0
   requiredItem: 0
@@ -82,53 +114,24 @@ MonoBehaviour:
   m_Name: item-shop-4
   m_EditorClassIdentifier: 
   headline: Travelling Merchant Arrives
-  article: 'An old wagon rolled into town today, containing all manner of mystical
-    items.
+  article: 'An old wagon rolled into town today containing all manner of mystical
+    items for sale.
 
 
-    <i>"I stole some of these things off an <b>evil wizard</b>! Hope
-    he isn''t chasing me..."</i>'
+    <i>"I stole some of these things off an <b>evil wizard</b>!
+    Hope he isn''t chasing me..."</i>'
   image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
   type: 13
   headliner: 0
   outcomes:
-  - {fileID: -8788968314960816584}
+  - {fileID: 4358498842438421000}
   choices:
-  - {fileID: 4165548936320049202}
-  - {fileID: 8221054764316704860}
-  - {fileID: -6594413475289345375}
-  - {fileID: -8623613751773614555}
+  - {fileID: -377622877469968960}
+  - {fileID: -5619299751551056}
+  - {fileID: 1504865685907058382}
+  - {fileID: -390981321341019042}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2889861524962864865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: It looks like control words for some strange mechanism...
-  flag: 6
-  value: 1
---- !u!114 &3549655777503334062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: The Arcanists say these glowing fungi helps them see into other
-    dimensions, we assume this helps their magical research.
---- !u!114 &3919705276421364129
+--- !u!114 &246220459311470811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,7 +148,7 @@ MonoBehaviour:
   amount: 2
   turns: -1
   reason: from the Magic Mushrooms
---- !u!114 &4165548936320049202
+--- !u!114 &1504865685907058382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,15 +158,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Instruction Manual
+  m_Name: Magic Mushrooms
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 2889861524962864865}
-  costScale: 1.3
+  - {fileID: 6359870558902976218}
+  - {fileID: 246220459311470811}
+  costScale: 0.5
   requiresItem: 0
-  disableRepurchase: 1
-  requiredItem: 6
---- !u!114 &5420496012425519869
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &4358498842438421000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 1c235772bb4f9b847814e56a3cd9ed61, type: 2}
+  toFront: 0
+--- !u!114 &6143195882308786452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,26 +195,7 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: '"Alrighty, I''ll come back another time!"'
---- !u!114 &8221054764316704860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Chest of Hoarding
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 9066760606690312815}
-  - {fileID: -8376474087473643439}
-  costScale: 1.2
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &9066760606690312815
+--- !u!114 &6359870558902976218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,5 +207,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
   m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: The chest contains a massive empty space. Adventurers decide
-    to move into the free real-estate.
+  customDescription: The Arcanists say these glowing fungi helps them see into other
+    dimensions, we assume this helps their magical research.

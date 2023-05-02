@@ -1,6 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7117568876324235593
+--- !u!114 &-5742816939075945435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: The dragonborn hero stays...
+  next: {fileID: 11400000, guid: aad5e698288b72b4f9b229e0639a93ea, type: 2}
+  toFront: 0
+--- !u!114 &-3310306021923383611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,21 +32,6 @@ MonoBehaviour:
   count: 1
   guild: 0
   anyGuild: 0
---- !u!114 &-420889166386447956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: The dragonborn hero stays...
-  next: {fileID: 11400000, guid: aad5e698288b72b4f9b229e0639a93ea, type: 2}
-  toFront: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,14 +45,14 @@ MonoBehaviour:
   m_Name: dragon-born-1
   m_EditorClassIdentifier: 
   headline: Dragonborn Wonder
-  article: A wondrous being has walked in to town today, an adventurer with the features
+  article: A wondrous being has walked into town today, an adventurer with the features
     of a dragon! Wearing a <b>trench-coat and fedora</b>, they have attracted the
     interest of the whole town.
   image: {fileID: 21300000, guid: a99b0d6215ab8ea4ea048ddc450d8d0f, type: 3}
   type: 4
   headliner: 0
   outcomes:
-  - {fileID: -420889166386447956}
-  - {fileID: -7117568876324235593}
+  - {fileID: -5742816939075945435}
+  - {fileID: -3310306021923383611}
   choices: []
   blueprintToUnlock: {fileID: 0}

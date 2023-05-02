@@ -1,6 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3955973185891829710
+--- !u!114 &-9173455521855865988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
+  m_EditorClassIdentifier: 
+  customDescription: An adventurer has been lost
+  count: 1
+  kill: 1
+  guild: 0
+  anyGuild: 1
+--- !u!114 &-4803487956538303029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,37 +30,6 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: On the upside, we got some gold!
---- !u!114 &-2408632329335245122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
-  m_Name: WealthAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  turnsWorth: 0.5
---- !u!114 &-1336714082170321258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: Both adventurers have been lost
-  count: 2
-  kill: 1
-  guild: 0
-  anyGuild: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,17 +43,32 @@ MonoBehaviour:
   m_Name: touch-of-gold
   m_EditorClassIdentifier: 
   headline: Touch of Gold
-  article: A disgruntled adventurer looking to make quick buck has blessed your people
-    with gold... Made of those same people! One of our heroic adventurers jumped
-    on the madman, turning themselves into gold, and crushing them in the process.
-    Try as we might, we couldn't unfreeze the lost. We mourn as we melt and sell
-    off all this new gold we found.
+  article: A disgruntled traveller looking to make quick buck has blessed the townsfolk
+    with gold... by turning them into it! One of our heroic adventurers jumped atop
+    the madman, accidentally turning themselves into gold and crushing the culprit
+    in the process. Try as we might, we couldn't unfreeze the lost, so we mourn as
+    we melt down those brave souls that lost their lives - it's what they would have
+    wanted us to do!
   image: {fileID: 21300000, guid: 6cda73374cfad4743a0e8f30d5984f28, type: 3}
   type: 5
   headliner: 0
   outcomes:
-  - {fileID: -1336714082170321258}
-  - {fileID: -3955973185891829710}
-  - {fileID: -2408632329335245122}
+  - {fileID: -9173455521855865988}
+  - {fileID: -4803487956538303029}
+  - {fileID: 2238175875058430035}
   choices: []
   blueprintToUnlock: {fileID: 0}
+--- !u!114 &2238175875058430035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  turnsWorth: 0.5

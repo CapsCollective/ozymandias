@@ -1,29 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: kidnapping-completed
-  m_EditorClassIdentifier: 
-  headline: Rescue Raiders
-  article: Our adventuring party has returned successfully, recovering our kidnapped
-    adventurers, and destroying the raiders camp.
-  image: {fileID: 21300000, guid: a9b19e930a1ceb54babac56fc22eb99b, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 5229940102855071242}
-  - {fileID: 1705430846135394185}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &1705430846135394185
+--- !u!114 &-1211309117873507806
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: b210f1afcd893c944a742a29ef63bcae, type: 2}
---- !u!114 &5229940102855071242
+--- !u!114 &-817389429626479542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,3 +31,26 @@ MonoBehaviour:
   count: 2
   guild: 0
   anyGuild: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: kidnapping-completed
+  m_EditorClassIdentifier: 
+  headline: Rescue Raiders
+  article: Our adventuring party has returned successfully, recovering our kidnapped
+    adventurers, and destroying the raider's camp.
+  image: {fileID: 21300000, guid: a9b19e930a1ceb54babac56fc22eb99b, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -817389429626479542}
+  - {fileID: -1211309117873507806}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

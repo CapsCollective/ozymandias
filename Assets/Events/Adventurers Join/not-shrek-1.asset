@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8606745750302165817
+--- !u!114 &-9078749439445083633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,6 +17,59 @@ MonoBehaviour:
   amount: 10
   turns: -1
   reason: from the Ogre's Sludge
+--- !u!114 &-7490047952410424083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Strike up a Bargain
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -3648798570089937697}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-3648798570089937697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: The ogre agrees to go on a quest in order to claim the land
+    as his
+  next: {fileID: 11400000, guid: 4f8eb553767a97e40ad8869c8b975e8c, type: 2}
+  toFront: 0
+--- !u!114 &-3485926470274312986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Leave Him Be
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5663300488750262517}
+  - {fileID: -9078749439445083633}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37,45 +90,10 @@ MonoBehaviour:
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 2925656059429978424}
-  - {fileID: 2008780676712355466}
+  - {fileID: -7490047952410424083}
+  - {fileID: -3485926470274312986}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1091438359497421067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: The ogre agrees to go on a quest in order to claim the land
-    as his
-  next: {fileID: 11400000, guid: 4f8eb553767a97e40ad8869c8b975e8c, type: 2}
-  toFront: 0
---- !u!114 &2008780676712355466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Leave Him Be
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 2825791825419649560}
-  - {fileID: -8606745750302165817}
-  costScale: 0
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &2825791825419649560
+--- !u!114 &5663300488750262517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,21 +106,3 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: The ogre thanks you with some surprisingly delicious sludge
---- !u!114 &2925656059429978424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Strike up a Bargain
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 1091438359497421067}
-  costScale: 0
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7794251123318935524
+--- !u!114 &-4255212866831166572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,6 +17,21 @@ MonoBehaviour:
   kill: 1
   guild: 0
   anyGuild: 1
+--- !u!114 &-2735604855966922517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 1178886dbf0529d41ad296aea4bd562f, type: 2}
+  toFront: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,18 +51,36 @@ MonoBehaviour:
 
 
     Whatever
-    is going on there we should probably avoid, lest we fall ill. Although a curfew
-    may leave our town vulnerable at night.'
+    is going on there we should probably avoid it, lest we fall ill. That being said,
+    a curfew may leave our town vulnerable at night.'
   image: {fileID: 21300000, guid: 726641c6ccce4d141ae1bd5c4f1cad45, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 5443370622934165178}
+  - {fileID: -2735604855966922517}
   choices:
-  - {fileID: 6780694732024444239}
-  - {fileID: 6295655232554495585}
+  - {fileID: 8830522404446975200}
+  - {fileID: 1719811537097990687}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2048636141509506863
+--- !u!114 &1719811537097990687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse curfews
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -4255212866831166572}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &7707144312276211573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,40 +97,7 @@ MonoBehaviour:
   amount: -3
   turns: 2
   reason: from the Curfew Orders
---- !u!114 &5443370622934165178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 1178886dbf0529d41ad296aea4bd562f, type: 2}
-  toFront: 0
---- !u!114 &6295655232554495585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse curfews
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -7794251123318935524}
-  costScale: 0
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &6780694732024444239
+--- !u!114 &8830522404446975200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: Enforce curfews
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 2048636141509506863}
+  - {fileID: 7707144312276211573}
   costScale: 0
   requiresItem: 0
   disableRepurchase: 0

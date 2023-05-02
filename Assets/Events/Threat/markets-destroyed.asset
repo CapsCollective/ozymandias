@@ -1,48 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6849403464139848610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
-  m_Name: BuildingDamaged
-  m_EditorClassIdentifier: 
-  customDescription: 
-  buildingType: 10
-  anyBuildingType: 0
-  demolishAll: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: markets-destroyed
-  m_EditorClassIdentifier: 
-  headline: Collateral Catastrophe
-  article: An elaborate chase of a thief through the city lasting hours caused every
-    single cart in a marketplace to be knocked over during the pursuit. Pots, rare
-    spices, and cabbages alike were tossed up in the air one by one during this cinematic
-    pursuit.
-  image: {fileID: 21300000, guid: 15b6f551ce9095348a7ffdb7560c70cb, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -6849403464139848610}
-  - {fileID: 356972173441390387}
-  - {fileID: 7529379062926547489}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &356972173441390387
+--- !u!114 &-3882183220250223427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,7 +17,7 @@ MonoBehaviour:
   kill: 0
   guild: 1
   anyGuild: 0
---- !u!114 &7529379062926547489
+--- !u!114 &-3541555812066006286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,3 +31,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: markets-destroyed
+  m_EditorClassIdentifier: 
+  headline: Collateral Catastrophe
+  article: The attempted arrest of a thief has resulted in an elaborate chase, lasting
+    hours, knocking over every single cart and stall in the marketplace. Pots, rare
+    spices, and cabbages alike were tossed up in the air one by one during this cinematic
+    pursuit.
+  image: {fileID: 21300000, guid: 15b6f551ce9095348a7ffdb7560c70cb, type: 3}
+  type: 7
+  headliner: 0
+  outcomes:
+  - {fileID: 7015258302783906488}
+  - {fileID: -3882183220250223427}
+  - {fileID: -3541555812066006286}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &7015258302783906488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
+  m_Name: BuildingDamaged
+  m_EditorClassIdentifier: 
+  customDescription: 
+  buildingType: 10
+  anyBuildingType: 0
+  demolishAll: 0

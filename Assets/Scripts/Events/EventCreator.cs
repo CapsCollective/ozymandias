@@ -471,7 +471,9 @@ namespace Events
         #region Utils
         private static Sprite LoadSprite(string name)
         {
-            return AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
+            if (sprite == null) Debug.LogWarning("Sprite not found: " + name);
+            return sprite;
         }
         
         private static Blueprint LoadBlueprint(string name)

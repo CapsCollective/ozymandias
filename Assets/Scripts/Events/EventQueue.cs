@@ -13,7 +13,7 @@ namespace Events
 {
     public class EventQueue : MonoBehaviour
     {
-        private const int MinQueueEvents = 3; // The minimum events in the queue to store
+        private const int EventsInNewspaper = 3; // The minimum events in the queue to store
         
         [SerializeField] private Event openingEvent, summerEvent, autumnEvent, winterEvent;
         [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents, tutorialEndEvents;
@@ -25,6 +25,7 @@ namespace Events
             _others = new LinkedList<Event>();
 
         private readonly Dictionary<EventType, List<Event>>
+            _allEvents = new Dictionary<EventType, List<Event>>(), // All events by type
             _availablePools = new Dictionary<EventType, List<Event>>(), // Events to randomly add to the queue
             _usedPools = new Dictionary<EventType, List<Event>>(); // Events already run but will be re-added on a shuffle
     
@@ -34,6 +35,7 @@ namespace Events
         public Dictionary<Flag, bool> Flags = new Dictionary<Flag, bool>();
 
         private bool TypeNotInQueue(EventType type) =>
+            _current.All(e => e.type != type) &&
             _others.All(e => e.type != type) &&
             _headliners.All(e => e.type != type);
         
@@ -80,6 +82,7 @@ namespace Events
 
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
             {
+                _allEvents.Add(type, new List<Event>());
                 _availablePools.Add(type, new List<Event>());
                 _usedPools.Add(type, new List<Event>());
             }
@@ -91,8 +94,6 @@ namespace Events
         {
             _current.Clear();
             _outcomeDescriptions.Clear();
-        
-            if (_others.Count < MinQueueEvents) AddRandomSelection();
             
             if (_headliners.Count > 0)
             {
@@ -102,6 +103,7 @@ namespace Events
 
             while (_current.Count < 3)
             {
+                if (_others.Count == 0) { AddRandomSelection(); continue; }
                 _current.Add(_others.First.Value);
                 _others.RemoveFirst();
             }
@@ -147,7 +149,7 @@ namespace Events
                     eventPool.Add(PickRandomStory());
             }
 
-            while (eventPool.Count < MinQueueEvents) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
+            while (eventPool.Count < EventsInNewspaper) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
         }
 
@@ -168,7 +170,8 @@ namespace Events
         private void Shuffle(EventType type)
         {
             Debug.Log($"Events: Shuffling {type}");
-            _availablePools[type].AddRange(_usedPools[type]);
+            _availablePools[type] = new List<Event>(_allEvents[type]);
+            print("All events: " + _allEvents[type].Count);
             _usedPools[type].Clear();
         }
         
@@ -258,6 +261,7 @@ namespace Events
         {
             foreach (Event e in Manager.AllEvents)
             {
+                _allEvents[e.type].Add(e);
                 if (details.used != null && details.used.ContainsKey(e.type) && details.used[e.type].Contains(e.name))
                     _usedPools[e.type].Add(e);
                 else 

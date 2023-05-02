@@ -70,7 +70,7 @@ namespace Quests
             BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (20f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 20f);
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
-            State.OnNewTurn += OnNewTurn;
+            State.OnNextTurnBegin += OnNextTurnBegin;
 
             if (location == Location.Grid)
             {
@@ -98,7 +98,7 @@ namespace Quests
         {
             if (location == Location.Grid) ClearBuilding();
             else ResetLocation();
-            State.OnNewTurn -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
+            State.OnNextTurnBegin -= OnNextTurnBegin; // Have to manually remove as scriptable object is never destroyed
         }
         
         private void SetLocation()
@@ -174,11 +174,11 @@ namespace Quests
             Structure = null;
         }
         
-        private void OnNewTurn()
+        private void OnNextTurnBegin()
         {
             if (IsActive)
             {
-                if (--TurnsLeft <= 1)
+                if (--TurnsLeft <= 0)
                 {
                     if (completeEvent) Manager.EventQueue.Add(completeEvent, true);
                     else Debug.LogError("Quests: Quest was completed with no event.");
@@ -209,7 +209,7 @@ namespace Quests
 
         public void Load(QuestDetails details)
         {
-            State.OnNewTurn += OnNewTurn;
+            State.OnNextTurnBegin += OnNextTurnBegin;
             BaseCost = details.cost;
             TurnsLeft = details.turnsLeft;
 

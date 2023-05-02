@@ -1,30 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: drunken-master
-  m_EditorClassIdentifier: 
-  headline: The Drunken Master
-  article: "A true change of heart today, as the town drunk made the revelation he
-    is an excellent combatant while drunk during a bar fight. He vows after his hangover
-    dies down, he\u2019s decided to turn his life around and join the adventures
-    guild, on the provision he\u2019s given a steady supply of beer."
-  image: {fileID: 21300000, guid: e9f94b8bf8047504ba4ce986b6800843, type: 3}
-  type: 4
-  headliner: 0
-  outcomes:
-  - {fileID: 8177105417348443860}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &8177105417348443860
+--- !u!114 &-7385914179276895436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,3 +17,27 @@ MonoBehaviour:
   count: 1
   guild: 2
   anyGuild: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: drunken-master
+  m_EditorClassIdentifier: 
+  headline: The Drunken Master
+  article: "A true change of heart today, as the town drunk has the revelation during
+    a bar fight that he is an excellent combatant while inebriated. He's vowed to
+    turn his life around and join the adventures guild... after his hangover dies
+    down <i>and on the provision he\u2019s given a steady supply of beer</i>."
+  image: {fileID: 21300000, guid: e9f94b8bf8047504ba4ce986b6800843, type: 3}
+  type: 4
+  headliner: 0
+  outcomes:
+  - {fileID: -7385914179276895436}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

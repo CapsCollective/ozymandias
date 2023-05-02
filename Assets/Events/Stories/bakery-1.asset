@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6522404575753641671
+--- !u!114 &-821941181389082462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,21 +15,6 @@ MonoBehaviour:
   customDescription: <color=#820000ff>+3 Threat (<sprite=9>) per Farm until this
     is resolved...</color>
   flag: 1
-  value: 1
---- !u!114 &-1767885736860861647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: 
-  flag: 0
   value: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -55,28 +40,13 @@ MonoBehaviour:
   type: 3
   headliner: 1
   outcomes:
-  - {fileID: -6522404575753641671}
-  - {fileID: 7512708388125655969}
-  - {fileID: -1767885736860861647}
-  - {fileID: 1067541890030997822}
+  - {fileID: -821941181389082462}
+  - {fileID: 2690245560894108022}
+  - {fileID: 2823409624388449991}
+  - {fileID: 4663929239613669719}
   choices: []
   blueprintToUnlock: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
---- !u!114 &1067541890030997822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
-  toFront: 0
---- !u!114 &7512708388125655969
+--- !u!114 &2690245560894108022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,3 +62,33 @@ MonoBehaviour:
   buildingType: 8
   anyBuildingType: 0
   demolishAll: 1
+--- !u!114 &2823409624388449991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 1
+--- !u!114 &4663929239613669719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: d4bfb8c086ea9ef468c89a6b174463b0, type: 2}
+  toFront: 0

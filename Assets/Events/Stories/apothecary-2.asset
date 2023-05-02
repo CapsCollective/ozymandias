@@ -1,24 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8661312145310652768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse bailouts
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 7748101345272217978}
-  costScale: 0
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &-8519404786888016360
+--- !u!114 &-6277162663734194720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,12 +13,12 @@ MonoBehaviour:
   m_Name: Issue stimulus
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: 8739200877355673337}
+  - {fileID: 8394647043651417945}
   costScale: 0.8
   requiresItem: 0
   disableRepurchase: 0
   requiredItem: 0
---- !u!114 &-5293533447233430771
+--- !u!114 &-274610096143827954
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,19 +47,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headline: Adventuring Bailouts Needed!
   article: With the <b>rat plague</b> requiring businesses to temporarily close,
-    unable to feed their families, we look to the Adventurers, who are sad to have
-    to stay home. We should really give them more money to keep them from going out
-    and causing more infections.
+    many are unable to feed their families. More pressingly, we should really think
+    of the Adventurers, who are just sad to have to stay home. We should really give
+    them more money to keep them from going out and causing more infections.
   image: {fileID: 21300000, guid: 59fe18cf41a57cc4ea5fa3878b5cee81, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -5293533447233430771}
+  - {fileID: -274610096143827954}
   choices:
-  - {fileID: -8519404786888016360}
-  - {fileID: -8661312145310652768}
+  - {fileID: -6277162663734194720}
+  - {fileID: 4172544663984833556}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &7748101345272217978
+--- !u!114 &1367080761809100495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +77,25 @@ MonoBehaviour:
   kill: 1
   guild: 0
   anyGuild: 1
---- !u!114 &8739200877355673337
+--- !u!114 &4172544663984833556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse bailouts
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 1367080761809100495}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &8394647043651417945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

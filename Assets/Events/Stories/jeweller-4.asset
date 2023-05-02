@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1039444430820298469
+--- !u!114 &-5196761616798586432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,20 +15,6 @@ MonoBehaviour:
   customDescription: Our weapons can use actual metals again! +5 Defence (<sprite=8>)
   flag: 3
   value: 0
---- !u!114 &-905769088356389562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,24 +28,24 @@ MonoBehaviour:
   m_Name: jeweller-4
   m_EditorClassIdentifier: 
   headline: The Dwarven Family Jewels
-  article: 'A deal has been struck to get the Dwarves back working in the mines.
+  article: 'A deal has been struck to get the dwarves back working in the mines.
     They have agreed to allow their children to partake in a jeweller apprenticeship
     in our town (unpaid, of course).
 
 
     <i>"Their tiny little hands make excellent
-    Jewellery, they can do that until they come of age."</i>'
+    jewellery, and they can do that until they come of age."</i>'
   image: {fileID: 21300000, guid: 8d1789e99ed95544bb1006a314a92e05, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: 5159492404858556600}
-  - {fileID: -1039444430820298469}
-  - {fileID: -905769088356389562}
-  - {fileID: 2371004573552225893}
+  - {fileID: 8080117907009980267}
+  - {fileID: -5196761616798586432}
+  - {fileID: 6448688601159570129}
+  - {fileID: 5980042104112808228}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &2371004573552225893
+--- !u!114 &5980042104112808228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +59,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 2790ba994bd69c54e853cff79c45c625, type: 2}
---- !u!114 &5159492404858556600
+--- !u!114 &6448688601159570129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: a52f269ca8f54af4db09c7a60753adcd, type: 2}
+--- !u!114 &8080117907009980267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3930037798262098009
+--- !u!114 &-3980139496366523442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
-  m_Name: QuestCompleted
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
---- !u!114 &-3515608090365877541
+  blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
+--- !u!114 &-2319764532934346835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,8 +26,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: <color=#007000ff>Farms no longer increase threat!</color>
-  flag: 1
+  customDescription: We've decided to grind up all this grain to make bread.
+  flag: 0
   value: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -54,13 +54,13 @@ MonoBehaviour:
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -3515608090365877541}
-  - {fileID: 5337064667425447220}
-  - {fileID: 1481889873632273248}
-  - {fileID: -3930037798262098009}
+  - {fileID: 2761200303953330787}
+  - {fileID: -2319764532934346835}
+  - {fileID: -3980139496366523442}
+  - {fileID: 2269728013406753515}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1481889873632273248
+--- !u!114 &2269728013406753515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,12 +69,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
   m_EditorClassIdentifier: 
   customDescription: 
-  blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
---- !u!114 &5337064667425447220
+  quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
+--- !u!114 &2761200303953330787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,6 +86,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: We've decided to grind up all this grain to make bread.
-  flag: 0
+  customDescription: <color=#007000ff>Farms no longer increase threat!</color>
+  flag: 1
   value: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3195787114206895889
+--- !u!114 &-6764909028709737892
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
-  m_Name: QuestAdded
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
   customDescription: 
-  quest: {fileID: 11400000, guid: 1c6e9280aa970c3409b27b69b3bf9599, type: 2}
+  flag: 0
+  value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,11 +43,11 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 4374556696153151395}
-  - {fileID: -3195787114206895889}
+  - {fileID: -6764909028709737892}
+  - {fileID: 6070730410426288622}
   choices: []
   blueprintToUnlock: {fileID: 11400000, guid: e7491c9e0d87f0c4dbbaabfed3cc0d21, type: 2}
---- !u!114 &4374556696153151395
+--- !u!114 &6070730410426288622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,9 +56,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  flag: 0
-  value: 1
+  quest: {fileID: 11400000, guid: 1c6e9280aa970c3409b27b69b3bf9599, type: 2}

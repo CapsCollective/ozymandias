@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1266826789299801778
+--- !u!114 &-6448100056789947064
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,33 +31,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headline: Best Left Unread
   article: A local arcanist uncovered a dangerous book in the local library this
-    morning, looking for a magical remedy for a clogged sink. Upon opening the book
-    <i>'The Endless Drain'</i>, it contained a vortex that sucked everything in the
-    vicinity up.
+    morning, looking for a magical remedy for a blocked sink. Upon opening the book
+    <i>'The Endless Drain'</i>, a vortex of immense, and seemingly endless appetite
+    consumed the general vicinity whole. The damages incurred by the event included
+    <i>everything</i> and the (still blocked) kitchen sink in spite of the arcanist's
+    best efforts, commenting "perhaps this DIY thing isn't for me. Next time I'll
+    be sure to call on Draino the Plumbing Wizard for all my unclogging needs!"
   image: {fileID: 21300000, guid: 9cdb4cdc0a8074548998639d14f3e03e, type: 3}
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: 3079588620312760648}
-  - {fileID: -1266826789299801778}
-  - {fileID: 1387021541299208051}
+  - {fileID: 7334871566992404917}
+  - {fileID: -6448100056789947064}
+  - {fileID: 8491920473124135977}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1387021541299208051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 1
---- !u!114 &3079588620312760648
+--- !u!114 &7334871566992404917
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,3 +62,17 @@ MonoBehaviour:
   buildingType: 5
   anyBuildingType: 0
   demolishAll: 0
+--- !u!114 &8491920473124135977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 1

@@ -1,21 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4607162444532781164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: There's just something in their eyes...
-  flag: 0
-  value: 1
---- !u!114 &-3293551786260937095
+--- !u!114 &-7184568789048976948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,7 +15,33 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: 0d8e2b38730ac5b42b0e50aafa3f390a, type: 2}
   toFront: 0
---- !u!114 &-2201936468520234126
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: armoury-1
+  m_EditorClassIdentifier: 
+  headline: Starry Eyed and Bushy Tailed
+  article: A pair of adventurers have stumbled out of the forest in the early hours
+    of the morning, calling themselves 'Red' and 'Mr. Woodsman'. They claim not to
+    know how they got here, but have vague memories of being chased by a <b>hideous,
+    hairy beast</b>.
+  image: {fileID: 21300000, guid: 283d2c6bb8faa9b408ec5f5434240ddd, type: 3}
+  type: 3
+  headliner: 0
+  outcomes:
+  - {fileID: 4571087898359133040}
+  - {fileID: 5707921739278765399}
+  - {fileID: -7184568789048976948}
+  choices: []
+  blueprintToUnlock: {fileID: 11400000, guid: d0ac4cced9571c34d92ea74a6321fbd6, type: 2}
+--- !u!114 &4571087898359133040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +66,7 @@ MonoBehaviour:
   count: 0
   guild: 0
   anyGuild: 0
---- !u!114 &11400000
+--- !u!114 &5707921739278765399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,20 +75,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: armoury-1
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  headline: Starry Eyed and Bushy Tailed
-  article: A pair of adventurers have stumbled out of the forest in the early hours
-    of the morning, calling themselves 'Red' and 'Mr. Woodsman'. They claim not to
-    know how they got here, but have vague memories of being chased by a <b>hideous
-    hairy beast</b>.
-  image: {fileID: 21300000, guid: 283d2c6bb8faa9b408ec5f5434240ddd, type: 3}
-  type: 3
-  headliner: 0
-  outcomes:
-  - {fileID: -2201936468520234126}
-  - {fileID: -4607162444532781164}
-  - {fileID: -3293551786260937095}
-  choices: []
-  blueprintToUnlock: {fileID: 11400000, guid: d0ac4cced9571c34d92ea74a6321fbd6, type: 2}
+  customDescription: There's just something in their eyes...
+  flag: 0
+  value: 1

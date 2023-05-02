@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5570856212164858421
+--- !u!114 &-7940369076127347235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17,7 +17,7 @@ MonoBehaviour:
   amount: -20
   turns: -1
   reason: from Long-Term Loan Payments
---- !u!114 &-5125658045723571933
+--- !u!114 &-7912579303958924672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,15 +26,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: I'm Good for Now
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 6803020960732684666}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-7765562763683060876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Long-Term Loan
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -6313957769222420066}
+  - {fileID: -7425038035163825042}
+  - {fileID: -7940369076127347235}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-7425038035163825042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: "It\u2019s going to take a while to pay that one off..."
+--- !u!114 &-6313957769222420066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
   m_EditorClassIdentifier: 
   customDescription: 
-  statToChange: 2
-  amount: 3
-  turns: -1
-  reason: from the Cute Lute
---- !u!114 &-3750361469556473009
+  turnsWorth: 3
+--- !u!114 &-3832548113570001995
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: This little lute plays the most adorable songs. The performers
     love to sing along.
---- !u!114 &-3213338802096252702
+--- !u!114 &-2112900033903529470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,6 +113,39 @@ MonoBehaviour:
   amount: 3
   turns: -1
   reason: from the Energising Beans
+--- !u!114 &-1669506676448299006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Magic Beans
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -870205152650925386}
+  - {fileID: -2112900033903529470}
+  costScale: 1.3
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-870205152650925386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: These magic beans energise adventurers when made into a bitter
+    potion. We've been awake for three days and never felt better!
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,20 +159,37 @@ MonoBehaviour:
   m_Name: item-shop-2
   m_EditorClassIdentifier: 
   headline: Travelling Merchant Has Returned
-  article: An old wagon rolled into town today, containing all manner of mystical
-    items. The equally old owner of the store offers to sell you an item from their
-    selection.
+  article: An old wagon rolled into town today containing all manner of mystical
+    items for sale. The equally vintage proprietor of the store offers to sell you
+    their wares.
   image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
   type: 13
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 6924258795002169154}
-  - {fileID: 4849238956614033043}
-  - {fileID: 1580003106433134959}
-  - {fileID: 5986471031463563251}
+  - {fileID: -7765562763683060876}
+  - {fileID: -1669506676448299006}
+  - {fileID: 5220609924686062771}
+  - {fileID: -7912579303958924672}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1580003106433134959
+--- !u!114 &2577333170870191598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 2
+  amount: 3
+  turns: -1
+  reason: from the Cute Lute
+--- !u!114 &5220609924686062771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,64 +202,13 @@ MonoBehaviour:
   m_Name: The Cute Lute
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -3750361469556473009}
-  - {fileID: -5125658045723571933}
+  - {fileID: -3832548113570001995}
+  - {fileID: 2577333170870191598}
   costScale: 0.7
   requiresItem: 0
   disableRepurchase: 0
   requiredItem: 0
---- !u!114 &2219432735646378053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: These magic beans energise adventurers when made into a bitter
-    potion. We've been awake for 3 days and never felt better!
---- !u!114 &4849238956614033043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Magic Beans
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 2219432735646378053}
-  - {fileID: -3213338802096252702}
-  costScale: 1.3
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &5986471031463563251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: I'm Good for Now
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 6017069332016520111}
-  costScale: 0
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &6017069332016520111
+--- !u!114 &6803020960732684666
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,50 +221,3 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: '"Alrighty, I''ll come back another time!"'
---- !u!114 &6699362166018554411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
-  m_Name: WealthAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  turnsWorth: 3
---- !u!114 &6924258795002169154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Long-Term Loan
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 6699362166018554411}
-  - {fileID: 7064031125375847876}
-  - {fileID: -5570856212164858421}
-  costScale: 0
-  requiresItem: 0
-  disableRepurchase: 0
-  requiredItem: 0
---- !u!114 &7064031125375847876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: "It\u2019s going to take a while to pay that one off..."

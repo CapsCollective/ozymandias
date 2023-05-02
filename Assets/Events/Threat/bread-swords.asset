@@ -1,59 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5480315367347320782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: It thinks we're an easy and tasty target now...
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: bread-swords
-  m_EditorClassIdentifier: 
-  headline: Bread-y for War!
-  article: The famous illiterate adventuring group <i>'The Unreadables'</i> was found
-    in a tough spot going up against a water elemental, while arming themselves to
-    the teeth with baguettes and brioches after mistaking the local bakery for a
-    blacksmith.
-  image: {fileID: 21300000, guid: 05f35efdc513ad54d9165b74adf0a927, type: 3}
-  type: 7
-  headliner: 0
-  outcomes:
-  - {fileID: -5480315367347320782}
-  - {fileID: 5414956005468075612}
-  - {fileID: 181834016931825307}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &181834016931825307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 4
---- !u!114 &5414956005468075612
+--- !u!114 &-7540180202313420566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,3 +17,56 @@ MonoBehaviour:
   kill: 1
   guild: 0
   anyGuild: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: bread-swords
+  m_EditorClassIdentifier: 
+  headline: Bread-y for War!
+  article: The famous, illiterate adventuring group <i>'The Unreadables'</i> was
+    found in a tough spot going up against a water elemental, arming themselves to
+    the teeth with baguettes and brioches after mistaking the local bakery for a
+    blacksmith.
+  image: {fileID: 21300000, guid: 05f35efdc513ad54d9165b74adf0a927, type: 3}
+  type: 7
+  headliner: 0
+  outcomes:
+  - {fileID: 5348321638293827342}
+  - {fileID: -7540180202313420566}
+  - {fileID: 743638098157078799}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &743638098157078799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 4
+--- !u!114 &5348321638293827342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: It thinks we're an easy and tasty target now...

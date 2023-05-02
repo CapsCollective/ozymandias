@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5196836565906592487
+--- !u!114 &-8105677082125597036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,6 +15,42 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: 4b64f9dc7ca546e4aae38d77bd0b1d46, type: 2}
   toFront: 0
+--- !u!114 &-7915103065162508610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: Gol Brojan has set up his circus. +1 Performer (<sprite=2>)
+  adventurers:
+  - name: Gol Brojan
+    guild: 2
+    isSpecial: 0
+    turnJoined: 0
+  count: 0
+  guild: 0
+  anyGuild: 0
+--- !u!114 &-3289946346871056493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: We should keep an eye on this one...
+  flag: 0
+  value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,44 +72,8 @@ MonoBehaviour:
   type: 3
   headliner: 0
   outcomes:
-  - {fileID: 422426674333759607}
-  - {fileID: 5287149385223447312}
-  - {fileID: -5196836565906592487}
+  - {fileID: -3289946346871056493}
+  - {fileID: -7915103065162508610}
+  - {fileID: -8105677082125597036}
   choices: []
   blueprintToUnlock: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
---- !u!114 &422426674333759607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: We should keep an eye on this one...
-  flag: 0
-  value: 1
---- !u!114 &5287149385223447312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: AdventurersAdded
-  m_EditorClassIdentifier: 
-  customDescription: Gol Brojan has set up his circus. +1 Performer (<sprite=2>)
-  adventurers:
-  - name: Gol Brojan
-    guild: 2
-    isSpecial: 0
-    turnJoined: 0
-  count: 0
-  guild: 0
-  anyGuild: 0

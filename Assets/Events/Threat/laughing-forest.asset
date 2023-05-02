@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-732632082073625588
+--- !u!114 &-7485718802521476612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 3
+  customDescription: You hear them too, don't you?
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,16 +27,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headline: Laughter From the Forests
   article: Local reporter is requesting whoever is going into the forests late at
-    night to cackle insistently please stop, or a least do it further away.
+    night to cackle please stop, or a least do it further away.
   image: {fileID: 21300000, guid: 112c029ea8b986e4ebc35dfc188b0627, type: 3}
-  type: 2
+  type: 7
   headliner: 0
   outcomes:
-  - {fileID: 472593514444951760}
-  - {fileID: -732632082073625588}
+  - {fileID: -7485718802521476612}
+  - {fileID: 4557155185693149605}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &472593514444951760
+--- !u!114 &4557155185693149605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +45,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  customDescription: You hear them too, don't you?
+  customDescription: 
+  baseAmount: 3

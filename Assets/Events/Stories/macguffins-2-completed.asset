@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
+--- !u!114 &-6233679093426127843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,24 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: macguffins-2-completed
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  headline: The Cutest MacGuffins You've Ever Seen!
-  article: Our adventuring party has returned, <b>MacGuffins</b> in hand, and it's
-    the new craze around town. People are flooding the stores trying to get their
-    hands on these things! We still don't fully understand their use, or where they
-    came from, but they're so exclusive <b>I must have one!</b>
-  image: {fileID: 21300000, guid: 7e4eb02b01bd2ea4faae0a3c1c09382f, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 5265720567522606162}
-  - {fileID: 2835750826127916054}
-  - {fileID: 3540783348670863566}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &2835750826127916054
+  customDescription: 
+  flag: 0
+  value: 0
+--- !u!114 &-3063881399144983148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +32,33 @@ MonoBehaviour:
   amount: 25
   turns: -1
   reason: from the MacGuffin Craze
---- !u!114 &3540783348670863566
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: macguffins-2-completed
+  m_EditorClassIdentifier: 
+  headline: The Cutest MacGuffins You've Ever Seen!
+  article: Our adventuring party has returned, <b>MacGuffins</b> in hand, and it's
+    the new craze around town. People are flooding the stores trying to get their
+    hands on these things! We still don't fully understand their use, or where they
+    came from, but they're so exclusive that <b>I must have one!</b>
+  image: {fileID: 21300000, guid: 7e4eb02b01bd2ea4faae0a3c1c09382f, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -6233679093426127843}
+  - {fileID: -3063881399144983148}
+  - {fileID: 1478012708656036474}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &1478012708656036474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,18 +72,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 26805067a7bc4a64bb0b6afeccd4142f, type: 2}
---- !u!114 &5265720567522606162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: 
-  flag: 0
-  value: 0

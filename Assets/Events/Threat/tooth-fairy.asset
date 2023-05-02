@@ -1,31 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: tooth-fairy
-  m_EditorClassIdentifier: 
-  headline: The Tooth Hurts
-  article: A warning to any parents out there, urge your children against putting
-    loose teeth under their pillows for the Tooth Fairies. While they seem whimsical
-    and wondrous, they are in fact just the larval stage of the far more deadly 'Bone
-    Fairy'. Hide your teeth! It's better to starve them before they get too strong.
-  image: {fileID: 21300000, guid: 6dbb07c40f9a878448bf435aff332262, type: 3}
-  type: 7
-  headliner: 0
-  outcomes:
-  - {fileID: 3425589095937290581}
-  - {fileID: 2380196650834307162}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &2380196650834307162
+--- !u!114 &-6923619651413719685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,7 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   baseAmount: 3
---- !u!114 &3425589095937290581
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: tooth-fairy
+  m_EditorClassIdentifier: 
+  headline: The Tooth Hurts
+  article: A warning to any parents out there to urge children against putting loose
+    teeth under pillows for the tooth fairies. While they seem whimsical and wondrous,
+    they are in fact just the larval stage of the far more deadly 'bone fairy'. Hide
+    your teeth! It's better to starve them before they get too strong.
+  image: {fileID: 21300000, guid: 6dbb07c40f9a878448bf435aff332262, type: 3}
+  type: 7
+  headliner: 0
+  outcomes:
+  - {fileID: 4567988504850324153}
+  - {fileID: -6923619651413719685}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &4567988504850324153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
