@@ -171,7 +171,6 @@ namespace Events
         {
             Debug.Log($"Events: Shuffling {type}");
             _availablePools[type] = new List<Event>(_allEvents[type]);
-            print("All events: " + _allEvents[type].Count);
             _usedPools[type].Clear();
         }
         
