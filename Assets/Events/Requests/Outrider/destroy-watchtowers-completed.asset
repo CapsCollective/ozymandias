@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6875651542118153052
+--- !u!114 &-9123014016662562103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068e6582b34a4d43a994376b4d046ac8, type: 3}
-  m_Name: Added Outcome
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: Completed Outcome
   m_EditorClassIdentifier: 
   customDescription: 
-  request: {fileID: 11400000, guid: 3c48dd86c79e90d4fa8293c473dda8aa, type: 2}
+  guild: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,14 +24,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: maintain-stability-added
+  m_Name: destroy-watchtowers-completed
   m_EditorClassIdentifier: 
-  headline: 'TODO: Keep Stability at 100%'
-  article: 
-  image: {fileID: 0}
-  type: 10
+  headline: The Watchers in the Night
+  article: 'Since the decommissioning of a number of our watchtowers crime rates
+    across the town have soared despite the outriders having taken it upon themselves
+    to form their own night-watch.
+
+
+    <i>"We just want to look out for our fellow
+    citizens that might be alone and encumbered with many valuables"</i>'
+  image: {fileID: 21300000, guid: e0eff1422afef9841b20bade4e6b4f83, type: 3}
+  type: 0
   headliner: 0
   outcomes:
-  - {fileID: -6875651542118153052}
+  - {fileID: -9123014016662562103}
   choices: []
   blueprintToUnlock: {fileID: 0}

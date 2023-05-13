@@ -1,6 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1623001142964642651
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: happy-outriders-added
+  m_EditorClassIdentifier: 
+  headline: Outriders' Premium
+  article: 'The outriders have brought us a contract, ''insuring'' their cooperation
+    for as long as their needs are met...
+
+
+    <i>"You scratch our back, we won''t
+    stab yours"</i>'
+  image: {fileID: 21300000, guid: 9d0f3c9fa0d978a4f827052367853bc2, type: 3}
+  type: 9
+  headliner: 0
+  outcomes:
+  - {fileID: 8950633559212798006}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &8950633559212798006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,24 +40,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   request: {fileID: 11400000, guid: c80cd6c61ce3b75488a0eba10da74082, type: 2}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: happy-outriders-added
-  m_EditorClassIdentifier: 
-  headline: 'TODO: Keep Outriders Happy'
-  article: 
-  image: {fileID: 0}
-  type: 9
-  headliner: 0
-  outcomes:
-  - {fileID: -1623001142964642651}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
