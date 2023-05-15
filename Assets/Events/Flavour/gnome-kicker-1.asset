@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6960794763236549180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 64a7bd95409134e88a5bea89bf17383d, type: 2}
+  toFront: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: gnome-kicker-1
+  m_EditorClassIdentifier: 
+  headline: Too Big for Their Boots?
+  article: 'Locals and adventurers alike cower today as eye-witness stories continue
+    to stream in about <b>The Gnome Kicker</b>, fearing they may be next. Reports
+    describe the assailant as an individual with one very large boot that he uses
+    to kick over gnomes in order to steal their coin purses.
+
+
+    <i>"One moment
+    I was upright and then bam! Upside down, pointy hat stuck in the ground and my
+    little booties dangling!"</i>.'
+  image: {fileID: 21300000, guid: c54c94b000211194e8045c1ba3a94c8f, type: 3}
+  type: 2
+  headliner: 0
+  outcomes:
+  - {fileID: -6960794763236549180}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
