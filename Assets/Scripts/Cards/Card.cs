@@ -56,6 +56,7 @@ namespace Cards
             {
                 transform.DOShakeRotation(0.5f, new Vector3(0,0,2));
                 cardDisplay.FlashCostRed();
+                if (!Manager.Inputs.UsingController) Toggle.isOn = false;
             }
 
             if (isOn) Manager.Cards.SelectedCard = this;
