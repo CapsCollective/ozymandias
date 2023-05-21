@@ -71,7 +71,7 @@ namespace Requests
             }
             else if (Request == null)
             {
-                _bookDisplay.description.text = "Nothings here yet!";
+                _bookDisplay.description.text = "Wait to receive a request";
                 _bookDisplay.count.text = "";
                 _bookDisplay.tokens.text = "";
                 _bookDisplay.slider.gameObject.SetActive(false);
