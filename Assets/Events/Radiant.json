@@ -12,16 +12,11 @@
         "outcomes": [
           {
             "type": "FlavourText",
-            "customDescription": "The well-remunerated trolls increase trade in town..."
+            "customDescription": "The well-remunerated trolls secure our trade routes dutifully..."
           },
           {
-            "type": "ModifierAdded",
-            "modifier": {
-              "toChange": "Spending",
-              "amount": 20,
-              "turns": 4,
-              "reason": "from the Troll Trade"
-            }
+            "type": "ThreatAdded",
+            "baseAmount": -1
           }
         ]
       },
