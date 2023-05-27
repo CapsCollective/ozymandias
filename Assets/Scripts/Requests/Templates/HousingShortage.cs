@@ -21,7 +21,7 @@ namespace Requests.Templates
 
         private void CheckShortage()
         {
-            if (Manager.Stats.GetStat(Stat.Housing) < -20) Completed++;
+            if (Manager.Stats.GetSatisfaction(Stat.Housing) <= -20) Completed++;
             else Completed = 0;
         }
     }

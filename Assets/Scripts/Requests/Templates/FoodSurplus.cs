@@ -21,7 +21,7 @@ namespace Requests.Templates
 
         private void CheckSurplus()
         {
-            if (Manager.Stats.GetStat(Stat.Food) >= 20) Completed++;
+            if (Manager.Stats.GetSatisfaction(Stat.Food) >= 20) Completed++;
             else Completed = 0;
         }
     }
