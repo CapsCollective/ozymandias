@@ -7,7 +7,8 @@ namespace Requests.Templates
     {
         public bool allowAny;
         public BuildingType buildingType;
-        public override string Description => $"Destroy {Required} {buildingType.ToString().Pluralise(Required)}";
+        public override string Description => 
+            $"Destroy {Required} {(allowAny ? "Buildings": buildingType.ToString().Pluralise(Required))}";
         protected override int RequiredScaled => (allowAny ? 2 : 1) * Tokens;
 
         public override void Start()

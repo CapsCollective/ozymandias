@@ -19,7 +19,6 @@ namespace UI
         private int _previousSpending = 0;
         private bool _running = false;
 
-        // Update is called once per frame
         protected override void UpdateUi()
         {
             if (_previousSpending != Manager.Stats.GetStat(Stat.Spending))

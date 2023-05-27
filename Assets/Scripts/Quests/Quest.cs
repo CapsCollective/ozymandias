@@ -8,7 +8,6 @@ using Map;
 using NaughtyAttributes;
 using Structures;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;

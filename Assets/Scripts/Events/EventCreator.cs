@@ -351,6 +351,7 @@ namespace Events
                         case RequestType.DestroyBuildings:
                             request = ScriptableObject.CreateInstance<DestroyBuildings>();
                             ((DestroyBuildings)request).buildingType = config.buildingType;
+                            ((DestroyBuildings)request).allowAny = config.allowAny;
                             break;
                         case RequestType.DestroyStructures:
                             request = ScriptableObject.CreateInstance<DestroyStructures>();

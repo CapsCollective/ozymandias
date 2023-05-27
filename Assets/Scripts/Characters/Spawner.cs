@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using Quests;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Characters
 {
@@ -115,11 +117,19 @@ namespace Characters
                 forestPath.Add(lastVert);
             }
             forestPath.Reverse();
-                
-            // Generate path from start to end of road
-            var roadPath = Algorithms.AStar(
-                Manager.Map.Layout.RoadGraph, 
-                startVert, lastVert);
+            
+            var roadPath = new List<Vertex>();
+            try
+            {
+                // Generate path from start to end of road
+                roadPath = Algorithms.AStar(
+                    Manager.Map.Layout.RoadGraph, 
+                    startVert, lastVert);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
                 
             // Concat the forest path to the road path and normalise positions
             var finalPath = roadPath.Concat(forestPath)
