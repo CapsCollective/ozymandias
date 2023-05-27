@@ -64,14 +64,14 @@ namespace Requests
         {
             if (Manager.Upgrades.TotalPurchasable == 0 && !Manager.Upgrades.IsUnlocked(UpgradeType.Discoveries))
             {
-                _bookDisplay.description.text = "Finish first game";
+                _bookDisplay.description.text = "Finish First Game";
                 _bookDisplay.count.text = "";
                 _bookDisplay.tokens.text = "x1";
                 _bookDisplay.slider.gameObject.SetActive(false);
             }
             else if (Request == null)
             {
-                _bookDisplay.description.text = "Wait for a new request";
+                _bookDisplay.description.text = "Wait for a New Request";
                 _bookDisplay.count.text = "";
                 _bookDisplay.tokens.text = "";
                 _bookDisplay.slider.gameObject.SetActive(false);
