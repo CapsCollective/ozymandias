@@ -110,6 +110,7 @@ namespace Structures
 
             if (!structure.CreateBuilding(blueprint, rootId, rotation, isRuin))
             {
+                Debug.LogError("Building has failed to place " + structure.name);
                 Destroy(structure.gameObject);
                 return false;
             }

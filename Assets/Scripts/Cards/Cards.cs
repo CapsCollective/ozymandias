@@ -156,9 +156,10 @@ namespace Cards
             {
                 if (Deck.Count == 0) Deck = new List<Blueprint>(Playable);
                 Blueprint card = Deck.PopRandom();
+                if (hand.Select(c => c.Blueprint).Contains(card)) continue;
                 // 1% for a free card per upgrade level
                 card.Free = Random.Range(0, 100) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
-                if (!hand.Select(c => c.Blueprint).Contains(card)) return card;
+                return card;
             }
         }
 
