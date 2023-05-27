@@ -1,12 +1,11 @@
 ﻿using Adventurers;
-using Utilities;
 
 namespace Requests.Templates
 {
     public sealed class LoseAdventurers : Request
     {
         public bool requireKill;
-        public override string Description => $"Kill {Required} {String.Pluralise("Adventurers", Required)}";
+        public override string Description => $"Kill {Required} Adventurers";
         protected override int RequiredScaled => 2 * Tokens;
 
         public override void Start()

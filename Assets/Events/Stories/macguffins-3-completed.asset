@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5677034982536256961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 0
+--- !u!114 &-612521575479844175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: Mr. MacGuffin joins the town. +1 Adventurer
+  adventurers: []
+  count: 1
+  guild: 0
+  anyGuild: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: macguffins-3-completed
+  m_EditorClassIdentifier: 
+  headline: We found a Dwarf Instead
+  article: Returning from their fetch quest, our adventuring party on the search
+    for the mysterious and confusingly named MacGuffins has instead captured a Dwarf
+    by the name of Greg MacGuffin. In a statement this morning, Greg said <i>"untie
+    me and I'll stay, just please don't put me back in the bag of holding!"</i>
+  image: {fileID: 21300000, guid: a0a0c969453b5c54c893880483b60d11, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -5677034982536256961}
+  - {fileID: -612521575479844175}
+  - {fileID: 559547045573235603}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &559547045573235603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: 5f4c7c1443e11ba4a9692f75b918a8f2, type: 2}

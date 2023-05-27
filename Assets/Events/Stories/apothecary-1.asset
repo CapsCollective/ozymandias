@@ -1,6 +1,42 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6365061188165609599
+--- !u!114 &-6539249115776145176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Allow free reign
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -3502030664666419358}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-6080784759789810274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Enforce lockdowns
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 2265850431073959398}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-3502030664666419358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,79 +51,9 @@ MonoBehaviour:
   customDescription: 3 Adventurers have fallen to the illness
   count: 3
   kill: 1
---- !u!114 &-5922912464932347305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: 
-  flag: 0
-  value: 1
---- !u!114 &-5002714995296548104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Allow free reign
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -6365061188165609599}
-  costScale: 0
---- !u!114 &-4860092908901959085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Enforce lockdowns
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 8330949454087284830}
-  costScale: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: apothecary-1
-  m_EditorClassIdentifier: 
-  headline: These Rats are Revolting!
-  article: Up from the under-city, the rats have risen up, and with them a deadly
-    disease! "Ve have been downtrodden, but non more! Ve shall unite as one voice!"
-    They may infect the whole town if we're not careful, we need to lock down right
-    away!
-  image: {fileID: 21300000, guid: 065c6f25d0e9b5a469ea0ab99596fd49, type: 3}
-  type: 3
-  headliner: 0
-  outcomes:
-  - {fileID: -5922912464932347305}
-  - {fileID: 1575435335561479506}
-  choices:
-  - {fileID: -4860092908901959085}
-  - {fileID: -5002714995296548104}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &1575435335561479506
+  guild: 0
+  anyGuild: 1
+--- !u!114 &-3202917817945489165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,7 +68,55 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: 4be3960b2be28f8458be4d86951d4040, type: 2}
   toFront: 0
---- !u!114 &8330949454087284830
+--- !u!114 &-2776207564003372087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: 
+  flag: 0
+  value: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: apothecary-1
+  m_EditorClassIdentifier: 
+  headline: These Rats are Revolting!
+  article: 'Up from the under-city, the rats have risen, and with them a <b>deadly
+    disease</b>!
+
+
+    <i>"Ve have been downtrodden, but non more! Ve shall unite
+    as one voice!"</i>
+
+
+    They may infect the whole town if we''re not careful;
+    we need to lock it down right away!'
+  image: {fileID: 21300000, guid: 065c6f25d0e9b5a469ea0ab99596fd49, type: 3}
+  type: 3
+  headliner: 0
+  outcomes:
+  - {fileID: -2776207564003372087}
+  - {fileID: -3202917817945489165}
+  choices:
+  - {fileID: -6080784759789810274}
+  - {fileID: -6539249115776145176}
+  blueprintToUnlock: {fileID: 11400000, guid: f615080d3cd449e4b8959e1aed05f9fd, type: 2}
+--- !u!114 &2265850431073959398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

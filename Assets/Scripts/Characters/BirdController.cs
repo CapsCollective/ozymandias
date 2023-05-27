@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Birds
 {
     public class BirdController : MonoBehaviour
     {
-        [System.Serializable]
+        [Serializable]
         private class Bird
         {
             public GameObject bird;

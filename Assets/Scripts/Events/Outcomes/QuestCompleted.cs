@@ -11,7 +11,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            if (!quest.IsActive) return false;
+            if (!quest.IsActive)
+            {
+                UnityEngine.Debug.LogWarning("Events: Quest not active - " + quest.name);
+                return false;
+            }
             
             _assigned = quest.AssignedCount;
             if (quest.Structure) _threat = quest.Structure.SectionCount;
@@ -19,11 +23,10 @@ namespace Events.Outcomes
             return true;
         }
         
-        protected override string Description => 
-            $"{Colors.GreenText}Quest completed: {quest.Title}. " +
-            (quest.IsRadiant ? $"Threat reduced by {_threat} and " : "") +
-            $"{_assigned} {String.Pluralise("Adventurer", _assigned)} " +
-            $"{(_assigned == 1 ? "has" : "have")} " +
-            $"returned.{Colors.EndText}";
+        protected override string Description => (
+            $"Quest completed: {quest.Title}." +
+            $"\n{String.StatWithIcon(Stat.Threat)} reduced by {_threat} and".Conditional(quest.IsRadiant) +
+            $" {_assigned} {"Adventurer".Pluralise(_assigned)} {(_assigned == 1 ? "has" : "have")} returned."
+        ).StatusColor(1);
     }
 }

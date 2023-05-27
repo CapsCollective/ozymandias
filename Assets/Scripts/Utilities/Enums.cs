@@ -67,7 +67,8 @@
         OutriderRequest = 9,
         PerformerRequest = 10,
         DivinerRequest = 11,
-        ArcanistRequest = 12
+        ArcanistRequest = 12,
+        Merchant = 13
     }
 
     public enum OutcomeType
@@ -87,7 +88,11 @@
         RequestAdded,
         RequestCompleted,
         ThreatAdded,
-        SetFlag
+        SetFlag,
+        WealthAdded,
+        WealthAddedRandom,
+        TerrainRemoved,
+        SetStability,
     }
 
     public enum RequestType
@@ -101,8 +106,12 @@
         CompleteQuests,
         KeepHappy,
         KeepUpset,
-        HoardWealth,
-        AcquireWealth
+        FoodSurplus,
+        HousingShortage,
+        LowStability,
+        MaxStability,
+        ConstructBuildingsInTurn,
+        DiscoverCards
     }
 
     public enum Guild
@@ -138,7 +147,8 @@
     {
         Inactive,
         Valid,
-        Invalid
+        Invalid,
+        Highlighted
     }
     
     public enum Direction
@@ -207,6 +217,8 @@
         Plaza, // + Guild Hall: Town Centre - Spending
         Tailor, // + Tannery: Stylish Armour - Performers
         Tannery, // + Hunting Lodge: Extra Padded Armour - Defence
+        // More Abilities
+        VisibleAdjacencyBonuses
     }
     
     public enum CursorType
@@ -229,7 +241,11 @@
         StoryActive,
         Scarecrows,
         Cosmetics,
-        MineStrike
+        MineStrike,
+        DemonicKey,
+        GoldenKey,
+        InstructionManual,
+        BottomlessFlask
     }
 
     public enum Secret

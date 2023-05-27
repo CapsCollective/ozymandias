@@ -1,21 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6662815161917818205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
-  m_Name: SetFlag
-  m_EditorClassIdentifier: 
-  customDescription: <color=#007000ff>Farms no longer increase threat!</color>
-  flag: 1
-  value: 0
---- !u!114 &-4779352107045895232
+--- !u!114 &-3980139496366523442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,35 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   blueprint: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: bakery-4
-  m_EditorClassIdentifier: 
-  headline: The Flour Fields
-  article: Our adventurers returned from their quest to rid us of the scarecrow plague,
-    but with bundles of grain, not miracle flowers, in hand. The scent of the delicious
-    grain has calmed the scarecrows, and they agree to go back to their homeland
-    and leave us be. As a parting gift, they left 'these weird stuffed dolls on sticks'
-    in their place.
-  image: {fileID: 21300000, guid: 5e297a6d605b174458fe492cd99a5acf, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -6662815161917818205}
-  - {fileID: 8594417843952292305}
-  - {fileID: -4779352107045895232}
-  - {fileID: 8862853820453048344}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &8594417843952292305
+--- !u!114 &-2319764532934346835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,7 +29,38 @@ MonoBehaviour:
   customDescription: We've decided to grind up all this grain to make bread.
   flag: 0
   value: 0
---- !u!114 &8862853820453048344
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: bakery-4
+  m_EditorClassIdentifier: 
+  headline: The Flour Fields
+  article: 'Our adventurers returned from their quest to rid us of the <b>scarecrow
+    scourge</b>, but with bundles of grain, not miracle flowers, in hand. The scent
+    of the delicious grain has calmed the scarecrows, and they agree to go back to
+    their homeland and leave us be.
+
+
+    As a parting gift, they left <i>"these
+    weird stuffed dolls on sticks"</i> in their place.'
+  image: {fileID: 21300000, guid: 5e297a6d605b174458fe492cd99a5acf, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 2761200303953330787}
+  - {fileID: -2319764532934346835}
+  - {fileID: -3980139496366523442}
+  - {fileID: 2269728013406753515}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &2269728013406753515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,3 +74,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 98463facf09060b40b5d8cd8db599c99, type: 2}
+--- !u!114 &2761200303953330787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
+  m_Name: SetFlag
+  m_EditorClassIdentifier: 
+  customDescription: <color=#007000ff>Farms no longer increase threat!</color>
+  flag: 1
+  value: 0

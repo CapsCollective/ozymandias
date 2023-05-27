@@ -1,105 +1,22 @@
 ﻿[
   {
-    "name": "woodland-creatures",
-    "headline": "Princess Out for Revenge",
-    "article": "A captured princess, tired of waiting for rescue, broke free, befriended nearby woodland creatures, and trained them into a deadly army. Now, she's out for revenge against the town for forgetting about her. GuildCo. correspondent reports \"We think her ransom note got caught in our spam filter.\"",
-    "image": "rabbit",
-    "type": "Radiant",
-    "outcomes": [
-      {
-        "type": "QuestAdded",
-        "quest": {
-          "name": "woodland-creatures-quest",
-          "location": "Grid",
-          "title": "Defeat the Escaped Princess",
-          "description": "The princesses' army of woodland creatures must be stopped",
-          "image": "rabbit",
-          "colour": "#31A84B",
-          "completedEvent": {
-            "name": "woodland-creatures-completed",
-            "headline": "Princess Re-captured",
-            "article": "The recaptured princess is now awaiting trial for raising a bloodthirsty militia of furry friends. Speculation indicates that she'll be locked up in The Tower, an asylum for runaway princesses.",
-            "image": "rabbit"
-          },
-          "baseTurns": 3,
-          "wealthMultiplier": 1.7
-        }
-      }
-    ]
-  },
-  {
-    "name": "dryad-commune",
-    "headline": "Dryad Commune",
-    "article": "A group of nature loving dryads have formed a commune near our industrious town. Rumour has it they have terrible mind controlling powers, spreading troublesome ideas like 'equality', and 'not burning the very world we live in'. Their very existence is a threat to us!",
-    "image": "flowers",
-    "type": "Radiant",
-    "outcomes": [
-      {
-        "type": "QuestAdded",
-        "quest": {
-          "name": "dryad-commune-quest",
-          "location": "Grid",
-          "title": "Organise a Coup",
-          "description": "Bring 'Peace and Order' to these dangerous Dryads",
-          "image": "flowers",
-          "colour": "#00997A",
-          "completedEvent": {
-            "name": "dryad-commune-completed",
-            "headline": "Dryad Commune Burned Down",
-            "article": "Evidence strongly supports they were going to destroy our way of life any day now.",
-            "image": "flowers"
-          },
-          "baseTurns": 5,
-          "wealthMultiplier": 0.8
-        }
-      }
-    ]
-  },
-  {
-    "name": "sentient-campsites",
-    "headline": "Mimics",
-    "article": "We've heard of some mimics closing in on our town, they seem to be setting up a campsite nearby. Knowing mimics, they could be hiding anywhere in the camp, so we must tread carefully.",
-    "image": "mimic-chest",
-    "type": "Radiant",
-    "outcomes": [
-      {
-        "type": "QuestAdded",
-        "quest": {
-          "name": "sentient-campsites-quest",
-          "location": "Grid",
-          "title": "Uncover the Mimics",
-          "description": "Investigate these camps and find the mimics hiding within",
-          "image": "mimic-chest",
-          "completedEvent": {
-            "name": "sentient-campsites-completed",
-            "headline": "Sentient Campsites",
-            "article": "Our adventurers barely made it out of the mimic camps, as they were investigating the content of a tent, teeth appeared around the opening, trapping the adventurer in the tent's maw. It was only the quick reflexes of a fellow adventurer poking at it with a stick that freed them to fight another day.",
-            "image": "mimic-chest"
-          },
-          "baseTurns": 6,
-          "wealthMultiplier": 0.7
-        }
-      }
-    ]
-  },
-  {
     "name": "troll-union",
     "headline": "Trolling for Tariffs",
-    "article": "Amid rising tensions between local merchants and the bridge-troll union, faction official Moh'rgen Mork'hol has threatened to lock down bridges along several strategic trade routes in an effort to raise minimum toll rates for union members. Refusing of these tolls may lead to a strike.",
+    "article": "Amid rising tensions between local merchants and the bridge-troll union, faction official <b>Moh'rgen Mork'hol</b> has threatened to lock down bridges along several strategic trade routes in an effort to raise minimum toll rates for union members. Refusing of these tolls may lead to a strike.",
     "image": "troll",
     "type": "Radiant",
     "choices": [
       {
         "name": "Accept their terms",
+        "costScale": 1.4,
         "outcomes": [
           {
-            "type": "ModifierAdded",
-            "modifier": {
-              "toChange": "Spending",
-              "amount": -20,
-              "turns": -1,
-              "reason": "from the Troll Tolls"
-            }
+            "type": "FlavourText",
+            "customDescription": "The well-remunerated trolls secure our trade routes dutifully..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": -1
           }
         ]
       },
@@ -112,20 +29,407 @@
               "name": "troll-union-quest",
               "location": "Grid",
               "title": "Bust the Troll Strike",
-              "description": "The Troll Union has gone on strike!",
+              "description": "We will NOT back down to the troll union's demands!",
               "image": "troll",
               "colour": "#FF4D42",
+              "adventurers": 4,
+              "baseTurns": 4,
+              "wealthMultiplier": 0.8,
               "completedEvent": {
                 "name": "troll-union-completed",
                 "headline": "Troll Strike Busted!",
-                "article": "Following the picket-busting crackdown on Moh'rgen Mork'hol's union headquarters, bridge-trolls across the land have backed down on their demand for tariff rate hikes.",
+                "article": "Following the picket-busting crackdown on <b>Moh'rgen Mork'hol's</b> union headquarters, bridge-trolls across the land have backed down on their outrageous demands for a four-day workweek and paid sick leave.",
                 "image": "troll"
-              },
-              "baseTurns": 4,
-              "wealthMultiplier": 1.4
+              }
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "goblins",
+    "headline": "Chanting Camps Causes Chaos",
+    "article": "Some <b>goblins</b> were spotted nearby the town, and residents have been kept up all night by horrid sounds of some rhythmic ritual they seem to be performing. We might be able to work outs what's going on in there, but we can also just ignore them and hope it goes away.",
+    "image": "goblin-camp",
+    "type": "Radiant",
+    "choices": [
+      {
+        "name": "Infiltrate the Camp!",
+        "outcomes": [
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "goblins-quest",
+              "location": "Grid",
+              "title": "Investigate Goblin Camp",
+              "description": "We need to put a stop to whatever going with that chanting",
+              "image": "goblin-camp",
+              "colour": "#3F7233",
+              "adventurers": 6,
+              "baseTurns": 3,
+              "wealthMultiplier": 0.4,
+              "completedEvent": {
+                "name": "goblins-completed",
+                "headline": "Goblin Festival Busted!",
+                "article": "Our scouts have reported that the ritualistic chants were just an experimental music festival. After our narcs were discovered, the <b>goblins</b> disbanded due to their <i>\"harshed vibes, bro\"</i>, taking their horrible music elsewhere.",
+                "image": "goblin-camp"
+              }             
+            }
+          }
+        ]
+      },
+      {
+        "name": "Ignore the Chanting",
+        "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "The distracting chanting continues for a few days, but they eventually move on for now..."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Arcanist",
+              "amount": -3,
+              "turns": 5,
+              "reason": "from the Goblin Chanting"
+            }
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "kidnapping",
+    "headline": "A Raider's Ransom",
+    "article": "Two adventurers have been kidnapped by raiders while scouting! We've received the ransom note pinned to a watchtower by dagger. Do we pay for their return, or hunt down these raiders?",
+    "image": "stabbed-note",
+    "type": "Radiant",
+    "choices": [
+      {
+        "name": "Track Down the Kidnappers",
+        "outcomes": [
+          {
+            "type": "AdventurersRemoved",
+            "anyGuild": true,
+            "count": 2,
+            "customDescription": "Two adventurers have been kidnapped!"
+          },
+          {
+            "type": "QuestAdded",
+            "quest": {
+              "name": "kidnapping-quest",
+              "location": "Grid",
+              "title": "Recover the Kidnapped Adventurers",
+              "description": "Raiders have kidnapped our adventurers, we need to rescue them!",
+              "image": "spikes",
+              "colour": "#D71709",
+              "adventurers": 5,
+              "baseTurns": 4,
+              "wealthMultiplier": 0.5,
+              "completedEvent": {
+                "name": "kidnapping-completed",
+                "headline": "Rescue Raiders",
+                "article": "Our adventuring party has returned successfully, recovering our kidnapped adventurers, and destroying the raider's camp.",
+                "image": "spikes",
+                "outcomes": [
+                  {
+                    "type": "AdventurersAdded",
+                    "anyGuild": true,
+                    "count": 2,
+                    "customDescription": "The 2 kidnapped adventurers have also returned"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Pay The Ransom",
+        "costScale": 0.6,
+        "outcomes": [
+          {
+            "type": "FlavourText",
+            "customDescription": "They realise you're a pushover, but return your adventurers, for now..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "woodland-creatures",
+    "headline": "Princess Out for Revenge",
+    "article": "A <b>captured princess</b>, tired of waiting for rescue, broke free, befriended nearby woodland creatures, and trained them into a deadly army. Now she's out for revenge against the town for forgetting about her.\n\nGuildCo. correspondent reports <i>\"We think her ransom note got caught in our spam filter.\"</i>",
+    "image": "rabbit",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "woodland-creatures-quest",
+          "location": "Grid",
+          "title": "Defeat the Escaped Princess",
+          "description": "The princess' army of woodland creatures must be stopped",
+          "image": "rabbit",
+          "colour": "#31A84B",
+          "adventurers": 2,
+          "baseTurns": 3,
+          "wealthMultiplier": 1.5,
+          "completedEvent": {
+            "name": "woodland-creatures-completed",
+            "headline": "Princess Re-captured",
+            "article": "The <b>recaptured princess</b> is now awaiting trial for raising a bloodthirsty militia of furry friends. Speculation indicates that she'll be locked up in <i>'The Tower'</i>, an asylum for runaway princesses.",
+            "image": "rabbit"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "dryad-commune",
+    "headline": "Dryad Commune Definitely a Real Threat",
+    "article": "A group of nature loving <b>dryads</b> have formed a commune near our industrious town. Rumour has it they have terrible mind controlling powers, spreading troublesome ideas like <i>'equality'</i>, and <i>'not burning the very world we live in'</i>.\n\nTheir very existence is a threat to us!",
+    "image": "flowers",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "dryad-commune-quest",
+          "location": "Grid",
+          "title": "Organise a Coup",
+          "description": "Bring 'peace and order' to these dangerous dryads",
+          "image": "flowers",
+          "colour": "#00997A",
+          "adventurers": 5,
+          "baseTurns": 5,
+          "wealthMultiplier": 0.6,
+          "completedEvent": {
+            "name": "dryad-commune-completed",
+            "headline": "Dryad Commune Burned Down",
+            "article": "Evidence strongly supports those hippy <b>dryads</b> were going to destroy our way of life any day now.",
+            "image": "flowers"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "sentient-campsites",
+    "headline": "Mimics Hidden in Camp",
+    "article": "We've heard of some <b>mimics</b> closing in on our town, and seem to be setting up a campsite nearby. Knowing mimics, they could be hiding anywhere in the camp, so we must tread carefully.",
+    "image": "mimic-chest",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "sentient-campsites-quest",
+          "location": "Grid",
+          "title": "Uncover the Mimics",
+          "description": "Investigate these camps and find the mimics hiding within",
+          "image": "mimic-chest",
+          "color": "#B6A27F",
+          "adventurers": 3,
+          "baseTurns": 6,
+          "wealthMultiplier": 0.7,
+          "completedEvent": {
+            "name": "sentient-campsites-completed",
+            "headline": "Sentient Campsites",
+            "article": "Our adventurers barely made it out of the <b>mimic</b> camps. As they were investigating the contents of a tent, teeth appeared around the opening, trapping the adventurer in the its maw. It was only for the quick reflexes of a fellow adventurer poking at it with a stick that freed their trapped comrade to fight another day.",
+            "image": "mimic-chest"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "kobolds",
+    "headline": "Kobold Mining Camp Spotted",
+    "article": "<b>Kobolds</b> have taken over a nearby mine, and were seen nibbling on the minerals. They were then chased back to town while the kobolds yelled at them to get off their property.",
+    "image": "gold-mine",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "kobolds-quest",
+          "location": "Grid",
+          "title": "Clear Out Mining Camp",
+          "description": "Take back the mine from these vicious kobolds",
+          "image": "gold-mine",
+          "colour": "#7B6490",
+          "adventurers": 2,
+          "baseTurns": 7,
+          "wealthMultiplier": 0.6,
+          "completedEvent": {
+            "name": "kobolds-completed",
+            "headline": "This Mine is MINE!",
+            "article": "The adventurers sabotaged the <b>kobold</b> operations, and have taken the mine back! The victorious party has converted the kobolds' crude explosives into fireworks and are hosting a celebration.",
+            "image": "firework-rocket",
+            "outcomes": [
+              {
+                "type": "ModifierAdded",
+                "modifier": {
+                  "toChange": "Spending",
+                  "amount": 15,
+                  "turns": 5,
+                  "reason": "from the Reclaimed Mine"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "undead",
+    "headline": "Necromaniac!",
+    "article": "A maniacal <b>necromancer</b> has started raising the dead outside our town. Time for us to start smashing some skeletons!",
+    "image": "raise-zombie",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "undead-quest",
+          "location": "Grid",
+          "title": "Stop the Undead Horde",
+          "description": "Defeat the necromancer and their undead cadre",
+          "image": "raise-zombie",
+          "colour": "#2C0C42",
+          "adventurers": 3,
+          "baseTurns": 4,
+          "wealthMultiplier": 1.1,
+          "completedEvent": {
+            "name": "undead-completed",
+            "headline": "Necromancer Actually Pretty Cool",
+            "article": "After smashing their way through the skeleton army, our adventurers confronted the necromancer, who was just hanging out with his new undead friends. After spending time chatting, the necromancer agreed to return the dead to rest if they could come hang out in the town.",
+            "image": "raise-zombie",
+            "outcomes": [
+              {
+                "type": "AdventurersAdded",
+                "count": 1,
+                "guild": "Arcanist",
+                "anyGuild": false,
+                "customDescription": "The necromancer joins your town. +1 Arcanist (<sprite=4>)"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "hivemind",
+    "headline": "Neighbourly Defence",
+    "article": "Another settlement needs our help! Word has come in that a nearby friendly camp is in trouble, and if we could lend a few of our adventurers <i>\"that'd be tops</i>\" they <b>said in unison</b>. Something about them is off, so we best be careful and only send our most expendable adventurers.",
+    "image": "village",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "hivemind-quest",
+          "location": "Grid",
+          "title": "Investigate the 'Friendly' Settlement",
+          "description": "Something is off about these friendly folk...",
+          "image": "village",
+          "colour": "#2DB2FB",
+          "adventurers": 5,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.7,
+          "completedEvent": {
+            "name": "hivemind-completed",
+            "headline": "Hysterical Hivemind",
+            "article": "Our adventurers return from a distress call to a nearby settlement. Unfortunately, the camp was already completely taken over by a <b>hivemind</b> that spread from a nearby elder-brain.\n\n\"We got there and everything was fine until we realised everyone was speaking in unison.\"\n\nThe adventurers burnt down the town before any of them could escape, although the trip home was full of shifty eyes, and accusatory <i>'jinxes'</i>.",
+            "image": "brain-tentacle"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "vikings",
+    "headline": "Viking Rager",
+    "article": "Some <b>vikings</b> have set up shop nearby, and are hosting a massive party. I hear these things go wild, we should totally go.",
+    "image": "viking-head",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "vikings-quest",
+          "location": "Grid",
+          "title": "Party With the Vikings",
+          "description": "The vikings are hosting a rager, we should swing by before it gets too out of hand",
+          "image": "viking-head",
+          "colour": "#D58703",
+          "adventurers": 6,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.3,
+          "completedEvent": {
+            "name": "vikings-completed",
+            "headline": "A Berserking Good Time",
+            "article": "Our adventurers have returned from their visit to the <b>viking party</b>. It was a great time, but around half-way through all the vikings took a strange shot. They began foaming at the mouth and blindly fighting each other. Our group decided to leave after it was clear the vikings would deal with themselves.",
+            "image": "viking-head",
+            "outcomes": [
+              {
+                "type": "FlavourText",
+                "customDescription": "Truly a rager of a time..."
+              }
+            ]
+          } 
+        }
+      }
+    ]
+  },
+  {
+    "name": "raiders",
+    "headline": "Strike Back First!",
+    "article": "Raiders have started setting up camps a little too close for our comfort. If we don't raid them first, who knows what they might do?",
+    "image": "saber-slash",
+    "type": "Radiant",
+    "outcomes": [
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "raiders-quest",
+          "location": "Grid",
+          "title": "Raid the Raiders",
+          "description": "We need to get them first!",
+          "image": "saber-slash",
+          "colour": "#A72626",
+          "adventurers": 3,
+          "baseTurns": 3,
+          "wealthMultiplier": 1.0,
+          "completedEvent": {
+            "name": "raiders-completed",
+            "headline": "Raiding the Raiders!",
+            "article": "Our adventurers return successful from taking down a nearby bandit camp. They claim to have found <i>\"totally real evidence they were just about to attack us\"</i>, so the complete destruction of their camp was justified, and no further questions are needed.",
+            "image": "saber-slash",
+            "outcomes": [
+              {
+                "type": "FlavourText",
+                "customDescription": "If we take gold from them, that doesn't make us the raiders, right?"
+              },
+              {
+                "type": "WealthAdded",
+                "turnsWorth": 0.6
+              }
+            ]
+          }
+        }
       }
     ]
   }

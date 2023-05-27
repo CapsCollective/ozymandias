@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4249586303804177877
+--- !u!114 &-7839237304192826042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  customDescription: Your townsfolk are fearful of this 'Time Being'
+  customDescription: 
+  baseAmount: 5
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,18 +27,21 @@ MonoBehaviour:
   m_Name: time-being
   m_EditorClassIdentifier: 
   headline: Tributes to the Time Being
-  article: A local cult has started making offerings to a mysterious creature in
-    exchange for future sight. "We have a busy schedule ahead, so let's just leave
-    this for the Time Being" chant the cultists.
+  article: 'A local cult has started making offerings to a mysterious creature in
+    exchange for future sight.
+
+
+    <i>"We have a busy schedule ahead, so let''s
+    just leave this for the Time Being"</i> chant the cultists.'
   image: {fileID: 21300000, guid: 1b5800a435d77d248ad9fc803c464b09, type: 3}
   type: 7
   headliner: 0
   outcomes:
-  - {fileID: -4249586303804177877}
-  - {fileID: 7337368388293180155}
+  - {fileID: 5335784207465620070}
+  - {fileID: -7839237304192826042}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &7337368388293180155
+--- !u!114 &5335784207465620070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,8 +50,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 3
+  customDescription: Your townsfolk are fearful of this 'Time Being'

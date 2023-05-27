@@ -2,15 +2,21 @@ using System;
 using DG.Tweening;
 using Requests.Templates;
 using TMPro;
+using Tooltip;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using static Managers.GameManager;
 
 namespace Requests
 {
     public class RequestDisplay : UiUpdater
     {
+        private const float FadeInDuration = 0.5f;
+        private const float FadeOutDuration = 1.0f;
+        private const float NotificationCloseDelay = 3f;
+        
         public static Action OnNotificationClicked;
         
         [Serializable]
@@ -46,23 +52,31 @@ namespace Requests
             notification.GetComponent<Button>().onClick.AddListener(() => OnNotificationClicked?.Invoke());
             
             _notificationCanvasGroup = notification.GetComponent<CanvasGroup>();
+
+            TooltipDisplay.OnTooltipDisplay += display =>
+            {
+                if (display) ShowNotification();
+                else HideNotification();
+            };
         }
         
         protected override void UpdateUi()
         {
-            if (Tutorial.Tutorial.Active)
+            if (Manager.Upgrades.TotalPurchasable == 0 && !Manager.Upgrades.IsUnlocked(UpgradeType.Discoveries))
             {
-                _bookDisplay.description.text = "Complete Tutorial";
+                _bookDisplay.description.text = "Finish First Game";
                 _bookDisplay.count.text = "";
                 _bookDisplay.tokens.text = "x1";
                 _bookDisplay.slider.gameObject.SetActive(false);
             }
             else if (Request == null)
             {
-                _bookDisplay.description.text = "Nothings here yet!";
+                _bookDisplay.description.text = "Wait for a New Request";
                 _bookDisplay.count.text = "";
-                _bookDisplay.tokens.text = "x0";
+                _bookDisplay.tokens.text = "";
                 _bookDisplay.slider.gameObject.SetActive(false);
+                _notificationDisplay.slider.value = 0;
+                _oldCompleted = 0;
             }
             else
             {
@@ -72,33 +86,42 @@ namespace Requests
                 _bookDisplay.slider.gameObject.SetActive(true);
                 _bookDisplay.slider.value = (float)Request.Completed / Request.Required;
 
-                if (Request.Completed == 0) {
-                    _oldCompleted = 0; // Reset for new requests
-                    _notificationDisplay.slider.value = 0;
-                }
-                
                 if (Request.Completed == _oldCompleted) return;
                 _oldCompleted = Request.Completed;
                 
-                // Cancel any current tweens in case updates trigger twice in quick succession
-                DOTween.Kill(_notificationDisplay);
-                DOTween.Kill(_notificationCanvasGroup);
+                ShowNotification();
                 
-                notification.SetActive(true);
-                _notificationCanvasGroup.alpha = 1;
-
-                _notificationDisplay.description.text = Request.Description;
-                _notificationDisplay.count.text = Request.Completed + "/" + Request.Required;
-
                 _notificationDisplay.slider
                     .DOValue((float)Request.Completed / Request.Required, 0.5f)
+                    .SetDelay(FadeInDuration)
                     .OnComplete(() =>
                     {
                         _notificationCanvasGroup
-                            .DOFade(0, 2f)
-                            .OnComplete(() => notification.SetActive(false)).SetDelay(2f);
+                            .DOFade(0, FadeOutDuration)
+                            .SetDelay(NotificationCloseDelay)
+                            .OnComplete(() => notification.SetActive(false));
                     });
             }
+        }
+
+        private void ShowNotification()
+        {
+            if (Request == null) return;
+            // Cancel any current tweens in case updates trigger twice in quick succession
+            DOTween.Kill(_notificationDisplay);
+            DOTween.Kill(_notificationCanvasGroup);
+            
+            notification.SetActive(true);
+            _notificationDisplay.description.text = Request.Description;
+            _notificationDisplay.count.text = Request.Completed + "/" + Request.Required;
+            _notificationCanvasGroup.DOFade(1, FadeInDuration);
+        }
+        
+        private void HideNotification()
+        {
+            _notificationCanvasGroup
+                .DOFade(0, FadeOutDuration)
+                .OnComplete(() => notification.SetActive(false));
         }
     }
 }

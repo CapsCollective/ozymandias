@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
 using NaughtyAttributes;
-using UI;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
@@ -26,7 +25,7 @@ namespace Characters
             Manager.Inputs.LeftClick.performed += _ =>
             {
                 Ray ray = _cam.ScreenPointToRay(Manager.Inputs.MousePosition);
-                if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider) return;
+                if (!Physics.Raycast(ray, out RaycastHit hit) || hit.collider != _collider || IsOverUi) return;
                 Separate();
             };
         }
@@ -37,7 +36,7 @@ namespace Characters
             if (_open) return;
             _open = true;
             OnOpened?.Invoke();
-            Manager.Notifications.Display("What's behind that waterfall?", icon);
+            Manager.Notifications.Display("Secret Unlocked: What's behind that waterfall?", icon);
 
             left.DOLocalMoveX(1f, 1f);
             right.DOLocalMoveX(-1f, 1f);

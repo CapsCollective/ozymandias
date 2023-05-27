@@ -31,6 +31,8 @@ namespace Quests
         // If a location is far enough away from the other quests
         private const int MinDistance = 3;
 
+        public bool IsActive(Quest quest) => Current.Contains(quest);
+        
         public bool FarEnoughAway(Vector3 position)
         {
             return Current
@@ -43,22 +45,28 @@ namespace Quests
             State.OnGameEnd += OnGameEnd;
         }
         
-        public bool Add(Quest q)
+        public void Add(Quest q)
         {
-            if (Current.Contains(q)) return false;
+            if (IsActive(q))
+            {
+                Debug.LogWarning($"Quest: {q.name} is already active");
+                return;
+            }
             Current.Add(q);
-            q.Add();
+            if(!Manager.State.Loading) q.Add();
             OnQuestAdded?.Invoke(q);
-            return true;
         }
 
-        public bool Remove(Quest q)
+        public void Remove(Quest q)
         {
-            if (!Current.Contains(q)) return false;
+            if (!Current.Contains(q))
+            {
+                Debug.LogWarning($"Quest: {q.name} is is not active");
+                return;
+            }
             Current.Remove(q);
             q.Remove();
             OnQuestRemoved?.Invoke(q);
-            return true;
         }
 
         public List<QuestDetails> Save()
@@ -73,10 +81,10 @@ namespace Quests
                 Quest q = Manager.AllQuests.Find(match => details.name == match.name);
                 if (q == null)
                 {
-                    Debug.LogWarning("Quest Not Found: " + details.name);
+                    Debug.LogWarning("Quests: Cannot find quest - " + details.name);
                     continue;
                 }
-                Current.Add(q);
+                Add(q);
                 q.Load(details);
             }
         }

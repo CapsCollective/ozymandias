@@ -13,6 +13,8 @@ namespace Upgrades
 {
     public class Upgrades: MonoBehaviour
     {
+        const int UpgradeBoxCutoffY = -60;
+
         public static Action<UpgradeType> OnUpgradePurchased;
         public bool BoxOpen { get; private set; }
 
@@ -24,7 +26,7 @@ namespace Upgrades
         {
             public RectTransform transform;
             public Canvas canvas;
-            public GameObject costBox;
+            public GameObject costBox, purchaseButtonContainer;
             public TextMeshProUGUI title, description;
             public SerializedDictionary<Guild, GameObject> costs;
             public Button purchaseButton, deselectButton;
@@ -41,6 +43,8 @@ namespace Upgrades
         public int TotalUpgrades => _upgrades.Count;
         public int TotalPurchasable => _upgrades.Count(pair => pair.Value.gameObject.activeSelf && !pair.Value.LevelMaxed && Affordable(pair.Value.Costs));
 
+        public bool AnyAdjacencies => _upgrades.Any(pair => pair.Value.SingleUnlock && pair.Value.LevelMaxed);
+        
         private void Awake()
         {
             purchaseBox.purchaseButton.onClick.AddListener(Purchase);
@@ -74,15 +78,15 @@ namespace Upgrades
 
         public void Select(Upgrade upgrade)
         {
-            if (_selected == upgrade)
+            if (!Manager.State.InMenu || _selected == upgrade)
             {
                 Deselect();
                 return;
             }
 
             _selected = upgrade;
-            purchaseBox.transform.pivot = new Vector2(0.5f, 1.1f);
-            if(upgrade.transform.localPosition.y < -80) purchaseBox.transform.pivot = new Vector2(0.5f, -0.1f);
+            purchaseBox.transform.pivot = new Vector2(0.5f, 1.05f);
+            if (upgrade.transform.localPosition.y < UpgradeBoxCutoffY) purchaseBox.transform.pivot = new Vector2(0.5f, -0.05f);
             purchaseBox.transform.position = upgrade.transform.position;
             purchaseBox.canvas.enabled = true;
             DisplayDetails(upgrade);
@@ -95,7 +99,7 @@ namespace Upgrades
             purchaseBox.title.text = upgrade.title;
             purchaseBox.description.text = upgrade.Description;
 
-            purchaseBox.purchaseButton.gameObject.SetActive(!upgrade.LevelMaxed);
+            purchaseBox.purchaseButtonContainer.SetActive(!upgrade.LevelMaxed);
             purchaseBox.costBox.gameObject.SetActive(!upgrade.LevelMaxed);
             purchaseBox.purchaseButton.interactable = Affordable(upgrade.Costs);
 
@@ -105,8 +109,8 @@ namespace Upgrades
                 {
                     purchaseBox.costs[guild].SetActive(true);
                     TextMeshProUGUI text = purchaseBox.costs[guild].GetComponentInChildren<TextMeshProUGUI>();
-                    text.text = upgrade.Costs[guild].ToString();
-                    text.color = GuildTokens[guild] >= upgrade.Costs[guild] ? Colors.CardLight : Colors.Red;
+                    bool affordable = GuildTokens[guild] >= upgrade.Costs[guild];
+                    text.text = $"{GuildTokens[guild].ToString().StatusColor(affordable ? 0: -1, true)}/{upgrade.Costs[guild]}";
                 }
                 else
                 {

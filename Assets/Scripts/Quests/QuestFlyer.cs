@@ -1,4 +1,5 @@
 ﻿using System;
+using Inputs;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -6,12 +7,13 @@ using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
+using String = Utilities.String;
 
 namespace Quests
 {
     public class QuestFlyer : UIController
     {
-        [SerializeField] private TextMeshProUGUI titleText, descriptionText, statsText;
+        [SerializeField] private TextMeshProUGUI titleText, descriptionText, adventurersText, durationText, rewardText, costText;
         [SerializeField] private Image icon;
         [SerializeField] private Button sendButton;
         [SerializeField] private GameObject stamp;
@@ -20,9 +22,6 @@ namespace Quests
         public Action<int, int> OnStartClicked;
         public Action<int> OnAdventurerValueChanged;
         public Action<int> OnDurationValueChanged;
-
-        private const float CostScaleMin = 0.5f;
-        private const float CostScaleMax = 1.5f;
 
         private Quest _quest;
 
@@ -39,10 +38,11 @@ namespace Quests
             sendButton.onClick.AddListener(() =>
             {
                 if (!Manager.State.InMenu) return;
-                Inputs.InputHelper.OnToggleCursor?.Invoke(false);
+                InputHelper.OnToggleCursor?.Invoke(false);
                 RandomRotateStamps();
                 Manager.Jukebox.PlayStamp();
                 OnStartClicked?.Invoke((int)adventurerSlider.value, (int)durationSlider.value);
+                UpdateContent(_quest, true);
             });
         }
 
@@ -69,45 +69,15 @@ namespace Quests
 
             if (quest.IsActive)
             {
-                var turnText = "\nReturn in: " + quest.TurnsLeft;
-
-                switch (quest.TurnsLeft)
-                {
-                    case 0:
-                        turnText = "\nReturning today";
-                        break;
-                    case 1:
-                        turnText += " turn";
-                        break;
-                    default:
-                        turnText += " turns";
-                        break;
-                }
-
-                statsText.text = "Adventurers: " + quest.AssignedCount + turnText;
+                adventurersText.text = "Adventurers: " + quest.AssignedCount;
+                durationText.text = quest.TurnsLeft <= 1 ? "Returning today" : $"Will return in {quest.TurnsLeft} turns";
+                rewardText.text = quest.RewardDescription;
+                costText.text = "";
             }
             else
             {
                 if (!valueChange)
                 {
-                    // Set default values for sliders
-                    //adventurerSlider.gameObject.SetActive(quest.IsRadiant && quest.MinAdventurers != quest.MaxAdventurers);
-                    /*if (quest.IsRadiant)
-                    {
-                        adventurerSlider.minValue = quest.MinAdventurers;
-                        adventurerSlider.maxValue = quest.MaxAdventurers;
-                        adventurerSlider.value = quest.MaxAdventurers;
-                    }
-                    else
-                    {
-                        adventurerSlider.maxValue = quest.adventurers;
-                        adventurerSlider.value = quest.adventurers;
-                    }*/
-                    
-                    /*costSlider.minValue = CostScaleMin;
-                    costSlider.maxValue = CostScaleMax;
-                    costSlider.value = 1f;*/
-
                     adventurerSlider.value = 0;
                     durationSlider.value = 0;
                 }
@@ -117,17 +87,12 @@ namespace Quests
                 int duration = (int)durationSlider.value + quest.baseDuration;
                 int cost = quest.ScaledCost((int)adventurerSlider.value + (int)durationSlider.value);
 
-                bool enoughAdventurers = Manager.Adventurers.Removable > adventurers;
+                bool enoughAdventurers = Manager.Adventurers.Available >= adventurers;
                 bool enoughMoney = Manager.Stats.Wealth >= cost;
-                statsText.text =
-                    (enoughAdventurers ? "" : Colors.RedText) + 
-                    "Adventurers: " + adventurers +
-                    (enoughAdventurers ? "" : Colors.EndText) +
-                    "\nDuration: " + duration + " Turns" +
-                    (enoughMoney ? "" : Colors.RedText) +
-                    "\nCost: " + cost +
-                    (enoughMoney ? "" : Colors.EndText) +
-                    "\nReward: " + quest.RewardDescription;
+                adventurersText.text = $"Adventurers: {adventurers}".StatusColor(enoughAdventurers ? 0 : -1);
+                durationText.text = $"Duration: {duration} {"turn".Pluralise(duration)}";
+                rewardText.text = quest.RewardDescription;
+                costText.text = $"Cost: {cost} {String.StatIcon(Stat.Spending)}".StatusColor(enoughMoney ? 0 : -1);
 
                 sendButton.interactable = enoughAdventurers && enoughMoney;
             }
@@ -136,7 +101,7 @@ namespace Quests
         public override void OnOpen()
         {
             base.OnOpen();
-            Inputs.InputHelper.OnToggleCursor?.Invoke(!_quest.IsActive);
+            InputHelper.OnToggleCursor?.Invoke(!_quest.IsActive);
         }
     }
 }

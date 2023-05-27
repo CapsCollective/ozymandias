@@ -8,11 +8,11 @@ using Map;
 using NaughtyAttributes;
 using Structures;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utilities;
 using static Managers.GameManager;
 using Event = Events.Event;
 using Random = UnityEngine.Random;
+using String = Utilities.String;
 
 namespace Quests
 {
@@ -41,8 +41,8 @@ namespace Quests
         public Color colour;
         
         [Range(0.5f, 3f)] public float wealthMultiplier = 1.5f; // How many turns worth of gold to send, sets cost when created.
-        [FormerlySerializedAs("adventurers")] [Range(3,8)] public int baseAdventurers = 2;
-        [FormerlySerializedAs("baseTurns")] [Range(3, 6)] public int baseDuration = 3; // How many turns worth of gold to send, sets cost when created.
+        [Range(2, 8)] public int baseAdventurers = 2;
+        [Range(3, 6)] public int baseDuration = 3; // How many turns worth of gold to send, sets cost when created.
         public Location location;
         public Event completeEvent; // Keep empty if randomly chosen
 
@@ -53,23 +53,23 @@ namespace Quests
         public string Description => description;
         public int TurnsLeft { get; private set; }
         public Structure Structure { get; private set; }
-        public bool IsActive => TurnsLeft != -1;
+        public bool IsActive => _assigned.Count > 0;
         public bool IsRadiant => location is Location.Grid;
         private int BaseCost { get; set; }
         
         // Flyer Properties
         // The base number of adventurers to send on a grid quest before any tiles are cleared
-        public int BaseAdventurers => IsRadiant ? 2 + Structure.SectionCount : baseAdventurers;
+        public int BaseAdventurers => IsRadiant ? baseAdventurers + Structure.SectionCount : baseAdventurers;
         public int ScaledCost(int scale) => (int) (BaseCost * CostScale[scale]);
-        public string RewardDescription => IsRadiant ? $"Clear camp (-{Structure.SectionCount} threat)" : reward;
+        public string RewardDescription => IsRadiant ? $"Reward: -{Structure.SectionCount} {String.StatWithIcon(Stat.Threat)}" : reward;
         public int AssignedCount => _assigned.Count;
         
         public void Add()
         {
-            BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (10f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 10f);
+            BaseCost = (int)(Manager.Stats.WealthPerTurn * wealthMultiplier * (20f - Manager.Upgrades.GetLevel(UpgradeType.QuestCost)) / 20f);
             _turnCreated = Manager.Stats.TurnCounter;
             TurnsLeft = -1;
-            State.OnNewTurn += OnNewTurn;
+            State.OnNextTurnBegin += OnNextTurnBegin;
 
             if (location == Location.Grid)
             {
@@ -97,7 +97,7 @@ namespace Quests
         {
             if (location == Location.Grid) ClearBuilding();
             else ResetLocation();
-            State.OnNewTurn -= OnNewTurn; // Have to manually remove as scriptable object is never destroyed
+            State.OnNextTurnBegin -= OnNextTurnBegin; // Have to manually remove as scriptable object is never destroyed
         }
         
         private void SetLocation()
@@ -173,17 +173,16 @@ namespace Quests
             Structure = null;
         }
         
-        private void OnNewTurn()
+        private void OnNextTurnBegin()
         {
             if (IsActive)
             {
-                if (TurnsLeft <= 1)
+                if (--TurnsLeft <= 0)
                 {
                     if (completeEvent) Manager.EventQueue.Add(completeEvent, true);
-                    else Debug.LogError("Quest was completed with no event.");
+                    else Debug.LogError("Quests: Quest was completed with no event.");
                 }
-                Debug.Log($"Quest in progress: {title}. {TurnsLeft} turns remaining.");
-                TurnsLeft--;
+                Debug.Log($"Quests: {title} in progress. {TurnsLeft} turns remaining.");
             }
             else if (
                 IsRadiant &&
@@ -209,14 +208,14 @@ namespace Quests
 
         public void Load(QuestDetails details)
         {
-            State.OnNewTurn += OnNewTurn;
+            State.OnNextTurnBegin += OnNextTurnBegin;
             BaseCost = details.cost;
             TurnsLeft = details.turnsLeft;
 
             if (location == Location.Grid) CreateBuilding(details.occupied);
             else SetLocation();
             
-            if (!IsActive) return;
+            if (details.assigned == null || details.assigned.Count == 0) return;
             foreach (string adventurerName in details.assigned) 
                 _assigned.Add(Manager.Adventurers.Assign(this, adventurerName));
         }

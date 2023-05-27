@@ -15,7 +15,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            if (!Manager.Stats.Modifiers.ContainsKey(statToChange)) return false;
+            if (!Manager.Stats.Modifiers.ContainsKey(statToChange))
+            {
+                UnityEngine.Debug.LogWarning($"Events: {statToChange} is not included in modifiers");
+                return false;
+            }
         
             Manager.Stats.Modifiers[statToChange].Add(new Stats.Modifier
             {
@@ -27,21 +31,11 @@ namespace Events.Outcomes
             return true;
         }
 
-        protected override string Description
-        {
-            get
-            {
-                string color = amount > 0 ? Colors.GreenText : Colors.RedText;
-                if (customDescription != "") return $"{color}{customDescription}{Colors.EndText}";
-                
-                string desc = color + statToChange + ((int)statToChange < 5 ? " Satisfaction" : "");
-                
-                if (amount > 0) desc += " has increased by " + amount;
-                else desc += " has decreased by " + Mathf.Abs(amount);
-            
-                if (turns != -1) desc += " for " + turns + " turns " + reason + ".";
-                return desc + "</color>";
-            }
-        }
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"{amount.WithSign()} {String.StatWithIcon(statToChange)} " +
+            $"for {turns} turns ".Conditional(turns != -1) + 
+            reason + "."
+        ).StatusColor(amount);
     }
 }

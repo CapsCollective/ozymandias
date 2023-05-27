@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
 using TMPro;
+using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utilities;
 using static Managers.GameManager;
 using String = Utilities.String;
-using UnityEngine.InputSystem;
 
 namespace Tooltip
 {
@@ -20,11 +21,12 @@ namespace Tooltip
     public class TooltipDisplay : MonoBehaviour
     {
         private CanvasGroup _cg;
-        private Tween _tween;
         [SerializeField] private TextMeshProUGUI title, details, description;
 
         [SerializeField] private TooltipPlacement defaultTooltip;
         private TooltipPlacement _selectedTooltip;
+
+        public static Action<bool> OnTooltipDisplay;
         public bool NavigationActive { get; private set; }
 
         const float FadeDuration = 0.3f;
@@ -62,10 +64,10 @@ namespace Tooltip
             }},
             {TooltipType.Arcanist, new TooltipConfig {
                 Title = "Arcanists",
-                Description = "Arcanists pluck from the very fabric of reality in weird, wonderful, and most " +
-                              "importantly, profitable ways. They are eccentric scholars who enjoy isolation and the " +
+                Description = "Arcanists pluck from the fabric of reality in weird, wonderful, and most " +
+                              "importantly, profitable ways. These eccentric scholars enjoy isolation and the " +
                               "pursuit of arcane knowledge. It is recommended their magic is controlled to prevent " +
-                              "*REDACTED*, and *SUPER REDACTED*.",
+                              "<b>REDACTED</b>, and <b>SUPER REDACTED</b>.",
                 Stat = Stat.Arcanist
             }},
             {TooltipType.Housing, new TooltipConfig {
@@ -136,21 +138,25 @@ namespace Tooltip
             Manager.Inputs.Close.performed += _ => DeactivateTooltips(); 
             Inputs.Inputs.OnControlChange += _ => DeactivateTooltips();
             State.OnEnterState += _ => DeactivateTooltips();
+            GameHud.OnTogglePhotoMode += _ => DeactivateTooltips();
 
             Manager.Inputs.NavigateTooltips.performed += NavigateTooltips;
         }
 
         private void DeactivateTooltips()
         {
-            _selectedTooltip.OnPointerExit(null);
+            if(IsVisible()) _selectedTooltip.OnPointerExit(null);
             NavigationActive = false;
+            OnTooltipDisplay?.Invoke(NavigationActive);
         }
 
         private void ToggleTooltips(InputAction.CallbackContext obj)
         {
-            if (!Manager.State.InGame) return;
-            
+            if (!Manager.State.InGame || Manager.GameHud.PhotoModeEnabled) return;
+            Manager.Cards.SelectCard(-1);
             NavigationActive = !NavigationActive;
+            OnTooltipDisplay?.Invoke(NavigationActive);
+
             if (NavigationActive) _selectedTooltip.OnPointerEnter(null);
             else _selectedTooltip.OnPointerExit(null);
         }
@@ -158,8 +164,8 @@ namespace Tooltip
         private void NavigateTooltips(InputAction.CallbackContext obj)
         {
             if (!NavigationActive) return;
-
-            Vector2 direction = Manager.Inputs.NavigateTooltips.ReadValue<Vector2>();
+            
+            Vector2 direction = obj.action.ReadValue<Vector2>();
             _selectedTooltip.OnPointerExit(null);
 
             if (Mathf.RoundToInt(direction.y) == 1 && _selectedTooltip.navigationDirections.up)
@@ -189,83 +195,105 @@ namespace Tooltip
             switch (config.Stat)
             {
                 case Stat.Housing:
-                    int spawnRate = Manager.Stats.RandomSpawnChance;
-                    string spawnText = spawnRate == -1
-                        ? "Adventurers will start to flee"
-                        : HousingSpawnName(spawnRate) + " adventurer spawn chance"; 
-                    details.text = $"{stat} housing for {adventurers} adventurers in town\n" +
-                                   $"({(diff > 0 ? "+" : "") + diff} total)\n" +
-                                   $"{FormattedBuildingString(Stat.Housing)}" +
-                                   $"{FormattedUpgradeString(Stat.Housing)}" +
-                                   $"{FormattedModifierString(Stat.Housing)}" +
-                                   $"{HousingDescriptor(spawnRate)} ({spawnText})";
+                    int housingSpawnRate = Manager.Stats.HousingSpawnChance;
+                    details.text =
+                        $"{stat} {String.StatWithIcon(Stat.Housing)} for {adventurers} Adventurers in town" +
+                        $"{FormattedBuildingString(Stat.Housing)}" +
+                        $"{FormattedUpgradeString(Stat.Housing)}" +
+                        $"{FormattedModifierString(Stat.Housing)}" +
+                        ($"\n\n{diff.WithSign()} housing {Surplus(diff >= 0)}" + 
+                         $"\n{HousingEffect(housingSpawnRate)}" + 
+                         $"\n{HousingDescriptor(housingSpawnRate)}".Italics()
+                        ).Center();
                     break;
                 case Stat.Food:
-                    details.text = $"{stat} food for {adventurers} adventurers in town\n"+
-                                   $"({(diff > 0 ? "+" : "") + diff} total)\n" +
-                                   $"{FormattedBuildingString(Stat.Food)}" +
-                                   $"{FormattedUpgradeString(Stat.Food)}" +
-                                   $"{FormattedModifierString(Stat.Food)}" +
-                                   $"{FoodDescriptor(Manager.Stats.FoodModifier)}";
+                    int foodMod = Manager.Stats.FoodModifier;
+                    details.text = 
+                        $"{stat} {String.StatWithIcon(Stat.Food)} for {adventurers} Adventurers in town" +
+                        FormattedBuildingString(Stat.Food) +
+                        FormattedUpgradeString(Stat.Food) +
+                        FormattedModifierString(Stat.Food) +
+                        ($"\n\n{diff.WithSign()} food {Surplus(diff >= 0)}" +
+                         $"\n{FoodEffect(foodMod)}" +
+                         $"\n{FoodDescriptor(foodMod)}".Italics()
+                        ).Center();
                     break;
                 case Stat.Defence:
                     int unavailable = Manager.Adventurers.Unavailable;
-                    details.text = $"{Manager.Stats.Defence} defence\n" +
-                                   $"  ● +{adventurers}{(unavailable != 0 ? "/" + (adventurers + unavailable) : "")} from adventurers in town\n"+
-                                   (unavailable != 0 ? $"     ({unavailable} out questing)\n" : "") + 
-                                   $"{FormattedBuildingString(Stat.Defence)}" + 
-                                   (Manager.Stats.MineStrikePenalty != 0 ? $"  ● {Manager.Stats.MineStrikePenalty} from the miners strike\n" : "") + 
-                                   $"{FormattedModifierString(Stat.Defence)}";
+                    details.text = 
+                        $"{Manager.Stats.Defence} Total {String.StatWithIcon(Stat.Defence)}".Center() +
+                        ($"+{adventurers}{("/" + (adventurers + unavailable)).Conditional(unavailable != 0)} from Adventurers in town" +
+                        $"\n({unavailable} out questing)".Conditional(unavailable != 0)).ListItem() + 
+                        FormattedBuildingString(Stat.Defence) + 
+                        $"{Manager.Stats.MineStrikePenalty} from the miners strike"
+                            .ListItem()
+                            .Conditional(Manager.Stats.MineStrikePenalty != 0) + 
+                        FormattedModifierString(Stat.Defence);
                     break;
                 case Stat.Threat:
-                    details.text = $"{Manager.Stats.Threat} threat\n" +
-                                   $"  ● +{Manager.Stats.BaseThreat} from events\n" +
-                                   (Manager.Quests.RadiantQuestCellCount != 0 ? $"  ● +{Manager.Quests.RadiantQuestCellCount} from enemy camps\n" : "") +
-                                   (Manager.Stats.ScarecrowThreat != 0 ? $"  ● +{Manager.Stats.ScarecrowThreat} from farms due to scarecrows\n" : "") +
-                                   $"{FormattedModifierString(Stat.Threat)}\n";
+                    details.text = 
+                        $"{Manager.Stats.Threat} Total {String.StatWithIcon(Stat.Threat)}".Center() +
+                        $"+{Manager.Stats.BaseThreat} from events"
+                            .ListItem() +
+                        $"+{Manager.Quests.RadiantQuestCellCount} from enemy camps"
+                            .ListItem()
+                            .Conditional(Manager.Quests.RadiantQuestCellCount != 0) +
+                        $"+{Manager.Stats.ScarecrowThreat} from farms due to scarecrows"
+                            .ListItem()
+                            .Conditional(Manager.Stats.ScarecrowThreat != 0 ) +
+                        FormattedModifierString(Stat.Threat);
                     break;
                 case Stat.Stability:
                     int change = Manager.Stats.Defence - Manager.Stats.Threat;
-                    details.text = $"{Manager.Stats.Stability}/100 town stability\n" +
-                                   $"{(change > 0 ? "+" : "") + change} next turn ({Manager.Stats.Defence} defence - {Manager.Stats.Threat} threat)";
+                    int turnsUntilDestruction = change >= 0 ? 0 : ((Manager.Stats.Stability - 1) / -change) + 1;
+                    details.text = (
+                        $"{Manager.Stats.Stability}/100 Town Stability" +
+                        $"\n{change.WithSign()} next turn ({Manager.Stats.Defence} Defence - {Manager.Stats.Threat} Threat)" + 
+                        $"\n{turnsUntilDestruction} {"turn".Pluralise(turnsUntilDestruction)} until town destruction".Conditional(change < 0)
+                    ).Center();
                     break;
                 case Stat.Spending:
-                    details.text = $"{Manager.Stats.WealthPerTurn} wealth per turn\n" +
-                                   $"  ● +{(Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) * adventurers} from {adventurers} adventurers in town" +
-                                   $"{(Manager.EventQueue.Flags[Flag.Cosmetics] ? " (-2 spending per adventurers due to cosmetics)" : "")}\n" +
-                                   $"  ● +{StartingSalary} starting salary\n" +
-                                   $"{FormattedBuildingString(Stat.Spending)}" +
-                                   $"{FormattedUpgradeString(Stat.Spending)}" +
-                                   $"{FormattedModifierString(Stat.Spending)}";
+                    details.text = 
+                        $"{Manager.Stats.WealthPerTurn} {String.StatWithIcon(Stat.Spending)}".Center() +
+                        ($"+{(Manager.EventQueue.Flags[Flag.Cosmetics] ? 0 : adventurers)}" +
+                         $"/{Manager.Adventurers.Count}".Conditional(Manager.Adventurers.Unavailable > 0) +
+                         " from Adventurers in town" +
+                         "\n(No spending from adventurers due to Cosmetic Craze)".Conditional(Manager.EventQueue.Flags[Flag.Cosmetics])
+                        ).ListItem() +
+                        $"+{StartingSalary + Manager.Stats.GetUpgradeMod(Stat.Spending) * BaseStatMultiplier} Starting Salary".ListItem() +
+                        FormattedBuildingString(Stat.Spending) +
+                        FormattedModifierString(Stat.Spending);
                     break; 
                 default: // Stat for a guild
-                    Guild guild = (Guild) config.Stat.Value;
-                    string guildName = config.Stat.ToString().ToLower();
+                    Stat statType = config.Stat.Value;
+                    Guild guild = (Guild) statType;
+                    string guildName = config.Stat.ToString();
                     int count = Manager.Adventurers.GetCount(guild, true);
                     int spawnChance = Manager.Stats.SpawnChance(guild);
-                    
+                    diff = stat - count;
                     details.text =
-                        $"{stat} satisfaction for {count} {String.Pluralise(guildName)} in town\n" +
-                        $"({(stat - count > 0 ? "+" : "")}{stat - count} total)\n" +
-                        $"{FormattedBuildingString(config.Stat.Value)}" +
-                        $"{FormattedUpgradeString(config.Stat.Value)}" +
-                        $"{FormattedFoodModifierString}" +
-                        $"{FormattedModifierString(config.Stat.Value)}" +
-                        $"{spawnChance}% {guildName} spawn chance per turn";
+                        $"{stat} Satisfaction for {count} {guildName.Pluralise(count)} ({String.StatIcon(statType)}) in town" +
+                        FormattedBuildingString(statType) +
+                        FormattedUpgradeString(statType) +
+                        FormattedFoodModifierString +
+                        FormattedModifierString(statType) +
+                        $"\n\n{diff.WithSign()} Satisfaction {Surplus(diff >= 0)}".Center() +
+                        $"\n{Mathf.Abs(spawnChance)}%{"(max)".Conditional(spawnChance == Manager.Stats.MaxSpawnChance)} {guildName} {(spawnChance >= 0 ? "spawn" : "leave")} chance per turn".Center();
                     break;
             }
         }
-
         private string FormattedBuildingString(Stat stat)
         {
             int buildingMod = Manager.Structures.GetStat(stat) * Manager.Stats.StatMultiplier(stat);
-            return $"  ● {(buildingMod >= 0 ? "+" : "")}{buildingMod} from buildings\n";
+            return $"{buildingMod.WithSign()} from Buildings".ListItem();
         }
+
+        private string Surplus(bool isSurplus) => isSurplus ? "surplus" : "shortage";
 
         private string FormattedUpgradeString(Stat stat)
         {
             int upgradeMod = Manager.Stats.GetUpgradeMod(stat) * Manager.Stats.StatMultiplier(stat);
-            return upgradeMod == 0 ? "" : $"  ● +{upgradeMod} from upgrades\n";
+            return $"+{upgradeMod} from Upgrades".ListItem().Conditional(upgradeMod != 0);
         }
 
         // Formatted string for food modifiers (specifically for adventurer)
@@ -275,12 +303,8 @@ namespace Tooltip
             {
                 int mod = Manager.Stats.FoodModifier;
                 if (mod == 0) return "";
-                bool isFoodInSurplus = Math.Sign(mod) == 1;
-                string foodDescriptor = isFoodInSurplus ? "surplus" : "shortage";
-                char foodSign = isFoodInSurplus ? '+' : '-';
-                string textColor = isFoodInSurplus ? Colors.GreenText : Colors.RedText;
-
-                return $"  ● {textColor}{foodSign}{Math.Abs(mod)}{Colors.EndText} from food {foodDescriptor}\n";
+                bool isFoodInSurplus = mod > 0;
+                return $"{mod.WithSign()} from {String.StatWithIcon(Stat.Food)} {Surplus(isFoodInSurplus)}".ListItem();
             }
         }
 
@@ -291,15 +315,30 @@ namespace Tooltip
 
             foreach (var modifier in Manager.Stats.Modifiers[stat])
             {
-                char sign = Math.Sign(modifier.amount) == 1 ? '+' : '-';
-                string textColor = sign == '+' ? Colors.GreenText : Colors.RedText;
-                string turnText = modifier.turnsLeft == 1 ? "turn" : "turns";
-                formattedModifierString += $"  ● {textColor}{sign}{Math.Abs(modifier.amount)}{Colors.EndText} " +
-                                           $"from {modifier.reason} {(modifier.turnsLeft != -1 ? $"({modifier.turnsLeft} {turnText} remaining)": "")}\n";
+                formattedModifierString += (
+                    $"{modifier.amount.WithSign()} from {modifier.reason}" +
+                    $"\n({modifier.turnsLeft} {"turn".Pluralise(modifier.turnsLeft)} remaining)".Conditional(modifier.turnsLeft != -1)
+                ).ListItem();
             }
             
             return formattedModifierString;
         }
+
+        private string FoodDescriptor(int foodMod)
+        {
+            return foodMod switch
+            {
+                >=  2 => "There are daily feasts",
+                    1 => "The adventurers are well fed",
+                    0 => "The town is getting by",
+                   -1 => "Rations have taken effect",
+                <= -2 => "People are starving",
+            };
+        }
+
+        private string FoodEffect(int foodMod) => foodMod == 0 
+            ? "No modifiers to satisfaction" 
+            : foodMod.WithSign() + " to all adventurer satisfaction";
 
         private string HousingDescriptor(int spawnRate)
         {
@@ -313,35 +352,29 @@ namespace Tooltip
                 _ => ""
             };
         }
-        
-        private string FoodDescriptor(int foodMod)
-        {
-            return foodMod switch
-            {
-                2 => "There are daily feasts (+2 to all adventurers)",
-                1 => "The adventurers are well fed (+1 to all adventurers)",
-                0 => "The town is getting by (No modifiers)",
-                -1 => "Rations have taken effect (-1 to all adventurers)",
-                -2 => "People are starving (-2 to all adventurers)",
-                _ => ""
-            };
-        }
 
         private string HousingSpawnName(int spawnRate)
         {
             return spawnRate switch
             {
-                3 => "High",
-                2 => "Medium",
+                3 => "Max",
+                2 => "High",
                 1 => "Low",
                 0 => "No",
                 _ => ""
             };
         }
+
+        private string HousingEffect(int spawnRate)
+        {
+            return spawnRate == -1 
+                ? "Adventurers will start to flee" 
+                : HousingSpawnName(spawnRate) + " adventurer spawn chance";  
+        }  
         
         public void Fade(float opacity)
         {
-            _tween = _cg.DOFade(opacity, FadeDuration);
+            _cg.DOFade(opacity, FadeDuration);
         }
 
         public bool IsVisible()

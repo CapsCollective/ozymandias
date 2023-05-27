@@ -5,7 +5,6 @@ using Reports;
 using Steamworks;
 using Steamworks.NET;
 using UnityEngine;
-using static Managers.GameManager;
 
 namespace Platform
 {
@@ -21,7 +20,12 @@ namespace Platform
             {
                 {Milestone.Population, "GREATEST_POPULATION"},
                 {Milestone.Turn, "GREATEST_TURN"},
-                {Milestone.Cards, "UNLOCKED_CARDS"}
+                {Milestone.Cards, "UNLOCKED_CARDS"},
+                {Milestone.CampsCleared, "CAMPS_CLEARED"},
+                {Milestone.TownsDestroyed, "TOWNS_DESTROYED"},
+                {Milestone.BuildingsBuilt, "BUILDINGS_BUILT"},
+                {Milestone.RuinsDemolished, "RUINS_DEMOLISHED"},
+                {Milestone.UpgradesPurchased, "UPGRADES_PURCHASED"}
             };
 
         private static readonly Dictionary<Achievement, string> AchievementIDs = 
@@ -45,6 +49,13 @@ namespace Platform
                 {Achievement.SeasonAutumn, "SEASON_AUTUMN"},
                 {Achievement.SeasonWinter, "SEASON_WINTER"},
                 {Achievement.SeasonSpring, "SEASON_SPRING"},
+                
+                {Achievement.PurchaseOneUpgrade, "PURCHASE_ONE_UPGRADE"},
+                {Achievement.PurchaseAllUpgrades, "PURCHASE_ALL_UPGRADES"},
+                
+                {Achievement.TownsDestroyed10, "TOWNS_DESTROYED_10"},
+                {Achievement.Ruins100, "RUINS_DEMOLISHED_100"},
+                {Achievement.Buildings1000, "BUILDINGS_BUILT_1000"},
             };
 
         public override void Initialise()

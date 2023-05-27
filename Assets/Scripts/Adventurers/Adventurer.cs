@@ -2,10 +2,9 @@ using System;
 using Managers;
 using Quests;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Adventurers
 {

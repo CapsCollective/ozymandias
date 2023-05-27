@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2352569525450913043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: bd97ccf6ac2d08546b7896b5443f840b, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: vikings
+  m_EditorClassIdentifier: 
+  headline: Viking Rager
+  article: Some <b>vikings</b> have set up shop nearby, and are hosting a massive
+    party. I hear these things go wild, we should totally go.
+  image: {fileID: 21300000, guid: 50e2cafa3bcf6df4b9da7ab3ae5b9b43, type: 3}
+  type: 6
+  headliner: 0
+  outcomes:
+  - {fileID: -2352569525450913043}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

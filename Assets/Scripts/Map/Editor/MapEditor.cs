@@ -27,7 +27,7 @@ namespace Map.Editor
             if (map == null) return;
 
             Event e = Event.current;
-            if (e.type != EventType.KeyDown || e.keyCode != KeyCode.Space) return;
+            if (e.type != EventType.KeyDown || e.keyCode != KeyCode.LeftShift) return;
 
             // Raycast from cursor position in the scene view to the closest cell
             Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);

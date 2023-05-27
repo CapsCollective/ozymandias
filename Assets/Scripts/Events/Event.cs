@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Events.Outcomes;
 using NaughtyAttributes;
 using Structures;
@@ -8,7 +9,7 @@ using EventType = Utilities.EventType;
 
 namespace Events
 {
-    [CreateAssetMenu(fileName = "Event")][System.Serializable]
+    [CreateAssetMenu(fileName = "Event")][Serializable]
     public class Event : ScriptableObject
     {
         public string headline;

@@ -1,6 +1,5 @@
 using System;
 using Managers;
-using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;
@@ -45,12 +44,14 @@ namespace Characters
 
         private void FishCheck(InputAction.CallbackContext obj)
         {
+            if (IsOverUi) return;
+            
             if (_fishing)
             {
                 if (_fishCaught)
                 {
                     OnFishCaught?.Invoke();
-                    Manager.Notifications.Display("You caught a fish!", icon);
+                    Manager.Notifications.Display("Secret Unlocked: You caught a fish!", icon);
                     Manager.Stats.Wealth += 1;
                     UpdateUi();
                 }

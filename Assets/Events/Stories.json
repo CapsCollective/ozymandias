@@ -1,45 +1,24 @@
 ﻿[
   {
-    "name": "time-loop-1",
-    "headline": "Local Reporter Stuck in a Time Loop!",
-    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please report back.",
-    "image": "empty-hourglass",
-    "type": "Story",
-    "outcomes": [
-      {
-        "type": "ChainEvent",
-        "nextEvent": {
-          "name": "time-loop-2",
-          "headline": "Local Reporter Stuck in a Time Loop!",
-          "article": "Seriously, it's been three days now, I don't what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
-          "image": "empty-hourglass",
-          "outcomes": [
-            {
-              "type": "ChainEvent",
-              "nextEvent": {
-                "name": "time-loop-3",
-                "headline": "Reporter Doesn't Know How Dates Work",
-                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
-                "image": "empty-hourglass"
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  {
     "name": "bakery-1",
     "headline": "Scarecrows!",
-    "article": "Farmers have awoken to a shock, as their scarecrows have up and started walking about! They have become territorial of their fields to anyone trying to harvest the produce. Local monster experts recommend \"Burning it all down first chance you get.\"",
+    "article": "Farmers have awoken to a shock, as their <b>scarecrows</b> have up and started walking about! They have become territorial of their fields to anyone trying to harvest the produce.\n\nLocal monster experts recommend <i>\"Burning it all down first chance you get.\"</i>",
     "type": "Story",
     "image": "scarecrow",
+    "headliner": true,
+    "blueprintToUnlock": "Bakery",
     "outcomes": [
       {
         "type": "SetFlag",
         "flag": "Scarecrows",
         "value": true,
-        "customDescription": "<color=#820000ff>2 Threat per farm until this is resolved</color>"
+        "customDescription": "<color=#820000ff>+3 Threat (<sprite=9>) per Farm until this is resolved...</color>"
+      },
+      {
+        "type": "BuildingDamaged",
+        "customDescriptions": "We've had to burn all our Farms down...",
+        "buildingType": "Farm",
+        "demolishAll": true
       },
       {
         "type": "SetFlag",
@@ -51,7 +30,7 @@
         "nextEvent": {
           "name": "bakery-2",
           "headline": "Let Them Eat Cake",
-          "article": "A kindly old woman appears \"I heard you're needing food darling, I offer you this delicious cake, if you just let me in.\"",
+          "article": "A kindly old woman appears, carrying with her a delicious looking assortment of cakes and pies.\n\n<i>\"I heard you're needing food darling, dealing with those <b>dastardly scarecrows</b>. I offer you these delicious cakes, if you just let me in...\"</i>",
           "image": "witch-face",
           "choices":
           [
@@ -60,7 +39,7 @@
               "outcomes": [
                 {
                   "type": "FlavourText",
-                  "customDescription": "\"I'm glad you are so welcoming, I hope to see you all soon...\" the woman exclaims before bursting into a pile of delicious cakes."
+                  "customDescription": "<i>\"I'm glad you are so welcoming, eat up!\"</i> the woman exclaims before bursting into a pile of delicious cakes herself, mixing in with the others..."
                 },
                 {
                   "type": "ThreatAdded",
@@ -72,7 +51,7 @@
                     "toChange": "Food",
                     "amount": 50,
                     "turns": 5,
-                    "reason": "from the witches cakes"
+                    "reason": "from the Witch's Cakes"
                   }
                 }
               ]
@@ -82,7 +61,7 @@
               "outcomes": [
                 {
                   "type": "FlavourText",
-                  "customDescription": "\"I hope you all starve!\" the woman shrieks as she bursts into a pile of rotten, inedible, cake."
+                  "customDescription": "<i>\"I hope you all starve!\"</i> the woman shrieks as she bursts into a pile of rotten, inedible, cake."
                 }
               ]
             }
@@ -94,7 +73,7 @@
               "nextEvent": {
                 "name": "bakery-3",
                 "headline": "The Flower Fields",
-                "article": "A beacon of hope for our farmers has come today, as we have retrieved an ancient map that looks to mark the distant homeland of these hazardous scarecrows. While the translation is unclear, it goes on to describe a 'field of flowers', which could be a cure to this curse!",
+                "article": "A beacon of hope for our farmers has come today, as we have retrieved an ancient map that looks to mark the distant homeland of these <b>hazardous scarecrows</b>.\n\nWhile the translation is unclear, it goes on to describe a 'field of flowers', which could be a cure to this curse!",
                 "image": "flowers",
                 "outcomes": [
                   {
@@ -106,17 +85,17 @@
                     "quest": {
                       "name": "bakery-quest",
                       "title": "Find the Flower Fields",
-                      "description": "The scarecrows homeland  are the only thing stopping us from ",
+                      "description": "Venture to the scarecrows' homeland and rid us of this curse",
                       "image": "flowers",
-                      "location": "Dock",
-                      "adventurers": 5,
+                      "location": "Forest",
+                      "adventurers": 6,
                       "baseTurns": 4,
-                      "wealthMultiplier": 1.5,
-                      "reward": "A new food source",
+                      "wealthMultiplier": 1.2,
+                      "reward": "Remove curse: +3 Threat (<sprite=9>) per farm",
                       "completedEvent": {
                         "name": "bakery-4",
                         "headline": "The Flour Fields",
-                        "article": "Our adventurers returned from their quest to rid us of the scarecrow plague, but with bundles of grain, not miracle flowers, in hand. The scent of the delicious grain has calmed the scarecrows, and they agree to go back to their homeland and leave us be. As a parting gift, they left 'these weird stuffed dolls on sticks' in their place.",
+                        "article": "Our adventurers returned from their quest to rid us of the <b>scarecrow scourge</b>, but with bundles of grain, not miracle flowers, in hand. The scent of the delicious grain has calmed the scarecrows, and they agree to go back to their homeland and leave us be.\n\nAs a parting gift, they left <i>\"these weird stuffed dolls on sticks\"</i> in their place.",
                         "image": "scarecrow",
                         "outcomes": [
                           {
@@ -150,9 +129,10 @@
   {
     "name": "plaza-1",
     "headline": "Performance With an Edge!",
-    "article": "A controversial new performer, Gol Brojan has joined the town today. He's stirred up the other performers, claiming they're 'too safe', with his act involving dangerous stunts, giving the audience knives to throw at him during his routine. The influence he has on our town remains to be seen.",
+    "article": "A controversial new performer, <b>Gol Brojan</b> has joined the town today. He's stirred up the other performers, claiming they're 'too safe', with his act involving dangerous stunts, giving the audience knives to throw at him during his routine. The influence he has on our town remains to be seen.",
     "type": "Story",
     "image": "drama-masks",
+    "blueprintToUnlock": "Plaza",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -165,17 +145,18 @@
         "adventurers": [
           {
             "name": "Gol Brojan",
-            "guild": "Outrider"
+            "guild": "Performer"
           }
         ],
-        "customDescription": "Gol Brojan has started performing (+1 Performer)"
+        "customDescription": "Gol Brojan has set up his circus. +1 Performer (<sprite=2>)"
       },
       {
         "type": "ChainEvent",
         "nextEvent": {
           "name": "plaza-2",
           "headline": "Performer Tragically Deplatformed",
-          "article": "In a growing hunger for death-defying acts, a performer has tragically fallen to their death as the audience literally ripped the stage out from under them. The blame has turned to Gol Brojan, the influential figure at the forefront of this \"edgy entertainment\" movement. 'You squares just don't understand REAL art!' he remarked before leaving the town to form a new enterprise, Cirque Du Slay.",
+          "headliner": true,
+          "article": "In a growing hunger for death-defying acts, a performer has tragically fallen to their death as the audience literally ripped the stage out from under them. The blame has turned to <b>Gol Brojan</b>, the influential figure at the forefront of this <i>\"edgy entertainment\"</i> movement.\n\n<i>\"You squares just don't understand REAL art!\"</i> he remarked before leaving the town to form a new enterprise, Cirque Du Slay.",
           "image": "human-pyramid",
           "outcomes": [
             {
@@ -188,31 +169,32 @@
               "type": "AdventurersRemoved",
               "count": 3,
               "guild": "Performer",
-              "customDescription": "Gol and his supporters leave the town to form their own troupe (-3 Performers)."
+              "customDescription": "Gol and his supporters leave the town to form their own troupe. -3 Performers (<sprite=3>)."
             },
             {
               "type": "QuestAdded",
               "quest": {
                 "name": "plaza-quest",
                 "title": "Cirque Du Slay",
-                "description": "Gol Brogan and his canceled crew have to be dealt with.",
+                "description": "Gol Brogan and his canceled crew have to be dealt with",
                 "image": "drama-masks",
                 "location": "Dock",
-                "adventurers": 4,
-                "wealthMultiplier": 1.5,
-                "baseTurns": 3,
-                "reward": "A new performance space",
+                "adventurers": 8,
+                "wealthMultiplier": 0.8,
+                "baseTurns": 6,
+                "reward": "Reward: A new performance space",
                 "completedEvent": {
                   "name": "plaza-3",
                   "headline": "Pay Day for Cirque Du Slay",
-                  "article": "A resolution has been struck with the Cirque Du Slay, with Gol and co agreeing to return, as long as we construct new 'safe spaces' for them to perform their acts. With the correct precautions in place, they will be able to juggle all the fireballs they desire, providing entertainment to the town.",
+                  "headliner": true,
+                  "article": "A resolution has been struck with the Cirque Du Slay, with <b>Gol and Co.</b> agreeing to return, as long as we construct new <i>'safe spaces'</i> for them to perform their acts. With the correct precautions in place, they will be able to juggle all the fireballs they desire, providing entertainment to the town.",
                   "image": "human-pyramid",
                   "outcomes": [
                     {
                       "type": "AdventurersAdded",
                       "count": 3,
                       "guild": "Performer",
-                      "customDescription": "Gol and his supporters rejoin the town (+3 Performers)."
+                      "customDescription": "Gol and his supporters rejoin the town. +3 Performers (<sprite=2>)"
                     },
                     {
                       "type": "SetFlag",
@@ -231,19 +213,19 @@
           ]
         }
       }
-      
     ]
   },
   {
     "name": "monastery-1",
     "headline": "Traveling Merchant Inbound",
-    "article": "Our scouts have reported to us that the traveling merchant has picked up an intriguing new item, and is on the way to our town now. ",
+    "article": "Our scouts have reported to us that the traveling merchant has picked up an <b>intriguing ancient scroll</b>, and is on the way to our town now.",
     "image": "old-wagon",
     "type": "Story",
+    "blueprintToUnlock": "Monastery",
     "outcomes": [
       {
         "type": "SetFlag",
-        "state": "StoryActive",
+        "flag": "StoryActive",
         "value": true,
         "customDescription": "You should start saving up..."
       },
@@ -251,8 +233,8 @@
         "type": "ChainEvent",
         "nextEvent": {
           "name": "monastery-2",
-          "headline": "Merchant Real Close Now",
-          "article": "Our scouts keep hyping up, whatever it is, must be worth it.",
+          "headline": "Merchant Getting Real Close Now",
+          "article": "Our scouts keep hyping up this <b>ancient scroll</b>, whatever it is, must be worth it.",
           "image": "old-wagon",
           "outcomes": [
             {
@@ -264,7 +246,7 @@
               "nextEvent": {
                 "name": "monastery-3",
                 "headline": "Travelling Merchant Comes to Town",
-                "article": "After days of anticipation, the merchant has finally arrived. \"I've just got the one item on me today, but it's a good find!\"",
+                "article": "After days of anticipation, the merchant has finally arrived.\n\n<i>\"I've just got the one item on me today, but it's a good find! I found this <b>scroll</b> while digging in the ruins, looks like a blueprint...\"</i>",
                 "image": "old-wagon",
                 "outcomes": [
                   {
@@ -308,9 +290,10 @@
   {
     "name": "tailor-1",
     "headline": "A Tailor of Two Cities",
-    "article": "Visitors from a nearby settlement have come by, wearing flashy clothes and hats. We've learned that a tailor has been designing unique clothes",
+    "article": "Visitors from a nearby settlement have come by, wearing <b>flashy clothes and hats</b>. We've learned that a tailor has been designing unique clothes that our adventurers will seemingly pay any price to own.",
     "type": "Story",
     "image": "top-hat",
+    "blueprintToUnlock": "Tailor",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -323,7 +306,7 @@
         "nextEvent": {
           "name": "tailor-2",
           "headline": "Foolish Fashion Fixation!",
-          "article": "Adventurers are spending exorbitant amounts on vanity items, but not with us! \"What's the purpose of life if I can't wear a cool hat?\", an adventurer yelled whilst showing off their exclusive unicorn skin fedora. If we don't start making clothes soon, our town will go bankrupt!",
+          "article": "Adventurers are spending exorbitant amounts on <b>cosmetic items</b>, but not with us!\n\n<i>\"What's the purpose of life if I can't wear a cool hat?\"</i>, an adventurer yelled whilst showing off their exclusive unicorn skin fedora.\n\nIf we don't start making clothes soon, our town will go bankrupt!",
           "image": "top-hat",
           "outcomes":
           [
@@ -331,14 +314,14 @@
               "type": "SetFlag",
               "flag": "Cosmetics",
               "value": true,
-              "customDescription": "<color=#820000ff>-2 spending per adventurer until this is resolved.</color>"
+              "customDescription": "<color=#820000ff>No Wealth (<sprite=7>) from adventurers until this is resolved.</color>"
             },
             {
               "type": "ChainEvent",
               "nextEvent": {
                 "name": "tailor-3",
                 "headline": "Loot Boxes",
-                "article": "Someone has come around and is offering a potential solution to our lack of vanity items, loot boxes. \"I mean, I literally fill these boxes with garbage, but there's a surprise in every one!\" The ethics are questionable, but lucrative.",
+                "article": "Someone has come around and is offering a potential solution to our lack of <b>cosmetic items</b>, loot boxes.\n\n<i>\"I mean, I literally fill these boxes with garbage, but there's a surprise in every one!\"</i>\n\nThe ethics are questionable, but lucrative.",
                 "image": "locked-box",
                 "choices": [
                   {
@@ -346,7 +329,7 @@
                     "outcomes": [
                       {
                         "type": "FlavourText",
-                        "customDescription": "It turns out the 'surprise' was explosives."
+                        "customDescription": "It turns out the 'surprise' was explosives..."
                       },
                       {
                         "type": "ThreatAdded",
@@ -360,7 +343,7 @@
                           "turns": 5,
                           "reason": "from Loot Boxes"
                         },
-                        "customDescription": "Somehow, they're still selling like wildfire (+50 spending for 5 turns)."
+                        "customDescription": "Somehow, they're still selling like wildfire. +50 Wealth per turn (<sprite=7>) for 5 turns)."
                       }
                     ]
                   },
@@ -381,24 +364,24 @@
               "quest": {
                 "name": "tailor-quest",
                 "title": "Find the Tailor",
-                "description": "I'm sure our neighbours won't mind if we 'borrow' them for a while.",
+                "description": "I'm sure our neighbours won't mind if we 'borrow' them for a while, and get our adventurers spending again",
                 "image": "Buildings/Tailor",
                 "location": "Dock",
                 "adventurers": 6,
-                "baseTurns": 5,
-                "wealthMultiplier": 2,
-                "reward": "Clothes and Hats for the Town",
+                "baseTurns": 7,
+                "wealthMultiplier": 1.1,
+                "reward": "Remove modifier: No Wealth (<sprite=7>) from adventurers",
                 "completedEvent": {
                   "name": "tailor-4",
                   "headline": "\"It's all about those dances, now!\"",
-                  "article": "Our heroic party has 'retrieved' the tailor from our neighbours, who has agreed to produce clothes for us. However, this has come just as the trend has died down. No longer do they care about clothes, \"It's all about those dances, now!\", an adventurer yelled at our reporter while performing a copyright free dance move.",
+                  "article": "Our heroic party has 'retrieved' the tailor from our neighbours, who has agreed to produce <b>clothes</b> for us. However, this has come just as the trend has died down.\n\n<i>\"It's all about those dances, now!\"</i>, an adventurer yelled at our reporter while performing a copyright free dance move.",
                   "image": "Buildings/Tailor",
                   "outcomes": [
                     {
                       "type": "SetFlag",
                       "flag": "Cosmetics",
                       "value": false,
-                      "customDescription": "<color=#007000ff>Adventurers are now fully spending in our town again!</color>"
+                      "customDescription": "<color=#007000ff>Adventurers are now spending in our town again!</color>"
                     },
                     {
                       "type": "SetFlag",
@@ -421,9 +404,10 @@
   {
     "name": "jeweller-1",
     "headline": "Dwarven Minors",
-    "article": "Reports have come in that the dwarves in the nearby mountains have been working their children in the mines. Their leader sent out a memo explaining \"They're so tiny, they can fit in the little gaps where all the good stuff is.\" GuildCo's PR department have forbid us from trading with them if this continues.",
+    "article": "Reports have come in that the <b>dwarves</b> in the nearby mountains have been working their children in the mines. Their leader sent out a memo explaining <i>\"They're so tiny, they can fit in the little gaps where all the good stuff is!\"</i>\n\nGuildCo's PR department have forbid us from trading with them if this continues.",
     "type": "Story",
     "image": "war-pick",
+    "blueprintToUnlock": "Jeweller",
     "choices": [
       {
         "name": "Impose Child Labour Laws",
@@ -439,7 +423,8 @@
             "nextEvent": {
               "name": "jeweller-2",
               "headline": "A Strike in the Mines!",
-              "article": "The Dwarves are up in arms about the newly imposed child labour laws. \"It's all well and good for YOUR children to not work, but it takes us 50 years to grow up! We're made from birth to be workers!\" the miners representative said, right before proclaiming a halt to all trade with us.",
+              "headliner": true,
+              "article": "The <b>dwarves</b> are up in arms about the newly imposed child labour laws.\n\n<i>\"It's all well and good for YOUR children to not work, but it takes us 50 years to grow up! We're made from birth to be workers!\"</i> the miners' representative stated. The dwarves have proclaimed a halt to all trade with us.",
               "image": "gold-mine",
               "outcomes":
               [
@@ -447,14 +432,14 @@
                   "type": "SetFlag",
                   "flag": "MineStrike",
                   "value": true,
-                  "customDescription": "<color=#820000ff>The lack of minerals has caused a weapons shortage. (-5 defence until this is resolved).</color>"
+                  "customDescription": "<color=#820000ff>The lack of minerals has caused a weapons shortage. -5 Defence (<sprite=8>) until this is resolved.</color>"
                 },
                 {
                   "type": "ChainEvent",
                   "nextEvent": {
                     "name": "jeweller-3",
                     "headline": "Crossing the Picket Line",
-                    "article": "In an attempt to offset the Dwarven Strike, we've scouted out some alternatives to work the mines in the meantime. A Dwarven representative chuckled \"You send anyone else in those mines, you'll learn the true meaning of 'crunch'.\"",
+                    "article": "In an attempt to offset the <b>dwarven strike</b>, we've scouted out some alternatives to work the mines in the meantime.\n\nA dwarven representative chuckled <i>\"You send anyone else in those mines, you'll learn the true meaning of 'crunch'.\"</i>",
                     "image": "uprising",
                     "choices": [
                       {
@@ -466,6 +451,7 @@
                           },
                           {
                             "type": "AdventurersRemoved",
+                            "anyGuild": true,
                             "kill": true,
                             "count": 3
                           },
@@ -477,7 +463,7 @@
                               "turns": 3,
                               "reason": "from Adventurer Scabs"
                             },
-                            "customDescription": "We still managed to get some metals out (+4 defence for 3 turns)."
+                            "customDescription": "We still managed to get some metals out. +4 Defence (<sprite=8>) for 3 turns."
                           }
                         ]
                       },
@@ -505,7 +491,7 @@
                               "turns": 3,
                               "reason": "from Gnome Scabs"
                             },
-                            "customDescription": "We still managed to get some metals out (+4 defence for 3 turns)"
+                            "customDescription": "We still managed to get some metals out. +4 Defence (<sprite=8>) for 3 turns."
                           }
                         ]
                       },
@@ -514,7 +500,7 @@
                         "outcomes": [
                           {
                             "type": "FlavourText",
-                            "customDescription": "The Dwarves gloat, knowing you couldn't find anyone better."
+                            "customDescription": "The dwarves gloat, knowing you couldn't find anyone better."
                           }
                         ]
                       }
@@ -526,17 +512,17 @@
                   "quest": {
                     "name": "jeweller-quest",
                     "title": "Resolve the Dwarven Strike",
-                    "description": "I'm sure there's something we can do to get them working again.",
+                    "description": "I'm sure there's something we can do to get them working again",
                     "image": "gold-mine",
-                    "location": "Dock",
+                    "location": "Mountains",
                     "adventurers": 4,
                     "baseTurns": 6,
                     "wealthMultiplier": 1.3,
-                    "reward": "Access to Minerals",
+                    "reward": "Remove modifier: -5 Defence (<sprite=8>)",
                     "completedEvent": {
                       "name": "jeweller-4",
                       "headline": "The Dwarven Family Jewels",
-                      "article": "A deal has been struck to get the Dwarves back working in the mines. They have agreed to allow their children to partake in a jeweller apprenticeship in our town (unpaid, of course). \"Their tiny little hands make excellent Jewellery, they can do that until they come of age.\"",
+                      "article": "A deal has been struck to get the dwarves back working in the mines. They have agreed to allow their children to partake in a jeweller apprenticeship in our town (unpaid, of course).\n\n<i>\"Their tiny little hands make excellent jewellery, and they can do that until they come of age.\"</i>",
                       "image": "Buildings/Jeweller",
                       "outcomes": [
                         {
@@ -548,7 +534,7 @@
                           "type": "SetFlag",
                           "flag": "MineStrike",
                           "value": false,
-                          "customDescription": "Our weapons can use actual metals again! (+5 defence)"
+                          "customDescription": "Our weapons can use actual metals again! +5 Defence (<sprite=8>)"
                         },
                         {
                           "type": "CardUnlocked",
@@ -564,7 +550,7 @@
         ]
       },
       {
-        "name": "Let Them Continue",
+        "name": "Cut Off Trade",
         "outcomes": [
           {
             "type": "FlavourText",
@@ -574,7 +560,7 @@
             "type": "ModifierAdded",
             "modifier": {
               "toChange": "Defence",
-              "amount": -5,
+              "amount": -3,
               "turns": -1,
               "reason": "from the Wooden Weapons"
             }
@@ -586,9 +572,10 @@
   {
     "name": "armoury-1",
     "headline": "Starry Eyed and Bushy Tailed",
-    "article": "A pair of adventurers have stumbled out of the forest in the early hours of the morning, calling themselves 'Red' and 'Mr. Woodsman'. They claim not to know how they got here, but have vague memories of being chased by a hideous hairy beast.",
+    "article": "A pair of adventurers have stumbled out of the forest in the early hours of the morning, calling themselves 'Red' and 'Mr. Woodsman'. They claim not to know how they got here, but have vague memories of being chased by a <b>hideous, hairy beast</b>.",
     "type": "Story",
     "image": "hooded-figure",
+    "blueprintToUnlock": "Armoury",
     "outcomes": [
       {
         "type": "AdventurersAdded",
@@ -602,7 +589,7 @@
             "guild": "Brawler"
           }
         ],
-        "customDescription": "Red and Mr. Woodsman find a home in town"
+        "customDescription": "Red and Mr. Woodsman find a home in town. +2 Adventurers"
       },
       {
         "type": "SetFlag",
@@ -615,7 +602,7 @@
         "nextEvent": {
           "name": "armoury-2",
           "headline": "Howler of a Night",
-          "article": "Last night there was an attack, causing the destruction of one of our blacksmiths. Witnesses claim howling could be heard from the location, and glimpses of a hideous hairy beast could be seen running away, illuminated by the full moon. Why \"Silvia and Sons Silver Swordery\" was specifically targeted remains a mystery to all.",
+          "article": "Last night there was an attack, causing the destruction of one of our blacksmiths. Witnesses claim howling could be heard from the location, and glimpses of a <b>hideous, hairy beast</b> could be seen running away, illuminated by the full moon.\n\nWhy <i>\"Silvia and Sons Silver Swordery\"</i> was specifically targeted remains a mystery to all.",
           "image": "wolf-howl",
           "outcomes": [
             {
@@ -627,7 +614,7 @@
               "nextEvent": {
                 "name": "armoury-3",
                 "headline": "Aware(wolf) of the Dangers",
-                "article": "Shocking revelations this morning as newly introduced member to our town (who you may remember mysteriously stumbling out of the woods) 'Red' has confessed to being the werewolf behind the recent attack! Coming to her defence, Mr. Woodsman pleads that to cure her we must defeat the grand-matriarch werewolf (known as 'Granny').",
+                "article": "Shocking revelations this morning as newly introduced member to our town 'Red' has confessed to being the <b>werewolf</b> behind the recent attack! Coming to her defence, Mr. Woodsman pleads that to cure her we must defeat the grand-matriarch werewolf, known as 'Granny'.",
                 "image": "werewolf",
                 "outcomes": [
                   {
@@ -635,17 +622,17 @@
                     "quest": {
                       "name": "armoury-quest",
                       "title": "Hunt Granny Werewolf",
-                      "description": "Break the curse by defeating the grand-matriarch werewolf.",
+                      "description": "Break the curse by defeating the grand-matriarch werewolf",
                       "image": "werewolf",
-                      "location": "Dock",
+                      "location": "Forest",
                       "adventurers": 7,
                       "baseTurns": 5,
-                      "wealthMultiplier": 2,
-                      "reward": "Retrieve our Silver Supply",
+                      "wealthMultiplier": 1.7,
+                      "reward": "Reward: Retrieve our silver supply",
                       "completedEvent": {
                         "name": "armoury-4",
                         "headline": "What Crushed Face You Have!",
-                        "article": "Our adventurers tracked down the grand-matriarch werewolf to a little cottage. Upon advice from Red, they lured her out with a basket of baked goods before crushing her face with a mace. It was a smashing success! In her shack, there was a plethora of stolen weapons, so much so we could build a whole armoury!",
+                        "article": "Our adventurers tracked down the menacing <b>'Granny' werewolf</b> to a little cottage. Upon advice from Red, they lured her out with a basket of baked goods before crushing her face with a mace. It was a smashing success!\n\nIn her shack, there was a plethora of stolen weapons, so much so we could build a whole armoury!",
                         "image": "wood-club",
                         "outcomes": [
                           {
@@ -672,9 +659,10 @@
   {
     "name": "barracks-1",
     "headline": "Commoners Ceramics Cause Complaints!",
-    "article": "For the third time this week, our townsfolk have submitted a formal complaint of adventurers coming into their stores and destroying their precious pots and vases in the pursuit of hidden treasure. \"We've had enough! We're forming our own guild!\" the newly formed league of 'Normal Folk' declared to no one in particular.",
+    "article": "For the third time this week, our townsfolk have submitted a formal complaint of adventurers coming into their stores and destroying their precious pots and vases in the pursuit of hidden treasure.\n\n<i>\"We've had enough! We're forming our own guild!\"</i> the newly formed <b>'League of Normal Folk'</b> declared to no one in particular.",
     "type": "Story",
     "image": "broken-pottery",
+    "blueprintToUnlock": "Armoury",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -687,11 +675,12 @@
         "nextEvent": {
           "name": "barracks-2",
           "headline": "Lack of Leadership Loses Lives",
-          "article": "A member from the commoners guild managed to get an entire adventuring party killed earlier today, when their attempt at a heroic charge while yelling their name at full volume gave away their position. \"If you're gonna be getting in our way, least we can do is find you some training!\" We've heard of a retired general not too far from here that might be willing to get them started.",
+          "article": "A member from the <b>commoners guild</b> managed to get an entire adventuring party killed earlier today, when their attempt at a heroic charge while yelling their name at full volume gave away their position.\n\n<i>\"If you're gonna be getting in our way, least we can do is find you some training!\"</i>\n\nWe've heard of a retired general not too far from here that might be willing to get them started.",
           "image": "shouting",
           "outcomes": [
             {
               "type": "AdventurersRemoved",
+              "anyGuild": true,
               "count": 3,
               "kill": true
             },
@@ -703,14 +692,14 @@
                 "description": "The commoners need some leadership if they're going to be any help",
                 "image": "wisdom",
                 "location": "Dock",
-                "adventurers": 4,
-                "baseTurns": 6,
-                "wealthMultiplier": 1.7,
-                "reward": "Better Trained Commoners",
+                "adventurers": 6,
+                "baseTurns": 7,
+                "wealthMultiplier": 1.6,
+                "reward": "Reward: Better trained commoners",
                 "completedEvent": {
                   "name": "barracks-3",
                   "headline": "Barracking for the Normal Folks!",
-                  "article": "The questing party has returned with the former General, who, while in no fighting shape, immediately started criticising the towns \"pathetic excuse for a town guard\", and barking orders. His first request is establishing some barracks for training. Adventurers are happily going along with this charade, at least it'll give them some slightly sturdier cannon fodder.",
+                  "article": "The questing party has returned with the former general, who, while in no fighting shape, immediately started criticising the towns <i>\"pathetic excuse for a <b>town guard</b>\"</i>.\n\nAdventurers are happily going along with this charade, at least it'll give them some slightly sturdier cannon fodder. His first order is establishing some barracks for training.",
                   "image": "wisdom",
                   "outcomes": [
                     {
@@ -721,6 +710,12 @@
                     {
                       "type": "CardUnlocked",
                       "blueprint": "Barracks"
+                    },
+                    {
+                      "type": "AdventurersAdded",
+                      "anyGuild": true,
+                      "count": 1,
+                      "customDescription": "The General has moved in. +1 Adventurer"
                     }
                   ]
                 }
@@ -734,9 +729,10 @@
   {
     "name": "enchanter-1",
     "headline": "Wait, Which Witch?",
-    "article": "Rumours there is a witch in the outskirts that is cursing our town. One adventurer claims the Witch made his sword fragile and blunt, another has been given a terrible hangover absolutely unrelated to a night of heavy drinking. These angry adventurers wish to bring the Witch to trial, but we want to hear her side first...",
+    "article": "Rumours there is a <b>wicked witch</b> in the outskirts that is cursing our town. One adventurer claims the witch made his sword fragile and blunt, another has been given a terrible hangover absolutely unrelated to a night of heavy drinking.\n\nThese angry adventurers wish to bring the witch to trial, but we want to hear her side first...",
     "type": "Story",
     "image": "uprising",
+    "blueprintToUnlock": "Enchanter",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -748,17 +744,17 @@
         "quest": {
           "name": "enchanter-quest",
           "title": "Do a Witch Hunt",
-          "description": "Look, I don't like it any more than you, but she might be a help",
+          "description": "Look, I don't like it any more than you, but it's always good fun",
           "image": "witch-face",
-          "location": "Dock",
-          "adventurers": 5,
-          "baseTurns": 4,
-          "wealthMultiplier": 1.6,
-          "reward": "A Witches Magic",
+          "location": "Forest",
+          "adventurers": 9,
+          "baseTurns": 5,
+          "wealthMultiplier": 0.4,
+          "reward": "Reward: A witch's magic",
           "completedEvent": {
             "name": "enchanter-2",
             "headline": "No Peace for the Wiccan",
-            "article": "The mob found the evil witch, and accused her of misdeeds. As it turns out, quite the opposite has been happening, and she's been protecting us this whole time. \"But if you want me to stop and for the storm clouds to obliterate you, I can surely do that\". The adventurers quickly backed off. \"Good good, now here's some enchantments, go make your weapons nice and strong and leave me be\" the witch was quoted as the mob started nervously backing off.",
+            "article": "The mob found the <b>evil witch</b>, and accused her of misdeeds. As it turns out, quite the opposite has been happening, and she's been protecting us this whole time.\n\n<i>\"But if you want me to stop and for the storm clouds to obliterate you, I can surely abide...\"</i>\n\n<i>\"Good good, now here's some enchantments, go make your weapons nice and strong and leave me be\"</i> the witch chided as the mob began nervously backing off.",
             "image": "wisdom",
             "outcomes": [
               {
@@ -779,13 +775,15 @@
   {
     "name": "tannery-1",
     "headline": "The Undead Are Dead!",
-    "article": "Tragedy unfolded at a local inn last night, as regional vampire cosplay and literature organisation, The Undead Poets Society, held their annual gala dinner, only to be brutally slain by a leather-clad, rag-tag team of vampire hunters who embarrassingly mistook them for the real deal.",
+    "article": "Tragedy unfolded at a local inn last night, as regional vampire cosplay and literature organisation, The Undead Poets Society, held their annual gala dinner, only to be brutally slain by a leather-clad, rag-tag team of <b>vampire hunters</b> who embarrassingly mistook them for the real deal.",
     "type": "Story",
     "image": "resting-vampire",
+    "blueprintToUnlock": "Tannery",
     "outcomes": [
       {
         "type": "AdventurersRemoved",
         "count": 2,
+        "anyGuild": true,
         "kill": true,
         "customDescription": "Two adventurers were amongst the casualties."
       },
@@ -800,37 +798,37 @@
         "nextEvent": {
           "name": "tannery-2",
           "headline": "The Fangs Are Out!",
-          "article": "The vampire hunters, thoroughly embarrassed by their blunder upon arriving in town, have today stumbled upon a vampire enclave! \"It's like a nest in there! I've never seen so many Draculas!\". The discovery has quickly sparked an all-out war, threatening to spill blood all over our streets - a fine waste.",
+          "article": "The <b>vampire hunters</b>, thoroughly embarrassed by their blunder upon arriving in town, have today stumbled upon a vampire enclave!\n\n<i>\"It's like a nest in there! I've never seen so many Draculas!\"</i>\n\nThe discovery has quickly sparked an all-out war, threatening to spill blood all over our streets - a fine waste.",
           "image": "resting-vampire",
           "outcomes": [
             {
               "type": "ThreatAdded",
-              "amount": 3
+              "baseAmount": 3
             },
             {
               "type": "ChainEvent",
               "nextEvent": {
                 "name": "tannery-3",
                 "headline": "Tight Leather Supply Spurs Shortage",
-                "article": "As tensions continue to rise amidst the civil war breaking out between vampires and their slayers, demand for leather goods has soared, leading to mass shortages on jackets, capes, and whips. The townsfolk have set about organising a hunting party in search of hides from creatures big and small (sorry gnomes).",
-                "image": "werewolf",
+                "article": "As tensions continue to rise amidst the civil war breaking out between <b>vampires</b> and their slayers, demand for leather goods has soared, leading to mass shortages on jackets, capes, and whips.\n\nThe townsfolk have set about organising a hunting party in search of hides from creatures big and small (sorry gnomes).",
+                "image": "animal-hide",
                 "outcomes": [
                   {
                     "type": "QuestAdded",
                     "quest": {
                       "name": "tannery-quest",
                       "title": "Hunt for Hides",
-                      "description": "The vampire war has caused a shortage in leatherwear!",
+                      "description": "The vampire war has caused a shortage in leather-wear!",
                       "image": "Buildings/Tannery",
-                      "location": "Dock",
+                      "location": "Forest",
                       "adventurers": 7,
-                      "baseTurns": 5,
-                      "wealthMultiplier": 2,
-                      "reward": "End the leather shortage",
+                      "baseTurns": 4,
+                      "wealthMultiplier": 1.5,
+                      "reward": "Reward: End the leather shortage",
                       "completedEvent": {
                         "name": "tannery-4",
                         "headline": "Former Foes Now Skin-Tight",
-                        "article": "An emotional day for many as vampires and vampire hunters finally called a truce to the ongoing bloodbath, in order to peruse the latest shipment of leather goods. \"We're not so different, you and I.\" one vampire mused, to which a hunter replied \"eh, I s'pose you're right; you like your steak rare, I like it wooden\". The once immortal enemies, now sworn allies bonded in leather.",
+                        "article": "An emotional day for many as <b>vampires and vampire hunters</b> finally called a truce to the ongoing bloodbath, in order to peruse the latest shipment of leather goods.\n\n<i>\"We're not so different, you and I.\"</i> one vampire mused, to which a hunter replied <i>\"eh, I s'pose you're right; you like your steak rare, I like it wooden\"</i>.\n\nThe once immortal enemies, now sworn allies, bound intimately by leather.",
                         "image": "leather-armor",
                         "outcomes": [
                           {
@@ -857,9 +855,10 @@
   {
     "name": "apothecary-1",
     "headline": "These Rats are Revolting!",
-    "article": "Up from the under-city, the rats have risen up, and with them a deadly disease! \"Ve have been downtrodden, but non more! Ve shall unite as one voice!\" They may infect the whole town if we're not careful, we need to lock down right away!",
+    "article": "Up from the under-city, the rats have risen, and with them a <b>deadly disease</b>!\n\n<i>\"Ve have been downtrodden, but non more! Ve shall unite as one voice!\"</i>\n\nThey may infect the whole town if we're not careful; we need to lock it down right away!",
     "type": "Story",
     "image": "rat",
+    "blueprintToUnlock": "Apothecary",
     "choices": [
       {
         "name": "Enforce lockdowns",
@@ -899,7 +898,7 @@
         "nextEvent": {
           "name": "apothecary-2",
           "headline": "Adventuring Bailouts Needed!",
-          "article": "With the plague requiring businesses to temporarily close, unable to feed their families, we look to the Adventurers, who are sad to have to stay home. We should really give them more money to keep them from going out and causing more infections.",
+          "article": "With the <b>rat plague</b> requiring businesses to temporarily close, many are unable to feed their families. More pressingly, we should really think of the Adventurers, who are just sad to have to stay home. We should really give them more money to keep them from going out and causing more infections.",
           "image": "treasure-chest",
           "choices": [
             {
@@ -931,7 +930,7 @@
               "nextEvent": {
                 "name": "apothecary-3",
                 "headline": "Rats All Night",
-                "article": "While we're still in the search of a cure to this horrible illness, the rats have been organising something at night, scouts claiming to spot 'multiple rats singing about their dreams while joined at the tail'. Whatever is going on there we should probably avoid, lest we fall ill. Although a curfew may leave our town vulnerable at night.",
+                "article": "While we're still in the search of a cure to this <b>horrible rat plague</b>, the rats have been organising something at night, scouts claiming to spot <i>\"multiple rats singing about their dreams while joined at the tail\"</i>.\n\nWhatever is going on there we should probably avoid it, lest we fall ill. That being said, a curfew may leave our town vulnerable at night.",
                 "image": "night-sky",
                 "choices": [
                   {
@@ -943,7 +942,7 @@
                           "toChange": "Defence",
                           "amount": -3,
                           "turns": 2,
-                          "reason": "from the curfew orders"
+                          "reason": "from the Curfew Orders"
                         }
                       }
                     ]
@@ -967,14 +966,18 @@
                     "nextEvent": {
                       "name": "apothecary-4",
                       "headline": "Every Rat a King",
-                      "article": "In a final act of unity, the Rats shockingly all joined together in a giant ball?!? \"At las'! We 'ave achieved unity!\" It promptly rolled off into the unknown, good for them... I think? In the now empty undercity, our adventurers found an enormous stash of glass bottles labeled \"Rat Juice\". An adventurous brawler took it without reading the label, and discovered it cured their illness!",
+                      "article": "In a final act of unity, the rats shockingly all joined together in a giant ball?\n\n<i>\"At las'! We 'ave achieved unity!\"</i> it chanted before promptly rolling off into the distance. Good for them... I think?\n\nIn the now empty undercity, we found a stash of glass bottles labeled <i>\"Rat Juice\"</i>. It tastes as you'd expect, but it does <b>cure the plague</b>!",
                       "image": "potion-ball",
                       "outcomes": [
+                        {
+                          "type": "FlavourText",
+                          "customDescription": "The rat plague is solved?"
+                        },
                         {
                           "type": "SetFlag",
                           "flag": "StoryActive",
                           "value": false,
-                          "customDescription": "We've started distributing the bottles to a new store..."
+                          "customDescription": "We've started distributing the bottles..."
                         },
                         {
                           "type": "CardUnlocked",
@@ -994,9 +997,10 @@
   {
     "name": "cartographer-1",
     "headline": "Mysterious Map: Marvelous or Mischievous?",
-    "article": "A strange map was found pinned to the town notice board this morning, with a note attached. \"This map will set you on a journey, leading to untold riches!\" The legitimacy of this claim is yet to be proven, and nobody has come forward as the source of this quest, but we can probably check it out.",
+    "article": "A <b>strange map</b> was found pinned to the town notice board this morning, with a note attached.\n\n<i>\"This map will set you on a journey, leading to untold riches!\"</i>\n\nThe legitimacy of this claim is yet to be proven, and nobody has come forward as the source of this quest, but we can probably check it out.",
     "type": "Story",
     "image": "map",
+    "blueprintToUnlock": "Cartographer",
     "outcomes": [
       {
         "type": "SetFlag",
@@ -1011,14 +1015,14 @@
           "description": "It has to lead somewhere...",
           "image": "map",
           "location": "Dock",
-          "adventurers": 2,
-          "baseTurns": 3,
-          "wealthMultiplier": 0.7,
-          "reward": "Untold riches, apparently?",
+          "adventurers": 4,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.6,
+          "reward": "Reward: Untold riches, apparently?",
           "completedEvent": {
             "name": "cartographer-2",
             "headline": "Detour Ahead!",
-            "article": "Our adventurers have returned from their investigation into the mysterious map left on our towns noticeboard, with yet ANOTHER map in hand. Along with it, another note, \"You have progressed on your quest, but the location of these riches is still to be found. Follow the trail, and I promise you'll be rewarded.\" ",
+            "article": "Our adventurers have returned from their investigation into the <b>mysterious map</b> left on our town's noticeboard, with yet ANOTHER map in hand.\n\nAlong with it, another note: <i>\"You have progressed on your quest, but the location of these riches is still to be found. Follow the trail, and I promise you'll be rewarded.\"</i>",
             "image": "map",
             "outcomes": [
               {
@@ -1026,17 +1030,17 @@
                 "quest": {
                   "name": "cartographer-quest-2",
                   "title": "Follow the Map, Again",
-                  "description": "This is starting to feel suspect.",
+                  "description": "This is starting to feel suspect...",
                   "image": "map",
-                  "location": "Dock",
-                  "adventurers": 2,
-                  "baseTurns": 2,
-                  "wealthMultiplier": 0.6,
-                  "reward": "Hopefully actual treasure this time...",
+                  "location": "Mountains",
+                  "adventurers": 3,
+                  "baseTurns": 3,
+                  "wealthMultiplier": 0.3,
+                  "reward": "Reward: Hopefully actual treasure this time...",
                   "completedEvent": {
                     "name": "cartographer-3",
                     "headline": "When Will This Torture End?!",
-                    "article": "Yet again, our adventurers have returned with a new map and not a treasure in hand. \"Not much further now! What lies at the end of this trail is worth it.\" I swear, if this one doesn't have a good payoff, I'm quitting.",
+                    "article": "Yet again, our adventurers have returned with a <b>new map</b> and no treasure in hand.\n\n<i>\"Not much further now! What lies at the end of this trail is worth it.\"</i>\n\nI swear, if this story doesn't have a good payoff, I'm quitting.",
                     "image": "map",
                     "outcomes": [
                       {
@@ -1046,15 +1050,15 @@
                           "title": "Follow THIS Map, I Guess",
                           "description": "This is the one, I can feel it...",
                           "image": "map",
-                          "location": "Dock",
-                          "adventurers": 2,
+                          "location": "Forest",
+                          "adventurers": 3,
                           "baseTurns": 3,
-                          "wealthMultiplier": 0.5,
-                          "reward": "It's gotta lead to something!",
+                          "wealthMultiplier": 0.3,
+                          "reward": "Reward: It's gotta lead to something!",
                           "completedEvent": {
                             "name": "cartographer-4",
                             "headline": "\"This Is Just Too Many Maps!\"",
-                            "article": "Our adventurers have returned, this time not with a single map, but hundreds! At the location specified, there was a huge stash of maps, each with the note \"Nah, really, THIS one is the real one. You gotta believe me.\" Frankly, we've had enough, it wasn't even a 'friends along the way' deal! We gotta get rid of all these maps somehow...",
+                            "article": "Our adventurers have returned, this time not with a single <b>map</b>, but hundreds! At the location specified, there was a huge stash of maps, each with the note <i>\"Nah, really, THIS one is the final one. Trust me, dude!\"</i>\n\nFrankly, we've had enough, it wasn't even a 'friends along the way' deal! We gotta get rid of all these maps somehow...",
                             "image": "map",
                             "outcomes": [
                               {
@@ -1084,7 +1088,7 @@
   {
     "name": "water-purity-1",
     "headline": "Well Wastage Causes Wicked Water",
-    "article": "A batch of expired potions has been illegally dumped into our well, resulting in tainted water! We need to search for a solution, quick!\n<b>Diviners: </b>Our scriptures tell of a sacred site, the 'Fountain of Purity', a single drop from it may solve our problems.\n<b>Performers: </b>Orrrr, we could 'borrow' some brewing supplies from the orcs. It's a win win! We get to purified water, and everyone gets a little buzzed!",
+    "article": "A batch of expired potions has been illegally dumped into our well, resulting in <b>tainted water</b>! We need to search for a solution, quick!\n\n<b>Diviners:</b> <i>\"Our scriptures tell of a sacred site, the 'Fountain of Purity', a single drop from it may solve our problems.\"</i>\n\n<b>Performers:</b> <i>\"Orrrr, we could 'borrow' some brewing supplies from the orcs. It's a win win! We get purified water, and everyone gets a little buzzed!\"</i>",
     "type": "Story",
     "image": "well",
     "outcomes": [
@@ -1103,17 +1107,17 @@
             "quest": {
               "name": "water-bathhouse-quest",
               "title": "Find the Fountain of Purity",
-              "description": "This should cure our tainted water.",
+              "description": "This should cure our tainted water...",
               "image": "waterfall",
-              "location": "Dock",
-              "adventurers": 5,
+              "location": "Mountains",
+              "adventurers": 7,
               "baseTurns": 4,
-              "wealthMultiplier": 1.6,
-              "reward": "Purified water",
+              "wealthMultiplier": 1.4,
+              "reward": "Reward: Purified water",
               "completedEvent": {
                 "name": "water-bathhouse-completed",
                 "headline": "\"I've Never Felt so Clean\"",
-                "article": "Our adventurers have returned, vials of crystal clear water in hand. While a single drop was enough to cure our water supply, bathing in the mixture results in a relaxation beyond compare!",
+                "article": "Our adventurers have returned, vials of crystal clear water in hand. While a single drop was enough to <b>cure our water supply</b>, bathing in the mixture results in a relaxation beyond compare!",
                 "image": "Buildings/Bath House",
                 "outcomes": [
                   {
@@ -1142,15 +1146,15 @@
               "title": "Retrieve Brewing Supplies",
               "description": "We can probably get some from the orc camp.",
               "image": "hops",
-              "location": "Dock",
-              "adventurers": 5,
+              "location": "Mountains",
+              "adventurers": 7,
               "baseTurns": 4,
-              "wealthMultiplier": 1.6,
-              "reward": "'Purified' water",
+              "wealthMultiplier": 1.4,
+              "reward": "Reward: 'Purified' water",
               "completedEvent": {
                 "name": "water-brewery-completed",
                 "headline": "Hops to it, Then!",
-                "article": "Returning from the orc camp, the adventurers recount that all seemed lost when they were caught and the Orcs started to descend on them. However, once they explained they were looking for beer, all hostilities dropped, and the chieftain was more than happy to hand over his personal starter kit and send them on their way. They may be bloodthirsty monsters who have waged a ceaseless war on us, but they DO respect the art of brewing!",
+                "article": "Returning from the orc camp, the adventurers recount that all seemed lost when they were caught and the orcs started to descend on them. However, once they explained they wanted to <b>learn how to brew</b>, all hostilities dropped, and the chieftain was more than happy to hand over his personal starter kit and send them on their way.\n\nThey may be bloodthirsty monsters who have waged a ceaseless war on us, but they DO respect the art of brewing!",
                 "image": "hops",
                 "outcomes": [
                   {
@@ -1174,7 +1178,7 @@
   {
     "name": "fights-1",
     "headline": "Fighting Fiasco!",
-    "article": "A huge bar fight broke out today that was so action packed it completely demolished the tavern it took place in! The fight seemed have started out as a competition between the Brawlers and Outriders over who was the toughest, a childish argument, but what could we expect?",
+    "article": "A huge <b>bar fight</b> broke out today that was so action packed it completely demolished the tavern it took place in! The fight seemed have started out as a competition between the Brawlers and Outriders over who was the toughest, a childish argument, but what could we expect?",
     "type": "Story",
     "image": "punch-blast",
     "outcomes": [
@@ -1193,7 +1197,7 @@
         "nextEvent": {
           "name": "fights-2",
           "headline": "A Fix to the Fighting",
-          "article": "In response to our growing rage issues bubbling though the town, we've had two proposals:\n<b>Performer: </b>\"Fighting Rings! Not only will they be punching each other and not your buildings, but we get to watch them do it!\"\n<b>Outrider: </b>\"Maybe, if we started a little club, get them to hunt things. They probably won't catch anything larger than a jackalope, but it'll make them feel big and tough.\"",
+          "article": "In response to our <b>growing rage issues</b> bubbling though the town, we've had two proposals:\n\n<b>Performers:</b> <i>\"Fighting Rings! Not only will they be punching each other and not your buildings, but we get to watch them do it!\"</i>\n\n<b>Outriders:</b> <i>\"Maybe, we can start a little club, get them to hunt things. They probably won't catch anything larger than a jackalope, but it'll make them feel big and tough.\"</i>",
           "image": "punch-blast",
           "outcomes": [
             {
@@ -1208,7 +1212,7 @@
               "outcomes": [
                 {
                   "type": "CardUnlocked",
-                  "blueprint": "FightingRing"
+                  "blueprint": "Fighting Ring"
                 }
               ]
             },
@@ -1217,11 +1221,185 @@
               "outcomes": [
                 {
                   "type": "CardUnlocked",
-                  "blueprint": "HuntingLodge"
+                  "blueprint": "Hunting Lodge"
                 }
               ]
             }
           ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "time-loop-1",
+    "headline": "Local Reporter Stuck in a Time Loop!",
+    "article": "Guys, you've gotta believe me. I woke up this morning and everything was just like yesterday. If anyone has any information, please let me know!",
+    "image": "empty-hourglass",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "ChainEvent",
+        "nextEvent": {
+          "name": "time-loop-2",
+          "headline": "Local Reporter Stuck in a Time Loop!",
+          "article": "Seriously, it's been three days now, I don't know what to do. I feel like I'm losing my mind here. Did I piss off a trickster god or something?",
+          "image": "empty-hourglass",
+          "outcomes": [
+            {
+              "type": "ChainEvent",
+              "nextEvent": {
+                "name": "time-loop-3",
+                "headline": "Reporter Doesn't Know How Dates Work",
+                "article": "Ok, sorry about that one everyone, I just forgot to mark off my calender. Won't happen again, promise.",
+                "image": "empty-hourglass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "macguffins-1",
+    "headline": "The Search for Plot Contrivances",
+    "article": "A local prophet has spoken again of the mysterious <b>MacGuffins</b> and their importance to our story. We don't fully understand what they do, but apparently we must set off on a voyage to find them immediately!",
+    "image": "puzzle",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "macguffins-1-quest",
+          "location": "Dock",
+          "title": "Hunt for the MacGuffins",
+          "description": "They're important for the plot",
+          "image": "puzzle",
+          "adventurers": 4,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.3,
+          "completedEvent": {
+            "name": "macguffins-1-completed",
+            "headline": "MacGuffins Form Powerful Artifact",
+            "article": "Our adventurers have returned, <b>MacGuffins</b> in hand. When pieced together, the <b>MacGuffins</b> form a conveniently powerful defensive weapon, that will keep us safe (for like 3 days before it's never brought up again)",
+            "image": "puzzle",
+            "outcomes": [
+              {
+                "type": "SetFlag",
+                "flag": "StoryActive",
+                "value": false
+              },
+              {
+                "type": "ModifierAdded",
+                "modifier": {
+                  "toChange": "Defence",
+                  "amount": 3,
+                  "turns": -1,
+                  "reason": "from the MacGuffin Defence System"
+                }
+              }
+
+            ]
+          }          
+        }
+      }
+    ]
+  },
+  {
+    "name": "macguffins-2",
+    "headline": "MacGuffin Craze",
+    "article": "The hottest new word around town is <b>MacGuffin</b>', and everyone wants to get their hands on one! Nobody is actually entirely sure what they are, but we know that we will delve into the deepest dungeons to obtain them!",
+    "image": "smitten",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "macguffins-2-quest",
+          "location": "Mountains",
+          "title": "Hunt for the MacGuffins",
+          "description": "They're the new craze around town",
+          "image": "smitten",
+          "adventurers": 4,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.3,
+          "completedEvent": {
+            "name": "macguffins-2-completed",
+            "headline": "The Cutest MacGuffins You've Ever Seen!",
+            "article": "Our adventuring party has returned, <b>MacGuffins</b> in hand, and it's the new craze around town. People are flooding the stores trying to get their hands on these things! We still don't fully understand their use, or where they came from, but they're so exclusive that <b>I must have one!</b>",
+            "image": "smitten",
+            "outcomes": [
+              {
+                "type": "SetFlag",
+                "flag": "StoryActive",
+                "value": false
+              },
+              {
+                "type": "ModifierAdded",
+                "modifier": {
+                  "toChange": "Spending",
+                  "amount": 25,
+                  "turns": -1,
+                  "reason": "from the MacGuffin Craze"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "macguffins-3",
+    "headline": "What is this 'MacGuffin?'",
+    "article": "Rumours are spreading of a mysterious 'MacGuffin'. Is it a person, is it an artifact? Either way, we must set out on a grand quest to find it!",
+    "image": "puzzle",
+    "type": "Story",
+    "outcomes": [
+      {
+        "type": "SetFlag",
+        "flag": "StoryActive",
+        "value": true
+      },
+      {
+        "type": "QuestAdded",
+        "quest": {
+          "name": "macguffins-3-quest",
+          "location": "Forest",
+          "title": "Hunt for 'MacGuffin'",
+          "description": "They must be important...",
+          "image": "puzzle",
+          "adventurers": 4,
+          "baseTurns": 4,
+          "wealthMultiplier": 0.3,
+          "completedEvent": {
+            "name": "macguffins-3-completed",
+            "headline": "We found a Dwarf Instead",
+            "article": "Returning from their fetch quest, our adventuring party on the search for the mysterious and confusingly named MacGuffins has instead captured a Dwarf by the name of Greg MacGuffin. In a statement this morning, Greg said <i>\"untie me and I'll stay, just please don't put me back in the bag of holding!\"</i>",
+            "image": "dwarf-face",
+            "outcomes": [
+              {
+                "type": "SetFlag",
+                "flag": "StoryActive",
+                "value": false
+              },
+              {
+                "type": "AdventurersAdded",
+                "count": 1,
+                "anyGuild": true,
+                "customDescription": "Mr. MacGuffin joins the town. +1 Adventurer"
+              }
+            ]
+          }
         }
       }
     ]

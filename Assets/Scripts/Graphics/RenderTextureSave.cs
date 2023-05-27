@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine;
 
 [ExecuteInEditMode]
 public class RenderTextureSave : MonoBehaviour
 {
-    [SerializeField] private CustomRenderTexture renderTexture;
+    [SerializeField] private RenderTexture renderTexture;
     [SerializeField] private string fileName;
 
     [Button]

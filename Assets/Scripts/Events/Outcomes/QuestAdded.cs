@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NaughtyAttributes;
 using Quests;
 using Utilities;
 using static Managers.GameManager;
@@ -12,6 +11,11 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
+            if (Manager.Quests.IsActive(quest))
+            {
+                UnityEngine.Debug.LogWarning("Events: Quest already active - " + quest.name);
+                return false;
+            }
             Newspaper.OnNextClosed += () => Manager.Quests.Add(quest);
             return true;
         }
@@ -24,6 +28,10 @@ namespace Events.Outcomes
             { Location.Mountains, "through the mountains" },
         };
 
-        protected override string Description => customDescription != "" ? customDescription : $"New quest added {LocationDescriptors[quest.location]}: {quest.Title}.";
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"New {(quest.IsRadiant ? "enemy camp" : "quest")} added {LocationDescriptors[quest.location]}: {quest.Title}." +
+            $"\n+1 {String.StatWithIcon(Stat.Threat)} per turn until cleared.".Conditional(quest.IsRadiant)
+        ).StatusColor(quest.IsRadiant ? -1 : 0);
     }
 }

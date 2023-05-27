@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8445511432550415974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2b2a8b9ceb4beb953246bbdf3ff16f, type: 3}
+  m_Name: QuestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: a4a75cb8d83f8e84ca9b266d339b2d4f, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: raiders-completed
+  m_EditorClassIdentifier: 
+  headline: Raiding the Raiders!
+  article: Our adventurers return successful from taking down a nearby bandit camp.
+    They claim to have found <i>"totally real evidence they were just about to attack
+    us"</i>, so the complete destruction of their camp was justified, and no further
+    questions are needed.
+  image: {fileID: 21300000, guid: 2573032232992b746899488da8752944, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 2174632109870721864}
+  - {fileID: 918594424099489324}
+  - {fileID: -8445511432550415974}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &918594424099489324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  turnsWorth: 0.6
+--- !u!114 &2174632109870721864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: If we take gold from them, that doesn't make us the raiders,
+    right?

@@ -49,11 +49,19 @@ namespace Cards
                 _selectedCardIndex = hand.FindIndex(card => card == value);
 
                 _selectedCard = value;
-                if(_selectedCard && _selectedCard.Toggle.IsInteractable()) Manager.Map.Flood();
-                else Manager.Map.Drain();
+                if (_selectedCard && _selectedCard.Interactable)
+                {
+                    Manager.Map.Flood();
+                    Manager.Map.SetHighlightedPlacements(_selectedCard.Blueprint);
+                }
+                else
+                {
+                    Manager.Map.Drain();
+                }
                 
-                Manager.Cursor.Current = _selectedCard ? CursorType.Build : CursorType.Pointer;
+                Manager.Cursor.Current = _selectedCard && _selectedCard.Interactable ? CursorType.Build : CursorType.Pointer;
                 OnCardSelected?.Invoke(_selectedCard);
+                
                 _lastBadge = -1;
                 _currentBadge = -1;
             }
@@ -88,7 +96,7 @@ namespace Cards
                 if (!structure.IsRuin) return;
                 if (Discoverable.Count <= 0)
                 {
-                    if (Random.Range(0,4) == 0) Manager.Notifications.Display(
+                    if (!Tutorial.Tutorial.Active && Random.Range(0,4) == 0) Manager.Notifications.Display(
                         "No unlocked cards to discover in ruins",
                         notificationIcon, 3,
                         () => Manager.Book.Open(Book.BookPage.Reports)
@@ -124,10 +132,10 @@ namespace Cards
             Manager.Inputs.LeftClick.performed += PlaceBuilding;
             Manager.Inputs.RotateBuilding.performed += RotateBuilding;
             Manager.Inputs.SelectCards.performed += SelectCards;
-            Manager.Inputs.DeselectCards.performed += DeselectCards;
+            Manager.Inputs.DeselectCards.performed += _ => DeselectCards();
             Manager.Inputs.NavigateCards.performed += NavigateCards;
             Manager.Inputs.SelectCardIndex.performed += SelectCardIndex;
-            State.OnEnterState += (_) =>
+            State.OnEnterState += _ =>
             {
                 _toggleGroup.SetAllTogglesOff();
                 if (Manager.State.InGame) PopCards();
@@ -148,7 +156,10 @@ namespace Cards
             {
                 if (Deck.Count == 0) Deck = new List<Blueprint>(Playable);
                 Blueprint card = Deck.PopRandom();
-                if (!hand.Select(c => c.Blueprint).Contains(card)) return card;
+                if (hand.Select(c => c.Blueprint).Contains(card)) continue;
+                // 1% for a free card per upgrade level
+                card.Free = Random.Range(0, 100) < Manager.Upgrades.GetLevel(UpgradeType.FreeCard);
+                return card;
             }
         }
 
@@ -156,7 +167,7 @@ namespace Cards
         {
             hand[0].Blueprint = Find(BuildingType.Herbalist);
             hand[0].Blueprint.Free = true;
-            hand[1].Blueprint = Find(BuildingType.Watchtower);
+            hand[1].Blueprint = Find(BuildingType.Tavern);
             hand[1].Blueprint.Free = true;
             hand[2].Blueprint = Find(BuildingType.Inn);
             hand[2].Blueprint.Free = true;
@@ -169,10 +180,10 @@ namespace Cards
         
         private void PlaceBuilding(InputAction.CallbackContext obj)
         {
-            if (!SelectedCard || !_cellsValid || IsOverUi) return;
+            if (!SelectedCard || !_cellsValid || IsOverUi || !SelectedCard.Interactable) return;
             PlacingBuilding = true;
             Blueprint blueprint = SelectedCard.Blueprint;
-            if (hand[_selectedCardIndex].Toggle.IsInteractable()) SelectedCard.Replace();
+            SelectedCard.Replace();
             if (!Manager.Structures.AddBuilding(blueprint, _hoveredCell.Id, _rotation)) return;
             SelectedCard = null;
         }
@@ -185,7 +196,7 @@ namespace Cards
 
         private void RotateBuilding(InputAction.CallbackContext obj)
         {
-            if (!Manager.Cards.SelectedCard) return;
+            if (!SelectedCard) return;
             OnBuildingRotate?.Invoke();
             _rotation = (_rotation + (int)Mathf.Sign(obj.ReadValue<float>()) + 4) % 4; // + 4 to offset negatives
         }
@@ -196,8 +207,9 @@ namespace Cards
             SelectCard(_prevCardIndex);
         }
         
-        private void DeselectCards(InputAction.CallbackContext obj)
+        public void DeselectCards()
         {
+            _toggleGroup.SetAllTogglesOff();
             if (_selectedCardIndex == -1) return;
             SelectCard(-1);
         }
@@ -210,15 +222,13 @@ namespace Cards
 
         private void SelectCardIndex(InputAction.CallbackContext obj)
         {
-            if (Manager.Tooltip.NavigationActive) return;
-
             int index = (int)obj.ReadValue<float>() - 1;
             SelectCard(_selectedCardIndex == index ? -1 : index);
         }
         
         public void SelectCard(int cardIndex)
         {
-            if (cardIndex == _selectedCardIndex || Tutorial.Tutorial.DisableSelect || !Manager.State.InGame) return;
+            if (Manager.GameHud.PhotoModeEnabled || cardIndex == _selectedCardIndex || Tutorial.Tutorial.DisableSelect || !Manager.State.InGame || Manager.Tooltip.NavigationActive) return;
 
             if (cardIndex >= 0)
             {
@@ -240,8 +250,6 @@ namespace Cards
         {
             get
             {
-                //Ray ray = Manager.Inputs.GetMouseRay(_cam);
-                //Physics.Raycast(ray, out RaycastHit hit, 200f, layerMask);
                 var hit = Manager.Inputs.GetRaycast(_cam, 200f, layerMask);
                 return Manager.Map.GetClosestCell(hit.point);
             }
@@ -251,21 +259,28 @@ namespace Cards
         {
             if (Globals.RestartingGame) return;
             
-            if (!Manager.Cards.SelectedCard || IsOverUi)
+            if (!SelectedCard)
             {
-                Manager.Map.Highlight(_selectedCells, HighlightState.Inactive);
+                ClearCells();
                 _hoveredCell = null;
                 return;
             }
 
             Cell closest = ClosestCellToCursor;
+            // Return if target cell, rotation, or card selected hasn't changed
             if (closest == null || !closest.Active || (_prevRotation == _rotation && _hoveredCell == closest && _prevCardIndex == _selectedCardIndex)) return;
-            _hoveredCell = closest;
-            _prevRotation = _rotation;
             
             // Wipe previously highlighted cells
             ClearCells();
-            _selectedCells = Manager.Map.GetCells(Manager.Cards.SelectedCard.Blueprint.sections, closest.Id, _rotation);
+
+            Manager.Map.HighlightPlacement();
+            
+            if (IsOverUi) return;
+            
+            _hoveredCell = closest;
+            _prevRotation = _rotation;
+            
+            _selectedCells = Manager.Map.GetCells(SelectedCard.Blueprint.sections, closest.Id, _rotation);
             _cellsValid = Cell.IsValid(_selectedCells);
             Manager.Map.Highlight(_selectedCells, _cellsValid ? HighlightState.Valid : HighlightState.Invalid);
 
@@ -284,21 +299,20 @@ namespace Cards
 
         private void ClearCells()
         {
-            Manager.Map.Highlight(_selectedCells, HighlightState.Inactive);
+            Manager.Map.ClearHighlight();
             _selectedCells.Clear();
         }
         
         #endregion
         
-        public bool Unlock(Blueprint blueprint, bool fromRuin = false)
+        public void Unlock(Blueprint blueprint, bool fromRuin = false)
         {
-            if (Playable.Contains(blueprint)) return false;
+            if (Playable.Contains(blueprint)) return;
             if (!Unlocked.Contains(blueprint)) Unlocked.Add(blueprint);
             Playable.Add(blueprint);
             Deck.Add(blueprint); // Add to deck so it shows up faster
             
             OnUnlock?.Invoke(blueprint, fromRuin);
-            return true;
         }
 
         public void UnlockAll()

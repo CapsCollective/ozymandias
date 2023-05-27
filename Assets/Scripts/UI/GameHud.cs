@@ -1,23 +1,27 @@
-using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine;
-using Managers;
-using Utilities;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using DG.Tweening;
+using Managers;
 using NaughtyAttributes;
+using UnityEngine;
+using Utilities;
 using static Managers.GameManager;
 using static UI.GameHud.HudObject;
-using System;
 
 namespace UI
 {
     public class GameHud : MonoBehaviour
     {
+        public static Action<bool> OnTogglePhotoMode;
+
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform topBar, menuBar, rightButtons, cards;
         [SerializeField] private CanvasGroup menuBarGroup, rightGameGroup;
 
+        public bool PhotoModeEnabled { get; private set; }
+        
         public enum HudObject
         {
             TopBar,
@@ -54,6 +58,17 @@ namespace UI
 
             State.OnEnterState += OnNewState;
 
+            Manager.Inputs.TogglePhotoMode.performed += obj =>
+            {
+                if (!Manager.State.InGame) return;
+                SetPhotoMode(!PhotoModeEnabled);
+            };
+            Manager.Inputs.Close.performed += obj =>
+            {
+                if (!Manager.State.InGame) return;
+                SetPhotoMode(false);
+            };
+
 #if UNITY_EDITOR
             Manager.Inputs.OnScreenshot.performed += obj => { TakeScreenshot(); };
 #endif
@@ -61,6 +76,9 @@ namespace UI
 
         private void OnNewState(GameState state)
         {
+            if (Manager.State.Loading) return;
+            SetPhotoMode(false);
+            
             switch (state)
             {
                 case GameState.InGame:
@@ -78,6 +96,21 @@ namespace UI
             }
         }
 
+        private void SetPhotoMode(bool modeEnabled)
+        {
+            if (PhotoModeEnabled == modeEnabled) return;
+            
+            PhotoModeEnabled = modeEnabled;
+            if (PhotoModeEnabled)
+            {
+                Manager.Cards.DeselectCards();
+                Hide();
+            }
+            else Show();
+            
+            OnTogglePhotoMode?.Invoke(modeEnabled);
+        }
+        
         public void Hide(bool animate = true)
         {
             Hide(new List<HudObject>(_hudValuesMap.Keys), animate);

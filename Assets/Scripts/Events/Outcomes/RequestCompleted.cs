@@ -10,15 +10,19 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            if (!Manager.Requests.HasRequest(guild)) return false;
+            if (!Manager.Requests.HasRequest(guild))
+            {
+                UnityEngine.Debug.LogWarning($"Events: {guild} has no active request to complete");
+                return false;
+            }
             _tokens = Manager.Requests.TokenCount(guild);
             Newspaper.OnNextClosed += () => Manager.Requests.Remove(guild);
             return true;
         }
 
-        protected override string Description => customDescription != "" ?
-            $"{Colors.GreenText}{customDescription}{Colors.EndText}" :
-            $"{Colors.GreenText}{guild} request completed, {_tokens} " +
-            $"{String.Pluralise("token", _tokens)} rewarded.{Colors.EndText}";
+        protected override string Description => (
+            customDescription != "" ? customDescription :
+            $"{String.GuildWithIcon(guild)} request completed, {_tokens} {"token".Pluralise(_tokens)} rewarded."
+        ).StatusColor(1);
     }
 }

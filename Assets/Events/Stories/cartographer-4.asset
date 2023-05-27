@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3110965652476180976
+--- !u!114 &-6025349538963435284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16,34 +16,7 @@ MonoBehaviour:
     maps?
   flag: 0
   value: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: cartographer-4
-  m_EditorClassIdentifier: 
-  headline: '"This Is Just Too Many Maps!"'
-  article: Our adventurers have returned, this time not with a single map, but hundreds!
-    At the location specified, there was a huge stash of maps, each with the note
-    "Nah, really, THIS one is the real one. You gotta believe me." Frankly, we've
-    had enough, it wasn't even a 'friends along the way' deal! We gotta get rid of
-    all these maps somehow...
-  image: {fileID: 21300000, guid: 3e19425fad5adeb49bd88c50e1eecf75, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -3110965652476180976}
-  - {fileID: 4483085361832057053}
-  - {fileID: 5268711958881438622}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &4483085361832057053
+--- !u!114 &-4891951579488384261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +30,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   blueprint: {fileID: 11400000, guid: e7491c9e0d87f0c4dbbaabfed3cc0d21, type: 2}
---- !u!114 &5268711958881438622
+--- !u!114 &-4524173230219783238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,3 +44,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: 07684174b677bdb4d86706db29cc9484, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: cartographer-4
+  m_EditorClassIdentifier: 
+  headline: '"This Is Just Too Many Maps!"'
+  article: 'Our adventurers have returned, this time not with a single <b>map</b>,
+    but hundreds! At the location specified, there was a huge stash of maps, each
+    with the note <i>"Nah, really, THIS one is the final one. Trust me, dude!"</i>
+
+
+    Frankly,
+    we''ve had enough, it wasn''t even a ''friends along the way'' deal! We gotta
+    get rid of all these maps somehow...'
+  image: {fileID: 21300000, guid: 3e19425fad5adeb49bd88c50e1eecf75, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -6025349538963435284}
+  - {fileID: -4891951579488384261}
+  - {fileID: -4524173230219783238}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

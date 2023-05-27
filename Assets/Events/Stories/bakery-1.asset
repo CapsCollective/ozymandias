@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-465491529878050105
+--- !u!114 &-821941181389082462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: 
-  flag: 0
+  customDescription: <color=#820000ff>+3 Threat (<sprite=9>) per Farm until this
+    is resolved...</color>
+  flag: 1
   value: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -28,20 +29,40 @@ MonoBehaviour:
   m_Name: bakery-1
   m_EditorClassIdentifier: 
   headline: Scarecrows!
-  article: Farmers have awoken to a shock, as their scarecrows have up and started
-    walking about! They have become territorial of their fields to anyone trying
-    to harvest the produce. Local monster experts recommend "Burning it all down
-    first chance you get."
+  article: 'Farmers have awoken to a shock, as their <b>scarecrows</b> have up and
+    started walking about! They have become territorial of their fields to anyone
+    trying to harvest the produce.
+
+
+    Local monster experts recommend <i>"Burning
+    it all down first chance you get."</i>'
   image: {fileID: 21300000, guid: 5e297a6d605b174458fe492cd99a5acf, type: 3}
   type: 3
-  headliner: 0
+  headliner: 1
   outcomes:
-  - {fileID: 1716925798374470240}
-  - {fileID: -465491529878050105}
-  - {fileID: 4342163961415091363}
+  - {fileID: -821941181389082462}
+  - {fileID: 2690245560894108022}
+  - {fileID: 2823409624388449991}
+  - {fileID: 4663929239613669719}
   choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &1716925798374470240
+  blueprintToUnlock: {fileID: 11400000, guid: f31912942346ab544a580bf968d6323a, type: 2}
+--- !u!114 &2690245560894108022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4008d17cace486b49bd767361c930786, type: 3}
+  m_Name: BuildingDamaged
+  m_EditorClassIdentifier: 
+  customDescription: 
+  buildingType: 8
+  anyBuildingType: 0
+  demolishAll: 1
+--- !u!114 &2823409624388449991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3c450dfbaf49af841b03392007d994, type: 3}
   m_Name: SetFlag
   m_EditorClassIdentifier: 
-  customDescription: <color=#820000ff>2 Threat per farm until this is resolved</color>
-  flag: 1
+  customDescription: 
+  flag: 0
   value: 1
---- !u!114 &4342163961415091363
+--- !u!114 &4663929239613669719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
 using Map;
-using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Structures
@@ -19,7 +18,7 @@ namespace Structures
         public static Action OnGuildHallDemolished;
 
         [Serializable] private struct Location { public int root, rotation; }
-        
+
         [SerializeField] private GameObject rockSection, treeSection, structurePrefab;
         [SerializeField] private Material outlineMaterial;
         [SerializeField] private Location dockLocation;
@@ -36,21 +35,18 @@ namespace Structures
         public GameObject RockSection => rockSection;
         public GameObject StructurePrefab => structurePrefab;
         public Material OutlineMaterial => outlineMaterial;
-        
+
         private Location SpawnLocation { get; set; }
         public Vector3 TownCentre { get; private set; }
         public Vector3 Dock => Manager.Map.GetCell(dockLocation.root).WorldSpace;
-        
+
         private void Awake()
         {
             State.OnNewGame += () => { if (!Tutorial.Tutorial.Active) SpawnGuildHall(); };
-            State.OnGameEnd += RemoveAll;
-            
-            var buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset));
-            foreach(Object o1 in buildingsText)
+            var buildingsText = Resources.LoadAll("SectionData/", typeof(TextAsset)).Cast<TextAsset>().ToArray();
+            foreach (TextAsset building in buildingsText)
             {
-                TextAsset o = (TextAsset) o1; // Explicit cast to avoid cast from Object to object above
-                BuildingCache.Add(o.name, JsonUtility.FromJson<Section.SectionData>(o.text));
+                BuildingCache.Add(building.name, JsonUtility.FromJson<Section.SectionData>(building.text));
             }
         }
 
@@ -58,17 +54,26 @@ namespace Structures
         {
             return _buildings.Sum(b => (b.Stats.ContainsKey(stat) ? b.Stats[stat] : 0) + (b.Bonus == stat ? 1 : 0));
         }
-        
+
         public int GetCount(BuildingType type)
         {
             return _buildings.Count(x => x.Blueprint.type == type);
         }
-        
-        public Structure GetRandom(BuildingType type)
+
+        public List<Structure> GetAll(BuildingType type)
         {
-            return _buildings.Where(x => x.Blueprint.type == type).ToList().SelectRandom();
+            return _buildings.Where(x => x.Blueprint.type == type).ToList();
         }
         
+        public Structure GetRandom()
+        {
+            return _buildings.Where(x => x.Blueprint.type != BuildingType.GuildHall).ToList().SelectRandom();
+        }
+        public Structure GetRandom(BuildingType type)
+        {
+            return GetAll(type).SelectRandom();
+        }
+
         public float GetClosestDistance(Vector3 position)
         {
             // Find distance of closest building to the camera
@@ -93,22 +98,23 @@ namespace Structures
                 closestBuilding = building;
                 closestDistance = distance;
             }
-    
+
             return closestBuilding;
-        } 
+        }
 
         public Cell RandomCell => _buildings.SelectRandom().Occupied.SelectRandom();
 
         public bool AddBuilding(Blueprint blueprint, int rootId, int rotation = 0, bool isRuin = false)
         {
             Structure structure = Instantiate(structurePrefab, transform).GetComponent<Structure>();
-            
+
             if (!structure.CreateBuilding(blueprint, rootId, rotation, isRuin))
             {
+                Debug.LogError("Building has failed to place " + structure.name);
                 Destroy(structure.gameObject);
                 return false;
             }
-            
+
             // Add to correct collection for querying
             if (structure.IsRuin) _ruins.Add(structure);
             else _buildings.Add(structure);
@@ -122,14 +128,13 @@ namespace Structures
             return true;
         }
 
-        public void AddTerrain(int rootId, int sectionCount = -1)
+        public void AddTerrain(int rootId, int sectionCount = 4)
         {
-            if (Manager.Map.GetCell(rootId).Occupied) return; 
             Structure structure = Instantiate(structurePrefab, transform).GetComponent<Structure>();
             structure.CreateTerrain(rootId, sectionCount);
             _terrain.Add(structure);
         }
-        
+
         public void Remove(Structure structure)
         {
             if (structure.Blueprint && structure.Blueprint.type == BuildingType.GuildHall)
@@ -138,36 +143,64 @@ namespace Structures
                 Manager.State.EnterState(GameState.NextTurn);
                 OnGuildHallDemolished?.Invoke();
             }
-            
+
             if (structure.IsTerrain) _terrain.Remove(structure);
             else if (structure.IsRuin) _ruins.Remove(structure);
             else _buildings.Remove(structure);
-            
+
             structure.Destroy();
             CheckAdjacencyBonuses();
             OnDestroyed?.Invoke(structure);
-            if(!Manager.State.Loading) UpdateUi();
+            if (!Manager.State.Loading) UpdateUi();
         }
 
-        public string Remove(BuildingType type)
+        public List<Cell> GetAdjacencyBonusCells(Blueprint blueprint)
         {
-            Structure structure = _buildings.Find(b => b.Blueprint.type == type);
-            if (structure == null) return null;
-            Remove(structure);
-            return structure.name;
-        }
+            AdjacencyConfiguration config = blueprint.adjacencyConfig;
+            if(!config.hasBonus || !Manager.Upgrades.IsUnlocked(config.upgrade)) return new List<Cell>();
 
+            if (config.specialCheck)
+            {
+                if (config.structureType == StructureType.Ruins)
+                    return _ruins.SelectMany(b => Manager.Map.GetValidAdjacencies(b)).Distinct().ToList();
+                
+                if (config.structureType == StructureType.Terrain)
+                    return _terrain.SelectMany(b => Manager.Map.GetValidAdjacencies(b)).Distinct().ToList();
+                
+                switch (blueprint.type)
+                {
+                    case BuildingType.Farm:
+                        return Manager.Map.GetCellsNextToTwoFarms();
+                    case BuildingType.BathHouse:
+                        return Manager.Map.GetCellsByWater();
+                    case BuildingType.Monastery:
+                    case BuildingType.Watchtower:
+                        return Manager.Map.GetCellsWithNoNeighbours();
+                }
+            }
+            else
+            {
+                return _buildings
+                    .Where(b => b.Blueprint.type == config.neighbourType)
+                    .SelectMany(b => Manager.Map.GetValidAdjacencies(b))
+                    .Distinct()
+                    .ToList();
+            }
+
+            return new List<Cell>();
+        }
+        
         public void CheckAdjacencyBonuses()
         {
             _buildings.ForEach(building => building.CheckAdjacencyBonus());
         }
 
-        private void RemoveAll()
+        public IEnumerator ResetGrid()
         {
-            int count = 0;
-            List<Structure> dupList = new List<Structure>(_buildings);
-            dupList.Reverse(); // Reverse processing order so its more likely the furthest out buildings become ruins
-            dupList.ForEach(building =>
+            int countPerFrame = 0;
+            int newRuinsCount = 0;
+            List<Structure> dupList = _buildings.OrderByDescending(b => Vector3.Distance(b.transform.position, TownCentre)).ToList();
+            foreach (Structure building in dupList)
             {
                 if (building.Blueprint.type != BuildingType.GuildHall &&
                     building.Blueprint.type != BuildingType.Farm &&
@@ -178,15 +211,22 @@ namespace Structures
                     building.Blueprint.type != BuildingType.BathHouse &&
                     building.Blueprint.type != BuildingType.Monastery &&
                     building.Blueprint.type != BuildingType.FightingRing &&
-                    Random.Range(0, count) == 0
+                    Random.Range(0, newRuinsCount + 1) == 0
                 )
                 {
                     ToRuin(building);
-                    count++;
+                    newRuinsCount++;
                 }
                 else building.Destroy();
-            });
+                
+                if (++countPerFrame < Manager.MaxStructuresPerFrame) continue;
+                countPerFrame = 0;
+                yield return null;
+            }
+            
             _buildings.Clear();
+            yield return Manager.Map.FillGrid();
+            
             SpawnLocation = NewSpawnLocation();
             TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
         }
@@ -206,20 +246,33 @@ namespace Structures
 
             foreach (Structure building in furthestBuildings)
             {
-                Vector3 position = Vector3.MoveTowards(building.transform.position, TownCentre, -Random.Range(6f, 10f));
+                Vector3 position = Vector3.MoveTowards(building.transform.position, TownCentre, -Random.Range(3f, 10f));
                 Cell cell = Manager.Map.GetClosestCell(position);
-                if (cell != null  && cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
+                if (cell != null && cell.Active && (!cell.Occupied || cell.Occupant.IsTerrain) && Manager.Quests.FarEnoughAway(cell.WorldSpace))
                 {
                     return cell.Id;
                 }
             }
 
-            Debug.LogError("Couldn't find valid location for quest");
+            Debug.LogWarning("Quests: Couldn't find valid location for quest");
             //TODO: A backup better than this
             return Random.Range(200, 1200);
         }
-        
+
         private Location NewSpawnLocation() => spawnLocations.SelectRandom();
+
+        public void RemoveRandomNearbyTerrain()
+        {
+            List<Structure> nearby = Manager.Map
+                .GetCells(TownCentre, 12)
+                .Where(cell => cell.Occupied && cell.Occupant.IsTerrain)
+                .Select(cell => cell.Occupant)
+                .Distinct()
+                .ToList();
+
+            for (int i = 0; i < 8 && nearby.Count > 0; i++) Remove(nearby.PopRandom());
+            SaveFile.SaveState(false);
+        }
         
         public void SpawnGuildHall()
         {
@@ -243,21 +296,37 @@ namespace Structures
             };
         }
 
-        public void Load(StructureDetails details)
+        public Coroutine Load(StructureDetails details)
         {
+            return StartCoroutine(LoadCoroutine(details));
+        }
+
+        private IEnumerator LoadCoroutine(StructureDetails details)
+        {
+            int countPerFrame = 0;
+
             foreach (BuildingDetails building in details.buildings ?? new List<BuildingDetails>())
             {
                 Blueprint blueprint = Manager.Cards.Find(building.type);
                 if (!blueprint) Debug.LogError(
-                    "Blueprint of type \"" + building.type + "\" could not be found." + 
+                    "Blueprint of type \"" + building.type + "\" could not be found." +
                     "It may not yet be available to the player.");
-                AddBuilding(
-                    blueprint, 
-                    building.rootId, building.rotation, building.isRuin);
+                AddBuilding(blueprint, building.rootId, building.rotation, building.isRuin);
+
+                if (++countPerFrame < Manager.MaxStructuresPerFrame) continue;
+                countPerFrame = 0;
+                yield return null;
             }
 
             foreach (TerrainDetails terrain in details.terrain ?? new List<TerrainDetails>())
+            {
                 AddTerrain(terrain.rootId, terrain.sectionCount);
+
+                if (++countPerFrame < Manager.MaxStructuresPerFrame) continue;
+                countPerFrame = 0;
+                yield return null;
+            }
+
             Structure guildHall = _buildings.Find(structure => structure.Blueprint.type == BuildingType.GuildHall);
             if (guildHall)
                 TownCentre = guildHall.Occupied[0].WorldSpace;
@@ -266,7 +335,7 @@ namespace Structures
                 SpawnLocation = Tutorial.Tutorial.Active ? spawnLocations[0] : NewSpawnLocation();
                 TownCentre = Manager.Map.GetCell(SpawnLocation.root).WorldSpace;
             }
-            
+
             CheckAdjacencyBonuses(); // Checks at end of load so it doesn't repeat
         }
     }

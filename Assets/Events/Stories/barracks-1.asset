@@ -1,31 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: barracks-1
-  m_EditorClassIdentifier: 
-  headline: Commoners Ceramics Cause Complaints!
-  article: For the third time this week, our townsfolk have submitted a formal complaint
-    of adventurers coming into their stores and destroying their precious pots and
-    vases in the pursuit of hidden treasure. "We've had enough! We're forming our
-    own guild!" the newly formed league of 'Normal Folk' declared to no one in particular.
-  image: {fileID: 21300000, guid: 8e6c52c98a4d6134ea4c4a6d492e238d, type: 3}
-  type: 3
-  headliner: 0
-  outcomes:
-  - {fileID: 8002595683381040241}
-  - {fileID: 5878399225003034571}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &5878399225003034571
+--- !u!114 &-1141300284032247045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +15,36 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: 12e6538bb071d0c47af0aa4d2af37242, type: 2}
   toFront: 0
---- !u!114 &8002595683381040241
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: barracks-1
+  m_EditorClassIdentifier: 
+  headline: Commoners Ceramics Cause Complaints!
+  article: 'For the third time this week, our townsfolk have submitted a formal complaint
+    of adventurers coming into their stores and destroying their precious pots and
+    vases in the pursuit of hidden treasure.
+
+
+    <i>"We''ve had enough! We''re
+    forming our own guild!"</i> the newly formed <b>''League of Normal Folk''</b>
+    declared to no one in particular.'
+  image: {fileID: 21300000, guid: 8e6c52c98a4d6134ea4c4a6d492e238d, type: 3}
+  type: 3
+  headliner: 0
+  outcomes:
+  - {fileID: 3485801519787614347}
+  - {fileID: -1141300284032247045}
+  choices: []
+  blueprintToUnlock: {fileID: 11400000, guid: d0ac4cced9571c34d92ea74a6321fbd6, type: 2}
+--- !u!114 &3485801519787614347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

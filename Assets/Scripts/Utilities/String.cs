@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Utilities
 {
     public static class String
     {
+        #region Pluralise 
         private static readonly List<string> UncountableWords = new List<string> {
             "sheep", 
             "fish",
@@ -28,7 +30,7 @@ namespace Utilities
             {"tooth", "teeth"},
             {"person", "people"},
         };
-
+        
         private static readonly Dictionary<string, string> RegularPluralRules = new Dictionary<string, string> {
             {"(quiz)$", "$1zes"},
             {"^(ox)$", "$1en"},
@@ -50,14 +52,14 @@ namespace Utilities
             {"([^s]+)$", "$1s"},
         };
         
-        private static Dictionary<string, string> PluralCache = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> PluralCache = new Dictionary<string, string>();
         
-        public static string Pluralise(string word, int count)
+        public static string Pluralise(this string word, int count)
         {
             return count == 1 ? word : Pluralise(word);
         }
-
-        public static string Pluralise(string word)
+        
+        public static string Pluralise(this string word)
         {
             // Try find plural in cache
             if (PluralCache.ContainsKey(word))
@@ -99,5 +101,30 @@ namespace Utilities
             PluralCache[word] = plural;
             return word;
         }
+        #endregion
+        
+        public static string Conditional(this string phrase, bool display) => display ? phrase : "";
+
+        private const string AlignCenter = "<align=\"center\">";
+        private const string AlignEnd = "</align>";
+        public static string Center(this string s) => AlignCenter + s + AlignEnd;
+
+        private const string ItalicsStart = "<i>";
+        private const string ItalicsEnd = "</i>";
+        public static string Italics(this string s) => ItalicsStart + s + ItalicsEnd;
+        
+        private const string ListStart = "\n •<indent=20px>";
+        private const string ListEnd = "</indent>";
+        public static string ListItem(this string s) => ListStart + s + ListEnd;
+
+        public static string WithSign(this int count) => (count > 0 ? "+" : "") + count;
+
+        public static string GuildWithIcon(Guild guild) => $"{guild} (<sprite={(int)guild}>)";
+        public static string GuildWithIcon(Guild guild, int count) => $"{guild.ToString().Pluralise(count)} (<sprite={(int)guild}>)";
+
+        public static string StatWithIcon(Stat stat) => 
+            $"{(stat == Stat.Spending ? "Wealth per turn" : stat)}{" Satisfaction".Conditional((int)stat < 5)} (<sprite={(int)stat}>)";
+
+        public static string StatIcon(Stat stat) => $"<sprite={(int)stat}>";
     }
 }

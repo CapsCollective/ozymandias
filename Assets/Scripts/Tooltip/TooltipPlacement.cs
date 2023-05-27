@@ -9,11 +9,14 @@ namespace Tooltip
 {
     public class TooltipPlacement : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     {
+        public static Action OnTooltipClosed;
+
         [SerializeField] private Vector3 position;
         [SerializeField] private Vector2 pivot;
         [SerializeField] private float delay = 0.2f;
         [SerializeField] private TooltipType type;
-        
+        [SerializeField] private float scaleOnHover = 1.15f;
+
         private bool _mouseOver;
         private float _mouseTimer;
 
@@ -46,7 +49,7 @@ namespace Tooltip
             t.anchoredPosition = position;
             Manager.Tooltip.UpdateTooltip(type);
             
-            if (Manager.Tooltip.NavigationActive && type != TooltipType.Stability) transform.DOScale(1.1f, 0.3f);
+            if (Manager.Tooltip.NavigationActive && type != TooltipType.Stability) transform.DOScale(scaleOnHover, 0.3f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -55,6 +58,7 @@ namespace Tooltip
             _mouseTimer = delay;
             Manager.Tooltip.Fade(0);
             transform.DOScale(1.0f, 0.3f);
+            OnTooltipClosed?.Invoke();
         }
     }
 }

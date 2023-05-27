@@ -1,29 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: attract-arcanists-added
-  m_EditorClassIdentifier: 
-  headline: Ritual invites
-  article: The arcanist are conducting a big, important, and very secret ritual.
-    They are requesting need more mages for it to proceed. They won't tell us what
-    it's for, I don't think we're invited.
-  image: {fileID: 21300000, guid: af5e5b903f5b23f4e99d14294ef8cc47, type: 3}
-  type: 12
-  headliner: 0
-  outcomes:
-  - {fileID: 4156789261642952798}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &4156789261642952798
+--- !u!114 &-1088796780004949639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,3 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   request: {fileID: 11400000, guid: 50e078e2427608845ac8c1993c1cec00, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: attract-arcanists-added
+  m_EditorClassIdentifier: 
+  headline: Ritual Invites
+  article: The arcanist are conducting a big, important, and very secret ritual.
+    They are requesting need more mages for it to proceed. They won't tell us what
+    it's for, and I don't think we're invited.
+  image: {fileID: 21300000, guid: af5e5b903f5b23f4e99d14294ef8cc47, type: 3}
+  type: 12
+  headliner: 0
+  outcomes:
+  - {fileID: -1088796780004949639}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

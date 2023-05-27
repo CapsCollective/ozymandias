@@ -27,6 +27,8 @@ namespace Events
             public EventType? type;
             public List<ChoiceConfig> choices;
             public List<OutcomeConfig> outcomes;
+            public bool headliner;
+            public string blueprintToUnlock;
         }
         
         [Serializable] private struct OutcomeConfig
@@ -50,6 +52,7 @@ namespace Events
 
             // Building Damaged
             public BuildingType buildingType;
+            public bool demolishAll, anyBuildingType;
             
             // Card Unlock blueprint
             public string blueprint;
@@ -68,6 +71,9 @@ namespace Events
             // Flags
             public Flag flag;
             public bool value;
+            
+            // Wealth
+            public float turnsWorth;
         }
         
         [Serializable] private struct ChoiceConfig
@@ -75,6 +81,8 @@ namespace Events
             public string name;
             public List<OutcomeConfig> outcomes;
             public float costScale;
+            public bool requiresItem, disableRepurchase;
+            public Flag requiredItem;
         }
         
         [Serializable] private struct QuestConfig
@@ -121,6 +129,8 @@ namespace Events
                 root.article = config.article;
                 root.image = LoadSprite(config.image);
                 root.type = config.type ?? EventType.Other;
+                root.headliner = config.headliner;
+                root.blueprintToUnlock = LoadBlueprint(config.blueprintToUnlock);
                 AssetDatabase.CreateAsset(root, $"Assets/Events/{folder}/{root.name}.asset");
                 
                 root.outcomes = config.outcomes != null ? 
@@ -168,10 +178,14 @@ namespace Events
                         outcome = ScriptableObject.CreateInstance<AdventurersRemoved>();
                         ((AdventurersRemoved)outcome).count = config.count;
                         ((AdventurersRemoved)outcome).kill = config.kill;
+                        ((AdventurersRemoved)outcome).guild = config.guild;
+                        ((AdventurersRemoved)outcome).anyGuild = config.anyGuild;
                         break;
                     case OutcomeType.BuildingDamaged:
                         outcome = ScriptableObject.CreateInstance<BuildingDamaged>();
-                        ((BuildingDamaged)outcome).type = config.buildingType;
+                        ((BuildingDamaged)outcome).buildingType = config.buildingType;
+                        ((BuildingDamaged)outcome).anyBuildingType = config.anyBuildingType;
+                        ((BuildingDamaged)outcome).demolishAll = config.demolishAll;
                         break;
                     case OutcomeType.CardUnlocked:
                         outcome = ScriptableObject.CreateInstance<CardUnlocked>();
@@ -200,6 +214,20 @@ namespace Events
                         ((SetFlag)outcome).flag = config.flag;
                         ((SetFlag)outcome).value = config.value;
                         break;
+                    case OutcomeType.WealthAdded:
+                        outcome = ScriptableObject.CreateInstance<WealthAdded>();
+                        ((WealthAdded)outcome).turnsWorth = config.turnsWorth;
+                        break;
+                    case OutcomeType.WealthAddedRandom: 
+                        outcome = ScriptableObject.CreateInstance<WealthAddedRandom>();
+                        break;
+                    case OutcomeType.TerrainRemoved:
+                        outcome = ScriptableObject.CreateInstance<TerrainRemoved>();
+                        break;
+                    case OutcomeType.SetStability:
+                        outcome = ScriptableObject.CreateInstance<SetStability>();
+                        ((SetStability)outcome).amount = config.amount;
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -215,6 +243,9 @@ namespace Events
                 Choice choice = ScriptableObject.CreateInstance<Choice>();
                 choice.name = config.name;
                 choice.costScale = config.costScale;
+                choice.requiresItem = config.requiresItem;
+                choice.disableRepurchase = config.disableRepurchase; 
+                choice.requiredItem = config.requiredItem;
                 choice.outcomes = config.outcomes.Select(outcomeConfig => CreateOutcome(outcomeConfig, root)).ToList();
                 AssetDatabase.AddObjectToAsset(choice, root);
                 return choice;
@@ -263,7 +294,7 @@ namespace Events
             
             public BuildingType buildingType;
             public StructureType structureType;
-            public bool allowAny;
+            public bool allowAny, requireKill;
             public Guild targetGuild;
         }
         
@@ -310,6 +341,7 @@ namespace Events
                             break;
                         case RequestType.LoseAdventurers:
                             request = ScriptableObject.CreateInstance<LoseAdventurers>();
+                            ((LoseAdventurers)request).requireKill = config.requireKill;
                             break;
                         case RequestType.ConstructBuildings:
                             request = ScriptableObject.CreateInstance<ConstructBuildings>();
@@ -319,6 +351,7 @@ namespace Events
                         case RequestType.DestroyBuildings:
                             request = ScriptableObject.CreateInstance<DestroyBuildings>();
                             ((DestroyBuildings)request).buildingType = config.buildingType;
+                            ((DestroyBuildings)request).allowAny = config.allowAny;
                             break;
                         case RequestType.DestroyStructures:
                             request = ScriptableObject.CreateInstance<DestroyStructures>();
@@ -338,8 +371,26 @@ namespace Events
                             request = ScriptableObject.CreateInstance<KeepUpset>();
                             ((KeepUpset)request).targetGuild = config.targetGuild;
                             break;
+                        case RequestType.FoodSurplus:
+                            request = ScriptableObject.CreateInstance<FoodSurplus>();
+                            break;
+                        case RequestType.HousingShortage:
+                            request = ScriptableObject.CreateInstance<HousingShortage>();
+                            break;
+                        case RequestType.LowStability:
+                            request = ScriptableObject.CreateInstance<LowStability>();
+                            break;
+                        case RequestType.MaxStability:
+                            request = ScriptableObject.CreateInstance<MaxStability>();
+                            break;
+                        case RequestType.ConstructBuildingsInTurn:
+                            request = ScriptableObject.CreateInstance<ConstructBuildingsInTurn>();
+                            break;
+                        case RequestType.DiscoverCards:
+                            request = ScriptableObject.CreateInstance<DiscoverCards>();
+                            break;
                         default:
-                            Debug.LogError("Request type not found: " + config.type);
+                            Debug.LogError("Request buildingType not found: " + config.type);
                             return;
                     }
                     request.guild = guild;
@@ -421,7 +472,9 @@ namespace Events
         #region Utils
         private static Sprite LoadSprite(string name)
         {
-            return AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/Icons/{name}.png");
+            if (sprite == null) Debug.LogWarning("Sprite not found: " + name);
+            return sprite;
         }
         
         private static Blueprint LoadBlueprint(string name)

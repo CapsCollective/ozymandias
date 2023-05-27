@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8715076428678136768
+--- !u!114 &-6669483114892755313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,8 +13,39 @@ MonoBehaviour:
   m_Name: BuildingDamaged
   m_EditorClassIdentifier: 
   customDescription: 
-  type: 1
---- !u!114 &-2655462342355141442
+  buildingType: 1
+  anyBuildingType: 0
+  demolishAll: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: armoury-2
+  m_EditorClassIdentifier: 
+  headline: Howler of a Night
+  article: 'Last night there was an attack, causing the destruction of one of our
+    blacksmiths. Witnesses claim howling could be heard from the location, and glimpses
+    of a <b>hideous, hairy beast</b> could be seen running away, illuminated by the
+    full moon.
+
+
+    Why <i>"Silvia and Sons Silver Swordery"</i> was specifically
+    targeted remains a mystery to all.'
+  image: {fileID: 21300000, guid: d5f387db4f5c50844a46b0ea7885fcb7, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -6669483114892755313}
+  - {fileID: 6808899575361978965}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &6808899575361978965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,29 +60,3 @@ MonoBehaviour:
   customDescription: 
   next: {fileID: 11400000, guid: bd1473a661e51954a8ac72e4ef9d0410, type: 2}
   toFront: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: armoury-2
-  m_EditorClassIdentifier: 
-  headline: Howler of a Night
-  article: Last night there was an attack, causing the destruction of one of our
-    blacksmiths. Witnesses claim howling could be heard from the location, and glimpses
-    of a hideous hairy beast could be seen running away, illuminated by the full
-    moon. Why "Silvia and Sons Silver Swordery" was specifically targeted remains
-    a mystery to all.
-  image: {fileID: 21300000, guid: d5f387db4f5c50844a46b0ea7885fcb7, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -8715076428678136768}
-  - {fileID: -2655462342355141442}
-  choices: []
-  blueprintToUnlock: {fileID: 0}

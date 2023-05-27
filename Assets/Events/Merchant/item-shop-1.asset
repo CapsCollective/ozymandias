@@ -1,0 +1,266 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8126906737541567396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 3
+--- !u!114 &-7147113388444468558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 2
+--- !u!114 &-6887458250989531113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 0
+--- !u!114 &-6101826638129805133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: Due to a 'paperwork error' all current guild requests have been
+    marked as complete.
+--- !u!114 &-5186239020530241491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Debt Forgiveness
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -6101826638129805133}
+  - {fileID: -6887458250989531113}
+  - {fileID: -3369641946904591110}
+  - {fileID: -7147113388444468558}
+  - {fileID: -8126906737541567396}
+  - {fileID: 997063514993303822}
+  costScale: 3.5
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-4231490461911567739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 0
+  amount: 2
+  turns: -1
+  reason: from the Orb of Slope Detection
+--- !u!114 &-3369641946904591110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 1
+--- !u!114 &-3158406145935793721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  statToChange: 6
+  amount: 20
+  turns: -1
+  reason: from the Forest Cheese
+--- !u!114 &-2959355159422810700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Nothing Today Thanks!
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 5728863046710927996}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-1409018020441839399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: This mystical object shifts itself to the lowest point of any
+    surface. The brawlers are mystified by its power and play with it endlessly...
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: item-shop-1
+  m_EditorClassIdentifier: 
+  headline: Travelling Merchant Comes to Town
+  article: An old wagon rolled into town today containing all manner of mystical
+    items for sale. The equally vintage proprietor of the store offers to sell you
+    their wares.
+  image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
+  type: 13
+  headliner: 0
+  outcomes: []
+  choices:
+  - {fileID: -5186239020530241491}
+  - {fileID: 778565927065480452}
+  - {fileID: 186046138245905228}
+  - {fileID: -2959355159422810700}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &186046138245905228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Orb of Slope Detection
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -1409018020441839399}
+  - {fileID: -4231490461911567739}
+  costScale: 0.5
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &778565927065480452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Rat on a Stick
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 1902760806671586399}
+  - {fileID: -3158406145935793721}
+  costScale: 1.1
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &997063514993303822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566c4264c0cc458180bee122eaa993d7, type: 3}
+  m_Name: RequestCompleted
+  m_EditorClassIdentifier: 
+  customDescription: 
+  guild: 4
+--- !u!114 &1902760806671586399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: This 'magical' item points you in the direction of forest cheese,
+    a very real, and very tasty thing.
+--- !u!114 &5728863046710927996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: '"Alrighty, I''ll come back another time!"'

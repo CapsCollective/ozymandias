@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using Managers;
+using Reports;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
-using Random = UnityEngine.Random;
 using EventType = Utilities.EventType;
+using Random = UnityEngine.Random;
 
 namespace Events
 {
     public class EventQueue : MonoBehaviour
     {
-        private const int MinQueueEvents = 3; // The minimum events in the queue to store
+        private const int EventsInNewspaper = 3; // The minimum events in the queue to store
         
-        [SerializeField] private Event openingEvent;
-        [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents;
+        [SerializeField] private Event openingEvent, summerEvent, autumnEvent, winterEvent;
+        [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents, tutorialEndEvents;
         
         private Newspaper _newspaper;
         
@@ -24,14 +25,20 @@ namespace Events
             _others = new LinkedList<Event>();
 
         private readonly Dictionary<EventType, List<Event>>
-            _availablePools = new Dictionary<EventType, List<Event>>(), //Events to randomly add to the queue
-            _usedPools = new Dictionary<EventType, List<Event>>(); //Events already run but will be re-added on a shuffle
+            _allEvents = new Dictionary<EventType, List<Event>>(), // All events by type
+            _availablePools = new Dictionary<EventType, List<Event>>(), // Events to randomly add to the queue
+            _usedPools = new Dictionary<EventType, List<Event>>(); // Events already run but will be re-added on a shuffle
     
         private readonly List<Event> _current = new List<Event>(4);
         private readonly List<string> _outcomeDescriptions = new List<string>(4);
 
         public Dictionary<Flag, bool> Flags = new Dictionary<Flag, bool>();
 
+        private bool TypeNotInQueue(EventType type) =>
+            _current.All(e => e.type != type) &&
+            _others.All(e => e.type != type) &&
+            _headliners.All(e => e.type != type);
+        
         private void Awake()
         {
             State.OnNewGame += () =>
@@ -43,11 +50,39 @@ namespace Events
             
             State.OnGameEnd += () =>
             {
+                new List<EventType>
+                {
+                    EventType.AdventurersJoin,
+                    EventType.AdventurersLeave,
+                    EventType.Advert,
+                    EventType.Flavour,
+                    EventType.Threat,
+                    EventType.Radiant,
+                    EventType.Merchant
+                }.ForEach(Shuffle);
+                
                 foreach (Flag flag in Enum.GetValues(typeof(Flag))) Flags[flag] = false;
+            };
+
+            State.OnNextTurnBegin += () =>
+            {
+                switch (Manager.Stats.TurnCounter)
+                {
+                    case 14:
+                        Add(summerEvent, true);
+                        break;
+                    case 29:
+                        Add(autumnEvent, true);
+                        break;
+                    case 44:
+                        Add(winterEvent, true);
+                        break;
+                }
             };
 
             foreach (EventType type in Enum.GetValues(typeof(EventType)))
             {
+                _allEvents.Add(type, new List<Event>());
                 _availablePools.Add(type, new List<Event>());
                 _usedPools.Add(type, new List<Event>());
             }
@@ -59,7 +94,7 @@ namespace Events
         {
             _current.Clear();
             _outcomeDescriptions.Clear();
-        
+            
             if (_headliners.Count > 0)
             {
                 _current.Add(_headliners.First.Value);
@@ -68,14 +103,18 @@ namespace Events
 
             while (_current.Count < 3)
             {
-                if (_others.Count < MinQueueEvents) { AddRandomSelection(); continue; }
+                if (_others.Count == 0) { AddRandomSelection(); continue; }
                 _current.Add(_others.First.Value);
                 _others.RemoveFirst();
             }
         
             _current.Add(PickRandom(EventType.Advert));
 
-            foreach (Event e in _current) _outcomeDescriptions.Add(e.Execute());
+            foreach (Event e in _current)
+            {
+                Debug.Log($"Events: Processing {e.type} - {e.name}");
+                _outcomeDescriptions.Add(e.Execute());
+            }
         
             _newspaper.UpdateDisplay(_current, _outcomeDescriptions);
         }
@@ -84,58 +123,61 @@ namespace Events
         {
             List<Event> eventPool = new List<Event>();
 
-            int randomSpawnChance = Manager.Stats.RandomSpawnChance;
-            if(randomSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
-            else if(Random.Range(0,3) < randomSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
+            int housingSpawnChance = Manager.Stats.HousingSpawnChance;
+            if (housingSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
+            else if (TypeNotInQueue(EventType.AdventurersJoin) && Random.Range(0,5) < housingSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
             // Let them gain some adventurers to start
-            if (Manager.Adventurers.Count >= 3)
+            if (Manager.Adventurers.Available >= 5)
             {
-                int lead = Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat - Manager.Quests.RadiantCount * 5, -10, 10);
+                // Scale from 100% down to 0% threat spawn if falling behind by up to 20 or leading by up to 10
+                // Prevent multiple threat events from happening in a single turn
+                if (TypeNotInQueue(EventType.Threat) && Random.Range(-20, 10) < Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat, -20, 10))
+                    eventPool.Add(PickRandom(EventType.Threat));
                 
-                // Scale from 100% down to 50% threat spawn if falling behind by up to 10
-                if(Random.Range(0,20) > -lead) eventPool.Add(PickRandom(EventType.Threat));
-                
-                // 5% base chance, plus how far ahead the player is, factoring in existing quests and capping at 10 (50% spawn chance) 
-                int random = Random.Range(0, 20);
-                if (!Tutorial.Tutorial.Active && (random == 0 || random < lead)) eventPool.Add(PickRandom(EventType.Radiant));
+                // Chance increases with stability, and decreases with count of active quests
+                int random = Random.Range(0, 100 + Manager.Quests.RadiantCount * 100);
+                if (!Tutorial.Tutorial.Active && TypeNotInQueue(EventType.Radiant) && random < Manager.Stats.Stability - 50)
+                    eventPool.Add(PickRandom(EventType.Radiant));
 
-                // 20% chance to start a new story while no other is active
-                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && Random.Range(0, 5) == 0)
-                {
-                    // Pick a story that isn't for an already playable building
-                    while (true)
-                    {
-                        Event story = PickRandom(EventType.Story);
-                        if (story == null) break; // Catch case for if there are no stories
-                        
-                        if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock))
-                        {
-                            Flags[Flag.StoryActive] = true;
-                            eventPool.Add(story);
-                            Debug.Log($"Story chosen: {story}");
-                            break;
-                        }
-                        Debug.Log($"Story invalid: {story}, picking another");
-                    }
-                }
+                // Scales merchant spawn by how much wealth the player has saved up, ranging from 10% to 50% for > 5x wealth per turn
+                if (TypeNotInQueue(EventType.Merchant) && Random.Range(0f,10f) < Mathf.Clamp((float)Manager.Stats.Wealth / Manager.Stats.WealthPerTurn, 0, 5f)) 
+                    eventPool.Add(PickRandom(EventType.Merchant));
+                
+                // 25% chance to start a new story while no other is active
+                if (!Tutorial.Tutorial.Active && !Flags[Flag.StoryActive] && TypeNotInQueue(EventType.Story) && Random.Range(0, 100) <= 25)
+                    eventPool.Add(PickRandomStory());
             }
 
-            while (eventPool.Count < 3) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
+            while (eventPool.Count < EventsInNewspaper) eventPool.Add(PickRandom(EventType.Flavour)); // Fill remaining event slots
             while (eventPool.Count > 0) Add(eventPool.PopRandom()); // Add events in random order
+        }
+
+        private Event PickRandomStory()
+        {
+            // Pick a story that isn't for an already playable building
+            while (true)
+            {
+                Event story = PickRandom(EventType.Story);
+                if (story == null) return null; // Catch case for if there are no stories
+                        
+                if (story.blueprintToUnlock == null || !Manager.Cards.IsPlayable(story.blueprintToUnlock)) return story;
+                
+                Debug.LogWarning($"Events: {story.name} story invalid, picking another");
+            }
+        }
+
+        private void Shuffle(EventType type)
+        {
+            Debug.Log($"Events: Shuffling {type}");
+            _availablePools[type] = new List<Event>(_allEvents[type]);
+            _usedPools[type].Clear();
         }
         
         private Event PickRandom(EventType type)
         {
-            if (_availablePools[type].Count == 0)
-            {
-                Debug.Log($"Shuffling {type} events");
-                if (_usedPools[type].Count == 0) return null; // Catch case for if there are no events of this type
-                
-                //Shuffle events back in
-                _availablePools[type] = new List<Event>(_usedPools[type]);
-                _usedPools[type].Clear();
-            }
+            if (_availablePools[type].Count == 0) Shuffle(type);
+            
             Event e = _availablePools[type].PopRandom();
             
             _usedPools[type].Add(e);
@@ -164,6 +206,12 @@ namespace Events
             foreach (Event e in supportWithdrawnEvents) Add(e, true);
         }
 
+        public void AddTutorialEndEvents()
+        {
+            foreach (Event e in tutorialEndEvents) Add(e, true);
+            Add(PickRandom(EventType.Threat), true);
+        }
+
         public void AddGuildHallDestroyedEvents()
         {
             foreach (Event e in guildHallDestroyedEvents) Add(e, true);
@@ -178,10 +226,21 @@ namespace Events
             { Guild.Arcanist, EventType.ArcanistRequest }
         };
 
+        public void AddThreat()
+        {
+            Add(PickRandom(EventType.Threat), true);
+        }
+        
         public void AddRequest(Guild guild)
         {
-            if (Random.Range(0, 5) != 0) return; // Random spawn chance so a new request doesnt come right away
-            Add(PickRandom(_requestMap[guild]));
+            // Don't spawn during first game
+            // Only allows one in the queue at a time
+            // Random spawn chance so a new request doesnt come right away
+            if (
+                Manager.Achievements.Milestones[Milestone.TownsDestroyed] > 0 &&
+                _others.All(e => (int)e.type < (int)EventType.BrawlerRequest || (int)e.type > (int)EventType.ArcanistRequest) &&
+                Random.Range(0, 3) == 0
+            ) Add(PickRandom(_requestMap[guild]));
         }
         
         public EventQueueDetails Save()
@@ -201,6 +260,7 @@ namespace Events
         {
             foreach (Event e in Manager.AllEvents)
             {
+                _allEvents[e.type].Add(e);
                 if (details.used != null && details.used.ContainsKey(e.type) && details.used[e.type].Contains(e.name))
                     _usedPools[e.type].Add(e);
                 else 
@@ -212,7 +272,7 @@ namespace Events
                 Event e = Manager.AllEvents.Find(match => eventName == match.name);
                 if (e == null)
                 {
-                    Debug.LogWarning("Event Not Found: " + eventName);
+                    Debug.LogWarning($"Events: {eventName} not found");
                     continue;
                 }
                 _headliners.AddLast(e);
@@ -223,7 +283,7 @@ namespace Events
                 Event e = Manager.AllEvents.Find(match => eventName == match.name);
                 if (e == null)
                 {
-                    Debug.LogWarning("Event Not Found: " + eventName);
+                    Debug.LogWarning($"Events: {eventName} not found");
                     continue;
                 }
                 _others.AddLast(e);

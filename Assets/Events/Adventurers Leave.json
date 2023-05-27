@@ -1,0 +1,175 @@
+[
+    {
+        "name": "amputation",
+        "headline": "Bankrupted Adventurer Flees",
+        "article": "An unfortunate encounter with a giant spider has left an adventurer in need of amputation. After finding out that they had forgotten to renew their guild insurance post-operation, the adventurer vanished, having taken out a loan for the cost of an arm and a leg.",
+        "image": "hand-saw",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "anyGuild": true,
+                "customDescription": "They were never seen again...",
+                "count": 1
+            }
+        ]
+    },
+    {
+        "name": "boot",
+        "headline": "Angry Adventurers Get the Boot",
+        "article": "After a punch-up in an <b>overcrowded</b> local tavern, the owner, wielding his magical boots of kickening, launched the offenders through the tavern roof and out of this town for good. Regrettably, the tavern was destroyed from the boots' sheer power.",
+        "image": "boot-kick",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "anyGuild": true,
+                "customDescription": "2 adventurers blast off again!",
+                "count": 2
+            },
+            {
+                "type": "BuildingDamaged",
+                "buildingType": "Tavern"
+            }
+        ]
+    },
+    {
+        "name": "magic-gate",
+        "headline": "\"We're Bored and Leaving\"",
+        "article": "A group of adventurers have become tired of this town and its <b>lack of housing</b>, to the point where they can't even stand being in the same dimension! They've opened up a magic gate, and stepped through to the unknown.",
+        "image": "magic-gate",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "anyGuild": true,
+                "customDescription": "3 adventurers move on to the unknown",
+                "count": 3
+            }
+        ]
+    },
+    {
+        "name": "neck-snapping",
+        "headline": "Taken Too Far",
+        "article": "An adventurer, known for acting as the town jester, lost his life last night after attempting to perform one of his most famous bits in which he pretends to twist his head off. The audience stated that while turning his neck, his last words were <i>\"Hey guys, watch this\"</i>, before realising he may have taken it a touch too far.",
+        "image": "neck snap",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "count": 1,
+                "guild": "Performer",
+                "kill": true
+            }
+        ]
+    },
+    {
+        "name": "propaganda",
+        "headline": "Propaganda Campaign Causes Exile",
+        "article": "A nearby, targeted harassment campaign from a competing town has caused adventurers to leave the city in droves. The other town has made demonstrably untrue statements, such as saying that we <i>\"aren't providing enough <b>housing</b>\"</i>, and we'll <i>\"be destroyed any day now\"<i>.\n\nYou would never hear such falsehoods from THIS paper! We would never lie...",
+        "image": "newspaper",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "anyGuild": true,
+                "count": 2
+            }
+        ]
+    },
+    {
+        "name": "quicksave",
+        "headline": "Insane Adventurer \"Forgets to Quicksave\"",
+        "article": "A <b>homeless</b> adventurer is now on the run from authorities after committing what can only be described as <i>\"a horrifying murder spree\"</i> after 'getting bored'. When questioned about the uncharacteristically violent attack, he had only this to say: <i>\"I meant to reload after, but forgot to quicksave, I'm so sorry\"</i>.",
+        "image": "boot-kick",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "customDescription": "The adventurer has disappeared",
+                "anyGuild": true,
+                "count": 1
+            },
+            {
+            	"type": "ThreatAdded",
+            	"baseAmount": 2
+            }
+        ]
+    },
+    {
+        "name": "stone-cold-killers",
+        "headline": "Stone Cold Killers!",
+        "article": "A warrant has been issued for rogue adventurers accused of murder after having been spotted fleeing from the scene of petrified villagers, holding what appeared to be a hissing, severed head.",
+        "image": "medusa-head",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "customDescription": "2 adventurers have run away!",
+                "anyGuild": true,
+                "count": 2
+            },
+            {
+            	"type": "ThreatAdded",
+            	"baseAmount": 1
+            }
+        ]
+    },
+    {
+        "name": "thief",
+        "headline": "Beloved Adventurer Hastily Leaves",
+        "article": "A popular adventurer was noticed today sporting a striking new look, adorned in several gold chains and a blood red shirt. When asked how they found their new getup, they joked <i>\"I'll never tell\"</i> before riding quickly into the forest.\n\nIn unrelated news, a number of villagers have been found dead in their homes and stripped of their valuables under mysterious circumstances.",
+        "image": "necklace",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "customDescription": "They were never seen again...",
+                "guild": "Outrider",
+                "count": 1
+            },
+            {
+	            "type": "ModifierAdded",
+	            "modifier": {
+		            "toChange": "Spending",
+		            "amount": -10,
+		            "turns": 3,
+		            "reason": "from the Mysterious Thefts"
+		        }
+	        }
+        ]
+    },
+    {
+        "name": "touch-of-gold",
+        "headline": "Touch of Gold",
+        "article": "A disgruntled traveller looking to make quick buck has blessed the townsfolk with gold... by turning them into it! One of our heroic adventurers jumped atop the madman, accidentally turning themselves into gold and crushing the culprit in the process. Try as we might, we couldn't unfreeze the lost, so we mourn as we melt down those brave souls that lost their lives - it's what they would have wanted us to do!",
+        "image": "two-coins",
+        "type": "AdventurersLeave",
+        "outcomes":
+        [
+            {
+                "type": "AdventurersRemoved",
+                "customDescription": "An adventurer has been lost",
+                "anyGuild": true,
+                "count": 1,
+                "kill": true
+            },
+            {
+            	"type": "FlavourText",
+            	"customDescription": "On the upside, we got some gold!"
+            },
+            {
+                "type": "WealthAdded",
+                "turnsWorth": 0.5
+            }
+        ]
+    }
+]

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4344150149428676892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: We've made a tidy profit selling all this <i>wood</i>...
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: living-wood
+  m_EditorClassIdentifier: 
+  headline: Magic Wood Found in Nearby Forest!
+  article: 'Silkhelm, otherwise known as <i>''Living Wood''</i> has been discovered.
+    This supernaturally strong wood is lucrative, so if you''ve got an axe free,
+    get chopping!
+
+
+    <b>Warning:</b> faint screaming may be heard, and should
+    be ignored.'
+  image: {fileID: 21300000, guid: 7062cec7f802e6246838bba1a759ac0c, type: 3}
+  type: 2
+  headliner: 0
+  outcomes:
+  - {fileID: -4344150149428676892}
+  - {fileID: 7676203806354114510}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &7676203806354114510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 485ebc95fb4f41329842c497e0c15eab, type: 3}
+  m_Name: WealthAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  turnsWorth: 0.3

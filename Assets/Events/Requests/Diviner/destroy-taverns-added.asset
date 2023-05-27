@@ -1,28 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: destroy-taverns-added
-  m_EditorClassIdentifier: 
-  headline: Smite Their Right to Paaartay!
-  article: The diviners are chomping at the bit to smite those sin-parlours of debauchery.
-    They are requesting they be torn down immediately!
-  image: {fileID: 0}
-  type: 11
-  headliner: 0
-  outcomes:
-  - {fileID: 6093980599320684126}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &6093980599320684126
+--- !u!114 &-7138404417715284292
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36,3 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   request: {fileID: 11400000, guid: df437d22a8b66ca4992781387a6553fd, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: destroy-taverns-added
+  m_EditorClassIdentifier: 
+  headline: Smite Their Right to Paaartay!
+  article: The diviners are chomping at the bit to smite all those <i>"sin-parlours
+    of debauchery"</i>. They are requesting they be torn down at your earliest convenience.
+  image: {fileID: 21300000, guid: 36edf1ae54e6495419596af0c9f10cf5, type: 3}
+  type: 11
+  headliner: 0
+  outcomes:
+  - {fileID: -7138404417715284292}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

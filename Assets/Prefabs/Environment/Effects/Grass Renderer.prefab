@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dacb2a151de317b4289e12131fe09788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _grassQuality: 1
   _grassEffect: {fileID: 4402737074244970403}
   _grassRT: {fileID: 8600000, guid: 2edc3d2701a48c2418bd626f6f7cae4b, type: 2}
   _grassCam: {fileID: 4982430811544454522}
@@ -208,9 +207,15 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 81
+        m_Name: Size
+        m_Overridden: 1
     m_Vector2f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 43, y: 41}
+        m_Name: Offset
+        m_Overridden: 1
     m_Vector3f:
       m_Array: []
     m_Vector4f:
@@ -218,7 +223,10 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: Quality
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:

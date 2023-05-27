@@ -1,6 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8088642466845834622
+--- !u!114 &-6277162663734194720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Issue stimulus
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 8394647043651417945}
+  costScale: 0.8
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-274610096143827954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
+  m_Name: ChainEvent
+  m_EditorClassIdentifier: 
+  customDescription: 
+  next: {fileID: 11400000, guid: 95c23dc5eb320204d8aa282ec77f9343, type: 2}
+  toFront: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: apothecary-2
+  m_EditorClassIdentifier: 
+  headline: Adventuring Bailouts Needed!
+  article: With the <b>rat plague</b> requiring businesses to temporarily close,
+    many are unable to feed their families. More pressingly, we should really think
+    of the Adventurers, who are just sad to have to stay home. We should really give
+    them more money to keep them from going out and causing more infections.
+  image: {fileID: 21300000, guid: 59fe18cf41a57cc4ea5fa3878b5cee81, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: -274610096143827954}
+  choices:
+  - {fileID: -6277162663734194720}
+  - {fileID: 4172544663984833556}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &1367080761809100495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16,7 +75,9 @@ MonoBehaviour:
     loot.
   count: 3
   kill: 1
---- !u!114 &-7818131278149755830
+  guild: 0
+  anyGuild: 1
+--- !u!114 &4172544663984833556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,9 +90,12 @@ MonoBehaviour:
   m_Name: Refuse bailouts
   m_EditorClassIdentifier: 
   outcomes:
-  - {fileID: -8088642466845834622}
+  - {fileID: 1367080761809100495}
   costScale: 0
---- !u!114 &-5542770959411590874
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &8394647043651417945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,59 +109,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: '"I GUESS this counts as looting, but its just not the same",
     an adventurer mopes while being handed a bag of gold.'
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: apothecary-2
-  m_EditorClassIdentifier: 
-  headline: Adventuring Bailouts Needed!
-  article: With the plague requiring businesses to temporarily close, unable to feed
-    their families, we look to the Adventurers, who are sad to have to stay home.
-    We should really give them more money to keep them from going out and causing
-    more infections.
-  image: {fileID: 21300000, guid: 59fe18cf41a57cc4ea5fa3878b5cee81, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: 8187145550072173583}
-  choices:
-  - {fileID: 7813684860870610418}
-  - {fileID: -7818131278149755830}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &7813684860870610418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Issue stimulus
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -5542770959411590874}
-  costScale: 0.8
---- !u!114 &8187145550072173583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39278e0dd5327c540b33a3f9e317e51d, type: 3}
-  m_Name: ChainEvent
-  m_EditorClassIdentifier: 
-  customDescription: 
-  next: {fileID: 11400000, guid: 95c23dc5eb320204d8aa282ec77f9343, type: 2}
-  toFront: 0

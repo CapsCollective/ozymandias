@@ -10,7 +10,13 @@ namespace Events.Outcomes
 
         protected override bool Execute()
         {
-            UnityEngine.Debug.Log($"Setting flag {flag} to {value}");
+            if (Manager.EventQueue.Flags[flag] == value)
+            {
+                UnityEngine.Debug.LogWarning($"Events: Flag {flag} already set to {value}");
+                return false;
+            }
+            
+            UnityEngine.Debug.Log($"Events: Setting flag {flag} to {value}");
             Manager.EventQueue.Flags[flag] = value;
             return true;
         }

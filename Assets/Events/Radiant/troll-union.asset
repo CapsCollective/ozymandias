@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1319189571673623849
+--- !u!114 &-6892144062809731259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,14 +9,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Refuse their demands
   m_EditorClassIdentifier: 
-  customDescription: 
-  statToChange: 7
-  amount: -10
-  turns: -1
-  reason: from the Troll Tolls
+  outcomes:
+  - {fileID: 7773681163055695215}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-4521199110844042297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: The well-remunerated trolls secure our trade routes dutifully...
+--- !u!114 &-3512130155180181768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Accept their terms
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -4521199110844042297}
+  - {fileID: 7403648023418890614}
+  costScale: 1.4
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31,18 +64,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headline: Trolling for Tariffs
   article: Amid rising tensions between local merchants and the bridge-troll union,
-    faction official Moh'rgen Mork'hol has threatened to lock down bridges along
-    several strategic trade routes in an effort to raise minimum toll rates for union
-    members. Refusing of these tolls may lead to a strike.
+    faction official <b>Moh'rgen Mork'hol</b> has threatened to lock down bridges
+    along several strategic trade routes in an effort to raise minimum toll rates
+    for union members. Refusing of these tolls may lead to a strike.
   image: {fileID: 21300000, guid: cb374d44b70eb2b4e8cabaccb595d26e, type: 3}
   type: 6
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: 3786432004286810036}
-  - {fileID: 9004198238162734405}
+  - {fileID: -3512130155180181768}
+  - {fileID: -6892144062809731259}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &3786432004286810036
+--- !u!114 &7403648023418890614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,13 +84,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Accept their terms
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -1319189571673623849}
-  costScale: 0
---- !u!114 &5875539164191265910
+  customDescription: 
+  baseAmount: -1
+--- !u!114 &7773681163055695215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,18 +103,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   quest: {fileID: 11400000, guid: feaa160205c0a9e40983076f308890f7, type: 2}
---- !u!114 &9004198238162734405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Refuse their demands
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 5875539164191265910}
-  costScale: 0

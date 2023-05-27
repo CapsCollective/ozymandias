@@ -1,8 +1,6 @@
 using System;
-using Platform;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem.Users;
 using static Managers.GameManager;
 
@@ -57,8 +55,9 @@ namespace Inputs
         public InputAction ReturnToTown { get; }
         public InputAction ToggleTooltips { get; }
         public InputAction NavigateTooltips { get; }
-        public InputAction OnScreenshot{ get; }
-        public InputAction OnDebugToggle{ get; }
+        public InputAction OnScreenshot { get; }
+        public InputAction TogglePhotoMode { get; }
+        public InputAction OnDebugToggle { get; }
 
         public Inputs()
         {
@@ -82,6 +81,7 @@ namespace Inputs
             Close = PlayerInput.UI.Cancel;
             OpenNewspaper = PlayerInput.Player.OpenNewspaper;
             OpenQuests = PlayerInput.Player.OpenQuests;
+            DialogueNext = PlayerInput.UI.DialogueNext;
 
             // Tooltips
             ToggleTooltips = PlayerInput.Player.ToggleTooltips;
@@ -100,9 +100,9 @@ namespace Inputs
 
             // Misc
             NextTurn = PlayerInput.Player.NextTurn;
-            DialogueNext = PlayerInput.Player.DialogueNext;
             ReturnToTown = PlayerInput.Player.ReturnToTown;
             OnScreenshot = PlayerInput.Player.Screenshot;
+            TogglePhotoMode = PlayerInput.Player.TogglePhotoMode;
             
             // Debug
             if (Debug.isDebugBuild)

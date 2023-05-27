@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Events;
 using UnityEngine;
 using Utilities;
-using Random = UnityEngine.Random;
 using static Managers.GameManager;
+using Event = Events.Event;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -44,7 +44,7 @@ namespace Managers
             Stat.Spending
         };
 
-        [SerializeField] private SerializedDictionary<Guild, Events.Event> excessEvents;
+        [SerializeField] private SerializedDictionary<Guild, Event> excessEvents;
 
         public int StatMultiplier(Stat stat) => _baseStats.Contains(stat) ? BaseStatMultiplier : 1;
 
@@ -72,20 +72,15 @@ namespace Managers
             return GetStat(stat) - Manager.Adventurers.Available;
         }
 
-        public int SpawnChance(Guild guild)
-        {
-            return Mathf.Clamp(
-                (GetSatisfaction(guild) + 5) * 5, 
-                0, 50 + 10 * Manager.Upgrades.GetLevel(UpgradeType.MaxAdventurerSpawn)
-            );
-        }
+        public int MaxSpawnChance => 50 + 10 * Manager.Upgrades.GetLevel(UpgradeType.MaxAdventurerSpawn);
         
-        public int RandomSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
+        public int SpawnChance(Guild guild) => Mathf.Clamp(GetSatisfaction(guild) * 10, -100, MaxSpawnChance);
         
-        public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -2, 2);
+        public int HousingSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
+        
+        public int FoodModifier => GetSatisfaction(Stat.Food)/10;
 
-        public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 3 : WealthPerAdventurer) *
-            Manager.Adventurers.Available + GetStat(Stat.Spending) + StartingSalary; // 5 gold per adventurer plus spending, 3 if in tailor story
+        public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 0 : Manager.Adventurers.Available) + GetStat(Stat.Spending) + StartingSalary;
     
         public int Wealth { get;  set; }
 
@@ -100,13 +95,13 @@ namespace Managers
         
         public bool Spend(int amount)
         {
-            if (Manager.State.Loading) return true; //Don't spend money when loading
+            if (Manager.State.Loading || Tutorial.Tutorial.DisableNextTurn) return true; //Don't spend money when loading
             if (Wealth < amount) return false;
             Wealth -= amount;
             return true;
         }
 
-        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 2 : 0;
+        public int ScarecrowThreat => Manager.EventQueue.Flags[Flag.Scarecrows] ? Manager.Structures.GetCount(BuildingType.Farm) * 3 : 0;
         public int MineStrikePenalty => Manager.EventQueue.Flags[Flag.MineStrike] ? -5 : 0;
         
         #endregion
@@ -125,8 +120,8 @@ namespace Managers
         {
             TurnCounter = 1;
             BaseThreat = 0;
-            Stability = 50 + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
-            Wealth = Tutorial.Tutorial.Active ? 0 : 100 + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 50;
+            Stability = 50; // + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
+            Wealth = Tutorial.Tutorial.Active ? 0 : StartingWealth + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 10;
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
             {
                 ModifiersTotal[stat] = 0;
@@ -143,32 +138,44 @@ namespace Managers
         private void OnNextTurnBegin()
         {
             Stability += Defence - Threat;
-            if (Stability > 100) Stability = 100;
+            if (Stability > 100)
+            {
+                Manager.EventQueue.AddThreat();
+                Stability = 100;
+            }
             Wealth += WealthPerTurn;
             TurnCounter++;
 
             // Spawn adventurers based on satisfaction
             foreach (Guild guild in Enum.GetValues(typeof(Guild)))
             {
-                if (Random.Range(0, 100) < SpawnChance(guild)) Manager.Adventurers.Add(guild);
-                if (GetSatisfaction(guild) >= 10) Manager.EventQueue.Add(excessEvents[guild], true);
+                int spawnRoll = Random.Range(0, 100);
+                int spawnChance = SpawnChance(guild);
+                if (spawnRoll < spawnChance) Manager.Adventurers.Add(guild);
+                else if (spawnRoll < -spawnChance) Manager.Adventurers.Remove(false, guild);
+                
+                if (GetSatisfaction(guild) >= 20) Manager.EventQueue.Add(excessEvents[guild], true);
             }
+            
+            Debug.Log($"Stats: Starting turn {TurnCounter}");
             UpdateUi();
         }
         
         private void OnNextTurnEnd()
         {
-            if (Stability <= 0) Manager.EventQueue.AddGameOverEvents();
+            if (Stability <= 0 && Manager.Structures.GetCount(BuildingType.GuildHall) != 0)
+                Manager.EventQueue.AddGameOverEvents();
         
-            foreach (var stat in Modifiers)
+            foreach ((Stat stat, List<Modifier> mods) in Modifiers)
             {
-                for (int i = stat.Value.Count-1; i >= 0; i--)
+                for (int i = mods.Count-1; i >= 0; i--)
                 {
+                    Modifier mod = mods[i];
                     // -1 means infinite modifier
-                    if (Modifiers[stat.Key][i].turnsLeft == -1 || --Modifiers[stat.Key][i].turnsLeft > 0) continue;
-                    Debug.Log("Removing Stat: " + stat.Key);
-                    ModifiersTotal[stat.Key] -= Modifiers[stat.Key][i].amount;
-                    Modifiers[stat.Key].RemoveAt(i);
+                    if (mod.turnsLeft == -1 || --mod.turnsLeft > 0) continue;
+                    Debug.Log($"Stats: Removing modifier {mod.amount.WithSign()} {stat} {mod.reason}");
+                    ModifiersTotal[stat] -= Modifiers[stat][i].amount;
+                    Modifiers[stat].RemoveAt(i);
                 }
             }
         }

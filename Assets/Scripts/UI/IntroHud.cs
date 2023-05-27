@@ -9,9 +9,11 @@ namespace UI
 {
     public class IntroHud : UIController
     {
+        public static bool DisableOpen = false;
+        
         [SerializeField] private float animateInDuration = 0.5f, animateOutDuration = 0.5f;
         [SerializeField] private RectTransform title, buttons, socials;
-        [SerializeField] private Button playButton, creditsButton, quitButton, introSettingsButton;
+        [SerializeField] private Button playButton, creditsButton, quitButton, settingsButton, upgradesButton;
 
         public enum HudObject
         {
@@ -40,9 +42,12 @@ namespace UI
         {
             OnOpen();
             playButton.onClick.AddListener(() => { if (Manager.State.InIntro) Manager.State.EnterState(GameState.ToGame); });
+            settingsButton.onClick.AddListener(() => { if (Manager.State.InIntro) Manager.Book.Open(Book.BookPage.Settings); });
+            upgradesButton.onClick.AddListener(() => { if (Manager.State.InIntro) Manager.Book.Open(Book.BookPage.Upgrades); });
             creditsButton.onClick.AddListener(() => { if (Manager.State.InIntro) Manager.State.EnterState(GameState.ToCredits); });
             quitButton.onClick.AddListener(() => { if (Manager.State.InIntro) Application.Quit(); });
-            introSettingsButton.onClick.AddListener(OnClose);
+            settingsButton.onClick.AddListener(OnClose);
+            upgradesButton.onClick.AddListener(OnClose);
             _hudValuesMap = new Dictionary<HudObject, HudObjectValues>
             {
                 {HudObject.Title, new HudObjectValues(title, new Vector2(600,320), new Vector2(600,700))},
@@ -71,6 +76,7 @@ namespace UI
         
         public void Show(bool animate = true)
         {
+            if (DisableOpen) return;
             OnOpen();
             Show(new List<HudObject>(_hudValuesMap.Keys), animate);
         }

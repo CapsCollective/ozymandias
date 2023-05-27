@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -111,7 +112,7 @@ public class BlitFeature : ScriptableRendererFeature
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Settings
     {
         public RenderPassEvent passEvent = RenderPassEvent.AfterRenderingOpaques;

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Adventurers;
 using Cards;
 using DG.Tweening;
 using Events;
@@ -12,11 +11,13 @@ using Quests;
 using Reports;
 using Structures;
 using TMPro;
+using Tooltip;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
+using String = Utilities.String;
 
 namespace Tutorial
 {
@@ -32,9 +33,6 @@ namespace Tutorial
     public class Tutorial : MonoBehaviour
     {
         public static bool Active, DisableSelect, DisableNextTurn, ShowShade;
-
-        // (Ben) I Don't love this architecture, but not sure a better way without making book public
-        public static Action ShowBook;
         
         [SerializeField] private SerializedDictionary<GuidePose, Sprite> poses;
         
@@ -52,7 +50,7 @@ namespace Tutorial
         private GameState _exitState = GameState.InGame;
         private Action _exitAction = null;
 
-        private bool _firstCardUnlock;
+        private bool _firstCardUnlock, _firstTownDestroyed;
         
         #region Dialogue
         
@@ -76,11 +74,15 @@ namespace Tutorial
             next.onClick.AddListener(NextLine);
             
             State.OnNewGame += StartTutorial;
-            //State.OnGameEnd += StartUpgradesDescription;
             UnlockDisplay.OnUnlockDisplayed += StartUnlockDescription;
             Quests.Quests.OnCampAdded += StartCampsDescription;
-            
-            State.OnLoadingEnd += () => _firstCardUnlock = Manager.Cards.UnlockedCards == 0;
+            State.OnEnterState += StartUpgradesDescription;
+
+            State.OnLoadingEnd += () =>
+            {
+                _firstCardUnlock = Manager.Cards.UnlockedCards == 0; 
+                _firstTownDestroyed = Manager.Achievements.Milestones[Milestone.TownsDestroyed] == 0;
+            };
         }
 
         private void ShowDialogue(List<Line> lines, GameState exitState = GameState.InGame, Action exitAction = null, bool showShade = false)
@@ -110,9 +112,9 @@ namespace Tutorial
             guide.GetComponent<RectTransform>().DOAnchorPosX(-600, 0.5f);
             dialogue.DOAnchorPosY(0, 0.5f);
             Manager.GameHud.Show(GameHud.HudObject.MenuBar);
+            blocker.SetActive(false);
             Manager.State.EnterState(_exitState);
             _exitAction?.Invoke();
-            blocker.SetActive(false);
         }
 
         private void NextLine()
@@ -189,7 +191,7 @@ namespace Tutorial
         
         private void ShowObjectives()
         {
-            objectives.DOAnchorPosX(-230, 0.5f);
+            objectives.DOAnchorPosX(-250, 0.5f);
         }
 
         private void HideObjectives()
@@ -221,8 +223,8 @@ namespace Tutorial
                 new Line("Oh! Are you the replacement regional manager that head office was gonna send down?"),
                 new Line("You know what, don't answer that, you are now.", GuidePose.Dismissive),
                 new Line("I could never run it myself, too much paperwork. But if you were to run the town and leave me to... clean.. then maybe we could work something out.", GuidePose.Neutral), // Should point a 'thinking' pose
-                new Line("Let's start you off by showing you around the place...", GuidePose.FingerGuns, StartCameraObjectives)
-            });
+                new Line("Let's start you off by showing you around the place...", GuidePose.FingerGuns)
+            }, exitAction: StartCameraObjectives);
         }
         
         private void StartCameraObjectives()
@@ -266,8 +268,8 @@ namespace Tutorial
                 new Line("Ok, now that's out of the way let's get this show on the road!", GuidePose.Neutral),
                 new Line("There's a few ruins that you can clear to make some space for some new buildings."),
                 new Line("You can do it by selecting the ruin, and then the clear button. Then, you can select a card, and place it in the spot!"),
-                new Line("Space can be tight when building in the forest, so make sure to rotate the buildings to fit everything in.", onNext: StartBuildingObjectives)
-            });
+                new Line("Space can be tight when building in the forest, so make sure to rotate the buildings to fit everything in.")
+            }, exitAction: StartBuildingObjectives);
         }
         
         private void StartBuildingObjectives()
@@ -326,7 +328,7 @@ namespace Tutorial
 
             void ShowGameUi()
             {
-                Manager.Stats.Wealth = 100;
+                Manager.Stats.Wealth = StartingWealth;
                 Manager.GameHud.Show(new List<GameHud.HudObject>()
                 {
                     GameHud.HudObject.TopBar,
@@ -339,11 +341,10 @@ namespace Tutorial
                 new Line("Now every adventuring town's lifeblood is the Guild Hall. I'll pop one in now, will even clear some space for you, you can thank me later.", onNext: SpawnGuildHall),
                 new Line("Pop! I always love doing that.", GuidePose.FingerGuns, ShowGameUi),
                 new Line("This next part's gonna be a bit wordy, so buckle up:\nSee all those badges up there? That's your towns stats...", GuidePose.PointingUp),
-                new Line("There are 5 adventuring guilds, each with their own needs. The happier they are, the more likely an adventurer from that guild will join each turn."),
-                new Line("Your town also needs housing, which gives a chance to spawn random adventurers, and food, which gives a modifier to all guilds satisfaction."),
+                new Line($"There are 5 adventuring guilds ({String.StatIcon(Stat.Brawler)}, {String.StatIcon(Stat.Outrider)}, {String.StatIcon(Stat.Performer)}, {String.StatIcon(Stat.Diviner)}, {String.StatIcon(Stat.Arcanist)}), each with their own needs. The happier they are, the more likely an adventurer from that guild will join each turn."),
+                new Line($"Your town also needs {String.StatWithIcon(Stat.Housing)}, which gives a chance to spawn random adventurers, and {String.StatWithIcon(Stat.Food)}, which gives a modifier to all guilds satisfaction."),
                 new Line("As your population grows, you'll need to keep building to keep everyone happy."),
-                new Line("Try attracting some adventurers now!", onNext: StartAdventurerObjectives)
-            });
+            }, exitAction: StartAdventurerObjectives);
         }
         
         private void StartAdventurerObjectives()
@@ -360,14 +361,14 @@ namespace Tutorial
             {
                 CreateObjective("Go To Next Turn"),
                 CreateObjective("Read The News"),
-                CreateObjective("Attract Adventurers", 5),
+                CreateObjective($"Check Tooltips\n({(Manager.Inputs.UsingController ? "L3" : "Hover over stats")})"),
             };
             _onObjectivesComplete = EndTutorialDialogue;
             ShowObjectives();
 
-            Adventurers.Adventurers.OnAdventurerJoin += AdventurerJoin;
             State.OnNextTurnBegin += NextTurn;
             Newspaper.OnNextClosed += ReadNews;
+            TooltipPlacement.OnTooltipClosed += CheckTooltips;
 
             void NextTurn()
             {
@@ -380,11 +381,10 @@ namespace Tutorial
                 CompleteObjective(_currentObjectives[1]);
             }
             
-            void AdventurerJoin(Adventurer adventurer)
+            void CheckTooltips()
             {
-                if (!_currentObjectives[2].Increment()) return;
-                Adventurers.Adventurers.OnAdventurerJoin -= AdventurerJoin;
-                Newspaper.OnNextClosed += () => CompleteObjective(_currentObjectives[2]);
+                TooltipPlacement.OnTooltipClosed -= CheckTooltips;
+                CompleteObjective(_currentObjectives[2]);
             }
         }
 
@@ -394,7 +394,7 @@ namespace Tutorial
                 new Line("Well, that's all for now!", GuidePose.Neutral),
                 new Line("Wait, I totally forgot to mention how the last town got overrun, huh?", GuidePose.Embarrassed),
                 new Line("That bar up the top there is your towns stability, it hits 0, well you can probably guess...", GuidePose.PointingUp),
-                new Line("You want your defence (total adventurers + defensive buildings) to be larger than threat, which grows over time."),
+                new Line($"You want your {String.StatWithIcon(Stat.Defence)} to be larger than {String.StatWithIcon(Stat.Threat)}, which grows over time."),
                 new Line("You'll probably manage to make it at least a little while before the hoards of monsters and bandits take over.", GuidePose.Neutral),
                 new Line("But no loss, even when this place does inevitably fall apart, you can always try again, and again...", GuidePose.Dismissive),
                 new Line("Good Luck!", GuidePose.FingerGuns, EndTutorial)
@@ -407,13 +407,9 @@ namespace Tutorial
             // (to stop controllers selecting structures on exiting tutorial)
             DisableSelect = true;
             Manager.Camera.MoveTo(Manager.Structures.TownCentre).OnComplete(() => DisableSelect = false);
-            
+            Manager.EventQueue.AddTutorialEndEvents();
+
             Active = false;
-            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
-            {
-                ++Manager.Upgrades.GuildTokens[guild];
-            }
-            Manager.Upgrades.Display();
             SaveFile.SaveState(false);
         }
 
@@ -422,7 +418,7 @@ namespace Tutorial
             if (Manager.Achievements.Milestones[Milestone.CampsCleared] > 0 || !quest.IsRadiant || Manager.Quests.RadiantCount > 1) return;
             ShowDialogue(new List<Line> {
                 new Line("Heads up, our scouts have found an enemy camp!", GuidePose.Neutral),
-                new Line("They don't look too threatening right now, but give them a few days to grow and they could become a real problem. Each space they take up adds 1 threat until cleared."),
+                new Line($"They don't look too threatening right now, but give them a few days to grow and they could become a real problem. Each space they take up adds +1 {String.StatWithIcon(Stat.Threat)} until cleared."),
                 new Line("You'll probably wanna get on sending a few adventurers to deal with them. How much you spend to gear them up will influence how long a quest will take."),
                 new Line("Just be warned, while they're out on quests, they won't be providing defence to your town."),
             });
@@ -442,38 +438,56 @@ namespace Tutorial
                 new Line("This building will be added to your cards, at least until they all get lost in the ruins of your town..."),
                 new Line("But fear not! Check the upgrades page in your book to purchase the ability to rediscover them from the ruins of your previous towns."),
                 new Line("Discovering more buildings might just give us the edge to lasting a little longer out here...")
-            },
-                GameState.InMenu,
-                () => StartCoroutine(Algorithms.DelayCall(0.5f, () => DisableSelect = false)),
-                true);
+            }, GameState.InMenu, () => StartCoroutine(Algorithms.DelayCall(0.5f, () => DisableSelect = false)), true);
         }
         
-        /*private void StartUpgradesDescription()
+        private void StartUpgradesDescription(GameState state)
         {
-            if (Manager.Upgrades.GetLevel(UpgradeType.Discoveries) > 0) return;
-            
-            DisableIntroMenu = true;
-            
-            //TODO: Write Proper dialogue
-            ShowDialogue(new List<Line> {
-                new Line("Camp gone! It's all ruins now", GuidePose.Neutral),
-                new Line("Cards gone too!"),
-                new Line("Here upgrades!", GuidePose.PointingUp, ShowBook.Invoke),
-                new Line("Let me give you points", GuidePose.Neutral, AddTokens),
-                new Line("Dialogue Finished", GuidePose.Neutral, EndUpgradesDescription),
-            });
+            if (state != GameState.InIntro || !_firstTownDestroyed || Manager.Achievements.Milestones[Milestone.TownsDestroyed] != 1) return;
+            _firstTownDestroyed = false;
 
-            void EndUpgradesDescription()
+            
+            IntroHud.DisableOpen = true;
+            ShowDialogue(new List<Line> {
+                new Line("Well... It all fell to ruins. Don't worry, these things happen, it's really just a matter of time.", GuidePose.Neutral),
+                new Line("We can always start again, build in the same deadly forest, hope for the best. I think they call it 'failing forward'."),
+                new Line("The good news is, you've attracted some attention, the good kind this time!", GuidePose.FingerGuns),
+                new Line("While you were busy getting a town blown up, I was reaching out some to some old friends, letting them know about our little venture.")
+            }, GameState.InIntro, OpenBook);
+            
+            void OpenBook()
             {
-                DisableIntroMenu = true;
-                Manager.IntroHud.Show();
+                Manager.Book.Open(Book.BookPage.Upgrades);
+                Manager.Book.DisableNavigation();
+                ShowDialogue(new List<Line> {
+                    new Line("Each guild has agreed to help us out, if we do what they want, of course.", GuidePose.PointingUp),
+                    new Line("I've cashed in a few favours, should be enough to get you your first upgrade, the rest is on you.", onNext: AddTokens),
+                    new Line("If you come across any of your old ruins, that upgrade will let you rediscover previously unlocked cards.", GuidePose.Neutral),
+                    new Line("Keep checking the newspaper, some requests will start coming in soon."),
+                    new Line("With their support, you might even be able to make it a whole year before it all falls apart!", GuidePose.FingerGuns, EndUpgradesDescription),
+                }, GameState.InMenu, showShade: true);
             }
             
             void AddTokens()
             {
                 foreach (Guild guild in Enum.GetValues(typeof(Guild))) Manager.Upgrades.GuildTokens[guild]++;
+                Manager.Upgrades.Display();
+                UpdateUi();
             }
-        }*/
+            
+            void EndUpgradesDescription()
+            {
+                IntroHud.DisableOpen = false;
+                Upgrades.Upgrades.OnUpgradePurchased += EndUpgradesTutorial;
+            }
+            
+            void EndUpgradesTutorial(UpgradeType upgradeType)
+            {
+                Manager.Book.EnableNavigation();
+                SaveFile.SaveState(false);
+                Upgrades.Upgrades.OnUpgradePurchased -= EndUpgradesTutorial;
+            }
+        }
         
         #endregion
     }

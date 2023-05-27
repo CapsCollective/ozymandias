@@ -1,6 +1,5 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static Managers.GameManager;
 
 namespace Adventurers

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: pirate-captain
+  m_EditorClassIdentifier: 
+  headline: Pier Pressure
+  article: Someone washed ashore today, claiming to be a fearsome pirate captain
+    from across the seas, his ship lost to him. His crew mutinied after one claimed
+    to have seen a terrifying monster in the depths of the ocean, causing hysteria,
+    and begging to return to land.
+  image: {fileID: 21300000, guid: cacff04cb2763da4fa70dc9cd0a1321c, type: 3}
+  type: 4
+  headliner: 0
+  outcomes:
+  - {fileID: 351933350427598207}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &351933350427598207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: They join the fight to fund a new ship. +1 Outrider (<sprite=1>)
+  adventurers: []
+  count: 1
+  guild: 1
+  anyGuild: 0

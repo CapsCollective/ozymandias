@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-985293855668958941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101636c2e4a55b14e9e8351607516cfb, type: 3}
+  m_Name: QuestAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  quest: {fileID: 11400000, guid: a17391711e74a1e4fac2c8e7d6de8374, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: hivemind
+  m_EditorClassIdentifier: 
+  headline: Neighbourly Defence
+  article: Another settlement needs our help! Word has come in that a nearby friendly
+    camp is in trouble, and if we could lend a few of our adventurers <i>"that'd
+    be tops</i>" they <b>said in unison</b>. Something about them is off, so we best
+    be careful and only send our most expendable adventurers.
+  image: {fileID: 21300000, guid: 4f09b82c7c5485042b9ab938fe367276, type: 3}
+  type: 6
+  headliner: 0
+  outcomes:
+  - {fileID: -985293855668958941}
+  choices: []
+  blueprintToUnlock: {fileID: 0}

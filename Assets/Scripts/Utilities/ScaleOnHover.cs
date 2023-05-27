@@ -1,7 +1,8 @@
 using DG.Tweening;
+using Inputs;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Inputs;
+using UnityEngine.InputSystem;
 using static Managers.GameManager;
 
 namespace Utilities
@@ -22,7 +23,7 @@ namespace Utilities
             Inputs.Inputs.OnControlChange += OnControlChange;
         }
 
-        private void OnControlChange(UnityEngine.InputSystem.InputControlScheme scheme)
+        private void OnControlChange(InputControlScheme scheme)
         {
             if (Manager.Inputs.UsingController)
                 InputHelper.OnNewSelection += DoScaling;

@@ -1,6 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8044032959734065818
+--- !u!114 &-6206233425707690666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
+  m_EditorClassIdentifier: 
+  customDescription: '"Ahh what a shame, I was looking forward to this payday."'
+--- !u!114 &-3161418661933858635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Ancient Blueprint
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 7880487855707147290}
+  - {fileID: 3415639978465934411}
+  costScale: 2
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: monastery-3
+  m_EditorClassIdentifier: 
+  headline: Travelling Merchant Comes to Town
+  article: 'After days of anticipation, the merchant has finally arrived.
+
+
+    <i>"I''ve
+    just got the one item on me today, but it''s a good find! I found this <b>scroll</b>
+    while digging in the ruins, looks like a blueprint..."</i>'
+  image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
+  type: 0
+  headliner: 0
+  outcomes:
+  - {fileID: 3894331823838732181}
+  choices:
+  - {fileID: -3161418661933858635}
+  - {fileID: 4654570152998209644}
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &3415639978465934411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,22 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: 
   blueprint: {fileID: 11400000, guid: 1e49bdfd9848d18478bde803ac073dcf, type: 2}
---- !u!114 &-4823671763080424713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Politely Decline
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 2362969348003235963}
-  costScale: 0
---- !u!114 &-2850389877414750368
+--- !u!114 &3894331823838732181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +89,7 @@ MonoBehaviour:
   customDescription: 
   flag: 0
   value: 0
---- !u!114 &11400000
+--- !u!114 &4654570152998209644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,35 +98,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: monastery-3
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Politely Decline
   m_EditorClassIdentifier: 
-  headline: Travelling Merchant Comes to Town
-  article: After days of anticipation, the merchant has finally arrived. "I've just
-    got the one item on me today, but it's a good find!"
-  image: {fileID: 21300000, guid: dbd225c958aaf6a4fb39c03e7917feb7, type: 3}
-  type: 0
-  headliner: 0
   outcomes:
-  - {fileID: -2850389877414750368}
-  choices:
-  - {fileID: 4306188443282620693}
-  - {fileID: -4823671763080424713}
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &2362969348003235963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
-  m_EditorClassIdentifier: 
-  customDescription: '"Ahh what a shame, I was looking forward to this payday."'
---- !u!114 &3407579642180633292
+  - {fileID: -6206233425707690666}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &7880487855707147290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,19 +120,3 @@ MonoBehaviour:
   m_Name: FlavourText
   m_EditorClassIdentifier: 
   customDescription: '"The blueprints look to be for an impressive monastery."'
---- !u!114 &4306188443282620693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Ancient Blueprint
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 3407579642180633292}
-  - {fileID: -8044032959734065818}
-  costScale: 2

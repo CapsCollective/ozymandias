@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8558018851455422111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
-  m_Name: ThreatAdded
-  m_EditorClassIdentifier: 
-  customDescription: 
-  baseAmount: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,19 +13,40 @@ MonoBehaviour:
   m_Name: tannery-2
   m_EditorClassIdentifier: 
   headline: The Fangs Are Out!
-  article: The vampire hunters, thoroughly embarrassed by their blunder upon arriving
-    in town, have today stumbled upon a vampire enclave! "It's like a nest in there!
-    I've never seen so many Draculas!". The discovery has quickly sparked an all-out
-    war, threatening to spill blood all over our streets - a fine waste.
+  article: 'The <b>vampire hunters</b>, thoroughly embarrassed by their blunder upon
+    arriving in town, have today stumbled upon a vampire enclave!
+
+
+    <i>"It''s
+    like a nest in there! I''ve never seen so many Draculas!"</i>
+
+
+    The discovery
+    has quickly sparked an all-out war, threatening to spill blood all over our streets
+    - a fine waste.'
   image: {fileID: 21300000, guid: abae7aaa39a40324e96def6de040fcab, type: 3}
   type: 0
   headliner: 0
   outcomes:
-  - {fileID: -8558018851455422111}
-  - {fileID: 1492249788082491549}
+  - {fileID: 3194877806381013123}
+  - {fileID: 4495547988827405334}
   choices: []
   blueprintToUnlock: {fileID: 0}
---- !u!114 &1492249788082491549
+--- !u!114 &3194877806381013123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93d7cbdb6ff452391cf896dadebd975, type: 3}
+  m_Name: ThreatAdded
+  m_EditorClassIdentifier: 
+  customDescription: 
+  baseAmount: 3
+--- !u!114 &4495547988827405334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

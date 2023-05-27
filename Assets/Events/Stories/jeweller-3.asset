@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9007058075185573858
+--- !u!114 &-7786283582497690330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,49 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
+  m_Name: AdventurersRemoved
   m_EditorClassIdentifier: 
-  customDescription: We still managed to get some metals out (+4 defence for 3 turns).
-  statToChange: 8
-  amount: 4
-  turns: 3
-  reason: from Adventurer Scabs
---- !u!114 &-8796703985593791891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send in Adventurers
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: 236925946179410797}
-  - {fileID: -2429497229909890867}
-  - {fileID: -9007058075185573858}
-  costScale: 0
---- !u!114 &-8356176257114630108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Send in Gnomes
-  m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -1349507905969607413}
-  - {fileID: -3133186883244317263}
-  - {fileID: 23246437587615081}
-  costScale: 0
---- !u!114 &-3133186883244317263
+  customDescription: 
+  count: 3
+  kill: 1
+  guild: 0
+  anyGuild: 1
+--- !u!114 &-7394571008308050628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,7 +34,7 @@ MonoBehaviour:
   amount: -15
   turns: -1
   reason: from Mine Cave-in
---- !u!114 &-2564568999460282476
+--- !u!114 &-7296551231098576138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,26 +43,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
-  m_Name: FlavourText
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
   m_EditorClassIdentifier: 
-  customDescription: The Dwarves gloat, knowing you couldn't find anyone better.
---- !u!114 &-2429497229909890867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de0139aeb28bb440aad26c91956bc78, type: 3}
-  m_Name: AdventurersRemoved
-  m_EditorClassIdentifier: 
-  customDescription: 
-  count: 3
-  kill: 1
---- !u!114 &-1349507905969607413
+  customDescription: We still managed to get some metals out. +4 Defence (<sprite=8>)
+    for 3 turns.
+  statToChange: 8
+  amount: 4
+  turns: 3
+  reason: from Gnome Scabs
+--- !u!114 &-6832726563803536001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,6 +66,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: We could only find garden gnomes, who promptly caused a cave-in
     to a valuable gold vein.
+--- !u!114 &-5821816582649357249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send in Gnomes
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: -6832726563803536001}
+  - {fileID: -7394571008308050628}
+  - {fileID: -7296551231098576138}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-1473597648866952747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Send in Adventurers
+  m_EditorClassIdentifier: 
+  outcomes:
+  - {fileID: 3033971215004303661}
+  - {fileID: -7786283582497690330}
+  - {fileID: -1001798109269907864}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &-1001798109269907864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
+  m_Name: ModifierAdded
+  m_EditorClassIdentifier: 
+  customDescription: We still managed to get some metals out. +4 Defence (<sprite=8>)
+    for 3 turns.
+  statToChange: 8
+  amount: 4
+  turns: 3
+  reason: from Adventurer Scabs
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,19 +137,23 @@ MonoBehaviour:
   m_Name: jeweller-3
   m_EditorClassIdentifier: 
   headline: Crossing the Picket Line
-  article: In an attempt to offset the Dwarven Strike, we've scouted out some alternatives
-    to work the mines in the meantime. A Dwarven representative chuckled "You send
-    anyone else in those mines, you'll learn the true meaning of 'crunch'."
+  article: 'In an attempt to offset the <b>dwarven strike</b>, we''ve scouted out
+    some alternatives to work the mines in the meantime.
+
+
+    A dwarven representative
+    chuckled <i>"You send anyone else in those mines, you''ll learn the true meaning
+    of ''crunch''."</i>'
   image: {fileID: 21300000, guid: 89337f10e53bde94d8e96c327f72e9a8, type: 3}
   type: 0
   headliner: 0
   outcomes: []
   choices:
-  - {fileID: -8796703985593791891}
-  - {fileID: -8356176257114630108}
-  - {fileID: 7769357139848114367}
+  - {fileID: -1473597648866952747}
+  - {fileID: -5821816582649357249}
+  - {fileID: 2781646709737904672}
   blueprintToUnlock: {fileID: 0}
---- !u!114 &23246437587615081
+--- !u!114 &2781646709737904672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,15 +162,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d92222dc33bd8748a934a5a0b6e6f9c, type: 3}
-  m_Name: ModifierAdded
+  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
+  m_Name: Don't Send Anyone
   m_EditorClassIdentifier: 
-  customDescription: We still managed to get some metals out (+4 defence for 3 turns)
-  statToChange: 8
-  amount: 4
-  turns: 3
-  reason: from Gnome Scabs
---- !u!114 &236925946179410797
+  outcomes:
+  - {fileID: 7685102524944705367}
+  costScale: 0
+  requiresItem: 0
+  disableRepurchase: 0
+  requiredItem: 0
+--- !u!114 &3033971215004303661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customDescription: Our inexperienced townsfolk only worked for a day until a lethal
     cave-in caused them to flee.
---- !u!114 &7769357139848114367
+--- !u!114 &7685102524944705367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,9 +194,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f5b40bba093e4418642a63f057e746, type: 3}
-  m_Name: Don't Send Anyone
+  m_Script: {fileID: 11500000, guid: 7edc53f218439334a93ef5402b24371e, type: 3}
+  m_Name: FlavourText
   m_EditorClassIdentifier: 
-  outcomes:
-  - {fileID: -2564568999460282476}
-  costScale: 0
+  customDescription: The dwarves gloat, knowing you couldn't find anyone better.

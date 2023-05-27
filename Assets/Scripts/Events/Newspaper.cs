@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Managers;
 using TMPro;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
 using Random = UnityEngine.Random;
+using String = Utilities.String;
 
 namespace Events
 {
@@ -22,11 +24,18 @@ namespace Events
         public static Action OnClosed; // For every newspaper close
         public static Action OnNextClosed; // Only on the next newspaper close
 
+        [Serializable]
+        public struct ChoiceButton
+        {
+            public Button button;
+            public TextMeshProUGUI description, cost;
+        }
+        
         // Serialised Fields
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private NewspaperEvent[] articleList;
         [SerializeField] private Image articleImage;
-        [SerializeField] private Button[] choiceList;
+        [SerializeField] private ChoiceButton[] choiceList;
         [SerializeField] private Button continueButton, openNewspaperButton;
         [SerializeField] private TextMeshProUGUI turnCounter;
         
@@ -34,7 +43,6 @@ namespace Events
         [SerializeField] private GameObject continueButtonContent;
         [SerializeField] private GameObject disableButtonContent;
         [SerializeField] private GameObject gameOverButtonContent;
-        [SerializeField] private GameObject newAdventurersContent;
 
         [SerializeField] private float animateInDuration = .5f;
         [SerializeField] private float animateOutDuration = .75f;
@@ -96,15 +104,25 @@ namespace Events
             UpdateUi();
         }
 
-        private void SetChoiceActive(int choice, bool active)
+        private void SetChoiceActive(int choiceI, bool active)
         {
-            choiceList[choice].gameObject.SetActive(active);
+            ChoiceButton choiceButton = choiceList[choiceI];
+            choiceButton.button.gameObject.SetActive(active);
             if (!active) return;
+
+            Choice choice = _choiceEvent.choices[choiceI];
+            int cost = (int)(choice.costScale * Manager.Stats.WealthPerTurn);
+            bool hasCost = cost != 0;
+
+            bool isLocked = choice.requiresItem && !Manager.EventQueue.Flags[choice.requiredItem];
+            bool alreadyPurchased = choice.disableRepurchase && Manager.EventQueue.Flags[choice.requiredItem];
             
-            int cost = (int)(_choiceEvent.choices[choice].costScale * Manager.Stats.WealthPerTurn);
-            choiceList[choice].GetComponentInChildren<TextMeshProUGUI>().text =
-                _choiceEvent.choices[choice].name + (cost != 0 ? $"\n(Spend {cost} of {Manager.Stats.Wealth} Wealth)" : "");
-            choiceList[choice].GetComponent<Button>().interactable = cost == 0 || Manager.Stats.Wealth >= cost;
+            choiceButton.description.text = choice.name +
+                $"\n(Spend {cost} / {Manager.Stats.Wealth} {String.StatIcon(Stat.Spending)})".Conditional(hasCost && !alreadyPurchased) +
+                "\n(Item Not Owned)".Conditional(isLocked) +
+                "\n(Item Already Owned)".Conditional(alreadyPurchased);
+            
+            choiceButton.button.interactable = !isLocked && !alreadyPurchased && (!hasCost || Manager.Stats.Wealth >= cost);
         }
     
         public void OnChoiceSelected(int choice)

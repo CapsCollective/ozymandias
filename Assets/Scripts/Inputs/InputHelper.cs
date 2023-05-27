@@ -1,12 +1,13 @@
-using Managers;
 using System;
 using System.Collections.Generic;
+using Cinemachine;
+using DG.Tweening;
+using Managers;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Utilities;
-using DG.Tweening;
-using UI;
 using static Managers.GameManager;
 
 namespace Inputs
@@ -48,7 +49,12 @@ namespace Inputs
                 HelperActive = b;
             };
 
-            worldSpaceCursor = GetComponent<Cinemachine.CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
+            GameHud.OnTogglePhotoMode += modeEnabled =>
+            {
+                if (Manager.Inputs.UsingController) ToggleWorldCursor(!modeEnabled);
+            };
+            
+            worldSpaceCursor = GetComponent<CinemachineFreeLook>().m_Follow.GetChild(0).gameObject;
             Manager.Inputs.WorldSpaceCursor = worldSpaceCursor.transform;
             worldSpaceCursor.GetComponentInChildren<Renderer>().material.SetFloat("_Opacity", 0);
             HelperActive = false;
@@ -73,7 +79,11 @@ namespace Inputs
             previousSelections[Manager.State.Current] = obj;
             
             selectionHelper.SetParent(obj.transform);
-            selectionHelper.anchoredPosition = CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero;
+            // Only animate if close so it doesn't fly in
+            if (Vector2.Distance(selectionHelper.position, obj.transform.position) > 400)
+                selectionHelper.anchoredPosition = CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero;
+            else
+                selectionHelper.DOAnchorPos(CursorOffsetOverrides.ContainsKey(obj) ? CursorOffsetOverrides[obj] : Vector2.zero, 0.3f);
             selectionHelper.localScale = Vector3.one;
             selectionHelper.eulerAngles = Vector3.zero;
         }
@@ -94,7 +104,6 @@ namespace Inputs
             previousSelections[state] = null;
         }
 
-        // I'll fill this up with stuff when I can.
         private void StateChecks(GameState state)
         {
             if (Manager.Inputs.UsingController)
@@ -119,7 +128,7 @@ namespace Inputs
                         HelperActive = false;
                         break;
                     case GameState.InGame:
-                        ToggleWorldCursor(true); 
+                        ToggleWorldCursor(true);
                         HelperActive = false;
                         break;
                     case GameState.NextTurn:
@@ -140,12 +149,12 @@ namespace Inputs
 
         private void ToggleWorldCursor(bool toggle)
         {
-            var renderer = worldSpaceCursor.GetComponentInChildren<Renderer>();
+            Renderer cursor = worldSpaceCursor.GetComponentInChildren<Renderer>();
             float tweenTo = toggle ? 0.5f : 0.0f;
             float tweenFrom = toggle ? 0.0f : 0.5f;
             tween = DOTween.To(() => tweenFrom, y => tweenFrom = y, tweenTo, 0.25f).OnUpdate(() =>
             {
-                renderer.material.SetFloat("_Opacity", tweenFrom);
+                cursor.material.SetFloat("_Opacity", tweenFrom);
             });
         }
 

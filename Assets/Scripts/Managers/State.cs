@@ -5,9 +5,10 @@ using Cinemachine;
 using DG.Tweening;
 using Inputs;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
 
@@ -53,7 +54,9 @@ namespace Managers
         [Serializable] private struct CreditsWaypoint
         {
             public Transform location;
-            public CanvasGroup panel;
+            public RectTransform panel;
+            public Vector2 startPos, endPos;
+            public float startRot, landingRot, endRot;
         }
 
         private GameState _state;
@@ -74,7 +77,7 @@ namespace Managers
             
             Manager.Inputs.NextTurn.performed += _ =>
             {
-                if (InGame && !Tutorial.Tutorial.DisableNextTurn) EnterState(GameState.NextTurn);
+                if (!Manager.GameHud.PhotoModeEnabled && InGame && !Tutorial.Tutorial.DisableNextTurn) EnterState(GameState.NextTurn);
                 _nextTurnTimer = 0;
                 nextTurnMask.fillAmount = 0;
             };
@@ -93,12 +96,13 @@ namespace Managers
 
         private void Update()
         {
-            if (InGame && Manager.Inputs.NextTurn.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+            if (InGame && Manager.Inputs.NextTurn.phase == InputActionPhase.Started)
                 nextTurnMask.fillAmount = Mathf.InverseLerp(0, 0.4f, _nextTurnTimer += Time.deltaTime);
         }
 
         public void EnterState(GameState state)
         {
+            Debug.Log($"State: Entering {_state}");
             _state = state;
             OnEnterState?.Invoke(_state);
             switch (_state)
@@ -125,7 +129,7 @@ namespace Managers
                     InMenuInit();
                     break;
                 case GameState.EndGame:
-                    EndGameInit();
+                    StartCoroutine(EndGameInit());
                     break;
                 case GameState.ToCredits:
                     ToCreditsInit();
@@ -134,7 +138,6 @@ namespace Managers
                     InCreditsInit();
                     break;
             }
-            Debug.Log(_state);
         }
 
         private void LoadingInit()
@@ -160,12 +163,12 @@ namespace Managers
             dofProfile.TryGet<DepthOfField>(out var dof);
             dof.focusDistance.value = dofFocalDist;
 
+            loadingShadeCanvasGroup.alpha = 1;
             // Reveal the CC logo screen
-            loadingShadeCanvasGroup.DOFade(0.0f, 0.5f).SetDelay(0.5f)
-                .OnComplete(() =>
-                {
-                    StartCoroutine(LoadGame());
-                });
+            loadingShadeCanvasGroup
+                .DOFade(0.0f, 0.5f)
+                .SetDelay(0.5f)
+                .OnComplete(() => StartCoroutine(LoadGame()));
         }
 
         private IEnumerator LoadGame()
@@ -174,13 +177,16 @@ namespace Managers
             Manager.Jukebox.PlayKeystrokes();
             
             var loadTime = Time.time;
-            SaveFile.LoadState();
+            yield return StartCoroutine(SaveFile.LoadState());
             OnLoadingEnd?.Invoke();
             
             // Hold the loading screen open for a minimum of 4 seconds
             loadTime = 4 - (Time.time - loadTime);
-            if (loadTime > 0) yield return new WaitForSeconds(loadTime);
-
+            if (loadTime > 0)
+            {
+                yield return new WaitForSeconds(loadTime);
+            }
+            
             // Fade out loading screen
             loadingCanvasGroup.DOFade(0.0f, 0.5f).OnComplete(() => loadingCanvas.enabled = false);
             
@@ -317,10 +323,10 @@ namespace Managers
             
         }
         
-        private void EndGameInit()
+        private IEnumerator EndGameInit()
         {
             OnGameEnd?.Invoke();
-            Manager.Map.FillGrid(); // Not included in the OnGameEnd action because it needs to happen after
+            yield return Manager.Structures.ResetGrid();
             Manager.State.IsGameOver = false; //Reset for next game
             Manager.Stats.TurnCounter = 0;
             
@@ -349,56 +355,72 @@ namespace Managers
             _creditsCoroutine = StartCoroutine(InCreditsUpdate());
         }
 
+
+        private const float CreditTransitionEntryDuration = 2.0f;
+        private const float CreditTransitionExitDuration = 2.0f;
+        private const float CreditTransitionMoveDuration = 8.5f;
+        
+        
         private IEnumerator InCreditsUpdate()
         {
-            var visitedTown = false;
-            
-            CanvasGroup previousPanel;
-            CanvasGroup currentPanel = null;
-            foreach (CreditsWaypoint waypoint in creditsWaypoints)
+            RectTransform previousPanel;
+            RectTransform currentPanel = null;
+            for (int index = 0; index < creditsWaypoints.Count; index++)
             {
+                CreditsWaypoint waypoint = creditsWaypoints[index];
                 Transform currentTransform = waypoint.location;
                 previousPanel = currentPanel;
                 currentPanel = waypoint.panel;
 
                 // Build a camera move object for the waypoint
-                Vector3 pos;
+                Vector3 pos = index == 0 ? Manager.Structures.TownCentre + Vector3.up * 0.5f : currentTransform.position;
                 Vector3 rot = currentTransform.eulerAngles;
-                if (visitedTown) pos = currentTransform.position;
-                else
-                {
-                    pos = Manager.Structures.TownCentre + Vector3.up * 0.5f;
-                    visitedTown = true;
-                }
+
                 CameraMovement.CameraMove currentMove = new CameraMovement.CameraMove(
                     pos,
                     2.0f,
                     rot.y % 180.0f,
                     pos.y
                 );
-                
-                // Fade out previous panel if it exists
+
                 if (previousPanel)
                 {
-                    previousPanel.DOFade(0.0f, 1.0f)
-                        .OnComplete(() =>
-                        {
-                            previousPanel.alpha = 0.0f;
-                        });
+                    if (index == 1) // Fade out exit text
+                    {
+                        CanvasGroup cg = previousPanel.GetComponent<CanvasGroup>();
+                        cg.DOFade(0.0f, CreditTransitionExitDuration)
+                            .OnComplete(() => previousPanel.gameObject.SetActive(false));
+                    }
+                    else
+                    {
+                        previousPanel
+                            .DOAnchorPos(waypoint.endPos, CreditTransitionExitDuration)
+                            .OnComplete(() => previousPanel.gameObject.SetActive(false));
+                        previousPanel
+                            .DOLocalRotate(new Vector3(0, 0, waypoint.endRot), CreditTransitionExitDuration);
+                    }
                 }
                 
-                // Fade in current panel
-                currentPanel.DOFade(1.0f, 2.0f)
-                    .OnComplete(() =>
-                    {
-                        currentPanel.alpha = 1.0f;
-                    });
-                
+                currentPanel.gameObject.SetActive(true);
+                if (index == 0)
+                {
+                    CanvasGroup cg = currentPanel.GetComponent<CanvasGroup>();
+                    cg.alpha = 0;
+                    cg.DOFade(1.0f, CreditTransitionEntryDuration);
+                }
+                else
+                {
+                    currentPanel.anchoredPosition = waypoint.startPos;
+                    currentPanel.eulerAngles = new Vector3(0, 0, waypoint.startRot);
+                    currentPanel.DOAnchorPos(new Vector2(), CreditTransitionEntryDuration);
+                    currentPanel.DOLocalRotate(new Vector3(0,0,waypoint.landingRot), CreditTransitionEntryDuration);
+                }
+
                 // Run the move
                 var finishedMoving = false;
                 while (!finishedMoving)
                 {
-                    finishedMoving = Manager.Camera.MoveCamRig(currentMove, creditsCurve, 6.0f);
+                    finishedMoving = Manager.Camera.MoveCamRig(currentMove, creditsCurve, index == 0 ? 4.0f : CreditTransitionMoveDuration);
                     yield return null;
                 }
             }
@@ -415,10 +437,20 @@ namespace Managers
             Manager.Camera.MoveCamRigCancel();
 
             DOTween.KillAll();
-            foreach (CreditsWaypoint waypoint in creditsWaypoints)
+            for (int index = 0; index < creditsWaypoints.Count; index++)
             {
-                waypoint.panel.alpha = 0.0f;
+                CreditsWaypoint waypoint = creditsWaypoints[index];
+                if (index == 0) waypoint.panel.gameObject.SetActive(false);
+                else if (waypoint.panel.gameObject.activeSelf)
+                {
+                    waypoint.panel
+                        .DOAnchorPos(waypoint.endPos, CreditTransitionExitDuration)
+                        .OnComplete(() => waypoint.panel.gameObject.SetActive(false));
+                    waypoint.panel
+                        .DOLocalRotate(new Vector3(), CreditTransitionExitDuration);
+                }
             }
+
             Manager.Jukebox.FadeTo(Jukebox.AmbienceVolume, Jukebox.FullVolume, 5f);
 
             EnterState(GameState.ToIntro);

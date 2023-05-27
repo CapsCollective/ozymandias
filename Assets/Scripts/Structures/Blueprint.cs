@@ -30,20 +30,13 @@ namespace Structures
     [CreateAssetMenu(fileName = "Blueprint")]
     public class Blueprint : ScriptableObject
     {
-        private enum ScaleSpeed
-        {
-            Slow = 4,
-            Medium = 3,
-            Fast = 2,
-            VeryFast = 1
-        } // Calculated placement rate
 
         public BuildingType type;
         [TextArea(3, 5)] public string description;
         public Sprite icon;
         public SerializedDictionary<Stat, int> stats;
         [SerializeField] private int baseCost;
-        [SerializeField] private ScaleSpeed scaleSpeed;
+        [SerializeField] private int scaleSpeed;
         
         public Color roofColor;
         public bool hasGrass = true;
@@ -53,13 +46,12 @@ namespace Structures
         public AdjacencyConfiguration adjacencyConfig;
 
         public bool Free { get; set; }
-        private const float BuildingCostScale = 1.45f;
         private const float BaseRefundPercentage = 5f; // Representing 50%
         
-        public int ScaledCost => Free ? 0 :
-            (int)(baseCost * Mathf.Pow(BuildingCostScale, Manager.Structures.GetCount(type) * 4 / (float)scaleSpeed));
-        public int Refund =>
-            (int)(baseCost * Mathf.Pow(BuildingCostScale, (Manager.Structures.GetCount(type) - 1) * 4 / (float)scaleSpeed) *
-                (BaseRefundPercentage + Manager.Upgrades.GetLevel(UpgradeType.Refund)) / 10f);
+        public int ScaledCost => Free ? 0 : baseCost + Manager.Structures.GetCount(type) * scaleSpeed;
+        public int Refund => Mathf.RoundToInt(
+            (baseCost + (Manager.Structures.GetCount(type) - 1) * scaleSpeed) * 
+            ((BaseRefundPercentage + Manager.Upgrades.GetLevel(UpgradeType.Refund)) / 10f)
+        );
     }
 }

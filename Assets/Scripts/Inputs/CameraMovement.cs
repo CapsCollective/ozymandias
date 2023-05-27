@@ -80,6 +80,7 @@ namespace Inputs
         {
             if (context.started)
             {
+                if (IsOverUi) return;
                 leftClick = true;
                 lastDrag = Manager.Inputs.MousePosition;
             }
@@ -260,7 +261,7 @@ namespace Inputs
         
         private void EndCursorGrab()
         {
-            Manager.Cursor.Current = Manager.Cards.SelectedCard ? CursorType.Build : CursorType.Pointer;
+            Manager.Cursor.Current = Manager.Cards.SelectedCard && Manager.Cards.SelectedCard.Interactable ? CursorType.Build : CursorType.Pointer;
             IsMoving = false;
         }
 

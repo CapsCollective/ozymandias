@@ -56,6 +56,12 @@ namespace Cards
             cardHighlight.DOFade(isOn ? 1 : 0, 0.5f);
         }
 
+        public void FlashCostRed()
+        {
+            cost.DOColor(Colors.Red, 0.3f)
+                .OnComplete(() => cost.DOColor(Colors.CostInactive, 0.3f));
+        }
+
         public void UpdateDetails(Blueprint blueprint, bool interactable = true)
         {
             if (interactable)
@@ -111,11 +117,10 @@ namespace Cards
                 // Set the badge values
                 badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
-                
-                badges[i].badge.Description = 
-                    $"{(effects[i].Value > 0 ? "+" : "")}" +
-                    $"{effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key)} " +
-                    $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
+
+                int scaledValue = effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key);
+                badges[i].badge.Description =
+                    $"{scaledValue.WithSign()} {effects[i].Key.ToString()}{" Satisfaction".Conditional((int)effects[i].Key < 5)}";
             }
         }
     }

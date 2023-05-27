@@ -5,12 +5,11 @@ using Cards;
 using DG.Tweening;
 using Inputs;
 using Managers;
-using Platform;
 using Quests;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using Utilities;
 using static Managers.GameManager;
@@ -45,8 +44,7 @@ namespace Structures
         [SerializeField] private EffectBadge bonusBadge;
         [SerializeField] private TextMeshProUGUI bonusText;
         [SerializeField] private List<Sprite> chevronSizes;
-        [SerializeField] private Utilities.SerializedDictionary<Stat, Sprite> statIcons;
-        [SerializeField] private PlatformAssets rendererData;
+        [SerializeField] private SerializedDictionary<Stat, Sprite> statIcons;
         
         private OutlineRenderFeature _outline;
         private Canvas _canvas;
@@ -116,14 +114,20 @@ namespace Structures
                         costText.text = "";
                         questTitleText.text = SelectedStructure.Quest ? SelectedStructure.Quest.Title : "No Quests Here";
                         buttonCanvasGroup.DOFade(SelectedStructure.Quest ? 1 : 0.7f, 0.5f);
+                        DisableEffects();
                         break;
                     case StructureType.Building:
                         questTitleText.text = "";
                         nameText.text = SelectedStructure.name;
-                        if (SelectedStructure.Blueprint.type == BuildingType.GuildHall)
+                        if (Tutorial.Tutorial.Active)
                         {
-                            costText.text = Tutorial.Tutorial.Active ? "Disabled" : "Destroy?";
-                            buttonCanvasGroup.DOFade(Tutorial.Tutorial.Active ? 0.7f : 1, 0.5f);
+                            costText.text = "Disabled";
+                            buttonCanvasGroup.DOFade(0.7f, 0.5f);
+                        }
+                        else if (SelectedStructure.Blueprint.type == BuildingType.GuildHall)
+                        {
+                            costText.text = "Destroy?";
+                            buttonCanvasGroup.DOFade(1, 0.5f);
                         }
                         else
                         {
@@ -148,6 +152,7 @@ namespace Structures
                             alpha = Manager.Stats.Wealth >= cost ? 1 : 0.7f;
                         }
                         buttonCanvasGroup.DOFade(alpha, 0.5f);
+                        DisableEffects();
                         break;
                 }
             }
@@ -184,6 +189,8 @@ namespace Structures
                 _interactTimer = 0;
                 maskImage.fillAmount = 0;
             };
+
+            GameHud.OnTogglePhotoMode += _ => Deselect();
             
             GetComponentInChildren<Button>().onClick.AddListener(Interact);
             State.OnEnterState += (_) =>
@@ -195,7 +202,6 @@ namespace Structures
             {
                 if (rd is OutlineRenderFeature)
                 {
-                    Debug.Log(Manager.PlatformManager.Gameplay.GetPlatformAssets().RendererData.name);
                     _outline = rd as OutlineRenderFeature;
                     break;
                 }
@@ -298,29 +304,35 @@ namespace Structures
                 badges[i].background.color = Colors.StatColours[effects[i].Key];
                 badges[i].icon.sprite = statIcons[effects[i].Key];
                 
-                badges[i].badge.Description = 
-                    $"{(effects[i].Value > 0 ? "+" : "")}" +
-                    $"{effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key)} " +
-                    $"{effects[i].Key.ToString()}{((int)effects[i].Key < 5 ? " Satisfaction" : "")}";
+                int scaledValue = effects[i].Value * Manager.Stats.StatMultiplier(effects[i].Key);
+                badges[i].badge.Description =
+                    $"{scaledValue.WithSign()} {effects[i].Key.ToString()}" +
+                    " Satisfaction".Conditional((int)effects[i].Key < 5);
             }
-            
             
             if (!SelectedStructure.Bonus.HasValue) return;
             bonusBadge.badge.Description = 
-                $"+{Manager.Stats.StatMultiplier(SelectedStructure.Bonus.Value)} {SelectedStructure.Bonus.ToString()}{((int)SelectedStructure.Bonus < 5 ? " Satisfaction" : "")}";
+                $"+{Manager.Stats.StatMultiplier(SelectedStructure.Bonus.Value)} {SelectedStructure.Bonus.ToString()}" +
+                " Satisfaction".Conditional((int)SelectedStructure.Bonus < 5);
             
-            bonusBadge.transform.localPosition = new Vector2(0, -320);
+            bonusBadge.transform.localPosition = new Vector2(0, -250);
             
             const float delay = 0.5f;
             bonusBadge.canvasGroup.DOFade(1, 1f).SetDelay(delay);
             bonusBadge.transform
-                .DOLocalMove(new Vector2(0, -270), 1f)
+                .DOLocalMove(new Vector2(0, -200), 1f)
                 .SetDelay(delay)
                 .OnStart(() => {
                     bonusBadge.icon.sprite = statIcons[SelectedStructure.Bonus.Value];
                     bonusBadge.background.color = Colors.StatColours[SelectedStructure.Bonus.Value];
                     bonusText.text = SelectedStructure.Blueprint.adjacencyConfig.Description;
                 });
+        }
+
+        private void DisableEffects()
+        {
+            badges.ForEach(badge => badge.canvasGroup.gameObject.SetActive(false));
+            bonusBadge.canvasGroup.gameObject.SetActive(false);
         }
         
         private void HideEffects()
@@ -364,9 +376,8 @@ namespace Structures
             
             if (SelectedStructure.IsQuest) return SelectedStructure.Quest;
             
-            // Guard against destroying terrain and guild hall in tutorial
-            if (Tutorial.Tutorial.Active && (SelectedStructure.IsTerrain || SelectedStructure.IsGuildHall))
-                return false;
+            // Guard against destroying anything besides ruins in the tutorial
+            if (Tutorial.Tutorial.Active && !SelectedStructure.IsRuin) return false;
             return Manager.Stats.Wealth >= SelectedStructureCost();
         }
 

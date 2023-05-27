@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,8 +6,9 @@ using Map;
 using NaughtyAttributes;
 using Quests;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Utilities;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Characters
 {
@@ -101,7 +103,7 @@ namespace Characters
             Vertex endVert = Manager.Map.GetClosestCell(questPos).Vertices[cellIdx];
 
             // Generate path regardless of roads
-            var naivePath = Utilities.Algorithms.AStar(
+            var naivePath = Algorithms.AStar(
                 Manager.Map.Layout.VertexGraph, startVert, endVert);
                 
             // Iterate backwards through the path until finding a vertex in
@@ -115,11 +117,19 @@ namespace Characters
                 forestPath.Add(lastVert);
             }
             forestPath.Reverse();
-                
-            // Generate path from start to end of road
-            var roadPath = Utilities.Algorithms.AStar(
-                Manager.Map.Layout.RoadGraph, 
-                startVert, lastVert);
+            
+            var roadPath = new List<Vertex>();
+            try
+            {
+                // Generate path from start to end of road
+                roadPath = Algorithms.AStar(
+                    Manager.Map.Layout.RoadGraph, 
+                    startVert, lastVert);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
                 
             // Concat the forest path to the road path and normalise positions
             var finalPath = roadPath.Concat(forestPath)

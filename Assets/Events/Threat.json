@@ -2,7 +2,7 @@
   {
     "name": "well-eye",
     "headline": "Well Well Well, Look What Eye Have Here!",
-    "article": "A monstrous eye has been found living at the bottom of our local well. Our on-the-field reporter described peering into the well akin to \"Delving into the abyss itself... Where the true master of our world lies... sorry, what were we talking about?\"",
+    "article": "A monstrous eye has been found living at the bottom of our local well. Our on-the-scene reporter described peering into the well akin to <i>\"Delving into the abyss itself... Where the true master of our world lies... sorry, what were we talking about?\"</i>",
     "image": "behold",
     "type": "Threat",
     "outcomes": [
@@ -12,14 +12,14 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 4
+        "baseAmount": 5
       }
     ]
   },
   {
     "name": "time-being",
     "headline": "Tributes to the Time Being",
-    "article": "A local cult has started making offerings to a mysterious creature in exchange for future sight. \"We have a busy schedule ahead, so let's just leave this for the Time Being\" chant the cultists.",
+    "article": "A local cult has started making offerings to a mysterious creature in exchange for future sight.\n\n<i>\"We have a busy schedule ahead, so let's just leave this for the Time Being\"</i> chant the cultists.",
     "image": "empty-hourglass",
     "type": "Threat",
     "outcomes": [
@@ -29,7 +29,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 5
       }
     ]
   },
@@ -42,11 +42,11 @@
     "outcomes": [
       {
         "type": "FlavourText",
-        "customDescription": "We don't know how much longer we can let it be.."
+        "customDescription": "We don't know how much longer we can let it be..."
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 4
       }
     ]
   },
@@ -59,18 +59,27 @@
     "outcomes": [
       {
         "type": "FlavourText",
-        "customDescription": "The beast will be fed for another year"
+        "customDescription": "The beast will be fed for another year..."
       },
       {
         "type": "ThreatAdded",
         "baseAmount": 4
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Food",
+          "amount": -10,
+          "turns": 5,
+          "reason": "from the Feeding Day Festivities"
+        }
       }
     ]
   },
   {
     "name": "humming-lights",
     "headline": "Mysterious Lights won't Stop Humming",
-    "article": "The strange dancing lights off the east side of town have started singing a little tune! Some claim it's cheerful, others ominous. Local residents have reported asking, \"Oh God, oh God why won't they stop? Please, someone, make them stop.\"",
+    "article": "The strange dancing lights off the east side of town have started singing a little tune! Some claim it's cheerful, others ominous. Local residents have reported asking, <i>\"Oh God, oh God why won't they stop? Please, someone, make them stop.\"</i>",
     "image": "behold",
     "type": "Threat",
     "outcomes": [
@@ -80,7 +89,16 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Performer",
+          "amount": -3,
+          "turns": 5,
+          "reason": "from the Annoying Humming Lights"
+        }
       }
     ]
   },
@@ -88,17 +106,18 @@
     "name": "bandit-raid",
     "headline": "Bandit Raid Takes its Toll",
     "article": "Two Adventurers (and 13 villagers) have been struck down protecting our town from a clan of nearby marauders. They didn't even try to steal anything, they're just jerks.",
-    "image": "sabre-slash",
+    "image": "saber-slash",
     "type": "Threat",
     "outcomes": [
       {
         "type": "AdventurersRemoved",
+        "anyGuild": true,
         "count": 2,
         "kill": true
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 4
       }
     ]
   },
@@ -115,7 +134,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       }
     ]
   },
@@ -131,13 +150,13 @@
         "modifier": {
           "toChange": "Spending",
           "amount": -10,
-          "turns": 3,
+          "turns": 5,
           "reason": "from the Marching Bandits"
         }
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       }
     ]
   },
@@ -154,7 +173,7 @@
       },
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 4
       }
     ]
   },
@@ -167,27 +186,36 @@
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 3
+        "baseAmount": 4
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Brawler",
+          "amount": -3,
+          "turns": 5,
+          "reason": "from the Mimic Weaponry"
+        }
       }
     ]
   },
   {
     "name": "gargoyles",
     "headline": "Gargoyles",
-    "article": "Pest control has been called in, as a new pest has infested our town. Gargoyles have taken residence atop our watchtowers where Arcanists often go to study. The gargoyles were reported silent and unremorseful about their actions, remaining stone-faced.",
+    "article": "Pest control has been called in, as a new pest has infested our town. Gargoyles have taken residence atop our watchtowers where Arcanists often go to study. The gargoyles were reported silent and unremorseful about their actions, remaining stone-faced in response to criticism.",
     "image": "gargoyle",
     "type": "Threat",
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       },
       {
         "type": "ModifierAdded",
         "modifier": {
           "toChange": "Arcanist",
           "amount": -3,
-          "turns": 3,
+          "turns": 5,
           "reason": "from the Gargoyles"
         }
       }
@@ -196,52 +224,47 @@
   {
     "name": "crypto-miners",
     "headline": "Crypt-O Miners",
-    "article": "A new alternative currency has taken a hold of the town, along with it a series of grave robberies. Human bones, known to the community 'Crypt-O' is a popular component for many Necromancers, and the sudden uptick in trade has given them an interest in our town...",
+    "article": "A new alternative currency has taken hold of the town, and along with it, a series of grave robberies. Human bones, known to the community as 'Crypt-O' is a popular component for many Necromancers, and the sudden uptick in trade has given them an interest in our town...",
     "image": "cultist",
     "type": "Threat",
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 4
+        "baseAmount": 5
       },
       {
-        "type": "ModifierAdded",
-        "modifier": {
-          "toChange": "Spending",
-          "amount": 20,
-          "turns": 3,
-          "reason": "from Crypt-O miners"
-        }
+        "type": "WealthAdded",
+        "turnsWorth": 0.3
       }
     ]
   },
   {
     "name": "bird-size",
     "headline": "Birds Incite Panic!",
-    "article": "The town erupted into a panic today, when a townsperson noticed the size disparity between them and the birds flying overhead. \"It's not something you really notice until it's pointed out, but WOW they could just pick one of us up with ease!\"",
+    "article": "The town erupted into a panic today, when a towns-person noticed the size disparity between them and the birds flying overhead.\n\n<i>\"It's not something you really notice until it's pointed out, but WOW they could just pick one of us up with ease!\"</i>",
     "image": "bird",
     "type": "Threat",
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
       }
     ]
   },
   {
     "name": "rat-shortage",
     "headline": "Rat Shortage",
-    "article": "Troubles for low level adventures today as queues backing up all the way through the sewer due to a rat shortage. A traveling salesman conveniently is offering to sell the town some rats he found.\"",
+    "article": "Troubles grow for low-level adventures today as queues begin to back up all the way through the sewer due to a rat shortage. A traveling salesman conveniently is offering to sell the town <i>\"some rats he found.\"</i>",
     "image": "rat",
     "type": "Threat",
     "choices": [
       {
         "name": "Buy the rats",
-        "costScale": 0.8,
+        "costScale": 1.1,
         "outcomes": [
           {
             "type": "FlavourText",
-            "customDescription": "The adventurers start griding for experience"
+            "customDescription": "The adventurers start griding for experience..."
           },
           {
             "type": "ModifierAdded",
@@ -259,11 +282,11 @@
         "outcomes": [
           {
             "type": "FlavourText",
-            "customDescription": "Oh no, the mice are too strong and escaped! We'll have to hunt them down..."
+            "customDescription": "Oh no, the mice have grown too strong and escaped! We'll have to hunt them down..."
           },
           {
             "type": "ThreatAdded",
-            "baseAmount": 2
+            "baseAmount": 5
           }
         ]
       }
@@ -272,7 +295,7 @@
   {
     "name": "sirens",
     "headline": "Tourist Death Trap",
-    "article": "A flock of sirens has moved in a nearby cove by our shores, their alluring song bringing unaware tourists to their nest to be consumed. The performers have been sulking all week, claiming they've been upstaged. While deadly, the beaches have never been more active...",
+    "article": "A flock of sirens has moved in a nearby cove by our shores, their alluring song bringing unaware tourists to their nest to be consumed. The performers have been sulking all week, claiming they've been upstaged. While deadly, the beaches have never been more lively...",
     "image": "mermaid",
     "type": "Threat",
     "choices": [
@@ -282,20 +305,15 @@
         [
           {
             "type": "FlavourText",
-            "customDescription": "The sirens gladly part with the loose gold they've found in the clothes of their prey."
+            "customDescription": "The sirens gladly part with the loose gold they've found in the clothes of their prey..."
+          },
+          {
+            "type": "WealthAdded",
+            "turnsWorth": 0.4
           },
           {
             "type": "ThreatAdded",
             "baseAmount": 4
-          },
-          {
-            "type": "ModifierAdded",
-            "modifier": {
-              "toChange": "Spending",
-              "amount": 10,
-              "turns": 5,
-              "reason": "from Siren Buskers"
-            }
           }
         ]
       },
@@ -310,6 +328,8 @@
           {
             "type": "AdventurersRemoved",
             "count": 3,
+            "anyGuild": true,
+            "kill": true,
             "customDescription": "It took 3 adventurers lives to wipe out their nest."
           },
           {
@@ -334,7 +354,436 @@
     "outcomes": [
       {
         "type": "ThreatAdded",
-        "baseAmount": 2
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "alcohol-shortage",
+    "headline": "Alcohol Shortage Causes Riots",
+    "article": "Sobriety rates have never been higher as a recent hops shortage dries up our taverns.\n\n<i>\"There's too much blood in our alcohol stream!\"</i> groans a local adventurer who can't fight due to the collective hangover.",
+    "image": "hops",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Use a Bottomless Flask",
+        "requiredItem": "BottomlessFlask",
+        "requiresItem": true,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "It took a while to figure out how to drain the flask into the pipes, but we've got liquor flowing again!"
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": 1,
+              "turns": 5,
+              "reason": "from Flowing Liquor"
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 1,
+              "turns": 5,
+              "reason": "from Flowing Liquor"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Use Fruits to Make Wine",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "The adventurers breath a drunken sigh of relief..."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Food",
+              "amount": -25,
+              "turns": 5,
+              "reason": "from Fermenting Fruits"
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": 1,
+              "turns": 5,
+              "reason": "from Fermenting Fruits"
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Performer",
+              "amount": 1,
+              "turns": 5,
+              "reason": "from Fermenting Fruits"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Order a Shipment from Far Away",
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "It's going to take a while to get here, and local monsters have taken advantage of the situation..."
+          },
+          {
+            "type": "ThreatAdded",
+            "baseAmount": 5
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Diviner",
+              "amount": 2,
+              "turns": 5,
+              "reason": "from Forced Sobriety"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bread-swords",
+    "headline": "Bread-y for War!",
+    "article": "The famous, illiterate adventuring group <i>'The Unreadables'</i> was found in a tough spot going up against a water elemental, arming themselves to the teeth with baguettes and brioches after mistaking the local bakery for a blacksmith.",
+    "image": "bread",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "It thinks we're an easy and tasty target now..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "anyGuild": true,
+        "kill": true
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 4
+      }
+    ]
+  },
+  {
+    "name": "murder-mystery",
+    "headline": "A Not-So Mysterious Murder Mystery",
+    "article": "Authorities still on the lookout for the culprits of the Dark Manor murders, after being fooled by the kitschy bed and breakfast spot into participating in an <i>\"immersive murder-mystery extravaganza\"</i> event late last week.",
+    "image": "reaper-scythe",
+    "type": "Threat",
+    "outcomes": [
+
+      {
+        "type": "AdventurersRemoved",
+        "count": 2,
+        "anyGuild": true,
+        "kill": true,
+        "customDescription": "2 Adventurers have been reported missing..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "snakes",
+    "headline": "Subdimension Spill Summons Slithering Species",
+    "article": "A tear in reality has opened up, with snakes flooding out into the town square. Townsfolk are advised to avoid the affected area while we get these snakes off our material plane.",
+    "image": "snake",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 5
+      }
+    ]
+  },
+  {
+    "name": "dragon-hoax-1",
+    "headline": "Hoax Heralded on Scaled-Hoarders",
+    "article": "<b>Seasonal dragon attacks</b> begin to ramp up once again, with many residents fireproofing their homes. As these measures are being taken, deniers decry the panic and moral crisis raised, demanding proof over the existence of dragon-fire before wasting another silver piece of taxpayer funding.",
+    "image": "spiked-dragon-head",
+    "type": "Threat",
+    "choices": [
+      {
+        "name": "Invest in Fireproofing",
+        "costScale": 1,
+        "outcomes":
+        [
+          {
+            "type": "FlavourText",
+            "customDescription": "We'll be prepared for another year..."
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Defence",
+              "amount": 2,
+              "turns": 5,
+              "reason": "from Dragon Fireproofing"
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": -2,
+              "turns": 5,
+              "reason": "from 'Useless' Fireproofing"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Ignore the Warnings",
+        "outcomes":
+        [
+          {
+            "type": "ChainEvent",
+            "customDescription": "I'm sure it will be fine...",
+            "nextEvent":
+            {
+              "name": "dragon-hoax-2",
+              "headline": "\"I definitely left my stove on, that's all this was\"", 
+              "article": "The residence of outspoken <b>dragon</b> denier, Darlon Da'owren, burnt down this morning as a winged figure was spotted flying away. He stated that he had left the stove on, followed by <i>\"and even if it WAS a dragon, our environmental impact has nothing to do with their unusually southern migration - there's simply no evidence!\"</i>",
+              "image": "damaged-house",
+              "type": "Other",
+              "outcomes":
+              [
+                {
+                  "type": "ThreatAdded",
+                  "baseAmount": 4
+                },
+                {
+                  "type": "BuildingDamaged",
+                  "buildingType": "House"
+                }
+              ]
+            }
+          },
+          {
+            "type": "ModifierAdded",
+            "modifier": {
+              "toChange": "Brawler",
+              "amount": 2,
+              "turns": 5,
+              "reason": "from Ignoring the Dragons"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "markets-destroyed",
+    "headline": "Collateral Catastrophe",
+    "article": "The attempted arrest of a thief has resulted in an elaborate chase, lasting hours, knocking over every single cart and stall in the marketplace. Pots, rare spices, and cabbages alike were tossed up in the air one by one during this cinematic pursuit.",
+    "image": "Buildings/Markets",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Markets"
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "guild": "Outrider",
+        "kill": false,
+        "customDescription": "The offending Outrider (<sprite=1>) was banished from the town..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "library-destroyed",
+    "headline": "Best Left Unread",
+    "article": "A local arcanist uncovered a dangerous book in the local library this morning, looking for a magical remedy for a blocked sink. Upon opening the book <i>'The Endless Drain'</i>, a vortex of immense, and seemingly endless appetite consumed the general vicinity whole. The damages incurred by the event included <i>everything</i> and the (still blocked) kitchen sink in spite of the arcanist's best efforts, commenting \"perhaps this DIY thing isn't for me. Next time I'll be sure to call on Draino the Plumbing Wizard for all my unclogging needs!\"",
+    "image": "book",
+    "type": "Threat",
+    "outcomes":
+    [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Library",
+        "customDescription": "The Library was sucked into the vortex..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "guild": "Arcanist",
+        "kill": true,
+        "customDescription": "The Arcanist (<sprite=4>) was sucked into the vortex..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "shrine-destroyed",
+    "headline": "My Name is Ozymandias",
+    "article": "A group of radical diviners have decided that the best way for their gods to be immortalised is by making their shrines symbolic and poignant ruins, the fast way...",
+    "image": "Buildings/Shrine",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Shrine",
+        "customDescription": "The Shrine just has the feet now..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "guild": "Arcanist",
+        "kill": true,
+        "customDescription": "One of the Diviners (<sprite=3>) was poetically crushed under their own symbolism..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "herbalist-destroyed",
+    "headline": "Soil Eater",
+    "article": "A herbalist was the centre of a sudden curse of rot this morning, draining all the life from the garden and surrounding fields. Luckily, the curse had not spread far before the source was identified and quarantined; a rare <i>soul eater</i> herb, which sucks the life out of any soil it grows in.\n\nRecent Guild Co. ordinances have dropped the restrictions of the growth of this plant, so who knows when the next slip-up may be?",
+    "image": "Buildings/Herbalist",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "BuildingDamaged",
+        "buildingType": "Herbalist"
+      },
+      {
+        "type": "ModifierAdded",
+        "modifier": {
+          "toChange": "Food",
+          "amount": -10,
+          "turns": 5,
+          "reason": "from the Cursed Soil"
+        }
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 1
+      }
+    ]
+  },
+  {
+    "name": "frog",
+    "headline": "Frog Fraud",
+    "article": "A shape-changing monster disguised as a frog has been reported consuming an adventurer whole before escaping today. Witnesses report that the creature lured the adventurer in claiming to be royalty trapped in the body of a frog, and requiring a kiss to be freed from the curse. When close enough, the creature then extended its mouth and ate the poor adventurer sword and all.",
+    "image": "frog-prince",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "Be on the lookout for any royal frogs..."
+      },
+      {
+        "type": "AdventurersRemoved",
+        "count": 1,
+        "anyGuild": true,
+        "kill": true
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "behind-you",
+    "headline": "Caution!",
+    "article": "If you're reading this, it's right behind you.\n\nJust keep reading and don't look, and it'll go away eventually...",
+    "image": "eyes",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "That's it, no sudden movements..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "laughing-forest",
+    "headline": "Laughter From the Forests",
+    "article": "Local reporter is requesting whoever is going into the forests late at night to cackle please stop, or a least do it further away.",
+    "image": "forest",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "You hear them too, don't you?"
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
+      }
+    ]
+  },
+  {
+    "name": "dragon-libel",
+    "headline": "Local Dragon Files Libel Complaint",
+    "article": "A local guild official was accused of misrepresenting facts when they claimed that Zanthyloxynym, the Red Dragon of the Burning Vale's hoard was <i>\"...worth millions...\"</i>\n\n<i>\"This is a blatant attack on my character!\"</i> the dragon exclaimed, <i>\"It must be worth at least BILLIONS at this point!\"</i>. The news seems to have encouraged a new influx of adventurers, eager try their luck with the dragon's hoard.",
+    "image": "spiked-dragon-head",
+    "type": "Flavour",
+    "outcomes": [
+      {
+        "type": "AdventurersAdded",
+        "count": 3,
+        "anyGuild": true
+      },
+      {
+        "type": "FlavourText",
+        "customDescription": "The dragon likes a challenge..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 6
+      }
+    ]
+  },
+  {
+    "name": "tooth-fairy",
+    "headline": "The Tooth Hurts",
+    "article": "A warning to any parents out there to urge children against putting loose teeth under pillows for the tooth fairies. While they seem whimsical and wondrous, they are in fact just the larval stage of the far more deadly 'bone fairy'. Hide your teeth! It's better to starve them before they get too strong.",
+    "image": "fairy",
+    "type": "Threat",
+    "outcomes": [
+      {
+        "type": "FlavourText",
+        "customDescription": "We've already caught a few hiding under pillows..."
+      },
+      {
+        "type": "ThreatAdded",
+        "baseAmount": 3
       }
     ]
   }

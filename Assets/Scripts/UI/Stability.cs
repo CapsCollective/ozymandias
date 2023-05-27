@@ -10,14 +10,13 @@ namespace UI
     public class Stability : UiUpdater
     {
         [SerializeField] private Sprite[] chevrons;
-        [SerializeField] private RectTransform threatBar, defenceBadge, threatBadge;
+        [SerializeField] private RectTransform defenceBadge, threatBadge;
         [SerializeField] private Image direction;
         [SerializeField] private TextMeshProUGUI defenceCount, threatCount;
         private const float BarStart = 55f;
         private const float BarLength = 530f;
-        private const float DirectionArrowStart = 105f;
-        private const float DirectionArrowEnd = 535f;
-        private const float Height = 25;
+        private const float DirectionArrowStart = 115f;
+        private const float DirectionArrowEnd = 525f;
         private int _oldDefence, _oldThreat;
         private float _linearOldStability, _linearStability;
         private bool _running;
@@ -62,7 +61,11 @@ namespace UI
             direction.enabled = change != 0 && Manager.Stats.Stability > 0;
             direction.rectTransform.DOAnchorPosX(Mathf.Clamp(BarStart + width, DirectionArrowStart, DirectionArrowEnd), 0.5f);
             direction.rectTransform.DORotate(new Vector3(0,0, change > 0 ? 90: -90), 0.5f);
-            direction.sprite = chevrons[Mathf.Clamp(Mathf.Abs(change) / 5, 0, 2)];
+
+            int chevronIndex = 0;
+            if (Mathf.Abs(change) > 5) chevronIndex = 1;
+            if (Mathf.Abs(change) > 15) chevronIndex = 2;
+            direction.sprite = chevrons[chevronIndex];
         }
         
         private void PunchBadge(RectTransform badge)

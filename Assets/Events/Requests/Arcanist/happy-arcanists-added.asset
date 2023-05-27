@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: happy-arcanists-added
+  m_EditorClassIdentifier: 
+  headline: The Sorcerer's Shopping List
+  article: 'The arcanists are requesting more magic junk for their experiments in
+    exchange for their arcane assistance.
+
+
+    <i>"You know, rare artefacts, precious
+    gemstones, small and innocent creatures, that sorta stuff"</i>'
+  image: {fileID: 21300000, guid: af5e5b903f5b23f4e99d14294ef8cc47, type: 3}
+  type: 12
+  headliner: 0
+  outcomes:
+  - {fileID: 3128298144210530967}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &3128298144210530967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068e6582b34a4d43a994376b4d046ac8, type: 3}
+  m_Name: Added Outcome
+  m_EditorClassIdentifier: 
+  customDescription: 
+  request: {fileID: 11400000, guid: 43a9b5657ebc5e24097df4886c3cff93, type: 2}

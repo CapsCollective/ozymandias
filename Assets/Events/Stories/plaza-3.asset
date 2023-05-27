@@ -1,64 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4756226841921329278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
-  m_Name: AdventurersAdded
-  m_EditorClassIdentifier: 
-  customDescription: Gol and his supporters rejoin the town (+3 Performers).
-  adventurers: []
-  count: 3
-  guild: 2
-  anyGuild: 0
---- !u!114 &-2821571890466611417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
-  m_Name: CardUnlocked
-  m_EditorClassIdentifier: 
-  customDescription: 
-  blueprint: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
-  m_Name: plaza-3
-  m_EditorClassIdentifier: 
-  headline: Pay Day for Cirque Du Slay
-  article: A resolution has been struck with the Cirque Du Slay, with Gol and co
-    agreeing to return, as long as we construct new 'safe spaces' for them to perform
-    their acts. With the correct precautions in place, they will be able to juggle
-    all the fireballs they desire, providing entertainment to the town.
-  image: {fileID: 21300000, guid: 90e21c5bcf2bbd943ba5d924814e5b96, type: 3}
-  type: 0
-  headliner: 0
-  outcomes:
-  - {fileID: -4756226841921329278}
-  - {fileID: 448246881506749920}
-  - {fileID: -2821571890466611417}
-  - {fileID: 1081444410342170134}
-  choices: []
-  blueprintToUnlock: {fileID: 0}
---- !u!114 &448246881506749920
+--- !u!114 &-9179489331598296280
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +15,66 @@ MonoBehaviour:
   customDescription: They've given us some designs for a public performance space.
   flag: 0
   value: 0
---- !u!114 &1081444410342170134
+--- !u!114 &-3644001897922819482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da98bb6bc7844054b87057553d5e7d1d, type: 3}
+  m_Name: AdventurersAdded
+  m_EditorClassIdentifier: 
+  customDescription: Gol and his supporters rejoin the town. +3 Performers (<sprite=2>)
+  adventurers: []
+  count: 3
+  guild: 2
+  anyGuild: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6939337205b1e8429c312bf3490cf8a, type: 3}
+  m_Name: plaza-3
+  m_EditorClassIdentifier: 
+  headline: Pay Day for Cirque Du Slay
+  article: A resolution has been struck with the Cirque Du Slay, with <b>Gol and
+    Co.</b> agreeing to return, as long as we construct new <i>'safe spaces'</i>
+    for them to perform their acts. With the correct precautions in place, they will
+    be able to juggle all the fireballs they desire, providing entertainment to the
+    town.
+  image: {fileID: 21300000, guid: 90e21c5bcf2bbd943ba5d924814e5b96, type: 3}
+  type: 0
+  headliner: 1
+  outcomes:
+  - {fileID: -3644001897922819482}
+  - {fileID: -9179489331598296280}
+  - {fileID: 2725855787736967803}
+  - {fileID: 5181108079350900679}
+  choices: []
+  blueprintToUnlock: {fileID: 0}
+--- !u!114 &2725855787736967803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e8fe9d30931ae4882aa5463c6c57b4, type: 3}
+  m_Name: CardUnlocked
+  m_EditorClassIdentifier: 
+  customDescription: 
+  blueprint: {fileID: 11400000, guid: f439b8559e1659744819df756beb6a41, type: 2}
+--- !u!114 &5181108079350900679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -5,23 +5,25 @@ namespace Requests.Templates
 {
     public sealed class DestroyBuildings : Request
     {
+        public bool allowAny;
         public BuildingType buildingType;
-        public override string Description => $"Destroy {Required} {String.Pluralise(buildingType.ToString(), Required)}";
-        protected override int RequiredScaled => Tokens;
+        public override string Description => 
+            $"Destroy {Required} {(allowAny ? "Buildings": buildingType.ToString().Pluralise(Required))}";
+        protected override int RequiredScaled => (allowAny ? 2 : 1) * Tokens;
 
         public override void Start()
         {
-            Select.OnClear += CheckClear;
+            Structures.Structures.OnDestroyed += CheckClear;
         }
         
         public override void Complete()
         {
-            Select.OnClear -= CheckClear;
+            Structures.Structures.OnDestroyed -= CheckClear;
         }
 
         private void CheckClear(Structure structure)
         {
-            if (structure.IsBuilding && structure.Blueprint.type == buildingType) Completed++;
+            if (structure.IsBuilding && (allowAny || structure.Blueprint.type == buildingType)) Completed++;
         }
     }
 }

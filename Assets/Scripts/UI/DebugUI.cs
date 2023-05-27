@@ -1,12 +1,13 @@
-using System.Text;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
-using static Managers.GameManager;
-using DG.Tweening;
+using System.Text;
 using Cinemachine;
+using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using static Managers.GameManager;
+using ShadowResolution = UnityEngine.Rendering.Universal.ShadowResolution;
 
 namespace UI {
 
@@ -22,7 +23,7 @@ namespace UI {
         [SerializeField] private VolumeProfile postProcessProfile;
         [SerializeField] private VolumeProfile dofProcessProfile;
         [SerializeField] private UniversalRendererData rendererData;
-        [SerializeField] private TMPro.TextMeshProUGUI settingsText;
+        [SerializeField] private TextMeshProUGUI settingsText;
 
         private CinemachineFreeLook camFreeLook;
         private bool toggleFPS = false;
@@ -86,7 +87,7 @@ namespace UI {
             settingsText.text = sb.ToString();
         }
 
-        private void ToggleDebug(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void ToggleDebug(InputAction.CallbackContext obj)
         {
             Debug.Log("Testing");
             debugUI.SetActive(!debugUI.activeSelf);
@@ -111,23 +112,23 @@ namespace UI {
         public void SetShadowQuality(float q)
         {
             int pick = (int)q;
-            UnityEngine.Rendering.Universal.ShadowResolution shadowResolution = UnityGraphicsBullshit.MainLightShadowResolution;
+            ShadowResolution shadowResolution = UnityGraphicsBullshit.MainLightShadowResolution;
             switch (pick)
             {
                 case 0:
-                    shadowResolution = UnityEngine.Rendering.Universal.ShadowResolution._256;
+                    shadowResolution = ShadowResolution._256;
                     break;
                 case 1:
-                    shadowResolution = UnityEngine.Rendering.Universal.ShadowResolution._512;
+                    shadowResolution = ShadowResolution._512;
                     break;
                 case 2:
-                    shadowResolution = UnityEngine.Rendering.Universal.ShadowResolution._1024;
+                    shadowResolution = ShadowResolution._1024;
                     break;
                 case 3:
-                    shadowResolution = UnityEngine.Rendering.Universal.ShadowResolution._2048;
+                    shadowResolution = ShadowResolution._2048;
                     break;
                 case 4:
-                    shadowResolution = UnityEngine.Rendering.Universal.ShadowResolution._4096;
+                    shadowResolution = ShadowResolution._4096;
                     break;
             }
             UnityGraphicsBullshit.MainLightShadowResolution = shadowResolution;
