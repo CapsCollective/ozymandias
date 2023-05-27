@@ -97,16 +97,22 @@ namespace Managers
             
             // Setup audio sliders
             musicSlider.maxValue = 1f;
+            var musicVolume= PlayerPrefs.GetFloat("music", 1f);
+            musicSlider.value = musicVolume;
             musicSlider.onValueChanged.AddListener(SetMusicVolume);
-            musicSlider.value = PlayerPrefs.GetFloat("music", 1f);
+            SetMusicVolume(musicVolume);
 
             ambienceSlider.maxValue = 1f;
+            var ambienceVolume = PlayerPrefs.GetFloat("ambience", 1f);
+            ambienceSlider.value = ambienceVolume;
             ambienceSlider.onValueChanged.AddListener(SetAmbienceVolume);
-            ambienceSlider.value = PlayerPrefs.GetFloat("ambience", 1f);
+            SetAmbienceVolume(ambienceVolume);
 
             sfxSlider.maxValue = 1f;
+            var sfxVolume = PlayerPrefs.GetFloat("sfx", 1f);
+            sfxSlider.value = sfxVolume;
             sfxSlider.onValueChanged.AddListener(SetSfxVolume);
-            sfxSlider.value = PlayerPrefs.GetFloat("sfx", 1f);
+            SetSfxVolume(sfxVolume);
         }
 
         #region Display
@@ -172,21 +178,28 @@ namespace Managers
         #endregion
         
         #region Volume
+        private float GetNormalisedVolume(float volume)
+        {
+            const float muteVolume = -80;
+            const float volumeEpsilon = 0.001f;
+            return volume > volumeEpsilon ? 20 * Mathf.Log10(volume) : muteVolume;
+        }
+
         private void SetMusicVolume(float volume)
         {
-            audioMixer.SetFloat("musicSettingVolume", 20 * Mathf.Log10(volume));
+            audioMixer.SetFloat("musicSettingVolume", GetNormalisedVolume(volume));
             PlayerPrefs.SetFloat("music", volume);
         }
 
         private void SetAmbienceVolume(float volume)
         {
-            audioMixer.SetFloat("ambianceSettingVolume", 20 * Mathf.Log10(volume));
+            audioMixer.SetFloat("ambianceSettingVolume", GetNormalisedVolume(volume));
             PlayerPrefs.SetFloat("ambience", volume);
         }
 
         private void SetSfxVolume(float volume)
         {
-            audioMixer.SetFloat("sfxVolumeSetting", 20 * Mathf.Log10(volume));
+            audioMixer.SetFloat("sfxVolumeSetting", GetNormalisedVolume(volume));
             PlayerPrefs.SetFloat("sfx", volume);
         }
         #endregion
