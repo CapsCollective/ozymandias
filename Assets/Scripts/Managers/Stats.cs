@@ -163,7 +163,8 @@ namespace Managers
         
         private void OnNextTurnEnd()
         {
-            if (Stability <= 0) Manager.EventQueue.AddGameOverEvents();
+            if (Stability <= 0 && Manager.Structures.GetCount(BuildingType.GuildHall) != 0)
+                Manager.EventQueue.AddGameOverEvents();
         
             foreach ((Stat stat, List<Modifier> mods) in Modifiers)
             {
