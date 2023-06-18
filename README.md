@@ -8,21 +8,23 @@
 
 ## About
 
-**Following a map to ancient ruins, in a long-forgotten fantasy land, you do the only reasonable thing and set up a small town right on top.**
+**Think you have what it takes to run a bustling adventuring hub? Expand its profits exponentially? Dust yourself off and try again when it all inevitably falls into ruin? Then this may just be the role for you!**
 
-Unknown riches and perils await your townsfolk, so your town will require a steady supply of adventurers for both protection and exploration. However, the chaos that the adventuring lifestyle brings can often times cause more problems than it solves!
+Unknown riches and perils await your townsfolk, so your job will be to procure a steady supply of adventurers for both protection and exploration. However, the chaos that the adventuring lifestyle brings can oftentimes cause more problems than it solves!
 
 **It is up to you**, the regional middle manager of the adventurers guild to grow this small hamlet into a bustling city. Will you stand the test of time, or will your works return to dust as many have before?
 
-A **turn-based roguelite city builder**, where as your city grows, it attracts more adventurers! Chaos will inevitably ensue, so be ready to face all that running an adventuring town brings.
+A **turn-based roguelite city builder**, where as your city grows, it attracts more adventurers! Chaos will inevitably ensue, so be ready to face all that running an adventuring hub brings.
 
 #### Your responsibilities as regional manager may include:
 - Constructing buildings!
 - Attracting the greatest adventurers!
-- Reading the some very odd news?
+- Keeping up-to-date with the latest news in your town!
 - Discovering all the blueprints!
+- Completing "favours" for the various guilds!
 - Sending adventurers on arduous quests!
 - Fending off your inevitable demise...
+- ... aaaand digging through the ruins of your numerous failures.
 
 ## BEFORE READING
 
