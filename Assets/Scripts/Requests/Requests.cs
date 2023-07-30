@@ -42,6 +42,7 @@ namespace Requests
         public void Remove(Guild guild)
         {
             _requests[guild].Complete();
+            Manager.Stats.RequestsCompleted++;
             Manager.Upgrades.GuildTokens[guild] += _requests[guild].Tokens;
             int purchasable = Manager.Upgrades.TotalPurchasable;
             if (purchasable > 0) Manager.Notifications.Display(

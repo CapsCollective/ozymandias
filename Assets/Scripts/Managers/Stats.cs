@@ -83,6 +83,10 @@ namespace Managers
         public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 0 : Manager.Adventurers.Available) + GetStat(Stat.Spending) + StartingSalary;
     
         public int Wealth { get;  set; }
+        public int TotalWealth { get;  set; } // Wealth over whole game
+        public int RequestsCompleted { get;  set; } // Requests in a single game
+        public int BuildingsDiscovered { get;  set; } // Buildings in a single game
+        public int CampsCleared { get;  set; } // Camps in a single game
 
         public int Defence => Manager.Adventurers.Available + GetStat(Stat.Defence) + MineStrikePenalty;
 
@@ -120,8 +124,12 @@ namespace Managers
         {
             TurnCounter = 1;
             BaseThreat = 0;
-            Stability = 50; // + Manager.Upgrades.GetLevel(UpgradeType.Stability) * 10;
+            Stability = 50;
             Wealth = Tutorial.Tutorial.Active ? 0 : StartingWealth + Manager.Upgrades.GetLevel(UpgradeType.Wealth) * 10;
+            TotalWealth = Wealth;
+            BuildingsDiscovered = 0;
+            RequestsCompleted = 0;
+            CampsCleared = 0;
             foreach (Stat stat in Enum.GetValues(typeof(Stat)))
             {
                 ModifiersTotal[stat] = 0;
@@ -144,6 +152,7 @@ namespace Managers
                 Stability = 100;
             }
             Wealth += WealthPerTurn;
+            TotalWealth += WealthPerTurn;
             TurnCounter++;
 
             // Spawn adventurers based on satisfaction
@@ -154,7 +163,7 @@ namespace Managers
                 if (spawnRoll < spawnChance) Manager.Adventurers.Add(guild);
                 else if (spawnRoll < -spawnChance) Manager.Adventurers.Remove(false, guild);
                 
-                if (GetSatisfaction(guild) >= 20) Manager.EventQueue.Add(excessEvents[guild], true);
+                if (GetSatisfaction(guild) >= Random.Range(10,50)) Manager.EventQueue.Add(excessEvents[guild], true);
             }
             
             Debug.Log($"Stats: Starting turn {TurnCounter}");
@@ -223,7 +232,11 @@ namespace Managers
                 baseThreat = BaseThreat,
                 modifiers = Modifiers,
                 statHistory = StatHistory,
-                adventurerHistory = AdventurerHistory
+                adventurerHistory = AdventurerHistory,
+                totalWealth = TotalWealth,
+                requestsCompleted = RequestsCompleted,
+                buildingsDiscovered = BuildingsDiscovered,
+                campsCleared = CampsCleared,
             };
         }
 
@@ -233,6 +246,10 @@ namespace Managers
             Wealth = details.wealth;
             Stability = details.stability;
             BaseThreat = details.baseThreat;
+            TotalWealth = details.totalWealth;
+            RequestsCompleted = details.requestsCompleted;
+            BuildingsDiscovered = details.buildingsDiscovered;
+            CampsCleared = details.campsCleared;
 
             Modifiers = details.modifiers ?? new Dictionary<Stat, List<Modifier>>();
             StatHistory = details.statHistory ?? new Dictionary<Stat, List<int>>();

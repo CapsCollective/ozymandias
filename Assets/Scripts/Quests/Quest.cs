@@ -125,6 +125,7 @@ namespace Quests
         public void Complete()
         {
             Quests.OnQuestCompleted?.Invoke(this);
+            if (IsRadiant) Manager.Stats.CampsCleared++;
             Manager.Quests.Remove(this);
             _assigned.ForEach(a =>
             {

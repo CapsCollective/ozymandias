@@ -311,6 +311,7 @@ namespace Cards
             if (!Unlocked.Contains(blueprint)) Unlocked.Add(blueprint);
             Playable.Add(blueprint);
             Deck.Add(blueprint); // Add to deck so it shows up faster
+            Manager.Stats.BuildingsDiscovered++;
             
             OnUnlock?.Invoke(blueprint, fromRuin);
         }
