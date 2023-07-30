@@ -6,7 +6,7 @@ namespace Requests.Templates
     {
         public bool requireKill;
         public override string Description => $"Kill {Required} Adventurers";
-        protected override int RequiredScaled => 2 * Tokens;
+        protected override int RequiredScaled => 1 + Tokens;
 
         public override void Start()
         {

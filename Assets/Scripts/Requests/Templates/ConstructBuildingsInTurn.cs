@@ -8,7 +8,7 @@ namespace Requests.Templates
     {
         public override string Description => $"Build {Required} Buildings in a Single Turn";
 
-        protected override int RequiredScaled => 2 + Tokens * 2;
+        protected override int RequiredScaled => 3 + Tokens;
 
         public override void Start()
         {

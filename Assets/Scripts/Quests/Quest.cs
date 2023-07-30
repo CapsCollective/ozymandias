@@ -126,7 +126,10 @@ namespace Quests
         {
             Quests.OnQuestCompleted?.Invoke(this);
             Manager.Quests.Remove(this);
-            _assigned.ForEach(a => a.assignedQuest = null);
+            _assigned.ForEach(a =>
+            {
+                if (a) a.assignedQuest = null;
+            });
             _assigned.Clear();
             TurnsLeft = -1;
         }

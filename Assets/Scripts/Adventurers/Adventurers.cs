@@ -57,7 +57,11 @@ namespace Adventurers
         public Adventurer Assign(Quest q, string adventurerName)
         {
             Adventurer assigned = _adventurers.Find(a => a.name == adventurerName);
-            if(assigned == null) Debug.LogError("Adventurer with name " + name + " not found.");
+            if (assigned == null)
+            {
+                Debug.LogError("Adventurer with name " + name + " not found.");
+                return null;
+            }
             assigned.assignedQuest = q;
             return assigned;
         }
