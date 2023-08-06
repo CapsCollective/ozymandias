@@ -183,7 +183,7 @@ namespace Structures
             
             Occupied.ForEach(o =>
             {
-                if (o.Occupied) Manager.Structures.Remove(o.Occupant);
+                if (o != null && o.Occupied) Manager.Structures.Remove(o.Occupant);
             });
 
             if(!Cell.IsValid(Occupied) || !Manager.Stats.Spend(Blueprint.ScaledCost)) return false;

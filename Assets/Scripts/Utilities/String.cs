@@ -113,8 +113,8 @@ namespace Utilities
         private const string ItalicsEnd = "</i>";
         public static string Italics(this string s) => ItalicsStart + s + ItalicsEnd;
         
-        private const string ListStart = "\n •<indent=20px>";
-        private const string ListEnd = "</indent>";
+        public const string ListStart = "\n •<indent=20px>";
+        public const string ListEnd = "</indent>";
         public static string ListItem(this string s) => ListStart + s + ListEnd;
 
         public static string WithSign(this int count) => (count > 0 ? "+" : "") + count;

@@ -316,7 +316,7 @@ namespace Tooltip
             foreach (var modifier in Manager.Stats.Modifiers[stat])
             {
                 formattedModifierString += (
-                    $"{modifier.amount.WithSign()} from {modifier.reason}" +
+                    $"{modifier.amount.WithSign()} {modifier.reason}" +
                     $"\n({modifier.turnsLeft} {"turn".Pluralise(modifier.turnsLeft)} remaining)".Conditional(modifier.turnsLeft != -1)
                 ).ListItem();
             }
