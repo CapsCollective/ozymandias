@@ -17,7 +17,8 @@ namespace Events
         
         [SerializeField] private Event openingEvent, summerEvent, autumnEvent, winterEvent;
         [SerializeField] private Event[] supportWithdrawnEvents, guildHallDestroyedEvents, tutorialEndEvents;
-        
+        [SerializeField] private SerializedDictionary<Guild, Event> excessEvents;
+
         private Newspaper _newspaper;
         
         private readonly LinkedList<Event>
@@ -127,12 +128,23 @@ namespace Events
             if (housingSpawnChance == -1) eventPool.Add(PickRandom(EventType.AdventurersLeave));
             else if (TypeNotInQueue(EventType.AdventurersJoin) && Random.Range(0,5) < housingSpawnChance) eventPool.Add(PickRandom(EventType.AdventurersJoin));
 
+            // Spawn excess adventurers for extra high satisfaction
+            foreach (Guild guild in Enum.GetValues(typeof(Guild)))
+            {
+                if (Manager.Stats.GetSatisfaction(guild) >= Random.Range(10,50))
+                    eventPool.Add(excessEvents[guild]);
+            }
+            
             // Let them gain some adventurers to start
             if (Manager.Adventurers.Available >= 5)
             {
                 // Scale from 100% down to 0% threat spawn if falling behind by up to 20 or leading by up to 10
                 // Prevent multiple threat events from happening in a single turn
                 if (TypeNotInQueue(EventType.Threat) && Random.Range(-20, 10) < Mathf.Clamp(Manager.Stats.Defence - Manager.Stats.Threat, -20, 10))
+                    eventPool.Add(PickRandom(EventType.Threat));
+                
+                // Add an extra threat if stability is maxed
+                if (Manager.Stats.Stability >= 100) 
                     eventPool.Add(PickRandom(EventType.Threat));
                 
                 // Chance increases with stability, and decreases with count of active quests
