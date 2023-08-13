@@ -76,7 +76,7 @@ namespace Managers
         
         public int HousingSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
         
-        public int FoodModifier => GetSatisfaction(Stat.Food)/10;
+        public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -5, 5);
 
         public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 0 : Manager.Adventurers.Available) + GetStat(Stat.Spending) + StartingSalary;
     

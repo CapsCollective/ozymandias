@@ -338,7 +338,9 @@ namespace Tooltip
 
         private string FoodEffect(int foodMod) => foodMod == 0 
             ? "No modifiers to satisfaction" 
-            : foodMod.WithSign() + " to all adventurer satisfaction";
+            : foodMod.WithSign() + 
+              (Mathf.Abs(foodMod) == 5 ? "(max)" : "") + 
+              " to all adventurer satisfaction";
 
         private string HousingDescriptor(int spawnRate)
         {
@@ -369,7 +371,7 @@ namespace Tooltip
         {
             return spawnRate == -1 
                 ? "Adventurers will start to flee" 
-                : HousingSpawnName(spawnRate) + " adventurer spawn chance";  
+                : HousingSpawnName(spawnRate) + " adventurer spawn event chance";  
         }  
         
         public void Fade(float opacity)
