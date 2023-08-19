@@ -12,35 +12,35 @@ namespace Utilities
         public static void ConvexHullAsync(List<Vertex> included, Graph<Vertex> graph, Action<List<Vertex>> callback)
         {
             List<Vertex> path = new List<Vertex>();
+            // Clone list to allow edits
+            List<Vertex> remaining = new List<Vertex>(included);
 
-            // Ensure that the first is on the path
-            Vertex p = included[0];
-            for (int i = 1; i < included.Count; i++)
-                if (((Vector3)included[i]).x < ((Vector3)p).x)
-                    p = included[i];
+            // Get the leftmost point
+            Vertex current = remaining[0];
+            for (int i = 1; i < remaining.Count; i++)
+                if (((Vector3)remaining[i]).x < ((Vector3)current).x)
+                    current = remaining[i];
 
-            path.Add(p);
+            path.Add(current);
 
-            while (path.Count == 1 || path[path.Count - 1] != path[0])
+            while ((path.Count == 1 || path[path.Count - 1] != path[0]) && remaining.Count > 0)
             {
-                // Initialise the set of possible points
-                List<Vertex> s = new List<Vertex>(included);
-
-                Vertex q = s[0];
-                foreach (Vertex n in s)
+                Vertex next = remaining[0];
+                foreach (Vertex n in remaining)
                 {
-                    if (n == p) continue;
+                    if (n == current) continue;
                     bool isNext = true;
-                    foreach (Vertex r in s)
+                    foreach (Vertex r in remaining)
                     {
-                        if (r != p && Vector3.Cross(p - n, r - n).z > 0)
+                        if (r != current && Vector3.Cross(current - n, r - n).z > 0)
                             isNext = false;
                     }
-                    if (isNext) q = n;
+                    if (isNext) next = n;
                 }
 
-                path.Add(q);
-                p = q;
+                path.Add(next);
+                remaining.Remove(next);
+                current = next;
             }
 
             Dictionary<Vertex, List<Vertex>> toInclude = new Dictionary<Vertex, List<Vertex>>();

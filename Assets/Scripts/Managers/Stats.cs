@@ -43,9 +43,7 @@ namespace Managers
             Stat.Housing,
             Stat.Spending
         };
-
-        [SerializeField] private SerializedDictionary<Guild, Event> excessEvents;
-
+        
         public int StatMultiplier(Stat stat) => _baseStats.Contains(stat) ? BaseStatMultiplier : 1;
 
 
@@ -78,7 +76,7 @@ namespace Managers
         
         public int HousingSpawnChance => Mathf.Clamp(GetSatisfaction(Stat.Housing)/10 + 1, -1, 3);
         
-        public int FoodModifier => GetSatisfaction(Stat.Food)/10;
+        public int FoodModifier => Mathf.Clamp(GetSatisfaction(Stat.Food)/10, -5, 5);
 
         public int WealthPerTurn => (Manager.EventQueue.Flags[Flag.Cosmetics] ? 0 : Manager.Adventurers.Available) + GetStat(Stat.Spending) + StartingSalary;
     
@@ -146,11 +144,7 @@ namespace Managers
         private void OnNextTurnBegin()
         {
             Stability += Defence - Threat;
-            if (Stability > 100)
-            {
-                Manager.EventQueue.AddThreat();
-                Stability = 100;
-            }
+            if (Stability > 100) Stability = 100;
             Wealth += WealthPerTurn;
             TotalWealth += WealthPerTurn;
             TurnCounter++;
@@ -162,8 +156,6 @@ namespace Managers
                 int spawnChance = SpawnChance(guild);
                 if (spawnRoll < spawnChance) Manager.Adventurers.Add(guild);
                 else if (spawnRoll < -spawnChance) Manager.Adventurers.Remove(false, guild);
-                
-                if (GetSatisfaction(guild) >= Random.Range(10,50)) Manager.EventQueue.Add(excessEvents[guild], true);
             }
             
             Debug.Log($"Stats: Starting turn {TurnCounter}");
