@@ -30,7 +30,7 @@ A **turn-based roguelite city builder**, where as your city grows, it attracts m
 
 We're developing this game as an open-source product primarily **for the benefit of other new game developers** who might want to see how we turned our student game into something releasable on Steam.
 
-**If you just want to go play the game, then please support us by purchasing it through [Steam](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) or [itch.io](https://caps-collective.itch.io/ftrm).**
+**If you just want to go play the game, then please support us by purchasing it through [Steam](https://store.steampowered.com/app/1524530/Fantasy_Town_Regional_Manager/) or [itch.io](https://capscollective.itch.io/ftrm).**
 
 The project is being developed out of our shared passion for putting out cool experiences and is solely being funded by our own blood, sweat, tears, the _continual ritual sacrifice of elves_ and whatever we can get from Steam and itch sales.
 
