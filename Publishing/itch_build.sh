@@ -4,7 +4,7 @@
 ((!$#)) && echo "Please specify the Butler executable platform (e.g. darwin-amd64)" && exit 1
 
 # Set itch push details
-itch_title="caps-collective/ftrm"
+itch_title="capscollective/ftrm"
 itch_branch_state="release"
 itch_branch_macos="macos"
 itch_branch_linux="linux"

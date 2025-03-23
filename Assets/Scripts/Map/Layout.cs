@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Grass;
@@ -7,6 +8,7 @@ using Structures;
 using UnityEngine;
 using Utilities;
 using static Managers.GameManager;
+using Random = UnityEngine.Random;
 
 namespace Map
 {
@@ -530,9 +532,17 @@ namespace Map
 
             // Create a perimeter path around the included vertices
             var perimeter = new List<Vertex>();
-            
-            Algorithms.ConvexHullAsync(vertices, VertexGraph, e => perimeter = e);
-            
+
+            try
+            {
+                Algorithms.ConvexHullAsync(vertices, VertexGraph, e => perimeter = e);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Convex hull async failed");
+                Debug.LogError(e);
+            }
+
             // Create a road linking the perimeter to the existing road graph
             if (RoadGraph.Count > 0 && perimeter.Count > 0)
             {

@@ -332,7 +332,7 @@ float4 TriplanarSampling(TEXTURE2D_PARAM(Texture, Sampler), float3 Position, flo
 
 float3 GetTerrainColor(float3 pos, float3 normal) {
     float noise = TriplanarSampling(TEXTURE2D_ARGS(_NoiseTexture, sampler_NoiseTexture), pos, normal, 1.0f, half2(0.03f, 0.03f));
-    float height = saturate(smoothstep(0.5, 0.5, noise + (pos.y - _Height)));
+    float height = saturate(smoothstep(0.499, 0.5, noise + (pos.y - _Height)));
 
     float3 color = lerp(lerp(_Grass, _SnowColor, _Winter), _AutumnColor, _Autumn);
     color = lerp(_Sand, color, height);
