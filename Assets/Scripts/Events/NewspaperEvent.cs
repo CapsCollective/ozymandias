@@ -32,7 +32,9 @@ namespace Events
         private void SetDebugEvent()
         {
             SetEvent(debugEvent, "");
-            articleImage.sprite = debugEvent.image;
+            if (articleImage != null) {
+                articleImage.sprite = debugEvent.image;
+            }
         }
 #endif
     }
